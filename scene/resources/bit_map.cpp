@@ -173,24 +173,25 @@ Vector<Vector<Vector2>> BitMap::_march_square(const Rect2i &p_rect, const Point2
 	int stepx = 0;
 	int stepy = 0;
 	int prevx = 0;
-	int prevy = 0;
+	int prevy = 1;
 	int startx = p_start.x;
 	int starty = p_start.y;
 	int curx = startx;
-	int cury = starty;
+	int cury = starty + 1;
 	unsigned int count = 0;
 
 	HashMap<Point2i, int> cross_map;
 
-	Vector<Vector2> _points;
-	int points_size = 0;
+	// Add first two points to vector, as initial movement is always down.
+	Vector<Vector2> _points{ Vector2(startx, starty), Vector2(curx, cury) };
+	int points_size = 2;
 
 	Vector<Vector<Vector2>> ret;
 
 	// Add starting entry at start of return.
 	ret.resize(1);
 
-	do {
+	while (true) {
 		int sv = 0;
 		{ // Square value
 
@@ -319,8 +320,30 @@ Vector<Vector<Vector2>> BitMap::_march_square(const Rect2i &p_rect, const Point2
 
 			// Find if this point has occurred before.
 			if (HashMap<Point2i, int>::Iterator found = cross_map.find(cur_pos)) {
-				// Add points after the previous crossing to the result.
-				ret.push_back(_points.slice(found->value + 1, points_size));
+				// Find the point with the smallest y and smallest x (in that order!) to ensure proper form.
+				int min_i = found->value + 1;
+
+				for (int i = found->value + 2; i < points_size; ++i) {
+					if (_points[i].y < _points[min_i].y || (_points[i].y == _points[min_i].y && _points[i].x < _points[min_i].x)) {
+						min_i = i;
+					}
+				}
+
+				Vector<Vector2> new_points;
+				new_points.resize(points_size - (found->value + 1));
+				Vector2 *ptrw = new_points.ptrw();
+
+				// Add points from minimum to end.
+				for (int i = min_i; i < points_size; ++i) {
+					*ptrw++ = _points[i];
+				}
+
+				// Add points from start to minimum.
+				for (int i = found->value + 1; i < min_i; ++i) {
+					*ptrw++ = _points[i];
+				}
+
+				ret.push_back(new_points);
 
 				// Remove points after crossing point.
 				points_size = found->value + 1;
@@ -337,11 +360,21 @@ Vector<Vector<Vector2>> BitMap::_march_square(const Rect2i &p_rect, const Point2
 			}
 		}
 
+		curx += stepx;
+		cury += stepy;
+
+		if (curx == startx && cury == starty) {
+			// If was going the same direction, drop last point.
+			if (stepx == prevx && stepy == prevy) {
+				points_size--;
+			}
+
+			break;
+		}
+
 		// Small optimization:
 		// If the previous direction is same as the current direction,
 		// then we should modify the last vector to current.
-		curx += stepx;
-		cury += stepy;
 		if (stepx == prevx && stepy == prevy) {
 			_points.set(points_size - 1, Vector2(curx, cury) - p_rect.position);
 		} else {
