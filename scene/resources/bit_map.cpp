@@ -31,7 +31,11 @@
 #include "bit_map.h"
 
 #include "core/io/image_loader.h"
+#include "core/templates/local_vector.h"
+#include "core/templates/rb_set.h"
 #include "core/variant/typed_array.h"
+
+#include "core/string/string_builder.h"
 
 void BitMap::create(const Size2i &p_size) {
 	ERR_FAIL_COND(p_size.width < 1);
@@ -398,85 +402,828 @@ Vector<Vector<Vector2>> BitMap::_march_square(const Rect2i &p_rect, const Point2
 	return ret;
 }
 
-static float perpendicular_distance(const Vector2 &i, const Vector2 &start, const Vector2 &end) {
-	float res;
-	float slope;
-	float intercept;
+struct PointEntry {
+	Vector2 dir;
+	int ind;
+};
 
-	if (start.x == end.x) {
-		res = Math::absf(i.x - end.x);
-	} else if (start.y == end.y) {
-		res = Math::absf(i.y - end.y);
-	} else {
-		slope = (end.y - start.y) / (end.x - start.x);
-		intercept = start.y - (slope * start.x);
-		res = Math::absf(slope * i.x - i.y + intercept) / Math::sqrt(Math::pow(slope, 2.0f) + 1.0);
+template <bool Flip>
+struct PointEntryCmp {
+	static int quadrant(const Vector2 &p_dir) {
+		if (p_dir.y <= 0 && p_dir.x > 0) {
+			return 0;
+		} else if (p_dir.y < 0 && p_dir.x <= 0) {
+			return 1;
+		} else if (p_dir.y <= 0 && p_dir.x < 0) {
+			return 2;
+		} else {
+			return 3;
+		}
 	}
-	return res;
+
+	bool operator()(const PointEntry &p_lhs, const PointEntry &p_rhs) const {
+		// Offset quadrant by 2 if flipping.
+		const int lhs_q = (quadrant(p_lhs.dir) + (Flip ? 2 : 0)) % 4;
+		const int rhs_q = (quadrant(p_rhs.dir) + (Flip ? 2 : 0)) % 4;
+
+		// Sort by quadrant first.
+		if (lhs_q < rhs_q) {
+			return true;
+		} else if (lhs_q > rhs_q) {
+			return false;
+		} else {
+			const int ori = SIGN(p_lhs.dir.cross(p_rhs.dir));
+
+			// If collinear, compare distance, otherwise smaller if RIGHT turn.
+			if (ori == 0) {
+				return p_lhs.dir.length_squared() < p_rhs.dir.length_squared();
+			} else {
+				return ori == -1;
+			}
+		}
+	}
+};
+
+struct EdgeEntry;
+
+struct EdgeEntryCmp {
+	inline bool operator()(const EdgeEntry *p_lhs, const EdgeEntry *p_rhs) const;
+};
+
+struct EdgeEntry {
+	Vector2 v0, v1;
+
+	RBSet<EdgeEntry *, EdgeEntryCmp>::Element *pos = nullptr;
+};
+
+bool EdgeEntryCmp::operator()(const EdgeEntry *p_lhs, const EdgeEntry *p_rhs) const {
+	// The rotational sweep processing below guarantee the following:
+	// * The target of any edge is counter-clockwise of the source (forward facing).
+	// * The target of any edge is never clockwise of the source of any other edge.
+	// * The source of any edge is never counter-clockwise of the target of any other edge.
+	// * Edges share no points, they do not cross, overlap, or share endpoints.
+
+	// The processing is simplified by the fact that edges are either horizontal or vertical.
+	const bool lhs_horiz = p_lhs->v0.y == p_lhs->v1.y;
+	const bool rhs_horiz = p_rhs->v0.y == p_rhs->v1.y;
+
+	// If both edges are horizontal or vertical, lhs is closer if it has a smaller absolute y or x value respectively.
+	if (lhs_horiz == rhs_horiz) {
+		return Math::abs(p_lhs->v0[lhs_horiz ? 1 : 0]) < Math::abs(p_rhs->v0[lhs_horiz ? 1 : 0]);
+	}
+
+	// The cross product is simplified as the edge is horizontal or vertical.
+	const int rhs_dir = (p_rhs->v1[rhs_horiz ? 0 : 1] > p_rhs->v0[rhs_horiz ? 0 : 1]) ? 1 : -1;
+
+	const int lhs_diff_source = SIGN(p_lhs->v0[rhs_horiz ? 1 : 0] - p_rhs->v0[rhs_horiz ? 1 : 0]);
+	const int lhs_diff_target = SIGN(p_lhs->v1[rhs_horiz ? 1 : 0] - p_rhs->v0[rhs_horiz ? 1 : 0]);
+
+	const int ori_source = rhs_dir * lhs_diff_source * (rhs_horiz ? 1 : -1);
+	const int ori_target = rhs_dir * lhs_diff_target * (rhs_horiz ? 1 : -1);
+
+	// lhs is closer than rhs if:
+	// * Source or target is to the LEFT of rhs, and the other is not to the RIGHT.
+	// * Source and target are on opposite sides, and source of rhs is to the RIGHT of lhs.
+	if (ori_source == 0) {
+		return ori_target == -1;
+	} else {
+		if (ori_source == -ori_target) {
+			return Math::abs(p_lhs->v0[lhs_horiz ? 1 : 0]) < Math::abs(p_rhs->v0[lhs_horiz ? 1 : 0]);
+		} else {
+			return ori_source == -1;
+		}
+	}
+
+#if 0
+	// Some assumptions ensured by the processing below:
+	// * No edge is collinear with origin.
+	// * The source of an edge is clockwise of the target of all other edges.
+	// * The target of an edge is counter-clockwise of the source of all other edges.
+
+	// Get orientation of the source of lhs with respect to rhs.
+	const int ori_source = SIGN((p_rhs->v1 - p_rhs->v0).cross(p_lhs->v0 - p_rhs->v0));
+	const int ori_target = SIGN((p_rhs->v1 - p_rhs->v0).cross(p_lhs->v1 - p_rhs->v0));
+
+	// lhs is in front of rhs if:
+	// * Both ends of lhs lies on the LEFT side of rhs.
+	// * One end of lhs is COLLINEAR with rhs and the other is to the LEFT.
+	// * One lies on either side of rhs, and the source of rhs lies on the RIGHT of lhs.
+	if (ori_source == 0) {
+		return ori_target == -1;
+	} else {
+		if (ori_source == -ori_target) {
+			return (p_lhs->v1 - p_lhs->v0).cross(p_rhs->v0 - p_lhs->v0) > 0;
+		} else {
+			return ori_source == -1;
+		}
+	}
+#endif
 }
 
-static Vector<Vector2> rdp(const Vector<Vector2> &v, float optimization) {
-	if (v.size() < 3) {
-		return v;
+static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, LocalVector<Point2i> &p_ranges, LocalVector<Point2i> &p_windows) {
+	// The window endpoints.
+	const Vector2 &first_p = p_points[p_first];
+	const Vector2 &last_p = p_points[p_last];
+
+	// The middle of the window.
+	const Vector2 q = (first_p + last_p) / 2;
+
+	// The direction of the window.
+	const Vector2 wd = first_p - last_p;
+
+	// Need flipping if positive X-axis lies inside the window, and not on the start direction.
+	const bool needs_flip = (wd.y > 0) || (wd.y == 0 && wd.x < 0);
+
+	LocalVector<PointEntry> points;
+	points.reserve(p_last - p_first + 1);
+
+	// Track edges that are considered.
+	LocalVector<EdgeEntry> valid_edges;
+	valid_edges.resize(p_last - p_first);
+
+	// Gather edges that cross the start direction.
+	Vector<int> start_edges;
+
+	// If target of first edge is not behind window.
+	if (wd.cross(p_points[p_first + 1] - q) <= 0) {
+		// Mark first edge as valid
+		valid_edges[0].v0 = first_p - q;
+		valid_edges[0].v1 = p_points[p_first + 1] - q;
+
+		points.push_back(PointEntry{ valid_edges[0].v0, p_first });
+		points.push_back(PointEntry{ valid_edges[0].v1, p_first + 1 });
 	}
 
-	int index = -1;
-	float dist = 0.0;
-	// Not looping first and last point.
-	for (size_t i = 1, size = v.size(); i < size - 1; ++i) {
-		float cdist = perpendicular_distance(v[i], v[0], v[v.size() - 1]);
-		if (cdist > dist) {
-			dist = cdist;
-			index = static_cast<int>(i);
+	// Traverse edges beyond first, checking which are considered.
+	for (int i = p_first + 2; i < p_last; ++i) {
+		const Vector2 &p0 = p_points[i - 1];
+		const Vector2 &p1 = p_points[i];
+
+		// Index of start point indicates horizontal or vertical.
+		if (i % 2) {
+			// If vertical, then collinear with q if same X coordinate.
+			if (p0.x == q.x) {
+				// Point on edge that might block, depending on which end is closer.
+				const bool on_source = (p0.y < q.y) == (p1.y < p0.y);
+
+				const int first_ind = on_source ? (i - 2) : (i + 1);
+				const int second_ind = on_source ? (i + 1) : (i - 2);
+
+				// Not visible if:
+				// * Going up and candidate edge is to the right of q
+				// * Going down and candidate edge is to the left of q
+				// * If edge closer goes one way and edge further goes other way
+				if ((p_points[first_ind].x < p0.x) == (p0.y > p1.y) || (p_points[first_ind].x < p0.x) != (p_points[second_ind].x < p0.x)) {
+					continue;
+				}
+			}
+			// Otherwise front facing if going down and on the right of q, or going up and on the left of q.
+			else if ((p0.x > q.x) == (p1.y < p0.y)) {
+				const int o = SIGN(wd.cross(p0 - q));
+
+				// If source is to the right of the window it might be a start segment, or hidden.
+				if (o == 1) {
+					// If target is not to the left, skip segment.
+					if (wd.cross(p1 - q) >= 0) {
+						continue;
+					}
+
+					start_edges.push_back(i - 1);
+				} else if (o == 0 && wd.cross(p1 - q) >= 0) {
+					continue;
+				}
+
+				// Check visibility against closer segment, if segment does not cross X-axis.
+				if ((p0.y >= q.y) == (p1.y >= q.y) && p0.y != q.y) {
+					// Flip order if top left or bottom right of q.
+					const bool flip = (p0.x > q.x) == (p0.y < q.y);
+
+					const Vector2 &other_p = flip ? p_points[i - 2] : p0;
+					const Vector2 &further_p = flip ? p1 : p_points[i + 1];
+
+					// Check if further end of this is hidden by other end of edge starting at closer end.
+					if ((other_p - q).cross(further_p - q) > 0) {
+						continue;
+					}
+				}
+			} else {
+				continue;
+			}
+		} else {
+			// If horizontal, then collinear with q if same y coordinate.
+			if (p0.y == q.y) {
+				// Point on edge that might block, depending on which end is closer.
+				const bool on_source = (p0.x > q.x) == (p1.x > p0.x);
+
+				const int first_ind = on_source ? (i - 2) : (i + 1);
+				const int second_ind = on_source ? (i + 1) : (i - 2);
+
+				// Not visible if:
+				// * Going to the left and candidate edge is above q
+				// * Going to the right and candidate edge is below q
+				// * If edge closer goes one way and edge further goes other way
+				if ((p_points[first_ind].y > p0.y) == (p0.x > p1.x) || (p_points[first_ind].y < p0.y) != (p_points[second_ind].y < p0.y)) {
+					continue;
+				}
+			}
+			// Front facing if going left and below q, or right and above q.
+			else if ((p0.y < q.y) == (p1.x < p0.x)) {
+				const int o = SIGN(wd.cross(p0 - q));
+
+				// If source is to the right of the window it might be a start segment, or hidden.
+				if (o == 1) {
+					// If target is not to the left, skip segment.
+					if (wd.cross(p1 - q) >= 0) {
+						continue;
+					}
+
+					start_edges.push_back(i - 1);
+				} else if (o == 0 && wd.cross(p1 - q) >= 0) {
+					continue;
+				}
+
+				// Check visibility against closer segment, if segment does not cross Y-axis.
+				if ((p0.x >= q.x) == (p1.x >= q.x) && p0.x != q.x) {
+					// Flip order if top left or bottom right of q.
+					const bool flip = (p0.x > q.x) != (p0.y < q.y);
+
+					const Vector2 &p_a = flip ? p_points[i - 2] : p0;
+					const Vector2 &p_b = flip ? p1 : p_points[i + 1];
+
+					// Check if further end of this is hidden by other end of edge starting at closer end.
+					if ((p_a - q).cross(p_b - q) > 0) {
+						continue;
+					}
+				}
+			} else {
+				continue;
+			}
+		}
+
+		// If edge is not skipped.
+
+		// Mark edge as valid and assign vectors.
+		valid_edges[(i - 1) - p_first].v0 = p0 - q;
+		valid_edges[(i - 1) - p_first].v1 = p1 - q;
+
+		// If source of this edge is not already on a valid edge, and it is not hidden by window.
+		if (wd.cross(p0 - q) <= 0 && valid_edges[(i - 2) - p_first].v0 == Vector2()) {
+			points.push_back(PointEntry{ valid_edges[(i - 1) - p_first].v0, i - 1 });
+		}
+
+		// If target of this edge is not behind window.
+		if (wd.cross(p1 - q) <= 0) {
+			points.push_back(PointEntry{ valid_edges[(i - 1) - p_first].v1, i });
 		}
 	}
-	if (dist > optimization) {
-		Vector<Vector2> left, right;
-		left.resize(index);
-		for (int i = 0; i < index; i++) {
-			left.write[i] = v[i];
-		}
-		right.resize(v.size() - index);
-		for (int i = 0; i < right.size(); i++) {
-			right.write[i] = v[index + i];
-		}
-		Vector<Vector2> r1 = rdp(left, optimization);
-		Vector<Vector2> r2 = rdp(right, optimization);
 
-		int middle = r1.size();
-		r1.resize(r1.size() + r2.size());
-		for (int i = 0; i < r2.size(); i++) {
-			r1.write[middle + i] = r2[i];
+	// If source of last edge is not behind window.
+	if (wd.cross(p_points[p_last - 1] - q) <= 0) {
+		// Mark edge as valid and assign vectors.
+		valid_edges[(p_last - 1) - p_first].v0 = p_points[p_last - 1] - q;
+		valid_edges[(p_last - 1) - p_first].v1 = last_p - q;
+
+		// If source of this edge is not already on a valid edge.
+		if (valid_edges[(p_last - 2) - p_first].v0 == Vector2()) {
+			points.push_back(PointEntry{ valid_edges[(p_last - 1) - p_first].v0, p_last - 1 });
 		}
-		return r1;
+
+		points.push_back(PointEntry{ valid_edges[(p_last - 1) - p_first].v1, p_last });
+	}
+
+	// Sort points, based on flipping.
+	if (needs_flip) {
+		points.sort_custom<PointEntryCmp<true>>();
 	} else {
-		Vector<Vector2> ret;
-		ret.push_back(v[0]);
-		ret.push_back(v[v.size() - 1]);
-		return ret;
+		points.sort_custom<PointEntryCmp<false>>();
+	}
+
+	// Handle collinear points.
+	for (uint32_t i = 0; i < points.size() - 1;) {
+		const Vector2 first_dir = points[i].dir;
+
+		// Skip if not collinear.
+		if (first_dir.cross(points[i + 1].dir) != 0) {
+			++i;
+			continue;
+		}
+
+		// Track if points are in forward or reverse order based on input.
+		const bool is_forward = points[i].ind < points[i + 1].ind;
+
+		uint32_t j = i + 2;
+
+		// Iterate until:
+		// * Non-collinear point.
+		// * The order switches.
+		// * There is an edge blocking the following points.
+		for (; j < points.size(); ++j) {
+			if (first_dir.cross(points[j].dir) != 0 || (points[j - 1].ind < points[j].ind) != is_forward) {
+				break;
+			} else {
+				const Vector2 &other_dir = p_points[points[j].ind + (is_forward ? -1 : 1)] - q;
+
+				// If forward, blocking if on the left, otherwise on the right.
+				if (SIGN(first_dir.cross(other_dir)) == (is_forward ? -1 : 1)) {
+					break;
+				}
+			}
+
+			// If the previous and current point make up an edge, and the edge on the closer point on this edge is non-blocking, it can be skipped.
+			// This is because there is a vertex closer to this edge that is collinear with q, which makes it invisible.
+			if (is_forward && points[j - 1].ind + 1 == points[j].ind && first_dir.cross(p_points[points[j - 1].ind - 1] - q) > 0) {
+				valid_edges[(points[j - 1].ind - 1) - p_first].v0 = Vector2();
+			} else if (!is_forward && points[j - 1].ind == points[j].ind + 1 && first_dir.cross(p_points[points[j - 1].ind + 1] - q) < 0) {
+				valid_edges[points[j - 1].ind - p_first].v0 = Vector2();
+			}
+		}
+
+		const uint32_t mid_j = j;
+
+		// Iterate while points are collinear.
+		for (; j < points.size(); ++j) {
+			if (first_dir.cross(points[j].dir) != 0) {
+				break;
+			}
+
+			// If previous and current make up an edge, skip that edge, as it is invisible.
+			if (points[j - 1].ind + 1 == points[j].ind) {
+				valid_edges[points[j - 1].ind - p_first].v0 = Vector2();
+			} else if (points[j - 1].ind == points[j].ind + 1) {
+				valid_edges[points[j].ind - p_first].v0 = Vector2();
+			}
+		}
+
+		// If not forward, the points need to be rearranged, by putting the points in the first part at the end, in reverse order.
+		if (!is_forward) {
+			for (uint32_t k = j; i < mid_j && k > i; --k, ++i) {
+				SWAP(points[k - 1], points[i]);
+			}
+		}
+
+		i = j;
+	}
+
+	// Set of edges for finding ordering.
+	RBSet<EdgeEntry *, EdgeEntryCmp> active_edges;
+
+	// The current closest edge.
+	RBSet<EdgeEntry *, EdgeEntryCmp>::Element *front_edge = nullptr;
+
+	if (!start_edges.is_empty()) {
+		for (const int &edge : start_edges) {
+			// Skip if edge is not considered.
+			if (valid_edges[edge - p_first].v0 == Vector2()) {
+				continue;
+			}
+
+			valid_edges[edge - p_first].pos = active_edges.insert(&valid_edges[edge - p_first]);
+
+			// Update front edge if new edge is front.
+			if (valid_edges[edge - p_first].pos->prev() == nullptr) {
+				front_edge = valid_edges[edge - p_first].pos;
+			}
+		}
+	}
+
+	// Add start point range to result.
+	p_ranges.push_back(Point2i(p_first, p_first));
+
+	for (uint32_t i = 0; i < points.size(); ++i) {
+		const int p_i = points[i].ind;
+		const Vector2 p_dir = points[i].dir;
+
+		// Check if previous or next edges are valid.
+		const bool has_prev = (p_i > p_first) && valid_edges[(p_i - 1) - p_first].v0 != Vector2();
+		const bool has_next = (p_i < p_last) && valid_edges[p_i - p_first].v0 != Vector2();
+
+		EdgeEntry *prev = has_prev ? &valid_edges[(p_i - 1) - p_first] : nullptr;
+		EdgeEntry *next = has_next ? &valid_edges[p_i - p_first] : nullptr;
+
+		if (has_prev && has_next) {
+			// Both edges are present, in this case the previous edge is on the set, and the next is not.
+			ERR_FAIL_COND(!(prev->pos && !next->pos));
+
+			// When two edges share an endpoint they will always be in the position in the set, so simply update this.
+			next->pos = prev->pos;
+
+			// Change which edge is pointed to, to avoid erasing and re-inserting.
+			next->pos->get() = next;
+
+			// If edge is not front edge, skip.
+			if (next->pos->prev() != nullptr) {
+				continue;
+			}
+		} else if (has_prev) {
+			// Previous edge is present, the previous edge must be on the set.
+			ERR_FAIL_COND(prev->pos == nullptr);
+
+			// Check if edge was front edge.
+			const bool was_front = (prev->pos->prev() == nullptr);
+
+			// If edge was front edge, update front edge.
+			if (was_front) {
+				front_edge = prev->pos->next();
+			}
+
+			// Erase edge.
+			active_edges.erase(prev->pos);
+
+			prev->pos = nullptr;
+
+			// If edge was not front, skip.
+			if (!was_front) {
+				continue;
+			}
+		} else if (has_next) {
+			// Next edge is present, the next edge must not be on the set.
+			ERR_FAIL_COND(next->pos);
+
+			// Special case if edge is collinear with q.
+			if (p_dir[p_i % 2] == 0) {
+				// Check if edge after next is present.
+				const bool has_next_next = (p_i + 1 < p_last) && valid_edges[(p_i + 1) - p_first].v0 != Vector2();
+
+				EdgeEntry *next_next = has_next_next ? &valid_edges[(p_i + 1) - p_first] : nullptr;
+
+				// Skip this point.
+				++i;
+
+				const int next_i = points[i].ind;
+				const Vector2 next_dir = points[i].dir;
+
+				// If edge after next is valid.
+				if (next_next) {
+					// Insert edge after next.
+					next_next->pos = active_edges.insert(next_next);
+
+					// If new front edge, update front edge, otherwise skip.
+					if (next_next->pos->prev() == nullptr) {
+						front_edge = next_next->pos;
+					} else {
+						continue;
+					}
+				}
+				// Otherwise skip if there is a front edge, and it is closer than next edge.
+				else if (front_edge && Math::abs(p_dir[1 - (p_i % 2)]) >= Math::abs(front_edge->get()->v0[1 - (p_i % 2)])) {
+					continue;
+				}
+
+				// Add the endpoints of next edge to the ranges.
+				if (p_ranges[p_ranges.size() - 1].y + 1 < p_i) {
+					p_windows.push_back(Point2i(p_ranges[p_ranges.size() - 1].y, p_i));
+					p_ranges.push_back(Point2i(p_i, next_i));
+				} else {
+					p_ranges[p_ranges.size() - 1].y = next_i;
+				}
+
+				continue;
+			} else {
+				// Insert edge.
+				next->pos = active_edges.insert(next);
+
+				// If new front edge, update front edge, otherwise skip.
+				if (next->pos->prev() == nullptr) {
+					front_edge = next->pos;
+				} else {
+					continue;
+				}
+			}
+		} else {
+			continue;
+		}
+
+		// If we did not skip, the current point should be inserted into result.
+		if (p_ranges[p_ranges.size() - 1].y + 1 < p_i) {
+			p_windows.push_back(Point2i(p_ranges[p_ranges.size() - 1].y, p_i));
+			p_ranges.push_back(Point2i(p_i, p_i));
+		} else {
+			p_ranges[p_ranges.size() - 1].y = p_i;
+		}
+	}
+
+	// Add last point if not present.
+	if (p_ranges[p_ranges.size() - 1].y != p_last) {
+		if (p_ranges[p_ranges.size() - 1].y + 1 < p_last) {
+			p_windows.push_back(Point2i(p_ranges[p_ranges.size() - 1].y, p_last));
+			p_ranges.push_back(Point2i(p_last, p_last));
+		} else {
+			p_ranges[p_ranges.size() - 1].y = p_last;
+		}
 	}
 }
 
-static Vector<Vector2> reduce(const Vector<Vector2> &points, const Rect2i &rect, float epsilon) {
-	int size = points.size();
-	// If there are less than 3 points, then we have nothing.
-	ERR_FAIL_COND_V(size < 3, Vector<Vector2>());
-	// If there are less than 9 points (but more than 3), then we don't need to reduce it.
-	if (size < 9) {
-		return points;
+#define SET_BIT(bits, ind) bits[(ind) / 8] |= (1 << ((ind) % 8))
+#define CLEAR_BIT(bits, ind) bits[(ind) / 8] &= ~(1 << ((ind) % 8))
+#define TEST_BIT(bits, ind) (bits[(ind) / 8] & (1 << ((ind) % 8)))
+
+static int rdp_plain(const Vector<Vector2> &p_points, int p_first, int p_last, float p_eps_2, LocalVector<uint8_t> &p_selected, bool p_total) {
+	if (p_last - p_first < 2) {
+		return 0;
 	}
 
-	float maxEp = MIN(rect.size.width, rect.size.height);
-	float ep = CLAMP(epsilon, 0.0, maxEp / 2);
-	Vector<Vector2> result = rdp(points, ep);
+	// Track furthest point from the line.
+	float dist = -1.0;
 
-	Vector2 last = result[result.size() - 1];
+	int ind = 0;
 
-	if (last.y > result[0].y && last.distance_to(result[0]) < ep * 0.5f) {
-		result.write[0].y = last.y;
-		result.resize(result.size() - 1);
+	const Vector2 v = p_points[p_last] - p_points[p_first];
+
+	// Iterate over points, ignoring first and last.
+	for (int i = p_first + 1; i < p_last; ++i) {
+		// Get distance from line, as the cross product with the line.
+		const float cur_dist = Math::abs((p_points[i] - p_points[p_first]).cross(v));
+
+		if (dist < cur_dist) {
+			dist = cur_dist;
+			ind = i;
+		}
 	}
-	return result;
+
+	// If over threshold, recurse.
+	if (dist * dist / v.length_squared() > p_eps_2) {
+		SET_BIT(p_selected, ind);
+
+		return rdp_plain(p_points, p_first, ind, p_eps_2, p_selected, false) +
+				rdp_plain(p_points, ind, p_last, p_eps_2, p_selected, false) + 1;
+	} else {
+		// If total, keep furthest point, to keep a polygon.
+		if (p_total) {
+			SET_BIT(p_selected, ind);
+
+			return 1;
+		}
+
+		return 0;
+	}
+}
+
+static int rdp(const Vector<Vector2> &p_points, int p_first, int p_last, float p_eps_2, LocalVector<uint8_t> &p_selected, LocalVector<Vector3i> &p_crossings, Rect2 &p_bounds, bool p_ensure_poly = false) {
+	if (p_last - p_first < 2) {
+		return 0;
+	}
+
+	// Track furthest point from the line, also track point furthest inside for crossing checks.
+	float dist = -1.0;
+	float dist_inner = 0.0;
+
+	int ind = 0;
+	int ind_inner = 0;
+
+	const Vector2 v = p_points[p_last] - p_points[p_first];
+
+	// Iterate over points, ignoring first and last.
+	for (int i = p_first + 1; i < p_last; ++i) {
+		// Get signed distance from line, as the cross product with the line.
+		const float cur_dist = (p_points[i] - p_points[p_first]).cross(v);
+
+		// If distance is non-negative the point is inside.
+		if (cur_dist >= 0) {
+			if (dist_inner < cur_dist) {
+				dist_inner = cur_dist;
+				ind_inner = i;
+			}
+
+			if (dist < cur_dist) {
+				dist = cur_dist;
+				ind = i;
+			}
+		} else if (dist < -cur_dist) {
+			dist = -cur_dist;
+			ind = i;
+		}
+	}
+
+	// If over threshold, recurse.
+	if (dist * dist / v.length_squared() > p_eps_2) {
+		SET_BIT(p_selected, ind);
+		p_bounds.expand_to(p_points[ind]);
+
+		return rdp(p_points, p_first, ind, p_eps_2, p_selected, p_crossings, p_bounds) +
+				rdp(p_points, ind, p_last, p_eps_2, p_selected, p_crossings, p_bounds) + 1;
+	} else {
+		if (p_ensure_poly) {
+			SET_BIT(p_selected, ind);
+			p_bounds.expand_to(p_points[ind]);
+
+			return 1;
+		} else if (ind_inner) {
+			// Mark crossing for furthest inner point.
+			p_crossings.push_back(Vector3i(p_first, p_last, ind_inner));
+		}
+
+		return 0;
+	}
+}
+
+static Vector<Vector2> reduce_2(const Vector<Vector2> &p_points, const Rect2i &p_rect, float p_epsilon) {
+	// Do nothing if epsilon is non-positive.
+	if (!(p_epsilon > 0.0)) {
+		return p_points;
+	}
+
+	LocalVector<LocalVector<Point2i>> ranges;
+	LocalVector<Point2i> windows;
+
+	windows.push_back(Point2i(0, p_points.size() - 1));
+
+	while (!windows.is_empty()) {
+		const Point2i window = windows[windows.size() - 1];
+		windows.resize(windows.size() - 1);
+
+		if (window.y - window.x <= 3) {
+			ranges.push_back({ window });
+		} else {
+			ranges.resize(ranges.size() + 1);
+
+			star_poly(p_points, window.x, window.y, ranges[ranges.size() - 1], windows);
+		}
+	}
+
+	print_line("{");
+
+	for (uint32_t k = 0; k < ranges.size(); ++k) {
+		StringBuilder builder;
+		builder += " { ";
+
+		for (uint32_t l = 0; l < ranges[k].size(); ++l) {
+			builder += (String)ranges[k][l];
+			builder += " ";
+		}
+
+		builder += "}";
+		print_line(builder.as_string());
+	}
+
+	print_line("}");
+
+	LocalVector<uint8_t> selected;
+	selected.resize(((p_points.size() - 1) / 8) + 1);
+	memset(selected.ptr(), 0, selected.size());
+
+	SET_BIT(selected, 0);
+	SET_BIT(selected, p_points.size() - 1);
+
+	if (ranges.size() > 1) {
+		LocalVector<LocalVector<Vector3i>> crossings;
+		LocalVector<LocalVector<Rect2>> bounds;
+
+		crossings.resize(ranges.size());
+		bounds.resize(ranges.size());
+
+		int num_points = 1;
+
+		for (uint32_t k = 0; k < ranges.size(); ++k) {
+			bounds[k].resize(ranges[k].size());
+
+			const int &first_i = ranges[k][0].x;
+			const int &last_i = ranges[k][ranges[k].size() - 1].y;
+
+			const Vector2 &first_p = p_points[first_i];
+			const Vector2 &last_p = p_points[last_i];
+			const Vector2 v = last_p - first_p;
+
+			for (uint32_t l = 0; l < ranges[k].size(); ++l) {
+				if (ranges[k][l].y - ranges[k][l].x >= 1) {
+					const int &i0 = ranges[k][l].x;
+					const int &i1 = ranges[k][l].y;
+
+					const Vector2 &p0 = p_points[i0];
+					const Vector2 &p1 = p_points[i1];
+
+					SET_BIT(selected, i0);
+					bounds[k][l] = Rect2(p0, Vector2());
+
+					bounds[k][l].expand_to(p1);
+
+					// Range needs special treatment if endpoints arent the ends of the total range, but are on the line of the ends.
+					const bool ensure_poly = (i0 != first_i || i1 != last_i) && (i0 == first_i || v.cross(p0 - first_p) == 0) && (i1 == last_i || v.cross(p1 - first_p) == 0);
+
+					num_points += rdp(p_points, i0, i1, p_epsilon * p_epsilon, selected, crossings[k], bounds[k][l], ensure_poly) + 1;
+				}
+			}
+		}
+
+		// TODO fix intersections between regions.
+
+		// Fix collinear points.
+		int prev_p = 1, prev_prev_p = 0;
+
+		// Find first selected vertex after start.
+		for (; prev_p < p_points.size() - 1; ++prev_p) {
+			if (TEST_BIT(selected, prev_p)) {
+				break;
+			}
+		}
+
+		for (int k = prev_p + 1; k < p_points.size() - 1; ++k) {
+			if (TEST_BIT(selected, k)) {
+				const Vector2 &p0 = p_points[prev_prev_p];
+				const Vector2 &p1 = p_points[prev_p];
+				const Vector2 &p2 = p_points[k];
+
+				if ((p1 - p0).cross(p2 - p0) == 0) {
+					CLEAR_BIT(selected, prev_p);
+					num_points -= 1;
+				} else {
+					prev_prev_p = prev_p;
+				}
+
+				prev_p = k;
+			}
+		}
+
+		Vector<Vector2> polygon;
+		polygon.resize(num_points);
+
+		Vector2 *ptr = polygon.ptrw();
+
+		{
+			StringBuilder builder;
+			builder += "C: { ";
+
+			for (uint32_t k = 0; k < crossings.size(); ++k) {
+				builder += "{ ";
+
+				for (uint32_t l = 0; l < crossings[k].size(); ++l) {
+					builder += (String)crossings[k][l];
+					builder += " ";
+				}
+
+				builder += "} ";
+			}
+
+			builder += "}";
+
+			print_line(builder.as_string());
+		}
+
+		{
+			StringBuilder builder;
+			builder += "B: { ";
+
+			for (uint32_t k = 0; k < bounds.size(); ++k) {
+				builder += "{ ";
+
+				for (uint32_t l = 0; l < bounds[k].size(); ++l) {
+					builder += (String)bounds[k][l];
+					builder += " ";
+				}
+
+				builder += "} ";
+			}
+
+			builder += "}";
+
+			print_line(builder.as_string());
+		}
+
+		{
+			StringBuilder builder;
+			builder += "P: ";
+			builder += String::num_int64(num_points);
+			builder += " { ";
+
+			for (int k = 0; k < p_points.size(); ++k) {
+				if (TEST_BIT(selected, k)) {
+					builder += String::num_int64(k);
+					builder += " ";
+					*ptr++ = p_points[k];
+				}
+			}
+
+			builder += "}";
+
+			print_line(builder.as_string());
+		}
+
+		return polygon;
+	} else {
+		int num_points = 2 + rdp_plain(p_points, 0, p_points.size() - 1, p_epsilon * p_epsilon, selected, true);
+
+		Vector<Vector2> polygon;
+
+		{
+			StringBuilder builder;
+			builder += "P: ";
+			builder += String::num_int64(num_points);
+			builder += " { ";
+
+			for (int k = 0; k < p_points.size(); ++k) {
+				if (TEST_BIT(selected, k)) {
+					builder += String::num_int64(k);
+					builder += " ";
+					polygon.push_back(p_points[k]);
+				}
+			}
+
+			builder += "}";
+
+			print_line(builder.as_string());
+		}
+
+		return polygon;
+	}
 }
 
 struct FillBitsStackEntry {
@@ -569,7 +1316,7 @@ Vector<Vector<Vector2>> BitMap::clip_opaque_to_polygons(const Rect2i &p_rect, fl
 				fill_bits(this, fill, Point2i(j, i), r);
 
 				for (Vector<Vector2> polygon : _march_square(r, Point2i(j, i))) {
-					polygon = reduce(polygon, r, p_epsilon);
+					polygon = reduce_2(polygon, r, p_epsilon);
 
 					if (polygon.size() < 3) {
 						print_verbose("Invalid polygon, skipped");
