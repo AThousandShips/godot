@@ -432,13 +432,13 @@ struct PointEntryCmp {
 		} else if (lhs_q > rhs_q) {
 			return false;
 		} else {
-			const int ori = SIGN(p_lhs.dir.cross(p_rhs.dir));
+			const real_t ori = p_lhs.dir.cross(p_rhs.dir);
 
 			// If collinear, compare distance, otherwise smaller if RIGHT turn.
 			if (ori == 0) {
 				return p_lhs.dir.length_squared() < p_rhs.dir.length_squared();
 			} else {
-				return ori == -1;
+				return ori < 0;
 			}
 		}
 	}
@@ -463,61 +463,48 @@ bool EdgeEntryCmp::operator()(const EdgeEntry *p_lhs, const EdgeEntry *p_rhs) co
 	// * The source of any edge is never counter-clockwise of the target of any other edge.
 	// * Edges share no points, they do not cross, overlap, or share endpoints.
 
+	const real_t lhs_x0 = p_lhs->v0.x;
+	const real_t lhs_y0 = p_lhs->v0.y;
+
+	const real_t lhs_x1 = p_lhs->v1.x;
+	const real_t lhs_y1 = p_lhs->v1.y;
+
+	const real_t rhs_x0 = p_rhs->v0.x;
+	const real_t rhs_y0 = p_rhs->v0.y;
+
+	const real_t rhs_x1 = p_rhs->v1.x;
+	const real_t rhs_y1 = p_rhs->v1.y;
+
 	// The processing is simplified by the fact that edges are either horizontal or vertical.
-	const bool lhs_horiz = p_lhs->v0.y == p_lhs->v1.y;
-	const bool rhs_horiz = p_rhs->v0.y == p_rhs->v1.y;
+	const bool lhs_horiz = lhs_y0 == lhs_y1;
+	const bool rhs_horiz = rhs_y0 == rhs_y1;
 
 	// If both edges are horizontal or vertical, lhs is closer if it has a smaller absolute y or x value respectively.
 	if (lhs_horiz == rhs_horiz) {
-		return Math::abs(p_lhs->v0[lhs_horiz ? 1 : 0]) < Math::abs(p_rhs->v0[lhs_horiz ? 1 : 0]);
+		return Math::abs(lhs_horiz ? lhs_y0 : lhs_x0) < Math::abs(lhs_horiz ? rhs_y0 : rhs_x0);
 	}
 
 	// The cross product is simplified as the edge is horizontal or vertical.
-	const int rhs_dir = (p_rhs->v1[rhs_horiz ? 0 : 1] > p_rhs->v0[rhs_horiz ? 0 : 1]) ? 1 : -1;
+	const int rhs_dir = ((rhs_horiz ? rhs_x1 : rhs_y1) > (rhs_horiz ? rhs_x0 : rhs_y0)) ? -1 : 1;
 
-	const int lhs_diff_source = SIGN(p_lhs->v0[rhs_horiz ? 1 : 0] - p_rhs->v0[rhs_horiz ? 1 : 0]);
-	const int lhs_diff_target = SIGN(p_lhs->v1[rhs_horiz ? 1 : 0] - p_rhs->v0[rhs_horiz ? 1 : 0]);
+	const int lhs_diff_source = SIGN((rhs_horiz ? lhs_y0 : lhs_x0) - (rhs_horiz ? rhs_y0 : rhs_x0));
+	const int lhs_diff_target = SIGN((rhs_horiz ? lhs_y1 : lhs_x1) - (rhs_horiz ? rhs_y0 : rhs_x0));
 
-	const int ori_source = rhs_dir * lhs_diff_source * (rhs_horiz ? 1 : -1);
-	const int ori_target = rhs_dir * lhs_diff_target * (rhs_horiz ? 1 : -1);
+	const int source_ori = rhs_dir * lhs_diff_source * (rhs_horiz ? 1 : -1);
+	const int target_ori = rhs_dir * lhs_diff_target * (rhs_horiz ? 1 : -1);
 
 	// lhs is closer than rhs if:
 	// * Source or target is to the LEFT of rhs, and the other is not to the RIGHT.
 	// * Source and target are on opposite sides, and source of rhs is to the RIGHT of lhs.
-	if (ori_source == 0) {
-		return ori_target == -1;
+	if (source_ori == 0) {
+		return target_ori == 1;
 	} else {
-		if (ori_source == -ori_target) {
-			return Math::abs(p_lhs->v0[lhs_horiz ? 1 : 0]) < Math::abs(p_rhs->v0[lhs_horiz ? 1 : 0]);
+		if (source_ori == -target_ori) {
+			return Math::abs(lhs_horiz ? lhs_y0 : lhs_x0) < Math::abs(lhs_horiz ? rhs_y0 : rhs_x0);
 		} else {
-			return ori_source == -1;
+			return source_ori == 1;
 		}
 	}
-
-#if 0
-	// Some assumptions ensured by the processing below:
-	// * No edge is collinear with origin.
-	// * The source of an edge is clockwise of the target of all other edges.
-	// * The target of an edge is counter-clockwise of the source of all other edges.
-
-	// Get orientation of the source of lhs with respect to rhs.
-	const int ori_source = SIGN((p_rhs->v1 - p_rhs->v0).cross(p_lhs->v0 - p_rhs->v0));
-	const int ori_target = SIGN((p_rhs->v1 - p_rhs->v0).cross(p_lhs->v1 - p_rhs->v0));
-
-	// lhs is in front of rhs if:
-	// * Both ends of lhs lies on the LEFT side of rhs.
-	// * One end of lhs is COLLINEAR with rhs and the other is to the LEFT.
-	// * One lies on either side of rhs, and the source of rhs lies on the RIGHT of lhs.
-	if (ori_source == 0) {
-		return ori_target == -1;
-	} else {
-		if (ori_source == -ori_target) {
-			return (p_lhs->v1 - p_lhs->v0).cross(p_rhs->v0 - p_lhs->v0) > 0;
-		} else {
-			return ori_source == -1;
-		}
-	}
-#endif
 }
 
 static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, LocalVector<Point2i> &p_ranges, LocalVector<Point2i> &p_windows) {
@@ -545,7 +532,7 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 	Vector<int> start_edges;
 
 	// If target of first edge is not behind window.
-	if (wd.cross(p_points[p_first + 1] - q) <= 0) {
+	if (wd.cross(q - p_points[p_first + 1]) >= 0) {
 		// Mark first edge as valid
 		valid_edges[0].v0 = first_p - q;
 		valid_edges[0].v1 = p_points[p_first + 1] - q;
@@ -566,8 +553,8 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 				// Point on edge that might block, depending on which end is closer.
 				const bool on_source = (p0.y < q.y) == (p1.y < p0.y);
 
-				const int first_ind = on_source ? (i - 2) : (i + 1);
-				const int second_ind = on_source ? (i + 1) : (i - 2);
+				const int first_ind = i + (on_source ? -2 : 1);
+				const int second_ind = i + (on_source ? 1 : -2);
 
 				// Not visible if:
 				// * Going up and candidate edge is to the right of q
@@ -579,10 +566,10 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 			}
 			// Otherwise front facing if going down and on the right of q, or going up and on the left of q.
 			else if ((p0.x > q.x) == (p1.y < p0.y)) {
-				const int o = SIGN(wd.cross(p0 - q));
+				const real_t o = wd.cross(q - p0);
 
 				// If source is to the right of the window it might be a start segment, or hidden.
-				if (o == 1) {
+				if (o < 0) {
 					// If target is not to the left, skip segment.
 					if (wd.cross(p1 - q) >= 0) {
 						continue;
@@ -615,8 +602,8 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 				// Point on edge that might block, depending on which end is closer.
 				const bool on_source = (p0.x > q.x) == (p1.x > p0.x);
 
-				const int first_ind = on_source ? (i - 2) : (i + 1);
-				const int second_ind = on_source ? (i + 1) : (i - 2);
+				const int first_ind = i + (on_source ? -2 : 1);
+				const int second_ind = i + (on_source ? 1 : -2);
 
 				// Not visible if:
 				// * Going to the left and candidate edge is above q
@@ -628,17 +615,17 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 			}
 			// Front facing if going left and below q, or right and above q.
 			else if ((p0.y < q.y) == (p1.x < p0.x)) {
-				const int o = SIGN(wd.cross(p0 - q));
+				const real_t o = wd.cross(q - p0);
 
 				// If source is to the right of the window it might be a start segment, or hidden.
-				if (o == 1) {
+				if (o < 0) {
 					// If target is not to the left, skip segment.
-					if (wd.cross(p1 - q) >= 0) {
+					if (wd.cross(q - p1) <= 0) {
 						continue;
 					}
 
 					start_edges.push_back(i - 1);
-				} else if (o == 0 && wd.cross(p1 - q) >= 0) {
+				} else if (o == 0 && wd.cross(q - p1) <= 0) {
 					continue;
 				}
 
@@ -667,18 +654,18 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 		valid_edges[(i - 1) - p_first].v1 = p1 - q;
 
 		// If source of this edge is not already on a valid edge, and it is not hidden by window.
-		if (wd.cross(p0 - q) <= 0 && valid_edges[(i - 2) - p_first].v0 == Vector2()) {
+		if (wd.cross(q - p0) >= 0 && valid_edges[(i - 2) - p_first].v0 == Vector2()) {
 			points.push_back(PointEntry{ valid_edges[(i - 1) - p_first].v0, i - 1 });
 		}
 
 		// If target of this edge is not behind window.
-		if (wd.cross(p1 - q) <= 0) {
+		if (wd.cross(q - p1) >= 0) {
 			points.push_back(PointEntry{ valid_edges[(i - 1) - p_first].v1, i });
 		}
 	}
 
 	// If source of last edge is not behind window.
-	if (wd.cross(p_points[p_last - 1] - q) <= 0) {
+	if (wd.cross(q - p_points[p_last - 1]) >= 0) {
 		// Mark edge as valid and assign vectors.
 		valid_edges[(p_last - 1) - p_first].v0 = p_points[p_last - 1] - q;
 		valid_edges[(p_last - 1) - p_first].v1 = last_p - q;
