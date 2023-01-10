@@ -507,7 +507,7 @@ bool EdgeEntryCmp::operator()(const EdgeEntry *p_lhs, const EdgeEntry *p_rhs) co
 	}
 }
 
-static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, LocalVector<Point2i> &p_ranges, LocalVector<Point2i> &p_windows) {
+static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, LocalVector<Point2i> &r_ranges, LocalVector<Point2i> &r_windows) {
 	// The window endpoints.
 	const Vector2 &first_p = p_points[p_first];
 	const Vector2 &last_p = p_points[p_last];
@@ -774,7 +774,7 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 	}
 
 	// Add start point range to result.
-	p_ranges.push_back(Point2i(p_first, p_first));
+	r_ranges.push_back(Point2i(p_first, p_first));
 
 	for (uint32_t i = 0; i < points.size(); ++i) {
 		const int p_i = points[i].ind;
@@ -837,7 +837,6 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 				++i;
 
 				const int next_i = points[i].ind;
-				const Vector2 next_dir = points[i].dir;
 
 				// If edge after next is valid.
 				if (next_next) {
@@ -857,11 +856,11 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 				}
 
 				// Add the endpoints of next edge to the ranges.
-				if (p_ranges[p_ranges.size() - 1].y + 1 < p_i) {
-					p_windows.push_back(Point2i(p_ranges[p_ranges.size() - 1].y, p_i));
-					p_ranges.push_back(Point2i(p_i, next_i));
+				if (r_ranges[r_ranges.size() - 1].y + 1 < p_i) {
+					r_windows.push_back(Point2i(r_ranges[r_ranges.size() - 1].y, p_i));
+					r_ranges.push_back(Point2i(p_i, next_i));
 				} else {
-					p_ranges[p_ranges.size() - 1].y = next_i;
+					r_ranges[r_ranges.size() - 1].y = next_i;
 				}
 
 				continue;
@@ -881,21 +880,21 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 		}
 
 		// If we did not skip, the current point should be inserted into result.
-		if (p_ranges[p_ranges.size() - 1].y + 1 < p_i) {
-			p_windows.push_back(Point2i(p_ranges[p_ranges.size() - 1].y, p_i));
-			p_ranges.push_back(Point2i(p_i, p_i));
+		if (r_ranges[r_ranges.size() - 1].y + 1 < p_i) {
+			r_windows.push_back(Point2i(r_ranges[r_ranges.size() - 1].y, p_i));
+			r_ranges.push_back(Point2i(p_i, p_i));
 		} else {
-			p_ranges[p_ranges.size() - 1].y = p_i;
+			r_ranges[r_ranges.size() - 1].y = p_i;
 		}
 	}
 
 	// Add last point if not present.
-	if (p_ranges[p_ranges.size() - 1].y != p_last) {
-		if (p_ranges[p_ranges.size() - 1].y + 1 < p_last) {
-			p_windows.push_back(Point2i(p_ranges[p_ranges.size() - 1].y, p_last));
-			p_ranges.push_back(Point2i(p_last, p_last));
+	if (r_ranges[r_ranges.size() - 1].y != p_last) {
+		if (r_ranges[r_ranges.size() - 1].y + 1 < p_last) {
+			r_windows.push_back(Point2i(r_ranges[r_ranges.size() - 1].y, p_last));
+			r_ranges.push_back(Point2i(p_last, p_last));
 		} else {
-			p_ranges[p_ranges.size() - 1].y = p_last;
+			r_ranges[r_ranges.size() - 1].y = p_last;
 		}
 	}
 }
@@ -904,7 +903,7 @@ static void star_poly(const Vector<Vector2> &p_points, int p_first, int p_last, 
 #define CLEAR_BIT(bits, ind) bits[(ind) / 8] &= ~(1 << ((ind) % 8))
 #define TEST_BIT(bits, ind) (bits[(ind) / 8] & (1 << ((ind) % 8)))
 
-static int rdp_plain(const Vector<Vector2> &p_points, int p_first, int p_last, float p_eps_2, LocalVector<uint8_t> &p_selected, bool p_total) {
+static int rdp_plain(const Vector<Vector2> &p_points, int p_first, int p_last, float p_eps_2, LocalVector<uint8_t> &r_selected, bool p_total = false) {
 	if (p_last - p_first < 2) {
 		return 0;
 	}
@@ -914,12 +913,15 @@ static int rdp_plain(const Vector<Vector2> &p_points, int p_first, int p_last, f
 
 	int ind = 0;
 
-	const Vector2 v = p_points[p_last] - p_points[p_first];
+	const Vector2 &p0 = p_points[p_first];
+	const Vector2 &p1 = p_points[p_last];
+
+	const Vector2 v = p1 - p0;
 
 	// Iterate over points, ignoring first and last.
 	for (int i = p_first + 1; i < p_last; ++i) {
 		// Get distance from line, as the cross product with the line.
-		const float cur_dist = Math::abs((p_points[i] - p_points[p_first]).cross(v));
+		const float cur_dist = Math::abs((p_points[i] - p0).cross(v));
 
 		if (dist < cur_dist) {
 			dist = cur_dist;
@@ -929,14 +931,14 @@ static int rdp_plain(const Vector<Vector2> &p_points, int p_first, int p_last, f
 
 	// If over threshold, recurse.
 	if (dist * dist / v.length_squared() > p_eps_2) {
-		SET_BIT(p_selected, ind);
+		SET_BIT(r_selected, ind);
 
-		return rdp_plain(p_points, p_first, ind, p_eps_2, p_selected, false) +
-				rdp_plain(p_points, ind, p_last, p_eps_2, p_selected, false) + 1;
+		return rdp_plain(p_points, p_first, ind, p_eps_2, r_selected) +
+				rdp_plain(p_points, ind, p_last, p_eps_2, r_selected) + 1;
 	} else {
 		// If total, keep furthest point, to keep a polygon.
 		if (p_total) {
-			SET_BIT(p_selected, ind);
+			SET_BIT(r_selected, ind);
 
 			return 1;
 		}
@@ -945,7 +947,7 @@ static int rdp_plain(const Vector<Vector2> &p_points, int p_first, int p_last, f
 	}
 }
 
-static int rdp(const Vector<Vector2> &p_points, int p_first, int p_last, float p_eps_2, LocalVector<uint8_t> &p_selected, LocalVector<Vector3i> &p_crossings, Rect2 &p_bounds, bool p_ensure_poly = false) {
+static int rdp(const Vector<Vector2> &p_points, int p_first, int p_last, float p_eps_2, LocalVector<uint8_t> &r_selected, LocalVector<Vector3i> &r_crossings, Rect2 &r_bounds, bool p_ensure_poly = false) {
 	if (p_last - p_first < 2) {
 		return 0;
 	}
@@ -957,12 +959,15 @@ static int rdp(const Vector<Vector2> &p_points, int p_first, int p_last, float p
 	int ind = 0;
 	int ind_inner = 0;
 
-	const Vector2 v = p_points[p_last] - p_points[p_first];
+	const Vector2 &p0 = p_points[p_first];
+	const Vector2 &p1 = p_points[p_last];
+
+	const Vector2 v = p1 - p0;
 
 	// Iterate over points, ignoring first and last.
 	for (int i = p_first + 1; i < p_last; ++i) {
 		// Get signed distance from line, as the cross product with the line.
-		const float cur_dist = (p_points[i] - p_points[p_first]).cross(v);
+		const float cur_dist = (p_points[i] - p0).cross(v);
 
 		// If distance is non-negative the point is inside.
 		if (cur_dist >= 0) {
@@ -983,29 +988,53 @@ static int rdp(const Vector<Vector2> &p_points, int p_first, int p_last, float p
 
 	// If over threshold, recurse.
 	if (dist * dist / v.length_squared() > p_eps_2) {
-		SET_BIT(p_selected, ind);
-		p_bounds.expand_to(p_points[ind]);
+		SET_BIT(r_selected, ind);
+		r_bounds.expand_to(p_points[ind]);
 
-		return rdp(p_points, p_first, ind, p_eps_2, p_selected, p_crossings, p_bounds) +
-				rdp(p_points, ind, p_last, p_eps_2, p_selected, p_crossings, p_bounds) + 1;
+		return rdp(p_points, p_first, ind, p_eps_2, r_selected, r_crossings, r_bounds) +
+				rdp(p_points, ind, p_last, p_eps_2, r_selected, r_crossings, r_bounds) + 1;
 	} else {
 		if (p_ensure_poly) {
-			SET_BIT(p_selected, ind);
-			p_bounds.expand_to(p_points[ind]);
+			SET_BIT(r_selected, ind);
+			r_bounds.expand_to(p_points[ind]);
 
 			return 1;
 		} else if (ind_inner) {
 			// Mark crossing for furthest inner point.
-			p_crossings.push_back(Vector3i(p_first, p_last, ind_inner));
+			r_crossings.push_back(Vector3i(p_first, p_last, ind_inner));
 		}
 
 		return 0;
 	}
 }
 
+static int check_crossing(const Vector<Vector2> &p_points, int p_first, int p_last) {
+	float dist = 0.0;
+
+	int ind = -1;
+
+	const Vector2 &p0 = p_points[p_first];
+	const Vector2 &p1 = p_points[p_last];
+
+	const Vector2 v = p1 - p0;
+
+	// Iterate over points finding the point with the greatest positive signed distance, if any.
+	for (int i = p_first + 1; i < p_last; ++i) {
+		// Get signed distance from line, as the cross product with the line.
+		const float cur_dist = (p_points[i] - p0).cross(v);
+
+		if (cur_dist > dist) {
+			dist = cur_dist;
+			ind = i;
+		}
+	}
+
+	return ind;
+}
+
 static Vector<Vector2> reduce_2(const Vector<Vector2> &p_points, const Rect2i &p_rect, float p_epsilon) {
-	// Do nothing if epsilon is non-positive.
-	if (!(p_epsilon > 0.0)) {
+	// Do nothing if epsilon is non-positive, or there are fewer than 9 points.
+	if (!(p_epsilon > 0.0) || p_points.size() < 9) {
 		return p_points;
 	}
 
@@ -1092,6 +1121,148 @@ static Vector<Vector2> reduce_2(const Vector<Vector2> &p_points, const Rect2i &p
 		}
 
 		// TODO fix intersections between regions.
+		{
+			struct CrossStackEntry {
+				Vector3i entry;
+				uint32_t other_i = 0, other_j = 0;
+				int other_k = 0;
+			};
+
+			LocalVector<CrossStackEntry> cross_stack;
+
+			for (uint32_t i = 0; i < crossings.size(); ++i) {
+				// Get the center of the window of this range.
+				const Vector2 q = (p_points[ranges[i][0].x] + p_points[ranges[i][ranges[i].size() - 1].y]) / 2.0;
+
+				for (uint32_t j = 0; j < crossings[i].size(); ++j) {
+					// Add current entry to stack for processing.
+					cross_stack.push_back(CrossStackEntry{ crossings[i][j] });
+
+					while (!cross_stack.is_empty()) {
+						CrossStackEntry entry = cross_stack[cross_stack.size() - 1];
+						cross_stack.resize(cross_stack.size() - 1);
+
+						const Vector2 &p0 = p_points[entry.entry.x];
+						const Vector2 &p1 = p_points[entry.entry.y];
+
+						const Vector2 d0 = p0 - q;
+						const Vector2 d1 = p1 - q;
+						const Vector2 d2 = p1 - p0;
+
+						// Check quadrant of crossing, never horizontal or vertical.
+						const int quad = (d2.y < 0) ? (d2.x < 0 ? 0 : 3) : (d2.x < 0 ? 1 : 2);
+
+						// Get the point inside the triangle of the crossing edge, for initial checks.
+						const real_t inner_x = (quad % 2) ? p0.x : p1.x;
+						const real_t inner_y = (quad % 2) ? p1.y : p0.y;
+
+						// Iterate over other ranges checking against their bounds.
+						bool found = false;
+
+						bool first = true;
+
+						for (uint32_t other_i = entry.other_i; other_i < ranges.size() && !found; ++other_i) {
+							if (other_i != i) {
+								for (uint32_t other_j = (first ? entry.other_j : 0); other_j < ranges[other_i].size() && !found; ++other_j) {
+									// Check bounds of other range against the crossing edge.
+									// The range is not a candidate if it does not lie in the relevant quadrant relative to the inner point.
+
+									// Skip if range has fewer than two points, as both endpoints will be considered for other ranges.
+									if (ranges[other_i][other_j].y - ranges[other_i][other_j].x < 1) {
+										first = false;
+										continue;
+									}
+
+									const Rect2 &other_bounds = bounds[other_i][other_j];
+
+									// Get the relevant ends of the bounds based on quadrant:
+									//    +  +-+
+									//   /|  | |
+									//  / |  +-+
+									// +--+
+									//
+									//  +-+
+									//  | |
+									//  +-+
+									//
+									// And equivalent for other quadrants.
+
+									const real_t other_max_x = other_bounds.position.x + ((quad == 0 || quad == 3) ? other_bounds.size.x : 0);
+									const real_t other_max_y = other_bounds.position.y + ((quad >= 2) ? other_bounds.size.y : 0);
+
+									const real_t other_min_x = other_bounds.position.x + ((quad == 0 || quad == 3) ? 0 : other_bounds.size.x);
+									const real_t other_min_y = other_bounds.position.y + ((quad >= 2) ? 0 : other_bounds.size.y);
+
+									if (inner_x == other_max_x || (inner_x > other_max_x) == (quad == 0 || quad == 3)) {
+										first = false;
+										continue;
+									}
+
+									if (inner_y == other_max_y || (inner_y > other_max_y) == (quad >= 2)) {
+										first = false;
+										continue;
+									}
+
+									if (d2.cross(Vector2(other_min_x, other_min_y) - p0) > 0) {
+										first = false;
+										continue;
+									}
+
+									// If all passed this is a candidate, traverse points in the range.
+									for (int other_k = (first ? entry.other_k : ranges[other_i][other_j].x); other_k <= ranges[other_i][other_j].y; ++other_k) {
+										// Skip if ends of the crossing edge
+										if (other_k == entry.entry.x || other_k == entry.entry.y) {
+											continue;
+										}
+
+										// Ignore if not selected.
+										if (!TEST_BIT(selected, other_k)) {
+											continue;
+										}
+
+										// Check against the triangle formed by the center of the window and the crossing edge.
+										if (d0.cross(p_points[other_k] - q) > 0) {
+											continue;
+										}
+
+										if (d1.cross(p_points[other_k] - q) < 0) {
+											continue;
+										}
+
+										if (d2.cross(p_points[other_k] - p0) > 0) {
+											continue;
+										}
+
+										// Edge has been confirmed to cross.
+
+										// Mark inner point of the crossing edge as selected.
+										SET_BIT(selected, entry.entry.z);
+
+										++num_points;
+
+										// Check if either part of the crossing edge also crosses, if so add to stack.
+
+										if (int ind = check_crossing(p_points, entry.entry.z, entry.entry.y); ind > 0) {
+											cross_stack.push_back(CrossStackEntry{ Vector3i(entry.entry.z, entry.entry.y, ind), other_i, other_j, other_k });
+										}
+
+										if (int ind = check_crossing(p_points, entry.entry.x, entry.entry.z); ind > 0) {
+											cross_stack.push_back(CrossStackEntry{ Vector3i(entry.entry.x, entry.entry.z, ind), other_i, other_j, other_k });
+										}
+
+										found = true;
+
+										break;
+									}
+
+									first = false;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 
 		// Fix collinear points.
 		int prev_p = 1, prev_prev_p = 0;
