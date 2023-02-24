@@ -118,85 +118,63 @@ static void _plot_triangle(Vector2i *p_vertices, const Vector2i &p_offset, bool 
 	int src_width = p_src_image->get_width();
 	int src_height = p_src_image->get_height();
 
-	int x[3];
-	int y[3];
+	const Vector2i &v0 = p_vertices[0];
+	const Vector2i &v1 = p_vertices[1];
+	const Vector2i &v2 = p_vertices[2];
 
-	for (int j = 0; j < 3; j++) {
-		x[j] = p_vertices[j].x;
-		y[j] = p_vertices[j].y;
-	}
+	// Get bounding box of triangle, clamping by source image bounds.
+	const int min_x = MAX(MIN(v0.x, MIN(v1.x, v2.x)), 0);
+	const int min_y = MAX(MIN(v0.y, MIN(v1.y, v2.y)), 0);
+	const int max_x = MIN(MAX(v0.x, MAX(v1.x, v2.x)), src_width);
+	const int max_y = MIN(MAX(v0.y, MAX(v1.y, v2.y)), src_height);
 
-	// sort the points vertically
-	if (y[1] > y[2]) {
-		SWAP(x[1], x[2]);
-		SWAP(y[1], y[2]);
-	}
-	if (y[0] > y[1]) {
-		SWAP(x[0], x[1]);
-		SWAP(y[0], y[1]);
-	}
-	if (y[1] > y[2]) {
-		SWAP(x[1], x[2]);
-		SWAP(y[1], y[2]);
-	}
+	// Rasterise triangle using barycentric coordinates, given a triangle (v0, v1, v2) and a point p:
+	// a = cross(p - v2, v1 - v2) / cross(v0 - v2, v1 - v2)
+	// b = -cross(p - v2, v0 - v2) / cross(v0 - v2, v1 - v2)
+	// c = 1 - a - b
+	//
+	// p is inside triangle if a, b, c all >= 0.
 
-	double dx_far = double(x[2] - x[0]) / (y[2] - y[0] + 1);
-	double dx_upper = double(x[1] - x[0]) / (y[1] - y[0] + 1);
-	double dx_low = double(x[2] - x[1]) / (y[2] - y[1] + 1);
-	double xf = x[0];
-	double xt = x[0] + dx_upper; // if y[0] == y[1], special case
-	int max_y = MIN(y[2], p_transposed ? (width - p_offset.x - 1) : (height - p_offset.y - 1));
-	for (int yi = y[0]; yi < max_y; yi++) {
-		if (yi >= 0) {
-			for (int xi = (xf > 0 ? int(xf) : 0); xi < (xt <= src_width ? xt : src_width); xi++) {
-				int px = xi, py = yi;
-				int sx = px, sy = py;
-				sx = CLAMP(sx, 0, src_width - 1);
-				sy = CLAMP(sy, 0, src_height - 1);
-				Color color = p_src_image->get_pixel(sx, sy);
-				if (p_transposed) {
-					SWAP(px, py);
-				}
-				px += p_offset.x;
-				py += p_offset.y;
+	const Vector2 v2v0 = v0 - v2;
+	const Vector2 v2v1 = v1 - v2;
 
-				//may have been cropped, so don't blit what is not visible?
-				if (px < 0 || px >= width) {
-					continue;
-				}
-				if (py < 0 || py >= height) {
-					continue;
-				}
-				p_image->set_pixel(px, py, color);
+	const real_t den = v2v0.cross(v2v1);
+
+	for (int y = min_y; y <= max_y; y++) {
+		for (int x = min_x; x <= max_x; x++) {
+			const Vector2 v2p = Vector2(x, y) - v2;
+
+			const real_t a = v2p.cross(v2v1) / den;
+
+			if (a < -CMP_EPSILON) {
+				continue;
 			}
 
-			for (int xi = (xf < src_width ? int(xf) : src_width - 1); xi >= (xt > 0 ? xt : 0); xi--) {
-				int px = xi, py = yi;
-				int sx = px, sy = py;
-				sx = CLAMP(sx, 0, src_width - 1);
-				sy = CLAMP(sy, 0, src_height - 1);
-				Color color = p_src_image->get_pixel(sx, sy);
-				if (p_transposed) {
-					SWAP(px, py);
-				}
-				px += p_offset.x;
-				py += p_offset.y;
+			const real_t b = -v2p.cross(v2v0) / den;
 
-				//may have been cropped, so don't blit what is not visible?
-				if (px < 0 || px >= width) {
-					continue;
-				}
-				if (py < 0 || py >= height) {
-					continue;
-				}
-				p_image->set_pixel(px, py, color);
+			if (b < -CMP_EPSILON || 1 - a - b < -CMP_EPSILON) {
+				continue;
 			}
-		}
-		xf += dx_far;
-		if (yi < y[1]) {
-			xt += dx_upper;
-		} else {
-			xt += dx_low;
+
+			int px = x, py = y;
+
+			if (p_transposed) {
+				SWAP(px, py);
+			}
+			px += p_offset.x;
+			py += p_offset.y;
+
+			// May have been cropped, so don't blit what is not visible?
+			if (px < 0 || px >= width) {
+				continue;
+			}
+			if (py < 0 || py >= height) {
+				continue;
+			}
+
+			const Color color = p_src_image->get_pixel(x, y);
+
+			p_image->set_pixel(px, py, color);
 		}
 	}
 }
@@ -317,6 +295,13 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
 	for (int i = 0; i < pack_data_files.size(); i++) {
 		PackData &pack_data = pack_data_files.write[i];
 
+		// If not mesh, blit rectangle directly.
+		if (!pack_data.is_mesh) {
+			new_atlas->blit_rect(pack_data.image, pack_data.region, charts[pack_data.chart_pieces[0]].vertices[0] + charts[pack_data.chart_pieces[0]].final_offset);
+			continue;
+		}
+
+		// Otherwise use triangle method.
 		for (int j = 0; j < pack_data.chart_pieces.size(); j++) {
 			const EditorAtlasPacker::Chart &chart = charts[pack_data.chart_pieces[j]];
 			for (int k = 0; k < chart.faces.size(); k++) {
