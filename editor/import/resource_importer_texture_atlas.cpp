@@ -67,6 +67,12 @@ bool ResourceImporterTextureAtlas::get_option_visibility(const String &p_path, c
 		return false;
 	} else if (p_option == "trim_alpha_border_from_region" && int(p_options["import_mode"]) != IMPORT_MODE_REGION) {
 		return false;
+	} else if (p_option == "shrink_mask" && int(p_options["import_mode"]) != IMPORT_MODE_2D_MESH) {
+		return false;
+	} else if (p_option == "grow_mask" && int(p_options["import_mode"]) != IMPORT_MODE_2D_MESH) {
+		return false;
+	} else if (p_option == "simplification" && int(p_options["import_mode"]) != IMPORT_MODE_2D_MESH) {
+		return false;
 	}
 
 	return true;
@@ -85,6 +91,9 @@ void ResourceImporterTextureAtlas::get_import_options(const String &p_path, List
 	r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "import_mode", PROPERTY_HINT_ENUM, "Region,Mesh2D", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED), 0));
 	r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "crop_to_region"), false));
 	r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "trim_alpha_border_from_region"), true));
+	r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "shrink_mask", PROPERTY_HINT_RANGE, "0,10,suffix:px"), 0));
+	r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "grow_mask", PROPERTY_HINT_RANGE, "0,10,suffix:px"), 0));
+	r_options->push_back(ImportOption(PropertyInfo(Variant::FLOAT, "simplification", PROPERTY_HINT_RANGE, "0.0,10,0.01"), 0.0));
 }
 
 String ResourceImporterTextureAtlas::get_option_group_file() const {
@@ -249,10 +258,25 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
 		} else {
 			pack_data.is_mesh = true;
 
+			const int shrink_mask = options["shrink_mask"];
+			const int grow_mask = options["grow_mask"];
+			const float simplification = options["simplification"];
+
 			Ref<BitMap> bit_map;
 			bit_map.instantiate();
-			bit_map->create_from_image_alpha(image);
-			Vector<Vector<Vector2>> polygons = bit_map->clip_opaque_to_polygons(Rect2(Vector2(), image->get_size()));
+			bit_map->create_from_image_alpha(image, 0);
+
+			const Rect2 rect = Rect2(Vector2(), image->get_size());
+
+			if (shrink_mask > 0) {
+				bit_map->shrink_mask(shrink_mask, rect);
+			}
+
+			if (grow_mask > 0) {
+				bit_map->grow_mask(grow_mask, rect);
+			}
+
+			Vector<Vector<Vector2>> polygons = bit_map->clip_opaque_to_polygons(rect, simplification);
 
 			for (int j = 0; j < polygons.size(); j++) {
 				EditorAtlasPacker::Chart chart;
