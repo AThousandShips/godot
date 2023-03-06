@@ -540,8 +540,30 @@ void PropertySelector::select_property_from_instance(Object *p_instance, const S
 	_update_search();
 }
 
-void PropertySelector::set_type_filter(const Vector<Variant::Type> &p_type_filter) {
-	type_filter = p_type_filter;
+void PropertySelector::set_type_filter(const Vector<Variant::Type> &p_type_filter, bool p_negative) {
+	type_filter.clear();
+
+	if (p_type_filter.is_empty()) {
+		return;
+	}
+
+	if (p_negative) {
+		type_filter.reserve(Variant::VARIANT_MAX);
+
+		for (int i = 0; i < Variant::VARIANT_MAX; ++i) {
+			type_filter.insert((Variant::Type)i);
+		}
+
+		for (const Variant::Type t : p_type_filter) {
+			type_filter.erase(t);
+		}
+	} else {
+		type_filter.reserve(p_type_filter.size());
+
+		for (const Variant::Type t : p_type_filter) {
+			type_filter.insert(t);
+		}
+	}
 }
 
 void PropertySelector::_bind_methods() {

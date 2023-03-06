@@ -60,7 +60,7 @@ class PropertySelector : public ConfirmationDialog {
 	Object *instance = nullptr;
 	bool virtuals_only = false;
 
-	Vector<Variant::Type> type_filter;
+	HashSet<Variant::Type> type_filter;
 
 protected:
 	void _notification(int p_what);
@@ -77,7 +77,7 @@ public:
 	void select_property_from_basic_type(Variant::Type p_type, const String &p_current = "");
 	void select_property_from_instance(Object *p_instance, const String &p_current = "");
 
-	void set_type_filter(const Vector<Variant::Type> &p_type_filter);
+	void set_type_filter(const Vector<Variant::Type> &p_type_filter, bool p_negative = false);
 
 	PropertySelector();
 };
