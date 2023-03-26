@@ -2838,6 +2838,12 @@
 		<constant name="PROPERTY_USAGE_READ_ONLY" value="268435456" enum="PropertyUsageFlags" is_bitfield="true">
 			The property is read-only in the [EditorInspector].
 		</constant>
+		<constant name="PROPERTY_USAGE_DEPRECATED" value="536870912" enum="PropertyUsageFlags" is_bitfield="true">
+			The property is deprecated.
+		</constant>
+		<constant name="PROPERTY_USAGE_EXPERIMENTAL" value="1073741824" enum="PropertyUsageFlags" is_bitfield="true">
+			The property is experimental.
+		</constant>
 		<constant name="PROPERTY_USAGE_DEFAULT" value="6" enum="PropertyUsageFlags" is_bitfield="true">
 			Default usage (storage, editor and network).
 		</constant>

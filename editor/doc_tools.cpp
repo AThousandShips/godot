@@ -214,8 +214,6 @@ void DocTools::merge_from(const DocTools &p_data) {
 				const DocData::PropertyDoc &pf = cf.properties[j];
 
 				p.description = pf.description;
-				p.is_deprecated = pf.is_deprecated;
-				p.is_experimental = pf.is_experimental;
 				break;
 			}
 		}
@@ -468,6 +466,14 @@ void DocTools::generate(bool p_basic_types) {
 
 				prop.setter = setter;
 				prop.getter = getter;
+
+				if (E.usage & PROPERTY_USAGE_DEPRECATED) {
+					prop.is_deprecated = true;
+				}
+
+				if (E.usage & PROPERTY_USAGE_EXPERIMENTAL) {
+					prop.is_experimental = true;
+				}
 
 				bool found_type = false;
 				if (getter != StringName()) {

@@ -109,6 +109,14 @@ void DocData::property_doc_from_scriptmemberinfo(DocData::PropertyDoc &p_propert
 		p_property.type = Variant::get_type_name(p_memberinfo.propinfo.type);
 	}
 
+	if (p_memberinfo.propinfo.usage & PROPERTY_USAGE_DEPRECATED) {
+		p_property.is_deprecated = true;
+	}
+
+	if (p_memberinfo.propinfo.usage & PROPERTY_USAGE_EXPERIMENTAL) {
+		p_property.is_experimental = true;
+	}
+
 	p_property.setter = p_memberinfo.setter;
 	p_property.getter = p_memberinfo.getter;
 
