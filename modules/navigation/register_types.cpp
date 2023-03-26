@@ -57,7 +57,7 @@ void initialize_navigation_module(ModuleInitializationLevel p_level) {
 
 #ifndef _3D_DISABLED
 		_nav_mesh_generator = memnew(NavigationMeshGenerator);
-		GDREGISTER_CLASS(NavigationMeshGenerator);
+		GDREGISTER_EXPERIMENTAL_CLASS(NavigationMeshGenerator);
 		Engine::get_singleton()->add_singleton(Engine::Singleton("NavigationMeshGenerator", NavigationMeshGenerator::get_singleton()));
 #endif
 	}

@@ -131,6 +131,8 @@ public:
 		bool disabled = false;
 		bool exposed = false;
 		bool is_virtual = false;
+		bool is_deprecated = false;
+		bool is_experimental = false;
 		Object *(*creation_func)() = nullptr;
 
 		ClassInfo() {}
@@ -180,7 +182,7 @@ public:
 	}
 
 	template <class T>
-	static void register_class(bool p_virtual = false) {
+	static void register_class(bool p_virtual = false, bool p_deprecated = false, bool p_experimental = false) {
 		GLOBAL_LOCK_FUNCTION;
 		T::initialize_class();
 		ClassInfo *t = classes.getptr(T::get_class_static());
@@ -188,18 +190,22 @@ public:
 		t->creation_func = &creator<T>;
 		t->exposed = true;
 		t->is_virtual = p_virtual;
+		t->is_deprecated = p_deprecated;
+		t->is_experimental = p_experimental;
 		t->class_ptr = T::get_class_ptr_static();
 		t->api = current_api;
 		T::register_custom_data_to_otdb();
 	}
 
 	template <class T>
-	static void register_abstract_class() {
+	static void register_abstract_class(bool p_deprecated = false, bool p_experimental = false) {
 		GLOBAL_LOCK_FUNCTION;
 		T::initialize_class();
 		ClassInfo *t = classes.getptr(T::get_class_static());
 		ERR_FAIL_COND(!t);
 		t->exposed = true;
+		t->is_deprecated = p_deprecated;
+		t->is_experimental = p_experimental;
 		t->class_ptr = T::get_class_ptr_static();
 		t->api = current_api;
 		//nothing
@@ -214,13 +220,15 @@ public:
 	}
 
 	template <class T>
-	static void register_custom_instance_class() {
+	static void register_custom_instance_class(bool p_deprecated = false, bool p_experimental = false) {
 		GLOBAL_LOCK_FUNCTION;
 		T::initialize_class();
 		ClassInfo *t = classes.getptr(T::get_class_static());
 		ERR_FAIL_COND(!t);
 		t->creation_func = &_create_ptr_func<T>;
 		t->exposed = true;
+		t->is_deprecated = p_deprecated;
+		t->is_experimental = p_experimental;
 		t->class_ptr = T::get_class_ptr_static();
 		t->api = current_api;
 		T::register_custom_data_to_otdb();
@@ -236,6 +244,8 @@ public:
 	static bool is_parent_class(const StringName &p_class, const StringName &p_inherits);
 	static bool can_instantiate(const StringName &p_class);
 	static bool is_virtual(const StringName &p_class);
+	static bool is_deprecated(const StringName &p_class);
+	static bool is_experimental(const StringName &p_class);
 	static Object *instantiate(const StringName &p_class);
 	static void set_object_extension_instance(Object *p_object, const StringName &p_class, GDExtensionClassInstancePtr p_instance);
 
@@ -445,13 +455,37 @@ _FORCE_INLINE_ Vector<Error> errarray(P... p_args) {
 	if (m_class::_class_is_enabled) {         \
 		::ClassDB::register_class<m_class>(); \
 	}
+#define GDREGISTER_DEPRECATED_CLASS(m_class)             \
+	if (m_class::_class_is_enabled) {                    \
+		::ClassDB::register_class<m_class>(false, true); \
+	}
+#define GDREGISTER_EXPERIMENTAL_CLASS(m_class)                  \
+	if (m_class::_class_is_enabled) {                           \
+		::ClassDB::register_class<m_class>(false, false, true); \
+	}
 #define GDREGISTER_VIRTUAL_CLASS(m_class)         \
 	if (m_class::_class_is_enabled) {             \
 		::ClassDB::register_class<m_class>(true); \
 	}
+#define GDREGISTER_DEPRECATED_VIRTUAL_CLASS(m_class)    \
+	if (m_class::_class_is_enabled) {                   \
+		::ClassDB::register_class<m_class>(true, true); \
+	}
+#define GDREGISTER_EXPERIMENTAL_VIRTUAL_CLASS(m_class)         \
+	if (m_class::_class_is_enabled) {                          \
+		::ClassDB::register_class<m_class>(true, false, true); \
+	}
 #define GDREGISTER_ABSTRACT_CLASS(m_class)             \
 	if (m_class::_class_is_enabled) {                  \
 		::ClassDB::register_abstract_class<m_class>(); \
+	}
+#define GDREGISTER_DEPRECATED_ABSTRACT_CLASS(m_class)      \
+	if (m_class::_class_is_enabled) {                      \
+		::ClassDB::register_abstract_class<m_class>(true); \
+	}
+#define GDREGISTER_EXPERIMENTAL_ABSTRACT_CLASS(m_class)           \
+	if (m_class::_class_is_enabled) {                             \
+		::ClassDB::register_abstract_class<m_class>(false, true); \
 	}
 
 #define GDREGISTER_NATIVE_STRUCT(m_class, m_code) ClassDB::register_native_struct(#m_class, m_code, sizeof(m_class))

@@ -161,12 +161,12 @@ void register_server_types() {
 	GDREGISTER_NATIVE_STRUCT(PhysicsServer3DExtensionMotionCollision, "Vector3 position;Vector3 normal;Vector3 collider_velocity;Vector3 collider_angular_velocity;real_t depth;int local_shape;ObjectID collider_id;RID collider;int collider_shape");
 	GDREGISTER_NATIVE_STRUCT(PhysicsServer3DExtensionMotionResult, "Vector3 travel;Vector3 remainder;real_t collision_depth;real_t collision_safe_fraction;real_t collision_unsafe_fraction;PhysicsServer3DExtensionMotionCollision collisions[32];int collision_count");
 
-	GDREGISTER_ABSTRACT_CLASS(NavigationServer2D);
-	GDREGISTER_ABSTRACT_CLASS(NavigationServer3D);
-	GDREGISTER_CLASS(NavigationPathQueryParameters2D);
-	GDREGISTER_CLASS(NavigationPathQueryParameters3D);
-	GDREGISTER_CLASS(NavigationPathQueryResult2D);
-	GDREGISTER_CLASS(NavigationPathQueryResult3D);
+	GDREGISTER_EXPERIMENTAL_ABSTRACT_CLASS(NavigationServer2D);
+	GDREGISTER_EXPERIMENTAL_ABSTRACT_CLASS(NavigationServer3D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationPathQueryParameters2D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationPathQueryParameters3D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationPathQueryResult2D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationPathQueryResult3D);
 
 	GDREGISTER_CLASS(XRServer);
 	GDREGISTER_CLASS(CameraServer);

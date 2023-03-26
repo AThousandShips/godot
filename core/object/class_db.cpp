@@ -391,6 +391,34 @@ bool ClassDB::is_virtual(const StringName &p_class) {
 	return (!ti->disabled && ti->creation_func != nullptr && !(ti->gdextension && !ti->gdextension->create_instance) && ti->is_virtual);
 }
 
+bool ClassDB::is_deprecated(const StringName &p_class) {
+	OBJTYPE_RLOCK;
+
+	ClassInfo *ti = classes.getptr(p_class);
+	if (!ti || !ti->creation_func) {
+		if (compat_classes.has(p_class)) {
+			ti = classes.getptr(compat_classes[p_class]);
+		}
+	}
+
+	ERR_FAIL_COND_V_MSG(!ti, false, "Cannot get class '" + String(p_class) + "'.");
+	return ti->is_deprecated;
+}
+
+bool ClassDB::is_experimental(const StringName &p_class) {
+	OBJTYPE_RLOCK;
+
+	ClassInfo *ti = classes.getptr(p_class);
+	if (!ti || !ti->creation_func) {
+		if (compat_classes.has(p_class)) {
+			ti = classes.getptr(compat_classes[p_class]);
+		}
+	}
+
+	ERR_FAIL_COND_V_MSG(!ti, false, "Cannot get class '" + String(p_class) + "'.");
+	return ti->is_experimental;
+}
+
 void ClassDB::_add_class2(const StringName &p_class, const StringName &p_inherits) {
 	OBJTYPE_WLOCK;
 

@@ -85,9 +85,6 @@ void DocTools::merge_from(const DocTools &p_data) {
 
 		const DocData::ClassDoc &cf = p_data.class_list[c.name];
 
-		c.is_deprecated = cf.is_deprecated;
-		c.is_experimental = cf.is_experimental;
-
 		c.description = cf.description;
 		c.brief_description = cf.brief_description;
 		c.tutorials = cf.tutorials;
@@ -382,6 +379,8 @@ void DocTools::generate(bool p_basic_types) {
 			DocData::ClassDoc &c = class_list[cname];
 			c.name = cname;
 			c.inherits = ClassDB::get_parent_class(name);
+			c.is_deprecated = ClassDB::is_deprecated(name);
+			c.is_experimental = ClassDB::is_experimental(name);
 
 			List<PropertyInfo> properties;
 			List<PropertyInfo> own_properties;

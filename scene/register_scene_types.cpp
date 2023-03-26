@@ -425,8 +425,8 @@ void register_scene_types() {
 	GDREGISTER_CLASS(HSplitContainer);
 	GDREGISTER_CLASS(VSplitContainer);
 
-	GDREGISTER_CLASS(GraphNode);
-	GDREGISTER_CLASS(GraphEdit);
+	GDREGISTER_EXPERIMENTAL_CLASS(GraphNode);
+	GDREGISTER_EXPERIMENTAL_CLASS(GraphEdit);
 
 	OS::get_singleton()->yield(); // may take time to init
 
@@ -544,7 +544,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(PhysicalBone3D);
 	GDREGISTER_CLASS(SoftBody3D);
 
-	GDREGISTER_CLASS(SkeletonIK3D);
+	GDREGISTER_DEPRECATED_CLASS(SkeletonIK3D);
 	GDREGISTER_CLASS(BoneAttachment3D);
 
 	GDREGISTER_CLASS(VehicleBody3D);
@@ -573,10 +573,10 @@ void register_scene_types() {
 	GDREGISTER_CLASS(ConeTwistJoint3D);
 	GDREGISTER_CLASS(Generic6DOFJoint3D);
 
-	GDREGISTER_CLASS(NavigationRegion3D);
-	GDREGISTER_CLASS(NavigationAgent3D);
-	GDREGISTER_CLASS(NavigationObstacle3D);
-	GDREGISTER_CLASS(NavigationLink3D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationRegion3D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationAgent3D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationObstacle3D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationLink3D);
 
 	OS::get_singleton()->yield(); // may take time to init
 #endif // _3D_DISABLED
@@ -759,17 +759,17 @@ void register_scene_types() {
 	GDREGISTER_CLASS(TouchScreenButton);
 	GDREGISTER_CLASS(RemoteTransform2D);
 
-	GDREGISTER_CLASS(SkeletonModificationStack2D);
-	GDREGISTER_CLASS(SkeletonModification2D);
-	GDREGISTER_CLASS(SkeletonModification2DLookAt);
-	GDREGISTER_CLASS(SkeletonModification2DCCDIK);
-	GDREGISTER_CLASS(SkeletonModification2DFABRIK);
-	GDREGISTER_CLASS(SkeletonModification2DJiggle);
-	GDREGISTER_CLASS(SkeletonModification2DTwoBoneIK);
-	GDREGISTER_CLASS(SkeletonModification2DStackHolder);
+	GDREGISTER_EXPERIMENTAL_CLASS(SkeletonModificationStack2D);
+	GDREGISTER_EXPERIMENTAL_CLASS(SkeletonModification2D);
+	GDREGISTER_EXPERIMENTAL_CLASS(SkeletonModification2DLookAt);
+	GDREGISTER_EXPERIMENTAL_CLASS(SkeletonModification2DCCDIK);
+	GDREGISTER_EXPERIMENTAL_CLASS(SkeletonModification2DFABRIK);
+	GDREGISTER_EXPERIMENTAL_CLASS(SkeletonModification2DJiggle);
+	GDREGISTER_EXPERIMENTAL_CLASS(SkeletonModification2DTwoBoneIK);
+	GDREGISTER_EXPERIMENTAL_CLASS(SkeletonModification2DStackHolder);
 
 	GDREGISTER_CLASS(PhysicalBone2D);
-	GDREGISTER_CLASS(SkeletonModification2DPhysicalBones);
+	GDREGISTER_EXPERIMENTAL_CLASS(SkeletonModification2DPhysicalBones);
 
 	OS::get_singleton()->yield(); // may take time to init
 
@@ -850,7 +850,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(CurveXYZTexture);
 	GDREGISTER_CLASS(GradientTexture1D);
 	GDREGISTER_CLASS(GradientTexture2D);
-	GDREGISTER_CLASS(AnimatedTexture);
+	GDREGISTER_DEPRECATED_CLASS(AnimatedTexture);
 	GDREGISTER_CLASS(CameraTexture);
 	GDREGISTER_VIRTUAL_CLASS(TextureLayered);
 	GDREGISTER_ABSTRACT_CLASS(ImageTextureLayered);
@@ -927,12 +927,12 @@ void register_scene_types() {
 	GDREGISTER_CLASS(Path2D);
 	GDREGISTER_CLASS(PathFollow2D);
 
-	GDREGISTER_CLASS(NavigationMesh);
-	GDREGISTER_CLASS(NavigationPolygon);
-	GDREGISTER_CLASS(NavigationRegion2D);
-	GDREGISTER_CLASS(NavigationAgent2D);
-	GDREGISTER_CLASS(NavigationObstacle2D);
-	GDREGISTER_CLASS(NavigationLink2D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationMesh);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationPolygon);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationRegion2D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationAgent2D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationObstacle2D);
+	GDREGISTER_EXPERIMENTAL_CLASS(NavigationLink2D);
 
 	OS::get_singleton()->yield(); // may take time to init
 
