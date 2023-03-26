@@ -150,8 +150,6 @@ void DocTools::merge_from(const DocTools &p_data) {
 				const DocData::MethodDoc &mf = cf.methods[j];
 
 				m.description = mf.description;
-				m.is_deprecated = mf.is_deprecated;
-				m.is_experimental = mf.is_experimental;
 				break;
 			}
 		}
@@ -166,8 +164,6 @@ void DocTools::merge_from(const DocTools &p_data) {
 				const DocData::MethodDoc &mf = cf.signals[j];
 
 				m.description = mf.description;
-				m.is_deprecated = mf.is_deprecated;
-				m.is_experimental = mf.is_experimental;
 				break;
 			}
 		}
@@ -561,6 +557,12 @@ void DocTools::generate(bool p_basic_types) {
 				for (List<MethodInfo>::Element *EV = signal_list.front(); EV; EV = EV->next()) {
 					DocData::MethodDoc signal;
 					signal.name = EV->get().name;
+					if (EV->get().flags & METHOD_FLAG_DEPRECATED) {
+						signal.is_deprecated = true;
+					}
+					if (EV->get().flags & METHOD_FLAG_EXPERIMENTAL) {
+						signal.is_experimental = true;
+					}
 					for (int i = 0; i < EV->get().arguments.size(); i++) {
 						const PropertyInfo &arginfo = EV->get().arguments[i];
 						DocData::ArgumentDoc argument;
