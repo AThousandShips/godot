@@ -56,6 +56,8 @@ public:
 	Callable get_callable() { return callable; }
 	Vector<Variant> get_binds() { return binds; }
 
+	CallableCustom *rebind(const Object *p_object) const override;
+
 	CallableCustomBind(const Callable &p_callable, const Vector<Variant> &p_binds);
 	virtual ~CallableCustomBind();
 };
@@ -82,6 +84,8 @@ public:
 
 	Callable get_callable() { return callable; }
 	int get_unbinds() { return argcount; }
+
+	CallableCustom *rebind(const Object *p_object) const override;
 
 	CallableCustomUnbind(const Callable &p_callable, int p_argcount);
 	virtual ~CallableCustomUnbind();

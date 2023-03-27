@@ -1055,6 +1055,10 @@ struct _VariantCall {
 		r_ret = callable->bindp(p_args, p_argcount);
 	}
 
+	static Callable func_Callable_rebind(Callable *p_callable, Object *p_object) {
+		return p_callable->rebind(p_object);
+	}
+
 	static void func_Signal_emit(Variant *v, const Variant **p_args, int p_argcount, Variant &r_ret, Callable::CallError &r_error) {
 		Signal *signal = VariantGetInternalPtr<Signal>::get_ptr(v);
 		signal->emit(p_args, p_argcount);
@@ -2036,6 +2040,8 @@ static void _register_variant_builtin_methods() {
 	bind_method(Callable, hash, sarray(), varray());
 	bind_method(Callable, bindv, sarray("arguments"), varray());
 	bind_method(Callable, unbind, sarray("argcount"), varray());
+	// bind_method(Callable, rebind, sarray("object"), varray());
+	bind_functionnc(Callable, rebind, _VariantCall::func_Callable_rebind, sarray("object"), varray());
 
 	bind_custom(Callable, call, _VariantCall::func_Callable_call, true, Variant);
 	bind_custom(Callable, call_deferred, _VariantCall::func_Callable_call_deferred, false, Variant);

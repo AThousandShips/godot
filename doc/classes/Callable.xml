@@ -170,6 +170,12 @@
 				Returns [code]true[/code] if the callable's object exists and has a valid method name assigned, or is a custom callable.
 			</description>
 		</method>
+		<method name="rebind">
+			<return type="Callable" />
+			<param index="0" name="object" type="Object" />
+			<description>
+			</description>
+		</method>
 		<method name="rpc" qualifiers="vararg const">
 			<return type="void" />
 			<description>

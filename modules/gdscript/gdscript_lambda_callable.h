@@ -82,6 +82,8 @@ public:
 	ObjectID get_object() const override;
 	void call(const Variant **p_arguments, int p_argcount, Variant &r_return_value, Callable::CallError &r_call_error) const override;
 
+	CallableCustom *rebind(const Object *p_object) const override;
+
 	GDScriptLambdaSelfCallable(Ref<RefCounted> p_self, GDScriptFunction *p_function, const Vector<Variant> &p_captures);
 	GDScriptLambdaSelfCallable(Object *p_self, GDScriptFunction *p_function, const Vector<Variant> &p_captures);
 	virtual ~GDScriptLambdaSelfCallable() = default;

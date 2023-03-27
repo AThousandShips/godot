@@ -111,6 +111,8 @@ public:
 	void get_bound_arguments_ref(Vector<Variant> &r_arguments, int &r_argcount) const; // Internal engine use, the exposed one is below.
 	Array get_bound_arguments() const;
 
+	Callable rebind(const Object *p_object) const;
+
 	uint32_t hash() const;
 
 	const Callable *get_base_comparator() const; //used for bind/unbind to do less precise comparisons (ignoring binds) in signal connect/disconnect
@@ -152,6 +154,8 @@ public:
 	virtual const Callable *get_base_comparator() const;
 	virtual int get_bound_arguments_count() const;
 	virtual void get_bound_arguments(Vector<Variant> &r_arguments, int &r_argcount) const;
+
+	virtual CallableCustom *rebind(const Object *p_object) const { return nullptr; };
 
 	CallableCustom();
 	virtual ~CallableCustom() {}

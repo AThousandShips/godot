@@ -140,6 +140,10 @@ void CallableCustomBind::call(const Variant **p_arguments, int p_argcount, Varia
 	callable.callp(args, p_argcount + binds.size(), r_return_value, r_call_error);
 }
 
+CallableCustom *CallableCustomBind::rebind(const Object *p_object) const {
+	return memnew(CallableCustomBind(callable.rebind(p_object), binds));
+}
+
 CallableCustomBind::CallableCustomBind(const Callable &p_callable, const Vector<Variant> &p_binds) {
 	callable = p_callable;
 	binds = p_binds;
@@ -232,6 +236,10 @@ void CallableCustomUnbind::call(const Variant **p_arguments, int p_argcount, Var
 		return;
 	}
 	callable.callp(p_arguments, p_argcount - argcount, r_return_value, r_call_error);
+}
+
+CallableCustom *CallableCustomUnbind::rebind(const Object *p_object) const {
+	return memnew(CallableCustomUnbind(callable.rebind(p_object), argcount));
 }
 
 CallableCustomUnbind::CallableCustomUnbind(const Callable &p_callable, int p_argcount) {

@@ -199,6 +199,18 @@ const Callable *Callable::get_base_comparator() const {
 	}
 }
 
+Callable Callable::rebind(const Object *p_object) const {
+	if (is_custom()) {
+		CallableCustom *new_custom = custom->rebind(p_object);
+		if (new_custom) {
+			return Callable(new_custom);
+		}
+		return Callable();
+	} else {
+		return Callable(p_object, method);
+	}
+}
+
 uint32_t Callable::hash() const {
 	if (is_custom()) {
 		return custom->hash();

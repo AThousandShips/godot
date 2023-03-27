@@ -155,6 +155,10 @@ void GDScriptLambdaSelfCallable::call(const Variant **p_arguments, int p_argcoun
 	}
 }
 
+CallableCustom *GDScriptLambdaSelfCallable::rebind(const Object *p_object) const {
+	return memnew(GDScriptLambdaSelfCallable(const_cast<Object *>(p_object), function, captures));
+}
+
 GDScriptLambdaSelfCallable::GDScriptLambdaSelfCallable(Ref<RefCounted> p_self, GDScriptFunction *p_function, const Vector<Variant> &p_captures) {
 	reference = p_self;
 	object = p_self.ptr();
