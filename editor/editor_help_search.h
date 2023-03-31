@@ -63,9 +63,17 @@ class EditorHelpSearch : public ConfirmationDialog {
 	Tree *results_tree = nullptr;
 	bool old_search = false;
 	String old_term;
+	bool using_index = false;
+
+	struct Index;
+	Index *index = nullptr;
+	bool index_dirty = false;
 
 	class Runner;
 	Ref<Runner> search;
+
+	void _build_index();
+	void _queue_rebuild_index();
 
 	void _update_icons();
 	void _update_results();
@@ -84,6 +92,28 @@ public:
 	void popup_dialog(const String &p_term);
 
 	EditorHelpSearch();
+	~EditorHelpSearch();
+};
+
+struct EditorHelpSearch::Index {
+	struct ClassEntry {
+		String class_name;
+		Vector<ClassEntry *> children;
+
+		~ClassEntry() {
+			for (ClassEntry *entry : children) {
+				memdelete_notnull(entry);
+			}
+		}
+	};
+
+	Vector<ClassEntry *> root_entries;
+
+	~Index() {
+		for (ClassEntry *entry : root_entries) {
+			memdelete_notnull(entry);
+		}
+	}
 };
 
 class EditorHelpSearch::Runner : public RefCounted {
@@ -118,12 +148,18 @@ class EditorHelpSearch::Runner : public RefCounted {
 
 	Control *ui_service = nullptr;
 	Tree *results_tree = nullptr;
+
+	Index *index = nullptr;
+
 	String term;
 	Vector<String> terms;
 	int search_flags;
 
 	Ref<Texture2D> empty_icon;
 	Color disabled_color;
+
+	typedef Pair<Index::ClassEntry *, TreeItem *> WorkEntry;
+	Vector<WorkEntry> work_stack;
 
 	HashMap<String, DocData::ClassDoc>::Iterator iterator_doc;
 	HashMap<String, ClassMatch> matches;
@@ -134,6 +170,11 @@ class EditorHelpSearch::Runner : public RefCounted {
 	float match_highest_score = 0;
 
 	bool _is_class_disabled_by_feature_profile(const StringName &p_class);
+
+	bool _fill();
+
+	void _push_class(TreeItem *p_parent, Index::ClassEntry *p_entry);
+	void _create_class_item(const WorkEntry &p_work);
 
 	bool _slice();
 	bool _phase_match_classes_init();
@@ -163,6 +204,7 @@ class EditorHelpSearch::Runner : public RefCounted {
 public:
 	bool work(uint64_t slot = 100000);
 
+	Runner(Control *p_icon_service, Tree *p_results_tree, Index *p_index, int p_search_flags);
 	Runner(Control *p_icon_service, Tree *p_results_tree, const String &p_term, int p_search_flags);
 };
 

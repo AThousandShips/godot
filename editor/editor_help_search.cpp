@@ -32,9 +32,62 @@
 
 #include "core/os/keyboard.h"
 #include "editor/editor_feature_profile.h"
+#include "editor/editor_file_system.h"
 #include "editor/editor_node.h"
 #include "editor/editor_scale.h"
 #include "editor/editor_settings.h"
+
+void EditorHelpSearch::_build_index() {
+	// Map to look up parent class for hierarchy.
+	HashMap<String, Index::ClassEntry *> class_map;
+
+	index = memnew(Index);
+
+	for (KeyValue<String, DocData::ClassDoc> &doc_entry : EditorHelp::get_doc_data()->class_list) {
+		DocData::ClassDoc &class_doc = doc_entry.value;
+
+		// Add any classes which are not script docs or which don't start with a double-quotation.
+		// This will ensure that only C++ classes and explicitly named classes will be added.
+		if (!class_doc.is_script_doc || class_doc.name[0] != '\"') {
+			Index::ClassEntry *new_entry = nullptr;
+
+			// Attempt to find entry in map, it might have been created by an inheriting class.
+			if (Index::ClassEntry **found = class_map.getptr(class_doc.name)) {
+				new_entry = *found;
+			} else {
+				new_entry = memnew(Index::ClassEntry);
+				class_map.insert(class_doc.name, new_entry);
+			}
+
+			// If class has a parent.
+			if (!class_doc.inherits.is_empty()) {
+				Index::ClassEntry *parent_item = nullptr;
+
+				// Attempt to find in class map.
+				if (Index::ClassEntry **found = class_map.getptr(class_doc.inherits)) {
+					parent_item = *found;
+				} else {
+					parent_item = memnew(Index::ClassEntry);
+					class_map.insert(class_doc.inherits, parent_item);
+				}
+
+				// Add to children of parent.
+				parent_item->children.push_back(new_entry);
+			} else {
+				// Otherwise add to root.
+				index->root_entries.push_back(new_entry);
+			}
+
+			new_entry->class_name = class_doc.name;
+		}
+	}
+}
+
+void EditorHelpSearch::_queue_rebuild_index() {
+	index_dirty = true;
+	// Force new search.
+	using_index = false;
+}
 
 void EditorHelpSearch::_update_icons() {
 	search_box->set_right_icon(results_tree->get_theme_icon(SNAME("Search"), SNAME("EditorIcons")));
@@ -49,18 +102,38 @@ void EditorHelpSearch::_update_icons() {
 }
 
 void EditorHelpSearch::_update_results() {
-	String term = search_box->get_text();
+	String term = search_box->get_text().strip_edges();
 
 	int search_flags = filter_combo->get_selected_id();
-	if (case_sensitive_button->is_pressed()) {
-		search_flags |= SEARCH_CASE_SENSITIVE;
-	}
-	if (hierarchy_button->is_pressed()) {
-		search_flags |= SEARCH_SHOW_HIERARCHY;
-	}
 
-	search = Ref<Runner>(memnew(Runner(results_tree, results_tree, term, search_flags)));
-	set_process(true);
+	// If term is longer than one, or equal to @ for annotation, use search, otherwise use index, if not already working.
+	if (term.length() > 1 || term == "@") {
+		if (case_sensitive_button->is_pressed()) {
+			search_flags |= SEARCH_CASE_SENSITIVE;
+		}
+		if (hierarchy_button->is_pressed()) {
+			search_flags |= SEARCH_SHOW_HIERARCHY;
+		}
+
+		search = Ref<Runner>(memnew(Runner(results_tree, results_tree, term, search_flags)));
+		set_process(true);
+		using_index = false;
+	} else if (!using_index) {
+		if (index_dirty) {
+			// Clear runner, it might be using the index.
+			search = Ref<Runner>();
+			memdelete_notnull(index);
+			index = nullptr;
+			index_dirty = false;
+		}
+		if (index == nullptr) {
+			_build_index();
+		}
+
+		search = Ref<Runner>(memnew(Runner(results_tree, results_tree, index, search_flags | SEARCH_SHOW_HIERARCHY)));
+		set_process(true);
+		using_index = true;
+	}
 }
 
 void EditorHelpSearch::_search_box_gui_input(const Ref<InputEvent> &p_event) {
@@ -107,6 +180,7 @@ void EditorHelpSearch::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_VISIBILITY_CHANGED: {
 			if (!is_visible()) {
+				search = Ref<Runner>();
 				results_tree->call_deferred(SNAME("clear")); // Wait for the Tree's mouse event propagation.
 				get_ok_button()->set_disabled(true);
 				EditorSettings::get_singleton()->set_project_metadata("dialog_bounds", "search_help", Rect2(get_position(), get_size()));
@@ -115,6 +189,14 @@ void EditorHelpSearch::_notification(int p_what) {
 
 		case EditorSettings::NOTIFICATION_EDITOR_SETTINGS_CHANGED: {
 			_update_icons();
+		} break;
+
+		case NOTIFICATION_ENTER_TREE: {
+			EditorFileSystem::get_singleton()->connect("script_classes_updated", callable_mp(this, &EditorHelpSearch::_queue_rebuild_index));
+		} break;
+
+		case NOTIFICATION_EXIT_TREE: {
+			EditorFileSystem::get_singleton()->disconnect("script_classes_updated", callable_mp(this, &EditorHelpSearch::_queue_rebuild_index));
 		} break;
 
 		case NOTIFICATION_READY: {
@@ -167,6 +249,7 @@ void EditorHelpSearch::popup_dialog(const String &p_term) {
 		popup_centered_ratio(0.5F);
 	}
 
+	using_index = false;
 	if (p_term.is_empty()) {
 		search_box->clear();
 	} else {
@@ -260,6 +343,10 @@ EditorHelpSearch::EditorHelpSearch() {
 	vbox->add_child(results_tree, true);
 }
 
+EditorHelpSearch::~EditorHelpSearch() {
+	memdelete_notnull(index);
+}
+
 bool EditorHelpSearch::Runner::_is_class_disabled_by_feature_profile(const StringName &p_class) {
 	Ref<EditorFeatureProfile> profile = EditorFeatureProfileManager::get_singleton()->get_current_profile();
 	if (profile.is_null()) {
@@ -279,6 +366,65 @@ bool EditorHelpSearch::Runner::_is_class_disabled_by_feature_profile(const Strin
 	}
 
 	return false;
+}
+
+bool EditorHelpSearch::Runner::_fill() {
+	if (phase == PHASE_MATCH_CLASSES_INIT) {
+		// Initialize work.
+		results_tree->clear();
+		TreeItem *root = results_tree->create_item();
+
+		for (int i = 1; i <= index->root_entries.size(); ++i) {
+			_push_class(root, index->root_entries[index->root_entries.size() - i]);
+		}
+
+		++phase;
+	} else {
+		if (!work_stack.is_empty()) {
+			WorkEntry work = work_stack[work_stack.size() - 1];
+			work_stack.resize(work_stack.size() - 1);
+
+			_create_class_item(work);
+		}
+	}
+
+	return work_stack.is_empty();
+}
+
+void EditorHelpSearch::Runner::_push_class(TreeItem *p_parent, Index::ClassEntry *p_entry) {
+	TreeItem *item = results_tree->create_item(p_parent, 0);
+
+	work_stack.push_back(WorkEntry(p_entry, item));
+}
+
+void EditorHelpSearch::Runner::_create_class_item(const WorkEntry &p_work) {
+	Index::ClassEntry *entry = p_work.first;
+	TreeItem *item = p_work.second;
+	DocData::ClassDoc *doc = EditorHelp::get_doc_data()->class_list.getptr(entry->class_name);
+
+	if (!doc) {
+		return;
+	}
+
+	Ref<Texture2D> icon = empty_icon;
+	if (ui_service->has_theme_icon(doc->name, SNAME("EditorIcons"))) {
+		icon = ui_service->get_theme_icon(doc->name, SNAME("EditorIcons"));
+	} else if (ClassDB::class_exists(doc->name) && ClassDB::is_parent_class(doc->name, "Object")) {
+		icon = ui_service->get_theme_icon(SNAME("Object"), SNAME("EditorIcons"));
+	}
+	String tooltip = DTR(doc->brief_description.strip_edges());
+
+	item->set_icon(0, icon);
+	item->set_text(0, doc->name);
+	item->set_text(1, TTR("Class"));
+	item->set_tooltip_text(0, tooltip);
+	item->set_tooltip_text(1, tooltip);
+	item->set_metadata(0, "class_name:" + doc->name);
+
+	// Push children.
+	for (int i = 1; i <= entry->children.size(); ++i) {
+		_push_class(item, entry->children[entry->children.size() - i]);
+	}
 }
 
 bool EditorHelpSearch::Runner::_slice() {
@@ -403,6 +549,7 @@ bool EditorHelpSearch::Runner::_phase_match_classes() {
 				}
 			}
 		}
+
 		matches[class_doc.name] = match;
 	}
 
@@ -621,7 +768,9 @@ TreeItem *EditorHelpSearch::Runner::_create_class_item(TreeItem *p_parent, const
 		item->add_button(0, warning_icon, 0, false, TTR("This class is marked as experimental."));
 	}
 
-	_match_item(item, p_doc->name);
+	if (!term.is_empty()) {
+		_match_item(item, p_doc->name);
+	}
 
 	return item;
 }
@@ -685,7 +834,9 @@ TreeItem *EditorHelpSearch::Runner::_create_member_item(TreeItem *p_parent, cons
 		item->add_button(0, warning_icon, 0, false, TTR("This member is marked as experimental."));
 	}
 
-	_match_item(item, p_name);
+	if (!term.is_empty()) {
+		_match_item(item, p_name);
+	}
 
 	return item;
 }
@@ -693,18 +844,37 @@ TreeItem *EditorHelpSearch::Runner::_create_member_item(TreeItem *p_parent, cons
 bool EditorHelpSearch::Runner::work(uint64_t slot) {
 	// Return true when the search has been completed, otherwise false.
 	const uint64_t until = OS::get_singleton()->get_ticks_usec() + slot;
-	while (!_slice()) {
-		if (OS::get_singleton()->get_ticks_usec() > until) {
-			return false;
+	if (index) {
+		while (!_fill()) {
+			if (OS::get_singleton()->get_ticks_usec() > until) {
+				return false;
+			}
+		}
+	} else {
+		while (!_slice()) {
+			if (OS::get_singleton()->get_ticks_usec() > until) {
+				return false;
+			}
 		}
 	}
 	return true;
 }
 
+EditorHelpSearch::Runner::Runner(Control *p_icon_service, Tree *p_results_tree, Index *p_index, int p_search_flags) :
+		ui_service(p_icon_service),
+		results_tree(p_results_tree),
+		index(p_index),
+		term(""),
+		search_flags(p_search_flags),
+		empty_icon(ui_service->get_theme_icon(SNAME("ArrowRight"), SNAME("EditorIcons"))),
+		disabled_color(ui_service->get_theme_color(SNAME("disabled_font_color"), SNAME("Editor"))) {
+}
+
 EditorHelpSearch::Runner::Runner(Control *p_icon_service, Tree *p_results_tree, const String &p_term, int p_search_flags) :
 		ui_service(p_icon_service),
 		results_tree(p_results_tree),
-		term((p_search_flags & SEARCH_CASE_SENSITIVE) == 0 ? p_term.strip_edges().to_lower() : p_term.strip_edges()),
+		index(nullptr),
+		term((p_search_flags & SEARCH_CASE_SENSITIVE) == 0 ? p_term.to_lower() : p_term),
 		search_flags(p_search_flags),
 		empty_icon(ui_service->get_theme_icon(SNAME("ArrowRight"), SNAME("EditorIcons"))),
 		disabled_color(ui_service->get_theme_color(SNAME("disabled_font_color"), SNAME("Editor"))) {
