@@ -63,7 +63,7 @@ class EditorHelpSearch : public ConfirmationDialog {
 	Tree *results_tree = nullptr;
 	bool old_search = false;
 	String old_term;
-	bool using_index = false;
+	int old_search_flags = 0;
 
 	struct Index;
 	Index *index = nullptr;
@@ -99,6 +99,7 @@ struct EditorHelpSearch::Index {
 	struct ClassEntry {
 		String class_name;
 		Vector<ClassEntry *> children;
+		int types_present = 0;
 
 		~ClassEntry() {
 			for (ClassEntry *entry : children) {
@@ -142,7 +143,7 @@ class EditorHelpSearch::Runner : public RefCounted {
 		Vector<DocData::MethodDoc *> annotations;
 
 		bool required() {
-			return name || methods.size() || signals.size() || constants.size() || properties.size() || theme_properties.size() || annotations.size();
+			return name || constructors.size() || methods.size() || operators.size() || signals.size() || constants.size() || properties.size() || theme_properties.size() || annotations.size();
 		}
 	};
 
@@ -156,6 +157,14 @@ class EditorHelpSearch::Runner : public RefCounted {
 	int search_flags;
 
 	Ref<Texture2D> empty_icon;
+	Ref<Texture2D> member_annotation_icon;
+	Ref<Texture2D> member_constructor_icon;
+	Ref<Texture2D> member_method_icon;
+	Ref<Texture2D> member_signal_icon;
+	Ref<Texture2D> member_operator_icon;
+	Ref<Texture2D> member_constant_icon;
+	Ref<Texture2D> member_property_icon;
+	Ref<Texture2D> member_theme_icon;
 	Color disabled_color;
 
 	typedef Pair<Index::ClassEntry *, TreeItem *> WorkEntry;
@@ -173,7 +182,7 @@ class EditorHelpSearch::Runner : public RefCounted {
 
 	bool _fill();
 
-	void _push_class(TreeItem *p_parent, Index::ClassEntry *p_entry);
+	bool _push_class(TreeItem *p_parent, Index::ClassEntry *p_entry);
 	void _create_class_item(const WorkEntry &p_work);
 
 	bool _slice();
@@ -193,13 +202,15 @@ class EditorHelpSearch::Runner : public RefCounted {
 	void _match_item(TreeItem *p_item, const String &p_text);
 	TreeItem *_create_class_hierarchy(const ClassMatch &p_match);
 	TreeItem *_create_class_item(TreeItem *p_parent, const DocData::ClassDoc *p_doc, bool p_gray);
-	TreeItem *_create_method_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const String &p_text, const DocData::MethodDoc *p_doc);
+	TreeItem *_create_constructor_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::MethodDoc *p_doc);
+	TreeItem *_create_method_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::MethodDoc *p_doc);
+	TreeItem *_create_operator_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::MethodDoc *p_doc);
 	TreeItem *_create_signal_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::MethodDoc *p_doc);
 	TreeItem *_create_annotation_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const String &p_text, const DocData::MethodDoc *p_doc);
 	TreeItem *_create_constant_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::ConstantDoc *p_doc);
 	TreeItem *_create_property_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::PropertyDoc *p_doc);
 	TreeItem *_create_theme_property_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::ThemeItemDoc *p_doc);
-	TreeItem *_create_member_item(TreeItem *p_parent, const String &p_class_name, const String &p_icon, const String &p_name, const String &p_text, const String &p_type, const String &p_metatype, const String &p_tooltip, bool is_deprecated, bool is_experimental);
+	TreeItem *_create_member_item(TreeItem *p_parent, const String &p_class_name, const Ref<Texture2D> &p_icon, const String &p_name, const String &p_text, const String &p_type, const String &p_metatype, const String &p_tooltip, bool is_deprecated, bool is_experimental);
 
 public:
 	bool work(uint64_t slot = 100000);
