@@ -191,6 +191,7 @@ public:
 
 	signed char casecmp_to(const String &p_str) const;
 	signed char nocasecmp_to(const String &p_str) const;
+	signed char naturalcasecmp_to(const String &p_str) const;
 	signed char naturalnocasecmp_to(const String &p_str) const;
 
 	const CharType *c_str() const;

@@ -508,15 +508,15 @@ signed char String::nocasecmp_to(const String &p_str) const {
 	const CharType *this_str = c_str();
 
 	while (true) {
-		if (*that_str == 0 && *this_str == 0) {
-			return 0; //we're equal
-		} else if (*this_str == 0) {
-			return -1; //if this is empty, and the other one is not, then we're less.. I think?
-		} else if (*that_str == 0) {
-			return 1; //otherwise the other one is smaller..
-		} else if (_find_upper(*this_str) < _find_upper(*that_str)) { //more than
+		if (*that_str == 0 && *this_str == 0) { // If both strings are at the end, they are equal.
+			return 0;
+		} else if (*this_str == 0) { // If at the end of this, and not of other, we are less.
 			return -1;
-		} else if (_find_upper(*this_str) > _find_upper(*that_str)) { //less than
+		} else if (*that_str == 0) { // If at end of other, and not of this, we are greater.
+			return 1;
+		} else if (_find_upper(*this_str) < _find_upper(*that_str)) { // If current character in this is less, we are less.
+			return -1;
+		} else if (_find_upper(*this_str) > _find_upper(*that_str)) { // If current character in this is greater, we are greater.
 			return 1;
 		}
 
@@ -540,21 +540,115 @@ signed char String::casecmp_to(const String &p_str) const {
 	const CharType *this_str = c_str();
 
 	while (true) {
-		if (*that_str == 0 && *this_str == 0) {
-			return 0; //we're equal
-		} else if (*this_str == 0) {
-			return -1; //if this is empty, and the other one is not, then we're less.. I think?
-		} else if (*that_str == 0) {
-			return 1; //otherwise the other one is smaller..
-		} else if (*this_str < *that_str) { //more than
+		if (*that_str == 0 && *this_str == 0) { // If both strings are at the end, they are equal.
+			return 0;
+		} else if (*this_str == 0) { // If at the end of this, and not of other, we are less.
 			return -1;
-		} else if (*this_str > *that_str) { //less than
+		} else if (*that_str == 0) { // If at end of other, and not of this, we are greater.
+			return 1;
+		} else if (*this_str < *that_str) { // If current character in this is less, we are less.
+			return -1;
+		} else if (*this_str > *that_str) { // If current character in this is greater, we are greater.
 			return 1;
 		}
 
 		this_str++;
 		that_str++;
 	}
+}
+
+static _FORCE_INLINE_ signed char natural_cmp_common(const CharType *&r_this_str, const CharType *&r_that_str) {
+	// Keep ptrs to start of numerical sequences.
+	const CharType *this_substr = r_this_str;
+	const CharType *that_substr = r_that_str;
+
+	// Compare lengths of both numerical sequences, ignoring leading zeros.
+	while (IS_DIGIT(*r_this_str)) {
+		r_this_str++;
+	}
+	while (IS_DIGIT(*r_that_str)) {
+		r_that_str++;
+	}
+	while (*this_substr == '0') {
+		this_substr++;
+	}
+	while (*that_substr == '0') {
+		that_substr++;
+	}
+	int this_len = r_this_str - this_substr;
+	int that_len = r_that_str - that_substr;
+
+	if (this_len < that_len) {
+		return -1;
+	} else if (this_len > that_len) {
+		return 1;
+	}
+
+	// If lengths equal, compare lexicographically.
+	while (this_substr != r_this_str && that_substr != r_that_str) {
+		if (*this_substr < *that_substr) {
+			return -1;
+		} else if (*this_substr > *that_substr) {
+			return 1;
+		}
+		this_substr++;
+		that_substr++;
+	}
+
+	return 0;
+}
+
+signed char String::naturalcasecmp_to(const String &p_str) const {
+	const CharType *this_str = c_str();
+	const CharType *that_str = p_str.c_str();
+
+	if (this_str && that_str) {
+		while (*this_str == '.' || *that_str == '.') {
+			if (*this_str++ != '.') {
+				return 1;
+			}
+			if (*that_str++ != '.') {
+				return -1;
+			}
+			if (!*that_str) {
+				return 1;
+			}
+			if (!*this_str) {
+				return -1;
+			}
+		}
+
+		while (*this_str) {
+			if (!*that_str) {
+				return 1;
+			} else if (IS_DIGIT(*this_str)) {
+				if (!IS_DIGIT(*that_str)) {
+					return -1;
+				}
+
+				signed char ret = natural_cmp_common(this_str, that_str);
+				if (ret) {
+					return ret;
+				}
+			} else if (IS_DIGIT(*that_str)) {
+				return 1;
+			} else {
+				if (*this_str < *that_str) { // If current character in this is less, we are less.
+					return -1;
+				} else if (*this_str > *that_str) { // If current character in this is greater, we are greater.
+					return 1;
+				}
+
+				this_str++;
+				that_str++;
+			}
+		}
+		if (*that_str) {
+			return -1;
+		}
+	}
+
+	return 0;
 }
 
 signed char String::naturalnocasecmp_to(const String &p_str) const {
@@ -585,48 +679,16 @@ signed char String::naturalnocasecmp_to(const String &p_str) const {
 					return -1;
 				}
 
-				// Keep ptrs to start of numerical sequences
-				const CharType *this_substr = this_str;
-				const CharType *that_substr = that_str;
-
-				// Compare lengths of both numerical sequences, ignoring leading zeros
-				while (IS_DIGIT(*this_str)) {
-					this_str++;
-				}
-				while (IS_DIGIT(*that_str)) {
-					that_str++;
-				}
-				while (*this_substr == '0') {
-					this_substr++;
-				}
-				while (*that_substr == '0') {
-					that_substr++;
-				}
-				int this_len = this_str - this_substr;
-				int that_len = that_str - that_substr;
-
-				if (this_len < that_len) {
-					return -1;
-				} else if (this_len > that_len) {
-					return 1;
-				}
-
-				// If lengths equal, compare lexicographically
-				while (this_substr != this_str && that_substr != that_str) {
-					if (*this_substr < *that_substr) {
-						return -1;
-					} else if (*this_substr > *that_substr) {
-						return 1;
-					}
-					this_substr++;
-					that_substr++;
+				signed char ret = natural_cmp_common(this_str, that_str);
+				if (ret) {
+					return ret;
 				}
 			} else if (IS_DIGIT(*that_str)) {
 				return 1;
 			} else {
-				if (_find_upper(*this_str) < _find_upper(*that_str)) { //more than
+				if (_find_upper(*this_str) < _find_upper(*that_str)) { // If current character in this is less, we are less.
 					return -1;
-				} else if (_find_upper(*this_str) > _find_upper(*that_str)) { //less than
+				} else if (_find_upper(*this_str) > _find_upper(*that_str)) { // If current character in this is greater, we are greater.
 					return 1;
 				}
 
