@@ -331,9 +331,14 @@ TEST_CASE("[String] Case compare function test") {
 
 TEST_CASE("[String] Natural compare function test") {
 	String a = "img2.png";
+	String b = "img_2.png";
 
 	CHECK(a.nocasecmp_to("img10.png") > 0);
 	CHECK(a.naturalnocasecmp_to("img10.png") < 0);
+	CHECK(a.naturalcasecmp_to("img10.png") < 0);
+	CHECK(a.naturalcasecmp_to("Img2.png") > 0);
+	CHECK(b.naturalcasecmp_to("imga.png") < 0);
+	CHECK(b.naturalcasecmp_to("img_20.png") < 0);
 }
 
 TEST_CASE("[String] hex_encode_buffer") {
