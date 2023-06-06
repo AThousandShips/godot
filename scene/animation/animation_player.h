@@ -283,7 +283,7 @@ private:
 	bool end_reached = false;
 	bool end_notify = false;
 
-	String autoplay;
+	StringName autoplay;
 	bool reset_on_save = true;
 	AnimationProcessCallback process_callback = ANIMATION_PROCESS_IDLE;
 	AnimationMethodCallMode method_call_mode = ANIMATION_METHOD_CALL_DEFERRED;
@@ -379,10 +379,10 @@ public:
 	void pause();
 	void stop(bool p_keep_state = false);
 	bool is_playing() const;
-	String get_current_animation() const;
-	void set_current_animation(const String &p_anim);
-	String get_assigned_animation() const;
-	void set_assigned_animation(const String &p_anim);
+	StringName get_current_animation() const;
+	void set_current_animation(const StringName &p_anim);
+	StringName get_assigned_animation() const;
+	void set_assigned_animation(const StringName &p_anim);
 	void set_active(bool p_active);
 	bool is_active() const;
 	bool is_valid() const;
@@ -391,8 +391,8 @@ public:
 	float get_speed_scale() const;
 	float get_playing_speed() const;
 
-	void set_autoplay(const String &p_name);
-	String get_autoplay() const;
+	void set_autoplay(const StringName &p_name);
+	StringName get_autoplay() const;
 
 	void set_reset_on_save_enabled(bool p_enabled);
 	bool is_reset_on_save_enabled() const;

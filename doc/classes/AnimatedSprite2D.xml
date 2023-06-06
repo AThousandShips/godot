@@ -79,7 +79,7 @@
 		<member name="animation" type="StringName" setter="set_animation" getter="get_animation" default="&amp;&quot;default&quot;">
 			The current animation from the [member sprite_frames] resource. If this value is changed, the [member frame] counter and the [member frame_progress] are reset.
 		</member>
-		<member name="autoplay" type="String" setter="set_autoplay" getter="get_autoplay" default="&quot;&quot;">
+		<member name="autoplay" type="StringName" setter="set_autoplay" getter="get_autoplay" default="&amp;&quot;&quot;">
 			The key of the animation to play when the scene loads.
 		</member>
 		<member name="centered" type="bool" setter="set_centered" getter="is_centered" default="true">

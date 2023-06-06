@@ -38,7 +38,7 @@ class AnimatedSprite2D : public Node2D {
 	GDCLASS(AnimatedSprite2D, Node2D);
 
 	Ref<SpriteFrames> frames;
-	String autoplay;
+	StringName autoplay;
 
 	bool playing = false;
 	StringName animation = "default";
@@ -98,8 +98,8 @@ public:
 	void set_animation(const StringName &p_name);
 	StringName get_animation() const;
 
-	void set_autoplay(const String &p_name);
-	String get_autoplay() const;
+	void set_autoplay(const StringName &p_name);
+	StringName get_autoplay() const;
 
 	void set_frame(int p_frame);
 	int get_frame() const;

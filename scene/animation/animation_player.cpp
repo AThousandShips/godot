@@ -1760,8 +1760,8 @@ bool AnimationPlayer::is_playing() const {
 	return playing;
 }
 
-void AnimationPlayer::set_current_animation(const String &p_anim) {
-	if (p_anim == "[stop]" || p_anim.is_empty()) {
+void AnimationPlayer::set_current_animation(const StringName &p_anim) {
+	if (String(p_anim) == "[stop]" || p_anim == StringName()) {
 		stop();
 	} else if (!is_playing()) {
 		play(p_anim);
@@ -1773,11 +1773,11 @@ void AnimationPlayer::set_current_animation(const String &p_anim) {
 	}
 }
 
-String AnimationPlayer::get_current_animation() const {
-	return (is_playing() ? playback.assigned : "");
+StringName AnimationPlayer::get_current_animation() const {
+	return (is_playing() ? playback.assigned : StringName());
 }
 
-void AnimationPlayer::set_assigned_animation(const String &p_anim) {
+void AnimationPlayer::set_assigned_animation(const StringName &p_anim) {
 	if (is_playing()) {
 		float speed = playback.current.speed_scale;
 		play(p_anim, -1.0, speed, signbit(speed));
@@ -1789,7 +1789,7 @@ void AnimationPlayer::set_assigned_animation(const String &p_anim) {
 	}
 }
 
-String AnimationPlayer::get_assigned_animation() const {
+StringName AnimationPlayer::get_assigned_animation() const {
 	return playback.assigned;
 }
 
@@ -1959,7 +1959,7 @@ StringName AnimationPlayer::find_animation_library(const Ref<Animation> &p_anima
 	return StringName();
 }
 
-void AnimationPlayer::set_autoplay(const String &p_name) {
+void AnimationPlayer::set_autoplay(const StringName &p_name) {
 	if (is_inside_tree() && !Engine::get_singleton()->is_editor_hint()) {
 		WARN_PRINT("Setting autoplay after the node has been added to the scene has no effect.");
 	}
@@ -1967,7 +1967,7 @@ void AnimationPlayer::set_autoplay(const String &p_name) {
 	autoplay = p_name;
 }
 
-String AnimationPlayer::get_autoplay() const {
+StringName AnimationPlayer::get_autoplay() const {
 	return autoplay;
 }
 
