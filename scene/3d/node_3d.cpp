@@ -1006,7 +1006,13 @@ void Node3D::set_visibility_parent(const NodePath &p_path) {
 	ERR_MAIN_THREAD_GUARD;
 	visibility_parent_path = p_path;
 	if (is_inside_tree()) {
-		_update_visibility_parent(true);
+		if (Engine::get_singleton()->is_editor_hint()) {
+			// When in editor, the setter may be called as a result of node rename.
+			// It happens before the node actually changes its name, which triggers false warning.
+			callable_mp(this, &Node3D::_update_visibility_parent).bind(true).call_deferred();
+		} else {
+			_update_visibility_parent(true);
+		}
 	}
 }
 

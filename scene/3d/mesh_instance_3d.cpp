@@ -197,7 +197,13 @@ void MeshInstance3D::set_skin(const Ref<Skin> &p_skin) {
 	if (!is_inside_tree()) {
 		return;
 	}
-	_resolve_skeleton_path();
+	if (Engine::get_singleton()->is_editor_hint()) {
+		// When in editor, the setter may be called as a result of node rename.
+		// It happens before the node actually changes its name, which triggers false warning.
+		callable_mp(this, &MeshInstance3D::_resolve_skeleton_path).call_deferred();
+	} else {
+		_resolve_skeleton_path();
+	}
 }
 
 Ref<Skin> MeshInstance3D::get_skin() const {
@@ -209,7 +215,13 @@ void MeshInstance3D::set_skeleton_path(const NodePath &p_skeleton) {
 	if (!is_inside_tree()) {
 		return;
 	}
-	_resolve_skeleton_path();
+	if (Engine::get_singleton()->is_editor_hint()) {
+		// When in editor, the setter may be called as a result of node rename.
+		// It happens before the node actually changes its name, which triggers false warning.
+		callable_mp(this, &MeshInstance3D::_resolve_skeleton_path).call_deferred();
+	} else {
+		_resolve_skeleton_path();
+	}
 }
 
 NodePath MeshInstance3D::get_skeleton_path() {
