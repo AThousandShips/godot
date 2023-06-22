@@ -73,6 +73,8 @@ bool ResourceImporterTextureAtlas::get_option_visibility(const String &p_path, c
 		return false;
 	} else if (p_option == "simplification" && int(p_options["import_mode"]) != IMPORT_MODE_2D_MESH) {
 		return false;
+	} else if (p_option == "alpha_threshold" && int(p_options["import_mode"]) != IMPORT_MODE_2D_MESH) {
+		return false;
 	}
 
 	return true;
@@ -93,6 +95,7 @@ void ResourceImporterTextureAtlas::get_import_options(const String &p_path, List
 	r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "trim_alpha_border_from_region"), true));
 	r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "shrink_mask", PROPERTY_HINT_RANGE, "0,10,suffix:px"), 0));
 	r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "grow_mask", PROPERTY_HINT_RANGE, "0,10,suffix:px"), 0));
+	r_options->push_back(ImportOption(PropertyInfo(Variant::FLOAT, "alpha_threshold", PROPERTY_HINT_RANGE, "0.0,1,0.01"), 0.1));
 	r_options->push_back(ImportOption(PropertyInfo(Variant::FLOAT, "simplification", PROPERTY_HINT_RANGE, "0.0,10,0.01"), 0.0));
 }
 
@@ -261,10 +264,11 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
 			const int shrink_mask = options["shrink_mask"];
 			const int grow_mask = options["grow_mask"];
 			const float simplification = options["simplification"];
+			const float alpha_threshold = options["alpha_threshold"];
 
 			Ref<BitMap> bit_map;
 			bit_map.instantiate();
-			bit_map->create_from_image_alpha(image);
+			bit_map->create_from_image_alpha(image, alpha_threshold);
 
 			const Rect2 rect = Rect2(Vector2(), image->get_size());
 
