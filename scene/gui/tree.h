@@ -209,6 +209,7 @@ public:
 
 	/* check mode */
 	void set_checked(int p_column, bool p_checked);
+	void set_checked_recursive(int p_column, bool p_checked);
 	void set_indeterminate(int p_column, bool p_indeterminate);
 	bool is_checked(int p_column) const;
 	bool is_indeterminate(int p_column) const;
@@ -661,6 +662,7 @@ private:
 	bool hide_folding = false;
 
 	bool enable_recursive_folding = true;
+	bool enable_recursive_checking = true;
 
 	int _count_selected_items(TreeItem *p_from) const;
 	bool _is_branch_selected(TreeItem *p_from) const;
@@ -773,6 +775,9 @@ public:
 
 	void set_enable_recursive_folding(bool p_enable);
 	bool is_recursive_folding_enabled() const;
+
+	void set_enable_recursive_checking(bool p_enable);
+	bool is_recursive_checking_enabled() const;
 
 	void set_drop_mode_flags(int p_flags);
 	int get_drop_mode_flags() const;

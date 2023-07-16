@@ -919,6 +919,7 @@ ThemeItemImportTree::ThemeItemImportTree() {
 	import_items_tree = memnew(Tree);
 	import_items_tree->set_hide_root(true);
 	import_items_tree->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	import_items_tree->set_enable_recursive_checking(false);
 	import_main_hb->add_child(import_items_tree);
 	import_items_tree->connect("item_edited", callable_mp(this, &ThemeItemImportTree::_tree_item_edited));
 	import_items_tree->connect("check_propagated_to_item", callable_mp(this, &ThemeItemImportTree::_check_propagated_to_tree_item));

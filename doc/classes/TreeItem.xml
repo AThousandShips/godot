@@ -522,6 +522,13 @@
 				If [param checked] is [code]true[/code], the given [param column] is checked. Clears column's indeterminate status.
 			</description>
 		</method>
+		<method name="set_checked_recursive">
+			<return type="void" />
+			<param index="0" name="column" type="int" />
+			<param index="1" name="checked" type="bool" />
+			<description>
+			</description>
+		</method>
 		<method name="set_collapsed_recursive">
 			<return type="void" />
 			<param index="0" name="enable" type="bool" />

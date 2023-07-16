@@ -203,6 +203,21 @@ void TreeItem::set_checked(int p_column, bool p_checked) {
 	_changed_notify(p_column);
 }
 
+void TreeItem::set_checked_recursive(int p_column, bool p_checked) {
+	ERR_FAIL_INDEX(p_column, cells.size());
+
+	set_checked(p_column, p_checked);
+
+	TreeItem *current = get_first_child();
+	while (current) {
+		current->set_checked_recursive(p_column, p_checked);
+		// if (p_emit_signal) {
+		// 	current->tree->emit_signal(SNAME("check_propagated_to_item"), current, p_column);
+		// }
+		current = current->get_next();
+	}
+}
+
 void TreeItem::set_indeterminate(int p_column, bool p_indeterminate) {
 	ERR_FAIL_INDEX(p_column, cells.size());
 
@@ -1524,6 +1539,7 @@ void TreeItem::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("is_edit_multiline", "column"), &TreeItem::is_edit_multiline);
 
 	ClassDB::bind_method(D_METHOD("set_checked", "column", "checked"), &TreeItem::set_checked);
+	ClassDB::bind_method(D_METHOD("set_checked_recursive", "column", "checked"), &TreeItem::set_checked_recursive);
 	ClassDB::bind_method(D_METHOD("set_indeterminate", "column", "indeterminate"), &TreeItem::set_indeterminate);
 	ClassDB::bind_method(D_METHOD("is_checked", "column"), &TreeItem::is_checked);
 	ClassDB::bind_method(D_METHOD("is_indeterminate", "column"), &TreeItem::is_indeterminate);
@@ -2914,11 +2930,19 @@ int Tree::propagate_mouse_event(const Point2i &p_pos, int x_ofs, int y_ofs, int 
 				bring_up_editor = false; //checkboxes are not edited with editor
 				if (force_edit_checkbox_only_on_checkbox) {
 					if (x < theme_cache.checked->get_width()) {
-						p_item->set_checked(col, !c.checked);
+						if (enable_recursive_checking && p_mod->is_shift_pressed()) {
+							p_item->set_checked_recursive(col, !c.checked);
+						} else {
+							p_item->set_checked(col, !c.checked);
+						}
 						item_edited(col, p_item, p_button);
 					}
 				} else {
-					p_item->set_checked(col, !c.checked);
+					if (enable_recursive_checking && p_mod->is_shift_pressed()) {
+						p_item->set_checked_recursive(col, !c.checked);
+					} else {
+						p_item->set_checked(col, !c.checked);
+					}
 					item_edited(col, p_item, p_button);
 				}
 				click_handled = true;
@@ -5361,6 +5385,14 @@ bool Tree::is_recursive_folding_enabled() const {
 	return enable_recursive_folding;
 }
 
+void Tree::set_enable_recursive_checking(bool p_enable) {
+	enable_recursive_checking = p_enable;
+}
+
+bool Tree::is_recursive_checking_enabled() const {
+	return enable_recursive_checking;
+}
+
 void Tree::set_drop_mode_flags(int p_flags) {
 	if (drop_mode_flags == p_flags) {
 		return;
@@ -5477,6 +5509,9 @@ void Tree::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_hide_folding", "hide"), &Tree::set_hide_folding);
 	ClassDB::bind_method(D_METHOD("is_folding_hidden"), &Tree::is_folding_hidden);
 
+	ClassDB::bind_method(D_METHOD("set_enable_recursive_checking", "enable"), &Tree::set_enable_recursive_checking);
+	ClassDB::bind_method(D_METHOD("is_recursive_checking_enabled"), &Tree::is_recursive_checking_enabled);
+
 	ClassDB::bind_method(D_METHOD("set_enable_recursive_folding", "enable"), &Tree::set_enable_recursive_folding);
 	ClassDB::bind_method(D_METHOD("is_recursive_folding_enabled"), &Tree::is_recursive_folding_enabled);
 
@@ -5498,6 +5533,7 @@ void Tree::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "allow_rmb_select"), "set_allow_rmb_select", "get_allow_rmb_select");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "allow_search"), "set_allow_search", "get_allow_search");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "hide_folding"), "set_hide_folding", "is_folding_hidden");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "enable_recursive_checking"), "set_enable_recursive_checking", "is_recursive_checking_enabled");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "enable_recursive_folding"), "set_enable_recursive_folding", "is_recursive_folding_enabled");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "hide_root"), "set_hide_root", "is_root_hidden");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "drop_mode_flags", PROPERTY_HINT_FLAGS, "On Item,In Between"), "set_drop_mode_flags", "get_drop_mode_flags");
