@@ -464,18 +464,20 @@ void FileDialog::deselect_all() {
 	if (!tree->is_anything_selected()) {
 		get_ok_button()->set_disabled(_is_open_should_be_disabled());
 
-		switch (mode) {
-			case FILE_MODE_OPEN_FILE:
-			case FILE_MODE_OPEN_FILES:
-				set_ok_button_text(RTR("Open"));
-				break;
-			case FILE_MODE_OPEN_DIR:
-				set_ok_button_text(RTR("Select Current Folder"));
-				break;
-			case FILE_MODE_OPEN_ANY:
-			case FILE_MODE_SAVE_FILE:
-				// FIXME: Implement, or refactor to avoid duplication with set_mode
-				break;
+		if (mode_overrides_ok_button_text) {
+			switch (mode) {
+				case FILE_MODE_OPEN_FILE:
+				case FILE_MODE_OPEN_FILES:
+					set_ok_button_text(RTR("Open"));
+					break;
+				case FILE_MODE_OPEN_DIR:
+					set_ok_button_text(RTR("Select Current Folder"));
+					break;
+				case FILE_MODE_OPEN_ANY:
+				case FILE_MODE_SAVE_FILE:
+					// FIXME: Implement, or refactor to avoid duplication with set_mode.
+					break;
+			}
 		}
 	}
 }
@@ -493,7 +495,7 @@ void FileDialog::_tree_selected() {
 
 	if (!d["dir"]) {
 		file->set_text(d["name"]);
-	} else if (mode == FILE_MODE_OPEN_DIR) {
+	} else if (mode == FILE_MODE_OPEN_DIR && mode_overrides_ok_button_text) {
 		set_ok_button_text(RTR("Select This Folder"));
 	}
 
@@ -809,11 +811,27 @@ String FileDialog::get_root_subfolder() const {
 }
 
 void FileDialog::set_mode_overrides_title(bool p_override) {
+	if (mode_overrides_title == p_override) {
+		return;
+	}
 	mode_overrides_title = p_override;
+	notify_property_list_changed();
 }
 
 bool FileDialog::is_mode_overriding_title() const {
 	return mode_overrides_title;
+}
+
+void FileDialog::set_mode_overrides_ok_button_text(bool p_override) {
+	if (mode_overrides_ok_button_text == p_override) {
+		return;
+	}
+	mode_overrides_ok_button_text = p_override;
+	notify_property_list_changed();
+}
+
+bool FileDialog::is_mode_overriding_ok_button_text() const {
+	return mode_overrides_ok_button_text;
 }
 
 void FileDialog::set_file_mode(FileMode p_mode) {
@@ -824,35 +842,45 @@ void FileDialog::set_file_mode(FileMode p_mode) {
 	mode = p_mode;
 	switch (mode) {
 		case FILE_MODE_OPEN_FILE:
-			set_ok_button_text(RTR("Open"));
+			if (mode_overrides_ok_button_text) {
+				set_ok_button_text(RTR("Open"));
+			}
 			if (mode_overrides_title) {
 				set_title(TTRC("Open a File"));
 			}
 			makedir->hide();
 			break;
 		case FILE_MODE_OPEN_FILES:
-			set_ok_button_text(RTR("Open"));
+			if (mode_overrides_ok_button_text) {
+				set_ok_button_text(RTR("Open"));
+			}
 			if (mode_overrides_title) {
 				set_title(TTRC("Open File(s)"));
 			}
 			makedir->hide();
 			break;
 		case FILE_MODE_OPEN_DIR:
-			set_ok_button_text(RTR("Select Current Folder"));
+			if (mode_overrides_ok_button_text) {
+				set_ok_button_text(RTR("Select Current Folder"));
+			}
 			if (mode_overrides_title) {
 				set_title(TTRC("Open a Directory"));
 			}
 			makedir->show();
 			break;
 		case FILE_MODE_OPEN_ANY:
-			set_ok_button_text(RTR("Open"));
+			if (mode_overrides_ok_button_text) {
+				set_ok_button_text(RTR("Open"));
+			}
 			if (mode_overrides_title) {
 				set_title(TTRC("Open a File or Directory"));
 			}
 			makedir->show();
 			break;
 		case FILE_MODE_SAVE_FILE:
-			set_ok_button_text(RTR("Save"));
+			if (mode_overrides_ok_button_text) {
+				set_ok_button_text(RTR("Save"));
+			}
 			if (mode_overrides_title) {
 				set_title(TTRC("Save a File"));
 			}
@@ -985,6 +1013,15 @@ void FileDialog::_update_drives(bool p_select) {
 	}
 }
 
+void FileDialog::_validate_property(PropertyInfo &p_property) const {
+	// If overriding these, do not store them.
+	if (p_property.name == "title" && mode_overrides_title) {
+		p_property.usage = PROPERTY_USAGE_NONE;
+	} else if (p_property.name == "ok_button_text" && mode_overrides_ok_button_text) {
+		p_property.usage = PROPERTY_USAGE_NONE;
+	}
+}
+
 bool FileDialog::default_show_hidden_files = false;
 
 void FileDialog::_bind_methods() {
@@ -1002,6 +1039,8 @@ void FileDialog::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_current_path", "path"), &FileDialog::set_current_path);
 	ClassDB::bind_method(D_METHOD("set_mode_overrides_title", "override"), &FileDialog::set_mode_overrides_title);
 	ClassDB::bind_method(D_METHOD("is_mode_overriding_title"), &FileDialog::is_mode_overriding_title);
+	ClassDB::bind_method(D_METHOD("set_mode_overrides_ok_button_text", "override"), &FileDialog::set_mode_overrides_ok_button_text);
+	ClassDB::bind_method(D_METHOD("is_mode_overriding_ok_button_text"), &FileDialog::is_mode_overriding_ok_button_text);
 	ClassDB::bind_method(D_METHOD("set_file_mode", "mode"), &FileDialog::set_file_mode);
 	ClassDB::bind_method(D_METHOD("get_file_mode"), &FileDialog::get_file_mode);
 	ClassDB::bind_method(D_METHOD("get_vbox"), &FileDialog::get_vbox);
@@ -1019,6 +1058,7 @@ void FileDialog::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("invalidate"), &FileDialog::invalidate);
 
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "mode_overrides_title"), "set_mode_overrides_title", "is_mode_overriding_title");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "mode_overrides_ok_button_text"), "set_mode_overrides_ok_button_text", "is_mode_overriding_ok_button_text");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "file_mode", PROPERTY_HINT_ENUM, "Open File,Open Files,Open Folder,Open Any,Save"), "set_file_mode", "get_file_mode");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "access", PROPERTY_HINT_ENUM, "Resources,User Data,File System"), "set_access", "get_access");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "root_subfolder"), "set_root_subfolder", "get_root_subfolder");

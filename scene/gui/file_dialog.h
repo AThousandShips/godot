@@ -100,6 +100,7 @@ private:
 	void _push_history();
 
 	bool mode_overrides_title = true;
+	bool mode_overrides_ok_button_text = true;
 	String root_subfolder;
 	String root_prefix;
 
@@ -170,6 +171,7 @@ protected:
 
 	void _notification(int p_what);
 	static void _bind_methods();
+	void _validate_property(PropertyInfo &p_property) const;
 	//bind helpers
 public:
 	virtual void popup(const Rect2i &p_rect = Rect2i()) override;
@@ -195,6 +197,9 @@ public:
 
 	void set_mode_overrides_title(bool p_override);
 	bool is_mode_overriding_title() const;
+
+	void set_mode_overrides_ok_button_text(bool p_override);
+	bool is_mode_overriding_ok_button_text() const;
 
 	void set_use_native_dialog(bool p_native);
 	bool get_use_native_dialog() const;
