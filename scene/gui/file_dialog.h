@@ -103,6 +103,7 @@ private:
 	void _push_history();
 
 	bool mode_overrides_title = true;
+	bool mode_overrides_ok_button_text = true;
 	String root_subfolder;
 	String root_prefix;
 
@@ -229,6 +230,9 @@ public:
 
 	void set_mode_overrides_title(bool p_override);
 	bool is_mode_overriding_title() const;
+
+	void set_mode_overrides_ok_button_text(bool p_override);
+	bool is_mode_overriding_ok_button_text() const;
 
 	void set_use_native_dialog(bool p_native);
 	bool get_use_native_dialog() const;
