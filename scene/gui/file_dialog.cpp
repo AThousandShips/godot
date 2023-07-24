@@ -163,6 +163,10 @@ void FileDialog::_validate_property(PropertyInfo &p_property) const {
 	if (p_property.name == "dialog_text") {
 		// File dialogs have a custom layout, and dialog nodes can't have both a text and a layout.
 		p_property.usage = PROPERTY_USAGE_NONE;
+	} else if (p_property.name == "ok_button_text") {
+		p_property.usage = PROPERTY_USAGE_NONE;
+	} else if (p_property.name == "title" && mode_overrides_title) {
+		p_property.usage = PROPERTY_USAGE_NONE;
 	}
 }
 
@@ -873,7 +877,11 @@ String FileDialog::get_root_subfolder() const {
 }
 
 void FileDialog::set_mode_overrides_title(bool p_override) {
+	if (mode_overrides_title == p_override) {
+		return;
+	}
 	mode_overrides_title = p_override;
+	notify_property_list_changed();
 }
 
 bool FileDialog::is_mode_overriding_title() const {
