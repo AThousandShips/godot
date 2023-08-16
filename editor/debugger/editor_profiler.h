@@ -173,6 +173,7 @@ public:
 	Vector<Vector<String>> get_data_as_csv() const;
 
 	EditorProfiler();
+	~EditorProfiler();
 };
 
 #endif // EDITOR_PROFILER_H

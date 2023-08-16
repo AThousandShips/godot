@@ -89,6 +89,8 @@ public:
 
 	void set_visibility_range_fade_mode(GeometryInstance3D::VisibilityRangeFadeMode p_mode);
 	GeometryInstance3D::VisibilityRangeFadeMode get_visibility_range_fade_mode() const;
+
+	~ImporterMeshInstance3D();
 };
 
 #endif // IMPORTER_MESH_INSTANCE_3D_H

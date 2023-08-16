@@ -590,6 +590,7 @@ public:
 	virtual String to_string() override;
 
 	InputEventShortcut();
+	~InputEventShortcut();
 };
 
 #endif // INPUT_EVENT_H

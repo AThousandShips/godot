@@ -1904,3 +1904,8 @@ String InputEventShortcut::to_string() {
 InputEventShortcut::InputEventShortcut() {
 	pressed = true;
 }
+
+InputEventShortcut::~InputEventShortcut() {
+	// Do not remove, kept to prevent forward declaration issues, see:
+	// https://github.com/godotengine/godot/pull/80330
+}

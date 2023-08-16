@@ -305,6 +305,7 @@ public:
 	virtual PackedStringArray get_configuration_warnings() const override;
 
 	LightmapGI();
+	~LightmapGI();
 };
 
 VARIANT_ENUM_CAST(LightmapGI::BakeQuality);

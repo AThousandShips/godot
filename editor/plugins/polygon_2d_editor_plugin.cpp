@@ -1547,6 +1547,11 @@ Polygon2DEditor::Polygon2DEditor() {
 	add_child(error);
 }
 
+Polygon2DEditor::~Polygon2DEditor() {
+	// Do not remove, kept to prevent forward declaration issues, see:
+	// https://github.com/godotengine/godot/pull/80330
+}
+
 Polygon2DEditorPlugin::Polygon2DEditorPlugin() :
 		AbstractPolygon2DEditorPlugin(memnew(Polygon2DEditor), "Polygon2D") {
 }

@@ -169,6 +169,7 @@ public:
 	virtual Category get_category() const override { return CATEGORY_PARTICLE; }
 
 	VisualShaderNodeParticleMeshEmitter();
+	~VisualShaderNodeParticleMeshEmitter();
 };
 
 class VisualShaderNodeParticleMultiplyByAxisAngle : public VisualShaderNode {

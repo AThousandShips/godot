@@ -175,3 +175,8 @@ void ImporterMeshInstance3D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "visibility_range_end_margin", PROPERTY_HINT_RANGE, "0.0,4096.0,0.01,or_greater,suffix:m"), "set_visibility_range_end_margin", "get_visibility_range_end_margin");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "visibility_range_fade_mode", PROPERTY_HINT_ENUM, "Disabled,Self,Dependencies"), "set_visibility_range_fade_mode", "get_visibility_range_fade_mode");
 }
+
+ImporterMeshInstance3D::~ImporterMeshInstance3D() {
+	// Do not remove, kept to prevent forward declaration issues, see:
+	// https://github.com/godotengine/godot/pull/80330
+}

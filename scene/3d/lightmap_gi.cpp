@@ -1664,3 +1664,8 @@ void LightmapGI::_bind_methods() {
 
 LightmapGI::LightmapGI() {
 }
+
+LightmapGI::~LightmapGI() {
+	// Do not remove, kept to prevent forward declaration issues, see:
+	// https://github.com/godotengine/godot/pull/80330
+}

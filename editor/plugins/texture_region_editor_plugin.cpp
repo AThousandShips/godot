@@ -1224,6 +1224,11 @@ TextureRegionEditor::TextureRegionEditor() {
 	texture_overlay->add_child(hscroll);
 }
 
+TextureRegionEditor::~TextureRegionEditor() {
+	// Do not remove, kept to prevent forward declaration issues, see:
+	// https://github.com/godotengine/godot/pull/80330
+}
+
 ////////////////////////
 
 bool EditorInspectorPluginTextureRegion::can_handle(Object *p_object) {
