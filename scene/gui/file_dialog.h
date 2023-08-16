@@ -189,6 +189,8 @@ protected:
 	bool _get(const StringName &p_name, Variant &r_ret) const;
 	void _get_property_list(List<PropertyInfo> *p_list) const;
 	static void _bind_methods();
+	void _validate_property(PropertyInfo &p_property) const;
+	//bind helpers
 
 public:
 	virtual void set_visible(bool p_visible) override;
