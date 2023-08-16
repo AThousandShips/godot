@@ -58,6 +58,8 @@ protected:
 	GDVIRTUAL2(_set_parameter, const StringName &, const Variant &)
 	GDVIRTUAL1RC(Variant, _get_parameter, const StringName &)
 
+	PackedVector2Array _mix_bind(float p_rate_scale, int p_frames);
+
 public:
 	virtual void start(double p_from_pos = 0.0);
 	virtual void stop();
