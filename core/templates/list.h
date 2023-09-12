@@ -133,6 +133,7 @@ public:
 		}
 
 		_FORCE_INLINE_ Element() {}
+		_FORCE_INLINE_ ~Element() {}
 	};
 
 	typedef T ValueType;
