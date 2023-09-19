@@ -1046,7 +1046,10 @@ PackedByteArray VariantUtilityFunctions::var_to_bytes(const Variant &p_var) {
 	}
 
 	PackedByteArray barr;
-	barr.resize(len);
+	err = barr.resize(len);
+	if (err != OK) {
+		return PackedByteArray();
+	}
 	{
 		uint8_t *w = barr.ptrw();
 		err = encode_variant(p_var, w, len, false);
@@ -1066,7 +1069,10 @@ PackedByteArray VariantUtilityFunctions::var_to_bytes_with_objects(const Variant
 	}
 
 	PackedByteArray barr;
-	barr.resize(len);
+	err = barr.resize(len);
+	if (err != OK) {
+		return PackedByteArray();
+	}
 	{
 		uint8_t *w = barr.ptrw();
 		err = encode_variant(p_var, w, len, true);

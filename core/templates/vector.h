@@ -152,7 +152,8 @@ public:
 		if (is_empty()) {
 			return ret;
 		}
-		ret.resize(size() * sizeof(T));
+		Error err = ret.resize(size() * sizeof(T));
+		ERR_FAIL_COND_V(err, Vector<uint8_t>());
 		memcpy(ret.ptrw(), ptr(), sizeof(T) * size());
 		return ret;
 	}
@@ -174,7 +175,8 @@ public:
 		ERR_FAIL_COND_V(begin > end, result);
 
 		int result_size = end - begin;
-		result.resize(result_size);
+		Error err = result.resize(result_size);
+		ERR_FAIL_COND_V(err, Vector<T>());
 
 		const T *const r = ptr();
 		T *const w = result.ptrw();
@@ -305,7 +307,8 @@ void Vector<T>::append_array(Vector<T> p_other) {
 		return;
 	}
 	const int bs = size();
-	resize(bs + ds);
+	Error err = resize(bs + ds);
+	ERR_FAIL_COND(err);
 	for (int i = 0; i < ds; ++i) {
 		ptrw()[bs + i] = p_other[i];
 	}

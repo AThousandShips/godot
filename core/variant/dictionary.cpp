@@ -285,7 +285,8 @@ Array Dictionary::keys() const {
 		return varr;
 	}
 
-	varr.resize(size());
+	Error err = varr.resize(size());
+	ERR_FAIL_COND_V(err, Array());
 
 	int i = 0;
 	for (const KeyValue<Variant, Variant> &E : _p->variant_map) {
@@ -302,7 +303,8 @@ Array Dictionary::values() const {
 		return varr;
 	}
 
-	varr.resize(size());
+	Error err = varr.resize(size());
+	ERR_FAIL_COND_V(err, Array());
 
 	int i = 0;
 	for (const KeyValue<Variant, Variant> &E : _p->variant_map) {

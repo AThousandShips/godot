@@ -230,7 +230,8 @@ void Array::assign(const Array &p_array) {
 	}
 
 	Vector<Variant> array;
-	array.resize(size);
+	Error err = array.resize(size);
+	ERR_FAIL_COND(err != OK);
 	Variant *data = array.ptrw();
 
 	if (source_typed.type == Variant::NIL && typed.type != Variant::OBJECT) {
@@ -435,7 +436,8 @@ Array Array::recursive_duplicate(bool p_deep, int recursion_count) const {
 	if (p_deep) {
 		recursion_count++;
 		int element_count = size();
-		new_arr.resize(element_count);
+		Error err = new_arr.resize(element_count);
+		ERR_FAIL_COND_V(err != OK, Array());
 		for (int i = 0; i < element_count; i++) {
 			new_arr[i] = get(i).recursive_duplicate(true, recursion_count);
 		}
@@ -471,7 +473,8 @@ Array Array::slice(int p_begin, int p_end, int p_step, bool p_deep) const {
 	ERR_FAIL_COND_V_MSG(p_step < 0 && begin < end, result, "Slice step is negative, but bounds are increasing.");
 
 	int result_size = (end - begin) / p_step + (((end - begin) % p_step != 0) ? 1 : 0);
-	result.resize(result_size);
+	Error err = result.resize(result_size);
+	ERR_FAIL_COND_V(err != OK, Array());
 
 	for (int src_idx = begin, dest_idx = 0; dest_idx < result_size; ++dest_idx) {
 		result[dest_idx] = p_deep ? get(src_idx).duplicate(true) : get(src_idx);
@@ -483,7 +486,8 @@ Array Array::slice(int p_begin, int p_end, int p_step, bool p_deep) const {
 
 Array Array::filter(const Callable &p_callable) const {
 	Array new_arr;
-	new_arr.resize(size());
+	Error err = new_arr.resize(size());
+	ERR_FAIL_COND_V(err != OK, Array());
 	new_arr._p->typed = _p->typed;
 	int accepted_count = 0;
 
@@ -504,14 +508,16 @@ Array Array::filter(const Callable &p_callable) const {
 		}
 	}
 
-	new_arr.resize(accepted_count);
+	err = new_arr.resize(accepted_count);
+	ERR_FAIL_COND_V(err != OK, Array());
 
 	return new_arr;
 }
 
 Array Array::map(const Callable &p_callable) const {
 	Array new_arr;
-	new_arr.resize(size());
+	Error err = new_arr.resize(size());
+	ERR_FAIL_COND_V(err != OK, Array());
 
 	const Variant *argptrs[1];
 	for (int i = 0; i < size(); i++) {

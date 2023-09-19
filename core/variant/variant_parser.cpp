@@ -1153,7 +1153,10 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			Vector<uint8_t> arr;
 			{
 				int len = args.size();
-				arr.resize(len);
+				err = arr.resize(len);
+				if (err) {
+					return err;
+				}
 				uint8_t *w = arr.ptrw();
 				for (int i = 0; i < len; i++) {
 					w[i] = args[i];
@@ -1171,7 +1174,10 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			Vector<int32_t> arr;
 			{
 				int32_t len = args.size();
-				arr.resize(len);
+				err = arr.resize(len);
+				if (err) {
+					return err;
+				}
 				int32_t *w = arr.ptrw();
 				for (int32_t i = 0; i < len; i++) {
 					w[i] = int32_t(args[i]);
@@ -1189,7 +1195,10 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			Vector<int64_t> arr;
 			{
 				int64_t len = args.size();
-				arr.resize(len);
+				err = arr.resize(len);
+				if (err) {
+					return err;
+				}
 				int64_t *w = arr.ptrw();
 				for (int64_t i = 0; i < len; i++) {
 					w[i] = int64_t(args[i]);
@@ -1207,7 +1216,10 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			Vector<float> arr;
 			{
 				int len = args.size();
-				arr.resize(len);
+				err = arr.resize(len);
+				if (err) {
+					return err;
+				}
 				float *w = arr.ptrw();
 				for (int i = 0; i < len; i++) {
 					w[i] = args[i];
@@ -1225,7 +1237,10 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			Vector<double> arr;
 			{
 				int len = args.size();
-				arr.resize(len);
+				err = arr.resize(len);
+				if (err) {
+					return err;
+				}
 				double *w = arr.ptrw();
 				for (int i = 0; i < len; i++) {
 					w[i] = args[i];
@@ -1271,7 +1286,10 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			Vector<String> arr;
 			{
 				int len = cs.size();
-				arr.resize(len);
+				Error err = arr.resize(len);
+				if (err) {
+					return err;
+				}
 				String *w = arr.ptrw();
 				for (int i = 0; i < len; i++) {
 					w[i] = cs[i];
@@ -1289,7 +1307,10 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			Vector<Vector2> arr;
 			{
 				int len = args.size() / 2;
-				arr.resize(len);
+				err = arr.resize(len);
+				if (err) {
+					return err;
+				}
 				Vector2 *w = arr.ptrw();
 				for (int i = 0; i < len; i++) {
 					w[i] = Vector2(args[i * 2 + 0], args[i * 2 + 1]);
@@ -1307,7 +1328,10 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			Vector<Vector3> arr;
 			{
 				int len = args.size() / 3;
-				arr.resize(len);
+				err = arr.resize(len);
+				if (err) {
+					return err;
+				}
 				Vector3 *w = arr.ptrw();
 				for (int i = 0; i < len; i++) {
 					w[i] = Vector3(args[i * 3 + 0], args[i * 3 + 1], args[i * 3 + 2]);
@@ -1325,7 +1349,10 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			Vector<Color> arr;
 			{
 				int len = args.size() / 4;
-				arr.resize(len);
+				err = arr.resize(len);
+				if (err) {
+					return err;
+				}
 				Color *w = arr.ptrw();
 				for (int i = 0; i < len; i++) {
 					w[i] = Color(args[i * 4 + 0], args[i * 4 + 1], args[i * 4 + 2], args[i * 4 + 3]);

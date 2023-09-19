@@ -106,7 +106,8 @@ bool Char16String::operator<(const Char16String &p_right) const {
 
 Char16String &Char16String::operator+=(char16_t p_char) {
 	const int lhs_len = length();
-	resize(lhs_len + 2);
+	Error err = resize(lhs_len + 2);
+	ERR_FAIL_COND_V(err != OK, *this);
 
 	char16_t *dst = ptrw();
 	dst[lhs_len] = p_char;
@@ -176,7 +177,8 @@ bool CharString::operator==(const CharString &p_right) const {
 
 CharString &CharString::operator+=(char p_char) {
 	const int lhs_len = length();
-	resize(lhs_len + 2);
+	Error err = resize(lhs_len + 2);
+	ERR_FAIL_COND_V(err != OK, *this);
 
 	char *dst = ptrw();
 	dst[lhs_len] = p_char;
@@ -300,7 +302,8 @@ void String::copy_from(const char *p_cstr) {
 		return;
 	}
 
-	resize(len + 1); // include 0
+	Error err = resize(len + 1); // include 0
+	ERR_FAIL_COND_MSG(err != OK, "Failed to copy string.");
 
 	char32_t *dst = this->ptrw();
 
@@ -333,7 +336,8 @@ void String::copy_from(const char *p_cstr, const int p_clip_to) {
 		return;
 	}
 
-	resize(len + 1); // include 0
+	Error err = resize(len + 1); // include 0
+	ERR_FAIL_COND_MSG(err != OK, "Failed to copy string.");
 
 	char32_t *dst = this->ptrw();
 
@@ -375,7 +379,8 @@ void String::copy_from(const char32_t &p_char) {
 		return;
 	}
 
-	resize(2);
+	Error err = resize(2);
+	ERR_FAIL_COND_MSG(err != OK, "Failed to copy string.");
 
 	char32_t *dst = ptrw();
 
@@ -437,7 +442,8 @@ void String::copy_from(const char32_t *p_cstr, const int p_clip_to) {
 // p_length > 0
 // p_length <= p_char strlen
 void String::copy_from_unchecked(const char32_t *p_char, const int p_length) {
-	resize(p_length + 1);
+	Error err = resize(p_length + 1);
+	ERR_FAIL_COND_MSG(err != OK, "Failed to copy string.");
 	char32_t *dst = ptrw();
 	dst[p_length] = 0;
 
@@ -519,7 +525,8 @@ String &String::operator+=(const String &p_str) {
 		return *this;
 	}
 
-	resize(lhs_len + rhs_len + 1);
+	Error err = resize(lhs_len + rhs_len + 1);
+	ERR_FAIL_COND_V(err != OK, *this);
 
 	const char32_t *src = p_str.ptr();
 	char32_t *dst = ptrw() + lhs_len;
@@ -539,7 +546,8 @@ String &String::operator+=(const char *p_str) {
 	const int lhs_len = length();
 	const size_t rhs_len = strlen(p_str);
 
-	resize(lhs_len + rhs_len + 1);
+	Error err = resize(lhs_len + rhs_len + 1);
+	ERR_FAIL_COND_V(err != OK, *this);
 
 	char32_t *dst = ptrw() + lhs_len;
 
@@ -579,7 +587,8 @@ String &String::operator+=(char32_t p_char) {
 	}
 
 	const int lhs_len = length();
-	resize(lhs_len + 2);
+	Error err = resize(lhs_len + 2);
+	ERR_FAIL_COND_V(err != OK, *this);
 	char32_t *dst = ptrw();
 
 	if ((p_char & 0xfffff800) == 0xd800) {
@@ -1589,7 +1598,8 @@ String String::num_int64(int64_t p_num, int base, bool capitalize_hex) {
 		chars++;
 	}
 	String s;
-	s.resize(chars + 1);
+	Error err = s.resize(chars + 1);
+	ERR_FAIL_COND_V(err != OK, String());
 	char32_t *c = s.ptrw();
 	c[chars] = 0;
 	n = p_num;
@@ -1622,7 +1632,8 @@ String String::num_uint64(uint64_t p_num, int base, bool capitalize_hex) {
 	} while (n);
 
 	String s;
-	s.resize(chars + 1);
+	Error err = s.resize(chars + 1);
+	ERR_FAIL_COND_V(err != OK, String());
 	char32_t *c = s.ptrw();
 	c[chars] = 0;
 	n = p_num;
@@ -1737,7 +1748,8 @@ Vector<uint8_t> String::hex_decode() const {
 
 	Vector<uint8_t> out;
 	int len = length() / 2;
-	out.resize(len);
+	Error err = out.resize(len);
+	ERR_FAIL_COND_V(err != OK, Vector<uint8_t>());
 	for (int i = 0; i < len; i++) {
 		char32_t c;
 		HEX_TO_BYTE(first, i * 2);
@@ -1762,7 +1774,8 @@ CharString String::ascii(bool p_allow_extended) const {
 	}
 
 	CharString cs;
-	cs.resize(size());
+	Error err = cs.resize(size());
+	ERR_FAIL_COND_V(err != OK, CharString());
 
 	for (int i = 0; i < size(); i++) {
 		char32_t c = operator[](i);
@@ -1875,7 +1888,10 @@ Error String::parse_utf8(const char *p_utf8, int p_len, bool p_skip_cr) {
 		return OK; // empty string
 	}
 
-	resize(str_size + 1);
+	Error err = resize(str_size + 1);
+	if (err != OK) {
+		return err;
+	}
 	char32_t *dst = ptrw();
 	dst[str_size] = 0;
 
@@ -1991,7 +2007,8 @@ CharString String::utf8() const {
 		return utf8s;
 	}
 
-	utf8s.resize(fl + 1);
+	Error err = utf8s.resize(fl + 1);
+	ERR_FAIL_COND_V(err != OK, CharString());
 	uint8_t *cdst = (uint8_t *)utf8s.get_data();
 
 #define APPEND_CHAR(m_c) *(cdst++) = m_c
@@ -2120,7 +2137,10 @@ Error String::parse_utf16(const char16_t *p_utf16, int p_len) {
 		return OK; // empty string
 	}
 
-	resize(str_size + 1);
+	Error err = resize(str_size + 1);
+	if (err != OK) {
+		return err;
+	}
 	char32_t *dst = ptrw();
 	dst[str_size] = 0;
 
@@ -2190,7 +2210,8 @@ Char16String String::utf16() const {
 		return utf16s;
 	}
 
-	utf16s.resize(fl + 1);
+	Error err = utf16s.resize(fl + 1);
+	ERR_FAIL_COND_V(err != OK, Char16String());
 	uint16_t *cdst = (uint16_t *)utf16s.get_data();
 
 #define APPEND_CHAR(m_c) *(cdst++) = m_c
@@ -2882,7 +2903,8 @@ Vector<uint8_t> String::md5_buffer() const {
 	CryptoCore::md5((unsigned char *)cs.ptr(), cs.length(), hash);
 
 	Vector<uint8_t> ret;
-	ret.resize(16);
+	Error err = ret.resize(16);
+	ERR_FAIL_COND_V(err != OK, Vector<uint8_t>());
 	for (int i = 0; i < 16; i++) {
 		ret.write[i] = hash[i];
 	}
@@ -2895,7 +2917,8 @@ Vector<uint8_t> String::sha1_buffer() const {
 	CryptoCore::sha1((unsigned char *)cs.ptr(), cs.length(), hash);
 
 	Vector<uint8_t> ret;
-	ret.resize(20);
+	Error err = ret.resize(20);
+	ERR_FAIL_COND_V(err != OK, Vector<uint8_t>());
 	for (int i = 0; i < 20; i++) {
 		ret.write[i] = hash[i];
 	}
@@ -2909,7 +2932,8 @@ Vector<uint8_t> String::sha256_buffer() const {
 	CryptoCore::sha256((unsigned char *)cs.ptr(), cs.length(), hash);
 
 	Vector<uint8_t> ret;
-	ret.resize(32);
+	Error err = ret.resize(32);
+	ERR_FAIL_COND_V(err != OK, Vector<uint8_t>());
 	for (int i = 0; i < 32; i++) {
 		ret.write[i] = hash[i];
 	}
@@ -3420,7 +3444,8 @@ Vector<String> String::bigrams() const {
 	if (n_pairs <= 0) {
 		return b;
 	}
-	b.resize(n_pairs);
+	Error err = b.resize(n_pairs);
+	ERR_FAIL_COND_V(err != OK, Vector<String>());
 	for (int i = 0; i < n_pairs; i++) {
 		b.write[i] = substr(i, 2);
 	}
@@ -3621,7 +3646,8 @@ String String::repeat(int p_count) const {
 
 	int len = length();
 	String new_string = *this;
-	new_string.resize(p_count * len + 1);
+	Error err = new_string.resize(p_count * len + 1);
+	ERR_FAIL_COND_V(err != OK, String());
 
 	char32_t *dst = new_string.ptrw();
 	int offset = 1;
@@ -3641,7 +3667,8 @@ String String::reverse() const {
 		return *this;
 	}
 	String new_string;
-	new_string.resize(len + 1);
+	Error err = new_string.resize(len + 1);
+	ERR_FAIL_COND_V(err != OK, String());
 
 	const char32_t *src = ptr();
 	char32_t *dst = new_string.ptrw();
@@ -4254,7 +4281,8 @@ String String::xml_unescape() const {
 	if (len == 0) {
 		return String();
 	}
-	str.resize(len + 1);
+	Error err = str.resize(len + 1);
+	ERR_FAIL_COND_V(err != OK, String());
 	_xml_unescape(get_data(), l, str.ptrw());
 	str[len] = 0;
 	return str;
@@ -5178,7 +5206,8 @@ Vector<uint8_t> String::to_ascii_buffer() const {
 
 	Vector<uint8_t> retval;
 	size_t len = charstr.length();
-	retval.resize(len);
+	Error err = retval.resize(len);
+	ERR_FAIL_COND_V(err != OK, Vector<uint8_t>());
 	uint8_t *w = retval.ptrw();
 	memcpy(w, charstr.ptr(), len);
 
@@ -5194,7 +5223,8 @@ Vector<uint8_t> String::to_utf8_buffer() const {
 
 	Vector<uint8_t> retval;
 	size_t len = charstr.length();
-	retval.resize(len);
+	Error err = retval.resize(len);
+	ERR_FAIL_COND_V(err != OK, Vector<uint8_t>());
 	uint8_t *w = retval.ptrw();
 	memcpy(w, charstr.ptr(), len);
 
@@ -5210,7 +5240,8 @@ Vector<uint8_t> String::to_utf16_buffer() const {
 
 	Vector<uint8_t> retval;
 	size_t len = charstr.length() * sizeof(char16_t);
-	retval.resize(len);
+	Error err = retval.resize(len);
+	ERR_FAIL_COND_V(err != OK, Vector<uint8_t>());
 	uint8_t *w = retval.ptrw();
 	memcpy(w, (const void *)charstr.ptr(), len);
 
@@ -5225,7 +5256,8 @@ Vector<uint8_t> String::to_utf32_buffer() const {
 
 	Vector<uint8_t> retval;
 	size_t len = s->length() * sizeof(char32_t);
-	retval.resize(len);
+	Error err = retval.resize(len);
+	ERR_FAIL_COND_V(err != OK, Vector<uint8_t>());
 	uint8_t *w = retval.ptrw();
 	memcpy(w, (const void *)s->ptr(), len);
 
