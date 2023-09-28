@@ -152,7 +152,7 @@ Error MultiplayerAPI::decode_and_decompress_variant(Variant &r_variant, const ui
 	uint8_t type = buf[0] & VARIANT_META_TYPE_MASK;
 	uint8_t encode_mode = buf[0] & VARIANT_META_EMODE_MASK;
 
-	ERR_FAIL_COND_V(type >= Variant::VARIANT_MAX, ERR_INVALID_DATA);
+	ERR_FAIL_UNSIGNED_INDEX_V(type, Variant::VARIANT_MAX, ERR_INVALID_DATA);
 
 	switch (type) {
 		case Variant::BOOL: {

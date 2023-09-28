@@ -253,7 +253,7 @@ void Utilities::capture_timestamps_begin() {
 }
 
 void Utilities::capture_timestamp(const String &p_name) {
-	ERR_FAIL_COND(frames[frame].timestamp_count >= max_timestamp_query_elements);
+	ERR_FAIL_UNSIGNED_INDEX(frames[frame].timestamp_count, max_timestamp_query_elements);
 
 #ifdef GL_API_ENABLED
 	if (RasterizerGLES3::is_gles_over_gl()) {

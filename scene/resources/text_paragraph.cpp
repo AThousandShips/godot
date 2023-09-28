@@ -301,7 +301,7 @@ RID TextParagraph::get_line_rid(int p_line) const {
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)lines_rid.size(), RID());
+	ERR_FAIL_INDEX_V(p_line, (int)lines_rid.size(), RID());
 	return lines_rid[p_line];
 }
 
@@ -571,7 +571,7 @@ Array TextParagraph::get_line_objects(int p_line) const {
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)lines_rid.size(), Array());
+	ERR_FAIL_INDEX_V(p_line, (int)lines_rid.size(), Array());
 	return TS->shaped_text_get_objects(lines_rid[p_line]);
 }
 
@@ -579,7 +579,7 @@ Rect2 TextParagraph::get_line_object_rect(int p_line, Variant p_key) const {
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)lines_rid.size(), Rect2());
+	ERR_FAIL_INDEX_V(p_line, (int)lines_rid.size(), Rect2());
 
 	Vector2 ofs;
 
@@ -670,7 +670,7 @@ Size2 TextParagraph::get_line_size(int p_line) const {
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)lines_rid.size(), Size2());
+	ERR_FAIL_INDEX_V(p_line, (int)lines_rid.size(), Size2());
 	return TS->shaped_text_get_size(lines_rid[p_line]);
 }
 
@@ -678,7 +678,7 @@ Vector2i TextParagraph::get_line_range(int p_line) const {
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)lines_rid.size(), Vector2i());
+	ERR_FAIL_INDEX_V(p_line, (int)lines_rid.size(), Vector2i());
 	return TS->shaped_text_get_range(lines_rid[p_line]);
 }
 
@@ -686,7 +686,7 @@ float TextParagraph::get_line_ascent(int p_line) const {
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)lines_rid.size(), 0.f);
+	ERR_FAIL_INDEX_V(p_line, (int)lines_rid.size(), 0.f);
 	return TS->shaped_text_get_ascent(lines_rid[p_line]);
 }
 
@@ -694,7 +694,7 @@ float TextParagraph::get_line_descent(int p_line) const {
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)lines_rid.size(), 0.f);
+	ERR_FAIL_INDEX_V(p_line, (int)lines_rid.size(), 0.f);
 	return TS->shaped_text_get_descent(lines_rid[p_line]);
 }
 
@@ -702,7 +702,7 @@ float TextParagraph::get_line_width(int p_line) const {
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)lines_rid.size(), 0.f);
+	ERR_FAIL_INDEX_V(p_line, (int)lines_rid.size(), 0.f);
 	return TS->shaped_text_get_width(lines_rid[p_line]);
 }
 
@@ -710,7 +710,7 @@ float TextParagraph::get_line_underline_position(int p_line) const {
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)lines_rid.size(), 0.f);
+	ERR_FAIL_INDEX_V(p_line, (int)lines_rid.size(), 0.f);
 	return TS->shaped_text_get_underline_position(lines_rid[p_line]);
 }
 
@@ -718,7 +718,7 @@ float TextParagraph::get_line_underline_thickness(int p_line) const {
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)lines_rid.size(), 0.f);
+	ERR_FAIL_INDEX_V(p_line, (int)lines_rid.size(), 0.f);
 	return TS->shaped_text_get_underline_thickness(lines_rid[p_line]);
 }
 
@@ -1019,7 +1019,7 @@ void TextParagraph::draw_line(RID p_canvas, const Vector2 &p_pos, int p_line, co
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND(p_line < 0 || p_line >= (int)lines_rid.size());
+	ERR_FAIL_INDEX(p_line, (int)lines_rid.size());
 
 	Vector2 ofs = p_pos;
 
@@ -1035,7 +1035,7 @@ void TextParagraph::draw_line_outline(RID p_canvas, const Vector2 &p_pos, int p_
 	_THREAD_SAFE_METHOD_
 
 	const_cast<TextParagraph *>(this)->_shape_lines();
-	ERR_FAIL_COND(p_line < 0 || p_line >= (int)lines_rid.size());
+	ERR_FAIL_INDEX(p_line, (int)lines_rid.size());
 
 	Vector2 ofs = p_pos;
 	if (TS->shaped_text_get_orientation(lines_rid[p_line]) == TextServer::ORIENTATION_HORIZONTAL) {

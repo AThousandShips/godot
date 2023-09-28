@@ -317,21 +317,20 @@ Vector3 GodotSoftBody3D::get_vertex_position(int p_index) const {
 	ERR_FAIL_COND_V(p_index >= (int)map_visual_to_physics.size(), Vector3());
 	uint32_t node_index = map_visual_to_physics[p_index];
 
-	ERR_FAIL_COND_V(node_index >= nodes.size(), Vector3());
+	ERR_FAIL_UNSIGNED_INDEX_V(node_index, nodes.size(), Vector3());
 	return nodes[node_index].x;
 }
 
 void GodotSoftBody3D::set_vertex_position(int p_index, const Vector3 &p_position) {
-	ERR_FAIL_COND(p_index < 0);
+	ERR_FAIL_INDEX(p_index, (int)map_visual_to_physics.size());
 
 	if (soft_mesh.is_null()) {
 		return;
 	}
 
-	ERR_FAIL_COND(p_index >= (int)map_visual_to_physics.size());
 	uint32_t node_index = map_visual_to_physics[p_index];
 
-	ERR_FAIL_COND(node_index >= nodes.size());
+	ERR_FAIL_UNSIGNED_INDEX(node_index, nodes.size());
 	Node &node = nodes[node_index];
 	node.q = node.x;
 	node.x = p_position;
@@ -350,7 +349,7 @@ void GodotSoftBody3D::pin_vertex(int p_index) {
 		ERR_FAIL_COND(p_index >= (int)map_visual_to_physics.size());
 		uint32_t node_index = map_visual_to_physics[p_index];
 
-		ERR_FAIL_COND(node_index >= nodes.size());
+		ERR_FAIL_UNSIGNED_INDEX(node_index, nodes.size());
 		Node &node = nodes[node_index];
 		node.im = 0.0;
 	}
@@ -368,7 +367,7 @@ void GodotSoftBody3D::unpin_vertex(int p_index) {
 				ERR_FAIL_COND(p_index >= (int)map_visual_to_physics.size());
 				uint32_t node_index = map_visual_to_physics[p_index];
 
-				ERR_FAIL_COND(node_index >= nodes.size());
+				ERR_FAIL_UNSIGNED_INDEX(node_index, nodes.size());
 				real_t inv_node_mass = nodes.size() * inv_total_mass;
 
 				Node &node = nodes[node_index];

@@ -2366,8 +2366,7 @@ int64_t FontFile::get_extra_spacing(int p_cache_index, TextServer::SpacingType p
 
 void FontFile::set_face_index(int p_cache_index, int64_t p_index) {
 	ERR_FAIL_COND(p_cache_index < 0);
-	ERR_FAIL_COND(p_index < 0);
-	ERR_FAIL_COND(p_index >= 0x7FFF);
+	ERR_FAIL_INDEX(p_index, 0x7FFF);
 
 	_ensure_rid(p_cache_index);
 	TS->font_set_face_index(cache[p_cache_index], p_index);

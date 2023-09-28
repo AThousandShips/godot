@@ -421,11 +421,11 @@ void Curve::set_data(const Array p_input) {
 
 		ERR_FAIL_COND(p_input[i + 3].get_type() != Variant::INT);
 		int left_mode = p_input[i + 3];
-		ERR_FAIL_COND(left_mode < 0 || left_mode >= TANGENT_MODE_COUNT);
+		ERR_FAIL_INDEX(left_mode, TANGENT_MODE_COUNT);
 
 		ERR_FAIL_COND(p_input[i + 4].get_type() != Variant::INT);
 		int right_mode = p_input[i + 4];
-		ERR_FAIL_COND(right_mode < 0 || right_mode >= TANGENT_MODE_COUNT);
+		ERR_FAIL_INDEX(right_mode, TANGENT_MODE_COUNT);
 	}
 	int old_size = _points.size();
 	int new_size = p_input.size() / ELEMS;

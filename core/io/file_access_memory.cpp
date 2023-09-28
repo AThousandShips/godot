@@ -159,7 +159,7 @@ void FileAccessMemory::flush() {
 
 void FileAccessMemory::store_8(uint8_t p_byte) {
 	ERR_FAIL_NULL(data);
-	ERR_FAIL_COND(pos >= length);
+	ERR_FAIL_UNSIGNED_INDEX(pos, length);
 	data[pos++] = p_byte;
 }
 

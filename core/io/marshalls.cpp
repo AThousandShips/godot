@@ -103,7 +103,7 @@ Error decode_variant(Variant &r_variant, const uint8_t *p_buffer, int p_len, int
 
 	uint32_t type = decode_uint32(buf);
 
-	ERR_FAIL_COND_V((type & ENCODE_MASK) >= Variant::VARIANT_MAX, ERR_INVALID_DATA);
+	ERR_FAIL_UNSIGNED_INDEX_V((type & ENCODE_MASK), Variant::VARIANT_MAX, ERR_INVALID_DATA);
 
 	buf += 4;
 	len -= 4;

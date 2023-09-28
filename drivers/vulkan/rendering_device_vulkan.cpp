@@ -2413,7 +2413,7 @@ RID RenderingDeviceVulkan::texture_create_shared_from_slice(const TextureView &p
 	image_view_create_info.components.a = component_swizzles[p_view.swizzle_a];
 
 	if (p_slice_type == TEXTURE_SLICE_CUBEMAP) {
-		ERR_FAIL_COND_V_MSG(p_layer >= src_texture->layers, RID(),
+		ERR_FAIL_UNSIGNED_INDEX_V_MSG(p_layer, src_texture->layers, RID(),
 				"Specified layer is invalid for cubemap");
 		ERR_FAIL_COND_V_MSG((p_layer % 6) != 0, RID(),
 				"Specified layer must be a multiple of 6.");
@@ -2487,7 +2487,7 @@ Error RenderingDeviceVulkan::_texture_update(RID p_texture, uint32_t p_layer, co
 	if (texture->type == TEXTURE_TYPE_CUBE || texture->type == TEXTURE_TYPE_CUBE_ARRAY) {
 		layer_count *= 6;
 	}
-	ERR_FAIL_COND_V(p_layer >= layer_count, ERR_INVALID_PARAMETER);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_layer, layer_count, ERR_INVALID_PARAMETER);
 
 	uint32_t width, height;
 	uint32_t image_size = get_image_format_required_size(texture->format, texture->width, texture->height, texture->depth, texture->mipmaps, &width, &height);
@@ -2766,7 +2766,7 @@ Vector<uint8_t> RenderingDeviceVulkan::texture_get_data(RID p_texture, uint32_t 
 	if (tex->type == TEXTURE_TYPE_CUBE || tex->type == TEXTURE_TYPE_CUBE_ARRAY) {
 		layer_count *= 6;
 	}
-	ERR_FAIL_COND_V(p_layer >= layer_count, Vector<uint8_t>());
+	ERR_FAIL_UNSIGNED_INDEX_V(p_layer, layer_count, Vector<uint8_t>());
 
 	if (tex->usage_flags & TEXTURE_USAGE_CPU_READ_BIT) {
 		// Does not need anything fancy, map and read.
@@ -2954,8 +2954,8 @@ Error RenderingDeviceVulkan::texture_copy(RID p_from_texture, RID p_to_texture, 
 	ERR_FAIL_COND_V(p_from.x < 0 || p_from.x + p_size.x > src_width, ERR_INVALID_PARAMETER);
 	ERR_FAIL_COND_V(p_from.y < 0 || p_from.y + p_size.y > src_height, ERR_INVALID_PARAMETER);
 	ERR_FAIL_COND_V(p_from.z < 0 || p_from.z + p_size.z > src_depth, ERR_INVALID_PARAMETER);
-	ERR_FAIL_COND_V(p_src_mipmap >= src_tex->mipmaps, ERR_INVALID_PARAMETER);
-	ERR_FAIL_COND_V(p_src_layer >= src_layer_count, ERR_INVALID_PARAMETER);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_src_mipmap, src_tex->mipmaps, ERR_INVALID_PARAMETER);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_src_layer, src_layer_count, ERR_INVALID_PARAMETER);
 
 	Texture *dst_tex = texture_owner.get_or_null(p_to_texture);
 	ERR_FAIL_NULL_V(dst_tex, ERR_INVALID_PARAMETER);
@@ -2975,8 +2975,8 @@ Error RenderingDeviceVulkan::texture_copy(RID p_from_texture, RID p_to_texture, 
 	ERR_FAIL_COND_V(p_to.x < 0 || p_to.x + p_size.x > dst_width, ERR_INVALID_PARAMETER);
 	ERR_FAIL_COND_V(p_to.y < 0 || p_to.y + p_size.y > dst_height, ERR_INVALID_PARAMETER);
 	ERR_FAIL_COND_V(p_to.z < 0 || p_to.z + p_size.z > dst_depth, ERR_INVALID_PARAMETER);
-	ERR_FAIL_COND_V(p_dst_mipmap >= dst_tex->mipmaps, ERR_INVALID_PARAMETER);
-	ERR_FAIL_COND_V(p_dst_layer >= dst_layer_count, ERR_INVALID_PARAMETER);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_dst_mipmap, dst_tex->mipmaps, ERR_INVALID_PARAMETER);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_dst_layer, dst_layer_count, ERR_INVALID_PARAMETER);
 
 	ERR_FAIL_COND_V_MSG(src_tex->read_aspect_mask != dst_tex->read_aspect_mask, ERR_INVALID_PARAMETER,
 			"Source and destination texture must be of the same type (color or depth).");
@@ -4177,7 +4177,7 @@ RenderingDevice::FramebufferFormatID RenderingDeviceVulkan::framebuffer_format_c
 RenderingDevice::TextureSamples RenderingDeviceVulkan::framebuffer_format_get_texture_samples(FramebufferFormatID p_format, uint32_t p_pass) {
 	HashMap<FramebufferFormatID, FramebufferFormat>::Iterator E = framebuffer_formats.find(p_format);
 	ERR_FAIL_COND_V(!E, TEXTURE_SAMPLES_1);
-	ERR_FAIL_COND_V(p_pass >= uint32_t(E->value.pass_samples.size()), TEXTURE_SAMPLES_1);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_pass, (uint32_t)E->value.pass_samples.size(), TEXTURE_SAMPLES_1);
 
 	return E->value.pass_samples[p_pass];
 }
@@ -9294,7 +9294,7 @@ void RenderingDeviceVulkan::_free_rids(T &p_owner, const char *p_type) {
 
 void RenderingDeviceVulkan::capture_timestamp(const String &p_name) {
 	ERR_FAIL_COND_MSG(draw_list != nullptr, "Capturing timestamps during draw list creation is not allowed. Offending timestamp was: " + p_name);
-	ERR_FAIL_COND(frames[frame].timestamp_count >= max_timestamp_query_elements);
+	ERR_FAIL_UNSIGNED_INDEX(frames[frame].timestamp_count, max_timestamp_query_elements);
 
 	// This should be optional for profiling, else it will slow things down.
 	{

@@ -231,7 +231,7 @@ String RichTextLabel::_letters(int p_num, bool p_capitalize) const {
 
 void RichTextLabel::_update_line_font(ItemFrame *p_frame, int p_line, const Ref<Font> &p_base_font, int p_base_font_size) {
 	ERR_FAIL_NULL(p_frame);
-	ERR_FAIL_COND(p_line < 0 || p_line >= (int)p_frame->lines.size());
+	ERR_FAIL_INDEX(p_line, (int)p_frame->lines.size());
 
 	Line &l = p_frame->lines[p_line];
 	MutexLock lock(l.text_buf->get_mutex());
@@ -282,7 +282,7 @@ void RichTextLabel::_update_line_font(ItemFrame *p_frame, int p_line, const Ref<
 
 float RichTextLabel::_resize_line(ItemFrame *p_frame, int p_line, const Ref<Font> &p_base_font, int p_base_font_size, int p_width, float p_h) {
 	ERR_FAIL_NULL_V(p_frame, p_h);
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)p_frame->lines.size(), p_h);
+	ERR_FAIL_INDEX_V(p_line, (int)p_frame->lines.size(), p_h);
 
 	Line &l = p_frame->lines[p_line];
 	MutexLock lock(l.text_buf->get_mutex());
@@ -471,7 +471,7 @@ float RichTextLabel::_resize_line(ItemFrame *p_frame, int p_line, const Ref<Font
 
 float RichTextLabel::_shape_line(ItemFrame *p_frame, int p_line, const Ref<Font> &p_base_font, int p_base_font_size, int p_width, float p_h, int *r_char_offset) {
 	ERR_FAIL_NULL_V(p_frame, p_h);
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)p_frame->lines.size(), p_h);
+	ERR_FAIL_INDEX_V(p_line, (int)p_frame->lines.size(), p_h);
 
 	Line &l = p_frame->lines[p_line];
 	MutexLock lock(l.text_buf->get_mutex());
@@ -775,7 +775,7 @@ float RichTextLabel::_shape_line(ItemFrame *p_frame, int p_line, const Ref<Font>
 
 int RichTextLabel::_draw_line(ItemFrame *p_frame, int p_line, const Vector2 &p_ofs, int p_width, const Color &p_base_color, int p_outline_size, const Color &p_outline_color, const Color &p_font_shadow_color, int p_shadow_outline_size, const Point2 &p_shadow_ofs, int &r_processed_glyphs) {
 	ERR_FAIL_NULL_V(p_frame, 0);
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)p_frame->lines.size(), 0);
+	ERR_FAIL_INDEX_V(p_line, (int)p_frame->lines.size(), 0);
 
 	Vector2 off;
 
@@ -5200,7 +5200,7 @@ bool RichTextLabel::_search_table(ItemTable *p_table, List<Item *>::Element *p_f
 
 bool RichTextLabel::_search_line(ItemFrame *p_frame, int p_line, const String &p_string, int p_char_idx, bool p_reverse_search) {
 	ERR_FAIL_NULL_V(p_frame, false);
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)p_frame->lines.size(), false);
+	ERR_FAIL_INDEX_V(p_line, (int)p_frame->lines.size(), false);
 
 	Line &l = p_frame->lines[p_line];
 
@@ -5341,7 +5341,7 @@ String RichTextLabel::_get_line_text(ItemFrame *p_frame, int p_line, Selection p
 	String txt;
 
 	ERR_FAIL_NULL_V(p_frame, txt);
-	ERR_FAIL_COND_V(p_line < 0 || p_line >= (int)p_frame->lines.size(), txt);
+	ERR_FAIL_INDEX_V(p_line, (int)p_frame->lines.size(), txt);
 
 	Line &l = p_frame->lines[p_line];
 

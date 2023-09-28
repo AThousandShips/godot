@@ -780,7 +780,7 @@ void SurfaceTool::deindex() {
 	LocalVector<Vertex> old_vertex_array = vertex_array;
 	vertex_array.clear();
 	for (const int &index : index_array) {
-		ERR_FAIL_COND(uint32_t(index) >= old_vertex_array.size());
+		ERR_FAIL_UNSIGNED_INDEX(uint32_t(index), old_vertex_array.size());
 		vertex_array.push_back(old_vertex_array[index]);
 	}
 	format &= ~Mesh::ARRAY_FORMAT_INDEX;

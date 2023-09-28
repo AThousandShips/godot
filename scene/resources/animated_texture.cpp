@@ -96,7 +96,7 @@ int AnimatedTexture::get_frames() const {
 }
 
 void AnimatedTexture::set_current_frame(int p_frame) {
-	ERR_FAIL_COND(p_frame < 0 || p_frame >= frame_count);
+	ERR_FAIL_INDEX(p_frame, frame_count);
 
 	RWLockWrite r(rw_lock);
 

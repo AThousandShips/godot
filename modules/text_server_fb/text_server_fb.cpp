@@ -968,8 +968,7 @@ void TextServerFallback::_font_set_style(const RID &p_font_rid, BitField<FontSty
 }
 
 void TextServerFallback::_font_set_face_index(const RID &p_font_rid, int64_t p_face_index) {
-	ERR_FAIL_COND(p_face_index < 0);
-	ERR_FAIL_COND(p_face_index >= 0x7FFF);
+	ERR_FAIL_INDEX(p_face_index, 0x7FFF);
 
 	FontFallback *fd = font_owner.get_or_null(p_font_rid);
 	ERR_FAIL_NULL(fd);

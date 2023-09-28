@@ -352,7 +352,7 @@ void CurveEdit::gui_input(const Ref<InputEvent> &p_event) {
 }
 
 void CurveEdit::use_preset(int p_preset_id) {
-	ERR_FAIL_COND(p_preset_id < 0 || p_preset_id >= PRESET_COUNT);
+	ERR_FAIL_INDEX(p_preset_id, PRESET_COUNT);
 	ERR_FAIL_COND(curve.is_null());
 
 	Array previous_data = curve->get_data();

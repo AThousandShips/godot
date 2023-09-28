@@ -1028,7 +1028,7 @@ public:
 		uint64_t id = p_instance_id;
 		uint32_t slot = id & OBJECTDB_SLOT_MAX_COUNT_MASK;
 
-		ERR_FAIL_COND_V(slot >= slot_max, nullptr); // This should never happen unless RID is corrupted.
+		ERR_FAIL_UNSIGNED_INDEX_V(slot, slot_max, nullptr); // This should never happen unless RID is corrupted.
 
 		spin_lock.lock();
 
