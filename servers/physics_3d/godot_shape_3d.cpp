@@ -109,7 +109,7 @@ const HashMap<GodotShapeOwner3D *, int> &GodotShape3D::get_owners() const {
 }
 
 GodotShape3D::~GodotShape3D() {
-	ERR_FAIL_COND(owners.size());
+	ERR_FAIL_COND(!owners.is_empty());
 }
 
 Plane GodotWorldBoundaryShape3D::get_plane() const {

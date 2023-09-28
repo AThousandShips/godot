@@ -337,7 +337,7 @@ uint64_t XMLParser::get_node_offset() const {
 
 Error XMLParser::seek(uint64_t p_pos) {
 	ERR_FAIL_NULL_V(data, ERR_FILE_EOF);
-	ERR_FAIL_COND_V(p_pos >= length, ERR_FILE_EOF);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_pos, length, ERR_FILE_EOF);
 
 	P = data + p_pos;
 

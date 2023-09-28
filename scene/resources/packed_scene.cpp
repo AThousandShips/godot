@@ -908,7 +908,7 @@ Error SceneState::_parse_connections(Node *p_owner, Node *p_node, HashMap<String
 			//find if this connection already exists
 			Node *common_parent = target->find_common_parent_with(p_node);
 
-			ERR_CONTINUE(!common_parent);
+			ERR_CONTINUE(common_parent == nullptr);
 
 			if (common_parent != p_owner && common_parent->get_scene_file_path().is_empty()) {
 				common_parent = common_parent->get_owner();

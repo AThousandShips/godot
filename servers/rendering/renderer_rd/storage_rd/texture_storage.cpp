@@ -780,7 +780,7 @@ void TextureStorage::texture_free(RID p_texture) {
 
 	for (int i = 0; i < t->proxies.size(); i++) {
 		Texture *p = texture_owner.get_or_null(t->proxies[i]);
-		ERR_CONTINUE(!p);
+		ERR_CONTINUE(p == nullptr);
 		p->proxy_to = RID();
 		p->rd_texture = RID();
 		p->rd_texture_srgb = RID();
@@ -1341,7 +1341,7 @@ Vector<Ref<Image>> TextureStorage::texture_3d_get(RID p_texture) const {
 
 	for (int i = 0; i < tex->buffer_slices_3d.size(); i++) {
 		const Texture::BufferSlice3D &bs = tex->buffer_slices_3d[i];
-		ERR_FAIL_COND_V(bs.offset >= (uint32_t)all_data.size(), Vector<Ref<Image>>());
+		ERR_FAIL_UNSIGNED_INDEX_V(bs.offset, (uint32_t)all_data.size(), Vector<Ref<Image>>());
 		ERR_FAIL_COND_V(bs.offset + bs.buffer_size > (uint32_t)all_data.size(), Vector<Ref<Image>>());
 		Vector<uint8_t> sub_region = all_data.slice(bs.offset, bs.offset + bs.buffer_size);
 

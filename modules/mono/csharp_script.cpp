@@ -784,7 +784,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
 			// Do not reload scripts with only non-collectible instances to avoid disrupting event subscriptions and such.
 			bool is_reloadable = elem->self()->instances.size() == 0;
 			for (Object *obj : elem->self()->instances) {
-				ERR_CONTINUE(!obj->get_script_instance());
+				ERR_CONTINUE(obj->get_script_instance() == nullptr);
 				CSharpInstance *csi = static_cast<CSharpInstance *>(obj->get_script_instance());
 				if (GDMonoCache::managed_callbacks.GCHandleBridge_GCHandleIsTargetCollectible(csi->get_gchandle_intptr())) {
 					is_reloadable = true;
@@ -886,7 +886,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
 		RBMap<ObjectID, CSharpScript::StateBackup> &owners_map = scr->pending_reload_state;
 
 		for (Object *obj : scr->instances) {
-			ERR_CONTINUE(!obj->get_script_instance());
+			ERR_CONTINUE(obj->get_script_instance() == nullptr);
 
 			CSharpInstance *csi = static_cast<CSharpInstance *>(obj->get_script_instance());
 
@@ -1084,7 +1084,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
 				continue;
 			}
 
-			ERR_CONTINUE(!obj->get_script_instance());
+			ERR_CONTINUE(obj->get_script_instance() == nullptr);
 
 			CSharpScript::StateBackup &state_backup = scr->pending_reload_state[obj_id];
 

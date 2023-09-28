@@ -32,7 +32,7 @@
 
 Error AESContext::start(Mode p_mode, PackedByteArray p_key, PackedByteArray p_iv) {
 	ERR_FAIL_COND_V_MSG(mode != MODE_MAX, ERR_ALREADY_IN_USE, "AESContext already started. Call 'finish' before starting a new one.");
-	ERR_FAIL_COND_V_MSG(p_mode < 0 || p_mode >= MODE_MAX, ERR_INVALID_PARAMETER, "Invalid mode requested.");
+	ERR_FAIL_INDEX_V_MSG(p_mode, MODE_MAX, ERR_INVALID_PARAMETER, "Invalid mode requested.");
 	// Key check.
 	int key_bits = p_key.size() << 3;
 	ERR_FAIL_COND_V_MSG(key_bits != 128 && key_bits != 256, ERR_INVALID_PARAMETER, "AES key must be either 16 or 32 bytes");
@@ -53,7 +53,7 @@ Error AESContext::start(Mode p_mode, PackedByteArray p_key, PackedByteArray p_iv
 }
 
 PackedByteArray AESContext::update(PackedByteArray p_src) {
-	ERR_FAIL_COND_V_MSG(mode < 0 || mode >= MODE_MAX, PackedByteArray(), "AESContext not started. Call 'start' before calling 'update'.");
+	ERR_FAIL_INDEX_V_MSG(mode, MODE_MAX, PackedByteArray(), "AESContext not started. Call 'start' before calling 'update'.");
 	int len = p_src.size();
 	ERR_FAIL_COND_V_MSG(len % 16, PackedByteArray(), "The number of bytes to be encrypted must be multiple of 16. Add padding if needed");
 	PackedByteArray out;

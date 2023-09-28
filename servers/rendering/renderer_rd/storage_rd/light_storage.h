@@ -623,7 +623,7 @@ public:
 		uint32_t quadrant = (key >> QUADRANT_SHIFT) & 0x3;
 		uint32_t shadow = key & SHADOW_INDEX_MASK;
 
-		ERR_FAIL_COND_V(shadow >= (uint32_t)shadow_atlas->quadrants[quadrant].shadows.size(), Rect2());
+		ERR_FAIL_UNSIGNED_INDEX_V(shadow, (uint32_t)shadow_atlas->quadrants[quadrant].shadows.size(), Rect2());
 
 		uint32_t atlas_size = shadow_atlas->size;
 		uint32_t quadrant_size = atlas_size >> 1;

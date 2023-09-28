@@ -1895,7 +1895,7 @@ GLTFAccessorIndex GLTFDocument::_encode_accessor_as_floats(Ref<GLTFState> p_stat
 		_calc_accessor_min_max(i, element_count, type_max, attribs, type_min);
 	}
 
-	ERR_FAIL_COND_V(!attribs.size(), -1);
+	ERR_FAIL_COND_V(attribs.is_empty(), -1);
 
 	Ref<GLTFAccessor> accessor;
 	accessor.instantiate();
@@ -2213,7 +2213,7 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 			Dictionary attributes;
 			{
 				Vector<Vector3> a = array[Mesh::ARRAY_VERTEX];
-				ERR_FAIL_COND_V(!a.size(), ERR_INVALID_DATA);
+				ERR_FAIL_COND_V(a.is_empty(), ERR_INVALID_DATA);
 				attributes["POSITION"] = _encode_accessor_as_vec3(p_state, a, true);
 				vertex_num = a.size();
 			}
@@ -5291,7 +5291,7 @@ Error GLTFDocument::_parse_animations(Ref<GLTFState> p_state) {
 
 				ERR_FAIL_INDEX_V(p_state->nodes[node]->mesh, p_state->meshes.size(), ERR_PARSE_ERROR);
 				Ref<GLTFMesh> mesh = p_state->meshes[p_state->nodes[node]->mesh];
-				ERR_CONTINUE(!mesh->get_blend_weights().size());
+				ERR_CONTINUE(mesh->get_blend_weights().is_empty());
 				const int wc = mesh->get_blend_weights().size();
 
 				track->weight_tracks.resize(wc);
@@ -6042,7 +6042,7 @@ struct SceneFormatImporterGLTFInterpolate<Quaternion> {
 
 template <class T>
 T GLTFDocument::_interpolate_track(const Vector<real_t> &p_times, const Vector<T> &p_values, const float p_time, const GLTFAnimation::Interpolation p_interp) {
-	ERR_FAIL_COND_V(!p_values.size(), T());
+	ERR_FAIL_COND_V(p_values.is_empty(), T());
 	if (p_times.size() != (p_values.size() / (p_interp == GLTFAnimation::INTERP_CUBIC_SPLINE ? 3 : 1))) {
 		ERR_PRINT_ONCE("The interpolated values are not corresponding to its times.");
 		return p_values[0];
@@ -7010,7 +7010,7 @@ void GLTFDocument::_convert_animation(Ref<GLTFState> p_state, AnimationPlayer *p
 				if (p_state->skeletons[skeleton_i]->godot_skeleton == cast_to<Skeleton3D>(godot_node)) {
 					skeleton = p_state->skeletons[skeleton_i]->godot_skeleton;
 					skeleton_gltf_i = skeleton_i;
-					ERR_CONTINUE(!skeleton);
+					ERR_CONTINUE(skeleton == nullptr);
 					Ref<GLTFSkeleton> skeleton_gltf = p_state->skeletons[skeleton_gltf_i];
 					int32_t bone = skeleton->find_bone(suffix);
 					ERR_CONTINUE_MSG(bone == -1, vformat("Cannot find the bone %s.", suffix));
@@ -7028,7 +7028,7 @@ void GLTFDocument::_convert_animation(Ref<GLTFState> p_state, AnimationPlayer *p
 				}
 			}
 		} else if (!String(final_track_path).contains(":")) {
-			ERR_CONTINUE(!animation_base_node);
+			ERR_CONTINUE(animation_base_node == nullptr);
 			Node *godot_node = animation_base_node->get_node_or_null(final_track_path);
 			ERR_CONTINUE_MSG(!godot_node, vformat("Cannot get the node from a skeleton path %s.", final_track_path));
 			for (const KeyValue<GLTFNodeIndex, Node *> &scene_node_i : p_state->scene_nodes) {
@@ -7383,7 +7383,7 @@ Node *GLTFDocument::generate_scene(Ref<GLTFState> p_state, float p_bake_fps, boo
 		}
 	}
 	for (KeyValue<GLTFNodeIndex, Node *> E : p_state->scene_nodes) {
-		ERR_CONTINUE(!E.value);
+		ERR_CONTINUE(E.value == nullptr);
 		for (Ref<GLTFDocumentExtension> ext : document_extensions) {
 			ERR_CONTINUE(ext.is_null());
 			ERR_CONTINUE(!p_state->json.has("nodes"));

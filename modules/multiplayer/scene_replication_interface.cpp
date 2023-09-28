@@ -84,7 +84,7 @@ void SceneReplicationInterface::_untrack(const ObjectID &p_id) {
 void SceneReplicationInterface::_free_remotes(const PeerInfo &p_info) {
 	for (const KeyValue<uint32_t, ObjectID> &E : p_info.recv_nodes) {
 		Node *node = tracked_nodes.has(E.value) ? get_id_as<Node>(E.value) : nullptr;
-		ERR_CONTINUE(!node);
+		ERR_CONTINUE(node == nullptr);
 		node->queue_free();
 	}
 }
@@ -118,7 +118,7 @@ void SceneReplicationInterface::on_reset() {
 	}
 	for (const ObjectID &oid : sync_nodes) {
 		MultiplayerSynchronizer *sync = get_id_as<MultiplayerSynchronizer>(oid);
-		ERR_CONTINUE(!sync);
+		ERR_CONTINUE(sync == nullptr);
 		sync->reset();
 	}
 	last_net_id = 0;
@@ -130,7 +130,7 @@ void SceneReplicationInterface::on_network_process() {
 		ERR_PRINT("An error happened during last spawn, this usually means the 'ready' signal was not emitted by the spawned node.");
 		for (const ObjectID &oid : spawn_queue) {
 			Node *node = get_id_as<Node>(oid);
-			ERR_CONTINUE(!node);
+			ERR_CONTINUE(node == nullptr);
 			if (node->is_connected(SceneStringNames::get_singleton()->ready, callable_mp(this, &SceneReplicationInterface::_node_ready))) {
 				node->disconnect(SceneStringNames::get_singleton()->ready, callable_mp(this, &SceneReplicationInterface::_node_ready));
 			}
@@ -181,7 +181,7 @@ void SceneReplicationInterface::_node_ready(const ObjectID &p_oid) {
 
 		TrackedNode &tobj = tracked_nodes[oid];
 		MultiplayerSpawner *spawner = get_id_as<MultiplayerSpawner>(tobj.spawner);
-		ERR_CONTINUE(!spawner);
+		ERR_CONTINUE(spawner == nullptr);
 
 		spawned_nodes.insert(oid);
 		if (multiplayer->has_multiplayer_peer() && spawner->is_multiplayer_authority()) {
@@ -328,7 +328,7 @@ bool SceneReplicationInterface::is_rpc_visible(const ObjectID &p_oid, int p_peer
 		// Cycle object synchronizers to check visibility.
 		for (const ObjectID &sid : tnode.synchronizers) {
 			MultiplayerSynchronizer *sync = get_id_as<MultiplayerSynchronizer>(sid);
-			ERR_CONTINUE(!sync);
+			ERR_CONTINUE(sync == nullptr);
 			// RPC visibility is composed using OR when multiple synchronizers are present.
 			// Note that we don't really care about authority here which may lead to unexpected
 			// results when using multiple synchronizers to control the same node.
@@ -389,7 +389,7 @@ Error SceneReplicationInterface::_update_spawn_visibility(int p_peer, const Obje
 	bool is_visible = true;
 	for (const ObjectID &sid : synchronizers) {
 		MultiplayerSynchronizer *sync = get_id_as<MultiplayerSynchronizer>(sid);
-		ERR_CONTINUE(!sync);
+		ERR_CONTINUE(sync == nullptr);
 		if (!sync->is_multiplayer_authority()) {
 			continue;
 		}
@@ -491,7 +491,7 @@ Error SceneReplicationInterface::_make_spawn_packet(Node *p_node, MultiplayerSpa
 		if (!sync->is_multiplayer_authority()) {
 			continue;
 		}
-		ERR_CONTINUE(!sync);
+		ERR_CONTINUE(sync == nullptr);
 		ERR_FAIL_COND_V(sync->get_replication_config().is_null(), ERR_BUG);
 		for (const NodePath &prop : sync->get_replication_config()->get_spawn_properties()) {
 			state_props.push_back(prop);
@@ -809,7 +809,7 @@ void SceneReplicationInterface::_send_sync(int p_peer, const HashSet<ObjectID> p
 		}
 
 		Node *node = sync->get_root_node();
-		ERR_CONTINUE(!node);
+		ERR_CONTINUE(node == nullptr);
 		uint32_t net_id = sync->get_net_id();
 		if (!_verify_synchronizer(p_peer, sync, net_id)) {
 			// The path based sync is not yet confirmed, skipping.

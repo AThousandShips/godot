@@ -3876,7 +3876,7 @@ Error Image::load_ktx_from_buffer(const Vector<uint8_t> &p_array) {
 
 void Image::convert_rg_to_ra_rgba8() {
 	ERR_FAIL_COND(format != FORMAT_RGBA8);
-	ERR_FAIL_COND(!data.size());
+	ERR_FAIL_COND(data.is_empty());
 
 	int s = data.size();
 	uint8_t *w = data.ptrw();
@@ -3889,7 +3889,7 @@ void Image::convert_rg_to_ra_rgba8() {
 
 void Image::convert_ra_rgba8_to_rg() {
 	ERR_FAIL_COND(format != FORMAT_RGBA8);
-	ERR_FAIL_COND(!data.size());
+	ERR_FAIL_COND(data.is_empty());
 
 	int s = data.size();
 	uint8_t *w = data.ptrw();
@@ -3902,7 +3902,7 @@ void Image::convert_ra_rgba8_to_rg() {
 
 void Image::convert_rgba8_to_bgra8() {
 	ERR_FAIL_COND(format != FORMAT_RGBA8);
-	ERR_FAIL_COND(!data.size());
+	ERR_FAIL_COND(data.is_empty());
 
 	int s = data.size();
 	uint8_t *w = data.ptrw();

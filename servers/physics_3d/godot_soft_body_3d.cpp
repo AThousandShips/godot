@@ -317,7 +317,7 @@ Vector3 GodotSoftBody3D::get_vertex_position(int p_index) const {
 	ERR_FAIL_COND_V(p_index >= (int)map_visual_to_physics.size(), Vector3());
 	uint32_t node_index = map_visual_to_physics[p_index];
 
-	ERR_FAIL_COND_V(node_index >= nodes.size(), Vector3());
+	ERR_FAIL_UNSIGNED_INDEX_V(node_index, nodes.size(), Vector3());
 	return nodes[node_index].x;
 }
 

@@ -489,7 +489,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 				HashMap<const Node *, Node *> duplimap;
 				Node *dup = node->duplicate_from_editor(duplimap);
 
-				ERR_CONTINUE(!dup);
+				ERR_CONTINUE(dup == nullptr);
 
 				// Preserve ownership relations ready for pasting.
 				List<Node *> owned;
@@ -708,7 +708,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 				HashMap<const Node *, Node *> duplimap;
 				Node *dup = node->duplicate_from_editor(duplimap);
 
-				ERR_CONTINUE(!dup);
+				ERR_CONTINUE(dup == nullptr);
 
 				if (selection.size() == 1) {
 					dupsingle = dup;
@@ -3431,7 +3431,7 @@ List<Node *> SceneTreeDock::paste_nodes(bool p_paste_as_sibling) {
 		HashMap<const Node *, Node *> duplimap;
 
 		Node *dup = node->duplicate_from_editor(duplimap, resource_remap);
-		ERR_CONTINUE(!dup);
+		ERR_CONTINUE(dup == nullptr);
 
 		pasted_nodes.push_back(dup);
 

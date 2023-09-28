@@ -1379,7 +1379,7 @@ void Variant::get_method_list(List<MethodInfo> *p_list) const {
 	} else {
 		for (const StringName &E : builtin_method_names[type]) {
 			const VariantBuiltInMethodInfo *method = builtin_method_info[type].lookup_ptr(E);
-			ERR_CONTINUE(!method);
+			ERR_CONTINUE(method == nullptr);
 
 			MethodInfo mi;
 			mi.name = E;

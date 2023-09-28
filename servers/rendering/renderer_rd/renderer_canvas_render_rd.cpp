@@ -670,7 +670,7 @@ void RendererCanvasRenderRD::_render_item(RD::DrawListID p_draw_list, RID p_rend
 				const Item::CommandPolygon *polygon = static_cast<const Item::CommandPolygon *>(c);
 
 				PolygonBuffers *pb = polygon_buffers.polygons.getptr(polygon->polygon.polygon_id);
-				ERR_CONTINUE(!pb);
+				ERR_CONTINUE(pb == nullptr);
 				//bind pipeline
 				{
 					static const PipelineVariant variant[RS::PRIMITIVE_MAX] = { PIPELINE_VARIANT_ATTRIBUTE_POINTS, PIPELINE_VARIANT_ATTRIBUTE_LINES, PIPELINE_VARIANT_ATTRIBUTE_LINES_STRIP, PIPELINE_VARIANT_ATTRIBUTE_TRIANGLES, PIPELINE_VARIANT_ATTRIBUTE_TRIANGLE_STRIP };
@@ -1193,7 +1193,7 @@ void RendererCanvasRenderRD::canvas_render_items(RID p_to_render_target, Item *p
 			if (!clight) { //unused or invalid texture
 				l->render_index_cache = -1;
 				l = l->next_ptr;
-				ERR_CONTINUE(!clight);
+				ERR_CONTINUE(clight == nullptr);
 			}
 
 			Vector2 canvas_light_dir = l->xform_cache.columns[1].normalized();
@@ -1256,7 +1256,7 @@ void RendererCanvasRenderRD::canvas_render_items(RID p_to_render_target, Item *p
 			if (!clight) { //unused or invalid texture
 				l->render_index_cache = -1;
 				l = l->next_ptr;
-				ERR_CONTINUE(!clight);
+				ERR_CONTINUE(clight == nullptr);
 			}
 
 			Vector2 canvas_light_pos = p_canvas_transform.xform(l->xform.get_origin()); //convert light position to canvas coordinates, as all computation is done in canvas coords to avoid precision loss

@@ -1796,7 +1796,7 @@ void MaterialStorage::_update_global_shader_uniforms() {
 		// so not often.
 		for (const RID &E : global_shader_uniforms.materials_using_buffer) {
 			Material *material = material_storage->get_material(E);
-			ERR_CONTINUE(!material); //wtf
+			ERR_CONTINUE(!material); // Wtf.
 
 			material_storage->_material_queue_update(material, true, false);
 		}
@@ -1809,7 +1809,7 @@ void MaterialStorage::_update_global_shader_uniforms() {
 		// so not often.
 		for (const RID &E : global_shader_uniforms.materials_using_texture) {
 			Material *material = material_storage->get_material(E);
-			ERR_CONTINUE(!material); //wtf
+			ERR_CONTINUE(!material); // Wtf.
 
 			material_storage->_material_queue_update(material, false, true);
 		}

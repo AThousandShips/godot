@@ -2039,8 +2039,8 @@ void Collada::_merge_skeletons(VisualScene *p_vscene, Node *p_node) {
 				ERR_CONTINUE(!state.scene_map.has(nodeid)); //weird, it should have it...
 
 				NodeJoint *nj = dynamic_cast<NodeJoint *>(state.scene_map[nodeid]);
-				ERR_CONTINUE(!nj); //broken collada
-				ERR_CONTINUE(!nj->owner); //weird, node should have a skeleton owner
+				ERR_CONTINUE(nj == nullptr); //broken collada
+				ERR_CONTINUE(nj->owner == nullptr); //weird, node should have a skeleton owner
 
 				skeletons.insert(nj->owner);
 			}
@@ -2100,7 +2100,7 @@ void Collada::_merge_skeletons2(VisualScene *p_vscene) {
 				node = node->parent;
 			}
 
-			ERR_CONTINUE(!sk);
+			ERR_CONTINUE(sk == nullptr);
 
 			if (!skeleton) {
 				skeleton = sk;

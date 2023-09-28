@@ -215,7 +215,7 @@ void MultiplayerSpawner::_notification(int p_what) {
 
 			for (const KeyValue<ObjectID, SpawnInfo> &E : tracked_nodes) {
 				Node *node = Object::cast_to<Node>(ObjectDB::get_instance(E.key));
-				ERR_CONTINUE(!node);
+				ERR_CONTINUE(node == nullptr);
 				node->disconnect(SceneStringNames::get_singleton()->tree_exiting, callable_mp(this, &MultiplayerSpawner::_node_exit));
 				get_multiplayer()->object_configuration_remove(node, this);
 			}

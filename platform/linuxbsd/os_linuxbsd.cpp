@@ -633,7 +633,7 @@ Vector<String> OS_LinuxBSD::get_system_fonts() const {
 	static const char *allowed_formats[] = { "TrueType", "CFF" };
 	for (size_t i = 0; i < sizeof(allowed_formats) / sizeof(const char *); i++) {
 		FcPattern *pattern = FcPatternCreate();
-		ERR_CONTINUE(!pattern);
+		ERR_CONTINUE(pattern == nullptr);
 
 		FcPatternAddBool(pattern, FC_SCALABLE, FcTrue);
 		FcPatternAddString(pattern, FC_FONTFORMAT, reinterpret_cast<const FcChar8 *>(allowed_formats[i]));

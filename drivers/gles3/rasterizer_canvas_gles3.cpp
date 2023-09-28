@@ -159,7 +159,7 @@ void RasterizerCanvasGLES3::canvas_render_items(RID p_to_render_target, Item *p_
 			if (!clight) { //unused or invalid texture
 				l->render_index_cache = -1;
 				l = l->next_ptr;
-				ERR_CONTINUE(!clight);
+				ERR_CONTINUE(clight == nullptr);
 			}
 
 			Vector2 canvas_light_dir = l->xform_cache.columns[1].normalized();
@@ -223,7 +223,7 @@ void RasterizerCanvasGLES3::canvas_render_items(RID p_to_render_target, Item *p_
 			if (!clight) { //unused or invalid texture
 				l->render_index_cache = -1;
 				l = l->next_ptr;
-				ERR_CONTINUE(!clight);
+				ERR_CONTINUE(clight == nullptr);
 			}
 
 			Vector2 canvas_light_pos = p_canvas_transform.xform(l->xform.get_origin()); //convert light position to canvas coordinates, as all computation is done in canvas coords to avoid precision loss

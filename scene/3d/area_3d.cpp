@@ -300,7 +300,7 @@ void Area3D::_clear_monitoring() {
 			if (!node) { //node may have been deleted in previous frame or at other legitimate point
 				continue;
 			}
-			//ERR_CONTINUE(!node);
+			//ERR_CONTINUE(node == nullptr);
 
 			node->disconnect(SceneStringNames::get_singleton()->tree_entered, callable_mp(this, &Area3D::_body_enter_tree));
 			node->disconnect(SceneStringNames::get_singleton()->tree_exiting, callable_mp(this, &Area3D::_body_exit_tree));
@@ -329,7 +329,7 @@ void Area3D::_clear_monitoring() {
 			if (!node) { //node may have been deleted in previous frame or at other legitimate point
 				continue;
 			}
-			//ERR_CONTINUE(!node);
+			//ERR_CONTINUE(node == nullptr);
 
 			node->disconnect(SceneStringNames::get_singleton()->tree_entered, callable_mp(this, &Area3D::_area_enter_tree));
 			node->disconnect(SceneStringNames::get_singleton()->tree_exiting, callable_mp(this, &Area3D::_area_exit_tree));

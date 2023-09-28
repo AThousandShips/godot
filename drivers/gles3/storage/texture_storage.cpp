@@ -731,7 +731,7 @@ void TextureStorage::texture_free(RID p_texture) {
 
 	for (int i = 0; i < t->proxies.size(); i++) {
 		Texture *p = texture_owner.get_or_null(t->proxies[i]);
-		ERR_CONTINUE(!p);
+		ERR_CONTINUE(p == nullptr);
 		p->proxy_to = RID();
 		p->tex_id = 0;
 	}

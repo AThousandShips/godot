@@ -53,7 +53,7 @@ uint32_t AudioRBResampler::_resample(AudioFrame *p_dest, int p_todo, int32_t p_i
 		read += p_increment;
 		uint32_t pos = offset >> MIX_FRAC_BITS;
 		float frac = float(offset & MIX_FRAC_MASK) / float(MIX_FRAC_LEN);
-		ERR_FAIL_COND_V(pos >= rb_len, 0);
+		ERR_FAIL_UNSIGNED_INDEX_V(pos, rb_len, 0);
 		uint32_t pos_next = (pos + 1) & rb_mask;
 
 		// since this is a template with a known compile time value (C), conditionals go away when compiling.

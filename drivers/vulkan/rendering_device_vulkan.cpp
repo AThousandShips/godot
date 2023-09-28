@@ -2487,7 +2487,7 @@ Error RenderingDeviceVulkan::_texture_update(RID p_texture, uint32_t p_layer, co
 	if (texture->type == TEXTURE_TYPE_CUBE || texture->type == TEXTURE_TYPE_CUBE_ARRAY) {
 		layer_count *= 6;
 	}
-	ERR_FAIL_COND_V(p_layer >= layer_count, ERR_INVALID_PARAMETER);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_layer, layer_count, ERR_INVALID_PARAMETER);
 
 	uint32_t width, height;
 	uint32_t image_size = get_image_format_required_size(texture->format, texture->width, texture->height, texture->depth, texture->mipmaps, &width, &height);
@@ -2766,7 +2766,7 @@ Vector<uint8_t> RenderingDeviceVulkan::texture_get_data(RID p_texture, uint32_t 
 	if (tex->type == TEXTURE_TYPE_CUBE || tex->type == TEXTURE_TYPE_CUBE_ARRAY) {
 		layer_count *= 6;
 	}
-	ERR_FAIL_COND_V(p_layer >= layer_count, Vector<uint8_t>());
+	ERR_FAIL_UNSIGNED_INDEX_V(p_layer, layer_count, Vector<uint8_t>());
 
 	if (tex->usage_flags & TEXTURE_USAGE_CPU_READ_BIT) {
 		// Does not need anything fancy, map and read.
@@ -2954,8 +2954,8 @@ Error RenderingDeviceVulkan::texture_copy(RID p_from_texture, RID p_to_texture, 
 	ERR_FAIL_COND_V(p_from.x < 0 || p_from.x + p_size.x > src_width, ERR_INVALID_PARAMETER);
 	ERR_FAIL_COND_V(p_from.y < 0 || p_from.y + p_size.y > src_height, ERR_INVALID_PARAMETER);
 	ERR_FAIL_COND_V(p_from.z < 0 || p_from.z + p_size.z > src_depth, ERR_INVALID_PARAMETER);
-	ERR_FAIL_COND_V(p_src_mipmap >= src_tex->mipmaps, ERR_INVALID_PARAMETER);
-	ERR_FAIL_COND_V(p_src_layer >= src_layer_count, ERR_INVALID_PARAMETER);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_src_mipmap, src_tex->mipmaps, ERR_INVALID_PARAMETER);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_src_layer, src_layer_count, ERR_INVALID_PARAMETER);
 
 	Texture *dst_tex = texture_owner.get_or_null(p_to_texture);
 	ERR_FAIL_NULL_V(dst_tex, ERR_INVALID_PARAMETER);
@@ -2975,8 +2975,8 @@ Error RenderingDeviceVulkan::texture_copy(RID p_from_texture, RID p_to_texture, 
 	ERR_FAIL_COND_V(p_to.x < 0 || p_to.x + p_size.x > dst_width, ERR_INVALID_PARAMETER);
 	ERR_FAIL_COND_V(p_to.y < 0 || p_to.y + p_size.y > dst_height, ERR_INVALID_PARAMETER);
 	ERR_FAIL_COND_V(p_to.z < 0 || p_to.z + p_size.z > dst_depth, ERR_INVALID_PARAMETER);
-	ERR_FAIL_COND_V(p_dst_mipmap >= dst_tex->mipmaps, ERR_INVALID_PARAMETER);
-	ERR_FAIL_COND_V(p_dst_layer >= dst_layer_count, ERR_INVALID_PARAMETER);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_dst_mipmap, dst_tex->mipmaps, ERR_INVALID_PARAMETER);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_dst_layer, dst_layer_count, ERR_INVALID_PARAMETER);
 
 	ERR_FAIL_COND_V_MSG(src_tex->read_aspect_mask != dst_tex->read_aspect_mask, ERR_INVALID_PARAMETER,
 			"Source and destination texture must be of the same type (color or depth).");
@@ -4177,7 +4177,7 @@ RenderingDevice::FramebufferFormatID RenderingDeviceVulkan::framebuffer_format_c
 RenderingDevice::TextureSamples RenderingDeviceVulkan::framebuffer_format_get_texture_samples(FramebufferFormatID p_format, uint32_t p_pass) {
 	HashMap<FramebufferFormatID, FramebufferFormat>::Iterator E = framebuffer_formats.find(p_format);
 	ERR_FAIL_COND_V(!E, TEXTURE_SAMPLES_1);
-	ERR_FAIL_COND_V(p_pass >= uint32_t(E->value.pass_samples.size()), TEXTURE_SAMPLES_1);
+	ERR_FAIL_UNSIGNED_INDEX_V(p_pass, uint32_t(E->value.pass_samples.size()), TEXTURE_SAMPLES_1);
 
 	return E->value.pass_samples[p_pass];
 }
@@ -7761,7 +7761,7 @@ void RenderingDeviceVulkan::draw_list_end(BitField<BarrierMask> p_post_barrier) 
 
 	for (int i = 0; i < draw_list_bound_textures.size(); i++) {
 		Texture *texture = texture_owner.get_or_null(draw_list_bound_textures[i]);
-		ERR_CONTINUE(!texture); // Wtf.
+		ERR_CONTINUE(texture == nullptr); // Wtf.
 		if (draw_list_unbind_color_textures && (texture->usage_flags & TEXTURE_USAGE_COLOR_ATTACHMENT_BIT)) {
 			texture->bound = false;
 		}
@@ -9685,9 +9685,9 @@ void RenderingDeviceVulkan::finalize() {
 	framebuffer_formats.clear();
 
 	// All these should be clear at this point.
-	ERR_FAIL_COND(descriptor_pools.size());
-	ERR_FAIL_COND(dependency_map.size());
-	ERR_FAIL_COND(reverse_dependency_map.size());
+	ERR_FAIL_COND(!descriptor_pools.is_empty());
+	ERR_FAIL_COND(!dependency_map.is_empty());
+	ERR_FAIL_COND(!reverse_dependency_map.is_empty());
 }
 
 RenderingDevice *RenderingDeviceVulkan::create_local_device() {

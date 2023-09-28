@@ -1807,7 +1807,7 @@ void Node3DEditorViewport::_sinput(const Ref<InputEvent> &p_event) {
 
 							int subgizmo_id = seg->subgizmos_intersect_ray(camera, _edit.mouse_pos);
 							if (subgizmo_id != -1) {
-								ERR_CONTINUE(!se);
+								ERR_CONTINUE(se == nullptr);
 								if (b->is_shift_pressed()) {
 									if (se->subgizmos.has(subgizmo_id)) {
 										se->subgizmos.erase(subgizmo_id);

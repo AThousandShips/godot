@@ -760,7 +760,7 @@ void EditorPropertyFlags::update_property() {
 }
 
 void EditorPropertyFlags::setup(const Vector<String> &p_options) {
-	ERR_FAIL_COND(flags.size());
+	ERR_FAIL_COND(!flags.is_empty());
 
 	bool first = true;
 	uint32_t current_val;

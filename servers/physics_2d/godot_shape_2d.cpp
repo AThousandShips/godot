@@ -76,7 +76,7 @@ const HashMap<GodotShapeOwner2D *, int> &GodotShape2D::get_owners() const {
 }
 
 GodotShape2D::~GodotShape2D() {
-	ERR_FAIL_COND(owners.size());
+	ERR_FAIL_COND(!owners.is_empty());
 }
 
 /*********************************************************/

@@ -1994,7 +1994,7 @@ void LightStorage::shadow_atlas_set_size(RID p_atlas, int p_size, bool p_16_bits
 	//erase shadow atlas reference from lights
 	for (const KeyValue<RID, uint32_t> &E : shadow_atlas->shadow_owners) {
 		LightInstance *li = light_instance_owner.get_or_null(E.key);
-		ERR_CONTINUE(!li);
+		ERR_CONTINUE(li == nullptr);
 		li->shadow_atlases.erase(p_atlas);
 	}
 
@@ -2029,7 +2029,7 @@ void LightStorage::shadow_atlas_set_quadrant_subdivision(RID p_atlas, int p_quad
 		if (shadow_atlas->quadrants[p_quadrant].shadows[i].owner.is_valid()) {
 			shadow_atlas->shadow_owners.erase(shadow_atlas->quadrants[p_quadrant].shadows[i].owner);
 			LightInstance *li = light_instance_owner.get_or_null(shadow_atlas->quadrants[p_quadrant].shadows[i].owner);
-			ERR_CONTINUE(!li);
+			ERR_CONTINUE(li == nullptr);
 			li->shadow_atlases.erase(p_atlas);
 		}
 	}
@@ -2090,7 +2090,7 @@ bool LightStorage::_shadow_atlas_find_shadow(ShadowAtlas *shadow_atlas, int *p_i
 			}
 
 			LightInstance *sli = light_instance_owner.get_or_null(sarr[j].owner);
-			ERR_CONTINUE(!sli);
+			ERR_CONTINUE(sli == nullptr);
 
 			if (sli->last_scene_pass != RendererSceneRenderRD::get_singleton()->get_scene_pass()) {
 				//was just allocated, don't kill it so soon, wait a bit..
@@ -2142,7 +2142,7 @@ bool LightStorage::_shadow_atlas_find_omni_shadows(ShadowAtlas *shadow_atlas, in
 
 			if (sarr[j].owner.is_valid()) {
 				LightInstance *sli = light_instance_owner.get_or_null(sarr[j].owner);
-				ERR_CONTINUE(!sli);
+				ERR_CONTINUE(sli == nullptr);
 
 				if (sli->last_scene_pass == RendererSceneRenderRD::get_singleton()->get_scene_pass()) {
 					continue;
@@ -2157,7 +2157,7 @@ bool LightStorage::_shadow_atlas_find_omni_shadows(ShadowAtlas *shadow_atlas, in
 
 			if (sarr[j + 1].owner.is_valid()) {
 				LightInstance *sli = light_instance_owner.get_or_null(sarr[j + 1].owner);
-				ERR_CONTINUE(!sli);
+				ERR_CONTINUE(sli == nullptr);
 
 				if (sli->last_scene_pass == RendererSceneRenderRD::get_singleton()->get_scene_pass()) {
 					continue;

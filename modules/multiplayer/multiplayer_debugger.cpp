@@ -67,7 +67,7 @@ Error MultiplayerDebugger::_capture(void *p_user, const String &p_msg, const Arr
 		for (int i = 0; i < p_args.size(); i++) {
 			ObjectID id = p_args[i].operator ObjectID();
 			Object *obj = ObjectDB::get_instance(id);
-			ERR_CONTINUE(!obj);
+			ERR_CONTINUE(obj == nullptr);
 			if (Object::cast_to<SceneReplicationConfig>(obj)) {
 				out.push_back(id);
 				out.push_back(obj->get_class());

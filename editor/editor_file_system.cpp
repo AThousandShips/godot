@@ -590,7 +590,7 @@ bool EditorFileSystem::_update_scan_actions() {
 				fs_changed = true;
 			} break;
 			case ItemAction::ACTION_DIR_REMOVE: {
-				ERR_CONTINUE(!ia.dir->parent);
+				ERR_CONTINUE(ia.dir->parent == nullptr);
 				ia.dir->parent->subdirs.erase(ia.dir);
 				memdelete(ia.dir);
 				fs_changed = true;

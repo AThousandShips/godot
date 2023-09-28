@@ -711,7 +711,7 @@ ShaderRD::ShaderRD() {
 }
 
 void ShaderRD::initialize(const Vector<String> &p_variant_defines, const String &p_general_defines) {
-	ERR_FAIL_COND(variant_defines.size());
+	ERR_FAIL_COND(!variant_defines.is_empty());
 	ERR_FAIL_COND(p_variant_defines.size() == 0);
 
 	general_defines = p_general_defines.utf8();
@@ -773,7 +773,7 @@ void ShaderRD::_initialize_cache() {
 
 // Same as above, but allows specifying shader compilation groups.
 void ShaderRD::initialize(const Vector<VariantDefine> &p_variant_defines, const String &p_general_defines) {
-	ERR_FAIL_COND(variant_defines.size());
+	ERR_FAIL_COND(!variant_defines.is_empty());
 	ERR_FAIL_COND(p_variant_defines.size() == 0);
 
 	general_defines = p_general_defines.utf8();

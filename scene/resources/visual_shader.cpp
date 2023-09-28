@@ -1204,7 +1204,7 @@ bool VisualShader::is_text_shader() const {
 String VisualShader::generate_preview_shader(Type p_type, int p_node, int p_port, Vector<DefaultTextureParam> &default_tex_params) const {
 	Ref<VisualShaderNode> node = get_node(p_type, p_node);
 	ERR_FAIL_COND_V(!node.is_valid(), String());
-	ERR_FAIL_COND_V(p_port < 0 || p_port >= node->get_expanded_output_port_count(), String());
+	ERR_FAIL_INDEX_V(p_port, node->get_expanded_output_port_count(), String());
 	ERR_FAIL_COND_V(node->get_output_port_type(p_port) == VisualShaderNode::PORT_TYPE_TRANSFORM, String());
 
 	StringBuilder global_code;

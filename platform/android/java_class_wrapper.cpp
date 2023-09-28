@@ -986,7 +986,7 @@ Ref<JavaClass> JavaClassWrapper::wrap(const String &p_class) {
 
 	for (int i = 0; i < count; i++) {
 		jobject obj = env->GetObjectArrayElement(methods, i);
-		ERR_CONTINUE(!obj);
+		ERR_CONTINUE(obj == nullptr);
 
 		jstring name = (jstring)env->CallObjectMethod(obj, getName);
 		String str_method = jstring_to_string(name, env);
@@ -1096,7 +1096,7 @@ Ref<JavaClass> JavaClassWrapper::wrap(const String &p_class) {
 				mi.method = env->GetMethodID(bclass, str_method.utf8().get_data(), signature.utf8().get_data());
 			}
 
-			ERR_CONTINUE(!mi.method);
+			ERR_CONTINUE(mi.method == nullptr);
 
 			java_class->methods[str_method].push_back(mi);
 		}
@@ -1114,7 +1114,7 @@ Ref<JavaClass> JavaClassWrapper::wrap(const String &p_class) {
 
 	for (int i = 0; i < count; i++) {
 		jobject obj = env->GetObjectArrayElement(fields, i);
-		ERR_CONTINUE(!obj);
+		ERR_CONTINUE(obj == nullptr);
 
 		jstring name = (jstring)env->CallObjectMethod(obj, Field_getName);
 		String str_field = jstring_to_string(name, env);

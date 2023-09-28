@@ -2507,7 +2507,7 @@ Node *Node::_duplicate(int p_flags, HashMap<const Node *, Node *> *r_duplimap) c
 
 	for (List<const Node *>::Element *N = node_tree.front(); N; N = N->next()) {
 		Node *current_node = node->get_node(get_path_to(N->get()));
-		ERR_CONTINUE(!current_node);
+		ERR_CONTINUE(current_node == nullptr);
 
 		if (p_flags & DUPLICATE_SCRIPTS) {
 			bool is_valid = false;
@@ -3545,7 +3545,7 @@ Node::~Node() {
 	data.children_cache.clear();
 
 	ERR_FAIL_COND(data.parent);
-	ERR_FAIL_COND(data.children_cache.size());
+	ERR_FAIL_COND(!data.children_cache.is_empty());
 
 	orphan_node_count--;
 }

@@ -1301,7 +1301,7 @@ void LightmapGI::_assign_lightmaps() {
 			}
 		} else {
 			VisualInstance3D *vi = Object::cast_to<VisualInstance3D>(node);
-			ERR_CONTINUE(!vi);
+			ERR_CONTINUE(vi == nullptr);
 			RS::get_singleton()->instance_geometry_set_lightmap(vi->get_instance(), get_instance(), light_data->get_user_lightmap_uv_scale(i), light_data->get_user_lightmap_slice_index(i));
 		}
 	}
@@ -1319,7 +1319,7 @@ void LightmapGI::_clear_lightmaps() {
 			}
 		} else {
 			VisualInstance3D *vi = Object::cast_to<VisualInstance3D>(node);
-			ERR_CONTINUE(!vi);
+			ERR_CONTINUE(vi == nullptr);
 			RS::get_singleton()->instance_geometry_set_lightmap(vi->get_instance(), RID(), Rect2(), 0);
 		}
 	}

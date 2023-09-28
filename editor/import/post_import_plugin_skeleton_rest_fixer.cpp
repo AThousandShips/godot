@@ -147,7 +147,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 
 							String track_path = String(anim->track_get_path(i).get_concatenated_names());
 							Node *node = (ap->get_node(ap->get_root()))->get_node(NodePath(track_path));
-							ERR_CONTINUE(!node);
+							ERR_CONTINUE(node == nullptr);
 
 							Skeleton3D *track_skeleton = Object::cast_to<Skeleton3D>(node);
 							if (!track_skeleton || track_skeleton != src_skeleton) {
@@ -389,7 +389,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 
 							String track_path = String(anim->track_get_path(i).get_concatenated_names());
 							Node *node = (ap->get_node(ap->get_root()))->get_node(NodePath(track_path));
-							ERR_CONTINUE(!node);
+							ERR_CONTINUE(node == nullptr);
 
 							Skeleton3D *track_skeleton = Object::cast_to<Skeleton3D>(node);
 							if (!track_skeleton || track_skeleton != src_skeleton) {
@@ -449,7 +449,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 
 						String track_path = String(anim->track_get_path(i).get_concatenated_names());
 						Node *node = (ap->get_node(ap->get_root()))->get_node(NodePath(track_path));
-						ERR_CONTINUE(!node);
+						ERR_CONTINUE(node == nullptr);
 
 						Skeleton3D *track_skeleton = Object::cast_to<Skeleton3D>(node);
 						if (!track_skeleton || track_skeleton != src_skeleton) {
@@ -528,7 +528,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 				TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
 				while (nodes.size()) {
 					AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
-					ERR_CONTINUE(!ap);
+					ERR_CONTINUE(ap == nullptr);
 					List<StringName> anims;
 					ap->get_animation_list(&anims);
 					for (const StringName &name : anims) {
@@ -545,7 +545,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 
 							String track_path = String(anim->track_get_path(i).get_concatenated_names());
 							Node *node = (ap->get_node(ap->get_root()))->get_node(NodePath(track_path));
-							ERR_CONTINUE(!node);
+							ERR_CONTINUE(node == nullptr);
 
 							Skeleton3D *track_skeleton = Object::cast_to<Skeleton3D>(node);
 							if (!track_skeleton || track_skeleton != src_skeleton) {
@@ -613,7 +613,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 				TypedArray<Node> nodes = p_base_scene->find_children("*", "ImporterMeshInstance3D");
 				while (nodes.size()) {
 					ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(nodes.pop_back());
-					ERR_CONTINUE(!mi);
+					ERR_CONTINUE(mi == nullptr);
 
 					Ref<Skin> skin = mi->get_skin();
 					if (skin.is_null()) {
@@ -625,7 +625,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 					mutated_skins.insert(skin);
 
 					Node *node = mi->get_node(mi->get_skeleton_path());
-					ERR_CONTINUE(!node);
+					ERR_CONTINUE(node == nullptr);
 
 					Skeleton3D *mesh_skeleton = Object::cast_to<Skeleton3D>(node);
 					if (!mesh_skeleton || mesh_skeleton != src_skeleton) {

@@ -1584,7 +1584,7 @@ Vector<Point2> TileSet::get_terrain_polygon(int p_terrain_set) {
 }
 
 Vector<Point2> TileSet::get_terrain_peering_bit_polygon(int p_terrain_set, TileSet::CellNeighbor p_bit) {
-	ERR_FAIL_COND_V(p_terrain_set < 0 || p_terrain_set >= get_terrain_sets_count(), Vector<Point2>());
+	ERR_FAIL_INDEX_V(p_terrain_set, get_terrain_sets_count(), Vector<Point2>());
 
 	TileSet::TerrainMode terrain_mode = get_terrain_set_mode(p_terrain_set);
 
@@ -2609,7 +2609,7 @@ void TileSet::_compatibility_conversion() {
 					compatibility_tilemap_mapping_tile_modes[E.key] = COMPATIBILITY_TILE_MODE_SINGLE_TILE;
 
 					TileData *tile_data = atlas_source->get_tile_data(coords, alternative_tile);
-					ERR_CONTINUE(!tile_data);
+					ERR_CONTINUE(tile_data == nullptr);
 
 					tile_data->set_flip_h(flip_h);
 					tile_data->set_flip_v(flip_v);

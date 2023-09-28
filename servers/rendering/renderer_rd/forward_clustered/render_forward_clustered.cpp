@@ -3786,7 +3786,7 @@ void RenderForwardClustered::_geometry_instance_update(RenderGeometryInstance *p
 #if 0
 		case RS::INSTANCE_IMMEDIATE: {
 			RasterizerStorageGLES3::Immediate *immediate = storage->immediate_owner.get_or_null(inst->base);
-			ERR_CONTINUE(!immediate);
+			ERR_CONTINUE(immediate == nullptr);
 
 			_add_geometry(immediate, inst, nullptr, -1, p_depth_pass, p_shadow_pass);
 

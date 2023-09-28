@@ -574,7 +574,7 @@ void ParticlesStorage::_particles_process(Particles *p_particles, double p_delta
 				continue;
 			}
 			ParticlesCollision *pc = particles_collision_owner.get_or_null(pci->collision);
-			ERR_CONTINUE(!pc);
+			ERR_CONTINUE(pc == nullptr);
 
 			Transform3D to_collider = pci->transform;
 			if (p_particles->use_local_coords) {
