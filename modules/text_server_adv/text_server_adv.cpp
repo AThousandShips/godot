@@ -4051,7 +4051,7 @@ bool TextServerAdvanced::_shaped_text_add_string(const RID &p_shaped, const Stri
 
 	MutexLock lock(sd->mutex);
 	for (int i = 0; i < p_fonts.size(); i++) {
-		ERR_FAIL_COND_V(!font_owner.get_or_null(p_fonts[i]), false);
+		ERR_FAIL_NULL_V(font_owner.get_or_null(p_fonts[i]), false);
 	}
 
 	if (p_text.is_empty()) {
