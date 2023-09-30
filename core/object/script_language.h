@@ -54,6 +54,7 @@ class ScriptServer {
 	static int _language_count;
 	static bool scripting_enabled;
 	static bool reload_scripts_on_save;
+	static Mutex mutex;
 	static SafeFlag languages_finished; // Used until GH-76581 is fixed properly.
 
 	struct GlobalScriptClass {
