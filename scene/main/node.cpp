@@ -3557,7 +3557,7 @@ Node::~Node() {
 	data.children_cache.clear();
 
 	ERR_FAIL_COND(data.parent);
-	ERR_FAIL_COND(data.children_cache.size());
+	ERR_FAIL_COND(!data.children_cache.is_empty());
 
 	orphan_node_count--;
 }

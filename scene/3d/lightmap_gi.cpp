@@ -851,8 +851,8 @@ LightmapGI::BakeError LightmapGI::bake(Node *p_from_node, String p_image_data_pa
 				const Vector3 *nr = nullptr;
 				Vector<int> index = a[Mesh::ARRAY_INDEX];
 
-				ERR_CONTINUE(uv.size() == 0);
-				ERR_CONTINUE(normals.size() == 0);
+				ERR_CONTINUE(uv.is_empty());
+				ERR_CONTINUE(normals.is_empty());
 
 				uvr = uv.ptr();
 				nr = normals.ptr();

@@ -684,7 +684,7 @@ bool ImporterMesh::has_mesh() const {
 }
 
 Ref<ArrayMesh> ImporterMesh::get_mesh(const Ref<ArrayMesh> &p_base) {
-	ERR_FAIL_COND_V(surfaces.size() == 0, Ref<ArrayMesh>());
+	ERR_FAIL_COND_V(surfaces.is_empty(), Ref<ArrayMesh>());
 
 	if (mesh.is_null()) {
 		if (p_base.is_valid()) {

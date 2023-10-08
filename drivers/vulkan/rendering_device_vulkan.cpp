@@ -5428,7 +5428,7 @@ void RenderingDeviceVulkan::_descriptor_pool_free(const DescriptorPoolKey &p_key
 RID RenderingDeviceVulkan::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p_shader, uint32_t p_shader_set) {
 	_THREAD_SAFE_METHOD_
 
-	ERR_FAIL_COND_V(p_uniforms.size() == 0, RID());
+	ERR_FAIL_COND_V(p_uniforms.is_empty(), RID());
 
 	Shader *shader = shader_owner.get_or_null(p_shader);
 	ERR_FAIL_NULL_V(shader, RID());
@@ -9687,9 +9687,9 @@ void RenderingDeviceVulkan::finalize() {
 	framebuffer_formats.clear();
 
 	// All these should be clear at this point.
-	ERR_FAIL_COND(descriptor_pools.size());
-	ERR_FAIL_COND(dependency_map.size());
-	ERR_FAIL_COND(reverse_dependency_map.size());
+	ERR_FAIL_COND(!descriptor_pools.is_empty());
+	ERR_FAIL_COND(!dependency_map.is_empty());
+	ERR_FAIL_COND(!reverse_dependency_map.is_empty());
 }
 
 RenderingDevice *RenderingDeviceVulkan::create_local_device() {

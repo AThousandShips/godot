@@ -1699,7 +1699,7 @@ static void _generate_po2_mipmap(const Component *p_src, Component *p_dst, uint3
 }
 
 void Image::shrink_x2() {
-	ERR_FAIL_COND(data.size() == 0);
+	ERR_FAIL_COND(data.is_empty());
 
 	if (mipmaps) {
 		//just use the lower mipmap as base and copy all
@@ -1709,7 +1709,7 @@ void Image::shrink_x2() {
 
 		int new_size = data.size() - ofs;
 		new_img.resize(new_size);
-		ERR_FAIL_COND(new_img.size() == 0);
+		ERR_FAIL_COND(new_img.is_empty());
 
 		{
 			uint8_t *w = new_img.ptrw();
@@ -1728,8 +1728,8 @@ void Image::shrink_x2() {
 		ERR_FAIL_COND(!_can_modify(format));
 		int ps = get_format_pixel_size(format);
 		new_img.resize((width / 2) * (height / 2) * ps);
-		ERR_FAIL_COND(new_img.size() == 0);
-		ERR_FAIL_COND(data.size() == 0);
+		ERR_FAIL_COND(new_img.is_empty());
+		ERR_FAIL_COND(data.is_empty());
 
 		{
 			uint8_t *w = new_img.ptrw();
@@ -3321,7 +3321,7 @@ void Image::adjust_bcs(float p_brightness, float p_contrast, float p_saturation)
 }
 
 Image::UsedChannels Image::detect_used_channels(CompressSource p_source) const {
-	ERR_FAIL_COND_V(data.size() == 0, USED_CHANNELS_RGBA);
+	ERR_FAIL_COND_V(data.is_empty(), USED_CHANNELS_RGBA);
 	ERR_FAIL_COND_V(is_compressed(), USED_CHANNELS_RGBA);
 	bool r = false, g = false, b = false, a = false, c = false;
 
@@ -3876,7 +3876,7 @@ Error Image::load_ktx_from_buffer(const Vector<uint8_t> &p_array) {
 
 void Image::convert_rg_to_ra_rgba8() {
 	ERR_FAIL_COND(format != FORMAT_RGBA8);
-	ERR_FAIL_COND(!data.size());
+	ERR_FAIL_COND(data.is_empty());
 
 	int s = data.size();
 	uint8_t *w = data.ptrw();
@@ -3889,7 +3889,7 @@ void Image::convert_rg_to_ra_rgba8() {
 
 void Image::convert_ra_rgba8_to_rg() {
 	ERR_FAIL_COND(format != FORMAT_RGBA8);
-	ERR_FAIL_COND(!data.size());
+	ERR_FAIL_COND(data.is_empty());
 
 	int s = data.size();
 	uint8_t *w = data.ptrw();
@@ -3902,7 +3902,7 @@ void Image::convert_ra_rgba8_to_rg() {
 
 void Image::convert_rgba8_to_bgra8() {
 	ERR_FAIL_COND(format != FORMAT_RGBA8);
-	ERR_FAIL_COND(!data.size());
+	ERR_FAIL_COND(data.is_empty());
 
 	int s = data.size();
 	uint8_t *w = data.ptrw();
