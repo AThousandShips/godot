@@ -120,7 +120,7 @@ void MultiMeshEditor::_populate() {
 
 	Vector<Face3> geometry = ss_instance->get_mesh()->get_faces();
 
-	if (geometry.size() == 0) {
+	if (geometry.is_empty()) {
 		err_dialog->set_text(TTR("Surface source is invalid (no faces)."));
 		err_dialog->popup_centered();
 		return;
@@ -154,7 +154,7 @@ void MultiMeshEditor::_populate() {
 		area_accum += area;
 	}
 
-	ERR_FAIL_COND_MSG(triangle_area_map.size() == 0, "Couldn't map area.");
+	ERR_FAIL_COND_MSG(triangle_area_map.is_empty(), "Couldn't map area.");
 	ERR_FAIL_COND_MSG(area_accum == 0, "Couldn't map area.");
 
 	Ref<MultiMesh> multimesh = memnew(MultiMesh);

@@ -690,7 +690,7 @@ Array SurfaceTool::commit_to_arrays() {
 
 			} break;
 			case Mesh::ARRAY_INDEX: {
-				ERR_CONTINUE(index_array.size() == 0);
+				ERR_CONTINUE(index_array.is_empty());
 
 				Vector<int> array;
 				array.resize(index_array.size());
@@ -773,7 +773,7 @@ void SurfaceTool::index() {
 }
 
 void SurfaceTool::deindex() {
-	if (index_array.size() == 0) {
+	if (index_array.is_empty()) {
 		return; //nothing to deindex
 	}
 
@@ -1015,7 +1015,7 @@ void SurfaceTool::create_from_blend_shape(const Ref<Mesh> &p_existing, int p_sur
 void SurfaceTool::append_from(const Ref<Mesh> &p_existing, int p_surface, const Transform3D &p_xform) {
 	ERR_FAIL_NULL_MSG(p_existing, "First argument in SurfaceTool::append_from() must be a valid object of type Mesh");
 
-	if (vertex_array.size() == 0) {
+	if (vertex_array.is_empty()) {
 		primitive = p_existing->surface_get_primitive_type(p_surface);
 		format = 0;
 	}
@@ -1280,7 +1280,7 @@ SurfaceTool::CustomFormat SurfaceTool::get_custom_format(int p_channel_index) co
 }
 void SurfaceTool::optimize_indices_for_cache() {
 	ERR_FAIL_NULL(optimize_vertex_cache_func);
-	ERR_FAIL_COND(index_array.size() == 0);
+	ERR_FAIL_COND(index_array.is_empty());
 	ERR_FAIL_COND(primitive != Mesh::PRIMITIVE_TRIANGLES);
 	ERR_FAIL_COND(index_array.size() % 3 != 0);
 
@@ -1290,7 +1290,7 @@ void SurfaceTool::optimize_indices_for_cache() {
 }
 
 AABB SurfaceTool::get_aabb() const {
-	ERR_FAIL_COND_V(vertex_array.size() == 0, AABB());
+	ERR_FAIL_COND_V(vertex_array.is_empty(), AABB());
 
 	AABB aabb;
 	for (uint32_t i = 0; i < vertex_array.size(); i++) {
@@ -1310,8 +1310,8 @@ Vector<int> SurfaceTool::generate_lod(float p_threshold, int p_target_index_coun
 
 	ERR_FAIL_NULL_V(simplify_func, lod);
 	ERR_FAIL_COND_V(p_target_index_count < 0, lod);
-	ERR_FAIL_COND_V(vertex_array.size() == 0, lod);
-	ERR_FAIL_COND_V(index_array.size() == 0, lod);
+	ERR_FAIL_COND_V(vertex_array.is_empty(), lod);
+	ERR_FAIL_COND_V(index_array.is_empty(), lod);
 	ERR_FAIL_COND_V(index_array.size() % 3 != 0, lod);
 	ERR_FAIL_COND_V(index_array.size() < (unsigned int)p_target_index_count, lod);
 

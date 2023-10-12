@@ -167,7 +167,7 @@ TEST_CASE("[LocalVector] Remove Unordered.") {
 	vector.remove_at_unordered(0);
 
 	CHECK(vector.is_empty());
-	CHECK(vector.size() == 0);
+	CHECK(vector.is_empty());
 }
 
 TEST_CASE("[LocalVector] Erase.") {
@@ -190,7 +190,7 @@ TEST_CASE("[LocalVector] Size / Resize / Reserve.") {
 	LocalVector<int> vector;
 
 	CHECK(vector.is_empty());
-	CHECK(vector.size() == 0);
+	CHECK(vector.is_empty());
 	CHECK(vector.get_capacity() == 0);
 
 	vector.resize(10);
@@ -214,13 +214,13 @@ TEST_CASE("[LocalVector] Size / Resize / Reserve.") {
 
 	vector.reset();
 
-	CHECK(vector.size() == 0);
+	CHECK(vector.is_empty());
 	CHECK(vector.get_capacity() == 0);
 
 	vector.reserve(3);
 
 	CHECK(vector.is_empty());
-	CHECK(vector.size() == 0);
+	CHECK(vector.is_empty());
 	CHECK(vector.get_capacity() >= 3);
 
 	vector.push_back(0);

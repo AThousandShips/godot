@@ -3571,8 +3571,8 @@ TEST_CASE("[SceneTree][TextEdit] line wrapping") {
 	CHECK(text_edit->get_line_wrap_index_at_column(0, -1) == 0);
 	CHECK(text_edit->get_line_wrap_index_at_column(1, 0) == 0);
 	CHECK(text_edit->get_line_wrap_index_at_column(0, 10000) == 0);
-	CHECK(text_edit->get_line_wrapped_text(-1).size() == 0);
-	CHECK(text_edit->get_line_wrapped_text(1).size() == 0);
+	CHECK(text_edit->get_line_wrapped_text(-1).is_empty());
+	CHECK(text_edit->get_line_wrapped_text(1).is_empty());
 	ERR_PRINT_ON;
 
 	memdelete(text_edit);

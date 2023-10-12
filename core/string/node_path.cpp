@@ -315,7 +315,7 @@ void NodePath::simplify() {
 			data->path.remove_at(i - 1);
 			data->path.remove_at(i - 1);
 			i -= 2;
-			if (data->path.size() == 0) {
+			if (data->path.is_empty()) {
 				data->path.push_back(".");
 				break;
 			}
@@ -331,7 +331,7 @@ NodePath NodePath::simplified() const {
 }
 
 NodePath::NodePath(const Vector<StringName> &p_path, bool p_absolute) {
-	if (p_path.size() == 0) {
+	if (p_path.is_empty()) {
 		return;
 	}
 
@@ -343,7 +343,7 @@ NodePath::NodePath(const Vector<StringName> &p_path, bool p_absolute) {
 }
 
 NodePath::NodePath(const Vector<StringName> &p_path, const Vector<StringName> &p_subpath, bool p_absolute) {
-	if (p_path.size() == 0 && p_subpath.size() == 0) {
+	if (p_path.is_empty() && p_subpath.is_empty()) {
 		return;
 	}
 

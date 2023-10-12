@@ -142,7 +142,7 @@ TEST_CASE("[Curve3D] Baked") {
 		SUBCASE("Disable up vectors") {
 			curve->set_up_vector_enabled(false);
 			CHECK(curve->is_up_vector_enabled() == false);
-			CHECK(curve->get_baked_up_vectors().size() == 0);
+			CHECK(curve->get_baked_up_vectors().is_empty());
 		}
 	}
 }

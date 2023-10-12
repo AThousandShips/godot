@@ -87,7 +87,7 @@ String RenderingDevice::shader_get_spirv_cache_key() const {
 
 RID RenderingDevice::shader_create_from_spirv(const Vector<ShaderStageSPIRVData> &p_spirv, const String &p_shader_name) {
 	Vector<uint8_t> bytecode = shader_compile_binary_from_spirv(p_spirv, p_shader_name);
-	ERR_FAIL_COND_V(bytecode.size() == 0, RID());
+	ERR_FAIL_COND_V(bytecode.is_empty(), RID());
 	return shader_create_from_bytecode(bytecode);
 }
 

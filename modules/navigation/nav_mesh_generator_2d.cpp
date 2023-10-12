@@ -77,7 +77,7 @@ NavMeshGenerator2D::~NavMeshGenerator2D() {
 }
 
 void NavMeshGenerator2D::sync() {
-	if (generator_tasks.size() == 0) {
+	if (generator_tasks.is_empty()) {
 		return;
 	}
 
@@ -698,7 +698,7 @@ void NavMeshGenerator2D::generator_bake_from_source_geometry_data(Ref<Navigation
 	const Vector<Vector<Vector2>> &traversable_outlines = p_source_geometry_data->_get_traversable_outlines();
 	const Vector<Vector<Vector2>> &obstruction_outlines = p_source_geometry_data->_get_obstruction_outlines();
 
-	if (outline_count == 0 && traversable_outlines.size() == 0) {
+	if (outline_count == 0 && traversable_outlines.is_empty()) {
 		return;
 	}
 
@@ -761,7 +761,7 @@ void NavMeshGenerator2D::generator_bake_from_source_geometry_data(Ref<Navigation
 		new_baked_outlines.push_back(polypath);
 	}
 
-	if (new_baked_outlines.size() == 0) {
+	if (new_baked_outlines.is_empty()) {
 		p_navigation_mesh->set_vertices(Vector<Vector2>());
 		p_navigation_mesh->clear_polygons();
 		return;

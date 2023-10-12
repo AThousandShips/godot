@@ -524,7 +524,7 @@ TEST_CASE("[String] Splitting") {
 	CHECK(l[0] == "");
 
 	l = s.split("", false);
-	CHECK(l.size() == 0);
+	CHECK(l.is_empty());
 
 	s = "Mars Jupiter Saturn Uranus";
 	const char *slices_s[4] = { "Mars", "Jupiter", "Saturn", "Uranus" };

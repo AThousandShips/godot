@@ -3549,7 +3549,7 @@ bool TileMap::_set(const StringName &p_name, const Variant &p_value) {
 #ifndef DISABLE_DEPRECATED
 	} else if (p_name == "tile_data") { // Kept for compatibility reasons.
 		if (p_value.is_array()) {
-			if (layers.size() == 0) {
+			if (layers.is_empty()) {
 				Ref<TileMapLayer> new_layer;
 				new_layer.instantiate();
 				new_layer->set_tile_map(this);

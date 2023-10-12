@@ -316,22 +316,22 @@ void Array::erase(const Variant &p_value) {
 }
 
 Variant Array::front() const {
-	ERR_FAIL_COND_V_MSG(_p->array.size() == 0, Variant(), "Can't take value from empty array.");
+	ERR_FAIL_COND_V_MSG(_p->array.is_empty(), Variant(), "Can't take value from empty array.");
 	return operator[](0);
 }
 
 Variant Array::back() const {
-	ERR_FAIL_COND_V_MSG(_p->array.size() == 0, Variant(), "Can't take value from empty array.");
+	ERR_FAIL_COND_V_MSG(_p->array.is_empty(), Variant(), "Can't take value from empty array.");
 	return operator[](_p->array.size() - 1);
 }
 
 Variant Array::pick_random() const {
-	ERR_FAIL_COND_V_MSG(_p->array.size() == 0, Variant(), "Can't take value from empty array.");
+	ERR_FAIL_COND_V_MSG(_p->array.is_empty(), Variant(), "Can't take value from empty array.");
 	return operator[](Math::rand() % _p->array.size());
 }
 
 int Array::find(const Variant &p_value, int p_from) const {
-	if (_p->array.size() == 0) {
+	if (_p->array.is_empty()) {
 		return -1;
 	}
 	Variant value = p_value;
@@ -354,7 +354,7 @@ int Array::find(const Variant &p_value, int p_from) const {
 }
 
 int Array::rfind(const Variant &p_value, int p_from) const {
-	if (_p->array.size() == 0) {
+	if (_p->array.is_empty()) {
 		return -1;
 	}
 	Variant value = p_value;
@@ -381,7 +381,7 @@ int Array::rfind(const Variant &p_value, int p_from) const {
 int Array::count(const Variant &p_value) const {
 	Variant value = p_value;
 	ERR_FAIL_COND_V(!_p->typed.validate(value, "count"), 0);
-	if (_p->array.size() == 0) {
+	if (_p->array.is_empty()) {
 		return 0;
 	}
 

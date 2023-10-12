@@ -3918,7 +3918,7 @@ void TextEdit::end_complex_operation() {
 	if (complex_operation_count > 0) {
 		return;
 	}
-	ERR_FAIL_COND(undo_stack.size() == 0);
+	ERR_FAIL_COND(undo_stack.is_empty());
 
 	undo_stack.back()->get().end_carets = carets;
 	if (undo_stack.back()->get().chain_forward) {
@@ -4329,7 +4329,7 @@ Rect2i TextEdit::get_rect_at_line_column(int p_line, int p_column) const {
 		return Rect2i();
 	}
 
-	if (line_drawing_cache.size() == 0 || !line_drawing_cache.has(p_line)) {
+	if (line_drawing_cache.is_empty() || !line_drawing_cache.has(p_line)) {
 		// Line is not in the cache, which means it's outside of the viewing area.
 		return Rect2i(-1, -1, 0, 0);
 	}

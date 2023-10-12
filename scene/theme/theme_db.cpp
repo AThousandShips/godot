@@ -483,7 +483,7 @@ List<Ref<Theme>> ThemeContext::get_themes() const {
 
 Ref<Theme> ThemeContext::get_fallback_theme() const {
 	// We expect all contexts to be valid and non-empty, but just in case...
-	if (themes.size() == 0) {
+	if (themes.is_empty()) {
 		return ThemeDB::get_singleton()->get_default_theme();
 	}
 

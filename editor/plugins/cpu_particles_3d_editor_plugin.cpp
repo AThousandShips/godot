@@ -94,7 +94,7 @@ void CPUParticles3DEditor::_generate_emission_points() {
 		return;
 	}
 
-	if (normals.size() == 0) {
+	if (normals.is_empty()) {
 		node->set_emission_shape(CPUParticles3D::EMISSION_SHAPE_POINTS);
 		node->set_emission_points(points);
 	} else {

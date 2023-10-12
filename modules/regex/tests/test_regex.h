@@ -106,7 +106,7 @@ TEST_CASE("[RegEx] Searching") {
 	CHECK(re.compile(numerics) == OK);
 	CHECK(re.is_valid());
 	CHECK(re.search(s) == nullptr);
-	CHECK(re.search_all(s).size() == 0);
+	CHECK(re.search_all(s).is_empty());
 }
 
 TEST_CASE("[RegEx] Substitution") {
@@ -157,10 +157,10 @@ TEST_CASE("[RegEx] Uninitialized use") {
 	RegEx re;
 	ERR_PRINT_OFF;
 	CHECK(re.search(s) == nullptr);
-	CHECK(re.search_all(s).size() == 0);
+	CHECK(re.search_all(s).is_empty());
 	CHECK(re.sub(s, "") == "");
 	CHECK(re.get_group_count() == 0);
-	CHECK(re.get_names().size() == 0);
+	CHECK(re.get_names().is_empty());
 	ERR_PRINT_ON
 }
 

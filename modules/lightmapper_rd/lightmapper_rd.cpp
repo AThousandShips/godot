@@ -49,7 +49,7 @@ void LightmapperRD::add_mesh(const MeshData &p_mesh) {
 	ERR_FAIL_COND(p_mesh.emission_on_uv2.is_null() || p_mesh.emission_on_uv2->is_empty());
 	ERR_FAIL_COND(p_mesh.albedo_on_uv2->get_width() != p_mesh.emission_on_uv2->get_width());
 	ERR_FAIL_COND(p_mesh.albedo_on_uv2->get_height() != p_mesh.emission_on_uv2->get_height());
-	ERR_FAIL_COND(p_mesh.points.size() == 0);
+	ERR_FAIL_COND(p_mesh.points.is_empty());
 	MeshInstance mi;
 	mi.data = p_mesh;
 	mesh_instances.push_back(mi);
@@ -507,19 +507,19 @@ void LightmapperRD::_create_acceleration_structures(RenderingDevice *rd, Size2i 
 		triangle_cell_indices_buffer = rd->storage_buffer_create(tib.size(), tib);
 
 		Vector<uint8_t> lb = lights.to_byte_array();
-		if (lb.size() == 0) {
+		if (lb.is_empty()) {
 			lb.resize(sizeof(Light)); //even if no lights, the buffer must exist
 		}
 		lights_buffer = rd->storage_buffer_create(lb.size(), lb);
 
 		Vector<uint8_t> sb = seam_buffer_vec.to_byte_array();
-		if (sb.size() == 0) {
+		if (sb.is_empty()) {
 			sb.resize(sizeof(Vector2i) * 2); //even if no seams, the buffer must exist
 		}
 		seams_buffer = rd->storage_buffer_create(sb.size(), sb);
 
 		Vector<uint8_t> pb = p_probe_positions.to_byte_array();
-		if (pb.size() == 0) {
+		if (pb.is_empty()) {
 			pb.resize(sizeof(Probe));
 		}
 		probe_positions_buffer = rd->storage_buffer_create(pb.size(), pb);
@@ -1886,7 +1886,7 @@ Variant LightmapperRD::get_bake_mesh_userdata(int p_index) const {
 }
 
 Rect2 LightmapperRD::get_bake_mesh_uv_scale(int p_index) const {
-	ERR_FAIL_COND_V(bake_textures.size() == 0, Rect2());
+	ERR_FAIL_COND_V(bake_textures.is_empty(), Rect2());
 	Rect2 uv_ofs;
 	Vector2 atlas_size = Vector2(bake_textures[0]->get_width(), bake_textures[0]->get_height());
 	uv_ofs.position = Vector2(mesh_instances[p_index].offset) / atlas_size;

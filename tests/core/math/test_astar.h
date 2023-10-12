@@ -104,15 +104,15 @@ TEST_CASE("[AStar3D] Add/Remove") {
 
 	a.disconnect_points(1, 2, true);
 	CHECK(a.get_point_connections(1).size() == 2); // 3, 4
-	CHECK(a.get_point_connections(2).size() == 0);
+	CHECK(a.get_point_connections(2).is_empty());
 
 	a.disconnect_points(4, 1, false);
 	CHECK(a.get_point_connections(1).size() == 2); // 3, 4
-	CHECK(a.get_point_connections(4).size() == 0);
+	CHECK(a.get_point_connections(4).is_empty());
 
 	a.disconnect_points(4, 1, true);
 	CHECK(a.get_point_connections(1).size() == 1); // 3
-	CHECK(a.get_point_connections(4).size() == 0);
+	CHECK(a.get_point_connections(4).is_empty());
 
 	a.connect_points(2, 3, false);
 	CHECK(a.get_point_connections(2).size() == 1); // 3
@@ -123,7 +123,7 @@ TEST_CASE("[AStar3D] Add/Remove") {
 	CHECK(a.get_point_connections(3).size() == 2); // 1, 2
 
 	a.disconnect_points(2, 3, false);
-	CHECK(a.get_point_connections(2).size() == 0);
+	CHECK(a.get_point_connections(2).is_empty());
 	CHECK(a.get_point_connections(3).size() == 2); // 1, 2
 
 	a.connect_points(4, 3, true);
@@ -135,9 +135,9 @@ TEST_CASE("[AStar3D] Add/Remove") {
 	CHECK(a.get_point_connections(4).size() == 1); // 3
 
 	a.remove_point(3);
-	CHECK(a.get_point_connections(1).size() == 0);
-	CHECK(a.get_point_connections(2).size() == 0);
-	CHECK(a.get_point_connections(4).size() == 0);
+	CHECK(a.get_point_connections(1).is_empty());
+	CHECK(a.get_point_connections(2).is_empty());
+	CHECK(a.get_point_connections(4).is_empty());
 
 	a.add_point(0, Vector3(0, -1, 0));
 	a.add_point(3, Vector3(2, 1, 0));
@@ -321,7 +321,7 @@ TEST_CASE("[Stress][AStar3D] Find paths") {
 					Vector<int64_t> route = a.get_id_path(u, v);
 					if (!Math::is_inf(d[u][v])) {
 						// Reachable.
-						if (route.size() == 0) {
+						if (route.is_empty()) {
 							print_verbose(vformat("From %d to %d: A* did not find a path\n", u, v));
 							match = false;
 							goto exit;

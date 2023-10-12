@@ -117,11 +117,11 @@ VkResult VulkanContext::vkCreateRenderPass2KHR(VkDevice p_device, const VkRender
 				p_create_info->pSubpasses[i].flags, /* flags */
 				p_create_info->pSubpasses[i].pipelineBindPoint, /* pipelineBindPoint */
 				p_create_info->pSubpasses[i].inputAttachmentCount, /* inputAttachmentCount */
-				input_attachments.size() == 0 ? nullptr : input_attachments.ptr(), /* pInputAttachments */
+				input_attachments.is_empty() ? nullptr : input_attachments.ptr(), /* pInputAttachments */
 				p_create_info->pSubpasses[i].colorAttachmentCount, /* colorAttachmentCount */
-				color_attachments.size() == 0 ? nullptr : color_attachments.ptr(), /* pColorAttachments */
-				resolve_attachments.size() == 0 ? nullptr : resolve_attachments.ptr(), /* pResolveAttachments */
-				depth_attachments.size() == 0 ? nullptr : depth_attachments.ptr(), /* pDepthStencilAttachment */
+				color_attachments.is_empty() ? nullptr : color_attachments.ptr(), /* pColorAttachments */
+				resolve_attachments.is_empty() ? nullptr : resolve_attachments.ptr(), /* pResolveAttachments */
+				depth_attachments.is_empty() ? nullptr : depth_attachments.ptr(), /* pDepthStencilAttachment */
 				p_create_info->pSubpasses[i].preserveAttachmentCount, /* preserveAttachmentCount */
 				p_create_info->pSubpasses[i].pPreserveAttachments /* pPreserveAttachments */
 			};

@@ -186,7 +186,7 @@ void ImporterMesh::add_surface(Mesh::PrimitiveType p_primitive, const Array &p_a
 		Surface::LOD lod;
 		lod.distance = E;
 		lod.indices = p_lods[E];
-		ERR_CONTINUE(lod.indices.size() == 0);
+		ERR_CONTINUE(lod.indices.is_empty());
 		s.lods.push_back(lod);
 	}
 
@@ -684,7 +684,7 @@ bool ImporterMesh::has_mesh() const {
 }
 
 Ref<ArrayMesh> ImporterMesh::get_mesh(const Ref<ArrayMesh> &p_base) {
-	ERR_FAIL_COND_V(surfaces.size() == 0, Ref<ArrayMesh>());
+	ERR_FAIL_COND_V(surfaces.is_empty(), Ref<ArrayMesh>());
 
 	if (mesh.is_null()) {
 		if (p_base.is_valid()) {
@@ -1035,7 +1035,7 @@ Ref<ConvexPolygonShape3D> ImporterMesh::create_convex_shape(bool p_clean, bool p
 
 Ref<ConcavePolygonShape3D> ImporterMesh::create_trimesh_shape() const {
 	Vector<Face3> faces = get_faces();
-	if (faces.size() == 0) {
+	if (faces.is_empty()) {
 		return Ref<ConcavePolygonShape3D>();
 	}
 
@@ -1056,7 +1056,7 @@ Ref<ConcavePolygonShape3D> ImporterMesh::create_trimesh_shape() const {
 
 Ref<NavigationMesh> ImporterMesh::create_navigation_mesh() {
 	Vector<Face3> faces = get_faces();
-	if (faces.size() == 0) {
+	if (faces.is_empty()) {
 		return Ref<NavigationMesh>();
 	}
 

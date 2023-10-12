@@ -509,7 +509,7 @@ static void _convert(int p_width, int p_height, const uint8_t *p_src, uint8_t *p
 }
 
 void Image::convert(Format p_new_format) {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 
@@ -1028,7 +1028,7 @@ void Image::resize_to_po2(bool p_square, Interpolation p_interpolation) {
 }
 
 void Image::resize(int p_width, int p_height, Interpolation p_interpolation) {
-	ERR_FAIL_COND_MSG(data.size() == 0, "Cannot resize image before creating it, use set_data() first.");
+	ERR_FAIL_COND_MSG(data.is_empty(), "Cannot resize image before creating it, use set_data() first.");
 	ERR_FAIL_COND_MSG(!_can_modify(format), "Cannot resize in compressed or custom image formats.");
 
 	bool mipmap_aware = p_interpolation == INTERPOLATE_TRILINEAR /* || p_interpolation == INTERPOLATE_TRICUBIC */;
@@ -1699,7 +1699,7 @@ static void _generate_po2_mipmap(const Component *p_src, Component *p_dst, uint3
 }
 
 void Image::shrink_x2() {
-	ERR_FAIL_COND(data.size() == 0);
+	ERR_FAIL_COND(data.is_empty());
 
 	if (mipmaps) {
 		//just use the lower mipmap as base and copy all
@@ -1709,7 +1709,7 @@ void Image::shrink_x2() {
 
 		int new_size = data.size() - ofs;
 		new_img.resize(new_size);
-		ERR_FAIL_COND(new_img.size() == 0);
+		ERR_FAIL_COND(new_img.is_empty());
 
 		{
 			uint8_t *w = new_img.ptrw();
@@ -1728,8 +1728,8 @@ void Image::shrink_x2() {
 		ERR_FAIL_COND(!_can_modify(format));
 		int ps = get_format_pixel_size(format);
 		new_img.resize((width / 2) * (height / 2) * ps);
-		ERR_FAIL_COND(new_img.size() == 0);
-		ERR_FAIL_COND(data.size() == 0);
+		ERR_FAIL_COND(new_img.is_empty());
+		ERR_FAIL_COND(data.is_empty());
 
 		{
 			uint8_t *w = new_img.ptrw();
@@ -2138,7 +2138,7 @@ void Image::clear_mipmaps() {
 }
 
 bool Image::is_empty() const {
-	return (data.size() == 0);
+	return data.is_empty();
 }
 
 Vector<uint8_t> Image::get_data() const {
@@ -2966,7 +2966,7 @@ void Image::_repeat_pixel_over_subsequent_memory(uint8_t *p_pixel, int p_pixel_s
 }
 
 void Image::fill(const Color &p_color) {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 	ERR_FAIL_COND_MSG(!_can_modify(format), "Cannot fill in compressed or custom image formats.");
@@ -2982,7 +2982,7 @@ void Image::fill(const Color &p_color) {
 }
 
 void Image::fill_rect(const Rect2i &p_rect, const Color &p_color) {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 	ERR_FAIL_COND_MSG(!_can_modify(format), "Cannot fill rect in compressed or custom image formats.");
@@ -3321,7 +3321,7 @@ void Image::adjust_bcs(float p_brightness, float p_contrast, float p_saturation)
 }
 
 Image::UsedChannels Image::detect_used_channels(CompressSource p_source) const {
-	ERR_FAIL_COND_V(data.size() == 0, USED_CHANNELS_RGBA);
+	ERR_FAIL_COND_V(data.is_empty(), USED_CHANNELS_RGBA);
 	ERR_FAIL_COND_V(is_compressed(), USED_CHANNELS_RGBA);
 	bool r = false, g = false, b = false, a = false, c = false;
 
@@ -3599,7 +3599,7 @@ void Image::normal_map_to_xy() {
 }
 
 Ref<Image> Image::rgbe_to_srgb() {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return Ref<Image>();
 	}
 
@@ -3693,7 +3693,7 @@ void Image::bump_map_to_normal_map(float bump_scale) {
 }
 
 void Image::srgb_to_linear() {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 
@@ -3724,7 +3724,7 @@ void Image::srgb_to_linear() {
 }
 
 void Image::premultiply_alpha() {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 
@@ -3746,7 +3746,7 @@ void Image::premultiply_alpha() {
 }
 
 void Image::fix_alpha_edges() {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 

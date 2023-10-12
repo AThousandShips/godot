@@ -601,7 +601,7 @@ Vector3 NavigationAgent3D::get_next_path_position() {
 	update_navigation();
 
 	const Vector<Vector3> &navigation_path = navigation_result->get_path();
-	if (navigation_path.size() == 0) {
+	if (navigation_path.is_empty()) {
 		ERR_FAIL_NULL_V_MSG(agent_parent, Vector3(), "The agent has no parent.");
 		return agent_parent->get_global_position();
 	} else {
@@ -631,7 +631,7 @@ Vector3 NavigationAgent3D::get_final_position() {
 	update_navigation();
 
 	const Vector<Vector3> &navigation_path = navigation_result->get_path();
-	if (navigation_path.size() == 0) {
+	if (navigation_path.is_empty()) {
 		return Vector3();
 	}
 	return navigation_path[navigation_path.size() - 1];
@@ -688,7 +688,7 @@ void NavigationAgent3D::update_navigation() {
 
 	if (NavigationServer3D::get_singleton()->agent_is_map_changed(agent)) {
 		reload_path = true;
-	} else if (navigation_result->get_path().size() == 0) {
+	} else if (navigation_result->get_path().is_empty()) {
 		reload_path = true;
 	} else {
 		// Check if too far from the navigation path
@@ -729,7 +729,7 @@ void NavigationAgent3D::update_navigation() {
 		emit_signal(SNAME("path_changed"));
 	}
 
-	if (navigation_result->get_path().size() == 0) {
+	if (navigation_result->get_path().is_empty()) {
 		return;
 	}
 

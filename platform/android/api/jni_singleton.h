@@ -219,7 +219,7 @@ public:
 	}
 
 	void add_signal(const StringName &p_name, const Vector<Variant::Type> &p_args) {
-		if (p_args.size() == 0) {
+		if (p_args.is_empty()) {
 			ADD_SIGNAL(MethodInfo(p_name));
 		} else if (p_args.size() == 1) {
 			ADD_SIGNAL(MethodInfo(p_name, PropertyInfo(p_args[0], "arg1")));

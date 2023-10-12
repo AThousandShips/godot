@@ -471,7 +471,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			}
 
 			List<Node *> selection = editor_selection->get_selected_node_list();
-			if (selection.size() == 0) {
+			if (selection.is_empty()) {
 				break;
 			}
 
@@ -685,7 +685,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			}
 
 			List<Node *> selection = editor_selection->get_selected_node_list();
-			if (selection.size() == 0) {
+			if (selection.is_empty()) {
 				break;
 			}
 
@@ -1928,7 +1928,7 @@ void SceneTreeDock::_do_reparent(Node *p_new_parent, int p_position_in_parent, V
 	Node *new_parent = p_new_parent;
 	ERR_FAIL_NULL(new_parent);
 
-	if (p_nodes.size() == 0) {
+	if (p_nodes.is_empty()) {
 		return; // Nothing to reparent.
 	}
 
@@ -2292,7 +2292,7 @@ void SceneTreeDock::_update_script_button() {
 	if (!profile_allow_script_editing) {
 		button_create_script->hide();
 		button_detach_script->hide();
-	} else if (editor_selection->get_selection().size() == 0) {
+	} else if (editor_selection->get_selection().is_empty()) {
 		button_create_script->hide();
 		button_detach_script->hide();
 	} else if (editor_selection->get_selection().size() == 1) {
@@ -2977,7 +2977,7 @@ void SceneTreeDock::_tree_rmb(const Vector2 &p_menu_pos) {
 	List<Node *> selection = editor_selection->get_selected_node_list();
 	List<Node *> full_selection = editor_selection->get_full_selected_node_list(); // Above method only returns nodes with common parent.
 
-	if (selection.size() == 0) {
+	if (selection.is_empty()) {
 		return;
 	}
 

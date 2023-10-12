@@ -4544,7 +4544,7 @@ void Node3DEditorViewport::drop_data_fw(const Point2 &p_point, const Variant &p_
 		} else if (is_shift && selected_node != root_node) {
 			target_node = selected_node->get_parent();
 		}
-	} else if (selected_nodes.size() == 0) {
+	} else if (selected_nodes.is_empty()) {
 		if (root_node) {
 			target_node = root_node;
 		} else {

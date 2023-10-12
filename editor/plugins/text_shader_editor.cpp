@@ -473,7 +473,7 @@ void ShaderTextEditor::_validate_script() {
 
 	if (last_compile_result != OK) {
 		//preprocessor error
-		ERR_FAIL_COND(err_positions.size() == 0);
+		ERR_FAIL_COND(err_positions.is_empty());
 
 		String err_text = error_pp;
 		int err_line = err_positions.front()->get().line;
@@ -1023,7 +1023,7 @@ void TextShaderEditor::_update_bookmark_list() {
 	bookmarks_menu->add_shortcut(ED_GET_SHORTCUT("script_text_editor/goto_previous_bookmark"), BOOKMARK_GOTO_PREV);
 
 	PackedInt32Array bookmark_list = shader_editor->get_text_editor()->get_bookmarked_lines();
-	if (bookmark_list.size() == 0) {
+	if (bookmark_list.is_empty()) {
 		return;
 	}
 

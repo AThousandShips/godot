@@ -2775,11 +2775,11 @@ void RasterizerSceneGLES3::_render_list_template(RenderListParameters *p_params,
 
 				if (pass == 0) {
 					spec_constants |= SceneShaderGLES3::BASE_PASS;
-					if (inst->omni_light_gl_cache.size() == 0) {
+					if (inst->omni_light_gl_cache.is_empty()) {
 						spec_constants |= SceneShaderGLES3::DISABLE_LIGHT_OMNI;
 					}
 
-					if (inst->spot_light_gl_cache.size() == 0) {
+					if (inst->spot_light_gl_cache.is_empty()) {
 						spec_constants |= SceneShaderGLES3::DISABLE_LIGHT_SPOT;
 					}
 

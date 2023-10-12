@@ -856,7 +856,7 @@ void CSGBrushOperation::Build2DFaces::_add_vertex_idx_sorted(Vector<int> &r_vert
 		ERR_FAIL_COND_MSG(p_new_vertex_index >= vertices.size(), "Invalid vertex index.");
 
 		// The first vertex.
-		if (r_vertex_indices.size() == 0) {
+		if (r_vertex_indices.is_empty()) {
 			// Simply add it.
 			r_vertex_indices.push_back(p_new_vertex_index);
 			return;
@@ -988,7 +988,7 @@ void CSGBrushOperation::Build2DFaces::_merge_faces(const Vector<int> &p_segment_
 			faces.remove_at(merge_faces_idx[i]);
 		}
 
-		if (degenerate_points.size() == 0) {
+		if (degenerate_points.is_empty()) {
 			continue;
 		}
 

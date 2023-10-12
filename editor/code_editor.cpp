@@ -941,7 +941,7 @@ void CodeTextEditor::_complete_request() {
 	if (code_complete_func) {
 		code_complete_func(code_complete_ud, ctext, &entries, forced);
 	}
-	if (entries.size() == 0) {
+	if (entries.is_empty()) {
 		return;
 	}
 

@@ -167,7 +167,7 @@ TEST_CASE("[Object] Metadata") {
 	List<StringName> meta_list2;
 	object.get_meta_list(&meta_list2);
 	CHECK_MESSAGE(
-			meta_list2.size() == 0,
+			meta_list2.is_empty(),
 			"The metadata list should contain 0 items after removing all metadata items.");
 }
 
@@ -356,7 +356,7 @@ TEST_CASE("[Object] Signals") {
 
 			signal_connections.clear();
 			object.get_all_signal_connections(&signal_connections);
-			CHECK(signal_connections.size() == 0);
+			CHECK(signal_connections.is_empty());
 			signal_connections.clear();
 			object.get_signals_connected_to_this(&signal_connections);
 			CHECK(signal_connections.size() == 1);
@@ -377,10 +377,10 @@ TEST_CASE("[Object] Signals") {
 
 		signal_connections.clear();
 		object.get_all_signal_connections(&signal_connections);
-		CHECK(signal_connections.size() == 0);
+		CHECK(signal_connections.is_empty());
 		signal_connections.clear();
 		object.get_signals_connected_to_this(&signal_connections);
-		CHECK(signal_connections.size() == 0);
+		CHECK(signal_connections.is_empty());
 	}
 
 	SUBCASE("Emitting a non existing signal will return an error") {
@@ -422,7 +422,7 @@ TEST_CASE("[Object] Signals") {
 		}
 		signal_connections.clear();
 		object.get_all_signal_connections(&signal_connections);
-		CHECK(signal_connections.size() == 0);
+		CHECK(signal_connections.is_empty());
 	}
 }
 

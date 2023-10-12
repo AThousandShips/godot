@@ -434,11 +434,11 @@ TEST_CASE("[BitMap] Clip to polygon") {
 	ERR_PRINT_OFF
 	polygons = bit_map.clip_opaque_to_polygons(Rect2i(0, 0, 128, 128));
 	ERR_PRINT_ON
-	CHECK_MESSAGE(polygons.size() == 0, "We should have no polygons, because the BitMap was not initialized");
+	CHECK_MESSAGE(polygons.is_empty(), "We should have no polygons, because the BitMap was not initialized");
 
 	bit_map.create(dim);
 	polygons = bit_map.clip_opaque_to_polygons(Rect2i(0, 0, 128, 128));
-	CHECK_MESSAGE(polygons.size() == 0, "We should have no polygons, because the BitMap was all 0's");
+	CHECK_MESSAGE(polygons.is_empty(), "We should have no polygons, because the BitMap was all 0's");
 
 	reset_bit_map(bit_map);
 	bit_map.set_bit_rect(Rect2i(0, 0, 64, 64), true);

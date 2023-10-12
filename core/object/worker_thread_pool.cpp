@@ -196,7 +196,7 @@ void WorkerThreadPool::_post_task(Task *p_task, bool p_high_priority) {
 	// Fall back to processing on the calling thread if there are no worker threads.
 	// Separated into its own variable to make it easier to extend this logic
 	// in custom builds.
-	bool process_on_calling_thread = threads.size() == 0;
+	bool process_on_calling_thread = threads.is_empty();
 	if (process_on_calling_thread) {
 		_process_task(p_task);
 		return;
@@ -550,7 +550,7 @@ void WorkerThreadPool::init(int p_thread_count, bool p_use_native_threads_low_pr
 }
 
 void WorkerThreadPool::finish() {
-	if (threads.size() == 0) {
+	if (threads.is_empty()) {
 		return;
 	}
 

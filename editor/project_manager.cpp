@@ -1582,7 +1582,7 @@ const HashSet<String> &ProjectList::get_selected_project_keys() const {
 
 Vector<ProjectList::Item> ProjectList::get_selected_projects() const {
 	Vector<Item> items;
-	if (_selected_project_paths.size() == 0) {
+	if (_selected_project_paths.is_empty()) {
 		return items;
 	}
 	items.resize(_selected_project_paths.size());
@@ -1603,7 +1603,7 @@ void ProjectList::ensure_project_visible(int p_index) {
 }
 
 int ProjectList::get_single_selected_index() const {
-	if (_selected_project_paths.size() == 0) {
+	if (_selected_project_paths.is_empty()) {
 		// Default selection
 		return 0;
 	}
@@ -1816,7 +1816,7 @@ void ProjectList::_select_project_range(int p_begin, int p_end) {
 }
 
 void ProjectList::erase_selected_projects(bool p_delete_project_contents) {
-	if (_selected_project_paths.size() == 0) {
+	if (_selected_project_paths.is_empty()) {
 		return;
 	}
 
@@ -2469,7 +2469,7 @@ void ProjectManager::_import_project() {
 void ProjectManager::_rename_project() {
 	const HashSet<String> &selected_list = _project_list->get_selected_project_keys();
 
-	if (selected_list.size() == 0) {
+	if (selected_list.is_empty()) {
 		return;
 	}
 
@@ -2601,7 +2601,7 @@ void ProjectManager::_erase_missing_projects_confirm() {
 void ProjectManager::_erase_project() {
 	const HashSet<String> &selected_list = _project_list->get_selected_project_keys();
 
-	if (selected_list.size() == 0) {
+	if (selected_list.is_empty()) {
 		return;
 	}
 

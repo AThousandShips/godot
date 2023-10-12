@@ -953,7 +953,7 @@ TEST_CASE("[SceneTree][CodeEdit] delimiters") {
 			/* clear should remove all. */
 			code_edit->clear_string_delimiters();
 			CHECK_FALSE(code_edit->has_string_delimiter("^^"));
-			CHECK(code_edit->get_string_delimiters().size() == 0);
+			CHECK(code_edit->get_string_delimiters().is_empty());
 		}
 
 		SUBCASE("[CodeEdit] add and remove comment delimiters") {
@@ -1019,7 +1019,7 @@ TEST_CASE("[SceneTree][CodeEdit] delimiters") {
 			/* clear should remove all. */
 			code_edit->clear_comment_delimiters();
 			CHECK_FALSE(code_edit->has_comment_delimiter("^^"));
-			CHECK(code_edit->get_comment_delimiters().size() == 0);
+			CHECK(code_edit->get_comment_delimiters().is_empty());
 		}
 
 		SUBCASE("[CodeEdit] add and remove mixed delimiters") {
@@ -1032,7 +1032,7 @@ TEST_CASE("[SceneTree][CodeEdit] delimiters") {
 			/* Disallow adding a string with the same start key as comment. */
 			code_edit->add_string_delimiter("#", "", false);
 			CHECK_FALSE(code_edit->has_string_delimiter("#"));
-			CHECK(code_edit->get_string_delimiters().size() == 0);
+			CHECK(code_edit->get_string_delimiters().is_empty());
 
 			code_edit->add_string_delimiter("\"", "\"", false);
 			CHECK(code_edit->has_string_delimiter("\""));
@@ -1146,7 +1146,7 @@ TEST_CASE("[SceneTree][CodeEdit] delimiters") {
 
 			code_edit->remove_string_delimiter("#");
 			CHECK_FALSE(code_edit->has_string_delimiter("$"));
-			CHECK(code_edit->get_string_delimiters().size() == 0);
+			CHECK(code_edit->get_string_delimiters().is_empty());
 
 			CHECK(code_edit->is_in_string(1) == -1);
 
@@ -1158,7 +1158,7 @@ TEST_CASE("[SceneTree][CodeEdit] delimiters") {
 
 			code_edit->clear_string_delimiters();
 			CHECK_FALSE(code_edit->has_string_delimiter("$"));
-			CHECK(code_edit->get_string_delimiters().size() == 0);
+			CHECK(code_edit->get_string_delimiters().is_empty());
 
 			CHECK(code_edit->is_in_string(1) == -1);
 		}
@@ -1237,7 +1237,7 @@ TEST_CASE("[SceneTree][CodeEdit] delimiters") {
 
 			code_edit->remove_comment_delimiter("#");
 			CHECK_FALSE(code_edit->has_comment_delimiter("$"));
-			CHECK(code_edit->get_comment_delimiters().size() == 0);
+			CHECK(code_edit->get_comment_delimiters().is_empty());
 
 			CHECK(code_edit->is_in_comment(1) == -1);
 
@@ -1249,7 +1249,7 @@ TEST_CASE("[SceneTree][CodeEdit] delimiters") {
 
 			code_edit->clear_comment_delimiters();
 			CHECK_FALSE(code_edit->has_comment_delimiter("$"));
-			CHECK(code_edit->get_comment_delimiters().size() == 0);
+			CHECK(code_edit->get_comment_delimiters().is_empty());
 
 			CHECK(code_edit->is_in_comment(1) == -1);
 		}
@@ -1298,7 +1298,7 @@ TEST_CASE("[SceneTree][CodeEdit] delimiters") {
 			/* Remove the comment delimiter. */
 			code_edit->remove_comment_delimiter("#");
 			CHECK_FALSE(code_edit->has_comment_delimiter("$"));
-			CHECK(code_edit->get_comment_delimiters().size() == 0);
+			CHECK(code_edit->get_comment_delimiters().is_empty());
 
 			/* The "first" comment region is no longer valid. */
 			CHECK(code_edit->is_in_comment(1, 1) == -1);
@@ -2556,7 +2556,7 @@ TEST_CASE("[SceneTree][CodeEdit] folding") {
 		CHECK(code_edit->get_next_visible_line_offset_from(1, 1) == 1);
 
 		// Check metadata.
-		CHECK(code_edit->get_folded_lines().size() == 0);
+		CHECK(code_edit->get_folded_lines().is_empty());
 
 		code_edit->fold_all_lines();
 		CHECK(code_edit->is_line_folded(0));
@@ -3351,16 +3351,16 @@ TEST_CASE("[SceneTree][CodeEdit] completion") {
 			code_edit->update_code_completion_options();
 			code_edit->set_code_completion_selected_index(1);
 			CHECK(code_edit->get_code_completion_selected_index() == -1);
-			CHECK(code_edit->get_code_completion_option(0).size() == 0);
-			CHECK(code_edit->get_code_completion_options().size() == 0);
+			CHECK(code_edit->get_code_completion_option(0).is_empty());
+			CHECK(code_edit->get_code_completion_options().is_empty());
 
 			/* Adding does not update the list. */
 			code_edit->add_code_completion_option(CodeEdit::CodeCompletionKind::KIND_VARIABLE, "item_0.", "item_0");
 
 			code_edit->set_code_completion_selected_index(1);
 			CHECK(code_edit->get_code_completion_selected_index() == -1);
-			CHECK(code_edit->get_code_completion_option(0).size() == 0);
-			CHECK(code_edit->get_code_completion_options().size() == 0);
+			CHECK(code_edit->get_code_completion_option(0).is_empty());
+			CHECK(code_edit->get_code_completion_options().is_empty());
 
 			/* After update, pending add should not be counted, */
 			/* also does not work on col 0                      */
@@ -3866,7 +3866,7 @@ TEST_CASE("[SceneTree][CodeEdit] line length guidelines") {
 	TypedArray<int> guide_lines;
 
 	code_edit->set_line_length_guidelines(guide_lines);
-	CHECK(code_edit->get_line_length_guidelines().size() == 0);
+	CHECK(code_edit->get_line_length_guidelines().is_empty());
 
 	guide_lines.push_back(80);
 	guide_lines.push_back(120);

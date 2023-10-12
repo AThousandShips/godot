@@ -318,7 +318,7 @@ PackedStringArray XRServer::get_suggested_tracker_names() const {
 		}
 	}
 
-	if (arr.size() == 0) {
+	if (arr.is_empty()) {
 		// no suggestions from our tracker? include our defaults
 		arr.push_back(String("head"));
 		arr.push_back(String("left_hand"));
@@ -341,7 +341,7 @@ PackedStringArray XRServer::get_suggested_pose_names(const StringName &p_tracker
 		}
 	}
 
-	if (arr.size() == 0) {
+	if (arr.is_empty()) {
 		// no suggestions from our tracker? include our defaults
 		arr.push_back(String("default"));
 

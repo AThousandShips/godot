@@ -144,7 +144,7 @@ TEST_CASE("[Vector] Fill large array and modify it") {
 	CHECK(vector[200] == 0x60d07);
 
 	vector.clear();
-	CHECK(vector.size() == 0);
+	CHECK(vector.is_empty());
 }
 
 TEST_CASE("[Vector] Copy creation") {
@@ -258,7 +258,7 @@ TEST_CASE("[Vector] Slice") {
 	vector.push_back(4);
 
 	Vector<int> slice0 = vector.slice(0, 0);
-	CHECK(slice0.size() == 0);
+	CHECK(slice0.is_empty());
 
 	Vector<int> slice1 = vector.slice(1, 3);
 	CHECK(slice1.size() == 2);
@@ -293,7 +293,7 @@ TEST_CASE("[Vector] Slice") {
 
 	ERR_PRINT_OFF;
 	Vector<int> slice7 = vector.slice(5, 1);
-	CHECK(slice7.size() == 0); // Expected to fail.
+	CHECK(slice7.is_empty()); // Expected to fail.
 	ERR_PRINT_ON;
 }
 
@@ -408,7 +408,7 @@ TEST_CASE("[Vector] Remove at and find") {
 	vector.remove_at(0);
 
 	CHECK(vector.is_empty());
-	CHECK(vector.size() == 0);
+	CHECK(vector.is_empty());
 }
 
 TEST_CASE("[Vector] Erase") {
@@ -430,7 +430,7 @@ TEST_CASE("[Vector] Erase") {
 TEST_CASE("[Vector] Size, resize, reserve") {
 	Vector<int> vector;
 	CHECK(vector.is_empty());
-	CHECK(vector.size() == 0);
+	CHECK(vector.is_empty());
 
 	vector.resize(10);
 
@@ -448,7 +448,7 @@ TEST_CASE("[Vector] Size, resize, reserve") {
 
 	vector.clear();
 
-	CHECK(vector.size() == 0);
+	CHECK(vector.is_empty());
 	CHECK(vector.is_empty());
 
 	vector.push_back(0);

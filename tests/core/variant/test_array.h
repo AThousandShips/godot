@@ -58,13 +58,13 @@ static inline Dictionary build_dictionary(Variant key, Variant item, Targs... Fa
 
 TEST_CASE("[Array] size(), clear(), and is_empty()") {
 	Array arr;
-	CHECK(arr.size() == 0);
+	CHECK(arr.is_empty());
 	CHECK(arr.is_empty());
 	arr.push_back(1);
 	CHECK(arr.size() == 1);
 	arr.clear();
 	CHECK(arr.is_empty());
-	CHECK(arr.size() == 0);
+	CHECK(arr.is_empty());
 }
 
 TEST_CASE("[Array] Assignment and comparison operators") {
@@ -137,7 +137,7 @@ TEST_CASE("[Array] remove_at()") {
 	CHECK(arr.size() == 1);
 	CHECK(int(arr[0]) == 2);
 	arr.remove_at(0);
-	CHECK(arr.size() == 0);
+	CHECK(arr.is_empty());
 
 	// The array is now empty; try to use `remove_at()` again.
 	// Normally, this prints an error message so we silence it.
@@ -145,7 +145,7 @@ TEST_CASE("[Array] remove_at()") {
 	arr.remove_at(0);
 	ERR_PRINT_ON;
 
-	CHECK(arr.size() == 0);
+	CHECK(arr.is_empty());
 }
 
 TEST_CASE("[Array] get()") {
@@ -256,7 +256,7 @@ TEST_CASE("[Array] slice()") {
 	array.push_back(5);
 
 	Array slice0 = array.slice(0, 0);
-	CHECK(slice0.size() == 0);
+	CHECK(slice0.is_empty());
 
 	Array slice1 = array.slice(1, 3);
 	CHECK(slice1.size() == 2);
@@ -318,17 +318,17 @@ TEST_CASE("[Array] slice()") {
 
 	ERR_PRINT_OFF;
 	Array slice11 = array.slice(4, 1);
-	CHECK(slice11.size() == 0);
+	CHECK(slice11.is_empty());
 
 	Array slice12 = array.slice(3, -4);
-	CHECK(slice12.size() == 0);
+	CHECK(slice12.is_empty());
 	ERR_PRINT_ON;
 
 	Array slice13 = Array().slice(1);
-	CHECK(slice13.size() == 0);
+	CHECK(slice13.is_empty());
 
 	Array slice14 = array.slice(6);
-	CHECK(slice14.size() == 0);
+	CHECK(slice14.is_empty());
 }
 
 TEST_CASE("[Array] Duplicate array") {

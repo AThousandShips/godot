@@ -1481,7 +1481,7 @@ void RasterizerCanvasGLES3::_add_to_batch(uint32_t &r_index, bool &r_batch_broke
 }
 
 void RasterizerCanvasGLES3::_new_batch(bool &r_batch_broken) {
-	if (state.canvas_instance_batches.size() == 0) {
+	if (state.canvas_instance_batches.is_empty()) {
 		state.canvas_instance_batches.push_back(Batch());
 		return;
 	}

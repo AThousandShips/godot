@@ -470,7 +470,7 @@ bool ExportTemplateManager::_install_file_selected(const String &p_file, bool p_
 
 		String file = file_path.get_file();
 
-		if (file.size() == 0) {
+		if (file.is_empty()) {
 			ret = unzGoToNextFile(pkg);
 			continue;
 		}

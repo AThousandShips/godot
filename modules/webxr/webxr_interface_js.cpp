@@ -252,7 +252,7 @@ bool WebXRInterfaceJS::initialize() {
 			return false;
 		}
 
-		if (requested_reference_space_types.size() == 0) {
+		if (requested_reference_space_types.is_empty()) {
 			return false;
 		}
 

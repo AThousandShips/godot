@@ -3531,7 +3531,7 @@ void TextServerFallback::_shaped_text_overrun_trim_to_width(const RID &p_shaped_
 		spans = parent_sd->spans;
 	}
 
-	if (spans.size() == 0) {
+	if (spans.is_empty()) {
 		return;
 	}
 

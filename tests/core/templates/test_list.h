@@ -70,7 +70,7 @@ TEST_CASE("[List] Push/pop back") {
 	list.pop_back();
 	CHECK(v == "A");
 
-	CHECK(list.size() == 0);
+	CHECK(list.is_empty());
 	CHECK(list.is_empty());
 
 	CHECK(list.back() == nullptr);
@@ -102,7 +102,7 @@ TEST_CASE("[List] Push/pop front") {
 	list.pop_front();
 	CHECK(v == "A");
 
-	CHECK(list.size() == 0);
+	CHECK(list.is_empty());
 	CHECK(list.is_empty());
 
 	CHECK(list.back() == nullptr);
@@ -251,7 +251,7 @@ TEST_CASE("[List] Clear") {
 
 	list.clear();
 
-	CHECK(list.size() == 0);
+	CHECK(list.is_empty());
 	CHECK(list.is_empty());
 }
 

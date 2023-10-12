@@ -57,7 +57,7 @@ TEST_CASE("[Translation] Messages") {
 	List<StringName> messages;
 	translation->get_message_list(&messages);
 	CHECK(translation->get_message_count() == 0);
-	CHECK(messages.size() == 0);
+	CHECK(messages.is_empty());
 
 	translation->add_message("Hello2", "Bonjour2");
 	translation->add_message("Hello3", "Bonjour3");
@@ -93,7 +93,7 @@ TEST_CASE("[TranslationPO] Messages with context") {
 	CHECK(translation->get_message_count() == 1);
 	// Only the default context is taken into account.
 	// Since "Hello" is now only present in a non-default context, it is not counted in the list of messages.
-	CHECK(messages.size() == 0);
+	CHECK(messages.is_empty());
 
 	translation->add_message("Hello2", "Bonjour2");
 	translation->add_message("Hello2", "Salut2", "friendly");
@@ -147,7 +147,7 @@ TEST_CASE("[OptimizedTranslation] Generate from Translation and read messages") 
 	// `get_message_list()` can't return the list of messages stored in an OptimizedTranslation.
 	optimized_translation->get_message_list(&messages);
 	CHECK(optimized_translation->get_message_count() == 0);
-	CHECK(messages.size() == 0);
+	CHECK(messages.is_empty());
 }
 
 #ifdef TOOLS_ENABLED

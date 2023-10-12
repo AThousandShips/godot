@@ -560,7 +560,7 @@ Ref<ConvexPolygonShape3D> Mesh::create_convex_shape(bool p_clean, bool p_simplif
 
 Ref<ConcavePolygonShape3D> Mesh::create_trimesh_shape() const {
 	Vector<Face3> faces = get_faces();
-	if (faces.size() == 0) {
+	if (faces.is_empty()) {
 		return Ref<ConcavePolygonShape3D>();
 	}
 
@@ -611,7 +611,7 @@ Ref<Mesh> Mesh::create_outline(float p_margin) const {
 						if (j == ARRAY_VERTEX) {
 							vcount = src.size();
 						}
-						if (dst.size() == 0 || src.size() == 0) {
+						if (dst.is_empty() || src.is_empty()) {
 							arrays[j] = Variant();
 							continue;
 						}
@@ -623,7 +623,7 @@ Ref<Mesh> Mesh::create_outline(float p_margin) const {
 					case ARRAY_WEIGHTS: {
 						Vector<real_t> dst = arrays[j];
 						Vector<real_t> src = a[j];
-						if (dst.size() == 0 || src.size() == 0) {
+						if (dst.is_empty() || src.is_empty()) {
 							arrays[j] = Variant();
 							continue;
 						}
@@ -634,7 +634,7 @@ Ref<Mesh> Mesh::create_outline(float p_margin) const {
 					case ARRAY_COLOR: {
 						Vector<Color> dst = arrays[j];
 						Vector<Color> src = a[j];
-						if (dst.size() == 0 || src.size() == 0) {
+						if (dst.is_empty() || src.is_empty()) {
 							arrays[j] = Variant();
 							continue;
 						}
@@ -646,7 +646,7 @@ Ref<Mesh> Mesh::create_outline(float p_margin) const {
 					case ARRAY_TEX_UV2: {
 						Vector<Vector2> dst = arrays[j];
 						Vector<Vector2> src = a[j];
-						if (dst.size() == 0 || src.size() == 0) {
+						if (dst.is_empty() || src.is_empty()) {
 							arrays[j] = Variant();
 							continue;
 						}
@@ -657,7 +657,7 @@ Ref<Mesh> Mesh::create_outline(float p_margin) const {
 					case ARRAY_INDEX: {
 						Vector<int> dst = arrays[j];
 						Vector<int> src = a[j];
-						if (dst.size() == 0 || src.size() == 0) {
+						if (dst.is_empty() || src.is_empty()) {
 							arrays[j] = Variant();
 							continue;
 						}
@@ -1994,7 +1994,7 @@ AABB ArrayMesh::get_custom_aabb() const {
 }
 
 void ArrayMesh::regen_normal_maps() {
-	if (surfaces.size() == 0) {
+	if (surfaces.is_empty()) {
 		return;
 	}
 	Vector<Ref<SurfaceTool>> surfs;

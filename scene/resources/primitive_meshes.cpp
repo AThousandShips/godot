@@ -52,7 +52,7 @@ void PrimitiveMesh::_update() const {
 
 	Vector<Vector3> points = arr[RS::ARRAY_VERTEX];
 
-	ERR_FAIL_COND_MSG(points.size() == 0, "_create_mesh_array must return at least a vertex array.");
+	ERR_FAIL_COND_MSG(points.is_empty(), "_create_mesh_array must return at least a vertex array.");
 
 	aabb = AABB();
 
@@ -102,7 +102,7 @@ void PrimitiveMesh::_update() const {
 		Vector<Vector2> uv = arr[RS::ARRAY_TEX_UV];
 		Vector<Vector2> uv2 = arr[RS::ARRAY_TEX_UV2];
 
-		if (uv.size() > 0 && uv2.size() == 0) {
+		if (uv.size() > 0 && uv2.is_empty()) {
 			Vector2 uv2_scale = get_uv2_scale();
 			uv2.resize(uv.size());
 

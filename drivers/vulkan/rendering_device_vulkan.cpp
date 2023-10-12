@@ -5428,12 +5428,12 @@ void RenderingDeviceVulkan::_descriptor_pool_free(const DescriptorPoolKey &p_key
 RID RenderingDeviceVulkan::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p_shader, uint32_t p_shader_set) {
 	_THREAD_SAFE_METHOD_
 
-	ERR_FAIL_COND_V(p_uniforms.size() == 0, RID());
+	ERR_FAIL_COND_V(p_uniforms.is_empty(), RID());
 
 	Shader *shader = shader_owner.get_or_null(p_shader);
 	ERR_FAIL_NULL_V(shader, RID());
 
-	ERR_FAIL_COND_V_MSG(p_shader_set >= (uint32_t)shader->sets.size() || shader->sets[p_shader_set].uniform_info.size() == 0, RID(),
+	ERR_FAIL_COND_V_MSG(p_shader_set >= (uint32_t)shader->sets.size() || shader->sets[p_shader_set].uniform_info.is_empty(), RID(),
 			"Desired set (" + itos(p_shader_set) + ") not used by shader.");
 	// See that all sets in shader are satisfied.
 
