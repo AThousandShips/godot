@@ -224,7 +224,7 @@ void MeshInstance3DEditor::_menu_option(int p_option) {
 
 			Vector<Ref<Shape3D>> shapes = mesh->convex_decompose(settings);
 
-			if (!shapes.size()) {
+			if (shapes.is_empty()) {
 				err_dialog->set_text(TTR("Couldn't create any collision shapes."));
 				err_dialog->popup_centered();
 				return;

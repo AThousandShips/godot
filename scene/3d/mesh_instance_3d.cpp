@@ -296,7 +296,7 @@ Node *MeshInstance3D::create_multiple_convex_collisions_node(const Ref<MeshConve
 	}
 
 	Vector<Ref<Shape3D>> shapes = mesh->convex_decompose(settings);
-	if (!shapes.size()) {
+	if (shapes.is_empty()) {
 		return nullptr;
 	}
 

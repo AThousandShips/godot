@@ -1195,7 +1195,7 @@ void SpriteFramesEditor::_update_library(bool p_skip_selector) {
 		List<StringName> anim_names;
 		frames->get_animation_list(&anim_names);
 		anim_names.sort_custom<StringName::AlphCompare>();
-		if (!anim_names.size()) {
+		if (anim_names.is_empty()) {
 			missing_anim_label->show();
 			anim_frames_vb->hide();
 			return;

@@ -400,7 +400,7 @@ public:
 
 	int cull_convex(const Vector<Plane> &p_convex, T **p_result_array, int p_result_max, const T *p_tester, uint32_t p_tree_collision_mask = 0xFFFFFFFF) {
 		BVH_LOCKED_FUNCTION
-		if (!p_convex.size()) {
+		if (p_convex.is_empty()) {
 			return 0;
 		}
 
@@ -430,7 +430,7 @@ public:
 private:
 	// do this after moving etc.
 	void _check_for_collisions(bool p_full_check = false) {
-		if (!changed_items.size()) {
+		if (changed_items.is_empty()) {
 			// noop
 			return;
 		}

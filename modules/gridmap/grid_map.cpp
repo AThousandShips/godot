@@ -1300,7 +1300,7 @@ void GridMap::make_baked_meshes(bool p_gen_lightmap_uv, float p_lightmap_uv_texe
 }
 
 Array GridMap::get_bake_meshes() {
-	if (!baked_meshes.size()) {
+	if (baked_meshes.is_empty()) {
 		make_baked_meshes(true);
 	}
 

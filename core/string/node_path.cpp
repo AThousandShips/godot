@@ -279,7 +279,7 @@ NodePath NodePath::rel_path_to(const NodePath &p_np) const {
 }
 
 NodePath NodePath::get_as_property_path() const {
-	if (!data || !data->path.size()) {
+	if (!data || data->path.is_empty()) {
 		return *this;
 	} else {
 		Vector<StringName> new_path = data->subpath;
@@ -408,7 +408,7 @@ NodePath::NodePath(const String &p_path) {
 		}
 	}
 
-	if (slices == 0 && !absolute && !subpath.size()) {
+	if (slices == 0 && !absolute && subpath.is_empty()) {
 		return;
 	}
 

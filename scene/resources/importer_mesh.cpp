@@ -1148,7 +1148,7 @@ Error ImporterMesh::lightmap_unwrap_cached(const Transform3D &p_base_transform, 
 
 		PackedVector3Array rnormals = arrays[Mesh::ARRAY_NORMAL];
 
-		if (!rnormals.size()) {
+		if (rnormals.is_empty()) {
 			continue;
 		}
 

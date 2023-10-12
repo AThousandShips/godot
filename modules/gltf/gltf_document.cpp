@@ -112,7 +112,7 @@ static Ref<ImporterMesh> _mesh_to_importer_mesh(Ref<Mesh> p_mesh) {
 }
 
 Error GLTFDocument::_serialize(Ref<GLTFState> p_state) {
-	if (!p_state->buffers.size()) {
+	if (p_state->buffers.is_empty()) {
 		p_state->buffers.push_back(Vector<uint8_t>());
 	}
 
@@ -704,7 +704,7 @@ static Vector<uint8_t> _parse_base64_uri(const String &p_uri) {
 Error GLTFDocument::_encode_buffer_glb(Ref<GLTFState> p_state, const String &p_path) {
 	print_verbose("glTF: Total buffers: " + itos(p_state->buffers.size()));
 
-	if (!p_state->buffers.size()) {
+	if (p_state->buffers.is_empty()) {
 		return OK;
 	}
 	Array buffers;
@@ -743,7 +743,7 @@ Error GLTFDocument::_encode_buffer_glb(Ref<GLTFState> p_state, const String &p_p
 Error GLTFDocument::_encode_buffer_bins(Ref<GLTFState> p_state, const String &p_path) {
 	print_verbose("glTF: Total buffers: " + itos(p_state->buffers.size()));
 
-	if (!p_state->buffers.size()) {
+	if (p_state->buffers.is_empty()) {
 		return OK;
 	}
 	Array buffers;
@@ -840,7 +840,7 @@ Error GLTFDocument::_encode_buffer_views(Ref<GLTFState> p_state) {
 		buffers.push_back(d);
 	}
 	print_verbose("glTF: Total buffer views: " + itos(p_state->buffer_views.size()));
-	if (!buffers.size()) {
+	if (buffers.is_empty()) {
 		return OK;
 	}
 	p_state->json["bufferViews"] = buffers;
@@ -932,7 +932,7 @@ Error GLTFDocument::_encode_accessors(Ref<GLTFState> p_state) {
 		accessors.push_back(d);
 	}
 
-	if (!accessors.size()) {
+	if (accessors.is_empty()) {
 		return OK;
 	}
 	p_state->json["accessors"] = accessors;
@@ -1897,7 +1897,7 @@ GLTFAccessorIndex GLTFDocument::_encode_accessor_as_floats(Ref<GLTFState> p_stat
 		_calc_accessor_min_max(i, element_count, type_max, attribs, type_min);
 	}
 
-	ERR_FAIL_COND_V(!attribs.size(), -1);
+	ERR_FAIL_COND_V(attribs.is_empty(), -1);
 
 	Ref<GLTFAccessor> accessor;
 	accessor.instantiate();
@@ -2215,7 +2215,7 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 			Dictionary attributes;
 			{
 				Vector<Vector3> a = array[Mesh::ARRAY_VERTEX];
-				ERR_FAIL_COND_V(!a.size(), ERR_INVALID_DATA);
+				ERR_FAIL_COND_V(a.is_empty(), ERR_INVALID_DATA);
 				attributes["POSITION"] = _encode_accessor_as_vec3(p_state, a, true);
 				vertex_num = a.size();
 			}
@@ -2534,7 +2534,7 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 		meshes.push_back(gltf_mesh);
 	}
 
-	if (!meshes.size()) {
+	if (meshes.is_empty()) {
 		return OK;
 	}
 	p_state->json["meshes"] = meshes;
@@ -3121,7 +3121,7 @@ Error GLTFDocument::_serialize_images(Ref<GLTFState> p_state) {
 
 	print_verbose("Total images: " + itos(p_state->images.size()));
 
-	if (!images.size()) {
+	if (images.is_empty()) {
 		return OK;
 	}
 	p_state->json["images"] = images;
@@ -3385,7 +3385,7 @@ Error GLTFDocument::_parse_images(Ref<GLTFState> p_state, const String &p_base_p
 }
 
 Error GLTFDocument::_serialize_textures(Ref<GLTFState> p_state) {
-	if (!p_state->textures.size()) {
+	if (p_state->textures.is_empty()) {
 		return OK;
 	}
 
@@ -3513,7 +3513,7 @@ Ref<GLTFTextureSampler> GLTFDocument::_get_sampler_for_texture(Ref<GLTFState> p_
 }
 
 Error GLTFDocument::_serialize_texture_samplers(Ref<GLTFState> p_state) {
-	if (!p_state->texture_samplers.size()) {
+	if (p_state->texture_samplers.is_empty()) {
 		return OK;
 	}
 
@@ -3860,7 +3860,7 @@ Error GLTFDocument::_serialize_materials(Ref<GLTFState> p_state) {
 
 		materials.push_back(d);
 	}
-	if (!materials.size()) {
+	if (materials.is_empty()) {
 		return OK;
 	}
 	p_state->json["materials"] = materials;
@@ -4817,7 +4817,7 @@ Error GLTFDocument::_serialize_skins(Ref<GLTFState> p_state) {
 		json_skin["name"] = gltf_skin->get_name();
 		json_skins.push_back(json_skin);
 	}
-	if (!p_state->skins.size()) {
+	if (p_state->skins.is_empty()) {
 		return OK;
 	}
 
@@ -4939,7 +4939,7 @@ Error GLTFDocument::_serialize_cameras(Ref<GLTFState> p_state) {
 		cameras[i] = p_state->cameras[i]->to_dictionary();
 	}
 
-	if (!p_state->cameras.size()) {
+	if (p_state->cameras.is_empty()) {
 		return OK;
 	}
 
@@ -5010,7 +5010,7 @@ String GLTFDocument::interpolation_to_string(const GLTFAnimation::Interpolation 
 }
 
 Error GLTFDocument::_serialize_animations(Ref<GLTFState> p_state) {
-	if (!p_state->animation_players.size()) {
+	if (p_state->animation_players.is_empty()) {
 		return OK;
 	}
 	for (int32_t player_i = 0; player_i < p_state->animation_players.size(); player_i++) {
@@ -5025,7 +5025,7 @@ Error GLTFDocument::_serialize_animations(Ref<GLTFState> p_state) {
 	for (GLTFAnimationIndex animation_i = 0; animation_i < p_state->animations.size(); animation_i++) {
 		Dictionary d;
 		Ref<GLTFAnimation> gltf_animation = p_state->animations[animation_i];
-		if (!gltf_animation->get_tracks().size()) {
+		if (gltf_animation->get_tracks().is_empty()) {
 			continue;
 		}
 
@@ -5184,7 +5184,7 @@ Error GLTFDocument::_serialize_animations(Ref<GLTFState> p_state) {
 		}
 	}
 
-	if (!animations.size()) {
+	if (animations.is_empty()) {
 		return OK;
 	}
 	p_state->json["animations"] = animations;
@@ -5297,7 +5297,7 @@ Error GLTFDocument::_parse_animations(Ref<GLTFState> p_state) {
 
 				ERR_FAIL_INDEX_V(p_state->nodes[node]->mesh, p_state->meshes.size(), ERR_PARSE_ERROR);
 				Ref<GLTFMesh> mesh = p_state->meshes[p_state->nodes[node]->mesh];
-				ERR_CONTINUE(!mesh->get_blend_weights().size());
+				ERR_CONTINUE(mesh->get_blend_weights().is_empty());
 				const int wc = mesh->get_blend_weights().size();
 
 				track->weight_tracks.resize(wc);
@@ -6048,7 +6048,7 @@ struct SceneFormatImporterGLTFInterpolate<Quaternion> {
 
 template <class T>
 T GLTFDocument::_interpolate_track(const Vector<real_t> &p_times, const Vector<T> &p_values, const float p_time, const GLTFAnimation::Interpolation p_interp) {
-	ERR_FAIL_COND_V(!p_values.size(), T());
+	ERR_FAIL_COND_V(p_values.is_empty(), T());
 	if (p_times.size() != (p_values.size() / (p_interp == GLTFAnimation::INTERP_CUBIC_SPLINE ? 3 : 1))) {
 		ERR_PRINT_ONCE("The interpolated values are not corresponding to its times.");
 		return p_values[0];
@@ -6781,7 +6781,7 @@ GLTFAnimation::Track GLTFDocument::_convert_animation_track(Ref<GLTFState> p_sta
 	} else if (track_type == Animation::TYPE_BEZIER) {
 		const int32_t keys = anim_end * BAKE_FPS;
 		if (path.contains(":scale")) {
-			if (!p_track.scale_track.times.size()) {
+			if (p_track.scale_track.times.is_empty()) {
 				p_track.scale_track.interpolation = gltf_interpolation;
 				Vector<real_t> new_times;
 				new_times.resize(keys);
@@ -6809,7 +6809,7 @@ GLTFAnimation::Track GLTFDocument::_convert_animation_track(Ref<GLTFState> p_sta
 				}
 			}
 		} else if (path.contains(":position")) {
-			if (!p_track.position_track.times.size()) {
+			if (p_track.position_track.times.is_empty()) {
 				p_track.position_track.interpolation = gltf_interpolation;
 				Vector<real_t> new_times;
 				new_times.resize(keys);
@@ -6833,7 +6833,7 @@ GLTFAnimation::Track GLTFDocument::_convert_animation_track(Ref<GLTFState> p_sta
 				p_track.position_track.values.write[key_i] = bezier_track;
 			}
 		} else if (path.contains(":rotation")) {
-			if (!p_track.rotation_track.times.size()) {
+			if (p_track.rotation_track.times.is_empty()) {
 				p_track.rotation_track.interpolation = gltf_interpolation;
 				Vector<real_t> new_times;
 				new_times.resize(keys);
@@ -7423,7 +7423,7 @@ Error GLTFDocument::append_from_scene(Node *p_node, Ref<GLTFState> p_state, uint
 	p_state->discard_meshes_and_materials = p_flags & GLTF_IMPORT_DISCARD_MESHES_AND_MATERIALS;
 	p_state->force_generate_tangents = p_flags & GLTF_IMPORT_GENERATE_TANGENT_ARRAYS;
 	p_state->force_disable_compression = p_flags & GLTF_IMPORT_FORCE_DISABLE_MESH_COMPRESSION;
-	if (!p_state->buffers.size()) {
+	if (p_state->buffers.is_empty()) {
 		p_state->buffers.push_back(Vector<uint8_t>());
 	}
 	// Perform export preflight for document extensions. Only extensions that

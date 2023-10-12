@@ -385,7 +385,7 @@ void incremental_optimize() {
 	}
 
 	// special case
-	if (!_active_refs.size()) {
+	if (_active_refs.is_empty()) {
 		return;
 	}
 

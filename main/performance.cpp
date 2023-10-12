@@ -296,7 +296,7 @@ Variant Performance::get_custom_monitor(const StringName &p_id) {
 }
 
 TypedArray<StringName> Performance::get_custom_monitor_names() {
-	if (!_monitor_map.size()) {
+	if (_monitor_map.is_empty()) {
 		return TypedArray<StringName>();
 	}
 	TypedArray<StringName> return_array;

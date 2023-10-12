@@ -84,7 +84,7 @@ void MultiplayerSynchronizer::_update_process() {
 	}
 	set_process_internal(false);
 	set_physics_process_internal(false);
-	if (!visibility_filters.size()) {
+	if (visibility_filters.is_empty()) {
 		return;
 	}
 	switch (visibility_update_mode) {

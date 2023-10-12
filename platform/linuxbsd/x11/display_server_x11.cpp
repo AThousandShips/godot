@@ -274,7 +274,7 @@ bool DisplayServerX11::_refresh_device_info() {
 
 	XIFreeDeviceInfo(info);
 #ifdef TOUCH_ENABLED
-	if (!xi.touch_devices.size()) {
+	if (xi.touch_devices.is_empty()) {
 		print_verbose("XInput: No touch devices found.");
 	}
 #endif

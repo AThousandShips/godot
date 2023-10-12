@@ -57,7 +57,7 @@ bool GPUParticles3DEditorBase::_generate(Vector<Vector3> &points, Vector<Vector3
 			area_accum += area;
 		}
 
-		if (!triangle_area_map.size() || area_accum == 0) {
+		if (triangle_area_map.is_empty() || area_accum == 0) {
 			EditorNode::get_singleton()->show_warning(TTR("The geometry's faces don't contain any area."));
 			return false;
 		}
