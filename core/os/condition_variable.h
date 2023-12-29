@@ -52,7 +52,7 @@ class ConditionVariable {
 public:
 	template <class BinaryMutexT>
 	_ALWAYS_INLINE_ void wait(const MutexLock<BinaryMutexT> &p_lock) const {
-		condition.wait(const_cast<THREADING_NAMESPACE::unique_lock<THREADING_NAMESPACE::mutex> &>(p_lock.lock));
+		condition.wait(const_cast<THREADING_NAMESPACE::unique_lock<THREADING_NAMESPACE::mutex> &>(p_lock._lock));
 	}
 
 	_ALWAYS_INLINE_ void notify_one() const {

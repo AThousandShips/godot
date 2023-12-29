@@ -640,7 +640,7 @@ Ref<Resource> ResourceLoader::_load_complete_inner(LoadToken &p_load_token, Erro
 			if (load_task.task_id != 0) {
 				// Loading thread is in the worker pool.
 				load_task.awaited = true;
-				thread_load_mutex.unlock();
+				p_thread_load_lock.unlock();
 				Error err = WorkerThreadPool::get_singleton()->wait_for_task_completion(load_task.task_id);
 				if (err == ERR_BUSY) {
 					// The WorkerThreadPool has scheduled tasks in a way that the current load depends on
@@ -656,11 +656,11 @@ Ref<Resource> ResourceLoader::_load_complete_inner(LoadToken &p_load_token, Erro
 					if (r_error) {
 						*r_error = err;
 					}
-					thread_load_mutex.lock();
+					p_thread_load_lock.lock();
 					return resource;
 				} else {
 					DEV_ASSERT(err == OK);
-					thread_load_mutex.lock();
+					p_thread_load_lock.lock();
 				}
 			} else {
 				// Loading thread is main or user thread.
@@ -1040,7 +1040,7 @@ void ResourceLoader::clear_translation_remaps() {
 void ResourceLoader::clear_thread_load_tasks() {
 	// Bring the thing down as quickly as possible without causing deadlocks or leaks.
 
-	thread_load_mutex.lock();
+	MutexLock thread_load_lock(thread_load_mutex);
 	cleaning_tasks = true;
 
 	while (true) {
@@ -1060,9 +1060,9 @@ void ResourceLoader::clear_thread_load_tasks() {
 		if (none_running) {
 			break;
 		}
-		thread_load_mutex.unlock();
+		thread_load_lock.unlock();
 		OS::get_singleton()->delay_usec(1000);
-		thread_load_mutex.lock();
+		thread_load_lock.lock();
 	}
 
 	while (user_load_tokens.begin()) {
@@ -1074,7 +1074,6 @@ void ResourceLoader::clear_thread_load_tasks() {
 	thread_load_tasks.clear();
 
 	cleaning_tasks = false;
-	thread_load_mutex.unlock();
 }
 
 void ResourceLoader::load_path_remaps() {

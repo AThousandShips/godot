@@ -131,21 +131,22 @@ PackedStringArray IP::resolve_hostname_addresses(const String &p_hostname, Type 
 	List<IPAddress> res;
 	String key = _IP_ResolverPrivate::get_cache_key(p_hostname, p_type);
 
-	resolver->mutex.lock();
-	if (resolver->cache.has(key)) {
-		res = resolver->cache[key];
-	} else {
-		// This should be run unlocked so the resolver thread can keep resolving
-		// other requests.
-		resolver->mutex.unlock();
-		_resolve_hostname(res, p_hostname, p_type);
-		resolver->mutex.lock();
-		// We might be overriding another result, but we don't care as long as the result is valid.
-		if (res.size()) {
-			resolver->cache[key] = res;
+	{
+		MutexLock lock(resolver->mutex);
+		if (resolver->cache.has(key)) {
+			res = resolver->cache[key];
+		} else {
+			// This should be run unlocked so the resolver thread can keep resolving
+			// other requests.
+			lock.unlock();
+			_resolve_hostname(res, p_hostname, p_type);
+			lock.lock();
+			// We might be overriding another result, but we don't care as long as the result is valid.
+			if (res.size()) {
+				resolver->cache[key] = res;
+			}
 		}
 	}
-	resolver->mutex.unlock();
 
 	PackedStringArray result;
 	for (int i = 0; i < res.size(); ++i) {
