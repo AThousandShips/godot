@@ -205,28 +205,27 @@ void ResourceFormatLoader::_bind_methods() {
 
 // This should be robust enough to be called redundantly without issues.
 void ResourceLoader::LoadToken::clear() {
-	thread_load_mutex.lock();
-
 	WorkerThreadPool::TaskID task_to_await = 0;
+	{
+		MutexLock thread_load_lock(thread_load_mutex);
 
-	if (!local_path.is_empty()) { // Empty is used for the special case where the load task is not registered.
-		DEV_ASSERT(thread_load_tasks.has(local_path));
-		ThreadLoadTask &load_task = thread_load_tasks[local_path];
-		if (!load_task.awaited) {
-			task_to_await = load_task.task_id;
-			load_task.awaited = true;
+		if (!local_path.is_empty()) { // Empty is used for the special case where the load task is not registered.
+			DEV_ASSERT(thread_load_tasks.has(local_path));
+			ThreadLoadTask &load_task = thread_load_tasks[local_path];
+			if (!load_task.awaited) {
+				task_to_await = load_task.task_id;
+				load_task.awaited = true;
+			}
+			thread_load_tasks.erase(local_path);
+			local_path.clear();
 		}
-		thread_load_tasks.erase(local_path);
-		local_path.clear();
-	}
 
-	if (!user_path.is_empty()) {
-		DEV_ASSERT(user_load_tokens.has(user_path));
-		user_load_tokens.erase(user_path);
-		user_path.clear();
+		if (!user_path.is_empty()) {
+			DEV_ASSERT(user_load_tokens.has(user_path));
+			user_load_tokens.erase(user_path);
+			user_path.clear();
+		}
 	}
-
-	thread_load_mutex.unlock();
 
 	// If task is unused, await it here, locally, now the token data is consistent.
 	if (task_to_await) {
@@ -241,12 +240,11 @@ ResourceLoader::LoadToken::~LoadToken() {
 Ref<Resource> ResourceLoader::_load(const String &p_path, const String &p_original_path, const String &p_type_hint, ResourceFormatLoader::CacheMode p_cache_mode, Error *r_error, bool p_use_sub_threads, float *r_progress) {
 	load_nesting++;
 	if (load_paths_stack->size()) {
-		thread_load_mutex.lock();
+		MutexLock thread_load_lock(thread_load_mutex);
 		HashMap<String, ThreadLoadTask>::Iterator E = thread_load_tasks.find(load_paths_stack->get(load_paths_stack->size() - 1));
 		if (E) {
 			E->value.sub_tasks.insert(p_path);
 		}
-		thread_load_mutex.unlock();
 	}
 	load_paths_stack->push_back(p_path);
 
@@ -285,14 +283,15 @@ Ref<Resource> ResourceLoader::_load(const String &p_path, const String &p_origin
 void ResourceLoader::_thread_load_function(void *p_userdata) {
 	ThreadLoadTask &load_task = *(ThreadLoadTask *)p_userdata;
 
-	thread_load_mutex.lock();
-	caller_task_id = load_task.task_id;
-	if (cleaning_tasks) {
-		load_task.status = THREAD_LOAD_FAILED;
-		thread_load_mutex.unlock();
-		return;
+	{
+		MutexLock thread_load_lock(thread_load_mutex);
+
+		caller_task_id = load_task.task_id;
+		if (cleaning_tasks) {
+			load_task.status = THREAD_LOAD_FAILED;
+			return;
+		}
 	}
-	thread_load_mutex.unlock();
 
 	// Thread-safe either if it's the current thread or a brand new one.
 	CallQueue *mq_override = nullptr;
@@ -321,60 +320,60 @@ void ResourceLoader::_thread_load_function(void *p_userdata) {
 		mq_override->flush();
 	}
 
-	thread_load_mutex.lock();
+	{
+		MutexLock thread_load_lock(thread_load_mutex);
 
-	load_task.resource = res;
+		load_task.resource = res;
 
-	load_task.progress = 1.0; //it was fully loaded at this point, so force progress to 1.0
-	if (load_task.error != OK) {
-		load_task.status = THREAD_LOAD_FAILED;
-	} else {
-		load_task.status = THREAD_LOAD_LOADED;
-	}
-
-	if (load_task.cond_var) {
-		load_task.cond_var->notify_all();
-		memdelete(load_task.cond_var);
-		load_task.cond_var = nullptr;
-	}
-
-	if (load_task.resource.is_valid()) {
-		if (load_task.cache_mode != ResourceFormatLoader::CACHE_MODE_IGNORE) {
-			load_task.resource->set_path(load_task.local_path, load_task.cache_mode == ResourceFormatLoader::CACHE_MODE_REPLACE);
-		} else if (!load_task.local_path.is_resource_file()) {
-			load_task.resource->set_path_cache(load_task.local_path);
-		}
-
-		if (load_task.xl_remapped) {
-			load_task.resource->set_as_translation_remapped(true);
-		}
-
-#ifdef TOOLS_ENABLED
-		load_task.resource->set_edited(false);
-		if (timestamp_on_load) {
-			uint64_t mt = FileAccess::get_modified_time(load_task.remapped_path);
-			//printf("mt %s: %lli\n",remapped_path.utf8().get_data(),mt);
-			load_task.resource->set_last_modified_time(mt);
-		}
-#endif
-
-		if (_loaded_callback) {
-			_loaded_callback(load_task.resource, load_task.local_path);
-		}
-	} else if (load_task.cache_mode != ResourceFormatLoader::CACHE_MODE_IGNORE) {
-		Ref<Resource> existing = ResourceCache::get_ref(load_task.local_path);
-		if (existing.is_valid()) {
-			load_task.resource = existing;
+		load_task.progress = 1.0; //it was fully loaded at this point, so force progress to 1.0
+		if (load_task.error != OK) {
+			load_task.status = THREAD_LOAD_FAILED;
+		} else {
 			load_task.status = THREAD_LOAD_LOADED;
-			load_task.progress = 1.0;
+		}
+
+		if (load_task.cond_var) {
+			load_task.cond_var->notify_all();
+			memdelete(load_task.cond_var);
+			load_task.cond_var = nullptr;
+		}
+
+		if (load_task.resource.is_valid()) {
+			if (load_task.cache_mode != ResourceFormatLoader::CACHE_MODE_IGNORE) {
+				load_task.resource->set_path(load_task.local_path, load_task.cache_mode == ResourceFormatLoader::CACHE_MODE_REPLACE);
+			} else if (!load_task.local_path.is_resource_file()) {
+				load_task.resource->set_path_cache(load_task.local_path);
+			}
+
+			if (load_task.xl_remapped) {
+				load_task.resource->set_as_translation_remapped(true);
+			}
+
+	#ifdef TOOLS_ENABLED
+			load_task.resource->set_edited(false);
+			if (timestamp_on_load) {
+				uint64_t mt = FileAccess::get_modified_time(load_task.remapped_path);
+				//printf("mt %s: %lli\n",remapped_path.utf8().get_data(),mt);
+				load_task.resource->set_last_modified_time(mt);
+			}
+	#endif
 
 			if (_loaded_callback) {
 				_loaded_callback(load_task.resource, load_task.local_path);
 			}
+		} else if (load_task.cache_mode != ResourceFormatLoader::CACHE_MODE_IGNORE) {
+			Ref<Resource> existing = ResourceCache::get_ref(load_task.local_path);
+			if (existing.is_valid()) {
+				load_task.resource = existing;
+				load_task.status = THREAD_LOAD_LOADED;
+				load_task.progress = 1.0;
+
+				if (_loaded_callback) {
+					_loaded_callback(load_task.resource, load_task.local_path);
+				}
+			}
 		}
 	}
-
-	thread_load_mutex.unlock();
 
 	if (load_nesting == 0) {
 		if (mq_override) {
@@ -396,24 +395,23 @@ static String _validate_local_path(const String &p_path) {
 }
 
 Error ResourceLoader::load_threaded_request(const String &p_path, const String &p_type_hint, bool p_use_sub_threads, ResourceFormatLoader::CacheMode p_cache_mode) {
-	thread_load_mutex.lock();
-	if (user_load_tokens.has(p_path)) {
-		print_verbose("load_threaded_request(): Another threaded load for resource path '" + p_path + "' has been initiated. Not an error.");
-		user_load_tokens[p_path]->reference(); // Additional request.
-		thread_load_mutex.unlock();
-		return OK;
+	{
+		MutexLock thread_load_lock(thread_load_mutex);
+		if (user_load_tokens.has(p_path)) {
+			print_verbose("load_threaded_request(): Another threaded load for resource path '" + p_path + "' has been initiated. Not an error.");
+			user_load_tokens[p_path]->reference(); // Additional request.
+			return OK;
+		}
+		user_load_tokens[p_path] = nullptr;
 	}
-	user_load_tokens[p_path] = nullptr;
-	thread_load_mutex.unlock();
 
 	Ref<ResourceLoader::LoadToken> token = _load_start(p_path, p_type_hint, p_use_sub_threads ? LOAD_THREAD_DISTRIBUTE : LOAD_THREAD_SPAWN_SINGLE, p_cache_mode);
 	if (token.is_valid()) {
-		thread_load_mutex.lock();
+		MutexLock thread_load_lock(thread_load_mutex);
 		token->user_path = p_path;
 		token->reference(); // First request.
 		user_load_tokens[p_path] = token.ptr();
 		print_lt("REQUEST: user load tokens: " + itos(user_load_tokens.size()));
-		thread_load_mutex.unlock();
 		return OK;
 	} else {
 		return FAILED;
@@ -992,17 +990,18 @@ String ResourceLoader::path_remap(const String &p_path) {
 }
 
 void ResourceLoader::reload_translation_remaps() {
-	ResourceCache::lock.lock();
-
 	List<Resource *> to_reload;
-	SelfList<Resource> *E = remapped_list.first();
 
-	while (E) {
-		to_reload.push_back(E->self());
-		E = E->next();
+	{
+		MutexLock lock(ResourceCache::mutex);
+
+		SelfList<Resource> *E = remapped_list.first();
+
+		while (E) {
+			to_reload.push_back(E->self());
+			E = E->next();
+		}
 	}
-
-	ResourceCache::lock.unlock();
 
 	//now just make sure to not delete any of these resources while changing locale..
 	while (to_reload.front()) {
