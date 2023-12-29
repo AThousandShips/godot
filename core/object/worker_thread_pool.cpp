@@ -127,9 +127,8 @@ void WorkerThreadPool::_process_task(Task *p_task) {
 
 			if (finished_users == max_users) {
 				// Get rid of the group, because nobody else is using it.
-				task_mutex.lock();
+				MutexLock lock(task_mutex);
 				group_allocator.free(p_task->group);
-				task_mutex.unlock();
 			}
 
 			// For groups, tasks get rid of themselves.
@@ -291,15 +290,13 @@ WorkerThreadPool::TaskID WorkerThreadPool::add_task(const Callable &p_action, bo
 }
 
 bool WorkerThreadPool::is_task_completed(TaskID p_task_id) const {
-	task_mutex.lock();
+	MutexLock lock(task_mutex);
 	const Task *const *taskp = tasks.getptr(p_task_id);
 	if (!taskp) {
-		task_mutex.unlock();
 		ERR_FAIL_V_MSG(false, "Invalid Task ID"); // Invalid task
 	}
 
 	bool completed = (*taskp)->completed;
-	task_mutex.unlock();
 
 	return completed;
 }
@@ -473,25 +470,22 @@ WorkerThreadPool::GroupID WorkerThreadPool::add_group_task(const Callable &p_act
 }
 
 uint32_t WorkerThreadPool::get_group_processed_element_count(GroupID p_group) const {
-	task_mutex.lock();
+	MutexLock lock(task_mutex);
 	const Group *const *groupp = groups.getptr(p_group);
 	if (!groupp) {
-		task_mutex.unlock();
 		ERR_FAIL_V_MSG(0, "Invalid Group ID");
 	}
 	uint32_t elements = (*groupp)->completed_index.get();
-	task_mutex.unlock();
 	return elements;
 }
+
 bool WorkerThreadPool::is_group_task_completed(GroupID p_group) const {
-	task_mutex.lock();
+	MutexLock lock(task_mutex);
 	const Group *const *groupp = groups.getptr(p_group);
 	if (!groupp) {
-		task_mutex.unlock();
 		ERR_FAIL_V_MSG(false, "Invalid Group ID");
 	}
 	bool completed = (*groupp)->completed.is_set();
-	task_mutex.unlock();
 	return completed;
 }
 
@@ -507,10 +501,9 @@ void WorkerThreadPool::wait_for_group_task_completion(GroupID p_group) {
 	if (group->low_priority_native_tasks.size() > 0) {
 		for (Task *task : group->low_priority_native_tasks) {
 			task->low_priority_thread->wait_to_finish();
-			task_mutex.lock();
+			MutexLock lock(task_mutex);
 			native_thread_allocator.free(task->low_priority_thread);
 			task_allocator.free(task);
-			task_mutex.unlock();
 		}
 
 		task_mutex.lock();
@@ -524,9 +517,8 @@ void WorkerThreadPool::wait_for_group_task_completion(GroupID p_group) {
 
 		if (finished_users == max_users) {
 			// All tasks using this group are gone (finished before the group), so clear the group too.
-			task_mutex.lock();
+			MutexLock lock(task_mutex);
 			group_allocator.free(group);
-			task_mutex.unlock();
 		}
 	}
 
