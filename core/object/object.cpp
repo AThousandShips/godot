@@ -1912,15 +1912,16 @@ void Object::clear_internal_extension() {
 	_extension_instance = nullptr;
 
 	// Clear the instance bindings.
-	_instance_binding_mutex.lock();
-	if (_instance_bindings[0].free_callback) {
-		_instance_bindings[0].free_callback(_instance_bindings[0].token, this, _instance_bindings[0].binding);
+	{
+		MutexLock lock(_instance_binding_mutex);
+		if (_instance_bindings[0].free_callback) {
+			_instance_bindings[0].free_callback(_instance_bindings[0].token, this, _instance_bindings[0].binding);
+		}
+		_instance_bindings[0].binding = nullptr;
+		_instance_bindings[0].token = nullptr;
+		_instance_bindings[0].free_callback = nullptr;
+		_instance_bindings[0].reference_callback = nullptr;
 	}
-	_instance_bindings[0].binding = nullptr;
-	_instance_bindings[0].token = nullptr;
-	_instance_bindings[0].free_callback = nullptr;
-	_instance_bindings[0].reference_callback = nullptr;
-	_instance_binding_mutex.unlock();
 
 	// Clear the virtual methods.
 	while (virtual_method_list) {

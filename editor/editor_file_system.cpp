@@ -1564,63 +1564,64 @@ String EditorFileSystem::_get_global_script_class(const String &p_type, const St
 }
 
 void EditorFileSystem::_update_script_classes() {
-	update_script_mutex.lock();
+	{
+		MutexLock lock(update_script_mutex);
 
-	for (const String &path : update_script_paths) {
-		ScriptServer::remove_global_class_by_path(path); // First remove, just in case it changed
+		for (const String &path : update_script_paths) {
+			ScriptServer::remove_global_class_by_path(path); // First remove, just in case it changed
 
-		int index = -1;
-		EditorFileSystemDirectory *efd = find_file(path, &index);
+			int index = -1;
+			EditorFileSystemDirectory *efd = find_file(path, &index);
 
-		if (!efd || index < 0) {
-			// The file was removed
-			continue;
+			if (!efd || index < 0) {
+				// The file was removed
+				continue;
+			}
+
+			if (!efd->files[index]->script_class_name.is_empty()) {
+				String lang;
+				for (int j = 0; j < ScriptServer::get_language_count(); j++) {
+					if (ScriptServer::get_language(j)->handles_global_class_type(efd->files[index]->type)) {
+						lang = ScriptServer::get_language(j)->get_name();
+					}
+				}
+				if (lang.is_empty()) {
+					continue; // No lang found that can handle this global class
+				}
+
+				ScriptServer::add_global_class(efd->files[index]->script_class_name, efd->files[index]->script_class_extends, lang, path);
+				EditorNode::get_editor_data().script_class_set_icon_path(efd->files[index]->script_class_name, efd->files[index]->script_class_icon_path);
+				EditorNode::get_editor_data().script_class_set_name(path, efd->files[index]->script_class_name);
+			}
 		}
 
-		if (!efd->files[index]->script_class_name.is_empty()) {
-			String lang;
-			for (int j = 0; j < ScriptServer::get_language_count(); j++) {
-				if (ScriptServer::get_language(j)->handles_global_class_type(efd->files[index]->type)) {
-					lang = ScriptServer::get_language(j)->get_name();
+		// Parse documentation second, as it requires the class names to be correct and registered
+		for (const String &path : update_script_paths) {
+			int index = -1;
+			EditorFileSystemDirectory *efd = find_file(path, &index);
+
+			if (!efd || index < 0) {
+				// The file was removed
+				continue;
+			}
+
+			for (int i = 0; i < ScriptServer::get_language_count(); i++) {
+				ScriptLanguage *lang = ScriptServer::get_language(i);
+				if (lang->supports_documentation() && efd->files[index]->type == lang->get_type()) {
+					Ref<Script> scr = ResourceLoader::load(path);
+					if (scr.is_null()) {
+						continue;
+					}
+					Vector<DocData::ClassDoc> docs = scr->get_documentation();
+					for (int j = 0; j < docs.size(); j++) {
+						EditorHelp::get_doc_data()->add_doc(docs[j]);
+					}
 				}
 			}
-			if (lang.is_empty()) {
-				continue; // No lang found that can handle this global class
-			}
-
-			ScriptServer::add_global_class(efd->files[index]->script_class_name, efd->files[index]->script_class_extends, lang, path);
-			EditorNode::get_editor_data().script_class_set_icon_path(efd->files[index]->script_class_name, efd->files[index]->script_class_icon_path);
-			EditorNode::get_editor_data().script_class_set_name(path, efd->files[index]->script_class_name);
 		}
+
+		update_script_paths.clear();
 	}
-
-	// Parse documentation second, as it requires the class names to be correct and registered
-	for (const String &path : update_script_paths) {
-		int index = -1;
-		EditorFileSystemDirectory *efd = find_file(path, &index);
-
-		if (!efd || index < 0) {
-			// The file was removed
-			continue;
-		}
-
-		for (int i = 0; i < ScriptServer::get_language_count(); i++) {
-			ScriptLanguage *lang = ScriptServer::get_language(i);
-			if (lang->supports_documentation() && efd->files[index]->type == lang->get_type()) {
-				Ref<Script> scr = ResourceLoader::load(path);
-				if (scr.is_null()) {
-					continue;
-				}
-				Vector<DocData::ClassDoc> docs = scr->get_documentation();
-				for (int j = 0; j < docs.size(); j++) {
-					EditorHelp::get_doc_data()->add_doc(docs[j]);
-				}
-			}
-		}
-	}
-
-	update_script_paths.clear();
-	update_script_mutex.unlock();
 
 	ScriptServer::save_global_classes();
 	EditorNode::get_editor_data().script_class_save_icon_paths();

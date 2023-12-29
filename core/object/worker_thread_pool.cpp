@@ -210,11 +210,11 @@ void WorkerThreadPool::_post_task(Task *p_task, bool p_high_priority) {
 		return;
 	}
 
-	task_mutex.lock();
+	MutexLock lock(task_mutex);
 	p_task->low_priority = !p_high_priority;
 	if (!p_high_priority && use_native_low_priority_threads) {
 		p_task->low_priority_thread = native_thread_allocator.alloc();
-		task_mutex.unlock();
+		lock.unlock();
 
 		if (p_task->group) {
 			p_task->group->low_priority_native_tasks.push_back(p_task);
@@ -225,12 +225,12 @@ void WorkerThreadPool::_post_task(Task *p_task, bool p_high_priority) {
 		if (!p_high_priority) {
 			low_priority_threads_used++;
 		}
-		task_mutex.unlock();
+		lock.unlock();
 		task_available_semaphore.post();
 	} else {
 		// Too many threads using low priority, must go to queue.
 		low_priority_task_queue.add_last(&p_task->task_elem);
-		task_mutex.unlock();
+		lock.unlock();
 	}
 }
 
