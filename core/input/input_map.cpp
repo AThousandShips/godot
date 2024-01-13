@@ -299,7 +299,7 @@ void InputMap::load_from_project_settings() {
 		String name = pi.name.substr(pi.name.find("/") + 1, pi.name.length());
 
 		Dictionary action = GLOBAL_GET(pi.name);
-		float deadzone = action.has("deadzone") ? (float)action["deadzone"] : 0.5f;
+		float deadzone = (float)action.get("deadzone", 0.5f);
 		Array events = action["events"];
 
 		add_action(name, deadzone);

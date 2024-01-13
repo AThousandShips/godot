@@ -200,11 +200,11 @@ Error ResourceImporterDynamicFont::import(const String &p_source_file, const Str
 	for (int i = 0; i < preload_configurations.size(); i++) {
 		Dictionary preload_config = preload_configurations[i];
 
-		Dictionary variation = preload_config.has("variation_opentype") ? preload_config["variation_opentype"].operator Dictionary() : Dictionary();
-		double embolden = preload_config.has("variation_embolden") ? preload_config["variation_embolden"].operator double() : 0;
-		int face_index = preload_config.has("variation_face_index") ? preload_config["variation_face_index"].operator int() : 0;
-		Transform2D transform = preload_config.has("variation_transform") ? preload_config["variation_transform"].operator Transform2D() : Transform2D();
-		Vector2i size = preload_config.has("size") ? preload_config["size"].operator Vector2i() : Vector2i(16, 0);
+		Dictionary variation = (Dictionary)preload_config.get("variation_opentype", Dictionary());
+		double embolden = (double)preload_config.get("variation_embolden", 0);
+		int face_index = (int)preload_config.get("variation_face_index", 0);
+		Transform2D transform = (Transform2D)preload_config.get("variation_transform", Transform2D());
+		Vector2i size = (Vector2i)preload_config.get("size", Vector2i(16, 0));
 		String name = preload_config.has("name") ? preload_config["name"].operator String() : vformat("Configuration %d", i);
 
 		RID conf_rid = font->find_variation(variation, face_index, embolden, transform);

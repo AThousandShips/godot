@@ -176,15 +176,15 @@ static const uint8_t MONTH_DAYS_TABLE[2][12] = {
 		}                                                                                     \
 	}
 
-#define EXTRACT_FROM_DICTIONARY                                                                   \
-	/* Get all time values from the dictionary. If it doesn't exist, set the */                   \
-	/* values to the default values for Unix epoch (1970-01-01 00:00:00). */                      \
-	int64_t year = p_datetime.has(YEAR_KEY) ? int64_t(p_datetime[YEAR_KEY]) : UNIX_EPOCH_YEAR_AD; \
-	Month month = Month((p_datetime.has(MONTH_KEY)) ? int(p_datetime[MONTH_KEY]) : 1);            \
-	int day = p_datetime.has(DAY_KEY) ? int(p_datetime[DAY_KEY]) : 1;                             \
-	int hour = p_datetime.has(HOUR_KEY) ? int(p_datetime[HOUR_KEY]) : 0;                          \
-	int minute = p_datetime.has(MINUTE_KEY) ? int(p_datetime[MINUTE_KEY]) : 0;                    \
-	int second = p_datetime.has(SECOND_KEY) ? int(p_datetime[SECOND_KEY]) : 0;
+#define EXTRACT_FROM_DICTIONARY                                                 \
+	/* Get all time values from the dictionary. If it doesn't exist, set the */ \
+	/* values to the default values for Unix epoch (1970-01-01 00:00:00). */    \
+	int64_t year = (int64_t)p_datetime.get(YEAR_KEY, UNIX_EPOCH_YEAR_AD);       \
+	Month month = (Month)(int)p_datetime.get(MONTH_KEY, 1);                     \
+	int day = (int)p_datetime.get(DAY_KEY, 1);                                  \
+	int hour = (int)p_datetime.get(HOUR_KEY, 0);                                \
+	int minute = (int)p_datetime.get(MINUTE_KEY, 0);                            \
+	int second = (int)p_datetime.get(SECOND_KEY, 0);
 
 Time *Time::singleton = nullptr;
 
