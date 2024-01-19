@@ -304,7 +304,7 @@ Vector<Vector3> NavMap::get_path(Vector3 p_origin, Vector3 p_destination, bool p
 		to_visit.erase(least_cost_id);
 
 		// When the list of polygons to visit is empty at this point it means the End Polygon is not reachable
-		if (to_visit.size() == 0) {
+		if (to_visit.is_empty()) {
 			// Thus use the further reachable polygon
 			ERR_BREAK_MSG(is_reachable == false, "It's not expect to not find the most reachable polygons");
 			is_reachable = false;

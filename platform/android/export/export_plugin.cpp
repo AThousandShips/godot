@@ -2226,7 +2226,7 @@ String EditorExportPlatformAndroid::get_apksigner_path(int p_target_sdk, bool p_
 		if (!sub_dir.begins_with(".")) {
 			Vector<String> ver_numbers = sub_dir.split(".");
 			// Dir not a version number, will use as last resort
-			if (!ver_numbers.size() || !ver_numbers[0].is_valid_int()) {
+			if (ver_numbers.is_empty() || !ver_numbers[0].is_valid_int()) {
 				other_versions.push_back(sub_dir);
 				continue;
 			}
@@ -2248,7 +2248,7 @@ String EditorExportPlatformAndroid::get_apksigner_path(int p_target_sdk, bool p_
 	versions.append_array(ideal_versions);
 	versions.append_array(other_versions);
 
-	if (!versions.size()) {
+	if (versions.is_empty()) {
 		print_error("Unable to find the 'apksigner' tool.");
 		return apksigner_path;
 	}

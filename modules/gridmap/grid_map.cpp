@@ -578,7 +578,7 @@ bool GridMap::_octant_update(const OctantKey &p_key) {
 	}
 	g.multimesh_instances.clear();
 
-	if (g.cells.size() == 0) {
+	if (g.cells.is_empty()) {
 		//octant no longer needed
 		_octant_clean_up(p_key);
 		return true;
@@ -610,7 +610,7 @@ bool GridMap::_octant_update(const OctantKey &p_key) {
 		xform.basis = _ortho_bases[c.rot];
 		xform.set_origin(cellpos * cell_size + ofs);
 		xform.basis.scale(Vector3(cell_scale, cell_scale, cell_scale));
-		if (baked_meshes.size() == 0) {
+		if (baked_meshes.is_empty()) {
 			if (mesh_library->get_item_mesh(c.item).is_valid()) {
 				if (!multimesh_items.has(c.item)) {
 					multimesh_items[c.item] = List<Pair<Transform3D, IndexKey>>();
@@ -685,7 +685,7 @@ bool GridMap::_octant_update(const OctantKey &p_key) {
 #endif // DEBUG_ENABLED
 
 	//update multimeshes, only if not baked
-	if (baked_meshes.size() == 0) {
+	if (baked_meshes.is_empty()) {
 		for (const KeyValue<int, List<Pair<Transform3D, IndexKey>>> &E : multimesh_items) {
 			Octant::MultimeshInstance mmi;
 
@@ -1298,7 +1298,7 @@ void GridMap::make_baked_meshes(bool p_gen_lightmap_uv, float p_lightmap_uv_texe
 }
 
 Array GridMap::get_bake_meshes() {
-	if (!baked_meshes.size()) {
+	if (baked_meshes.is_empty()) {
 		make_baked_meshes(true);
 	}
 
@@ -1422,7 +1422,7 @@ void GridMap::_update_octant_navigation_debug_edge_connections_mesh(const Octant
 		}
 	}
 
-	if (vertex_array.size() == 0) {
+	if (vertex_array.is_empty()) {
 		return;
 	}
 

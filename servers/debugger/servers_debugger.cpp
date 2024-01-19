@@ -379,7 +379,7 @@ public:
 	void tick(double p_frame_time, double p_process_time, double p_physics_time, double p_physics_frame_time) {
 		Vector<RS::FrameProfileArea> profile_areas = RS::get_singleton()->get_frame_profile();
 		ServersDebugger::VisualProfilerFrame frame;
-		if (!profile_areas.size()) {
+		if (profile_areas.is_empty()) {
 			return;
 		}
 

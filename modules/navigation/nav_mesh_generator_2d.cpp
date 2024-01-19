@@ -79,7 +79,7 @@ NavMeshGenerator2D::~NavMeshGenerator2D() {
 }
 
 void NavMeshGenerator2D::sync() {
-	if (generator_tasks.size() == 0) {
+	if (generator_tasks.is_empty()) {
 		return;
 	}
 
@@ -614,7 +614,7 @@ void NavMeshGenerator2D::generator_parse_tilemap_node(const Ref<NavigationPolygo
 			if (navigation_polygon.is_valid()) {
 				for (int outline_index = 0; outline_index < navigation_polygon->get_outline_count(); outline_index++) {
 					const Vector<Vector2> &navigation_polygon_outline = navigation_polygon->get_outline(outline_index);
-					if (navigation_polygon_outline.size() == 0) {
+					if (navigation_polygon_outline.is_empty()) {
 						continue;
 					}
 
@@ -636,7 +636,7 @@ void NavMeshGenerator2D::generator_parse_tilemap_node(const Ref<NavigationPolygo
 		if (physics_layers_count > 0 && (parsed_geometry_type == NavigationPolygon::PARSED_GEOMETRY_STATIC_COLLIDERS || parsed_geometry_type == NavigationPolygon::PARSED_GEOMETRY_BOTH) && (tile_set->get_physics_layer_collision_layer(tilemap_layer) & parsed_collision_mask)) {
 			for (int collision_polygon_index = 0; collision_polygon_index < tile_data->get_collision_polygons_count(tilemap_layer); collision_polygon_index++) {
 				PackedVector2Array collision_polygon_points = tile_data->get_collision_polygon_points(tilemap_layer, collision_polygon_index);
-				if (collision_polygon_points.size() == 0) {
+				if (collision_polygon_points.is_empty()) {
 					continue;
 				}
 
@@ -736,7 +736,7 @@ void NavMeshGenerator2D::generator_bake_from_source_geometry_data(Ref<Navigation
 	const Vector<Vector<Vector2>> &traversable_outlines = p_source_geometry_data->_get_traversable_outlines();
 	const Vector<Vector<Vector2>> &obstruction_outlines = p_source_geometry_data->_get_obstruction_outlines();
 
-	if (outline_count == 0 && traversable_outlines.size() == 0) {
+	if (outline_count == 0 && traversable_outlines.is_empty()) {
 		return;
 	}
 
@@ -836,7 +836,7 @@ void NavMeshGenerator2D::generator_bake_from_source_geometry_data(Ref<Navigation
 		new_baked_outlines.push_back(polypath);
 	}
 
-	if (new_baked_outlines.size() == 0) {
+	if (new_baked_outlines.is_empty()) {
 		p_navigation_mesh->set_vertices(Vector<Vector2>());
 		p_navigation_mesh->clear_polygons();
 		return;

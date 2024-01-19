@@ -138,7 +138,7 @@ int HTTPClientWeb::get_response_code() const {
 }
 
 Error HTTPClientWeb::get_response_headers(List<String> *r_response) {
-	if (!response_headers.size()) {
+	if (response_headers.is_empty()) {
 		return ERR_INVALID_PARAMETER;
 	}
 	for (int i = 0; i < response_headers.size(); i++) {
