@@ -510,7 +510,7 @@ static void _convert(int p_width, int p_height, const uint8_t *p_src, uint8_t *p
 
 void Image::convert(Format p_new_format) {
 	ERR_FAIL_INDEX_MSG(p_new_format, FORMAT_MAX, "The Image format specified (" + itos(p_new_format) + ") is out of range. See Image's Format enum.");
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 
@@ -2139,7 +2139,7 @@ void Image::clear_mipmaps() {
 }
 
 bool Image::is_empty() const {
-	return (data.size() == 0);
+	return data.is_empty();
 }
 
 Vector<uint8_t> Image::get_data() const {
@@ -2967,7 +2967,7 @@ void Image::_repeat_pixel_over_subsequent_memory(uint8_t *p_pixel, int p_pixel_s
 }
 
 void Image::fill(const Color &p_color) {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 	ERR_FAIL_COND_MSG(!_can_modify(format), "Cannot fill in compressed or custom image formats.");
@@ -2983,7 +2983,7 @@ void Image::fill(const Color &p_color) {
 }
 
 void Image::fill_rect(const Rect2i &p_rect, const Color &p_color) {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 	ERR_FAIL_COND_MSG(!_can_modify(format), "Cannot fill rect in compressed or custom image formats.");
@@ -3613,7 +3613,7 @@ void Image::normal_map_to_xy() {
 }
 
 Ref<Image> Image::rgbe_to_srgb() {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return Ref<Image>();
 	}
 
@@ -3707,7 +3707,7 @@ void Image::bump_map_to_normal_map(float bump_scale) {
 }
 
 void Image::srgb_to_linear() {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 
@@ -3738,7 +3738,7 @@ void Image::srgb_to_linear() {
 }
 
 void Image::premultiply_alpha() {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 
@@ -3760,7 +3760,7 @@ void Image::premultiply_alpha() {
 }
 
 void Image::fix_alpha_edges() {
-	if (data.size() == 0) {
+	if (data.is_empty()) {
 		return;
 	}
 

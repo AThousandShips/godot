@@ -195,7 +195,7 @@ void WorkerThreadPool::_post_tasks_and_unlock(Task **p_tasks, uint32_t p_count, 
 	// Fall back to processing on the calling thread if there are no worker threads.
 	// Separated into its own variable to make it easier to extend this logic
 	// in custom builds.
-	bool process_on_calling_thread = threads.size() == 0;
+	bool process_on_calling_thread = threads.is_empty();
 	if (process_on_calling_thread) {
 		task_mutex.unlock();
 		for (uint32_t i = 0; i < p_count; i++) {
@@ -615,7 +615,7 @@ void WorkerThreadPool::init(int p_thread_count, float p_low_priority_task_ratio)
 }
 
 void WorkerThreadPool::finish() {
-	if (threads.size() == 0) {
+	if (threads.is_empty()) {
 		return;
 	}
 

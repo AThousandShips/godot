@@ -230,7 +230,7 @@ int HTTPClientTCP::get_response_code() const {
 }
 
 Error HTTPClientTCP::get_response_headers(List<String> *r_response) {
-	if (!response_headers.size()) {
+	if (response_headers.is_empty()) {
 		return ERR_INVALID_PARAMETER;
 	}
 

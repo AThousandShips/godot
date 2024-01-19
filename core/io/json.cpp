@@ -86,7 +86,7 @@ String JSON::_stringify(const Variant &p_var, const String &p_indent, int p_cur_
 		case Variant::PACKED_STRING_ARRAY:
 		case Variant::ARRAY: {
 			Array a = p_var;
-			if (a.size() == 0) {
+			if (a.is_empty()) {
 				return "[]";
 			}
 			String s = "[";
