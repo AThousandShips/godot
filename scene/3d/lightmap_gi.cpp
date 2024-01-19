@@ -579,7 +579,7 @@ int32_t LightmapGI::_compute_bsp_tree(const Vector<Vector3> &p_points, const Loc
 	BSPNode node;
 	node.plane = best_plane;
 
-	if (indices_under.size() == 0) {
+	if (indices_under.is_empty()) {
 		//nothing to do here
 		node.under = BSPNode::EMPTY_LEAF;
 	} else if (indices_under.size() == 1) {
@@ -588,7 +588,7 @@ int32_t LightmapGI::_compute_bsp_tree(const Vector<Vector3> &p_points, const Loc
 		node.under = _compute_bsp_tree(p_points, p_planes, planes_tested, p_simplices, indices_under, bsp_nodes);
 	}
 
-	if (indices_over.size() == 0) {
+	if (indices_over.is_empty()) {
 		//nothing to do here
 		node.over = BSPNode::EMPTY_LEAF;
 	} else if (indices_over.size() == 1) {
@@ -720,7 +720,7 @@ LightmapGI::BakeError LightmapGI::bake(Node *p_from_node, String p_image_data_pa
 		Vector<MeshesFound> meshes_found;
 		_find_meshes_and_lights(p_from_node ? p_from_node : get_parent(), meshes_found, lights_found, probes_found);
 
-		if (meshes_found.size() == 0) {
+		if (meshes_found.is_empty()) {
 			return BAKE_ERROR_NO_MESHES;
 		}
 		// create mesh data for insert

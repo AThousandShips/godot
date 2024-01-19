@@ -3985,7 +3985,7 @@ void TextEdit::undo() {
 	_push_current_op();
 
 	if (undo_stack_pos == nullptr) {
-		if (!undo_stack.size()) {
+		if (undo_stack.is_empty()) {
 			return; // Nothing to undo.
 		}
 

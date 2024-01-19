@@ -38,7 +38,7 @@ Line2D::Line2D() {
 
 #ifdef TOOLS_ENABLED
 Rect2 Line2D::_edit_get_rect() const {
-	if (_points.size() == 0) {
+	if (_points.is_empty()) {
 		return Rect2(0, 0, 0, 0);
 	}
 	Vector2 d = Vector2(_width, _width);

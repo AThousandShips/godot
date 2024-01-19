@@ -52,7 +52,7 @@ Dictionary SyntaxHighlighter::get_line_syntax_highlighting(int p_line) {
 }
 
 void SyntaxHighlighter::_lines_edited_from(int p_from_line, int p_to_line) {
-	if (highlighting_cache.size() < 1) {
+	if (highlighting_cache.is_empty()) {
 		return;
 	}
 

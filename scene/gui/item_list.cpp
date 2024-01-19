@@ -412,7 +412,7 @@ void ItemList::deselect(int p_idx) {
 }
 
 void ItemList::deselect_all() {
-	if (items.size() < 1) {
+	if (items.is_empty()) {
 		return;
 	}
 

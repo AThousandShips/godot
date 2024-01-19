@@ -93,7 +93,7 @@ void GraphEditArranger::arrange_nodes() {
 		}
 	}
 
-	if (!selected_nodes.size()) {
+	if (selected_nodes.is_empty()) {
 		arranging_graph = false;
 		return;
 	}
@@ -200,7 +200,7 @@ int GraphEditArranger::_set_operations(SET_OPERATIONS p_operation, HashSet<Strin
 			return r_u.size() == r_v.size();
 		} break;
 		case GraphEditArranger::IS_SUBSET: {
-			if (r_u.size() == r_v.size() && !r_u.size()) {
+			if (r_u.size() == r_v.size() && r_u.is_empty()) {
 				return 1;
 			}
 			for (const StringName &E : r_u) {
@@ -283,7 +283,7 @@ HashMap<int, Vector<StringName>> GraphEditArranger::_layering(const HashSet<Stri
 }
 
 Vector<StringName> GraphEditArranger::_split(const Vector<StringName> &r_layer, const HashMap<StringName, Dictionary> &r_crossings) {
-	if (!r_layer.size()) {
+	if (r_layer.is_empty()) {
 		return Vector<StringName>();
 	}
 

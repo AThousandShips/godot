@@ -364,7 +364,7 @@ void AnimationNodeBlendSpace2D::_update_triangles() {
 Vector2 AnimationNodeBlendSpace2D::get_closest_point(const Vector2 &p_point) {
 	_update_triangles();
 
-	if (triangles.size() == 0) {
+	if (triangles.is_empty()) {
 		return Vector2();
 	}
 
@@ -453,7 +453,7 @@ double AnimationNodeBlendSpace2D::_process(const AnimationMixer::PlaybackInfo p_
 	AnimationMixer::PlaybackInfo pi = p_playback_info;
 
 	if (blend_mode == BLEND_MODE_INTERPOLATED) {
-		if (triangles.size() == 0) {
+		if (triangles.is_empty()) {
 			return 0;
 		}
 

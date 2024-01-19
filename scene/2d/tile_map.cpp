@@ -536,7 +536,7 @@ bool TileMap::_set(const StringName &p_name, const Variant &p_value) {
 #ifndef DISABLE_DEPRECATED
 	else if (p_name == "tile_data") { // Kept for compatibility reasons.
 		if (p_value.is_array()) {
-			if (layers.size() == 0) {
+			if (layers.is_empty()) {
 				TileMapLayer *new_layer = memnew(TileMapLayer);
 				add_child(new_layer, false, INTERNAL_MODE_FRONT);
 				new_layer->force_parent_owned();
