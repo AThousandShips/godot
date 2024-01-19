@@ -747,7 +747,7 @@ Ref<ArrayMesh> SurfaceTool::commit(const Ref<ArrayMesh> &p_existing, uint64_t p_
 }
 
 void SurfaceTool::index() {
-	if (index_array.size()) {
+	if (index_array.size() > 0) {
 		return; //already indexed
 	}
 
@@ -820,26 +820,26 @@ void SurfaceTool::create_vertex_array_from_triangle_arrays(const Array &p_arrays
 	}
 
 	uint64_t lformat = 0;
-	if (varr.size()) {
+	if (varr.size() > 0) {
 		lformat |= RS::ARRAY_FORMAT_VERTEX;
 	}
-	if (narr.size()) {
+	if (narr.size() > 0) {
 		lformat |= RS::ARRAY_FORMAT_NORMAL;
 	}
-	if (tarr.size()) {
+	if (tarr.size() > 0) {
 		lformat |= RS::ARRAY_FORMAT_TANGENT;
 	}
-	if (carr.size()) {
+	if (carr.size() > 0) {
 		lformat |= RS::ARRAY_FORMAT_COLOR;
 	}
-	if (uvarr.size()) {
+	if (uvarr.size() > 0) {
 		lformat |= RS::ARRAY_FORMAT_TEX_UV;
 	}
-	if (uv2arr.size()) {
+	if (uv2arr.size() > 0) {
 		lformat |= RS::ARRAY_FORMAT_TEX_UV2;
 	}
 	int wcount = 0;
-	if (barr.size() && warr.size()) {
+	if (barr.size() > 0 && warr.size() > 0) {
 		lformat |= RS::ARRAY_FORMAT_BONES;
 		lformat |= RS::ARRAY_FORMAT_WEIGHTS;
 
@@ -849,7 +849,7 @@ void SurfaceTool::create_vertex_array_from_triangle_arrays(const Array &p_arrays
 		}
 	}
 
-	if (warr.size()) {
+	if (warr.size() > 0) {
 		lformat |= RS::ARRAY_FORMAT_WEIGHTS;
 	}
 

@@ -130,7 +130,7 @@ void SceneReplicationInterface::on_reset() {
 
 void SceneReplicationInterface::on_network_process() {
 	// Prevent endless stalling in case of unforeseen spawn errors.
-	if (spawn_queue.size()) {
+	if (spawn_queue.size() > 0) {
 		ERR_PRINT("An error happened during last spawn, this usually means the 'ready' signal was not emitted by the spawned node.");
 		for (const ObjectID &oid : spawn_queue) {
 			Node *node = get_id_as<Node>(oid);
@@ -433,7 +433,7 @@ Error SceneReplicationInterface::_update_spawn_visibility(int p_peer, const Obje
 			}
 		}
 	}
-	if (to_spawn.size()) {
+	if (to_spawn.size() > 0) {
 		int len = 0;
 		_make_spawn_packet(node, spawner, len);
 		for (int pid : to_spawn) {
@@ -444,7 +444,7 @@ Error SceneReplicationInterface::_update_spawn_visibility(int p_peer, const Obje
 			peers_info[pid].spawn_nodes.insert(p_oid);
 		}
 	}
-	if (to_despawn.size()) {
+	if (to_despawn.size() > 0) {
 		int len = 0;
 		_make_despawn_packet(node, len);
 		for (int pid : to_despawn) {
@@ -513,7 +513,7 @@ Error SceneReplicationInterface::_make_spawn_packet(Node *p_node, MultiplayerSpa
 	int state_size = 0;
 	Vector<Variant> state_vars;
 	Vector<const Variant *> state_varp;
-	if (state_props.size()) {
+	if (state_props.size() > 0) {
 		Error err = MultiplayerSynchronizer::get_state(state_props, p_node, state_vars, state_varp);
 		ERR_FAIL_COND_V_MSG(err != OK, err, "Unable to retrieve spawn state.");
 		err = MultiplayerAPI::encode_and_compress_variants(state_varp.ptrw(), state_varp.size(), nullptr, state_size);
@@ -646,7 +646,7 @@ Error SceneReplicationInterface::on_spawn_receive(int p_from, const uint8_t *p_b
 	pending_spawn_remote = 0;
 	pending_buffer = nullptr;
 	pending_buffer_size = 0;
-	if (pending_sync_net_ids.size()) {
+	if (pending_sync_net_ids.size() > 0) {
 		pending_sync_net_ids.clear();
 		ERR_FAIL_V(ERR_INVALID_DATA); // Should have been consumed.
 	}

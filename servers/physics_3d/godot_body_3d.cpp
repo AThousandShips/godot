@@ -306,7 +306,7 @@ void GodotBody3D::set_mode(PhysicsServer3D::BodyMode p_mode) {
 			_inv_mass = 0;
 			_inv_inertia = Vector3();
 			_set_static(p_mode == PhysicsServer3D::BODY_MODE_STATIC);
-			set_active(p_mode == PhysicsServer3D::BODY_MODE_KINEMATIC && contacts.size());
+			set_active(p_mode == PhysicsServer3D::BODY_MODE_KINEMATIC && contacts.size() > 0);
 			linear_velocity = Vector3();
 			angular_velocity = Vector3();
 			if (mode == PhysicsServer3D::BODY_MODE_KINEMATIC && prev != mode) {

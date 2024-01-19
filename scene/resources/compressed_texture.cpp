@@ -697,7 +697,7 @@ Image::Format CompressedTextureLayered::get_format() const {
 }
 
 Error CompressedTextureLayered::_load_data(const String &p_path, Vector<Ref<Image>> &images, int &mipmap_limit, int p_size_limit) {
-	ERR_FAIL_COND_V(images.size() != 0, ERR_INVALID_PARAMETER);
+	ERR_FAIL_COND_V(images.size() > 0, ERR_INVALID_PARAMETER);
 
 	Ref<FileAccess> f = FileAccess::open(p_path, FileAccess::READ);
 	ERR_FAIL_COND_V_MSG(f.is_null(), ERR_CANT_OPEN, vformat("Unable to open file: %s.", p_path));

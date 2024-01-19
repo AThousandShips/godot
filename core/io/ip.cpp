@@ -97,7 +97,7 @@ struct _IP_ResolverPrivate {
 				continue;
 			}
 			// We might be overriding another result, but we don't care as long as the result is valid.
-			if (response.size()) {
+			if (response.size() > 0) {
 				String key = get_cache_key(hostname, type);
 				cache[key] = response;
 			}
@@ -141,7 +141,7 @@ PackedStringArray IP::resolve_hostname_addresses(const String &p_hostname, Type 
 		_resolve_hostname(res, p_hostname, p_type);
 		resolver->mutex.lock();
 		// We might be overriding another result, but we don't care as long as the result is valid.
-		if (res.size()) {
+		if (res.size() > 0) {
 			resolver->cache[key] = res;
 		}
 	}

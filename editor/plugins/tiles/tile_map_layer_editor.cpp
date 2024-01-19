@@ -1794,7 +1794,7 @@ void TileMapLayerEditorTilesPlugin::_update_selection_pattern_from_tileset_patte
 	// Clear the selected pattern.
 	selection_pattern.instantiate();
 
-	if (patterns_item_list->get_selected_items().size() >= 1) {
+	if (patterns_item_list->get_selected_items().size() > 0) {
 		selection_pattern = patterns_item_list->get_item_metadata(patterns_item_list->get_selected_items()[0]);
 	}
 

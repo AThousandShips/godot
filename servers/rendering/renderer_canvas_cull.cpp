@@ -1358,7 +1358,7 @@ void RendererCanvasCull::canvas_item_add_primitive(RID p_item, const Vector<Poin
 		}
 		if (i < p_colors.size()) {
 			prim->colors[i] = p_colors[i];
-		} else if (p_colors.size()) {
+		} else if (p_colors.size() > 0) {
 			prim->colors[i] = p_colors[0];
 		} else {
 			prim->colors[i] = Color(1, 1, 1, 1);
@@ -2175,7 +2175,7 @@ template <class T>
 void RendererCanvasCull::_free_rids(T &p_owner, const char *p_type) {
 	List<RID> owned;
 	p_owner.get_owned_list(&owned);
-	if (owned.size()) {
+	if (owned.size() > 0) {
 		if (owned.size() == 1) {
 			WARN_PRINT(vformat("1 RID of type \"%s\" was leaked.", p_type));
 		} else {

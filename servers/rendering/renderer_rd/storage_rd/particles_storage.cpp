@@ -626,7 +626,7 @@ AABB ParticlesStorage::particles_get_current_aabb(RID p_particles) {
 	Transform3D inv = particles->emission_transform.affine_inverse();
 
 	AABB aabb;
-	if (buffer.size()) {
+	if (buffer.size() > 0) {
 		bool first = true;
 
 		const uint8_t *data_ptr = (const uint8_t *)buffer.ptr();

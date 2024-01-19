@@ -118,7 +118,7 @@ void RemoteDebugger::_err_handler(void *p_this, const char *p_func, const char *
 
 	for (int i = 0; i < ScriptServer::get_language_count(); i++) {
 		si = ScriptServer::get_language(i)->debug_get_current_stack_info();
-		if (si.size()) {
+		if (si.size() > 0) {
 			break;
 		}
 	}
@@ -201,7 +201,7 @@ void RemoteDebugger::flush_output() {
 		}
 	}
 
-	if (output_strings.size()) {
+	if (output_strings.size() > 0) {
 		// Join output strings so we generate less messages.
 		Vector<String> joined_log_strings;
 		Vector<String> strings;
@@ -241,7 +241,7 @@ void RemoteDebugger::flush_output() {
 		output_strings.clear();
 	}
 
-	while (errors.size()) {
+	while (errors.size() > 0) {
 		ErrorMessage oe = errors.front()->get();
 		_put_msg("error", oe.serialize());
 		errors.pop_front();

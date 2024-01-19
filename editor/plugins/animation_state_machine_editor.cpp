@@ -94,7 +94,7 @@ String AnimationNodeStateMachineEditor::_get_root_playback_path(String &r_node_d
 
 	bool is_playable_anodesm_found = false;
 
-	if (edited_path.size()) {
+	if (edited_path.size() > 0) {
 		while (!is_playable_anodesm_found) {
 			base_path = String("/").join(edited_path);
 			Ref<AnimationNodeStateMachine> anodesm = edited_path.is_empty() ? Ref<AnimationNode>(tree->get_root_animation_node().ptr()) : tree->get_root_animation_node()->find_node_by_path(base_path);
@@ -116,7 +116,7 @@ String AnimationNodeStateMachineEditor::_get_root_playback_path(String &r_node_d
 		// Return Root/Nested state machine playback.
 		node_directory_path.reverse();
 		r_node_directory = String("/").join(node_directory_path);
-		if (node_directory_path.size()) {
+		if (node_directory_path.size() > 0) {
 			r_node_directory += "/";
 		}
 		base_path = edited_path.is_empty() ? String(SceneStringNames::get_singleton()->parameters_base_path) + "playback" : String(SceneStringNames::get_singleton()->parameters_base_path) + base_path + "/playback";
@@ -1063,7 +1063,7 @@ void AnimationNodeStateMachineEditor::_state_machine_draw() {
 			tl.fade_ratio = MIN(1.0, fading_pos / fading_time);
 		}
 
-		if (travel_path.size()) {
+		if (travel_path.size() > 0) {
 			if (current == tl.from_node && travel_path[0] == tl.to_node) {
 				tl.travel = true;
 			} else {

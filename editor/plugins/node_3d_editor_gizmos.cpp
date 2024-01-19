@@ -500,7 +500,7 @@ bool EditorNode3DGizmo::intersect_frustum(const Camera3D *p_camera, const Vector
 		return !any_out;
 	}
 
-	if (collision_segments.size()) {
+	if (collision_segments.size() > 0) {
 		const Plane *p = p_frustum.ptr();
 		int fc = p_frustum.size();
 
@@ -665,7 +665,7 @@ bool EditorNode3DGizmo::intersect_ray(Camera3D *p_camera, const Point2 &p_point,
 		}
 	}
 
-	if (collision_segments.size()) {
+	if (collision_segments.size() > 0) {
 		Plane camp(-p_camera->get_transform().basis.get_column(2).normalized(), p_camera->get_transform().origin);
 
 		int vc = collision_segments.size();

@@ -612,7 +612,7 @@ void LightStorage::lightmap_set_probe_capture_data(RID p_lightmap, const PackedV
 	Lightmap *lightmap = lightmap_owner.get_or_null(p_lightmap);
 	ERR_FAIL_NULL(lightmap);
 
-	if (p_points.size()) {
+	if (p_points.size() > 0) {
 		ERR_FAIL_COND(p_points.size() * 9 != p_point_sh.size());
 		ERR_FAIL_COND((p_tetrahedra.size() % 4) != 0);
 		ERR_FAIL_COND((p_bsp_tree.size() % 6) != 0);

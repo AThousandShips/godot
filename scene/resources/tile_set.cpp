@@ -3699,7 +3699,7 @@ bool TileSet::_set(const StringName &p_name, const Variant &p_value) {
 
 #ifndef DISABLE_DEPRECATED
 	// TODO: This should be moved to a dedicated conversion system (see #50691)
-	if (components.size() >= 1 && components[0].is_valid_int()) {
+	if (components.size() > 0 && components[0].is_valid_int()) {
 		int id = components[0].to_int();
 
 		// Get or create the compatibility object
@@ -6262,7 +6262,7 @@ void TileData::remove_collision_polygon(int p_layer_id, int p_polygon_index) {
 void TileData::set_collision_polygon_points(int p_layer_id, int p_polygon_index, Vector<Vector2> p_polygon) {
 	ERR_FAIL_INDEX(p_layer_id, physics.size());
 	ERR_FAIL_INDEX(p_polygon_index, physics[p_layer_id].polygons.size());
-	ERR_FAIL_COND_MSG(p_polygon.size() != 0 && p_polygon.size() < 3, "Invalid polygon. Needs either 0 or more than 3 points.");
+	ERR_FAIL_COND_MSG(p_polygon.size() > 0 && p_polygon.size() < 3, "Invalid polygon. Needs either 0 or more than 3 points.");
 
 	TileData::PhysicsLayerTileData::PolygonShapeTileData &polygon_shape_tile_data = physics.write[p_layer_id].polygons.write[p_polygon_index];
 

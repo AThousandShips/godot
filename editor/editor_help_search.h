@@ -138,7 +138,7 @@ class EditorHelpSearch::Runner : public RefCounted {
 		Vector<MemberMatch<DocData::MethodDoc>> annotations;
 
 		bool required() {
-			return name || !keyword.is_empty() || methods.size() || signals.size() || constants.size() || properties.size() || theme_properties.size() || annotations.size();
+			return name || !keyword.is_empty() || methods.size() > 0 || signals.size() > 0 || constants.size() > 0 || properties.size() > 0 || theme_properties.size() > 0 || annotations.size() > 0;
 		}
 	};
 

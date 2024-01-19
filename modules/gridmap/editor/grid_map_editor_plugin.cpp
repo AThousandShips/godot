@@ -668,7 +668,7 @@ EditorPlugin::AfterGUIInput GridMapEditor::forward_spatial_input_event(Camera3D 
 			return EditorPlugin::AFTER_GUI_INPUT_PASS;
 		} else {
 			if ((mb->get_button_index() == MouseButton::RIGHT && input_action == INPUT_ERASE) || (mb->get_button_index() == MouseButton::LEFT && input_action == INPUT_PAINT)) {
-				if (set_items.size()) {
+				if (set_items.size() > 0) {
 					EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 					undo_redo->create_action(TTR("GridMap Paint"));
 					for (const SetItem &si : set_items) {

@@ -324,7 +324,7 @@ void ImporterMesh::generate_lods(float p_normal_merge_angle, float p_normal_spli
 			}
 		}
 
-		if (bones.size() > 0 && weights.size() && bone_transform_vector.size() > 0) {
+		if (bones.size() > 0 && weights.size() > 0 && bone_transform_vector.size() > 0) {
 			Vector3 *vertices_ptrw = vertices.ptrw();
 
 			// Apply bone transforms to regular surface.
@@ -795,7 +795,7 @@ void ImporterMesh::create_shadow_mesh() {
 		new_surface[RS::ARRAY_VERTEX] = new_vertices;
 
 		Vector<int> indices = surfaces[i].arrays[RS::ARRAY_INDEX];
-		if (indices.size()) {
+		if (indices.size() > 0) {
 			int index_count = indices.size();
 			const int *index_rptr = indices.ptr();
 			Vector<int> new_indices;
@@ -878,7 +878,7 @@ void ImporterMesh::_set_data(const Dictionary &p_data) {
 }
 Dictionary ImporterMesh::_get_data() const {
 	Dictionary data;
-	if (blend_shapes.size()) {
+	if (blend_shapes.size() > 0) {
 		data["blend_shape_names"] = blend_shapes;
 	}
 	Array surface_arr;
@@ -886,14 +886,14 @@ Dictionary ImporterMesh::_get_data() const {
 		Dictionary d;
 		d["primitive"] = surfaces[i].primitive;
 		d["arrays"] = surfaces[i].arrays;
-		if (surfaces[i].blend_shape_data.size()) {
+		if (surfaces[i].blend_shape_data.size() > 0) {
 			Array bs_data;
 			for (int j = 0; j < surfaces[i].blend_shape_data.size(); j++) {
 				bs_data.push_back(surfaces[i].blend_shape_data[j].arrays);
 			}
 			d["blend_shapes"] = bs_data;
 		}
-		if (surfaces[i].lods.size()) {
+		if (surfaces[i].lods.size() > 0) {
 			Dictionary lods;
 			for (int j = 0; j < surfaces[i].lods.size(); j++) {
 				lods[surfaces[i].lods[j].distance] = surfaces[i].lods[j].indices;
@@ -923,7 +923,7 @@ Vector<Face3> ImporterMesh::get_faces() const {
 		if (surfaces[i].primitive == Mesh::PRIMITIVE_TRIANGLES) {
 			Vector<Vector3> vertices = surfaces[i].arrays[Mesh::ARRAY_VERTEX];
 			Vector<int> indices = surfaces[i].arrays[Mesh::ARRAY_INDEX];
-			if (indices.size()) {
+			if (indices.size() > 0) {
 				for (int j = 0; j < indices.size(); j += 3) {
 					Face3 f;
 					f.vertex[0] = vertices[indices[j + 0]];
@@ -1111,7 +1111,7 @@ static const uint32_t custom_shift[RS::ARRAY_CUSTOM_COUNT] = { Mesh::ARRAY_FORMA
 
 Error ImporterMesh::lightmap_unwrap_cached(const Transform3D &p_base_transform, float p_texel_size, const Vector<uint8_t> &p_src_cache, Vector<uint8_t> &r_dst_cache) {
 	ERR_FAIL_NULL_V(array_mesh_lightmap_unwrap_callback, ERR_UNCONFIGURED);
-	ERR_FAIL_COND_V_MSG(blend_shapes.size() != 0, ERR_UNAVAILABLE, "Can't unwrap mesh with blend shapes.");
+	ERR_FAIL_COND_V_MSG(blend_shapes.size() > 0, ERR_UNAVAILABLE, "Can't unwrap mesh with blend shapes.");
 
 	LocalVector<float> vertices;
 	LocalVector<float> normals;

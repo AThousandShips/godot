@@ -1132,7 +1132,7 @@ void PopupMenu::_notification(int p_what) {
 			}
 
 			// Only used when using operating system windows.
-			if (!activated_by_keyboard && !is_embedded() && autohide_areas.size()) {
+			if (!activated_by_keyboard && !is_embedded() && autohide_areas.size() > 0) {
 				Point2 mouse_pos = DisplayServer::get_singleton()->mouse_get_position();
 				mouse_pos -= get_position();
 

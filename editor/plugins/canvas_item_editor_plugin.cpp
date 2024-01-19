@@ -1394,7 +1394,7 @@ bool CanvasItemEditor::_gui_input_pivot(const Ref<InputEvent> &p_event) {
 		}
 
 		// Confirm the pivot move
-		if (drag_selection.size() >= 1 &&
+		if (drag_selection.size() > 0 &&
 				((b.is_valid() && !b->is_pressed() && b->get_button_index() == MouseButton::LEFT && tool == TOOL_EDIT_PIVOT) ||
 						(k.is_valid() && !k->is_pressed() && k->get_keycode() == Key::V))) {
 			_commit_canvas_item_state(
@@ -1645,7 +1645,7 @@ bool CanvasItemEditor::_gui_input_anchors(const Ref<InputEvent> &p_event) {
 		}
 
 		// Confirms new anchor position
-		if (drag_selection.size() >= 1 && b.is_valid() && b->get_button_index() == MouseButton::LEFT && !b->is_pressed()) {
+		if (drag_selection.size() > 0 && b.is_valid() && b->get_button_index() == MouseButton::LEFT && !b->is_pressed()) {
 			_commit_canvas_item_state(
 					drag_selection,
 					vformat(TTR("Move CanvasItem \"%s\" Anchor"), drag_selection[0]->get_name()));
@@ -1818,7 +1818,7 @@ bool CanvasItemEditor::_gui_input_resize(const Ref<InputEvent> &p_event) {
 		}
 
 		// Confirm resize
-		if (drag_selection.size() >= 1 && b.is_valid() && b->get_button_index() == MouseButton::LEFT && !b->is_pressed()) {
+		if (drag_selection.size() > 0 && b.is_valid() && b->get_button_index() == MouseButton::LEFT && !b->is_pressed()) {
 			const Node2D *node2d = Object::cast_to<Node2D>(drag_selection[0]);
 			if (node2d) {
 				// Extends from Node2D.
@@ -4241,7 +4241,7 @@ void CanvasItemEditor::_insert_animation_keys(bool p_location, bool p_rotation, 
 					n = Object::cast_to<Node2D>(n->get_parent_item());
 				}
 
-				if (has_chain && ik_chain.size()) {
+				if (has_chain && ik_chain.size() > 0) {
 					for (Node2D *&F : ik_chain) {
 						if (key_pos) {
 							te->insert_node_value_key(F, "position", F->get_position(), p_on_existing);

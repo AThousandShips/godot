@@ -402,7 +402,7 @@ Error ResourceImporterLayeredTexture::import(const String &p_source_file, const 
 	if (r_metadata) {
 		Dictionary meta;
 		meta["vram_texture"] = compress_mode == COMPRESS_VRAM_COMPRESSED;
-		if (formats_imported.size()) {
+		if (formats_imported.size() > 0) {
 			meta["imported_formats"] = formats_imported;
 		}
 		*r_metadata = meta;

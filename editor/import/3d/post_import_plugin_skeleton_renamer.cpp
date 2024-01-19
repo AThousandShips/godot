@@ -67,7 +67,7 @@ void PostImportPluginSkeletonRenamer::_internal_process(InternalImportCategory p
 	// Rename bones in Skin.
 	{
 		TypedArray<Node> nodes = p_base_scene->find_children("*", "ImporterMeshInstance3D");
-		while (nodes.size()) {
+		while (nodes.size() > 0) {
 			ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(nodes.pop_back());
 			Ref<Skin> skin = mi->get_skin();
 			if (skin.is_valid()) {
@@ -94,7 +94,7 @@ void PostImportPluginSkeletonRenamer::_internal_process(InternalImportCategory p
 	// Rename bones in AnimationPlayer.
 	{
 		TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
-		while (nodes.size()) {
+		while (nodes.size() > 0) {
 			AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
 			List<StringName> anims;
 			ap->get_animation_list(&anims);
@@ -131,7 +131,7 @@ void PostImportPluginSkeletonRenamer::_internal_process(InternalImportCategory p
 		}
 
 		TypedArray<Node> nodes = p_base_scene->find_children("*", "BoneAttachment3D");
-		while (nodes.size()) {
+		while (nodes.size() > 0) {
 			BoneAttachment3D *attachment = Object::cast_to<BoneAttachment3D>(nodes.pop_back());
 			if (attachment) {
 				attachment->notify_skeleton_bones_renamed(p_base_scene, skeleton, rename_map_dict);
@@ -207,7 +207,7 @@ void PostImportPluginSkeletonRenamer::internal_process(InternalImportCategory p_
 			ERR_FAIL_COND_MSG(unique_name.is_empty(), "Skeleton unique name cannot be empty.");
 
 			TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
-			while (nodes.size()) {
+			while (nodes.size() > 0) {
 				AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
 				List<StringName> anims;
 				ap->get_animation_list(&anims);

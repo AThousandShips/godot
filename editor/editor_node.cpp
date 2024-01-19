@@ -901,7 +901,7 @@ void EditorNode::_resources_changed(const Vector<String> &p_resources) {
 		changed.push_back(res);
 	}
 
-	if (changed.size()) {
+	if (changed.size() > 0) {
 		for (Ref<Resource> &res : changed) {
 			res->reload_from_file();
 		}
@@ -1351,7 +1351,7 @@ void EditorNode::save_resource_as(const Ref<Resource> &p_resource, const String 
 		if (p_resource->get_path().is_resource_file()) {
 			file->set_current_file(p_resource->get_path().get_file());
 		} else {
-			if (extensions.size()) {
+			if (extensions.size() > 0) {
 				String resource_name_snake_case = p_resource->get_class().to_snake_case();
 				file->set_current_file("new_" + resource_name_snake_case + "." + preferred.front()->get().to_lower());
 			} else {
@@ -1360,15 +1360,15 @@ void EditorNode::save_resource_as(const Ref<Resource> &p_resource, const String 
 		}
 	} else if (!p_resource->get_path().is_empty()) {
 		file->set_current_path(p_resource->get_path());
-		if (extensions.size()) {
+		if (extensions.size() > 0) {
 			String ext = p_resource->get_path().get_extension().to_lower();
 			if (extensions.find(ext) == nullptr) {
 				file->set_current_path(p_resource->get_path().replacen("." + ext, "." + extensions.front()->get()));
 			}
 		}
-	} else if (preferred.size()) {
+	} else if (preferred.size() > 0) {
 		String existing;
-		if (extensions.size()) {
+		if (extensions.size() > 0) {
 			String resource_name_snake_case = p_resource->get_class().to_snake_case();
 			existing = "new_" + resource_name_snake_case + "." + preferred.front()->get().to_lower();
 		}
@@ -2688,13 +2688,13 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
 			if (!scene->get_scene_file_path().is_empty()) {
 				String path = scene->get_scene_file_path();
 				file->set_current_path(path);
-				if (extensions.size()) {
+				if (extensions.size() > 0) {
 					String ext = path.get_extension().to_lower();
 					if (extensions.find(ext) == nullptr) {
 						file->set_current_path(path.replacen("." + ext, "." + extensions.front()->get()));
 					}
 				}
-			} else if (extensions.size()) {
+			} else if (extensions.size() > 0) {
 				String root_name = scene->get_name();
 				root_name = EditorNode::adjust_scene_name_casing(root_name);
 				file->set_current_path(root_name + "." + extensions.front()->get().to_lower());
@@ -5773,7 +5773,7 @@ void EditorNode::reload_instances_with_path_in_edited_scenes(const String &p_ins
 				}
 
 				// Restore the selection.
-				if (selected_node_paths.size()) {
+				if (selected_node_paths.size() > 0) {
 					for (NodePath selected_node_path : selected_node_paths) {
 						Node *selected_node = instantiated_node->get_node_or_null(selected_node_path);
 						if (selected_node) {

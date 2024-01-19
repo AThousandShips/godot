@@ -74,7 +74,7 @@ void PrimitiveMesh::_update() const {
 	if (flip_faces) {
 		Vector<Vector3> normals = arr[RS::ARRAY_NORMAL];
 
-		if (normals.size() && indices.size()) {
+		if (normals.size() > 0 && indices.size() > 0) {
 			{
 				int nc = normals.size();
 				Vector3 *w = normals.ptrw();

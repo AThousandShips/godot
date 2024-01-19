@@ -491,7 +491,7 @@ String AnimationNodeStateMachinePlayback::_validate_path(AnimationNodeStateMachi
 	Ref<AnimationNodeStateMachine> anodesm = p_state_machine->find_node_by_path(target);
 	while (anodesm.is_valid() && anodesm->get_state_machine_type() == AnimationNodeStateMachine::STATE_MACHINE_TYPE_GROUPED) {
 		Vector<int> indices = anodesm->find_transition_from(anodesm->start_node);
-		if (indices.size()) {
+		if (indices.size() > 0) {
 			target = target + "/" + anodesm->get_transition_to(indices[0]); // Find next state of Start.
 		} else {
 			break; // There is no transition in Start state of grouped state machine.
@@ -724,7 +724,7 @@ double AnimationNodeStateMachinePlayback::_process(const String &p_base_path, An
 		String start_target = _validate_path(p_state_machine, start_request);
 		Vector<String> start_path = String(start_target).split("/");
 		start_request = start_path[0];
-		if (start_path.size()) {
+		if (start_path.size() > 0) {
 			_start_children(tree, p_state_machine, start_target, p_test_only);
 		}
 		// Teleport to start.
@@ -745,7 +745,7 @@ double AnimationNodeStateMachinePlayback::_process(const String &p_base_path, An
 		// Process children.
 		Vector<StringName> new_path;
 		bool can_travel = _make_travel_path(tree, p_state_machine, travel_path.size() <= 1 ? p_state_machine->is_allow_transition_to_self() : false, new_path, p_test_only);
-		if (travel_path.size()) {
+		if (travel_path.size() > 0) {
 			if (can_travel) {
 				can_travel = _travel_children(tree, p_state_machine, travel_target, p_state_machine->is_allow_transition_to_self(), travel_path[0] == current, p_test_only);
 			} else {
@@ -957,7 +957,7 @@ bool AnimationNodeStateMachinePlayback::_transition_to_next_recursive(AnimationT
 		}
 
 		// If it came from path, remove path.
-		if (path.size()) {
+		if (path.size() > 0) {
 			path.remove_at(0);
 		}
 
@@ -1070,7 +1070,7 @@ Ref<AnimationNodeStateMachineTransition> AnimationNodeStateMachinePlayback::_che
 
 AnimationNodeStateMachinePlayback::NextInfo AnimationNodeStateMachinePlayback::_find_next(AnimationTree *p_tree, AnimationNodeStateMachine *p_state_machine) const {
 	NextInfo next;
-	if (path.size()) {
+	if (path.size() > 0) {
 		for (int i = 0; i < p_state_machine->transitions.size(); i++) {
 			Ref<AnimationNodeStateMachine> anodesm = p_state_machine;
 			bool bypass = false;

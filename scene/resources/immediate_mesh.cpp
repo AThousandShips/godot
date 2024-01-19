@@ -100,7 +100,7 @@ void ImmediateMesh::surface_set_uv2(const Vector2 &p_uv2) {
 }
 void ImmediateMesh::surface_add_vertex(const Vector3 &p_vertex) {
 	ERR_FAIL_COND_MSG(!surface_active, "Not creating any surface. Use surface_begin() to do it.");
-	ERR_FAIL_COND_MSG(vertices.size() && active_surface_data.vertex_2d, "Can't mix 2D and 3D vertices in a surface.");
+	ERR_FAIL_COND_MSG(vertices.size() > 0 && active_surface_data.vertex_2d, "Can't mix 2D and 3D vertices in a surface.");
 
 	if (uses_colors) {
 		colors.push_back(current_color);
@@ -122,7 +122,7 @@ void ImmediateMesh::surface_add_vertex(const Vector3 &p_vertex) {
 
 void ImmediateMesh::surface_add_vertex_2d(const Vector2 &p_vertex) {
 	ERR_FAIL_COND_MSG(!surface_active, "Not creating any surface. Use surface_begin() to do it.");
-	ERR_FAIL_COND_MSG(vertices.size() && !active_surface_data.vertex_2d, "Can't mix 2D and 3D vertices in a surface.");
+	ERR_FAIL_COND_MSG(vertices.size() > 0 && !active_surface_data.vertex_2d, "Can't mix 2D and 3D vertices in a surface.");
 
 	if (uses_colors) {
 		colors.push_back(current_color);

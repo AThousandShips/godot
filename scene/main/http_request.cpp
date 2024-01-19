@@ -433,7 +433,7 @@ bool HTTPRequest::_update_connection() {
 				return true;
 			}
 
-			if (chunk.size()) {
+			if (chunk.size() > 0) {
 				if (file.is_valid()) {
 					const uint8_t *r = chunk.ptr();
 					file->store_buffer(r, chunk.size());

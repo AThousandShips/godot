@@ -397,7 +397,7 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 		bool skip_setter_getter_methods = true;
 
 		// Populate documentation data for each exposed class.
-		while (classes.size()) {
+		while (classes.size() > 0) {
 			const String &name = classes.front()->get();
 			if (!ClassDB::is_class_exposed(name)) {
 				print_verbose(vformat("Class '%s' is not exposed, skipping.", name));
@@ -606,7 +606,7 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 				DocData::method_doc_from_methodinfo(method, E, "");
 
 				Vector<Error> errs = ClassDB::get_method_error_return_values(name, E.name);
-				if (errs.size()) {
+				if (errs.size() > 0) {
 					if (!errs.has(OK)) {
 						errs.insert(0, OK);
 					}
@@ -625,7 +625,7 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 			List<MethodInfo> signal_list;
 			ClassDB::get_signal_list(name, &signal_list, true);
 
-			if (signal_list.size()) {
+			if (signal_list.size() > 0) {
 				for (List<MethodInfo>::Element *EV = signal_list.front(); EV; EV = EV->next()) {
 					DocData::MethodDoc signal;
 					signal.name = EV->get().name;
@@ -1208,7 +1208,7 @@ Error DocTools::erase_classes(const String &p_dir) {
 	}
 	da->list_dir_end();
 
-	while (to_erase.size()) {
+	while (to_erase.size() > 0) {
 		da->remove(to_erase.front()->get());
 		to_erase.pop_front();
 	}

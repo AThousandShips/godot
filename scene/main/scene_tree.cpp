@@ -194,7 +194,7 @@ void SceneTree::flush_transform_notifications() {
 void SceneTree::_flush_ugc() {
 	ugc_locked = true;
 
-	while (unique_group_calls.size()) {
+	while (unique_group_calls.size() > 0) {
 		HashMap<UGCall, Vector<Variant>, UGCall>::Iterator E = unique_group_calls.begin();
 
 		const Variant **argptrs = (const Variant **)alloca(E->value.size() * sizeof(Variant *));
@@ -1353,7 +1353,7 @@ void SceneTree::get_nodes_in_group(const StringName &p_group, List<Node *> *p_li
 void SceneTree::_flush_delete_queue() {
 	_THREAD_SAFE_METHOD_
 
-	while (delete_queue.size()) {
+	while (delete_queue.size() > 0) {
 		Object *obj = ObjectDB::get_instance(delete_queue.front()->get());
 		if (obj) {
 			memdelete(obj);

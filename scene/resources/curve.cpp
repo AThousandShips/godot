@@ -463,7 +463,7 @@ void Curve::bake() {
 		_baked_cache.write[i] = y;
 	}
 
-	if (_points.size() != 0) {
+	if (_points.size() > 0) {
 		_baked_cache.write[0] = _points[0].position.y;
 		_baked_cache.write[_baked_cache.size() - 1] = _points[_points.size() - 1].position.y;
 	}

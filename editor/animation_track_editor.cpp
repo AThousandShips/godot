@@ -3813,7 +3813,7 @@ void AnimationTrackEditor::_insert_track(bool p_reset_wanted, bool p_create_bezi
 
 	TrackIndices next_tracks(animation.ptr(), reset_anim.ptr());
 	bool advance = false;
-	while (insert_data.size()) {
+	while (insert_data.size() > 0) {
 		if (insert_data.front()->get().advance) {
 			advance = true;
 		}
@@ -4155,7 +4155,7 @@ void AnimationTrackEditor::_confirm_insert_list() {
 
 	TrackIndices next_tracks(animation.ptr(), reset_anim.ptr());
 	bool advance = false;
-	while (insert_data.size()) {
+	while (insert_data.size() > 0) {
 		if (insert_data.front()->get().advance) {
 			advance = true;
 		}
@@ -5636,7 +5636,7 @@ void AnimationTrackEditor::_bezier_track_set_key_handle_mode(Animation *p_anim, 
 }
 
 void AnimationTrackEditor::_anim_duplicate_keys(float p_ofs, int p_track) {
-	if (selection.size() && animation.is_valid()) {
+	if (selection.size() > 0 && animation.is_valid()) {
 		int top_track = 0x7FFFFFFF;
 		float top_time = 1e10;
 		for (RBMap<SelectedKey, KeyInfo>::Element *E = selection.back(); E; E = E->prev()) {
@@ -6549,7 +6549,7 @@ void AnimationTrackEditor::_edit_menu_pressed(int p_option) {
 				break;
 			}
 
-			if (selection.size()) {
+			if (selection.size() > 0) {
 				EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 				undo_redo->create_action(TTR("Animation Delete Keys"));
 

@@ -99,7 +99,7 @@ public:
 	T *request(U &r_id) {
 		_used_size++;
 
-		if (freelist.size()) {
+		if (freelist.size() > 0) {
 			// pop from freelist
 			int new_size = freelist.size() - 1;
 			r_id = freelist[new_size];

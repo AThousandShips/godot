@@ -119,7 +119,7 @@ void Polygon2D::_notification(int p_what) {
 
 			ObjectID new_skeleton_id;
 
-			if (skeleton_node && !invert && bone_weights.size()) {
+			if (skeleton_node && !invert && bone_weights.size() > 0) {
 				RS::get_singleton()->canvas_item_attach_skeleton(get_canvas_item(), skeleton_node->get_skeleton());
 				new_skeleton_id = skeleton_node->get_instance_id();
 			} else {
@@ -234,7 +234,7 @@ void Polygon2D::_notification(int p_what) {
 				}
 			}
 
-			if (skeleton_node && !invert && bone_weights.size()) {
+			if (skeleton_node && !invert && bone_weights.size() > 0) {
 				//a skeleton is set! fill indices and weights
 				int vc = len;
 				bones.resize(vc * 4);
@@ -351,7 +351,7 @@ void Polygon2D::_notification(int p_what) {
 
 			RS::get_singleton()->mesh_clear(mesh);
 
-			if (index_array.size()) {
+			if (index_array.size() > 0) {
 				Array arr;
 				arr.resize(RS::ARRAY_MAX);
 				arr[RS::ARRAY_VERTEX] = points;

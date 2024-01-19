@@ -455,7 +455,7 @@ float RichTextLabel::_resize_line(ItemFrame *p_frame, int p_line, const Ref<Font
 					idx++;
 				}
 				int row_idx = (table->align_to_row < 0) ? table->rows_baseline.size() - 1 : table->align_to_row;
-				if (table->rows_baseline.size() != 0 && row_idx < (int)table->rows_baseline.size() - 1) {
+				if (table->rows_baseline.size() > 0 && row_idx < (int)table->rows_baseline.size() - 1) {
 					l.text_buf->resize_object(it->rid, Size2(table->total_width, table->total_height), table->inline_align, Math::round(table->rows_baseline[row_idx]));
 				} else {
 					l.text_buf->resize_object(it->rid, Size2(table->total_width, table->total_height), table->inline_align);
@@ -753,7 +753,7 @@ float RichTextLabel::_shape_line(ItemFrame *p_frame, int p_line, const Ref<Font>
 					idx++;
 				}
 				int row_idx = (table->align_to_row < 0) ? table->rows_baseline.size() - 1 : table->align_to_row;
-				if (table->rows_baseline.size() != 0 && row_idx < (int)table->rows_baseline.size() - 1) {
+				if (table->rows_baseline.size() > 0 && row_idx < (int)table->rows_baseline.size() - 1) {
 					l.text_buf->add_object(it->rid, Size2(table->total_width, table->total_height), table->inline_align, t_char_count, Math::round(table->rows_baseline[row_idx]));
 				} else {
 					l.text_buf->add_object(it->rid, Size2(table->total_width, table->total_height), table->inline_align, t_char_count);
@@ -965,7 +965,7 @@ int RichTextLabel::_draw_line(ItemFrame *p_frame, int p_line, const Vector2 &p_o
 							int col = idx % col_count;
 							int row = idx / col_count;
 
-							if (frame->lines.size() != 0 && row < row_count) {
+							if (frame->lines.size() > 0 && row < row_count) {
 								Vector2 coff = frame->lines[0].offset;
 								if (rtl) {
 									coff.x = rect.size.width - table->columns[col].width - coff.x;
@@ -1621,7 +1621,7 @@ float RichTextLabel::_find_click_in_line(ItemFrame *p_frame, int p_line, const V
 								int col = idx % col_count;
 								int row = idx / col_count;
 
-								if (frame->lines.size() != 0 && row < row_count) {
+								if (frame->lines.size() > 0 && row < row_count) {
 									Vector2 coff = frame->lines[0].offset;
 									if (rtl) {
 										coff.x = rect.size.width - table->columns[col].width - coff.x;
@@ -4149,7 +4149,7 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 			bbcode_name = bbcode_name.substr(0, main_value_pos);
 		}
 
-		if (tag.begins_with("/") && tag_stack.size()) {
+		if (tag.begins_with("/") && tag_stack.size() > 0) {
 			bool tag_ok = tag_stack.size() && tag_stack.front()->get() == tag.substr(1, tag.length());
 
 			if (tag_stack.front()->get() == "b") {
@@ -5105,7 +5105,7 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 		Item *subitem = static_cast<Item *>(E);
 		_fetch_item_fx_stack(subitem, fx_items);
 
-		if (fx_items.size()) {
+		if (fx_items.size() > 0) {
 			set_process_internal(true);
 			break;
 		}

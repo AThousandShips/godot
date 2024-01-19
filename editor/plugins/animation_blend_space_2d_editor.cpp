@@ -298,11 +298,11 @@ void AnimationNodeBlendSpace2DEditor::_blend_space_gui_input(const Ref<InputEven
 		_update_edited_point_pos();
 	}
 
-	if (mm.is_valid() && tool_triangle->is_pressed() && making_triangle.size()) {
+	if (mm.is_valid() && tool_triangle->is_pressed() && making_triangle.size() > 0) {
 		blend_space_draw->queue_redraw();
 	}
 
-	if (mm.is_valid() && !tool_triangle->is_pressed() && making_triangle.size()) {
+	if (mm.is_valid() && !tool_triangle->is_pressed() && making_triangle.size() > 0) {
 		making_triangle.clear();
 		blend_space_draw->queue_redraw();
 	}
@@ -576,7 +576,7 @@ void AnimationNodeBlendSpace2DEditor::_blend_space_draw() {
 		}
 	}
 
-	if (making_triangle.size()) {
+	if (making_triangle.size() > 0) {
 		Vector<Vector2> bl_points;
 		for (int i = 0; i < making_triangle.size(); i++) {
 			Vector2 point = blend_space->get_blend_point_position(making_triangle[i]);

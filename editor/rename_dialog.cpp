@@ -514,7 +514,7 @@ String RenameDialog::_postprocess(const String &subject) {
 		Array matches = pattern.search_all(result);
 
 		// The name `_` would become empty; ignore it.
-		if (matches.size() && result != "_") {
+		if (matches.size() > 0 && result != "_") {
 			String buffer;
 			int start = 0;
 			int end = 0;

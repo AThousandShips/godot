@@ -288,7 +288,7 @@ bool ResourcePreloaderEditor::can_drop_data_fw(const Point2 &p_point, const Vari
 	if (String(d["type"]) == "files") {
 		Vector<String> files = d["files"];
 
-		return files.size() != 0;
+		return files.size() > 0;
 	}
 	return false;
 }

@@ -67,7 +67,7 @@ bool MultiplayerEditorDebugger::capture(const String &p_message, const Array &p_
 			profiler->add_sync_frame_data(E.value);
 		}
 		Array missing = profiler->pop_missing_node_data();
-		if (missing.size()) {
+		if (missing.size() > 0) {
 			// Asks for the object information.
 			get_session(p_session)->send_message("multiplayer:cache", missing);
 		}

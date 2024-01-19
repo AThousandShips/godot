@@ -2088,12 +2088,12 @@ void RasterizerSceneGLES3::_render_shadows(const RenderDataGLES3 *p_render_data,
 				shadows.push_back(i);
 			}
 		}
-		if (directional_shadows.size()) {
+		if (directional_shadows.size() > 0) {
 			light_storage->update_directional_shadow_atlas();
 		}
 	}
 
-	bool render_shadows = directional_shadows.size() || shadows.size() || cube_shadows.size();
+	bool render_shadows = directional_shadows.size() > 0 || shadows.size() > 0 || cube_shadows.size() > 0;
 
 	if (render_shadows) {
 		RENDER_TIMESTAMP("Render Shadows");

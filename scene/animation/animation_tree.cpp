@@ -740,7 +740,7 @@ void AnimationTree::set_animation_player(const NodePath &p_path) {
 	animation_player = p_path;
 	if (p_path.is_empty()) {
 		set_root_node(SceneStringNames::get_singleton()->path_pp);
-		while (animation_libraries.size()) {
+		while (animation_libraries.size() > 0) {
 			remove_animation_library(animation_libraries[0].name);
 		}
 	}
@@ -781,7 +781,7 @@ void AnimationTree::_setup_animation_player() {
 		if (root) {
 			set_root_node(get_path_to(root, true));
 		}
-		while (animation_libraries.size()) {
+		while (animation_libraries.size() > 0) {
 			remove_animation_library(animation_libraries[0].name);
 		}
 		List<StringName> list;

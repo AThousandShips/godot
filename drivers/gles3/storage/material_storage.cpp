@@ -1054,13 +1054,13 @@ void MaterialData::update_parameters_internal(const HashMap<StringName, Variant>
 		}
 
 		ubo_data.resize(p_ubo_size);
-		if (ubo_data.size()) {
+		if (ubo_data.size() > 0) {
 			memset(ubo_data.ptrw(), 0, ubo_data.size()); //clear
 		}
 	}
 
 	//check whether buffer changed
-	if (p_uniform_dirty && ubo_data.size()) {
+	if (p_uniform_dirty && ubo_data.size() > 0) {
 		update_uniform_buffer(p_uniforms, p_uniform_offsets, p_parameters, ubo_data.ptrw(), ubo_data.size());
 		glBindBuffer(GL_UNIFORM_BUFFER, uniform_buffer);
 		glBufferData(GL_UNIFORM_BUFFER, ubo_data.size(), ubo_data.ptrw(), GL_DYNAMIC_DRAW);

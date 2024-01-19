@@ -499,7 +499,7 @@ String GDScriptLanguage::make_function(const String &p_class, const String &p_na
 #endif
 
 	String s = "func " + p_name + "(";
-	if (p_args.size()) {
+	if (p_args.size() > 0) {
 		for (int i = 0; i < p_args.size(); i++) {
 			if (i > 0) {
 				s += ", ";
@@ -1761,7 +1761,7 @@ static bool _guess_expression_type(GDScriptParser::CompletionContext &p_context,
 
 								Object *baseptr = base.value;
 
-								if (all_is_const && call->function_name == SNAME("get_node") && ClassDB::is_parent_class(native_type.native_type, SNAME("Node")) && args.size()) {
+								if (all_is_const && call->function_name == SNAME("get_node") && ClassDB::is_parent_class(native_type.native_type, SNAME("Node")) && args.size() > 0) {
 									String arg1 = args[0];
 									if (arg1.begins_with("/root/")) {
 										String which = arg1.get_slice("/", 2);
@@ -3425,18 +3425,18 @@ void GDScriptLanguage::auto_indent_code(String &p_code, int p_from_line, int p_t
 		}
 
 		int ilevel = 0;
-		if (indent_stack.size()) {
+		if (indent_stack.size() > 0) {
 			ilevel = indent_stack.back()->get();
 		}
 
 		if (tc > ilevel) {
 			indent_stack.push_back(tc);
 		} else if (tc < ilevel) {
-			while (indent_stack.size() && indent_stack.back()->get() > tc) {
+			while (indent_stack.size() > 0 && indent_stack.back()->get() > tc) {
 				indent_stack.pop_back();
 			}
 
-			if (indent_stack.size() && indent_stack.back()->get() != tc) {
+			if (indent_stack.size() > 0 && indent_stack.back()->get() != tc) {
 				indent_stack.push_back(tc); // this is not right but gets the job done
 			}
 		}

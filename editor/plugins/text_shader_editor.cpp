@@ -398,7 +398,7 @@ void ShaderTextEditor::_code_complete_script(const String &p_code, List<ScriptLa
 	}
 	preprocessor.preprocess(p_code, resource_path, code, nullptr, nullptr, nullptr, nullptr, &pp_options, &pp_defines, _complete_include_paths);
 	complete_from_path = String();
-	if (pp_options.size()) {
+	if (pp_options.size() > 0) {
 		for (const ScriptLanguage::CodeCompletionOption &E : pp_options) {
 			r_options->push_back(E);
 		}

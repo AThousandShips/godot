@@ -1469,7 +1469,7 @@ void GDScriptParser::parse_function_signature(FunctionNode *p_function, SuiteNod
 		if (!p_function->is_static) {
 			push_error(R"(Static constructor must be declared static.)");
 		}
-		if (p_function->parameters.size() != 0) {
+		if (p_function->parameters.size() > 0) {
 			push_error(R"(Static constructor cannot have parameters.)");
 		}
 		current_class->has_static_data = true;

@@ -411,15 +411,15 @@ void Voxelizer::plot_mesh(const Transform3D &p_xform, Ref<Mesh> &p_mesh, const V
 		const Vector3 *nr = nullptr;
 		Vector<int> index = a[Mesh::ARRAY_INDEX];
 
-		if (uv.size()) {
+		if (uv.size() > 0) {
 			uvr = uv.ptr();
 		}
 
-		if (normals.size()) {
+		if (normals.size() > 0) {
 			nr = normals.ptr();
 		}
 
-		if (index.size()) {
+		if (index.size() > 0) {
 			int facecount = index.size() / 3;
 			const int *ir = index.ptr();
 
@@ -584,7 +584,7 @@ void Voxelizer::_fixup_plot(int p_idx, int p_level) {
 
 		bake_cells.write[p_idx].alpha = 1.0;
 
-		/*if (bake_light.size()) {
+		/*if (bake_light.size() > 0) {
 			for(int i=0;i<6;i++) {
 			}
 		}*/

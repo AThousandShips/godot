@@ -129,7 +129,7 @@ bool GridMap::_get(const StringName &p_name, Variant &r_ret) const {
 }
 
 void GridMap::_get_property_list(List<PropertyInfo> *p_list) const {
-	if (baked_meshes.size()) {
+	if (baked_meshes.size() > 0) {
 		p_list->push_back(PropertyInfo(Variant::ARRAY, "baked_meshes", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE));
 	}
 
@@ -322,7 +322,7 @@ bool GridMap::get_center_z() const {
 }
 
 void GridMap::set_cell_item(const Vector3i &p_position, int p_item, int p_rot) {
-	if (baked_meshes.size() && !recreating_octants) {
+	if (baked_meshes.size() > 0 && !recreating_octants) {
 		//if you set a cell item, baked meshes go good bye
 		clear_baked_meshes();
 		_recreate_octant_data();
@@ -723,7 +723,7 @@ bool GridMap::_octant_update(const OctantKey &p_key) {
 		}
 	}
 
-	if (col_debug.size()) {
+	if (col_debug.size() > 0) {
 		Array arr;
 		arr.resize(RS::ARRAY_MAX);
 		arr[RS::ARRAY_VERTEX] = col_debug;

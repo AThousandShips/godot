@@ -1349,7 +1349,7 @@ void GDScriptAnalyzer::resolve_class_body(GDScriptParser::ClassNode *p_class, co
 							return_datatype.is_meta_type = false;
 						}
 
-						if (getter_function->parameters.size() != 0 || return_datatype.has_no_type()) {
+						if (getter_function->parameters.size() > 0 || return_datatype.has_no_type()) {
 							push_error(vformat(R"(Function "%s" cannot be used as getter because of its signature.)", getter_function->identifier->name), member.variable);
 						} else if (!is_type_compatible(member.variable->datatype, return_datatype, true)) {
 							push_error(vformat(R"(Function with return type "%s" cannot be used as getter for a property of type "%s".)", return_datatype.to_string(), member.variable->datatype.to_string()), member.variable);

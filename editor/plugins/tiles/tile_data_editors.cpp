@@ -752,7 +752,7 @@ int GenericTilePolygonEditor::get_polygon_count() {
 
 int GenericTilePolygonEditor::add_polygon(Vector<Point2> p_polygon, int p_index) {
 	ERR_FAIL_COND_V(p_polygon.size() < 3, -1);
-	ERR_FAIL_COND_V(!multiple_polygon_mode && polygons.size() >= 1, -1);
+	ERR_FAIL_COND_V(!multiple_polygon_mode && polygons.size() > 0, -1);
 
 	if (p_index < 0) {
 		polygons.push_back(p_polygon);

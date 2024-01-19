@@ -995,7 +995,7 @@ bool MaterialStorage::MaterialData::update_parameters_uniform_set(const HashMap<
 		}
 
 		ubo_data.resize(p_ubo_size);
-		if (ubo_data.size()) {
+		if (ubo_data.size() > 0) {
 			uniform_buffer = RD::get_singleton()->uniform_buffer_create(ubo_data.size());
 			memset(ubo_data.ptrw(), 0, ubo_data.size()); //clear
 		}
@@ -1009,7 +1009,7 @@ bool MaterialStorage::MaterialData::update_parameters_uniform_set(const HashMap<
 	}
 
 	//check whether buffer changed
-	if (p_uniform_dirty && ubo_data.size()) {
+	if (p_uniform_dirty && ubo_data.size() > 0) {
 		update_uniform_buffer(p_uniforms, p_uniform_offsets, p_parameters, ubo_data.ptrw(), ubo_data.size(), p_use_linear_color);
 		RD::get_singleton()->buffer_update(uniform_buffer, 0, ubo_data.size(), ubo_data.ptrw());
 	}

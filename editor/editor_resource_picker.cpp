@@ -279,7 +279,7 @@ void EditorResourcePicker::_update_menu_items() {
 	// Add options to convert existing resource to another type of resource.
 	if (is_editable() && edited_resource.is_valid()) {
 		Vector<Ref<EditorResourceConversionPlugin>> conversions = EditorNode::get_singleton()->find_resource_conversion_plugin(edited_resource);
-		if (conversions.size()) {
+		if (conversions.size() > 0) {
 			edit_menu->add_separator();
 		}
 		for (int i = 0; i < conversions.size(); i++) {

@@ -261,7 +261,7 @@ bool SceneCacheInterface::send_object_cache(Object *p_obj, int p_peer_id, int &r
 		}
 	}
 
-	if (peers_to_add.size()) {
+	if (peers_to_add.size() > 0) {
 		_send_confirm_path(node, cache, peers_to_add);
 	}
 

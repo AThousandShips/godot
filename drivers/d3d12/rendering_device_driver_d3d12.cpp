@@ -2989,7 +2989,7 @@ Vector<uint8_t> RenderingDeviceDriverD3D12::shader_compile_binary_from_spirv(Vec
 #endif
 
 	// Patch with default values of specialization constants.
-	if (specialization_constants.size()) {
+	if (specialization_constants.size() > 0) {
 		for (const ShaderBinary::SpecializationConstant &sc : specialization_constants) {
 			_shader_patch_dxil_specialization_constant((PipelineSpecializationConstantType)sc.type, &sc.int_value, sc.stages_bit_offsets, dxil_blobs, true);
 		}
@@ -3285,7 +3285,7 @@ Vector<uint8_t> RenderingDeviceDriverD3D12::shader_compile_binary_from_spirv(Vec
 			}
 		}
 
-		if (specialization_constants.size()) {
+		if (specialization_constants.size() > 0) {
 			memcpy(binptr + offset, specialization_constants.ptr(), sizeof(ShaderBinary::SpecializationConstant) * specialization_constants.size());
 			offset += sizeof(ShaderBinary::SpecializationConstant) * specialization_constants.size();
 		}

@@ -367,7 +367,7 @@ void FileDialog::_action_pressed() {
 			ti = tree->get_next_selected(ti);
 		}
 
-		if (files.size()) {
+		if (files.size() > 0) {
 			emit_signal(SNAME("files_selected"), files);
 			hide();
 		}

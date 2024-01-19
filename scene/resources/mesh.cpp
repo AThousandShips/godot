@@ -689,7 +689,7 @@ Ref<Mesh> Mesh::create_outline(float p_margin) const {
 		ERR_FAIL_COND_V(!vc, Ref<ArrayMesh>());
 		Vector3 *r = vertices.ptrw();
 
-		if (indices.size()) {
+		if (indices.size() > 0) {
 			ERR_FAIL_COND_V(indices.size() % 3 != 0, Ref<ArrayMesh>());
 			vc = indices.size();
 			ir = indices.ptrw();
@@ -1519,7 +1519,7 @@ Array ArrayMesh::_get_surfaces() const {
 			lods.push_back(surface.lods[j].index_data);
 		}
 
-		if (lods.size()) {
+		if (lods.size() > 0) {
 			data["lods"] = lods;
 		}
 
@@ -1527,7 +1527,7 @@ Array ArrayMesh::_get_surfaces() const {
 		for (int j = 0; j < surface.bone_aabbs.size(); j++) {
 			bone_aabbs.push_back(surface.bone_aabbs[j]);
 		}
-		if (bone_aabbs.size()) {
+		if (bone_aabbs.size() > 0) {
 			data["bone_aabbs"] = bone_aabbs;
 		}
 
@@ -1836,7 +1836,7 @@ int ArrayMesh::get_surface_count() const {
 }
 
 void ArrayMesh::add_blend_shape(const StringName &p_name) {
-	ERR_FAIL_COND_MSG(surfaces.size(), "Can't add a shape key count if surfaces are already created.");
+	ERR_FAIL_COND_MSG(surfaces.size() > 0, "Can't add a shape key count if surfaces are already created.");
 
 	StringName shape_name = p_name;
 
@@ -1881,7 +1881,7 @@ void ArrayMesh::set_blend_shape_name(int p_index, const StringName &p_name) {
 }
 
 void ArrayMesh::clear_blend_shapes() {
-	ERR_FAIL_COND_MSG(surfaces.size(), "Can't set shape key count if surfaces are already created.");
+	ERR_FAIL_COND_MSG(surfaces.size() > 0, "Can't set shape key count if surfaces are already created.");
 
 	blend_shapes.clear();
 
@@ -2050,7 +2050,7 @@ Error ArrayMesh::lightmap_unwrap(const Transform3D &p_base_transform, float p_te
 
 Error ArrayMesh::lightmap_unwrap_cached(const Transform3D &p_base_transform, float p_texel_size, const Vector<uint8_t> &p_src_cache, Vector<uint8_t> &r_dst_cache, bool p_generate_cache) {
 	ERR_FAIL_NULL_V(array_mesh_lightmap_unwrap_callback, ERR_UNCONFIGURED);
-	ERR_FAIL_COND_V_MSG(blend_shapes.size() != 0, ERR_UNAVAILABLE, "Can't unwrap mesh with blend shapes.");
+	ERR_FAIL_COND_V_MSG(blend_shapes.size() > 0, ERR_UNAVAILABLE, "Can't unwrap mesh with blend shapes.");
 	ERR_FAIL_COND_V_MSG(p_texel_size <= 0.0f, ERR_PARAMETER_RANGE_ERROR, "Texel size must be greater than 0.");
 
 	LocalVector<float> vertices;

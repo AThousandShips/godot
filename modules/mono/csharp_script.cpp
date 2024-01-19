@@ -2196,7 +2196,7 @@ bool CSharpScript::_update_exports(PlaceHolderScriptInstance *p_instance_to_upda
 	if (is_editor) {
 		placeholder_fallback_enabled = false;
 
-		if ((changed || p_instance_to_update) && placeholders.size()) {
+		if ((changed || p_instance_to_update) && placeholders.size() > 0) {
 			// Update placeholders if any
 			HashMap<StringName, Variant> values;
 			List<PropertyInfo> propnames;
@@ -2209,7 +2209,7 @@ bool CSharpScript::_update_exports(PlaceHolderScriptInstance *p_instance_to_upda
 			} else {
 				p_instance_to_update->update(propnames, values);
 			}
-		} else if (placeholders.size()) {
+		} else if (placeholders.size() > 0) {
 			uint64_t script_modified_time = FileAccess::get_modified_time(get_path());
 			uint64_t last_valid_build_time = GDMono::get_singleton()->get_project_assembly_modified_time();
 			if (script_modified_time > last_valid_build_time) {

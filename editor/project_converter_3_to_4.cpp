@@ -1834,7 +1834,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 			String starting_space = get_starting_space(line);
 
 			Vector<String> parts = parse_arguments(line.substr(start, end));
-			if (parts.size() >= 1) {
+			if (parts.size() > 0) {
 				String line_new;
 
 				// motion_velocity
@@ -1885,7 +1885,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 			String starting_space = get_starting_space(line);
 
 			Vector<String> parts = parse_arguments(line.substr(start, end));
-			if (parts.size() >= 1) {
+			if (parts.size() > 0) {
 				String line_new;
 
 				// motion_velocity

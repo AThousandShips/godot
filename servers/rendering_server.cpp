@@ -362,7 +362,7 @@ Error RenderingServer::_surface_set_data(Array p_arrays, uint64_t p_format, uint
 	uint8_t *sw = r_skin_array.ptrw();
 
 	uint8_t *iw = nullptr;
-	if (r_index_array.size()) {
+	if (r_index_array.size() > 0) {
 		iw = r_index_array.ptrw();
 	}
 
@@ -949,7 +949,7 @@ Error RenderingServer::_surface_set_data(Array p_arrays, uint64_t p_format, uint
 
 		bool any_valid = false;
 
-		if (vertices.size() && bones.size() == vertices.size() * weight_count && weights.size() == bones.size()) {
+		if (vertices.size() > 0 && bones.size() == vertices.size() * weight_count && weights.size() == bones.size()) {
 			int vs = vertices.size();
 			const Vector3 *rv = vertices.ptr();
 			const int *rb = bones.ptr();
@@ -1223,7 +1223,7 @@ Error RenderingServer::mesh_create_surface_data_from_arrays(SurfaceData *r_surfa
 		}
 	}
 
-	if (p_blend_shapes.size()) {
+	if (p_blend_shapes.size() > 0) {
 		// Validate format for morphs.
 		for (int i = 0; i < p_blend_shapes.size(); i++) {
 			uint32_t bsformat = 0;
@@ -1300,7 +1300,7 @@ Error RenderingServer::mesh_create_surface_data_from_arrays(SurfaceData *r_surfa
 
 	Vector<uint8_t> blend_shape_data;
 
-	if (p_blend_shapes.size()) {
+	if (p_blend_shapes.size() > 0) {
 		uint32_t bs_format = format & RS::ARRAY_FORMAT_BLEND_SHAPE_MASK;
 		for (int i = 0; i < p_blend_shapes.size(); i++) {
 			Vector<uint8_t> vertex_array_shape;

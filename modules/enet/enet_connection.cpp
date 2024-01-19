@@ -83,7 +83,7 @@ void ENetConnection::destroy() {
 Ref<ENetPacketPeer> ENetConnection::connect_to_host(const String &p_address, int p_port, int p_channels, int p_data) {
 	Ref<ENetPacketPeer> out;
 	ERR_FAIL_NULL_V_MSG(host, out, "The ENetConnection instance isn't currently active.");
-	ERR_FAIL_COND_V_MSG(peers.size(), out, "The ENetConnection is already connected to a peer.");
+	ERR_FAIL_COND_V_MSG(peers.size() > 0, out, "The ENetConnection is already connected to a peer.");
 	ERR_FAIL_COND_V_MSG(p_port < 1 || p_port > 65535, out, "The remote port number must be between 1 and 65535 (inclusive).");
 
 	IPAddress ip;

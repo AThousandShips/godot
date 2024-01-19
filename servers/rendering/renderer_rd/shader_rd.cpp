@@ -716,7 +716,7 @@ ShaderRD::ShaderRD() {
 }
 
 void ShaderRD::initialize(const Vector<String> &p_variant_defines, const String &p_general_defines) {
-	ERR_FAIL_COND(variant_defines.size());
+	ERR_FAIL_COND(variant_defines.size() > 0);
 	ERR_FAIL_COND(p_variant_defines.is_empty());
 
 	general_defines = p_general_defines.utf8();
@@ -778,7 +778,7 @@ void ShaderRD::_initialize_cache() {
 
 // Same as above, but allows specifying shader compilation groups.
 void ShaderRD::initialize(const Vector<VariantDefine> &p_variant_defines, const String &p_general_defines) {
-	ERR_FAIL_COND(variant_defines.size());
+	ERR_FAIL_COND(variant_defines.size() > 0);
 	ERR_FAIL_COND(p_variant_defines.is_empty());
 
 	general_defines = p_general_defines.utf8();
@@ -841,9 +841,9 @@ bool ShaderRD::shader_cache_save_debug = true;
 ShaderRD::~ShaderRD() {
 	List<RID> remaining;
 	version_owner.get_owned_list(&remaining);
-	if (remaining.size()) {
+	if (remaining.size() > 0) {
 		ERR_PRINT(itos(remaining.size()) + " shaders of type " + name + " were never freed");
-		while (remaining.size()) {
+		while (remaining.size() > 0) {
 			version_free(remaining.front()->get());
 			remaining.pop_front();
 		}

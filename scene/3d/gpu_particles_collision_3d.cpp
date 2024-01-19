@@ -428,7 +428,7 @@ Ref<Image> GPUParticlesCollisionSDF3D::bake() {
 			const Vector3 *vr = vertices.ptr();
 			Vector<int> index = a[Mesh::ARRAY_INDEX];
 
-			if (index.size()) {
+			if (index.size() > 0) {
 				int facecount = index.size() / 3;
 				const int *ir = index.ptr();
 

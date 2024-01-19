@@ -550,7 +550,7 @@ void Viewport::_notification(int p_what) {
 
 		case NOTIFICATION_READY: {
 #ifndef _3D_DISABLED
-			if (audio_listener_3d_set.size() && !audio_listener_3d) {
+			if (audio_listener_3d_set.size() > 0 && !audio_listener_3d) {
 				AudioListener3D *first = nullptr;
 				for (AudioListener3D *E : audio_listener_3d_set) {
 					if (first == nullptr || first->is_greater_than(E)) {
@@ -563,7 +563,7 @@ void Viewport::_notification(int p_what) {
 				}
 			}
 
-			if (camera_3d_set.size() && !camera_3d) {
+			if (camera_3d_set.size() > 0 && !camera_3d) {
 				// There are cameras but no current camera, pick first in tree and make it current.
 				Camera3D *first = nullptr;
 				for (Camera3D *E : camera_3d_set) {
@@ -736,7 +736,7 @@ void Viewport::_process_picking() {
 		physics_picking_events.push_back(mm);
 	}
 
-	while (physics_picking_events.size()) {
+	while (physics_picking_events.size() > 0) {
 		local_input_handled = false;
 		if (!handle_input_locally) {
 			Viewport *vp = this;
@@ -2666,7 +2666,7 @@ void Viewport::_cleanup_mouseover_colliders(bool p_clean_all_frames, bool p_paus
 		to_erase.push_back(E.key);
 	}
 
-	while (to_erase.size()) {
+	while (to_erase.size() > 0) {
 		physics_2d_mouseover.erase(to_erase.front()->get());
 		to_erase.pop_front();
 	}
@@ -2693,19 +2693,19 @@ void Viewport::_cleanup_mouseover_colliders(bool p_clean_all_frames, bool p_paus
 		shapes_to_erase.push_back(E.key);
 	}
 
-	while (shapes_to_erase.size()) {
+	while (shapes_to_erase.size() > 0) {
 		physics_2d_shape_mouseover.erase(shapes_to_erase.front()->get());
 		shapes_to_erase.pop_front();
 	}
 
-	while (to_mouse_exit.size()) {
+	while (to_mouse_exit.size() > 0) {
 		Object *o = ObjectDB::get_instance(to_mouse_exit.front()->get());
 		CollisionObject2D *co = Object::cast_to<CollisionObject2D>(o);
 		co->_mouse_exit();
 		to_mouse_exit.pop_front();
 	}
 
-	while (shapes_to_mouse_exit.size()) {
+	while (shapes_to_mouse_exit.size() > 0) {
 		Pair<ObjectID, int> e = shapes_to_mouse_exit.front()->get();
 		Object *o = ObjectDB::get_instance(e.first);
 		CollisionObject2D *co = Object::cast_to<CollisionObject2D>(o);

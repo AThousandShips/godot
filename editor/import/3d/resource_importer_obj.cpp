@@ -392,7 +392,7 @@ static Error _parse_obj(const String &p_path, List<Ref<ImporterMesh>> &r_meshes,
 					surf_tool->generate_normals();
 				}
 
-				if (generate_tangents && uvs.size()) {
+				if (generate_tangents && uvs.size() > 0) {
 					surf_tool->generate_tangents();
 				}
 

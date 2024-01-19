@@ -291,7 +291,7 @@ void ThemeDB::_finalize_theme_contexts() {
 		memdelete(default_theme_context);
 		default_theme_context = nullptr;
 	}
-	while (theme_contexts.size()) {
+	while (theme_contexts.size() > 0) {
 		HashMap<Node *, ThemeContext *>::Iterator E = theme_contexts.begin();
 		memdelete(E->value);
 		theme_contexts.remove(E);

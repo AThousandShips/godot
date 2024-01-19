@@ -398,7 +398,7 @@ void PolygonPathFinder::_set_data(const Dictionary &p_data) {
 	Array c = p_data["connections"];
 
 	ERR_FAIL_COND(c.size() != p.size());
-	if (c.size()) {
+	if (c.size() > 0) {
 		return;
 	}
 

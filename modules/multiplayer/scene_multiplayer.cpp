@@ -143,7 +143,7 @@ Error SceneMultiplayer::poll() {
 			return OK;
 		}
 	}
-	if (pending_peers.size() && auth_timeout) {
+	if (pending_peers.size() > 0 && auth_timeout) {
 		HashSet<int> to_drop;
 		uint64_t time = OS::get_singleton()->get_ticks_msec();
 		for (const KeyValue<int, PendingPeer> &pending : pending_peers) {

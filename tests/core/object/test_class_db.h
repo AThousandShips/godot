@@ -473,7 +473,7 @@ void add_exposed_classes(Context &r_context) {
 	ClassDB::get_class_list(&class_list);
 	class_list.sort_custom<StringName::AlphCompare>();
 
-	while (class_list.size()) {
+	while (class_list.size() > 0) {
 		StringName class_name = class_list.front()->get();
 
 		ClassDB::APIType api_type = ClassDB::get_api_type(class_name);

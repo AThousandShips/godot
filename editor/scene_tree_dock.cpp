@@ -1017,7 +1017,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			}
 
 			String existing;
-			if (extensions.size()) {
+			if (extensions.size() > 0) {
 				String root_name(tocopy->get_name());
 				root_name = EditorNode::adjust_scene_name_casing(root_name);
 				existing = root_name + "." + extensions.front()->get().to_lower();
@@ -1247,7 +1247,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 					}
 				}
 
-				if (new_unique_nodes.size()) {
+				if (new_unique_nodes.size() > 0) {
 					undo_redo->create_action(TTR("Enable Scene Unique Name(s)"));
 					for (Node *node : new_unique_nodes) {
 						undo_redo->add_do_method(node, "set_unique_name_in_owner", true);
@@ -1256,7 +1256,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 					undo_redo->commit_action();
 				}
 
-				if (cant_be_set_unique_names.size()) {
+				if (cant_be_set_unique_names.size() > 0) {
 					String popup_text = TTR("Unique names already used by another node in the scene:");
 					popup_text += "\n";
 					for (const StringName &name : cant_be_set_unique_names) {

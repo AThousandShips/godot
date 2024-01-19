@@ -381,7 +381,7 @@ String InputMap::get_builtin_display_name(const String &p_name) const {
 
 const HashMap<String, List<Ref<InputEvent>>> &InputMap::get_builtins() {
 	// Return cache if it has already been built.
-	if (default_builtin_cache.size()) {
+	if (default_builtin_cache.size() > 0) {
 		return default_builtin_cache;
 	}
 

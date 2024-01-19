@@ -589,7 +589,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 				arguments.push_back(arg);
 			}
 
-			if (arguments.size()) {
+			if (arguments.size() > 0) {
 				func["arguments"] = arguments;
 			}
 
@@ -654,7 +654,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 					}
 					members.push_back(d2);
 				}
-				if (members.size()) {
+				if (members.size() > 0) {
 					d["members"] = members;
 				}
 			}
@@ -680,7 +680,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 					}
 					constants.push_back(d2);
 				}
-				if (constants.size()) {
+				if (constants.size() > 0) {
 					d["constants"] = constants;
 				}
 			}
@@ -721,13 +721,13 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 						}
 					}
 
-					if (values.size()) {
+					if (values.size() > 0) {
 						enum_dict["values"] = values;
 					}
 					enums.push_back(enum_dict);
 				}
 
-				if (enums.size()) {
+				if (enums.size() > 0) {
 					d["enums"] = enums;
 				}
 			}
@@ -765,7 +765,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 						}
 					}
 				}
-				if (operators.size()) {
+				if (operators.size() > 0) {
 					d["operators"] = operators;
 				}
 			}
@@ -803,7 +803,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 						arguments.push_back(d3);
 					}
 
-					if (arguments.size()) {
+					if (arguments.size() > 0) {
 						d2["arguments"] = arguments;
 					}
 
@@ -818,7 +818,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 
 					methods.push_back(d2);
 				}
-				if (methods.size()) {
+				if (methods.size() > 0) {
 					d["methods"] = methods;
 				}
 			}
@@ -838,7 +838,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 						d3["type"] = get_builtin_or_variant_type_name(Variant::get_constructor_argument_type(type, j, k));
 						arguments.push_back(d3);
 					}
-					if (arguments.size()) {
+					if (arguments.size() > 0) {
 						d2["arguments"] = arguments;
 					}
 
@@ -866,7 +866,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 					constructors.push_back(d2);
 				}
 
-				if (constructors.size()) {
+				if (constructors.size() > 0) {
 					d["constructors"] = constructors;
 				}
 			}
@@ -948,7 +948,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 					constants.push_back(d2);
 				}
 
-				if (constants.size()) {
+				if (constants.size() > 0) {
 					d["constants"] = constants;
 				}
 			}
@@ -994,7 +994,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 					enums.push_back(d2);
 				}
 
-				if (enums.size()) {
+				if (enums.size() > 0) {
 					d["enums"] = enums;
 				}
 			}
@@ -1038,7 +1038,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 							}
 						}
 
-						if (arguments.size()) {
+						if (arguments.size() > 0) {
 							d2["arguments"] = arguments;
 						}
 
@@ -1073,7 +1073,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 
 						Vector<uint32_t> compat_hashes = ClassDB::get_method_compatibility_hashes(class_name, method_name);
 						Array compatibility;
-						if (compat_hashes.size()) {
+						if (compat_hashes.size() > 0) {
 							for (int i = 0; i < compat_hashes.size(); i++) {
 								compatibility.push_back(compat_hashes[i]);
 							}
@@ -1115,7 +1115,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 							}
 						}
 
-						if (arguments.size()) {
+						if (arguments.size() > 0) {
 							d2["arguments"] = arguments;
 						}
 
@@ -1132,7 +1132,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 					}
 				}
 
-				if (methods.size()) {
+				if (methods.size() > 0) {
 					d["methods"] = methods;
 				}
 			}
@@ -1158,7 +1158,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 						}
 						arguments.push_back(d3);
 					}
-					if (arguments.size()) {
+					if (arguments.size() > 0) {
 						d2["arguments"] = arguments;
 					}
 
@@ -1174,7 +1174,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 					signals.push_back(d2);
 				}
 
-				if (signals.size()) {
+				if (signals.size() > 0) {
 					d["signals"] = signals;
 				}
 			}
@@ -1223,7 +1223,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 					properties.push_back(d2);
 				}
 
-				if (properties.size()) {
+				if (properties.size() > 0) {
 					d["properties"] = properties;
 				}
 			}
@@ -1257,7 +1257,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 			singletons.push_back(d);
 		}
 
-		if (singletons.size()) {
+		if (singletons.size() > 0) {
 			api_dump["singletons"] = singletons;
 		}
 	}

@@ -110,7 +110,7 @@ void WSLPeer::Resolver::try_next_candidate(Ref<StreamPeerTCP> &p_tcp) {
 	}
 
 	// Keep trying next candidate.
-	while (ip_candidates.size()) {
+	while (ip_candidates.size() > 0) {
 		Error err = p_tcp->connect_to_host(ip_candidates.pop_front(), port);
 		if (err == OK) {
 			return;

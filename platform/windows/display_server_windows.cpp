@@ -383,7 +383,7 @@ Error DisplayServerWindows::_file_dialog_with_options_show(const String &p_title
 	Vector<Char16String> filter_exts;
 	for (const String &E : p_filters) {
 		Vector<String> tokens = E.split(";");
-		if (tokens.size() >= 1) {
+		if (tokens.size() > 0) {
 			String flt = tokens[0].strip_edges();
 			int filter_slice_count = flt.get_slice_count(",");
 			Vector<String> exts;
@@ -4525,7 +4525,7 @@ LRESULT DisplayServerWindows::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 				files.push_back(file);
 			}
 
-			if (files.size() && !windows[window_id].drop_files_callback.is_null()) {
+			if (files.size() > 0 && !windows[window_id].drop_files_callback.is_null()) {
 				windows[window_id].drop_files_callback.call(files);
 			}
 		} break;

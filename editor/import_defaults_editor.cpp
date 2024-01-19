@@ -104,7 +104,7 @@ void ImportDefaultsEditor::_save() {
 			}
 		}
 
-		if (modified.size()) {
+		if (modified.size() > 0) {
 			ProjectSettings::get_singleton()->set("importer_defaults/" + settings->importer->get_importer_name(), modified);
 		} else {
 			ProjectSettings::get_singleton()->set("importer_defaults/" + settings->importer->get_importer_name(), Variant());

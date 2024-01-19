@@ -196,7 +196,7 @@ void EditorExportPlatform::gen_debug_flags(Vector<String> &r_flags, int p_flags)
 		List<String> breakpoints;
 		ScriptEditor::get_singleton()->get_breakpoints(&breakpoints);
 
-		if (breakpoints.size()) {
+		if (breakpoints.size() > 0) {
 			r_flags.push_back("--breakpoints");
 			String bpoints;
 			for (const List<String>::Element *E = breakpoints.front(); E; E = E->next()) {
@@ -1365,7 +1365,7 @@ Error EditorExportPlatform::export_project_files(const Ref<EditorExportPreset> &
 	}
 
 	ProjectSettings::CustomMap custom_map;
-	if (path_remaps.size()) {
+	if (path_remaps.size() > 0) {
 		if (true) { //new remap mode, use always as it's friendlier with multiple .pck exports
 			for (int i = 0; i < path_remaps.size(); i += 2) {
 				const String &from = path_remaps[i];
@@ -1809,7 +1809,7 @@ void EditorExportPlatform::gen_export_flags(Vector<String> &r_flags, int p_flags
 		List<String> breakpoints;
 		ScriptEditor::get_singleton()->get_breakpoints(&breakpoints);
 
-		if (breakpoints.size()) {
+		if (breakpoints.size() > 0) {
 			r_flags.push_back("--breakpoints");
 			String bpoints;
 			for (List<String>::Element *E = breakpoints.front(); E; E = E->next()) {

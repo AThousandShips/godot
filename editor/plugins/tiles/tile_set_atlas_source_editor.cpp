@@ -874,7 +874,7 @@ void TileSetAtlasSourceEditor::_update_current_tile_data_editor() {
 	String property;
 	if (tools_button_group->get_pressed_button() == tool_select_button && tile_inspector->is_visible() && !tile_inspector->get_selected_path().is_empty()) {
 		Vector<String> components = tile_inspector->get_selected_path().split("/");
-		if (components.size() >= 1) {
+		if (components.size() > 0) {
 			property = components[0];
 
 			// Workaround for terrains as they don't have a common first component.
@@ -1581,7 +1581,7 @@ HashMap<Vector2i, List<const PropertyInfo *>> TileSetAtlasSourceEditor::_group_p
 	HashMap<Vector2i, List<const PropertyInfo *>> per_tile;
 	for (const List<PropertyInfo>::Element *E_property = r_list.front(); E_property; E_property = E_property->next()) {
 		Vector<String> components = String(E_property->get().name).split("/", true, 1);
-		if (components.size() >= 1) {
+		if (components.size() > 0) {
 			Vector<String> coord_arr = components[0].split(":");
 			if (coord_arr.size() == 2 && coord_arr[0].is_valid_int() && coord_arr[1].is_valid_int()) {
 				Vector2i coords = Vector2i(coord_arr[0].to_int(), coord_arr[1].to_int());

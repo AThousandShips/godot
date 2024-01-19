@@ -129,7 +129,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 			bones_to_process = src_skeleton->get_parentless_bones();
 			{
 				TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
-				while (nodes.size()) {
+				while (nodes.size() > 0) {
 					AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
 					List<StringName> anims;
 					ap->get_animation_list(&anims);
@@ -197,7 +197,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 		// Complement Rotation track for compatibility between different rests.
 		{
 			TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
-			while (nodes.size()) {
+			while (nodes.size() > 0) {
 				AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
 				List<StringName> anims;
 				ap->get_animation_list(&anims);
@@ -372,7 +372,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 				src_skeleton->set_bone_rest(src_bone_idx, Transform3D(src_rest.basis, Vector3(src_rest.origin.x, src_rest.origin.y + base_adjustment, src_rest.origin.z)));
 
 				TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
-				while (nodes.size()) {
+				while (nodes.size() > 0) {
 					AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
 					List<StringName> anims;
 					ap->get_animation_list(&anims);
@@ -432,7 +432,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 			}
 
 			TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
-			while (nodes.size()) {
+			while (nodes.size() > 0) {
 				AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
 				List<StringName> anims;
 				ap->get_animation_list(&anims);
@@ -527,7 +527,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 			// Fix animation.
 			{
 				TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
-				while (nodes.size()) {
+				while (nodes.size() > 0) {
 					AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
 					ERR_CONTINUE(!ap);
 					List<StringName> anims;
@@ -612,7 +612,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 			{
 				HashSet<Ref<Skin>> mutated_skins;
 				TypedArray<Node> nodes = p_base_scene->find_children("*", "ImporterMeshInstance3D");
-				while (nodes.size()) {
+				while (nodes.size() > 0) {
 					ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(nodes.pop_back());
 					ERR_CONTINUE(!mi);
 
@@ -645,7 +645,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 					}
 				}
 				nodes = src_skeleton->get_children();
-				while (nodes.size()) {
+				while (nodes.size() > 0) {
 					BoneAttachment3D *attachment = Object::cast_to<BoneAttachment3D>(nodes.pop_back());
 					if (attachment == nullptr) {
 						continue;
@@ -659,7 +659,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 					adjust_transform.scale(global_transform.basis.get_scale_local());
 
 					TypedArray<Node> child_nodes = attachment->get_children();
-					while (child_nodes.size()) {
+					while (child_nodes.size() > 0) {
 						Node3D *child = Object::cast_to<Node3D>(child_nodes.pop_back());
 						if (child == nullptr) {
 							continue;

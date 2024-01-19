@@ -868,7 +868,7 @@ static bool _is_value_potential_override(Node *p_node, const String &p_property)
 	// b) The node belongs to the scene, but the original value comes from somewhere but the builtin class (i.e., a script).
 	Node *edited_scene = EditorNode::get_singleton()->get_edited_scene();
 	Vector<SceneState::PackState> states_stack = PropertyUtils::get_node_states_stack(p_node, edited_scene);
-	if (states_stack.size()) {
+	if (states_stack.size() > 0) {
 		return true;
 	} else {
 		bool is_valid_default = false;
@@ -1365,7 +1365,7 @@ void EditorInspectorSection::_notification(int p_what) {
 				int font_size = get_theme_font_size(SNAME("bold_size"), EditorStringName(EditorFonts));
 				Color font_color = get_theme_color(SNAME("font_color"), EditorStringName(Editor));
 
-				if (folded && revertable_properties.size()) {
+				if (folded && revertable_properties.size() > 0) {
 					int label_width = font->get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, available, font_size, TextServer::JUSTIFICATION_KASHIDA | TextServer::JUSTIFICATION_CONSTRAIN_ELLIPSIS).x;
 
 					Ref<Font> light_font = get_theme_font(SNAME("main"), EditorStringName(EditorFonts));
@@ -3286,7 +3286,7 @@ void EditorInspector::update_tree() {
 				// Set all this before the control gets the ENTER_TREE notification.
 				ep->object = object;
 
-				if (properties.size()) {
+				if (properties.size() > 0) {
 					if (properties.size() == 1) {
 						// Since it's one, associate:
 						ep->property = properties[0];
@@ -4029,7 +4029,7 @@ void EditorInspector::_notification(int p_what) {
 				pending.clear();
 
 			} else {
-				while (pending.size()) {
+				while (pending.size() > 0) {
 					StringName prop = *pending.begin();
 					if (editor_property_map.has(prop)) {
 						for (EditorProperty *E : editor_property_map[prop]) {

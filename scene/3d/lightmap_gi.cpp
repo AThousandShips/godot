@@ -152,7 +152,7 @@ bool LightmapGIData::is_using_spherical_harmonics() const {
 }
 
 void LightmapGIData::set_capture_data(const AABB &p_bounds, bool p_interior, const PackedVector3Array &p_points, const PackedColorArray &p_point_sh, const PackedInt32Array &p_tetrahedra, const PackedInt32Array &p_bsp_tree, float p_baked_exposure) {
-	if (p_points.size()) {
+	if (p_points.size() > 0) {
 		int pc = p_points.size();
 		ERR_FAIL_COND(pc * 9 != p_point_sh.size());
 		ERR_FAIL_COND((p_tetrahedra.size() % 4) != 0);
@@ -830,7 +830,7 @@ LightmapGI::BakeError LightmapGI::bake(Node *p_from_node, String p_image_data_pa
 				int facecount;
 				const int *ir = nullptr;
 
-				if (index.size()) {
+				if (index.size() > 0) {
 					facecount = index.size() / 3;
 					ir = index.ptr();
 				} else {

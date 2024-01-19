@@ -411,7 +411,7 @@ void OS_Android::_load_system_font_config() {
 					Vector<String> lang_codes = lang_code.split(",");
 					for (int i = 0; i < lang_codes.size(); i++) {
 						Vector<String> lang_code_elements = lang_codes[i].split("-");
-						if (lang_code_elements.size() >= 1 && lang_code_elements[0] != "und") {
+						if (lang_code_elements.size() > 0 && lang_code_elements[0] != "und") {
 							// Add missing script codes.
 							if (lang_code_elements[0] == "ko") {
 								fi.script.insert("Hani");

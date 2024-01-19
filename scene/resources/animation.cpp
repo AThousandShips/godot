@@ -253,7 +253,7 @@ bool Animation::_set(const StringName &p_name, const Variant &p_value) {
 
 				ERR_FAIL_COND_V(times.size() != values.size(), false);
 
-				if (times.size()) {
+				if (times.size() > 0) {
 					int valcount = times.size();
 
 					const real_t *rt = times.ptr();
@@ -293,7 +293,7 @@ bool Animation::_set(const StringName &p_name, const Variant &p_value) {
 
 				ERR_FAIL_COND_V(times.size() != values.size(), false);
 
-				if (times.size()) {
+				if (times.size() > 0) {
 					int valcount = times.size();
 
 					const real_t *rt = times.ptr();
@@ -327,7 +327,7 @@ bool Animation::_set(const StringName &p_name, const Variant &p_value) {
 
 				ERR_FAIL_COND_V(times.size() * 5 != values.size(), false);
 
-				if (times.size()) {
+				if (times.size() > 0) {
 					int valcount = times.size();
 
 					const real_t *rt = times.ptr();
@@ -364,7 +364,7 @@ bool Animation::_set(const StringName &p_name, const Variant &p_value) {
 
 				ERR_FAIL_COND_V(clips.size() != times.size(), false);
 
-				if (times.size()) {
+				if (times.size() > 0) {
 					int valcount = times.size();
 
 					const real_t *rt = times.ptr();
@@ -405,7 +405,7 @@ bool Animation::_set(const StringName &p_name, const Variant &p_value) {
 
 				ERR_FAIL_COND_V(clips.size() != times.size(), false);
 
-				if (times.size()) {
+				if (times.size() > 0) {
 					int valcount = times.size();
 
 					const real_t *rt = times.ptr();

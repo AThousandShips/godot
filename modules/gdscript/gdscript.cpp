@@ -583,7 +583,7 @@ bool GDScript::_update_exports(bool *r_err, bool p_recursive_call, PlaceHolderSc
 		}
 	}
 
-	if ((changed || p_instance_to_update) && placeholders.size()) { //hm :(
+	if ((changed || p_instance_to_update) && placeholders.size() > 0) { //hm :(
 
 		// update placeholders if any
 		HashMap<StringName, Variant> values;
