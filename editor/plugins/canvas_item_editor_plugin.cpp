@@ -4545,7 +4545,7 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 
 		} break;
 		case ANIM_PASTE_POSE: {
-			if (!pose_clipboard.size()) {
+			if (pose_clipboard.is_empty()) {
 				break;
 			}
 
@@ -5979,7 +5979,7 @@ void CanvasItemEditorViewport::drop_data(const Point2 &p_point, const Variant &p
 	if (d.has("type") && String(d["type"]) == "files") {
 		selected_files = d["files"];
 	}
-	if (selected_files.size() == 0) {
+	if (selected_files.is_empty()) {
 		return;
 	}
 

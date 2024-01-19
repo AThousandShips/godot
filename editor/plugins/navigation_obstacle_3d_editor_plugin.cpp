@@ -462,7 +462,7 @@ void NavigationObstacle3DEditor::_polygon_draw() {
 
 	point_lines_mesh->surface_end();
 
-	if (poly.size() == 0) {
+	if (poly.is_empty()) {
 		return;
 	}
 

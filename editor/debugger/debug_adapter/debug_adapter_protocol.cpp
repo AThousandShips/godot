@@ -161,7 +161,7 @@ Error DebugAdapterProtocol::on_client_connected() {
 
 void DebugAdapterProtocol::on_client_disconnected(const Ref<DAPeer> &p_peer) {
 	clients.erase(p_peer);
-	if (!clients.size()) {
+	if (clients.is_empty()) {
 		reset_ids();
 		EditorDebuggerNode::get_singleton()->get_default_debugger()->set_move_to_foreground(true);
 	}

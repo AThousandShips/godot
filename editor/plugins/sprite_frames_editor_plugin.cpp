@@ -128,7 +128,7 @@ void SpriteFramesEditor::_sheet_preview_draw() {
 	}
 	_draw_shadowed_line(split_sheet_preview, draw_offset + Vector2(0, draw_size.y), Vector2(draw_size.x, 0), Vector2(0, 1), line_color, shadow_color);
 
-	if (frames_selected.size() == 0) {
+	if (frames_selected.is_empty()) {
 		split_sheet_dialog->get_ok_button()->set_disabled(true);
 		split_sheet_dialog->set_ok_button_text(TTR("No Frames Selected"));
 		return;
@@ -1211,7 +1211,7 @@ void SpriteFramesEditor::_update_library_impl() {
 		List<StringName> anim_names;
 		frames->get_animation_list(&anim_names);
 		anim_names.sort_custom<StringName::AlphCompare>();
-		if (!anim_names.size()) {
+		if (anim_names.is_empty()) {
 			missing_anim_label->show();
 			anim_frames_vb->hide();
 			return;
@@ -1421,7 +1421,7 @@ bool SpriteFramesEditor::can_drop_data_fw(const Point2 &p_point, const Variant &
 	if (String(d["type"]) == "files") {
 		Vector<String> files = d["files"];
 
-		if (files.size() == 0) {
+		if (files.is_empty()) {
 			return false;
 		}
 
