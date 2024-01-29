@@ -157,7 +157,7 @@ Error ImageLoaderSVG::create_image_from_utf8_buffer(Ref<Image> p_image, const Pa
 }
 
 Error ImageLoaderSVG::create_image_from_string(Ref<Image> p_image, String p_string, float p_scale, bool p_upsample, const HashMap<Color, Color> &p_color_map) {
-	if (p_color_map.size()) {
+	if (p_color_map.size() > 0) {
 		_replace_color_property(p_color_map, "stop-color=\"", p_string);
 		_replace_color_property(p_color_map, "fill=\"", p_string);
 		_replace_color_property(p_color_map, "stroke=\"", p_string);

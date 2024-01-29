@@ -499,7 +499,7 @@ String GDScriptLanguage::make_function(const String &p_class, const String &p_na
 #endif
 
 	String s = "func " + p_name + "(";
-	if (p_args.size()) {
+	if (p_args.size() > 0) {
 		for (int i = 0; i < p_args.size(); i++) {
 			if (i > 0) {
 				s += ", ";
@@ -3425,7 +3425,7 @@ void GDScriptLanguage::auto_indent_code(String &p_code, int p_from_line, int p_t
 		}
 
 		int ilevel = 0;
-		if (indent_stack.size()) {
+		if (indent_stack.size() > 0) {
 			ilevel = indent_stack.back()->get();
 		}
 

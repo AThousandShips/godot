@@ -513,7 +513,7 @@ void ReplicationEditor::_update_config() {
 		return;
 	}
 	TypedArray<NodePath> props = config->get_properties();
-	if (props.size()) {
+	if (props.size() > 0) {
 		drop_label->set_visible(false);
 	}
 	for (int i = 0; i < props.size(); i++) {

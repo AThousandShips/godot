@@ -196,7 +196,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		}
 	}
 
-	if (constant_map.size()) {
+	if (constant_map.size() > 0) {
 		function->_constant_count = constant_map.size();
 		function->constants.resize(constant_map.size());
 		function->_constants_ptr = function->constants.ptrw();
@@ -208,7 +208,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_constant_count = 0;
 	}
 
-	if (name_map.size()) {
+	if (name_map.size() > 0) {
 		function->global_names.resize(name_map.size());
 		function->_global_names_ptr = &function->global_names[0];
 		for (const KeyValue<StringName, int> &E : name_map) {
@@ -221,7 +221,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_global_names_count = 0;
 	}
 
-	if (opcodes.size()) {
+	if (opcodes.size() > 0) {
 		function->code = opcodes;
 		function->_code_ptr = &function->code.write[0];
 		function->_code_size = opcodes.size();
@@ -239,7 +239,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_default_arg_ptr = nullptr;
 	}
 
-	if (operator_func_map.size()) {
+	if (operator_func_map.size() > 0) {
 		function->operator_funcs.resize(operator_func_map.size());
 		function->_operator_funcs_count = function->operator_funcs.size();
 		function->_operator_funcs_ptr = function->operator_funcs.ptr();
@@ -251,7 +251,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_operator_funcs_ptr = nullptr;
 	}
 
-	if (setters_map.size()) {
+	if (setters_map.size() > 0) {
 		function->setters.resize(setters_map.size());
 		function->_setters_count = function->setters.size();
 		function->_setters_ptr = function->setters.ptr();
@@ -263,7 +263,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_setters_ptr = nullptr;
 	}
 
-	if (getters_map.size()) {
+	if (getters_map.size() > 0) {
 		function->getters.resize(getters_map.size());
 		function->_getters_count = function->getters.size();
 		function->_getters_ptr = function->getters.ptr();
@@ -275,7 +275,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_getters_ptr = nullptr;
 	}
 
-	if (keyed_setters_map.size()) {
+	if (keyed_setters_map.size() > 0) {
 		function->keyed_setters.resize(keyed_setters_map.size());
 		function->_keyed_setters_count = function->keyed_setters.size();
 		function->_keyed_setters_ptr = function->keyed_setters.ptr();
@@ -287,7 +287,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_keyed_setters_ptr = nullptr;
 	}
 
-	if (keyed_getters_map.size()) {
+	if (keyed_getters_map.size() > 0) {
 		function->keyed_getters.resize(keyed_getters_map.size());
 		function->_keyed_getters_count = function->keyed_getters.size();
 		function->_keyed_getters_ptr = function->keyed_getters.ptr();
@@ -299,7 +299,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_keyed_getters_ptr = nullptr;
 	}
 
-	if (indexed_setters_map.size()) {
+	if (indexed_setters_map.size() > 0) {
 		function->indexed_setters.resize(indexed_setters_map.size());
 		function->_indexed_setters_count = function->indexed_setters.size();
 		function->_indexed_setters_ptr = function->indexed_setters.ptr();
@@ -311,7 +311,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_indexed_setters_ptr = nullptr;
 	}
 
-	if (indexed_getters_map.size()) {
+	if (indexed_getters_map.size() > 0) {
 		function->indexed_getters.resize(indexed_getters_map.size());
 		function->_indexed_getters_count = function->indexed_getters.size();
 		function->_indexed_getters_ptr = function->indexed_getters.ptr();
@@ -323,7 +323,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_indexed_getters_ptr = nullptr;
 	}
 
-	if (builtin_method_map.size()) {
+	if (builtin_method_map.size() > 0) {
 		function->builtin_methods.resize(builtin_method_map.size());
 		function->_builtin_methods_ptr = function->builtin_methods.ptr();
 		function->_builtin_methods_count = builtin_method_map.size();
@@ -335,7 +335,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_builtin_methods_count = 0;
 	}
 
-	if (constructors_map.size()) {
+	if (constructors_map.size() > 0) {
 		function->constructors.resize(constructors_map.size());
 		function->_constructors_ptr = function->constructors.ptr();
 		function->_constructors_count = constructors_map.size();
@@ -347,7 +347,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_constructors_count = 0;
 	}
 
-	if (utilities_map.size()) {
+	if (utilities_map.size() > 0) {
 		function->utilities.resize(utilities_map.size());
 		function->_utilities_ptr = function->utilities.ptr();
 		function->_utilities_count = utilities_map.size();
@@ -359,7 +359,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_utilities_count = 0;
 	}
 
-	if (gds_utilities_map.size()) {
+	if (gds_utilities_map.size() > 0) {
 		function->gds_utilities.resize(gds_utilities_map.size());
 		function->_gds_utilities_ptr = function->gds_utilities.ptr();
 		function->_gds_utilities_count = gds_utilities_map.size();
@@ -371,7 +371,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_gds_utilities_count = 0;
 	}
 
-	if (method_bind_map.size()) {
+	if (method_bind_map.size() > 0) {
 		function->methods.resize(method_bind_map.size());
 		function->_methods_ptr = function->methods.ptrw();
 		function->_methods_count = method_bind_map.size();
@@ -383,7 +383,7 @@ GDScriptFunction *GDScriptByteCodeGenerator::write_end() {
 		function->_methods_count = 0;
 	}
 
-	if (lambdas_map.size()) {
+	if (lambdas_map.size() > 0) {
 		function->lambdas.resize(lambdas_map.size());
 		function->_lambdas_ptr = function->lambdas.ptrw();
 		function->_lambdas_count = lambdas_map.size();

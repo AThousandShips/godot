@@ -1004,7 +1004,7 @@ void BindingsGenerator::_generate_global_constants(StringBuilder &p_output) {
 			String xml_summary = bbcode_to_xml(fix_doc_description(iconstant.const_doc->description), nullptr);
 			Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
 
-			if (summary_lines.size()) {
+			if (summary_lines.size() > 0) {
 				p_output.append(MEMBER_BEGIN "/// <summary>\n");
 
 				for (int i = 0; i < summary_lines.size(); i++) {
@@ -1068,7 +1068,7 @@ void BindingsGenerator::_generate_global_constants(StringBuilder &p_output) {
 				String xml_summary = bbcode_to_xml(fix_doc_description(iconstant.const_doc->description), nullptr);
 				Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
 
-				if (summary_lines.size()) {
+				if (summary_lines.size() > 0) {
 					p_output.append(INDENT1 "/// <summary>\n");
 
 					for (int i = 0; i < summary_lines.size(); i++) {
@@ -1418,7 +1418,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 		String xml_summary = bbcode_to_xml(fix_doc_description(class_doc->description), &itype);
 		Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
 
-		if (summary_lines.size()) {
+		if (summary_lines.size() > 0) {
 			output.append("/// <summary>\n");
 
 			for (int i = 0; i < summary_lines.size(); i++) {
@@ -1478,7 +1478,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 			String xml_summary = bbcode_to_xml(fix_doc_description(iconstant.const_doc->description), &itype);
 			Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
 
-			if (summary_lines.size()) {
+			if (summary_lines.size() > 0) {
 				output.append(MEMBER_BEGIN "/// <summary>\n");
 
 				for (int i = 0; i < summary_lines.size(); i++) {
@@ -1526,7 +1526,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 				String xml_summary = bbcode_to_xml(fix_doc_description(iconstant.const_doc->description), &itype);
 				Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
 
-				if (summary_lines.size()) {
+				if (summary_lines.size() > 0) {
 					output.append(INDENT2 "/// <summary>\n");
 
 					for (int i = 0; i < summary_lines.size(); i++) {
@@ -1981,7 +1981,7 @@ Error BindingsGenerator::_generate_cs_property(const BindingsGenerator::TypeInte
 		String xml_summary = bbcode_to_xml(fix_doc_description(p_iprop.prop_doc->description), &p_itype);
 		Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
 
-		if (summary_lines.size()) {
+		if (summary_lines.size() > 0) {
 			p_output.append(MEMBER_BEGIN "/// <summary>\n");
 
 			for (int i = 0; i < summary_lines.size(); i++) {
@@ -2230,7 +2230,7 @@ Error BindingsGenerator::_generate_cs_method(const BindingsGenerator::TypeInterf
 			String xml_summary = bbcode_to_xml(fix_doc_description(p_imethod.method_doc->description), &p_itype);
 			Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
 
-			if (summary_lines.size()) {
+			if (summary_lines.size() > 0) {
 				p_output.append(MEMBER_BEGIN "/// <summary>\n");
 
 				for (int i = 0; i < summary_lines.size(); i++) {
@@ -2448,7 +2448,7 @@ Error BindingsGenerator::_generate_cs_signal(const BindingsGenerator::TypeInterf
 			String xml_summary = bbcode_to_xml(fix_doc_description(p_isignal.method_doc->description), &p_itype, true);
 			Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
 
-			if (summary_lines.size()) {
+			if (summary_lines.size() > 0) {
 				p_output.append(MEMBER_BEGIN "/// <summary>\n");
 
 				for (int i = 0; i < summary_lines.size(); i++) {
@@ -2991,7 +2991,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 	ClassDB::get_class_list(&class_list);
 	class_list.sort_custom<StringName::AlphCompare>();
 
-	while (class_list.size()) {
+	while (class_list.size() > 0) {
 		StringName type_cname = class_list.front()->get();
 
 		ClassDB::APIType api_type = ClassDB::get_api_type(type_cname);

@@ -812,13 +812,13 @@ CSGBrush *CSGMesh3D::_build_brush() {
 
 		Vector<Vector3> anormals = arrays[Mesh::ARRAY_NORMAL];
 		const Vector3 *nr = nullptr;
-		if (anormals.size()) {
+		if (anormals.size() > 0) {
 			nr = anormals.ptr();
 		}
 
 		Vector<Vector2> auvs = arrays[Mesh::ARRAY_TEX_UV];
 		const Vector2 *uvr = nullptr;
-		if (auvs.size()) {
+		if (auvs.size() > 0) {
 			uvr = auvs.ptr();
 		}
 
@@ -830,7 +830,7 @@ CSGBrush *CSGMesh3D::_build_brush() {
 		}
 
 		Vector<int> aindices = arrays[Mesh::ARRAY_INDEX];
-		if (aindices.size()) {
+		if (aindices.size() > 0) {
 			int as = vertices.size();
 			int is = aindices.size();
 

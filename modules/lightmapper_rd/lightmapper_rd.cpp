@@ -1689,7 +1689,7 @@ LightmapperRD::BakeError LightmapperRD::bake(BakeQuality p_quality, bool p_use_d
 
 	RID light_probe_buffer;
 
-	if (probe_positions.size()) {
+	if (probe_positions.size() > 0) {
 		light_probe_buffer = rd->storage_buffer_create(sizeof(float) * 4 * 9 * probe_positions.size());
 
 		if (p_step_function) {

@@ -83,7 +83,7 @@ Error EMWSPeer::connect_to_url(const String &p_url, Ref<TLSOptions> p_tls_option
 		proto_string += supported_protocols[i];
 	}
 
-	if (handshake_headers.size()) {
+	if (handshake_headers.size() > 0) {
 		WARN_PRINT_ONCE("Custom headers are not supported in Web platform.");
 	}
 

@@ -97,7 +97,7 @@ TypedArray<RID> GodotNavigationServer::get_maps() const {
 	TypedArray<RID> all_map_rids;
 	List<RID> maps_owned;
 	map_owner.get_owned_list(&maps_owned);
-	if (maps_owned.size()) {
+	if (maps_owned.size() > 0) {
 		for (const RID &E : maps_owned) {
 			all_map_rids.push_back(E);
 		}

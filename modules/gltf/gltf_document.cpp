@@ -543,7 +543,7 @@ Error GLTFDocument::_parse_scenes(Ref<GLTFState> p_state) {
 		WARN_PRINT("The load-time scene is not defined in the glTF2 file. Picking the first scene.");
 	}
 
-	if (scenes.size()) {
+	if (scenes.size() > 0) {
 		ERR_FAIL_COND_V(loaded_scene >= scenes.size(), ERR_FILE_CORRUPT);
 		const Dictionary &scene_dict = scenes[loaded_scene];
 		ERR_FAIL_COND_V(!scene_dict.has("nodes"), ERR_UNAVAILABLE);
@@ -2208,7 +2208,7 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 			}
 			{
 				Vector<real_t> a = array[Mesh::ARRAY_TANGENT];
-				if (a.size()) {
+				if (a.size() > 0) {
 					const int ret_size = a.size() / 4;
 					Vector<Color> attribs;
 					attribs.resize(ret_size);
@@ -2225,7 +2225,7 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 			}
 			{
 				Vector<Vector3> a = array[Mesh::ARRAY_NORMAL];
-				if (a.size()) {
+				if (a.size() > 0) {
 					const int ret_size = a.size();
 					Vector<Vector3> attribs;
 					attribs.resize(ret_size);
@@ -2237,19 +2237,19 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 			}
 			{
 				Vector<Vector2> a = array[Mesh::ARRAY_TEX_UV];
-				if (a.size()) {
+				if (a.size() > 0) {
 					attributes["TEXCOORD_0"] = _encode_accessor_as_vec2(p_state, a, true);
 				}
 			}
 			{
 				Vector<Vector2> a = array[Mesh::ARRAY_TEX_UV2];
-				if (a.size()) {
+				if (a.size() > 0) {
 					attributes["TEXCOORD_1"] = _encode_accessor_as_vec2(p_state, a, true);
 				}
 			}
 			for (int custom_i = 0; custom_i < 3; custom_i++) {
 				Vector<float> a = array[Mesh::ARRAY_CUSTOM0 + custom_i];
-				if (a.size()) {
+				if (a.size() > 0) {
 					int num_channels = 4;
 					int custom_shift = Mesh::ARRAY_FORMAT_CUSTOM0_SHIFT + custom_i * Mesh::ARRAY_FORMAT_CUSTOM_BITS;
 					switch ((format >> custom_shift) & Mesh::ARRAY_FORMAT_CUSTOM_MASK) {
@@ -2301,7 +2301,7 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 			}
 			{
 				Vector<Color> a = array[Mesh::ARRAY_COLOR];
-				if (a.size()) {
+				if (a.size() > 0) {
 					attributes["COLOR_0"] = _encode_accessor_as_color(p_state, a, true);
 				}
 			}
@@ -2394,7 +2394,7 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 			}
 			{
 				Vector<int32_t> mesh_indices = array[Mesh::ARRAY_INDEX];
-				if (mesh_indices.size()) {
+				if (mesh_indices.size() > 0) {
 					if (primitive_type == Mesh::PRIMITIVE_TRIANGLES) {
 						//swap around indices, convert ccw to cw for front face
 						const int is = mesh_indices.size();
@@ -2437,7 +2437,7 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 					Dictionary t;
 					Vector<Vector3> varr = array_morph[Mesh::ARRAY_VERTEX];
 					Array mesh_arrays = import_mesh->get_surface_arrays(surface_i);
-					if (varr.size()) {
+					if (varr.size() > 0) {
 						Vector<Vector3> src_varr = array[Mesh::ARRAY_VERTEX];
 						if (shape_mode == ArrayMesh::BlendShapeMode::BLEND_SHAPE_MODE_NORMALIZED) {
 							const int max_idx = src_varr.size();
@@ -2450,11 +2450,11 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 					}
 
 					Vector<Vector3> narr = array_morph[Mesh::ARRAY_NORMAL];
-					if (narr.size()) {
+					if (narr.size() > 0) {
 						t["NORMAL"] = _encode_accessor_as_vec3(p_state, narr, true);
 					}
 					Vector<real_t> tarr = array_morph[Mesh::ARRAY_TANGENT];
-					if (tarr.size()) {
+					if (tarr.size() > 0) {
 						const int ret_size = tarr.size() / 4;
 						Vector<Vector3> attribs;
 						attribs.resize(ret_size);
@@ -2490,7 +2490,7 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 				}
 			}
 
-			if (targets.size()) {
+			if (targets.size() > 0) {
 				primitive["targets"] = targets;
 			}
 
@@ -2508,7 +2508,7 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> p_state) {
 			}
 			weights[name_i] = weight;
 		}
-		if (weights.size()) {
+		if (weights.size() > 0) {
 			gltf_mesh["weights"] = weights;
 		}
 

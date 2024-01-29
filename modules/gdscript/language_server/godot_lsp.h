@@ -376,7 +376,7 @@ struct Command {
 		Dictionary dict;
 		dict["title"] = title;
 		dict["command"] = command;
-		if (arguments.size()) {
+		if (arguments.size() > 0) {
 			dict["arguments"] = arguments;
 		}
 		return dict;
@@ -1042,7 +1042,7 @@ struct CompletionItem {
 			dict["preselect"] = preselect;
 			dict["sortText"] = sortText;
 			dict["filterText"] = filterText;
-			if (commitCharacters.size()) {
+			if (commitCharacters.size() > 0) {
 				dict["commitCharacters"] = commitCharacters;
 			}
 			if (!command.command.is_empty()) {

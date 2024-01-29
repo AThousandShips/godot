@@ -670,7 +670,7 @@ const lsp::DocumentSymbol *GDScriptWorkspace::resolve_symbol(const lsp::TextDocu
 	if (const ExtendGDScriptParser *parser = get_parse_result(path)) {
 		String symbol_identifier = p_symbol_name;
 		Vector<String> identifier_parts = symbol_identifier.split("(");
-		if (identifier_parts.size()) {
+		if (identifier_parts.size() > 0) {
 			symbol_identifier = identifier_parts[0];
 		}
 
