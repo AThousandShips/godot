@@ -1486,7 +1486,7 @@ Error ShaderCompiler::compile(RS::ShaderMode p_mode, const String &p_code, Ident
 				includes[inc_path] = Vector<String>();
 
 			} else if (l.begins_with("@@<")) {
-				if (include_stack.size()) {
+				if (include_stack.size() > 0) {
 					current = include_stack[include_stack.size() - 1];
 					include_stack.resize(include_stack.size() - 1);
 				}

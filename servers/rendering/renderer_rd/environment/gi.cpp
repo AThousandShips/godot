@@ -86,7 +86,7 @@ void GI::voxel_gi_allocate_data(RID p_voxel_gi, const Transform3D &p_to_cell_xfo
 	voxel_gi->octree_size = p_octree_size;
 	voxel_gi->level_counts = p_level_counts;
 
-	if (p_octree_cells.size()) {
+	if (p_octree_cells.size() > 0) {
 		ERR_FAIL_COND(p_octree_cells.size() % 32 != 0); //cells size must be a multiple of 32
 
 		uint32_t cell_count = p_octree_cells.size() / 32;
@@ -99,7 +99,7 @@ void GI::voxel_gi_allocate_data(RID p_voxel_gi, const Transform3D &p_to_cell_xfo
 		voxel_gi->data_buffer = RD::get_singleton()->storage_buffer_create(p_data_cells.size(), p_data_cells);
 		voxel_gi->data_buffer_size = p_data_cells.size();
 
-		if (p_distance_field.size()) {
+		if (p_distance_field.size() > 0) {
 			RD::TextureFormat tf;
 			tf.format = RD::DATA_FORMAT_R8_UNORM;
 			tf.width = voxel_gi->octree_size.x;
@@ -2932,7 +2932,7 @@ void GI::VoxelGIInstance::update(bool p_update_light_instances, const Vector<RID
 
 	if (has_dynamic_object_data || p_update_light_instances || p_dynamic_objects.size()) {
 		// PROCESS MIPMAPS
-		if (mipmaps.size()) {
+		if (mipmaps.size() > 0) {
 			//can update mipmaps
 
 			Vector3i probe_size = gi->voxel_gi_get_octree_size(probe);

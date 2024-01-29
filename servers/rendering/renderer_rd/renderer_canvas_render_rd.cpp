@@ -307,7 +307,7 @@ RendererCanvasRender::PolygonID RendererCanvasRenderRD::request_polygon(const Ve
 	pb.vertex_array = RD::get_singleton()->vertex_array_create(p_points.size(), vertex_id, buffers);
 	pb.primitive_count = vertex_count;
 
-	if (p_indices.size()) {
+	if (p_indices.size() > 0) {
 		//create indices, as indices were requested
 		Vector<uint8_t> index_buffer;
 		index_buffer.resize(p_indices.size() * sizeof(int32_t));
@@ -1938,7 +1938,7 @@ void RendererCanvasRenderRD::occluder_polygon_set_shape(RID p_occluder, const Ve
 
 	Vector<Vector2> lines;
 
-	if (p_points.size()) {
+	if (p_points.size() > 0) {
 		int lc = p_points.size() * 2;
 
 		lines.resize(lc - (p_closed ? 0 : 2));
@@ -1973,7 +1973,7 @@ void RendererCanvasRenderRD::occluder_polygon_set_shape(RID p_occluder, const Ve
 		oc->line_point_count = lines.size();
 	}
 
-	if (lines.size()) {
+	if (lines.size() > 0) {
 		oc->line_point_count = lines.size();
 		Vector<uint8_t> geometry;
 		Vector<uint8_t> indices;
@@ -2047,7 +2047,7 @@ void RendererCanvasRenderRD::occluder_polygon_set_shape(RID p_occluder, const Ve
 
 	Vector<int> sdf_indices;
 
-	if (p_points.size()) {
+	if (p_points.size() > 0) {
 		if (p_closed) {
 			sdf_indices = Geometry2D::triangulate_polygon(p_points);
 			oc->sdf_is_lines = false;
@@ -2081,7 +2081,7 @@ void RendererCanvasRenderRD::occluder_polygon_set_shape(RID p_occluder, const Ve
 		oc->sdf_is_lines = false;
 	}
 
-	if (sdf_indices.size()) {
+	if (sdf_indices.size() > 0) {
 		if (oc->sdf_vertex_array.is_null()) {
 			//create from scratch
 			//vertices

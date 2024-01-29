@@ -191,7 +191,7 @@ void RenderingDevice::shader_set_get_cache_key_function(ShaderSPIRVGetCacheKeyFu
 Vector<uint8_t> RenderingDevice::shader_compile_spirv_from_source(ShaderStage p_stage, const String &p_source_code, ShaderLanguage p_language, String *r_error, bool p_allow_cache) {
 	if (p_allow_cache && cache_function) {
 		Vector<uint8_t> cache = cache_function(p_stage, p_source_code, p_language);
-		if (cache.size()) {
+		if (cache.size() > 0) {
 			return cache;
 		}
 	}
@@ -607,7 +607,7 @@ RID RenderingDevice::storage_buffer_create(uint32_t p_size_bytes, const Vector<u
 	buffer.draw_tracker = RDG::resource_tracker_create();
 	buffer.draw_tracker->buffer_driver_id = buffer.driver_id;
 
-	if (p_data.size()) {
+	if (p_data.size() > 0) {
 		_buffer_update(&buffer, RID(), 0, p_data.ptr(), p_data.size());
 	}
 
@@ -647,7 +647,7 @@ RID RenderingDevice::texture_buffer_create(uint32_t p_size_elements, DataFormat 
 		ERR_FAIL_V(RID());
 	}
 
-	if (p_data.size()) {
+	if (p_data.size() > 0) {
 		_buffer_update(&texture_buffer, RID(), 0, p_data.ptr(), p_data.size());
 	}
 
@@ -711,7 +711,7 @@ RID RenderingDevice::texture_create(const TextureFormat &p_format, const Texture
 			"Too many mipmaps requested for texture format and dimensions (" + itos(format.mipmaps) + "), maximum allowed: (" + itos(required_mipmaps) + ").");
 
 	uint32_t forced_usage_bits = 0;
-	if (p_data.size()) {
+	if (p_data.size() > 0) {
 		ERR_FAIL_COND_V_MSG(p_data.size() != (int)format.array_layers, RID(),
 				"Default supplied data for image format is of invalid length (" + itos(p_data.size()) + "), should be (" + itos(format.array_layers) + ").");
 
@@ -818,7 +818,7 @@ RID RenderingDevice::texture_create(const TextureFormat &p_format, const Texture
 	set_resource_name(id, "RID:" + itos(id.get_id()));
 #endif
 
-	if (p_data.size()) {
+	if (p_data.size() > 0) {
 		for (uint32_t i = 0; i < p_format.array_layers; i++) {
 			_texture_update(id, i, p_data[i], true, false);
 		}
@@ -2166,7 +2166,7 @@ RID RenderingDevice::vertex_buffer_create(uint32_t p_size_bytes, const Vector<ui
 		buffer.draw_tracker->buffer_driver_id = buffer.driver_id;
 	}
 
-	if (p_data.size()) {
+	if (p_data.size() > 0) {
 		_buffer_update(&buffer, RID(), 0, p_data.ptr(), p_data.size());
 	}
 
@@ -2291,7 +2291,7 @@ RID RenderingDevice::index_buffer_create(uint32_t p_index_count, IndexBufferForm
 	index_buffer.index_count = p_index_count;
 	uint32_t size_bytes = p_index_count * ((p_format == INDEX_BUFFER_FORMAT_UINT16) ? 2 : 4);
 #ifdef DEBUG_ENABLED
-	if (p_data.size()) {
+	if (p_data.size() > 0) {
 		index_buffer.max_index = 0;
 		ERR_FAIL_COND_V_MSG((uint32_t)p_data.size() != size_bytes, RID(),
 				"Default index buffer initializer array size (" + itos(p_data.size()) + ") does not match format required size (" + itos(size_bytes) + ").");
@@ -2330,7 +2330,7 @@ RID RenderingDevice::index_buffer_create(uint32_t p_index_count, IndexBufferForm
 		index_buffer.draw_tracker->buffer_driver_id = index_buffer.driver_id;
 	}
 
-	if (p_data.size()) {
+	if (p_data.size() > 0) {
 		_buffer_update(&index_buffer, RID(), 0, p_data.ptr(), p_data.size());
 	}
 
@@ -2512,7 +2512,7 @@ RID RenderingDevice::uniform_buffer_create(uint32_t p_size_bytes, const Vector<u
 		buffer.draw_tracker->buffer_driver_id = buffer.driver_id;
 	}
 
-	if (p_data.size()) {
+	if (p_data.size() > 0) {
 		_buffer_update(&buffer, RID(), 0, p_data.ptr(), p_data.size());
 	}
 
@@ -5186,7 +5186,7 @@ template <class T>
 void RenderingDevice::_free_rids(T &p_owner, const char *p_type) {
 	List<RID> owned;
 	p_owner.get_owned_list(&owned);
-	if (owned.size()) {
+	if (owned.size() > 0) {
 		if (owned.size() == 1) {
 			WARN_PRINT(vformat("1 RID of type \"%s\" was leaked.", p_type));
 		} else {
@@ -5337,7 +5337,7 @@ void RenderingDevice::finalize() {
 		// For textures it's a bit more difficult because they may be shared.
 		List<RID> owned;
 		texture_owner.get_owned_list(&owned);
-		if (owned.size()) {
+		if (owned.size() > 0) {
 			if (owned.size() == 1) {
 				WARN_PRINT("1 RID of type \"Texture\" was leaked.");
 			} else {
@@ -5391,7 +5391,7 @@ void RenderingDevice::finalize() {
 		driver->buffer_free(staging_buffer_blocks[i].driver_id);
 	}
 
-	while (vertex_formats.size()) {
+	while (vertex_formats.size() > 0) {
 		HashMap<VertexFormatID, VertexDescriptionCache>::Iterator temp = vertex_formats.begin();
 		driver->vertex_format_free(temp->value.driver_id);
 		vertex_formats.remove(temp);

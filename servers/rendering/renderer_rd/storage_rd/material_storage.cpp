@@ -995,7 +995,7 @@ bool MaterialStorage::MaterialData::update_parameters_uniform_set(const HashMap<
 		}
 
 		ubo_data.resize(p_ubo_size);
-		if (ubo_data.size()) {
+		if (ubo_data.size() > 0) {
 			uniform_buffer = RD::get_singleton()->uniform_buffer_create(ubo_data.size());
 			memset(ubo_data.ptrw(), 0, ubo_data.size()); //clear
 		}

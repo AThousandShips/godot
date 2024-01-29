@@ -841,9 +841,9 @@ bool ShaderRD::shader_cache_save_debug = true;
 ShaderRD::~ShaderRD() {
 	List<RID> remaining;
 	version_owner.get_owned_list(&remaining);
-	if (remaining.size()) {
+	if (remaining.size() > 0) {
 		ERR_PRINT(itos(remaining.size()) + " shaders of type " + name + " were never freed");
-		while (remaining.size()) {
+		while (remaining.size() > 0) {
 			version_free(remaining.front()->get());
 			remaining.pop_front();
 		}

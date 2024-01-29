@@ -169,7 +169,7 @@ void RenderingServerDefault::_draw(bool p_swap_buffers, double frame_step) {
 			}
 		}
 
-		if (frame_profile.size()) {
+		if (frame_profile.size() > 0) {
 			total_time = frame_profile[frame_profile.size() - 1].gpu_msec;
 		}
 

@@ -162,7 +162,7 @@ class FramebufferCacheRD : public Object {
 
 	RID _allocate_from_data(uint32_t p_views, uint32_t p_hash, uint32_t p_table_idx, const Vector<RID> &p_textures, const Vector<RD::FramebufferPass> &p_passes) {
 		RID rid;
-		if (p_passes.size()) {
+		if (p_passes.size() > 0) {
 			rid = RD::get_singleton()->framebuffer_create_multipass(p_textures, p_passes, RD::INVALID_ID, p_views);
 		} else {
 			rid = RD::get_singleton()->framebuffer_create(p_textures, RD::INVALID_ID, p_views);
