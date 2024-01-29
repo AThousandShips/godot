@@ -383,7 +383,7 @@ Error DisplayServerWindows::_file_dialog_with_options_show(const String &p_title
 	Vector<Char16String> filter_exts;
 	for (const String &E : p_filters) {
 		Vector<String> tokens = E.split(";");
-		if (tokens.size() >= 1) {
+		if (tokens.size() > 0) {
 			String flt = tokens[0].strip_edges();
 			int filter_slice_count = flt.get_slice_count(",");
 			Vector<String> exts;

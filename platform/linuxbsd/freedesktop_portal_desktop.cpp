@@ -372,7 +372,7 @@ Error FreeDesktopPortalDesktop::file_dialog_show(DisplayServer::WindowID p_windo
 	Vector<String> filter_exts;
 	for (int i = 0; i < p_filters.size(); i++) {
 		Vector<String> tokens = p_filters[i].split(";");
-		if (tokens.size() >= 1) {
+		if (tokens.size() > 0) {
 			String flt = tokens[0].strip_edges();
 			if (!flt.is_empty()) {
 				if (tokens.size() == 2) {

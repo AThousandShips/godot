@@ -117,7 +117,7 @@
 			NSPopUpButton *popup = [[NSPopUpButton alloc] initWithFrame:NSZeroRect pullsDown:NO];
 			for (int i = 0; i < p_filters.size(); i++) {
 				Vector<String> tokens = p_filters[i].split(";");
-				if (tokens.size() >= 1) {
+				if (tokens.size() > 0) {
 					String flt = tokens[0].strip_edges();
 					int filter_slice_count = flt.get_slice_count(",");
 
@@ -145,7 +145,7 @@
 			}
 		} else if (p_filters.size() == 1) {
 			Vector<String> tokens = p_filters[0].split(";");
-			if (tokens.size() >= 1) {
+			if (tokens.size() > 0) {
 				String flt = tokens[0].strip_edges();
 				int filter_slice_count = flt.get_slice_count(",");
 

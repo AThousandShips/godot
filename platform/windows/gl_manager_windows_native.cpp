@@ -254,7 +254,7 @@ void GLManagerNative_Windows::_nvapi_disable_threaded_optimization() {
 
 int GLManagerNative_Windows::_find_or_create_display(GLWindow &win) {
 	// find display NYI, only 1 supported so far
-	if (_displays.size()) {
+	if (_displays.size() > 0) {
 		return 0;
 	}
 

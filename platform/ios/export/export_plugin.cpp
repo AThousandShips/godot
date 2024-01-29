@@ -2479,7 +2479,7 @@ Error EditorExportPlatformIOS::run(const Ref<EditorExportPreset> &p_preset, int 
 		List<String> breakpoints;
 		ScriptEditor::get_singleton()->get_breakpoints(&breakpoints);
 
-		if (breakpoints.size()) {
+		if (breakpoints.size() > 0) {
 			cmd_args_list.push_back("--breakpoints");
 			String bpoints;
 			for (const List<String>::Element *E = breakpoints.front(); E; E = E->next()) {

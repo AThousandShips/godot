@@ -145,7 +145,7 @@ void AndroidInputHandler::_cancel_all_touch() {
 }
 
 void AndroidInputHandler::_parse_all_touch(bool p_pressed, bool p_canceled, bool p_double_tap) {
-	if (touch.size()) {
+	if (touch.size() > 0) {
 		//end all if exist
 		for (int i = 0; i < touch.size(); i++) {
 			Ref<InputEventScreenTouch> ev;
