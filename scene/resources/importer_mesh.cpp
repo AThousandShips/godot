@@ -795,7 +795,7 @@ void ImporterMesh::create_shadow_mesh() {
 		new_surface[RS::ARRAY_VERTEX] = new_vertices;
 
 		Vector<int> indices = surfaces[i].arrays[RS::ARRAY_INDEX];
-		if (indices.size()) {
+		if (indices.size() > 0) {
 			int index_count = indices.size();
 			const int *index_rptr = indices.ptr();
 			Vector<int> new_indices;
@@ -878,7 +878,7 @@ void ImporterMesh::_set_data(const Dictionary &p_data) {
 }
 Dictionary ImporterMesh::_get_data() const {
 	Dictionary data;
-	if (blend_shapes.size()) {
+	if (blend_shapes.size() > 0) {
 		data["blend_shape_names"] = blend_shapes;
 	}
 	Array surface_arr;
@@ -923,7 +923,7 @@ Vector<Face3> ImporterMesh::get_faces() const {
 		if (surfaces[i].primitive == Mesh::PRIMITIVE_TRIANGLES) {
 			Vector<Vector3> vertices = surfaces[i].arrays[Mesh::ARRAY_VERTEX];
 			Vector<int> indices = surfaces[i].arrays[Mesh::ARRAY_INDEX];
-			if (indices.size()) {
+			if (indices.size() > 0) {
 				for (int j = 0; j < indices.size(); j += 3) {
 					Face3 f;
 					f.vertex[0] = vertices[indices[j + 0]];

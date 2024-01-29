@@ -351,7 +351,7 @@ void Polygon2D::_notification(int p_what) {
 
 			RS::get_singleton()->mesh_clear(mesh);
 
-			if (index_array.size()) {
+			if (index_array.size() > 0) {
 				Array arr;
 				arr.resize(RS::ARRAY_MAX);
 				arr[RS::ARRAY_VERTEX] = points;

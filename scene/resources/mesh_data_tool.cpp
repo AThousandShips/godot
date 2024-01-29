@@ -304,25 +304,25 @@ Error MeshDataTool::commit_to_surface(const Ref<ArrayMesh> &p_mesh, uint64_t p_c
 
 	arr[Mesh::ARRAY_VERTEX] = v;
 	arr[Mesh::ARRAY_INDEX] = in;
-	if (n.size()) {
+	if (n.size() > 0) {
 		arr[Mesh::ARRAY_NORMAL] = n;
 	}
-	if (c.size()) {
+	if (c.size() > 0) {
 		arr[Mesh::ARRAY_COLOR] = c;
 	}
-	if (u.size()) {
+	if (u.size() > 0) {
 		arr[Mesh::ARRAY_TEX_UV] = u;
 	}
-	if (u2.size()) {
+	if (u2.size() > 0) {
 		arr[Mesh::ARRAY_TEX_UV2] = u2;
 	}
-	if (t.size()) {
+	if (t.size() > 0) {
 		arr[Mesh::ARRAY_TANGENT] = t;
 	}
-	if (b.size()) {
+	if (b.size() > 0) {
 		arr[Mesh::ARRAY_BONES] = b;
 	}
-	if (w.size()) {
+	if (w.size() > 0) {
 		arr[Mesh::ARRAY_WEIGHTS] = w;
 	}
 

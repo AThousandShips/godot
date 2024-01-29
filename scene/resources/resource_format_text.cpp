@@ -2097,7 +2097,7 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 		f->store_string(s); // Bundled.
 	}
 
-	if (external_resources.size()) {
+	if (external_resources.size() > 0) {
 		f->store_line(String()); // Separate.
 	}
 
@@ -2240,11 +2240,11 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 				header += " index=\"" + itos(index) + "\"";
 			}
 
-			if (deferred_node_paths.size()) {
+			if (deferred_node_paths.size() > 0) {
 				header += " node_paths=" + Variant(deferred_node_paths).get_construct_string();
 			}
 
-			if (groups.size()) {
+			if (groups.size() > 0) {
 				// Write all groups on the same line as they're part of a section header.
 				// This improves readability while not impacting VCS friendliness too much,
 				// since it's rare to have more than 5 groups assigned to a single node.
@@ -2312,7 +2312,7 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 
 			Array binds = state->get_connection_binds(i);
 			f->store_string(connstr);
-			if (binds.size()) {
+			if (binds.size() > 0) {
 				String vars;
 				VariantWriter::write_to_string(binds, vars, _write_resources, this);
 				f->store_string(" binds= " + vars);

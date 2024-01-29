@@ -509,7 +509,7 @@ SceneDebuggerTree::SceneDebuggerTree(Node *p_root) {
 	bool is_root = true;
 	const StringName &is_visible_sn = SNAME("is_visible");
 	const StringName &is_visible_in_tree_sn = SNAME("is_visible_in_tree");
-	while (stack.size()) {
+	while (stack.size() > 0) {
 		Node *n = stack[0];
 		stack.pop_front();
 

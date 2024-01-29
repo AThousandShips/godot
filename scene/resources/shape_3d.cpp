@@ -38,7 +38,7 @@
 void Shape3D::add_vertices_to_array(Vector<Vector3> &array, const Transform3D &p_xform) {
 	Vector<Vector3> toadd = get_debug_mesh_lines();
 
-	if (toadd.size()) {
+	if (toadd.size() > 0) {
 		int base = array.size();
 		array.resize(base + toadd.size());
 		Vector3 *w = array.ptrw();

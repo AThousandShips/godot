@@ -318,7 +318,7 @@ void AnimationPlayer::_blend_post_process() {
 	if (end_reached) {
 		// If the method track changes current animation, the animation is not finished.
 		if (tmp_from == playback.current.from->animation->get_instance_id()) {
-			if (playback_queue.size()) {
+			if (playback_queue.size() > 0) {
 				String old = playback.assigned;
 				play(playback_queue.front()->get());
 				String new_name = playback.assigned;
@@ -757,7 +757,7 @@ void AnimationPlayer::_animation_removed(const StringName &p_name, const StringN
 		}
 	}
 
-	while (to_erase.size()) {
+	while (to_erase.size() > 0) {
 		blend_times.erase(to_erase.front()->get());
 		to_erase.pop_front();
 	}
@@ -788,12 +788,12 @@ void AnimationPlayer::_rename_animation(const StringName &p_from_name, const Str
 		}
 	}
 
-	while (to_erase.size()) {
+	while (to_erase.size() > 0) {
 		blend_times.erase(to_erase.front()->get());
 		to_erase.pop_front();
 	}
 
-	while (to_insert.size()) {
+	while (to_insert.size() > 0) {
 		blend_times[to_insert.begin()->key] = to_insert.begin()->value;
 		to_insert.remove(to_insert.begin());
 	}

@@ -451,7 +451,7 @@ MeshInstance3D *MeshInstance3D::create_debug_tangents_node() {
 		}
 	}
 
-	if (lines.size()) {
+	if (lines.size() > 0) {
 		Ref<StandardMaterial3D> sm;
 		sm.instantiate();
 

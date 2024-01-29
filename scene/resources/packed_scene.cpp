@@ -572,7 +572,7 @@ Node *SceneState::instantiate(GenEditState p_edit_state) const {
 	//Node *s = ret_nodes[0];
 
 	//remove nodes that could not be added, likely as a result that
-	while (stray_instances.size()) {
+	while (stray_instances.size() > 0) {
 		memdelete(stray_instances.front()->get());
 		stray_instances.pop_front();
 	}
@@ -1365,7 +1365,7 @@ void SceneState::set_bundled_scene(const Dictionary &p_dictionary) {
 	ERR_FAIL_COND(sconns.size() < conn_count);
 
 	Vector<String> snames = p_dictionary["names"];
-	if (snames.size()) {
+	if (snames.size() > 0) {
 		int namecount = snames.size();
 		names.resize(namecount);
 		const String *r = snames.ptr();
@@ -1376,7 +1376,7 @@ void SceneState::set_bundled_scene(const Dictionary &p_dictionary) {
 
 	Array svariants = p_dictionary["variants"];
 
-	if (svariants.size()) {
+	if (svariants.size() > 0) {
 		int varcount = svariants.size();
 		variants.resize(varcount);
 		for (int i = 0; i < varcount; i++) {
@@ -1465,7 +1465,7 @@ Dictionary SceneState::get_bundled_scene() const {
 	Vector<String> rnames;
 	rnames.resize(names.size());
 
-	if (names.size()) {
+	if (names.size() > 0) {
 		String *r = rnames.ptrw();
 
 		for (int i = 0; i < names.size(); i++) {

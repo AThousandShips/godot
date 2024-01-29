@@ -68,7 +68,7 @@ bool AnimationMixer::_set(const StringName &p_name, const Variant &p_value) {
 	if (name.begins_with("libraries")) {
 #endif // DISABLE_DEPRECATED
 		Dictionary d = p_value;
-		while (animation_libraries.size()) {
+		while (animation_libraries.size() > 0) {
 			remove_animation_library(animation_libraries[0].name);
 		}
 		List<Variant> keys;
@@ -170,7 +170,7 @@ void AnimationMixer::_animation_set_cache_update() {
 		}
 	}
 
-	while (to_erase.size()) {
+	while (to_erase.size() > 0) {
 		animation_set.erase(to_erase.front()->get());
 		to_erase.pop_front();
 	}
@@ -1548,7 +1548,7 @@ void AnimationMixer::_blend_process(double p_delta, bool p_update_only) {
 					} else {
 						List<int> to_play;
 						a->track_get_key_indices_in_range(i, time, delta, &to_play, looped_flag);
-						if (to_play.size()) {
+						if (to_play.size() > 0) {
 							idx = to_play.back()->get();
 						}
 					}
@@ -1644,7 +1644,7 @@ void AnimationMixer::_blend_process(double p_delta, bool p_update_only) {
 						// Find stuff to play.
 						List<int> to_play;
 						a->track_get_key_indices_in_range(i, time, delta, &to_play, looped_flag);
-						if (to_play.size()) {
+						if (to_play.size() > 0) {
 							int idx = to_play.back()->get();
 							StringName anim_name = a->animation_track_get_key_animation(i, idx);
 							if (String(anim_name) == "[stop]" || !player2->has_animation(anim_name)) {

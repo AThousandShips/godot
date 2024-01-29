@@ -5105,7 +5105,7 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 		Item *subitem = static_cast<Item *>(E);
 		_fetch_item_fx_stack(subitem, fx_items);
 
-		if (fx_items.size()) {
+		if (fx_items.size() > 0) {
 			set_process_internal(true);
 			break;
 		}

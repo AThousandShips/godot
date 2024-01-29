@@ -101,7 +101,7 @@ void OccluderPolygon2D::set_closed(bool p_closed) {
 		return;
 	}
 	closed = p_closed;
-	if (polygon.size()) {
+	if (polygon.size() > 0) {
 		RS::get_singleton()->canvas_occluder_polygon_set_shape(occ_polygon, polygon, closed);
 	}
 	emit_changed();
@@ -179,7 +179,7 @@ void LightOccluder2D::_notification(int p_what) {
 				if (occluder_polygon.is_valid()) {
 					Vector<Vector2> poly = occluder_polygon->get_polygon();
 
-					if (poly.size()) {
+					if (poly.size() > 0) {
 						if (occluder_polygon->is_closed()) {
 							Vector<Color> color;
 							color.push_back(Color(0, 0, 0, 0.6));

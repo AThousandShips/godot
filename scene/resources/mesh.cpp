@@ -689,7 +689,7 @@ Ref<Mesh> Mesh::create_outline(float p_margin) const {
 		ERR_FAIL_COND_V(!vc, Ref<ArrayMesh>());
 		Vector3 *r = vertices.ptrw();
 
-		if (indices.size()) {
+		if (indices.size() > 0) {
 			ERR_FAIL_COND_V(indices.size() % 3 != 0, Ref<ArrayMesh>());
 			vc = indices.size();
 			ir = indices.ptrw();
@@ -1519,7 +1519,7 @@ Array ArrayMesh::_get_surfaces() const {
 			lods.push_back(surface.lods[j].index_data);
 		}
 
-		if (lods.size()) {
+		if (lods.size() > 0) {
 			data["lods"] = lods;
 		}
 
@@ -1527,7 +1527,7 @@ Array ArrayMesh::_get_surfaces() const {
 		for (int j = 0; j < surface.bone_aabbs.size(); j++) {
 			bone_aabbs.push_back(surface.bone_aabbs[j]);
 		}
-		if (bone_aabbs.size()) {
+		if (bone_aabbs.size() > 0) {
 			data["bone_aabbs"] = bone_aabbs;
 		}
 

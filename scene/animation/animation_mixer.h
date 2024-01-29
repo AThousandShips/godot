@@ -106,7 +106,7 @@ protected:
 		List<StringName> animations;
 		get_animation_list(&animations);
 		Vector<String> ret;
-		while (animations.size()) {
+		while (animations.size() > 0) {
 			ret.push_back(animations.front()->get());
 			animations.pop_front();
 		}
