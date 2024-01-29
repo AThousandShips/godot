@@ -276,7 +276,7 @@ void GPUParticles2DEditorPlugin::_generate_emission_mask() {
 	}
 
 	valid_positions.resize(vpc);
-	if (valid_normals.size()) {
+	if (valid_normals.size() > 0) {
 		valid_normals.resize(vpc);
 	}
 
@@ -324,7 +324,7 @@ void GPUParticles2DEditorPlugin::_generate_emission_mask() {
 		pm->set_emission_color_texture(ImageTexture::create_from_image(img));
 	}
 
-	if (valid_normals.size()) {
+	if (valid_normals.size() > 0) {
 		pm->set_emission_shape(ParticleProcessMaterial::EMISSION_SHAPE_DIRECTED_POINTS);
 
 		Vector<uint8_t> normdata;

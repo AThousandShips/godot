@@ -692,7 +692,7 @@ bool EditorFileSystem::_update_scan_actions() {
 		}
 	}
 
-	if (reimports.size()) {
+	if (reimports.size() > 0) {
 		if (_scan_import_support(reimports)) {
 			return true;
 		}
@@ -710,7 +710,7 @@ bool EditorFileSystem::_update_scan_actions() {
 		_save_filesystem_cache();
 	}
 
-	if (reloads.size()) {
+	if (reloads.size() > 0) {
 		emit_signal(SNAME("resources_reload"), reloads);
 	}
 	scan_actions.clear();
@@ -1937,7 +1937,7 @@ Error EditorFileSystem::_reimport_group(const String &p_group_file, const Vector
 			f->store_line("");
 
 			f->store_line("source_file=" + Variant(file).get_construct_string());
-			if (dest_paths.size()) {
+			if (dest_paths.size() > 0) {
 				Array dp;
 				for (int i = 0; i < dest_paths.size(); i++) {
 					dp.push_back(dest_paths[i]);
@@ -1970,7 +1970,7 @@ Error EditorFileSystem::_reimport_group(const String &p_group_file, const Vector
 			ERR_FAIL_COND_V_MSG(md5s.is_null(), ERR_FILE_CANT_OPEN, "Cannot open MD5 file '" + base_path + ".md5'.");
 
 			md5s->store_line("source_md5=\"" + FileAccess::get_md5(file) + "\"");
-			if (dest_paths.size()) {
+			if (dest_paths.size() > 0) {
 				md5s->store_line("dest_md5=\"" + FileAccess::get_multiple_md5(dest_paths) + "\"\n");
 			}
 		}
@@ -2161,7 +2161,7 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 		if (err == OK) {
 			if (importer->get_save_extension().is_empty()) {
 				//no path
-			} else if (import_variants.size()) {
+			} else if (import_variants.size() > 0) {
 				//import with variants
 				for (const String &E : import_variants) {
 					String path = base_path.c_escape() + "." + E + "." + importer->get_save_extension();
@@ -2191,7 +2191,7 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 
 		f->store_line("[deps]\n");
 
-		if (gen_files.size()) {
+		if (gen_files.size() > 0) {
 			Array genf;
 			for (const String &E : gen_files) {
 				genf.push_back(E);
@@ -2206,7 +2206,7 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 
 		f->store_line("source_file=" + Variant(p_file).get_construct_string());
 
-		if (dest_paths.size()) {
+		if (dest_paths.size() > 0) {
 			Array dp;
 			for (int i = 0; i < dest_paths.size(); i++) {
 				dp.push_back(dest_paths[i]);
@@ -2233,7 +2233,7 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 		ERR_FAIL_COND_V_MSG(md5s.is_null(), ERR_FILE_CANT_OPEN, "Cannot open MD5 file '" + base_path + ".md5'.");
 
 		md5s->store_line("source_md5=\"" + FileAccess::get_md5(p_file) + "\"");
-		if (dest_paths.size()) {
+		if (dest_paths.size() > 0) {
 			md5s->store_line("dest_md5=\"" + FileAccess::get_multiple_md5(dest_paths) + "\"\n");
 		}
 	}
@@ -2411,7 +2411,7 @@ void EditorFileSystem::reimport_files(const Vector<String> &p_files) {
 
 	from = reimport_files.size();
 
-	if (groups_to_reimport.size()) {
+	if (groups_to_reimport.size() > 0) {
 		HashMap<String, Vector<String>> group_files;
 		_find_group_files(filesystem, group_files, groups_to_reimport);
 		for (const KeyValue<String, Vector<String>> &E : group_files) {
@@ -2599,7 +2599,7 @@ bool EditorFileSystem::_scan_extensions() {
 	}
 
 	String extension_list_config_file = GDExtension::get_extension_list_config_file();
-	if (extensions.size()) {
+	if (extensions.size() > 0) {
 		if (extensions_added.size() || extensions_removed.size()) { //extensions were added or removed
 			Ref<FileAccess> f = FileAccess::open(extension_list_config_file, FileAccess::WRITE);
 			for (const String &E : extensions) {

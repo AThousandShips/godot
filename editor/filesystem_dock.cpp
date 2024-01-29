@@ -3115,7 +3115,7 @@ void FileSystemDock::_file_and_folders_fill_popup(PopupMenu *p_popup, Vector<Str
 
 	p_popup->add_separator();
 
-	if (p_paths.size() >= 1) {
+	if (p_paths.size() > 0) {
 		if (!all_favorites) {
 			p_popup->add_icon_item(get_editor_theme_icon(SNAME("Favorites")), TTR("Add to Favorites"), FILE_ADD_FAVORITE);
 		}

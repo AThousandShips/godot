@@ -363,7 +363,7 @@ static void _pre_gen_shape_list(Ref<ImporterMesh> &mesh, Vector<Ref<Shape3D>> &r
 	} else {
 		Vector<Ref<Shape3D>> cd;
 		cd.push_back(mesh->create_convex_shape(true, /*Passing false, otherwise VHACD will be used to simplify (Decompose) the Mesh.*/ false));
-		if (cd.size()) {
+		if (cd.size() > 0) {
 			for (int i = 0; i < cd.size(); i++) {
 				r_shape_list.push_back(cd[i]);
 			}
@@ -691,7 +691,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 					r_collision_map[mesh] = shapes;
 				}
 
-				if (shapes.size()) {
+				if (shapes.size() > 0) {
 					StaticBody3D *col = memnew(StaticBody3D);
 					col->set_transform(mi->get_transform());
 					col->set_name(fixed_name);
@@ -793,7 +793,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 				}
 			}
 
-			if (shapes.size()) {
+			if (shapes.size() > 0) {
 				StaticBody3D *col = memnew(StaticBody3D);
 				mi->add_child(col, true);
 				col->set_owner(mi->get_owner());
@@ -910,7 +910,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 				mesh->set_name(_fixstr(mesh->get_name(), "occ"));
 			}
 
-			if (shapes.size()) {
+			if (shapes.size() > 0) {
 				StaticBody3D *col = memnew(StaticBody3D);
 				p_node->add_child(col, true);
 				col->set_owner(p_node->get_owner());
@@ -1241,7 +1241,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 								p_applied_root_scale);
 					}
 
-					if (shapes.size()) {
+					if (shapes.size() > 0) {
 						CollisionObject3D *base = nullptr;
 						switch (mesh_physics_mode) {
 							case MESH_PHYSICS_MESH_AND_STATIC_COLLIDER: {
@@ -1416,7 +1416,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 			post_importer_plugins.write[i]->internal_process(EditorScenePostImportPlugin::INTERNAL_IMPORT_CATEGORY_ANIMATION_NODE, p_root, p_node, Ref<Resource>(), node_settings);
 		}
 
-		if (post_importer_plugins.size()) {
+		if (post_importer_plugins.size() > 0) {
 			List<StringName> anims;
 			ap->get_animation_list(&anims);
 			for (const StringName &name : anims) {
@@ -2599,7 +2599,7 @@ Error ResourceImporterScene::import(const String &p_source_file, const String &p
 
 	scene = _generate_meshes(scene, mesh_data, gen_lods, create_shadow_meshes, LightBakeMode(light_bake_mode), lightmap_texel_size, src_lightmap_cache, mesh_lightmap_caches);
 
-	if (mesh_lightmap_caches.size()) {
+	if (mesh_lightmap_caches.size() > 0) {
 		Ref<FileAccess> f = FileAccess::open(p_source_file + ".unwrap_cache", FileAccess::WRITE);
 		if (f.is_valid()) {
 			f->store_32(mesh_lightmap_caches.size());
@@ -2660,7 +2660,7 @@ Error ResourceImporterScene::import(const String &p_source_file, const String &p
 			if (ap) {
 				List<StringName> libs;
 				ap->get_animation_library_list(&libs);
-				if (libs.size()) {
+				if (libs.size() > 0) {
 					library = ap->get_animation_library(libs.front()->get());
 					break;
 				}

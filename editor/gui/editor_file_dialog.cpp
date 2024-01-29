@@ -393,7 +393,7 @@ void EditorFileDialog::_action_pressed() {
 			}
 		}
 
-		if (files.size()) {
+		if (files.size() > 0) {
 			_save_to_recent();
 			hide();
 			emit_signal(SNAME("files_selected"), files);

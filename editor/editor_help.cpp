@@ -1582,7 +1582,7 @@ void EditorHelp::_update_doc() {
 
 		// Enums
 		bool has_enums = enums.size() && !cd.is_script_doc;
-		if (enums.size() && !has_enums) {
+		if (enums.size() > 0 && !has_enums) {
 			for (KeyValue<String, DocData::EnumDoc> &E : cd.enums) {
 				const bool is_documented = E.value.is_deprecated || E.value.is_experimental || !E.value.description.strip_edges().is_empty();
 				if (!is_documented && E.key.begins_with("_")) {

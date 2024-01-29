@@ -1090,7 +1090,7 @@ void SceneImportSettingsDialog::_re_import() {
 			nodes[E.key] = d;
 		}
 	}
-	if (nodes.size()) {
+	if (nodes.size() > 0) {
 		subresources["nodes"] = nodes;
 	}
 
@@ -1103,7 +1103,7 @@ void SceneImportSettingsDialog::_re_import() {
 			materials[E.key] = d;
 		}
 	}
-	if (materials.size()) {
+	if (materials.size() > 0) {
 		subresources["materials"] = materials;
 	}
 
@@ -1116,7 +1116,7 @@ void SceneImportSettingsDialog::_re_import() {
 			meshes[E.key] = d;
 		}
 	}
-	if (meshes.size()) {
+	if (meshes.size() > 0) {
 		subresources["meshes"] = meshes;
 	}
 
@@ -1129,11 +1129,11 @@ void SceneImportSettingsDialog::_re_import() {
 			animations[E.key] = d;
 		}
 	}
-	if (animations.size()) {
+	if (animations.size() > 0) {
 		subresources["animations"] = animations;
 	}
 
-	if (subresources.size()) {
+	if (subresources.size() > 0) {
 		main_settings["_subresources"] = subresources;
 	}
 

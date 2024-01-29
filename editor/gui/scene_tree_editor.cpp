@@ -479,7 +479,7 @@ void SceneTreeEditor::_add_nodes(Node *p_node, TreeItem *p_parent) {
 		_add_nodes(p_node->get_child(i), item);
 	}
 
-	if (valid_types.size()) {
+	if (valid_types.size() > 0) {
 		bool valid = false;
 		for (const StringName &E : valid_types) {
 			if (p_node->is_class(E) ||

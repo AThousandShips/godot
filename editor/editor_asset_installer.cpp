@@ -564,7 +564,7 @@ void EditorAssetInstaller::_install_asset() {
 	ProgressDialog::get_singleton()->end_task("uncompress");
 	unzClose(pkg);
 
-	if (failed_files.size()) {
+	if (failed_files.size() > 0) {
 		String msg = vformat(TTR("The following files failed extraction from asset \"%s\":"), asset_name) + "\n\n";
 		for (int i = 0; i < failed_files.size(); i++) {
 			if (i > 10) {

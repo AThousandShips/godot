@@ -197,7 +197,7 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
 	}
 
 	valid_positions.resize(vpc);
-	if (valid_normals.size()) {
+	if (valid_normals.size() > 0) {
 		valid_normals.resize(vpc);
 	}
 
@@ -218,7 +218,7 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
 		particles->set_emission_colors(pca);
 	}
 
-	if (valid_normals.size()) {
+	if (valid_normals.size() > 0) {
 		particles->set_emission_shape(CPUParticles2D::EMISSION_SHAPE_DIRECTED_POINTS);
 		PackedVector2Array norms;
 		norms.resize(valid_normals.size());

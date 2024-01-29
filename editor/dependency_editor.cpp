@@ -151,7 +151,7 @@ void DependencyEditor::_fix_all() {
 		}
 	}
 
-	if (remaps.size()) {
+	if (remaps.size() > 0) {
 		ResourceLoader::rename_dependencies(editing, remaps);
 
 		_update_list();

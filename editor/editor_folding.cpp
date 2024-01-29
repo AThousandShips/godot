@@ -38,7 +38,7 @@
 Vector<String> EditorFolding::_get_unfolds(const Object *p_object) {
 	Vector<String> sections;
 	sections.resize(p_object->editor_get_section_folding().size());
-	if (sections.size()) {
+	if (sections.size() > 0) {
 		String *w = sections.ptrw();
 		int idx = 0;
 		for (const String &E : p_object->editor_get_section_folding()) {
@@ -103,7 +103,7 @@ void EditorFolding::_fill_folds(const Node *p_root, const Node *p_node, Array &p
 	}
 	Vector<String> unfolds = _get_unfolds(p_node);
 
-	if (unfolds.size()) {
+	if (unfolds.size() > 0) {
 		p_folds.push_back(p_root->get_path_to(p_node));
 		p_folds.push_back(unfolds);
 	}

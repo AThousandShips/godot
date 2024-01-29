@@ -1086,7 +1086,7 @@ void ProjectExportDialog::_export_project() {
 	if (!current->get_export_path().is_empty()) {
 		export_project->set_current_path(current->get_export_path());
 	} else {
-		if (extension_list.size() >= 1) {
+		if (extension_list.size() > 0) {
 			export_project->set_current_file(default_filename + "." + extension_list[0]);
 		} else {
 			export_project->set_current_file(default_filename);

@@ -54,7 +54,7 @@ void EditorVisualProfiler::add_frame_metric(const Metric &p_metric) {
 			stack.pop_back();
 		}
 
-		if (stack.size()) {
+		if (stack.size() > 0) {
 			full_name = stack.back()->get() + name;
 		} else {
 			full_name = name;

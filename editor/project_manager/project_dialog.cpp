@@ -600,7 +600,7 @@ void ProjectDialog::ok_pressed() {
 
 				unzClose(pkg);
 
-				if (failed_files.size()) {
+				if (failed_files.size() > 0) {
 					String err_msg = TTR("The following files failed extraction from package:") + "\n\n";
 					for (int i = 0; i < failed_files.size(); i++) {
 						if (i > 15) {

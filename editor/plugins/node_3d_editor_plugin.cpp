@@ -7443,7 +7443,7 @@ void Node3DEditor::_snap_selected_nodes_to_floor() {
 			HashSet<CollisionShape3D *> cs = _get_child_nodes<CollisionShape3D>(sp);
 			bool found_valid_shape = false;
 
-			if (cs.size()) {
+			if (cs.size() > 0) {
 				AABB aabb;
 				HashSet<CollisionShape3D *>::Iterator I = cs.begin();
 				if ((*I)->get_shape().is_valid()) {
@@ -7502,7 +7502,7 @@ void Node3DEditor::_snap_selected_nodes_to_floor() {
 	// Will be set to `true` if at least one node from the selection was successfully snapped
 	bool snapped_to_floor = false;
 
-	if (keys.size()) {
+	if (keys.size() > 0) {
 		// For snapping to be performed, there must be solid geometry under at least one of the selected nodes.
 		// We need to check this before snapping to register the undo/redo action only if needed.
 		for (int i = 0; i < keys.size(); i++) {

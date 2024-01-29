@@ -572,7 +572,7 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent> &p_input) {
 
 					uv_create_poly_prev.push_back(pos);
 					uv_create_uv_prev.push_back(pos);
-					if (uv_create_colors_prev.size()) {
+					if (uv_create_colors_prev.size() > 0) {
 						uv_create_colors_prev.push_back(Color(1, 1, 1));
 					}
 
@@ -627,7 +627,7 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent> &p_input) {
 
 					uv_create_poly_prev.remove_at(closest);
 					uv_create_uv_prev.remove_at(closest);
-					if (uv_create_colors_prev.size()) {
+					if (uv_create_colors_prev.size() > 0) {
 						uv_create_colors_prev.remove_at(closest);
 					}
 
@@ -944,7 +944,7 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent> &p_input) {
 
 			uv_edit_draw->queue_redraw();
 			CanvasItemEditor::get_singleton()->update_viewport();
-		} else if (polygon_create.size()) {
+		} else if (polygon_create.size() > 0) {
 			uv_create_to = mtx.affine_inverse().xform(mm->get_position());
 			uv_edit_draw->queue_redraw();
 		} else if (uv_mode == UV_MODE_PAINT_WEIGHT || uv_mode == UV_MODE_CLEAR_WEIGHT) {
@@ -1210,7 +1210,7 @@ void Polygon2DEditor::_uv_draw() {
 		}
 	}
 
-	if (polygon_create.size()) {
+	if (polygon_create.size() > 0) {
 		for (int i = 0; i < polygon_create.size(); i++) {
 			Vector2 from = uvs[polygon_create[i]];
 			Vector2 to = (i + 1) < polygon_create.size() ? uvs[polygon_create[i + 1]] : uv_create_to;

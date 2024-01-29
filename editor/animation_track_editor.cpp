@@ -3813,7 +3813,7 @@ void AnimationTrackEditor::_insert_track(bool p_reset_wanted, bool p_create_bezi
 
 	TrackIndices next_tracks(animation.ptr(), reset_anim.ptr());
 	bool advance = false;
-	while (insert_data.size()) {
+	while (insert_data.size() > 0) {
 		if (insert_data.front()->get().advance) {
 			advance = true;
 		}
@@ -4155,7 +4155,7 @@ void AnimationTrackEditor::_confirm_insert_list() {
 
 	TrackIndices next_tracks(animation.ptr(), reset_anim.ptr());
 	bool advance = false;
-	while (insert_data.size()) {
+	while (insert_data.size() > 0) {
 		if (insert_data.front()->get().advance) {
 			advance = true;
 		}
@@ -6549,7 +6549,7 @@ void AnimationTrackEditor::_edit_menu_pressed(int p_option) {
 				break;
 			}
 
-			if (selection.size()) {
+			if (selection.size() > 0) {
 				EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 				undo_redo->create_action(TTR("Animation Delete Keys"));
 

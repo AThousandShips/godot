@@ -469,7 +469,7 @@ void MeshInstance3DEditor::_create_uv_lines(int p_layer) {
 
 		int ic;
 
-		if (indices.size()) {
+		if (indices.size() > 0) {
 			ic = indices.size();
 			ri = indices.ptr();
 		} else {

@@ -969,7 +969,7 @@ void AnimationBezierTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 
 				menu->clear();
 				menu->add_icon_item(bezier_icon, TTR("Insert Key Here"), MENU_KEY_INSERT);
-				if (selected || selection.size()) {
+				if (selected || selection.size() > 0) {
 					menu->add_separator();
 					menu->add_icon_item(get_editor_theme_icon(SNAME("Duplicate")), TTR("Duplicate Selected Key(s)"), MENU_KEY_DUPLICATE);
 					menu->add_icon_item(get_editor_theme_icon(SNAME("ActionCut")), TTR("Cut Selected Key(s)"), MENU_KEY_CUT);
@@ -1806,7 +1806,7 @@ void AnimationBezierTrackEdit::paste_keys(real_t p_ofs) {
 }
 
 void AnimationBezierTrackEdit::delete_selection() {
-	if (selection.size()) {
+	if (selection.size() > 0) {
 		EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 		undo_redo->create_action(TTR("Animation Delete Keys"));
 
