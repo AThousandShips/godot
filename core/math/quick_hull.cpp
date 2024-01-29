@@ -313,7 +313,7 @@ Error QuickHull::build(const Vector<Vector3> &p_points, Geometry3D::MeshData &r_
 
 		//erase lit faces
 
-		while (lit_faces.size()) {
+		while (lit_faces.size() > 0) {
 			faces.erase(lit_faces.front()->get());
 			lit_faces.pop_front();
 		}

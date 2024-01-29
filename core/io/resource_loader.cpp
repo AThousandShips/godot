@@ -1054,7 +1054,7 @@ void ResourceLoader::clear_thread_load_tasks() {
 
 	while (true) {
 		bool none_running = true;
-		if (thread_load_tasks.size()) {
+		if (thread_load_tasks.size() > 0) {
 			for (KeyValue<String, ResourceLoader::ThreadLoadTask> &E : thread_load_tasks) {
 				if (E.value.status == THREAD_LOAD_IN_PROGRESS) {
 					if (E.value.cond_var) {

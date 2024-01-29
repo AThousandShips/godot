@@ -2025,7 +2025,7 @@ Object::~Object() {
 	}
 
 	// Drop all connections to the signals of this object.
-	while (signal_map.size()) {
+	while (signal_map.size() > 0) {
 		// Avoid regular iteration so erasing is safe.
 		KeyValue<StringName, SignalData> &E = *signal_map.begin();
 		SignalData *s = &E.value;
@@ -2041,7 +2041,7 @@ Object::~Object() {
 	}
 
 	// Disconnect signals that connect to this object.
-	while (connections.size()) {
+	while (connections.size() > 0) {
 		Connection c = connections.front()->get();
 		bool disconnected = c.signal.get_object()->_disconnect(c.signal.get_name(), c.callable, true);
 		if (unlikely(!disconnected)) {

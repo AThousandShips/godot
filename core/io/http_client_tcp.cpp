@@ -218,7 +218,7 @@ Error HTTPClientTCP::request(Method p_method, const String &p_url, const Vector<
 }
 
 bool HTTPClientTCP::has_response() const {
-	return response_headers.size() != 0;
+	return response_headers.size() > 0;
 }
 
 bool HTTPClientTCP::is_response_chunked() const {

@@ -443,7 +443,7 @@ void UndoRedo::clear_history(bool p_increase_version) {
 	ERR_FAIL_COND(action_level > 0);
 	_discard_redo();
 
-	while (actions.size()) {
+	while (actions.size() > 0) {
 		_pop_history_tail();
 	}
 
