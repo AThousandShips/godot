@@ -1054,7 +1054,7 @@ void MaterialData::update_parameters_internal(const HashMap<StringName, Variant>
 		}
 
 		ubo_data.resize(p_ubo_size);
-		if (ubo_data.size()) {
+		if (ubo_data.size() > 0) {
 			memset(ubo_data.ptrw(), 0, ubo_data.size()); //clear
 		}
 	}

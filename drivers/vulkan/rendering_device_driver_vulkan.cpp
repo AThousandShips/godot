@@ -3026,7 +3026,7 @@ Vector<uint8_t> RenderingDeviceDriverVulkan::shader_compile_binary_from_spirv(Ve
 			}
 		}
 
-		if (specialization_constants.size()) {
+		if (specialization_constants.size() > 0) {
 			memcpy(binptr + offset, specialization_constants.ptr(), sizeof(ShaderBinary::SpecializationConstant) * specialization_constants.size());
 			offset += sizeof(ShaderBinary::SpecializationConstant) * specialization_constants.size();
 		}
@@ -4516,7 +4516,7 @@ RDD::PipelineID RenderingDeviceDriverVulkan::render_pipeline_create(
 	for (uint32_t i = 0; i < shader_info->vk_stages_create_info.size(); i++) {
 		vk_pipeline_stages[i] = shader_info->vk_stages_create_info[i];
 
-		if (p_specialization_constants.size()) {
+		if (p_specialization_constants.size() > 0) {
 			VkSpecializationMapEntry *specialization_map_entries = ALLOCA_ARRAY(VkSpecializationMapEntry, p_specialization_constants.size());
 			for (uint32_t j = 0; j < p_specialization_constants.size(); j++) {
 				specialization_map_entries[j] = {};
@@ -4594,7 +4594,7 @@ RDD::PipelineID RenderingDeviceDriverVulkan::compute_pipeline_create(ShaderID p_
 	pipeline_create_info.stage = shader_info->vk_stages_create_info[0];
 	pipeline_create_info.layout = shader_info->vk_pipeline_layout;
 
-	if (p_specialization_constants.size()) {
+	if (p_specialization_constants.size() > 0) {
 		VkSpecializationMapEntry *specialization_map_entries = ALLOCA_ARRAY(VkSpecializationMapEntry, p_specialization_constants.size());
 		for (uint32_t i = 0; i < p_specialization_constants.size(); i++) {
 			specialization_map_entries[i] = {};
@@ -4963,7 +4963,7 @@ RenderingDeviceDriverVulkan::RenderingDeviceDriverVulkan(RenderingContextDriverV
 }
 
 RenderingDeviceDriverVulkan::~RenderingDeviceDriverVulkan() {
-	while (small_allocs_pools.size()) {
+	while (small_allocs_pools.size() > 0) {
 		HashMap<uint32_t, VmaPool>::Iterator E = small_allocs_pools.begin();
 		vmaDestroyPool(allocator, E->value);
 		small_allocs_pools.remove(E);

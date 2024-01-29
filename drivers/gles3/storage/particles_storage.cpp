@@ -285,7 +285,7 @@ void ParticlesStorage::particles_set_trails(RID p_particles, bool p_enable, doub
 }
 
 void ParticlesStorage::particles_set_trail_bind_poses(RID p_particles, const Vector<Transform3D> &p_bind_poses) {
-	if (p_bind_poses.size() != 0) {
+	if (p_bind_poses.size() > 0) {
 		WARN_PRINT_ONCE_ED("The GL Compatibility rendering backend does not support particle trails.");
 	}
 }
@@ -391,7 +391,7 @@ AABB ParticlesStorage::particles_get_current_aabb(RID p_particles) {
 	Transform3D inv = particles->emission_transform.affine_inverse();
 
 	AABB aabb;
-	if (buffer.size()) {
+	if (buffer.size() > 0) {
 		bool first = true;
 
 		const uint8_t *data_ptr = (const uint8_t *)buffer.ptr();

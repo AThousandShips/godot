@@ -1926,7 +1926,7 @@ void RasterizerCanvasGLES3::occluder_polygon_set_shape(RID p_occluder, const Vec
 
 	Vector<Vector2> lines;
 
-	if (p_points.size()) {
+	if (p_points.size() > 0) {
 		int lc = p_points.size() * 2;
 
 		lines.resize(lc - (p_closed ? 0 : 2));
@@ -1957,7 +1957,7 @@ void RasterizerCanvasGLES3::occluder_polygon_set_shape(RID p_occluder, const Vec
 		oc->index_buffer = 0;
 	}
 
-	if (lines.size()) {
+	if (lines.size() > 0) {
 		Vector<uint8_t> geometry;
 		Vector<uint8_t> indices;
 		int lc = lines.size();
@@ -2033,7 +2033,7 @@ void RasterizerCanvasGLES3::occluder_polygon_set_shape(RID p_occluder, const Vec
 
 	Vector<int> sdf_indices;
 
-	if (p_points.size()) {
+	if (p_points.size() > 0) {
 		if (p_closed) {
 			sdf_indices = Geometry2D::triangulate_polygon(p_points);
 			oc->sdf_is_lines = false;
@@ -2063,7 +2063,7 @@ void RasterizerCanvasGLES3::occluder_polygon_set_shape(RID p_occluder, const Vec
 		oc->sdf_point_count = p_points.size();
 	}
 
-	if (sdf_indices.size()) {
+	if (sdf_indices.size() > 0) {
 		if (oc->sdf_vertex_array == 0) {
 			oc->sdf_index_count = sdf_indices.size();
 			oc->sdf_point_count = p_points.size();
@@ -2486,7 +2486,7 @@ RendererCanvasRender::PolygonID RasterizerCanvasGLES3::request_polygon(const Vec
 		GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_ARRAY_BUFFER, pb.vertex_buffer, vertex_count * stride * sizeof(float), polygon_buffer.ptr(), GL_STATIC_DRAW, "Polygon 2D vertex buffer");
 	}
 
-	if (p_indices.size()) {
+	if (p_indices.size() > 0) {
 		//create indices, as indices were requested
 		Vector<uint8_t> index_buffer;
 		index_buffer.resize(p_indices.size() * sizeof(int32_t));
