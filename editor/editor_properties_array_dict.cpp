@@ -1141,6 +1141,11 @@ void EditorPropertyDictionary::update_property() {
 					editor->setup(Variant::PACKED_COLOR_ARRAY);
 					prop = editor;
 				} break;
+				case Variant::PACKED_VECTOR4_ARRAY: {
+					EditorPropertyArray *editor = memnew(EditorPropertyArray);
+					editor->setup(Variant::PACKED_VECTOR4_ARRAY);
+					prop = editor;
+				} break;
 				default: {
 				}
 			}
