@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef CLIPPER2_ENABLED
+
 #ifndef NAV_MESH_GENERATOR_2D_H
 #define NAV_MESH_GENERATOR_2D_H
 
@@ -96,5 +98,7 @@ public:
 	NavMeshGenerator2D();
 	~NavMeshGenerator2D();
 };
+
+#endif // CLIPPER2_ENABLED
 
 #endif // NAV_MESH_GENERATOR_2D_H
