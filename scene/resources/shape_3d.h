@@ -31,6 +31,8 @@
 #ifndef SHAPE_3D_H
 #define SHAPE_3D_H
 
+#ifndef _3D_DISABLED
+
 #include "core/io/resource.h"
 
 class ArrayMesh;
@@ -72,5 +74,7 @@ public:
 	Shape3D();
 	~Shape3D();
 };
+
+#endif // _3D_DISABLED
 
 #endif // SHAPE_3D_H

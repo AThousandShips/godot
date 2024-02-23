@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "mesh_library.h"
 
 #include "box_shape_3d.h"
@@ -354,3 +356,5 @@ MeshLibrary::MeshLibrary() {
 
 MeshLibrary::~MeshLibrary() {
 }
+
+#endif // _3D_DISABLED

@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "shape_3d.h"
 
 #include "core/os/os.h"
@@ -131,3 +133,5 @@ Shape3D::~Shape3D() {
 	ERR_FAIL_NULL(PhysicsServer3D::get_singleton());
 	PhysicsServer3D::get_singleton()->free(shape);
 }
+
+#endif // _3D_DISABLED

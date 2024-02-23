@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "concave_polygon_shape_3d.h"
 
 #include "servers/physics_server_3d.h"
@@ -116,3 +118,5 @@ ConcavePolygonShape3D::ConcavePolygonShape3D() :
 		Shape3D(PhysicsServer3D::get_singleton()->shape_create(PhysicsServer3D::SHAPE_CONCAVE_POLYGON)) {
 	//set_planes(Vector3(1,1,1));
 }
+
+#endif // _3D_DISABLED

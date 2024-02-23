@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "separation_ray_shape_3d.h"
 
 #include "servers/physics_server_3d.h"
@@ -90,3 +92,5 @@ SeparationRayShape3D::SeparationRayShape3D() :
 	_update_shape();
 	emit_changed();
 }
+
+#endif // _3D_DISABLED

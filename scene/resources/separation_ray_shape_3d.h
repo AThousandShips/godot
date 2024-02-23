@@ -31,6 +31,8 @@
 #ifndef SEPARATION_RAY_SHAPE_3D_H
 #define SEPARATION_RAY_SHAPE_3D_H
 
+#ifndef _3D_DISABLED
+
 #include "scene/resources/shape_3d.h"
 
 class SeparationRayShape3D : public Shape3D {
@@ -54,5 +56,7 @@ public:
 
 	SeparationRayShape3D();
 };
+
+#endif // _3D_DISABLED
 
 #endif // SEPARATION_RAY_SHAPE_3D_H

@@ -31,6 +31,8 @@
 #ifndef CYLINDER_SHAPE_3D_H
 #define CYLINDER_SHAPE_3D_H
 
+#ifndef _3D_DISABLED
+
 #include "scene/resources/shape_3d.h"
 
 class CylinderShape3D : public Shape3D {
@@ -53,5 +55,7 @@ public:
 
 	CylinderShape3D();
 };
+
+#endif // _3D_DISABLED
 
 #endif // CYLINDER_SHAPE_3D_H

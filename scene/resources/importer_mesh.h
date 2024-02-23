@@ -31,6 +31,8 @@
 #ifndef IMPORTER_MESH_H
 #define IMPORTER_MESH_H
 
+#ifndef _3D_DISABLED
+
 #include "core/io/resource.h"
 #include "core/templates/local_vector.h"
 #include "scene/resources/concave_polygon_shape_3d.h"
@@ -131,5 +133,7 @@ public:
 	Ref<ArrayMesh> get_mesh(const Ref<ArrayMesh> &p_base = Ref<ArrayMesh>());
 	void clear();
 };
+
+#endif // _3D_DISABLED
 
 #endif // IMPORTER_MESH_H

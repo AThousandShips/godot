@@ -31,6 +31,8 @@
 #ifndef CONCAVE_POLYGON_SHAPE_3D_H
 #define CONCAVE_POLYGON_SHAPE_3D_H
 
+#ifndef _3D_DISABLED
+
 #include "scene/resources/shape_3d.h"
 
 class ConcavePolygonShape3D : public Shape3D {
@@ -76,5 +78,7 @@ public:
 
 	ConcavePolygonShape3D();
 };
+
+#endif // _3D_DISABLED
 
 #endif // CONCAVE_POLYGON_SHAPE_3D_H

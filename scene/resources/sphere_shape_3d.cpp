@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "sphere_shape_3d.h"
 
 #include "servers/physics_server_3d.h"
@@ -85,3 +87,5 @@ SphereShape3D::SphereShape3D() :
 		Shape3D(PhysicsServer3D::get_singleton()->shape_create(PhysicsServer3D::SHAPE_SPHERE)) {
 	set_radius(0.5);
 }
+
+#endif // _3D_DISABLED

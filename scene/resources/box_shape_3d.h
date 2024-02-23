@@ -31,6 +31,8 @@
 #ifndef BOX_SHAPE_3D_H
 #define BOX_SHAPE_3D_H
 
+#ifndef _3D_DISABLED
+
 #include "scene/resources/shape_3d.h"
 
 class BoxShape3D : public Shape3D {
@@ -55,5 +57,7 @@ public:
 
 	BoxShape3D();
 };
+
+#endif // _3D_DISABLED
 
 #endif // BOX_SHAPE_3D_H

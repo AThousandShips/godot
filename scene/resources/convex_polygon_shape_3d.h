@@ -31,6 +31,8 @@
 #ifndef CONVEX_POLYGON_SHAPE_3D_H
 #define CONVEX_POLYGON_SHAPE_3D_H
 
+#ifndef _3D_DISABLED
+
 #include "scene/resources/shape_3d.h"
 
 class ConvexPolygonShape3D : public Shape3D {
@@ -51,5 +53,7 @@ public:
 
 	ConvexPolygonShape3D();
 };
+
+#endif // _3D_DISABLED
 
 #endif // CONVEX_POLYGON_SHAPE_3D_H

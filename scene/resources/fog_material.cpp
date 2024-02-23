@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "fog_material.h"
 
 #include "core/version.h"
@@ -180,3 +182,5 @@ FogMaterial::FogMaterial() {
 FogMaterial::~FogMaterial() {
 	RS::get_singleton()->material_set_shader(_get_material(), RID());
 }
+
+#endif // _3D_DISABLED

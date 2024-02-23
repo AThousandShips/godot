@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "primitive_meshes.h"
 
 #include "core/config/project_settings.h"
@@ -3653,3 +3655,5 @@ void TextMesh::set_uppercase(bool p_uppercase) {
 bool TextMesh::is_uppercase() const {
 	return uppercase;
 }
+
+#endif // _3D_DISABLED

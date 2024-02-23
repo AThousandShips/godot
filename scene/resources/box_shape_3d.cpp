@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "box_shape_3d.h"
 #include "servers/physics_server_3d.h"
 
@@ -98,3 +100,5 @@ BoxShape3D::BoxShape3D() :
 		Shape3D(PhysicsServer3D::get_singleton()->shape_create(PhysicsServer3D::SHAPE_BOX)) {
 	set_size(Vector3(1, 1, 1));
 }
+
+#endif // _3D_DISABLED

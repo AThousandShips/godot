@@ -31,8 +31,11 @@
 #ifndef ROOT_MOTION_VIEW_H
 #define ROOT_MOTION_VIEW_H
 
+#ifndef _3D_DISABLED
+
 #include "scene/3d/visual_instance_3d.h"
 #include "scene/resources/immediate_mesh.h"
+
 class RootMotionView : public VisualInstance3D {
 	GDCLASS(RootMotionView, VisualInstance3D);
 
@@ -75,5 +78,7 @@ public:
 	RootMotionView();
 	~RootMotionView();
 };
+
+#endif // _3D_DISABLED
 
 #endif // ROOT_MOTION_VIEW_H

@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "world_boundary_shape_3d.h"
 
 #include "servers/physics_server_3d.h"
@@ -87,3 +89,5 @@ WorldBoundaryShape3D::WorldBoundaryShape3D() :
 		Shape3D(PhysicsServer3D::get_singleton()->shape_create(PhysicsServer3D::SHAPE_WORLD_BOUNDARY)) {
 	set_plane(Plane(0, 1, 0, 0));
 }
+
+#endif // _3D_DISABLED

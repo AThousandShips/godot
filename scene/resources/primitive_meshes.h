@@ -31,6 +31,8 @@
 #ifndef PRIMITIVE_MESHES_H
 #define PRIMITIVE_MESHES_H
 
+#ifndef _3D_DISABLED
+
 #include "scene/resources/font.h"
 #include "scene/resources/mesh.h"
 #include "servers/text_server.h"
@@ -685,5 +687,7 @@ public:
 };
 
 VARIANT_ENUM_CAST(RibbonTrailMesh::Shape)
+
+#endif // _3D_DISABLED
 
 #endif // PRIMITIVE_MESHES_H

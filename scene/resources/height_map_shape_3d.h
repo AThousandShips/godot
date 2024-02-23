@@ -31,6 +31,8 @@
 #ifndef HEIGHT_MAP_SHAPE_3D_H
 #define HEIGHT_MAP_SHAPE_3D_H
 
+#ifndef _3D_DISABLED
+
 #include "scene/resources/shape_3d.h"
 
 class HeightMapShape3D : public Shape3D {
@@ -62,5 +64,7 @@ public:
 
 	HeightMapShape3D();
 };
+
+#endif // _3D_DISABLED
 
 #endif // HEIGHT_MAP_SHAPE_3D_H

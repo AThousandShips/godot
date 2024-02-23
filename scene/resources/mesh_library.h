@@ -31,6 +31,8 @@
 #ifndef MESH_LIBRARY_H
 #define MESH_LIBRARY_H
 
+#ifndef _3D_DISABLED
+
 #include "core/io/resource.h"
 #include "core/templates/rb_map.h"
 #include "scene/3d/navigation_region_3d.h"
@@ -102,5 +104,7 @@ public:
 	MeshLibrary();
 	~MeshLibrary();
 };
+
+#endif // _3D_DISABLED
 
 #endif // MESH_LIBRARY_H

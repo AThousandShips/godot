@@ -28,7 +28,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "convex_polygon_shape_3d.h"
+
 #include "core/math/convex_hull.h"
 #include "servers/physics_server_3d.h"
 
@@ -88,3 +91,5 @@ void ConvexPolygonShape3D::_bind_methods() {
 ConvexPolygonShape3D::ConvexPolygonShape3D() :
 		Shape3D(PhysicsServer3D::get_singleton()->shape_create(PhysicsServer3D::SHAPE_CONVEX_POLYGON)) {
 }
+
+#endif // _3D_DISABLED

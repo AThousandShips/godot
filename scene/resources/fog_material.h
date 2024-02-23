@@ -31,6 +31,8 @@
 #ifndef FOG_MATERIAL_H
 #define FOG_MATERIAL_H
 
+#ifndef _3D_DISABLED
+
 #include "scene/resources/material.h"
 
 class FogMaterial : public Material {
@@ -83,5 +85,7 @@ public:
 	FogMaterial();
 	virtual ~FogMaterial();
 };
+
+#endif // _3D_DISABLED
 
 #endif // FOG_MATERIAL_H

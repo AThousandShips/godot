@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "cylinder_shape_3d.h"
 
 #include "servers/physics_server_3d.h"
@@ -108,3 +110,5 @@ CylinderShape3D::CylinderShape3D() :
 		Shape3D(PhysicsServer3D::get_singleton()->shape_create(PhysicsServer3D::SHAPE_CYLINDER)) {
 	_update_shape();
 }
+
+#endif // _3D_DISABLED

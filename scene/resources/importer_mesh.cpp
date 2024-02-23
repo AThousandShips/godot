@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "importer_mesh.h"
 
 #include "core/io/marshalls.h"
@@ -1376,3 +1378,5 @@ void ImporterMesh::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "_data", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR), "_set_data", "_get_data");
 }
+
+#endif // _3D_DISABLED

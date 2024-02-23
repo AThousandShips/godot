@@ -31,6 +31,8 @@
 #ifndef SKY_MATERIAL_H
 #define SKY_MATERIAL_H
 
+#ifndef _3D_DISABLED
+
 #include "core/templates/rid.h"
 #include "scene/resources/material.h"
 
@@ -231,5 +233,7 @@ public:
 	PhysicalSkyMaterial();
 	~PhysicalSkyMaterial();
 };
+
+#endif // _3D_DISABLED
 
 #endif // SKY_MATERIAL_H
