@@ -756,6 +756,7 @@ bool Node3D::is_set_as_top_level() const {
 	return data.top_level;
 }
 
+#ifndef _3D_DISABLED
 Ref<World3D> Node3D::get_world_3d() const {
 	ERR_READ_THREAD_GUARD_V(Ref<World3D>()); // World3D can only be set from main thread, so it's safe to obtain on threads.
 	ERR_FAIL_COND_V(!is_inside_world(), Ref<World3D>());
@@ -763,6 +764,7 @@ Ref<World3D> Node3D::get_world_3d() const {
 
 	return data.viewport->find_world_3d();
 }
+#endif // _3D_DISABLED
 
 void Node3D::_propagate_visibility_changed() {
 	notification(NOTIFICATION_VISIBILITY_CHANGED);

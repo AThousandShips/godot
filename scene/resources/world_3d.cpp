@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifndef _3D_DISABLED
+
 #include "world_3d.h"
 
 #include "core/config/project_settings.h"
@@ -186,3 +188,5 @@ World3D::~World3D() {
 		NavigationServer3D::get_singleton()->free(navigation_map);
 	}
 }
+
+#endif // _3D_DISABLED

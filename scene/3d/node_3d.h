@@ -169,7 +169,9 @@ public:
 
 	Node3D *get_parent_node_3d() const;
 
+#ifndef _3D_DISABLED
 	Ref<World3D> get_world_3d() const;
+#endif // _3D_DISABLED
 
 	void set_position(const Vector3 &p_position);
 

@@ -31,6 +31,8 @@
 #ifndef WORLD_3D_H
 #define WORLD_3D_H
 
+#ifndef _3D_DISABLED
+
 #include "core/io/resource.h"
 #include "scene/resources/compositor.h"
 #include "scene/resources/environment.h"
@@ -89,5 +91,7 @@ public:
 	World3D();
 	~World3D();
 };
+
+#endif // _3D_DISABLED
 
 #endif // WORLD_3D_H
