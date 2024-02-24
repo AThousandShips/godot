@@ -69,6 +69,7 @@ struct VariantUtilityFunctions {
 	static int64_t signi(int64_t x);
 	static double pow(double x, double y);
 	static double log(double x);
+	static double logb(double x, double b);
 	static double exp(double x);
 	static bool is_nan(double x);
 	static bool is_inf(double x);

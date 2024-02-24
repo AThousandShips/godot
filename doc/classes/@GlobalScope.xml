@@ -689,6 +689,14 @@
 				[b]Note:[/b] The logarithm of [code]0[/code] returns [code]-inf[/code], while negative values return [code]-nan[/code].
 			</description>
 		</method>
+		<method name="logb">
+			<return type="float" />
+			<param index="0" name="x" type="float" />
+			<param index="1" name="b" type="float" />
+			<description>
+				Returns the logarithm of [param x] in base [param b], this is the same as [code]log(x) / log(b)[/code].
+			</description>
+		</method>
 		<method name="max" qualifiers="vararg">
 			<return type="Variant" />
 			<description>
