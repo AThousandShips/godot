@@ -53,7 +53,7 @@ class CharProxy {
 	CowData<T> &_cowdata;
 	static const T _null = 0;
 
-	_FORCE_INLINE_ CharProxy(const int &p_index, CowData<T> &p_cowdata) :
+	_FORCE_INLINE_ CharProxy(int p_index, CowData<T> &p_cowdata) :
 			_index(p_index),
 			_cowdata(p_cowdata) {}
 
@@ -98,7 +98,7 @@ public:
 	Error resize(int p_size) { return _cowdata.resize(p_size); }
 
 	_FORCE_INLINE_ char16_t get(int p_index) const { return _cowdata.get(p_index); }
-	_FORCE_INLINE_ void set(int p_index, const char16_t &p_elem) { _cowdata.set(p_index, p_elem); }
+	_FORCE_INLINE_ void set(int p_index, char16_t p_elem) { _cowdata.set(p_index, p_elem); }
 	_FORCE_INLINE_ const char16_t &operator[](int p_index) const {
 		if (unlikely(p_index == _cowdata.size())) {
 			return _null;
@@ -118,7 +118,7 @@ public:
 	Char16String &operator+=(char16_t p_char);
 	int length() const { return size() ? size() - 1 : 0; }
 	const char16_t *get_data() const;
-	operator const char16_t *() const { return get_data(); };
+	operator const char16_t *() const { return get_data(); }
 
 protected:
 	void copy_from(const char16_t *p_cstr);
@@ -139,7 +139,7 @@ public:
 	Error resize(int p_size) { return _cowdata.resize(p_size); }
 
 	_FORCE_INLINE_ char get(int p_index) const { return _cowdata.get(p_index); }
-	_FORCE_INLINE_ void set(int p_index, const char &p_elem) { _cowdata.set(p_index, p_elem); }
+	_FORCE_INLINE_ void set(int p_index, char p_elem) { _cowdata.set(p_index, p_elem); }
 	_FORCE_INLINE_ const char &operator[](int p_index) const {
 		if (unlikely(p_index == _cowdata.size())) {
 			return _null;
@@ -160,7 +160,7 @@ public:
 	CharString &operator+=(char p_char);
 	int length() const { return size() ? size() - 1 : 0; }
 	const char *get_data() const;
-	operator const char *() const { return get_data(); };
+	operator const char *() const { return get_data(); }
 
 protected:
 	void copy_from(const char *p_cstr);
@@ -186,17 +186,17 @@ class String {
 	static const char32_t _replacement_char;
 
 	void copy_from(const char *p_cstr);
-	void copy_from(const char *p_cstr, const int p_clip_to);
+	void copy_from(const char *p_cstr, int p_clip_to);
 	void copy_from(const wchar_t *p_cstr);
-	void copy_from(const wchar_t *p_cstr, const int p_clip_to);
+	void copy_from(const wchar_t *p_cstr, int p_clip_to);
 	void copy_from(const char32_t *p_cstr);
-	void copy_from(const char32_t *p_cstr, const int p_clip_to);
+	void copy_from(const char32_t *p_cstr, int p_clip_to);
 
-	void copy_from(const char32_t &p_char);
+	void copy_from(char32_t p_char);
 
-	void copy_from_unchecked(const char32_t *p_char, const int p_length);
+	void copy_from_unchecked(const char32_t *p_char, int p_length);
 
-	bool _base_is_subsequence_of(const String &p_string, bool case_insensitive) const;
+	bool _base_is_subsequence_of(const String &p_string, bool p_case_insensitive) const;
 	int _count(const String &p_string, int p_from, int p_to, bool p_case_insensitive) const;
 	String _camelcase_to_underscore() const;
 
@@ -213,7 +213,7 @@ public:
 	_FORCE_INLINE_ void clear() { resize(0); }
 
 	_FORCE_INLINE_ char32_t get(int p_index) const { return _cowdata.get(p_index); }
-	_FORCE_INLINE_ void set(int p_index, const char32_t &p_elem) { _cowdata.set(p_index, p_elem); }
+	_FORCE_INLINE_ void set(int p_index, char32_t p_elem) { _cowdata.set(p_index, p_elem); }
 	_FORCE_INLINE_ int size() const { return _cowdata.size(); }
 	Error resize(int p_size) { return _cowdata.resize(p_size); }
 
@@ -231,7 +231,7 @@ public:
 	String operator+(const String &p_str) const;
 	String operator+(char32_t p_char) const;
 
-	String &operator+=(const String &);
+	String &operator+=(const String &p_str);
 	String &operator+=(char32_t p_char);
 	String &operator+=(const char *p_str);
 	String &operator+=(const wchar_t *p_str);
@@ -283,7 +283,7 @@ public:
 	String substr(int p_from, int p_chars = -1) const;
 	int find(const String &p_str, int p_from = 0) const; ///< return <0 if failed
 	int find(const char *p_str, int p_from = 0) const; ///< return <0 if failed
-	int find_char(const char32_t &p_char, int p_from = 0) const; ///< return <0 if failed
+	int find_char(char32_t p_char, int p_from = 0) const; ///< return <0 if failed
 	int findn(const String &p_str, int p_from = 0) const; ///< return <0 if failed, case insensitive
 	int rfind(const String &p_str, int p_from = -1) const; ///< return <0 if failed
 	int rfindn(const String &p_str, int p_from = -1) const; ///< return <0 if failed, case insensitive
@@ -299,7 +299,7 @@ public:
 	bool is_quoted() const;
 	Vector<String> bigrams() const;
 	float similarity(const String &p_string) const;
-	String format(const Variant &values, const String &placeholder = "{_}") const;
+	String format(const Variant &p_values, const String &p_placeholder = "{_}") const;
 	String replace_first(const String &p_key, const String &p_with) const;
 	String replace(const String &p_key, const String &p_with) const;
 	String replace(const char *p_key, const char *p_with) const;
@@ -312,16 +312,16 @@ public:
 	String pad_zeros(int p_digits) const;
 	String trim_prefix(const String &p_prefix) const;
 	String trim_suffix(const String &p_suffix) const;
-	String lpad(int min_length, const String &character = " ") const;
-	String rpad(int min_length, const String &character = " ") const;
-	String sprintf(const Array &values, bool *error) const;
-	String quote(const String &quotechar = "\"") const;
+	String lpad(int p_min_length, const String &p_character = " ") const;
+	String rpad(int p_min_length, const String &p_character = " ") const;
+	String sprintf(const Array &p_values, bool *r_error) const;
+	String quote(const String &p_quotechar = "\"") const;
 	String unquote() const;
 	static String num(double p_num, int p_decimals = -1);
 	static String num_scientific(double p_num);
 	static String num_real(double p_num, bool p_trailing = true);
-	static String num_int64(int64_t p_num, int base = 10, bool capitalize_hex = false);
-	static String num_uint64(uint64_t p_num, int base = 10, bool capitalize_hex = false);
+	static String num_int64(int64_t p_num, int p_base = 10, bool p_capitalize_hex = false);
+	static String num_uint64(uint64_t p_num, int p_base = 10, bool p_capitalize_hex = false);
 	static String chr(char32_t p_char);
 	static String md5(const uint8_t *p_md5);
 	static String hex_encode_buffer(const uint8_t *p_buffer, int p_len);
@@ -375,7 +375,7 @@ public:
 	String right(int p_len) const;
 	String indent(const String &p_prefix) const;
 	String dedent() const;
-	String strip_edges(bool left = true, bool right = true) const;
+	String strip_edges(bool p_left = true, bool p_right = true) const;
 	String strip_escapes() const;
 	String lstrip(const String &p_chars) const;
 	String rstrip(const String &p_chars) const;
@@ -595,17 +595,17 @@ _FORCE_INLINE_ String ETRN(const String &p_text, const String &p_text_plural, in
 
 bool select_word(const String &p_s, int p_col, int &r_beg, int &r_end);
 
-_FORCE_INLINE_ void sarray_add_str(Vector<String> &arr) {
+_FORCE_INLINE_ void sarray_add_str(Vector<String> &r_arr) {
 }
 
-_FORCE_INLINE_ void sarray_add_str(Vector<String> &arr, const String &p_str) {
-	arr.push_back(p_str);
+_FORCE_INLINE_ void sarray_add_str(Vector<String> &r_arr, const String &p_str) {
+	r_arr.push_back(p_str);
 }
 
 template <class... P>
-_FORCE_INLINE_ void sarray_add_str(Vector<String> &arr, const String &p_str, P... p_args) {
-	arr.push_back(p_str);
-	sarray_add_str(arr, p_args...);
+_FORCE_INLINE_ void sarray_add_str(Vector<String> &r_arr, const String &p_str, P... p_args) {
+	r_arr.push_back(p_str);
+	sarray_add_str(r_arr, p_args...);
 }
 
 template <class... P>

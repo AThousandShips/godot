@@ -55,8 +55,8 @@
 
 static const int MAX_DECIMALS = 32;
 
-static _FORCE_INLINE_ char32_t lower_case(char32_t c) {
-	return (is_ascii_upper_case(c) ? (c + ('a' - 'A')) : c);
+static _FORCE_INLINE_ char32_t lower_case(char32_t p_c) {
+	return (is_ascii_upper_case(p_c) ? (p_c + ('a' - 'A')) : p_c);
 }
 
 const char CharString::_null = 0;
@@ -319,7 +319,7 @@ void String::copy_from(const char *p_cstr) {
 	}
 }
 
-void String::copy_from(const char *p_cstr, const int p_clip_to) {
+void String::copy_from(const char *p_cstr, int p_clip_to) {
 	// copy Latin-1 encoded c-string directly
 	if (!p_cstr) {
 		resize(0);
@@ -367,7 +367,7 @@ void String::copy_from(const wchar_t *p_cstr) {
 #endif
 }
 
-void String::copy_from(const wchar_t *p_cstr, const int p_clip_to) {
+void String::copy_from(const wchar_t *p_cstr, int p_clip_to) {
 #ifdef WINDOWS_ENABLED
 	// wchar_t is 16-bit, parse as UTF-16
 	parse_utf16((const char16_t *)p_cstr, p_clip_to);
@@ -377,7 +377,7 @@ void String::copy_from(const wchar_t *p_cstr, const int p_clip_to) {
 #endif
 }
 
-void String::copy_from(const char32_t &p_char) {
+void String::copy_from(char32_t p_char) {
 	if (p_char == 0) {
 		print_unicode_error("NUL character", true);
 		return;
@@ -420,7 +420,7 @@ void String::copy_from(const char32_t *p_cstr) {
 	copy_from_unchecked(p_cstr, len);
 }
 
-void String::copy_from(const char32_t *p_cstr, const int p_clip_to) {
+void String::copy_from(const char32_t *p_cstr, int p_clip_to) {
 	if (!p_cstr) {
 		resize(0);
 		return;
@@ -444,7 +444,7 @@ void String::copy_from(const char32_t *p_cstr, const int p_clip_to) {
 // p_char != nullptr
 // p_length > 0
 // p_length <= p_char strlen
-void String::copy_from_unchecked(const char32_t *p_char, const int p_length) {
+void String::copy_from_unchecked(const char32_t *p_char, int p_length) {
 	resize(p_length + 1);
 	char32_t *dst = ptrw();
 	dst[p_length] = 0;
@@ -1438,13 +1438,13 @@ Vector<int> String::split_ints_mk(const Vector<String> &p_splitters, bool p_allo
 	return ret;
 }
 
-String String::join(const Vector<String> &parts) const {
+String String::join(const Vector<String> &p_parts) const {
 	String ret;
-	for (int i = 0; i < parts.size(); ++i) {
+	for (int i = 0; i < p_parts.size(); ++i) {
 		if (i > 0) {
 			ret += *this;
 		}
-		ret += parts[i];
+		ret += p_parts[i];
 	}
 	return ret;
 }
@@ -1586,14 +1586,14 @@ String String::num(double p_num, int p_decimals) {
 	return buf;
 }
 
-String String::num_int64(int64_t p_num, int base, bool capitalize_hex) {
+String String::num_int64(int64_t p_num, int p_base, bool p_capitalize_hex) {
 	bool sign = p_num < 0;
 
 	int64_t n = p_num;
 
 	int chars = 0;
 	do {
-		n /= base;
+		n /= p_base;
 		chars++;
 	} while (n);
 
@@ -1606,15 +1606,15 @@ String String::num_int64(int64_t p_num, int base, bool capitalize_hex) {
 	c[chars] = 0;
 	n = p_num;
 	do {
-		int mod = ABS(n % base);
+		int mod = ABS(n % p_base);
 		if (mod >= 10) {
-			char a = (capitalize_hex ? 'A' : 'a');
+			char a = (p_capitalize_hex ? 'A' : 'a');
 			c[--chars] = a + (mod - 10);
 		} else {
 			c[--chars] = '0' + mod;
 		}
 
-		n /= base;
+		n /= p_base;
 	} while (n);
 
 	if (sign) {
@@ -1624,12 +1624,12 @@ String String::num_int64(int64_t p_num, int base, bool capitalize_hex) {
 	return s;
 }
 
-String String::num_uint64(uint64_t p_num, int base, bool capitalize_hex) {
+String String::num_uint64(uint64_t p_num, int p_base, bool p_capitalize_hex) {
 	uint64_t n = p_num;
 
 	int chars = 0;
 	do {
-		n /= base;
+		n /= p_base;
 		chars++;
 	} while (n);
 
@@ -1639,15 +1639,15 @@ String String::num_uint64(uint64_t p_num, int base, bool capitalize_hex) {
 	c[chars] = 0;
 	n = p_num;
 	do {
-		int mod = n % base;
+		int mod = n % p_base;
 		if (mod >= 10) {
-			char a = (capitalize_hex ? 'A' : 'a');
+			char a = (p_capitalize_hex ? 'A' : 'a');
 			c[--chars] = a + (mod - 10);
 		} else {
 			c[--chars] = '0' + mod;
 		}
 
-		n /= base;
+		n /= p_base;
 	} while (n);
 
 	return s;
@@ -3087,7 +3087,7 @@ int String::find(const char *p_str, int p_from) const {
 	return -1;
 }
 
-int String::find_char(const char32_t &p_char, int p_from) const {
+int String::find_char(char32_t p_char, int p_from) const {
 	return _cowdata.find(p_char, p_from);
 }
 
@@ -3408,7 +3408,7 @@ int String::countn(const String &p_string, int p_from, int p_to) const {
 	return _count(p_string, p_from, p_to, true);
 }
 
-bool String::_base_is_subsequence_of(const String &p_string, bool case_insensitive) const {
+bool String::_base_is_subsequence_of(const String &p_string, bool p_case_insensitive) const {
 	int len = length();
 	if (len == 0) {
 		// Technically an empty string is subsequence of any string
@@ -3424,7 +3424,7 @@ bool String::_base_is_subsequence_of(const String &p_string, bool case_insensiti
 
 	for (; *src && *tgt; tgt++) {
 		bool match = false;
-		if (case_insensitive) {
+		if (p_case_insensitive) {
 			char32_t srcc = _find_lower(*src);
 			char32_t tgtc = _find_lower(*tgt);
 			match = srcc == tgtc;
@@ -3515,11 +3515,11 @@ bool String::matchn(const String &p_wildcard) const {
 	return _wildcard_match(p_wildcard.get_data(), get_data(), false);
 }
 
-String String::format(const Variant &values, const String &placeholder) const {
+String String::format(const Variant &p_values, const String &p_placeholder) const {
 	String new_string = String(ptr());
 
-	if (values.get_type() == Variant::ARRAY) {
-		Array values_arr = values;
+	if (p_values.get_type() == Variant::ARRAY) {
+		Array values_arr = p_values;
 
 		for (int i = 0; i < values_arr.size(); i++) {
 			String i_as_str = String::num_int64(i);
@@ -3534,7 +3534,7 @@ String String::format(const Variant &values, const String &placeholder) const {
 					Variant v_val = value_arr[1];
 					String val = v_val;
 
-					new_string = new_string.replace(placeholder.replace("_", key), val);
+					new_string = new_string.replace(p_placeholder.replace("_", key), val);
 				} else {
 					ERR_PRINT(String("STRING.format Inner Array size != 2 ").ascii().get_data());
 				}
@@ -3542,20 +3542,20 @@ String String::format(const Variant &values, const String &placeholder) const {
 				Variant v_val = values_arr[i];
 				String val = v_val;
 
-				if (placeholder.find("_") > -1) {
-					new_string = new_string.replace(placeholder.replace("_", i_as_str), val);
+				if (p_placeholder.find("_") > -1) {
+					new_string = new_string.replace(p_placeholder.replace("_", i_as_str), val);
 				} else {
-					new_string = new_string.replace_first(placeholder, val);
+					new_string = new_string.replace_first(p_placeholder, val);
 				}
 			}
 		}
-	} else if (values.get_type() == Variant::DICTIONARY) {
-		Dictionary d = values;
+	} else if (p_values.get_type() == Variant::DICTIONARY) {
+		Dictionary d = p_values;
 		List<Variant> keys;
 		d.get_key_list(&keys);
 
 		for (const Variant &key : keys) {
-			new_string = new_string.replace(placeholder.replace("_", key), d[key]);
+			new_string = new_string.replace(p_placeholder.replace("_", key), d[key]);
 		}
 	} else {
 		ERR_PRINT(String("Invalid type: use Array or Dictionary.").ascii().get_data());
@@ -3785,11 +3785,11 @@ String String::dedent() const {
 	return new_string;
 }
 
-String String::strip_edges(bool left, bool right) const {
+String String::strip_edges(bool p_left, bool p_right) const {
 	int len = length();
 	int beg = 0, end = len;
 
-	if (left) {
+	if (p_left) {
 		for (int i = 0; i < len; i++) {
 			if (operator[](i) <= 32) {
 				beg++;
@@ -3799,7 +3799,7 @@ String String::strip_edges(bool left, bool right) const {
 		}
 	}
 
-	if (right) {
+	if (p_right) {
 		for (int i = len - 1; i >= 0; i--) {
 			if (operator[](i) <= 32) {
 				end--;
@@ -4823,21 +4823,21 @@ String rtoss(double p_val) {
 }
 
 // Right-pad with a character.
-String String::rpad(int min_length, const String &character) const {
+String String::rpad(int p_min_length, const String &p_character) const {
 	String s = *this;
-	int padding = min_length - s.length();
+	int padding = p_min_length - s.length();
 	if (padding > 0) {
-		s += character.repeat(padding);
+		s += p_character.repeat(padding);
 	}
 	return s;
 }
 
 // Left-pad with a character.
-String String::lpad(int min_length, const String &character) const {
+String String::lpad(int p_min_length, const String &p_character) const {
 	String s = *this;
-	int padding = min_length - s.length();
+	int padding = p_min_length - s.length();
 	if (padding > 0) {
-		s = character.repeat(padding) + s;
+		s = p_character.repeat(padding) + s;
 	}
 	return s;
 }
@@ -4846,7 +4846,7 @@ String String::lpad(int min_length, const String &character) const {
 //   "fish %s pie" % "frog"
 //   "fish %s %d pie" % ["frog", 12]
 // In case of an error, the string returned is the error description and "error" is true.
-String String::sprintf(const Array &values, bool *error) const {
+String String::sprintf(const Array &p_values, bool *r_error) const {
 	String formatted;
 	char32_t *self = (char32_t *)get_data();
 	bool in_format = false;
@@ -4859,8 +4859,8 @@ String String::sprintf(const Array &values, bool *error) const {
 	bool show_sign = false;
 	bool as_unsigned = false;
 
-	if (error) {
-		*error = true;
+	if (r_error) {
+		*r_error = true;
 	}
 
 	for (; *self; self++) {
@@ -4877,15 +4877,15 @@ String String::sprintf(const Array &values, bool *error) const {
 				case 'o': // Octal
 				case 'x': // Hexadecimal (lowercase)
 				case 'X': { // Hexadecimal (uppercase)
-					if (value_index >= values.size()) {
+					if (value_index >= p_values.size()) {
 						return "not enough arguments for format string";
 					}
 
-					if (!values[value_index].is_num()) {
+					if (!p_values[value_index].is_num()) {
 						return "a number is required";
 					}
 
-					int64_t value = values[value_index];
+					int64_t value = p_values[value_index];
 					int base = 16;
 					bool capitalize = false;
 					switch (c) {
@@ -4943,15 +4943,15 @@ String String::sprintf(const Array &values, bool *error) const {
 					break;
 				}
 				case 'f': { // Float
-					if (value_index >= values.size()) {
+					if (value_index >= p_values.size()) {
 						return "not enough arguments for format string";
 					}
 
-					if (!values[value_index].is_num()) {
+					if (!p_values[value_index].is_num()) {
 						return "a number is required";
 					}
 
-					double value = values[value_index];
+					double value = p_values[value_index];
 					bool is_negative = signbit(value);
 					String str = String::num(Math::abs(value), min_decimals);
 					const bool is_finite = Math::is_finite(value);
@@ -4988,12 +4988,12 @@ String String::sprintf(const Array &values, bool *error) const {
 					break;
 				}
 				case 'v': { // Vector2/3/4/2i/3i/4i
-					if (value_index >= values.size()) {
+					if (value_index >= p_values.size()) {
 						return "not enough arguments for format string";
 					}
 
 					int count;
-					switch (values[value_index].get_type()) {
+					switch (p_values[value_index].get_type()) {
 						case Variant::VECTOR2:
 						case Variant::VECTOR2I: {
 							count = 2;
@@ -5011,7 +5011,7 @@ String String::sprintf(const Array &values, bool *error) const {
 						}
 					}
 
-					Vector4 vec = values[value_index];
+					Vector4 vec = p_values[value_index];
 					String str = "(";
 					for (int i = 0; i < count; i++) {
 						double val = vec[i];
@@ -5058,11 +5058,11 @@ String String::sprintf(const Array &values, bool *error) const {
 					break;
 				}
 				case 's': { // String
-					if (value_index >= values.size()) {
+					if (value_index >= p_values.size()) {
 						return "not enough arguments for format string";
 					}
 
-					String str = values[value_index];
+					String str = p_values[value_index];
 					// Padding.
 					if (left_justified) {
 						str = str.rpad(min_chars);
@@ -5076,14 +5076,14 @@ String String::sprintf(const Array &values, bool *error) const {
 					break;
 				}
 				case 'c': {
-					if (value_index >= values.size()) {
+					if (value_index >= p_values.size()) {
 						return "not enough arguments for format string";
 					}
 
 					// Convert to character.
 					String str;
-					if (values[value_index].is_num()) {
-						int value = values[value_index];
+					if (p_values[value_index].is_num()) {
+						int value = p_values[value_index];
 						if (value < 0) {
 							return "unsigned integer is lower than minimum";
 						} else if (value >= 0xd800 && value <= 0xdfff) {
@@ -5091,9 +5091,9 @@ String String::sprintf(const Array &values, bool *error) const {
 						} else if (value > 0x10ffff) {
 							return "unsigned integer is greater than maximum";
 						}
-						str = chr(values[value_index]);
-					} else if (values[value_index].get_type() == Variant::STRING) {
-						str = values[value_index];
+						str = chr(p_values[value_index]);
+					} else if (p_values[value_index].get_type() == Variant::STRING) {
+						str = p_values[value_index];
 						if (str.length() != 1) {
 							return "%c requires number or single-character string";
 						}
@@ -5163,19 +5163,19 @@ String String::sprintf(const Array &values, bool *error) const {
 				}
 
 				case '*': { // Dynamic width, based on value.
-					if (value_index >= values.size()) {
+					if (value_index >= p_values.size()) {
 						return "not enough arguments for format string";
 					}
 
-					Variant::Type value_type = values[value_index].get_type();
-					if (!values[value_index].is_num() &&
+					Variant::Type value_type = p_values[value_index].get_type();
+					if (!p_values[value_index].is_num() &&
 							value_type != Variant::VECTOR2 && value_type != Variant::VECTOR2I &&
 							value_type != Variant::VECTOR3 && value_type != Variant::VECTOR3I &&
 							value_type != Variant::VECTOR4 && value_type != Variant::VECTOR4I) {
 						return "* wants number or vector";
 					}
 
-					int size = values[value_index];
+					int size = p_values[value_index];
 
 					if (in_decimals) {
 						min_decimals = size;
@@ -5213,18 +5213,18 @@ String String::sprintf(const Array &values, bool *error) const {
 		return "incomplete format";
 	}
 
-	if (value_index != values.size()) {
+	if (value_index != p_values.size()) {
 		return "not all arguments converted during string formatting";
 	}
 
-	if (error) {
-		*error = false;
+	if (r_error) {
+		*r_error = false;
 	}
 	return formatted;
 }
 
-String String::quote(const String &quotechar) const {
-	return quotechar + *this + quotechar;
+String String::quote(const String &p_quotechar) const {
+	return p_quotechar + *this + p_quotechar;
 }
 
 String String::unquote() const {
