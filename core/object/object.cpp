@@ -1099,9 +1099,6 @@ Error Object::emit_signalp(const StringName &p_name, const Variant **p_args, int
 	// Check emitting for recursion.
 	ERR_FAIL_COND_V_MSG(emitting_signals.has(p_name), ERR_UNAVAILABLE, "Can't emit signal " + String("\"") + p_name + "\", already emitting.");
 
-	// Mark as emitting to prevent recursion.
-	emitting_signals.insert(p_name);
-
 	// If this is a ref-counted object, prevent it from being destroyed during signal emission,
 	// which is needed in certain edge cases; e.g., https://github.com/godotengine/godot/issues/73889.
 	Ref<RefCounted> rc = Ref<RefCounted>(Object::cast_to<RefCounted>(this));
@@ -1159,8 +1156,15 @@ Error Object::emit_signalp(const StringName &p_name, const Variant **p_args, int
 		} else {
 			Callable::CallError ce;
 			_emitting = true;
+			if (!(c.flags & CONNECT_ONE_SHOT)) {
+				// Mark as emitting to prevent recursion.
+				emitting_signals.insert(p_name);
+			}
 			Variant ret;
 			c.callable.callp(args, argc, ret, ce);
+			if (!(c.flags & CONNECT_ONE_SHOT)) {
+				emitting_signals.erase(p_name);
+			}
 			_emitting = false;
 
 			if (ce.error != Callable::CallError::CALL_OK) {
@@ -1179,8 +1183,6 @@ Error Object::emit_signalp(const StringName &p_name, const Variant **p_args, int
 			}
 		}
 	}
-
-	emitting_signals.erase(p_name);
 
 	return err;
 }
