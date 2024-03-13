@@ -1110,8 +1110,29 @@ Error Object::emit_signalp(const StringName &p_name, const Variant **p_args, int
 		uint32_t idx = 0;
 		for (const KeyValue<Callable, SignalData::Slot> &slot_kv : s->slot_map) {
 			slot_conns[idx++] = slot_kv.value.conn;
+
+			bool disconnect = slot_kv.value.conn.flags & CONNECT_ONE_SHOT;
+#ifdef TOOLS_ENABLED
+			if (disconnect && (slot_kv.value.conn.flags & CONNECT_PERSIST) && Engine::get_singleton()->is_editor_hint()) {
+				// This signal was connected from the editor, and is being edited. Just don't disconnect for now.
+				disconnect = false;
+			}
+#endif
+			if (disconnect) {
+				_ObjectSignalDisconnectData dd;
+				dd.signal = p_name;
+				dd.callable = slot_kv.value.conn.callable;
+				disconnect_data.push_back(dd);
+			}
 		}
 		DEV_ASSERT(idx == s->slot_map.size());
+	}
+
+	while (!disconnect_data.is_empty()) {
+		const _ObjectSignalDisconnectData &dd = disconnect_data.front()->get();
+
+		_disconnect(dd.signal, dd.callable);
+		disconnect_data.pop_front();
 	}
 
 	OBJ_DEBUG_LOCK
@@ -1151,27 +1172,6 @@ Error Object::emit_signalp(const StringName &p_name, const Variant **p_args, int
 				}
 			}
 		}
-
-		bool disconnect = c.flags & CONNECT_ONE_SHOT;
-#ifdef TOOLS_ENABLED
-		if (disconnect && (c.flags & CONNECT_PERSIST) && Engine::get_singleton()->is_editor_hint()) {
-			//this signal was connected from the editor, and is being edited. just don't disconnect for now
-			disconnect = false;
-		}
-#endif
-		if (disconnect) {
-			_ObjectSignalDisconnectData dd;
-			dd.signal = p_name;
-			dd.callable = c.callable;
-			disconnect_data.push_back(dd);
-		}
-	}
-
-	while (!disconnect_data.is_empty()) {
-		const _ObjectSignalDisconnectData &dd = disconnect_data.front()->get();
-
-		_disconnect(dd.signal, dd.callable);
-		disconnect_data.pop_front();
 	}
 
 	return err;
