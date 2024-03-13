@@ -622,6 +622,7 @@ private:
 	};
 
 	HashMap<StringName, SignalData> signal_map;
+	HashSet<StringName> emitting_signals;
 	List<Connection> connections;
 #ifdef DEBUG_ENABLED
 	SafeRefCount _lock_index;
