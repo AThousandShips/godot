@@ -73,98 +73,98 @@
 # Modules
 
 ## Audio (+ video)
-/modules/interactive_music/             @godotengine/audio
-/modules/interactive_music/doc_classes/ @godotengine/audio @godotengine/documentation
-/modules/minimp3/                       @godotengine/audio
-/modules/minimp3/doc_classes/           @godotengine/audio @godotengine/documentation
-/modules/ogg/                           @godotengine/audio
-/modules/ogg/doc_classes/               @godotengine/audio @godotengine/documentation
-/modules/theora/                        @godotengine/audio
-/modules/theora/doc_classes/            @godotengine/audio @godotengine/documentation
-/modules/vorbis/                        @godotengine/audio
-/modules/vorbis/doc_classes/            @godotengine/audio @godotengine/documentation
+/modules/interactive_music/             @godotengine/audio @AThousandShips
+/modules/interactive_music/doc_classes/ @godotengine/audio @godotengine/documentation @AThousandShips
+/modules/minimp3/                       @godotengine/audio @AThousandShips
+/modules/minimp3/doc_classes/           @godotengine/audio @godotengine/documentation @AThousandShips
+/modules/ogg/                           @godotengine/audio @AThousandShips
+/modules/ogg/doc_classes/               @godotengine/audio @godotengine/documentation @AThousandShips
+/modules/theora/                        @godotengine/audio @AThousandShips
+/modules/theora/doc_classes/            @godotengine/audio @godotengine/documentation @AThousandShips
+/modules/vorbis/                        @godotengine/audio @AThousandShips
+/modules/vorbis/doc_classes/            @godotengine/audio @godotengine/documentation @AThousandShips
 
 ## Import
-/modules/astcenc/                       @godotengine/import
-/modules/basis_universal/               @godotengine/import
-/modules/bmp/                           @godotengine/import
-/modules/cvtt/                          @godotengine/import
-/modules/dds/                           @godotengine/import
-/modules/etcpak/                        @godotengine/import
-/modules/fbx/                           @godotengine/import
-/modules/fbx/doc_classes/               @godotengine/import @godotengine/documentation
-/modules/gltf/                          @godotengine/import
-/modules/gltf/doc_classes/              @godotengine/import @godotengine/documentation
-/modules/hdr/                           @godotengine/import
-/modules/jpg/                           @godotengine/import
-/modules/ktx/                           @godotengine/import
-/modules/squish/                        @godotengine/import
-/modules/svg/                           @godotengine/import
-/modules/tga/                           @godotengine/import
-/modules/tinyexr/                       @godotengine/import
-/modules/webp/                          @godotengine/import
+/modules/astcenc/                       @godotengine/import @AThousandShips
+/modules/basis_universal/               @godotengine/import @AThousandShips
+/modules/bmp/                           @godotengine/import @AThousandShips
+/modules/cvtt/                          @godotengine/import @AThousandShips
+/modules/dds/                           @godotengine/import @AThousandShips
+/modules/etcpak/                        @godotengine/import @AThousandShips
+/modules/fbx/                           @godotengine/import @AThousandShips
+/modules/fbx/doc_classes/               @godotengine/import @godotengine/documentation @AThousandShips
+/modules/gltf/                          @godotengine/import @AThousandShips
+/modules/gltf/doc_classes/              @godotengine/import @godotengine/documentation @AThousandShips
+/modules/hdr/                           @godotengine/import @AThousandShips
+/modules/jpg/                           @godotengine/import @AThousandShips
+/modules/ktx/                           @godotengine/import @AThousandShips
+/modules/squish/                        @godotengine/import @AThousandShips
+/modules/svg/                           @godotengine/import @AThousandShips
+/modules/tga/                           @godotengine/import @AThousandShips
+/modules/tinyexr/                       @godotengine/import @AThousandShips
+/modules/webp/                          @godotengine/import @AThousandShips
 
 ## Network
-/modules/enet/                          @godotengine/network
-/modules/enet/doc_classes/              @godotengine/network @godotengine/documentation
-/modules/mbedtls/                       @godotengine/network
-/modules/mbedtls/tests/                 @godotengine/network @godotengine/tests
-/modules/multiplayer/                   @godotengine/network
-/modules/multiplayer/doc_classes/       @godotengine/network @godotengine/documentation
-/modules/upnp/                          @godotengine/network
-/modules/upnp/doc_classes/              @godotengine/network @godotengine/documentation
-/modules/webrtc/                        @godotengine/network
-/modules/webrtc/doc_classes/            @godotengine/network @godotengine/documentation
-/modules/websocket/                     @godotengine/network
-/modules/websocket/doc_classes/         @godotengine/network @godotengine/documentation
+/modules/enet/                          @godotengine/network @AThousandShips
+/modules/enet/doc_classes/              @godotengine/network @godotengine/documentation @AThousandShips
+/modules/mbedtls/                       @godotengine/network @AThousandShips
+/modules/mbedtls/tests/                 @godotengine/network @godotengine/tests @AThousandShips
+/modules/multiplayer/                   @godotengine/network @AThousandShips
+/modules/multiplayer/doc_classes/       @godotengine/network @godotengine/documentation @AThousandShips
+/modules/upnp/                          @godotengine/network @AThousandShips
+/modules/upnp/doc_classes/              @godotengine/network @godotengine/documentation @AThousandShips
+/modules/webrtc/                        @godotengine/network @AThousandShips
+/modules/webrtc/doc_classes/            @godotengine/network @godotengine/documentation @AThousandShips
+/modules/websocket/                     @godotengine/network @AThousandShips
+/modules/websocket/doc_classes/         @godotengine/network @godotengine/documentation @AThousandShips
 
 ## Rendering
-/modules/glslang/                       @godotengine/rendering
-/modules/lightmapper_rd/                @godotengine/rendering
-/modules/meshoptimizer/                 @godotengine/rendering
-/modules/raycast/                       @godotengine/rendering
-/modules/vhacd/                         @godotengine/rendering
-/modules/xatlas_unwrap/                 @godotengine/rendering
+/modules/glslang/                       @godotengine/rendering @AThousandShips
+/modules/lightmapper_rd/                @godotengine/rendering @AThousandShips
+/modules/meshoptimizer/                 @godotengine/rendering @AThousandShips
+/modules/raycast/                       @godotengine/rendering @AThousandShips
+/modules/vhacd/                         @godotengine/rendering @AThousandShips
+/modules/xatlas_unwrap/                 @godotengine/rendering @AThousandShips
 
 ## Scripting
-/modules/gdscript/                      @godotengine/gdscript
-/modules/gdscript/doc_classes/          @godotengine/gdscript @godotengine/documentation
-/modules/gdscript/tests/                @godotengine/gdscript @godotengine/tests
-/modules/jsonrpc/                       @godotengine/gdscript @godotengine/network
-/modules/mono/                          @godotengine/dotnet
-/modules/mono/doc_classes/              @godotengine/dotnet @godotengine/documentation
+/modules/gdscript/                      @godotengine/gdscript @AThousandShips
+/modules/gdscript/doc_classes/          @godotengine/gdscript @godotengine/documentation @AThousandShips
+/modules/gdscript/tests/                @godotengine/gdscript @godotengine/tests @AThousandShips
+/modules/jsonrpc/                       @godotengine/gdscript @godotengine/network @AThousandShips
+/modules/mono/                          @godotengine/dotnet @AThousandShips
+/modules/mono/doc_classes/              @godotengine/dotnet @godotengine/documentation @AThousandShips
 
 ## Text
-/modules/freetype/                      @godotengine/buildsystem
-/modules/msdfgen/                       @godotengine/buildsystem
-/modules/text_server_adv/               @godotengine/gui-nodes
-/modules/text_server_adv/doc_classes/   @godotengine/gui-nodes @godotengine/documentation
-/modules/text_server_fb/                @godotengine/gui-nodes
-/modules/text_server_fb/doc_classes/    @godotengine/gui-nodes @godotengine/documentation
+/modules/freetype/                      @godotengine/buildsystem @AThousandShips
+/modules/msdfgen/                       @godotengine/buildsystem @AThousandShips
+/modules/text_server_adv/               @godotengine/gui-nodes @AThousandShips
+/modules/text_server_adv/doc_classes/   @godotengine/gui-nodes @godotengine/documentation @AThousandShips
+/modules/text_server_fb/                @godotengine/gui-nodes @AThousandShips
+/modules/text_server_fb/doc_classes/    @godotengine/gui-nodes @godotengine/documentation @AThousandShips
 
 ## XR
-/modules/camera/                        @godotengine/xr
-/modules/mobile_vr/                     @godotengine/xr
-/modules/mobile_vr/doc_classes/         @godotengine/xr @godotengine/documentation
-/modules/openxr/                        @godotengine/xr
-/modules/openxr/doc_classes/            @godotengine/xr @godotengine/documentation
-/modules/webxr/                         @godotengine/xr
-/modules/webxr/doc_classes/             @godotengine/xr @godotengine/documentation
+/modules/camera/                        @godotengine/xr @AThousandShips
+/modules/mobile_vr/                     @godotengine/xr @AThousandShips
+/modules/mobile_vr/doc_classes/         @godotengine/xr @godotengine/documentation @AThousandShips
+/modules/openxr/                        @godotengine/xr @AThousandShips
+/modules/openxr/doc_classes/            @godotengine/xr @godotengine/documentation @AThousandShips
+/modules/webxr/                         @godotengine/xr @AThousandShips
+/modules/webxr/doc_classes/             @godotengine/xr @godotengine/documentation @AThousandShips
 
 ## Misc
-/modules/csg/                           @godotengine/3d-nodes
-/modules/csg/doc_classes/               @godotengine/3d-nodes @godotengine/documentation
-/modules/navigation/                    @godotengine/navigation
-/modules/gridmap/                       @godotengine/3d-nodes
-/modules/gridmap/doc_classes/           @godotengine/3d-nodes @godotengine/documentation
-/modules/noise/                         @godotengine/core
-/modules/noise/doc_classes/             @godotengine/core @godotengine/documentation
-/modules/noise/tests/                   @godotengine/core @godotengine/tests
-/modules/regex/                         @godotengine/core
-/modules/regex/doc_classes/             @godotengine/core @godotengine/documentation
-/modules/regex/test/                    @godotengine/core @godotengine/tests
-/modules/zip/                           @godotengine/core
-/modules/zip/doc_classes/               @godotengine/core @godotengine/documentation
+/modules/csg/                           @godotengine/3d-nodes @AThousandShips
+/modules/csg/doc_classes/               @godotengine/3d-nodes @godotengine/documentation @AThousandShips
+/modules/navigation/                    @godotengine/navigation @AThousandShips
+/modules/gridmap/                       @godotengine/3d-nodes @AThousandShips
+/modules/gridmap/doc_classes/           @godotengine/3d-nodes @godotengine/documentation @AThousandShips
+/modules/noise/                         @godotengine/core @AThousandShips
+/modules/noise/doc_classes/             @godotengine/core @godotengine/documentation @AThousandShips
+/modules/noise/tests/                   @godotengine/core @godotengine/tests @AThousandShips
+/modules/regex/                         @godotengine/core @AThousandShips
+/modules/regex/doc_classes/             @godotengine/core @godotengine/documentation @AThousandShips
+/modules/regex/test/                    @godotengine/core @godotengine/tests @AThousandShips
+/modules/zip/                           @godotengine/core @AThousandShips
+/modules/zip/doc_classes/               @godotengine/core @godotengine/documentation @AThousandShips
 
 # Platform
 
