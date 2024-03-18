@@ -898,6 +898,8 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 						err_text = "Invalid assignment of property or key " + v + " with value of type '" + _get_var_type(value) + "' on a base object of type '" + _get_var_type(dst) + "'.";
 						if (err_code == Variant::VariantSetError::SET_INDEXED_ERR) {
 							err_text = "Invalid assignment of index " + v + " (on base: '" + _get_var_type(dst) + "') with value of type '" + _get_var_type(value) + "'.";
+						} else if (err_code == Variant::VariantSetError::SET_READ_ONLY_ERR) {
+							err_text = "Invalid assignment on read-only (on base: '" + _get_var_type(dst) + "').";
 						}
 					}
 					OPCODE_BREAK;

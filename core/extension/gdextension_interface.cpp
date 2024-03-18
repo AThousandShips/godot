@@ -378,7 +378,8 @@ static void gdextension_variant_set_indexed(GDExtensionVariantPtr p_self, GDExte
 
 	bool valid;
 	bool oob;
-	self->set_indexed(p_index, *value, valid, oob);
+	bool ro; // TODO: Add to extension?
+	self->set_indexed(p_index, *value, valid, oob, ro);
 	*r_valid = valid;
 	*r_oob = oob;
 }

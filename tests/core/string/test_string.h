@@ -1864,11 +1864,13 @@ TEST_CASE("[String] Variant indexed set") {
 	Variant s = String("abcd");
 	bool valid = false;
 	bool oob = true;
+	bool ro = true;
 
-	s.set_indexed(1, String("z"), valid, oob);
+	s.set_indexed(1, String("z"), valid, oob, ro);
 
 	CHECK(valid);
 	CHECK_FALSE(oob);
+	CHECK_FALSE(ro);
 	CHECK_EQ(s, String("azcd"));
 }
 

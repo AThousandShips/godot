@@ -670,7 +670,7 @@ public:
 	static PTRIndexedSetter get_member_ptr_indexed_setter(Variant::Type p_type);
 	static PTRIndexedGetter get_member_ptr_indexed_getter(Variant::Type p_type);
 
-	void set_indexed(int64_t p_index, const Variant &p_value, bool &r_valid, bool &r_oob);
+	void set_indexed(int64_t p_index, const Variant &p_value, bool &r_valid, bool &r_oob, bool &r_ro);
 	Variant get_indexed(int64_t p_index, bool &r_valid, bool &r_oob) const;
 
 	uint64_t get_indexed_size() const;
@@ -704,7 +704,8 @@ public:
 		SET_OK,
 		SET_KEYED_ERR,
 		SET_NAMED_ERR,
-		SET_INDEXED_ERR
+		SET_INDEXED_ERR,
+		SET_READ_ONLY_ERR,
 	};
 	enum VariantGetError {
 		GET_OK,
