@@ -70,7 +70,15 @@ String JSON::_stringify(const Variant &p_var, const String &p_indent, int p_cur_
 			return itos(p_var);
 		case Variant::FLOAT: {
 			double num = p_var;
-			if (p_full_precision) {
+			if (Math::is_nan(num)) {
+				// Convert NaN to 0 to comply with the JSON standard which does not support NaN.
+				// TODO: Warning?
+				return "0.0";
+			} else if (Math::is_inf(num)) {
+				// Store +/-INF as a significantly large number, this will be read as +/-inf, but JSON does not support it directly.
+				// TODO: Warning?
+				return (num > 0.0) ? "1.0e+309" : "-1.0e+309";
+			} else if (p_full_precision) {
 				// Store unreliable digits (17) instead of just reliable
 				// digits (14) so that the value can be decoded exactly.
 				return String::num(num, 17 - (int)floor(log10(num)));

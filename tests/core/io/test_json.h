@@ -86,6 +86,14 @@ TEST_CASE("[JSON] Parsing single data types") {
 			double(json.get_data()) == doctest::Approx(0.123456),
 			"Parsing a floating-point number as JSON should return the expected value.");
 
+	json.parse("1.0e+309");
+	CHECK_MESSAGE(
+			json.get_error_line() == 0,
+			"Parsing a floating-point number as JSON should parse successfully.");
+	CHECK_MESSAGE(
+			double(json.get_data()) == INFINITY,
+			"Parsing a floating-point number as JSON should return the expected value.");
+
 	json.parse("\"hello\"");
 	CHECK_MESSAGE(
 			json.get_error_line() == 0,
