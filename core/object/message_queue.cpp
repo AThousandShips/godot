@@ -260,7 +260,7 @@ Error CallQueue::flush() {
 		// Any other possibly existing source page needs to be added.
 
 		if (mq->pages_used + (pages_used - src_page) > mq->max_pages) {
-			ERR_PRINT("Failed appending thread queue. Message queue out of memory. " + mq->error_text);
+			fprintf(stderr, "Failed appending thread queue. Message queue out of memory. %s\n", mq->error_text.utf8().get_data());
 			mq->statistics();
 			mq->mutex.unlock();
 			return ERR_OUT_OF_MEMORY;
@@ -459,7 +459,7 @@ void CallQueue::statistics() {
 			}
 			if (null_target) {
 				//object was deleted
-				print_line("Object was deleted while awaiting a callback");
+				fprintf(stdout, "Object was deleted while awaiting a callback.\n");
 
 				null_count++;
 			}
@@ -477,19 +477,19 @@ void CallQueue::statistics() {
 		}
 	}
 
-	print_line("TOTAL PAGES: " + itos(pages_used) + " (" + itos(pages_used * PAGE_SIZE_BYTES) + " bytes).");
-	print_line("NULL count: " + itos(null_count));
+	fprintf(stdout, "TOTAL PAGES: %d (%d bytes).\n", pages_used, pages_used * PAGE_SIZE_BYTES);
+	fprintf(stdout, "NULL count: %d.\n", null_count);
 
 	for (const KeyValue<StringName, int> &E : set_count) {
-		print_line("SET " + E.key + ": " + itos(E.value));
+		fprintf(stdout, "SET %s: %d.\n", String(E.key).utf8().get_data(), E.value);
 	}
 
 	for (const KeyValue<Callable, int> &E : call_count) {
-		print_line("CALL " + E.key + ": " + itos(E.value));
+		fprintf(stdout, "CALL %s: %d.\n", String(E.key).utf8().get_data(), E.value);
 	}
 
 	for (const KeyValue<int, int> &E : notify_count) {
-		print_line("NOTIFY " + itos(E.key) + ": " + itos(E.value));
+		fprintf(stdout, "NOTIFY %d: %d.\n", E.key, E.value);
 	}
 
 	UNLOCK_MUTEX;
