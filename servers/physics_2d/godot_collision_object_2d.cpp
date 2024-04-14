@@ -148,8 +148,7 @@ void GodotCollisionObject2D::_set_static(bool p_static) {
 }
 
 void GodotCollisionObject2D::_unregister_shapes() {
-	for (int i = 0; i < shapes.size(); i++) {
-		Shape &s = shapes.write[i];
+	for (Shape &s : shapes) {
 		if (s.bpid > 0) {
 			space->get_broadphase()->remove(s.bpid);
 			s.bpid = 0;
@@ -218,8 +217,7 @@ void GodotCollisionObject2D::_set_space(GodotSpace2D *p_space) {
 	if (old_space) {
 		old_space->remove_object(this);
 
-		for (int i = 0; i < shapes.size(); i++) {
-			Shape &s = shapes.write[i];
+		for (Shape &s : shapes) {
 			if (s.bpid) {
 				old_space->get_broadphase()->remove(s.bpid);
 				s.bpid = 0;

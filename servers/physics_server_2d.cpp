@@ -162,8 +162,8 @@ Ref<PhysicsRayQueryParameters2D> PhysicsRayQueryParameters2D::create(Vector2 p_f
 
 void PhysicsRayQueryParameters2D::set_exclude(const TypedArray<RID> &p_exclude) {
 	parameters.exclude.clear();
-	for (int i = 0; i < p_exclude.size(); i++) {
-		parameters.exclude.insert(p_exclude[i]);
+	for (const RID E : p_exclude) {
+		parameters.exclude.insert(E);
 	}
 }
 
@@ -214,8 +214,8 @@ void PhysicsRayQueryParameters2D::_bind_methods() {
 
 void PhysicsPointQueryParameters2D::set_exclude(const TypedArray<RID> &p_exclude) {
 	parameters.exclude.clear();
-	for (int i = 0; i < p_exclude.size(); i++) {
-		parameters.exclude.insert(p_exclude[i]);
+	for (const RID E : p_exclude) {
+		parameters.exclude.insert(E);
 	}
 }
 
@@ -273,8 +273,8 @@ void PhysicsShapeQueryParameters2D::set_shape_rid(const RID &p_shape) {
 
 void PhysicsShapeQueryParameters2D::set_exclude(const TypedArray<RID> &p_exclude) {
 	parameters.exclude.clear();
-	for (int i = 0; i < p_exclude.size(); i++) {
-		parameters.exclude.insert(p_exclude[i]);
+	for (const RID E : p_exclude) {
+		parameters.exclude.insert(E);
 	}
 }
 
@@ -477,8 +477,8 @@ TypedArray<RID> PhysicsTestMotionParameters2D::get_exclude_bodies() const {
 
 void PhysicsTestMotionParameters2D::set_exclude_bodies(const TypedArray<RID> &p_exclude) {
 	parameters.exclude_bodies.clear();
-	for (int i = 0; i < p_exclude.size(); i++) {
-		parameters.exclude_bodies.insert(p_exclude[i]);
+	for (const RID E : p_exclude) {
+		parameters.exclude_bodies.insert(E);
 	}
 }
 
@@ -496,8 +496,8 @@ TypedArray<uint64_t> PhysicsTestMotionParameters2D::get_exclude_objects() const 
 
 void PhysicsTestMotionParameters2D::set_exclude_objects(const TypedArray<uint64_t> &p_exclude) {
 	parameters.exclude_objects.clear();
-	for (int i = 0; i < p_exclude.size(); ++i) {
-		ObjectID object_id = p_exclude[i];
+	for (const uint64_t E : p_exclude) {
+		ObjectID object_id(E);
 		ERR_CONTINUE(object_id.is_null());
 		parameters.exclude_objects.insert(object_id);
 	}

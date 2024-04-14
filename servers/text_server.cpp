@@ -52,12 +52,12 @@ void TextServerManager::_bind_methods() {
 void TextServerManager::add_interface(const Ref<TextServer> &p_interface) {
 	ERR_FAIL_COND(p_interface.is_null());
 
-	for (int i = 0; i < interfaces.size(); i++) {
-		if (interfaces[i] == p_interface) {
+	for (const Ref<TextServer> &interface : interfaces) {
+		if (interface == p_interface) {
 			ERR_PRINT("TextServer: Interface was already added.");
 			return;
-		};
-	};
+		}
+	}
 
 	interfaces.push_back(p_interface);
 	print_verbose("TextServer: Added interface \"" + p_interface->get_name() + "\"");

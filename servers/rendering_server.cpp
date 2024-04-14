@@ -94,8 +94,7 @@ PackedInt64Array RenderingServer::_instances_cull_ray_bind(const Vector3 &p_from
 
 PackedInt64Array RenderingServer::_instances_cull_convex_bind(const TypedArray<Plane> &p_convex, RID p_scenario) const {
 	Vector<Plane> planes;
-	for (int i = 0; i < p_convex.size(); ++i) {
-		const Variant &v = p_convex[i];
+	for (const Variant &v : p_convex) {
 		ERR_FAIL_COND_V(v.get_type() != Variant::PLANE, PackedInt64Array());
 		planes.push_back(v);
 	}
@@ -1218,12 +1217,12 @@ Error RenderingServer::mesh_create_surface_data_from_arrays(SurfaceData *r_surfa
 
 	if (p_blend_shapes.size()) {
 		// Validate format for morphs.
-		for (int i = 0; i < p_blend_shapes.size(); i++) {
+		for (const Variant &E : p_blend_shapes) {
 			uint32_t bsformat = 0;
-			Array arr = p_blend_shapes[i];
-			for (int j = 0; j < arr.size(); j++) {
-				if (arr[j].get_type() != Variant::NIL) {
-					bsformat |= (1 << j);
+			Array arr = E;
+			for (int i = 0; i < arr.size(); i++) {
+				if (arr[i].get_type() != Variant::NIL) {
+					bsformat |= (1 << i);
 				}
 			}
 
@@ -1295,7 +1294,7 @@ Error RenderingServer::mesh_create_surface_data_from_arrays(SurfaceData *r_surfa
 
 	if (p_blend_shapes.size()) {
 		uint32_t bs_format = format & RS::ARRAY_FORMAT_BLEND_SHAPE_MASK;
-		for (int i = 0; i < p_blend_shapes.size(); i++) {
+		for (const Variant &E : p_blend_shapes) {
 			Vector<uint8_t> vertex_array_shape;
 			vertex_array_shape.resize(vertex_array_size);
 			Vector<uint8_t> noindex;
@@ -1304,7 +1303,7 @@ Error RenderingServer::mesh_create_surface_data_from_arrays(SurfaceData *r_surfa
 
 			AABB laabb;
 			Vector4 bone_uv_scale; // Not used.
-			Error err2 = _surface_set_data(p_blend_shapes[i], bs_format, offsets, vertex_element_size, normal_element_size, 0, 0, vertex_array_shape, noattrib, noskin, array_len, noindex, 0, laabb, bone_aabb, bone_uv_scale);
+			Error err2 = _surface_set_data(E, bs_format, offsets, vertex_element_size, normal_element_size, 0, 0, vertex_array_shape, noattrib, noskin, array_len, noindex, 0, laabb, bone_aabb, bone_uv_scale);
 			aabb.merge_with(laabb);
 			ERR_FAIL_COND_V_MSG(err2 != OK, ERR_INVALID_DATA, "Invalid blend shape array format for surface.");
 
@@ -1949,8 +1948,7 @@ static RS::SurfaceData _dict_to_surf(const Dictionary &p_dictionary) {
 
 	if (p_dictionary.has("lods")) {
 		Array lods = p_dictionary["lods"];
-		for (int i = 0; i < lods.size(); i++) {
-			Dictionary lod = lods[i];
+		for (Dictionary lod : lods) {
 			ERR_CONTINUE(!lod.has("edge_length"));
 			ERR_CONTINUE(!lod.has("index_data"));
 			RS::SurfaceData::LOD l;
@@ -1962,8 +1960,7 @@ static RS::SurfaceData _dict_to_surf(const Dictionary &p_dictionary) {
 
 	if (p_dictionary.has("bone_aabbs")) {
 		Array aabbs = p_dictionary["bone_aabbs"];
-		for (int i = 0; i < aabbs.size(); i++) {
-			AABB aabb = aabbs[i];
+		for (const AABB aabb : aabbs) {
 			sd.bone_aabbs.push_back(aabb);
 		}
 	}
@@ -1980,8 +1977,8 @@ static RS::SurfaceData _dict_to_surf(const Dictionary &p_dictionary) {
 }
 RID RenderingServer::_mesh_create_from_surfaces(const TypedArray<Dictionary> &p_surfaces, int p_blend_shape_count) {
 	Vector<RS::SurfaceData> surfaces;
-	for (int i = 0; i < p_surfaces.size(); i++) {
-		surfaces.push_back(_dict_to_surf(p_surfaces[i]));
+	for (const Dictionary E : p_surfaces) {
+		surfaces.push_back(_dict_to_surf(E));
 	}
 	return mesh_create_from_surfaces(surfaces);
 }
@@ -2046,8 +2043,8 @@ TypedArray<Dictionary> RenderingServer::_instance_geometry_get_shader_parameter_
 
 TypedArray<Image> RenderingServer::_bake_render_uv2(RID p_base, const TypedArray<RID> &p_material_overrides, const Size2i &p_image_size) {
 	TypedArray<RID> mat_overrides;
-	for (int i = 0; i < p_material_overrides.size(); i++) {
-		mat_overrides.push_back(p_material_overrides[i]);
+	for (const RID E : p_material_overrides) {
+		mat_overrides.push_back(E);
 	}
 	return bake_render_uv2(p_base, mat_overrides, p_image_size);
 }

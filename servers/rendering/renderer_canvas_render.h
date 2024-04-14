@@ -488,8 +488,8 @@ public:
 		}
 		virtual ~Item() {
 			clear();
-			for (int i = 0; i < blocks.size(); i++) {
-				memfree(blocks[i].memory);
+			for (CommandBlock &block : blocks) {
+				memfree(block.memory);
 			}
 			if (copy_back_buffer) {
 				memdelete(copy_back_buffer);

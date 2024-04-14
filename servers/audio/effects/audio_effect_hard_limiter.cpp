@@ -79,8 +79,8 @@ void AudioEffectHardLimiterInstance::process(const AudioFrame *p_src_frames, Aud
 
 		gain_bucket_cursor = (gain_bucket_cursor + 1) % gain_samples_to_store;
 
-		for (int j = 0; j < (int)gain_buckets.size(); j++) {
-			gain = MIN(gain, gain_buckets[j]);
+		for (const float &gain_bucket : gain_buckets) {
+			gain = MIN(gain, gain_bucket);
 		}
 
 		// Introduce latency by grabbing the AudioFrame stored previously,

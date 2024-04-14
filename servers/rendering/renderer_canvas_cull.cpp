@@ -2151,8 +2151,8 @@ bool RendererCanvasCull::free(RID p_rid) {
 			canvas->viewports.erase(*canvas->viewports.begin());
 		}
 
-		for (int i = 0; i < canvas->child_items.size(); i++) {
-			canvas->child_items[i].item->parent = RID();
+		for (Canvas::ChildItem &child_item : canvas->child_items) {
+			child_item.item->parent = RID();
 		}
 
 		for (RendererCanvasRender::Light *E : canvas->lights) {
@@ -2184,8 +2184,8 @@ bool RendererCanvasCull::free(RID p_rid) {
 			}
 		}
 
-		for (int i = 0; i < canvas_item->child_items.size(); i++) {
-			canvas_item->child_items[i]->parent = RID();
+		for (Item *child_item : canvas_item->child_items) {
+			child_item->parent = RID();
 		}
 
 		if (canvas_item->visibility_notifier != nullptr) {

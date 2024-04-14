@@ -181,16 +181,16 @@ Transform3D XRServer::get_hmd_transform() {
 void XRServer::add_interface(const Ref<XRInterface> &p_interface) {
 	ERR_FAIL_COND(p_interface.is_null());
 
-	for (int i = 0; i < interfaces.size(); i++) {
-		if (interfaces[i] == p_interface) {
+	for (const Ref<XRInterface> &interface : interfaces) {
+		if (interface == p_interface) {
 			ERR_PRINT("Interface was already added");
 			return;
-		};
-	};
+		}
+	}
 
 	interfaces.push_back(p_interface);
 	emit_signal(SNAME("interface_added"), p_interface->get_name());
-};
+}
 
 void XRServer::remove_interface(const Ref<XRInterface> &p_interface) {
 	ERR_FAIL_COND(p_interface.is_null());
@@ -220,13 +220,13 @@ Ref<XRInterface> XRServer::get_interface(int p_index) const {
 };
 
 Ref<XRInterface> XRServer::find_interface(const String &p_name) const {
-	for (int i = 0; i < interfaces.size(); i++) {
-		if (interfaces[i]->get_name() == p_name) {
-			return interfaces[i];
-		};
-	};
+	for (const Ref<XRInterface> &interface : interfaces) {
+		if (interface->get_name() == p_name) {
+			return interface;
+		}
+	}
 	return Ref<XRInterface>();
-};
+}
 
 TypedArray<Dictionary> XRServer::get_interfaces() const {
 	Array ret;
@@ -312,17 +312,16 @@ Ref<XRTracker> XRServer::get_tracker(const StringName &p_name) const {
 PackedStringArray XRServer::get_suggested_tracker_names() const {
 	PackedStringArray arr;
 
-	for (int i = 0; i < interfaces.size(); i++) {
-		Ref<XRInterface> interface = interfaces[i];
+	for (const Ref<XRInterface> &interface : interfaces) {
 		PackedStringArray interface_arr = interface->get_suggested_tracker_names();
-		for (int a = 0; a < interface_arr.size(); a++) {
-			if (!arr.has(interface_arr[a])) {
-				arr.push_back(interface_arr[a]);
+		for (const String &E : interface_arr) {
+			if (!arr.has(E)) {
+				arr.push_back(E);
 			}
 		}
 	}
 
-	if (arr.size() == 0) {
+	if (arr.is_empty()) {
 		// no suggestions from our tracker? include our defaults
 		arr.push_back(String("head"));
 		arr.push_back(String("left_hand"));
@@ -335,17 +334,16 @@ PackedStringArray XRServer::get_suggested_tracker_names() const {
 PackedStringArray XRServer::get_suggested_pose_names(const StringName &p_tracker_name) const {
 	PackedStringArray arr;
 
-	for (int i = 0; i < interfaces.size(); i++) {
-		Ref<XRInterface> interface = interfaces[i];
+	for (const Ref<XRInterface> &interface : interfaces) {
 		PackedStringArray interface_arr = interface->get_suggested_pose_names(p_tracker_name);
-		for (int a = 0; a < interface_arr.size(); a++) {
-			if (!arr.has(interface_arr[a])) {
-				arr.push_back(interface_arr[a]);
+		for (const String &E : interface_arr) {
+			if (!arr.has(E)) {
+				arr.push_back(E);
 			}
 		}
 	}
 
-	if (arr.size() == 0) {
+	if (arr.is_empty()) {
 		// no suggestions from our tracker? include our defaults
 		arr.push_back(String("default"));
 
@@ -364,40 +362,40 @@ void XRServer::_process() {
 	// note that we can have multiple interfaces active if we have interfaces that purely handle tracking
 
 	// process all active interfaces
-	for (int i = 0; i < interfaces.size(); i++) {
-		if (!interfaces[i].is_valid()) {
+	for (Ref<XRInterface> &interface : interfaces) {
+		if (!interface.is_valid()) {
 			// ignore, not a valid reference
-		} else if (interfaces[i]->is_initialized()) {
-			interfaces.write[i]->process();
-		};
-	};
-};
+		} else if (interface->is_initialized()) {
+			interface->process();
+		}
+	}
+}
 
 void XRServer::pre_render() {
 	// called from RendererViewport.draw_viewports right before we start drawing our viewports
 	// note that we can have multiple interfaces active if we have interfaces that purely handle tracking
 
 	// process all active interfaces
-	for (int i = 0; i < interfaces.size(); i++) {
-		if (!interfaces[i].is_valid()) {
+	for (Ref<XRInterface> &interface : interfaces) {
+		if (!interface.is_valid()) {
 			// ignore, not a valid reference
-		} else if (interfaces[i]->is_initialized()) {
-			interfaces.write[i]->pre_render();
-		};
-	};
+		} else if (interface->is_initialized()) {
+			interface->pre_render();
+		}
+	}
 }
 
 void XRServer::end_frame() {
 	// called from RenderingServerDefault after Vulkan queues have been submitted
 
 	// process all active interfaces
-	for (int i = 0; i < interfaces.size(); i++) {
-		if (!interfaces[i].is_valid()) {
+	for (Ref<XRInterface> &interface : interfaces) {
+		if (!interface.is_valid()) {
 			// ignore, not a valid reference
-		} else if (interfaces[i]->is_initialized()) {
-			interfaces.write[i]->end_frame();
-		};
-	};
+		} else if (interface->is_initialized()) {
+			interface->end_frame();
+		}
+	}
 }
 
 XRServer::XRServer() {

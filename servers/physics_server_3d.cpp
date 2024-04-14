@@ -178,8 +178,8 @@ PhysicsDirectBodyState3D::PhysicsDirectBodyState3D() {}
 
 void PhysicsRayQueryParameters3D::set_exclude(const TypedArray<RID> &p_exclude) {
 	parameters.exclude.clear();
-	for (int i = 0; i < p_exclude.size(); i++) {
-		parameters.exclude.insert(p_exclude[i]);
+	for (const RID E : p_exclude) {
+		parameters.exclude.insert(E);
 	}
 }
 
@@ -244,8 +244,8 @@ Ref<PhysicsRayQueryParameters3D> PhysicsRayQueryParameters3D::create(Vector3 p_f
 
 void PhysicsPointQueryParameters3D::set_exclude(const TypedArray<RID> &p_exclude) {
 	parameters.exclude.clear();
-	for (int i = 0; i < p_exclude.size(); i++) {
-		parameters.exclude.insert(p_exclude[i]);
+	for (const RID E : p_exclude) {
+		parameters.exclude.insert(E);
 	}
 }
 
@@ -299,8 +299,8 @@ void PhysicsShapeQueryParameters3D::set_shape_rid(const RID &p_shape) {
 
 void PhysicsShapeQueryParameters3D::set_exclude(const TypedArray<RID> &p_exclude) {
 	parameters.exclude.clear();
-	for (int i = 0; i < p_exclude.size(); i++) {
-		parameters.exclude.insert(p_exclude[i]);
+	for (const RID E : p_exclude) {
+		parameters.exclude.insert(E);
 	}
 }
 
@@ -504,8 +504,8 @@ TypedArray<RID> PhysicsTestMotionParameters3D::get_exclude_bodies() const {
 
 void PhysicsTestMotionParameters3D::set_exclude_bodies(const TypedArray<RID> &p_exclude) {
 	parameters.exclude_bodies.clear();
-	for (int i = 0; i < p_exclude.size(); i++) {
-		parameters.exclude_bodies.insert(p_exclude[i]);
+	for (const RID E : p_exclude) {
+		parameters.exclude_bodies.insert(E);
 	}
 }
 
@@ -523,8 +523,8 @@ TypedArray<uint64_t> PhysicsTestMotionParameters3D::get_exclude_objects() const 
 
 void PhysicsTestMotionParameters3D::set_exclude_objects(const TypedArray<uint64_t> &p_exclude) {
 	parameters.exclude_objects.clear();
-	for (int i = 0; i < p_exclude.size(); ++i) {
-		ObjectID object_id = p_exclude[i];
+	for (const uint64_t E : p_exclude) {
+		ObjectID object_id(E);
 		ERR_CONTINUE(object_id.is_null());
 		parameters.exclude_objects.insert(object_id);
 	}
