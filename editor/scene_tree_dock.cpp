@@ -263,11 +263,11 @@ void SceneTreeDock::_perform_instantiate_scenes(const Vector<String> &p_files, N
 
 	bool error = false;
 
-	for (int i = 0; i < p_files.size(); i++) {
-		Ref<PackedScene> sdata = ResourceLoader::load(p_files[i]);
+	for (const String &file : p_files) {
+		Ref<PackedScene> sdata = ResourceLoader::load(file);
 		if (!sdata.is_valid()) {
 			current_option = -1;
-			accept->set_text(vformat(TTR("Error loading scene from %s"), p_files[i]));
+			accept->set_text(vformat(TTR("Error loading scene from %s"), file));
 			accept->popup_centered();
 			error = true;
 			break;
@@ -276,7 +276,7 @@ void SceneTreeDock::_perform_instantiate_scenes(const Vector<String> &p_files, N
 		Node *instantiated_scene = sdata->instantiate(PackedScene::GEN_EDIT_STATE_INSTANCE);
 		if (!instantiated_scene) {
 			current_option = -1;
-			accept->set_text(vformat(TTR("Error instantiating scene from %s"), p_files[i]));
+			accept->set_text(vformat(TTR("Error instantiating scene from %s"), file));
 			accept->popup_centered();
 			error = true;
 			break;
@@ -284,21 +284,21 @@ void SceneTreeDock::_perform_instantiate_scenes(const Vector<String> &p_files, N
 
 		if (!edited_scene->get_scene_file_path().is_empty()) {
 			if (_cyclical_dependency_exists(edited_scene->get_scene_file_path(), instantiated_scene)) {
-				accept->set_text(vformat(TTR("Cannot instantiate the scene '%s' because the current scene exists within one of its nodes."), p_files[i]));
+				accept->set_text(vformat(TTR("Cannot instantiate the scene '%s' because the current scene exists within one of its nodes."), file));
 				accept->popup_centered();
 				error = true;
 				break;
 			}
 		}
 
-		instantiated_scene->set_scene_file_path(ProjectSettings::get_singleton()->localize_path(p_files[i]));
+		instantiated_scene->set_scene_file_path(ProjectSettings::get_singleton()->localize_path(file));
 
 		instances.push_back(instantiated_scene);
 	}
 
 	if (error) {
-		for (int i = 0; i < instances.size(); i++) {
-			memdelete(instances[i]);
+		for (Node *instance : instances) {
+			memdelete(instance);
 		}
 		return;
 	}
@@ -327,8 +327,8 @@ void SceneTreeDock::_perform_instantiate_scenes(const Vector<String> &p_files, N
 
 	undo_redo->commit_action();
 	_push_item(instances[instances.size() - 1]);
-	for (int i = 0; i < instances.size(); i++) {
-		emit_signal(SNAME("node_created"), instances[i]);
+	for (Node *instance : instances) {
+		emit_signal(SNAME("node_created"), instance);
 	}
 }
 
@@ -429,8 +429,8 @@ bool SceneTreeDock::_track_inherit(const String &p_target_scene_path, Node *p_de
 			break;
 		}
 	}
-	for (int i = 0; i < instances.size(); i++) {
-		memdelete(instances[i]);
+	for (Node *instance : instances) {
+		memdelete(instance);
 	}
 	return result;
 }
@@ -491,9 +491,9 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 					preferred_types.push_back("Node3D");
 				}
 
-				for (int i = 0; i < preferred_types.size(); i++) {
-					if (ClassDB::is_parent_class(root_class, preferred_types[i])) {
-						create_dialog->set_preferred_search_result_type(preferred_types[i]);
+				for (const String &preferred_type : preferred_types) {
+					if (ClassDB::is_parent_class(root_class, preferred_type)) {
+						create_dialog->set_preferred_search_result_type(preferred_type);
 						break;
 					}
 				}
@@ -653,8 +653,8 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			undo_redo->create_action(TTR("Detach Script"), UndoRedo::MERGE_DISABLE, EditorNode::get_singleton()->get_edited_scene());
 			undo_redo->add_do_method(EditorNode::get_singleton(), "push_item", (Script *)nullptr);
 
-			for (int i = 0; i < selection.size(); i++) {
-				Node *n = Object::cast_to<Node>(selection[i]);
+			for (Variant &var : selection) {
+				Node *n = Object::cast_to<Node>(var);
 				Ref<Script> existing = n->get_script();
 				Ref<Script> empty = EditorNode::get_singleton()->get_object_custom_type_base(n);
 				if (existing != empty) {
@@ -1062,8 +1062,8 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			Ref<PackedScene> sd = memnew(PackedScene);
 			ResourceSaver::get_recognized_extensions(sd, &extensions);
 			new_scene_from_dialog->clear_filters();
-			for (int i = 0; i < extensions.size(); i++) {
-				new_scene_from_dialog->add_filter("*." + extensions[i], extensions[i].to_upper());
+			for (const String &extension : extensions) {
+				new_scene_from_dialog->add_filter("*." + extension, extension.to_upper());
 			}
 
 			String existing;
@@ -1101,8 +1101,8 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 		} break;
 		case TOOL_OPEN_DOCUMENTATION: {
 			List<Node *> selection = editor_selection->get_selected_node_list();
-			for (int i = 0; i < selection.size(); i++) {
-				ScriptEditor::get_singleton()->goto_help("class_name:" + selection[i]->get_class());
+			for (Node *node : selection) {
+				ScriptEditor::get_singleton()->goto_help("class_name:" + node->get_class());
 			}
 			EditorNode::get_singleton()->set_visible_editor(EditorNode::EDITOR_SCRIPT);
 		} break;
@@ -1686,8 +1686,8 @@ void SceneTreeDock::_node_renamed() {
 }
 
 void SceneTreeDock::_set_owners(Node *p_owner, const Array &p_nodes) {
-	for (int i = 0; i < p_nodes.size(); i++) {
-		Node *n = Object::cast_to<Node>(p_nodes[i]);
+	for (const Variant &var : p_nodes) {
+		Node *n = Object::cast_to<Node>(var);
 		if (!n) {
 			continue;
 		}
@@ -2144,18 +2144,18 @@ void SceneTreeDock::_do_reparent(Node *p_new_parent, int p_position_in_parent, V
 	const int first_idx = p_position_in_parent == -1 ? p_new_parent->get_child_count(false) : p_position_in_parent;
 	int nodes_before = first_idx;
 	bool no_change = true;
-	for (int ni = 0; ni < p_nodes.size(); ni++) {
-		if (p_nodes[ni] == p_new_parent) {
+	for (Node *node : p_nodes) {
+		if (node == p_new_parent) {
 			return; // Attempt to reparent to itself.
 		}
 		// `move_child` + `get_index` doesn't really work for internal nodes.
-		ERR_FAIL_COND_MSG(p_nodes[ni]->get_internal_mode() != INTERNAL_MODE_DISABLED, "Trying to move internal node, this is not supported.");
+		ERR_FAIL_COND_MSG(node->get_internal_mode() != INTERNAL_MODE_DISABLED, "Trying to move internal node, this is not supported.");
 
-		if (p_nodes[ni]->get_index(false) < first_idx) {
+		if (node->get_index(false) < first_idx) {
 			nodes_before--;
 		}
 
-		if (p_nodes[ni]->get_parent() != p_new_parent) {
+		if (node->get_parent() != p_new_parent) {
 			no_change = false;
 		}
 	}
@@ -2271,9 +2271,7 @@ void SceneTreeDock::_do_reparent(Node *p_new_parent, int p_position_in_parent, V
 	}
 
 	// Add and move in a second step (so old order is preserved).
-	for (int ni = 0; ni < p_nodes.size(); ni++) {
-		Node *node = p_nodes[ni];
-
+	for (Node *node : p_nodes) {
 		List<Node *> owned;
 		node->get_owned_by(node->get_owner(), &owned);
 		Array owners;
@@ -2403,8 +2401,8 @@ void SceneTreeDock::_toggle_placeholder_from_selection() {
 
 void SceneTreeDock::_reparent_nodes_to_root(Node *p_root, const Array &p_nodes, Node *p_owner) {
 	List<Node *> nodes;
-	for (int i = 0; i < p_nodes.size(); i++) {
-		Node *node = Object::cast_to<Node>(p_nodes[i]);
+	for (const Variant &var : p_nodes) {
+		Node *node = Object::cast_to<Node>(var);
 		ERR_FAIL_NULL(node);
 		nodes.push_back(node);
 	}
@@ -2627,8 +2625,8 @@ void SceneTreeDock::_update_script_button() {
 	} else {
 		button_create_script->hide();
 		Array selection = editor_selection->get_selected_nodes();
-		for (int i = 0; i < selection.size(); i++) {
-			Node *n = Object::cast_to<Node>(selection[i]);
+		for (Variant &var : selection) {
+			Node *n = Object::cast_to<Node>(var);
 			if (!n->get_script().is_null()) {
 				button_detach_script->show();
 				return;

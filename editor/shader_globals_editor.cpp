@@ -126,13 +126,12 @@ protected:
 		return r_ret.get_type() != Variant::NIL;
 	}
 	void _get_property_list(List<PropertyInfo> *p_list) const {
-		Vector<StringName> variables;
-		variables = RS::get_singleton()->global_shader_parameter_get_list();
-		for (int i = 0; i < variables.size(); i++) {
+		Vector<StringName> variables = RS::get_singleton()->global_shader_parameter_get_list();
+		for (const StringName &variable : variables) {
 			PropertyInfo pinfo;
-			pinfo.name = variables[i];
+			pinfo.name = variable;
 
-			switch (RS::get_singleton()->global_shader_parameter_get_type(variables[i])) {
+			switch (RS::get_singleton()->global_shader_parameter_get_type(variable)) {
 				case RS::GLOBAL_VAR_TYPE_BOOL: {
 					pinfo.type = Variant::BOOL;
 				} break;

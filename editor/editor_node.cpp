@@ -4800,8 +4800,8 @@ void EditorNode::_build_icon_type_cache() {
 }
 
 void EditorNode::_enable_pending_addons() {
-	for (uint32_t i = 0; i < pending_addons.size(); i++) {
-		set_addon_plugin_enabled(pending_addons[i], true);
+	for (const String &pending_addon : pending_addons) {
+		set_addon_plugin_enabled(pending_addon, true);
 	}
 	pending_addons.clear();
 }

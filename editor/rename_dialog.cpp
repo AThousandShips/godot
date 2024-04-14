@@ -518,8 +518,8 @@ String RenameDialog::_postprocess(const String &subject) {
 			String buffer;
 			int start = 0;
 			int end = 0;
-			for (int i = 0; i < matches.size(); ++i) {
-				start = ((Ref<RegExMatch>)matches[i])->get_start(1);
+			for (const Variant &match : matches) {
+				start = ((Ref<RegExMatch>)match)->get_start(1);
 				buffer += result.substr(end, start - end - 1);
 				buffer += result.substr(start, 1).to_upper();
 				end = start + 1;

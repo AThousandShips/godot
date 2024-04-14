@@ -1056,8 +1056,7 @@ void Skeleton3DEditor::_subgizmo_selection_change() {
 
 	if (selected >= 0) {
 		Vector<Ref<Node3DGizmo>> gizmos = skeleton->get_gizmos();
-		for (int i = 0; i < gizmos.size(); i++) {
-			Ref<EditorNode3DGizmo> gizmo = gizmos[i];
+		for (Ref<EditorNode3DGizmo> gizmo : gizmos) {
 			if (!gizmo.is_valid()) {
 				continue;
 			}
@@ -1318,24 +1317,24 @@ void Skeleton3DGizmoPlugin::commit_subgizmos(const EditorNode3DGizmo *p_gizmo, c
 	EditorUndoRedoManager *ur = EditorUndoRedoManager::get_singleton();
 	ur->create_action(TTR("Set Bone Transform"));
 	if (ne->get_tool_mode() == Node3DEditor::TOOL_MODE_SELECT || ne->get_tool_mode() == Node3DEditor::TOOL_MODE_MOVE) {
-		for (int i = 0; i < p_ids.size(); i++) {
-			ur->add_do_method(skeleton, "set_bone_pose_position", p_ids[i], skeleton->get_bone_pose_position(p_ids[i]));
-			ur->add_undo_method(skeleton, "set_bone_pose_position", p_ids[i], se->get_bone_original_position());
+		for (const int &id : p_ids) {
+			ur->add_do_method(skeleton, "set_bone_pose_position", id, skeleton->get_bone_pose_position(id));
+			ur->add_undo_method(skeleton, "set_bone_pose_position", id, se->get_bone_original_position());
 		}
 	}
 	if (ne->get_tool_mode() == Node3DEditor::TOOL_MODE_SELECT || ne->get_tool_mode() == Node3DEditor::TOOL_MODE_ROTATE) {
-		for (int i = 0; i < p_ids.size(); i++) {
-			ur->add_do_method(skeleton, "set_bone_pose_rotation", p_ids[i], skeleton->get_bone_pose_rotation(p_ids[i]));
-			ur->add_undo_method(skeleton, "set_bone_pose_rotation", p_ids[i], se->get_bone_original_rotation());
+		for (const int &id : p_ids) {
+			ur->add_do_method(skeleton, "set_bone_pose_rotation", id, skeleton->get_bone_pose_rotation(id));
+			ur->add_undo_method(skeleton, "set_bone_pose_rotation", id, se->get_bone_original_rotation());
 		}
 	}
 	if (ne->get_tool_mode() == Node3DEditor::TOOL_MODE_SCALE) {
-		for (int i = 0; i < p_ids.size(); i++) {
+		for (const int &id : p_ids) {
 			// If the axis is swapped by scaling, the rotation can be changed.
-			ur->add_do_method(skeleton, "set_bone_pose_rotation", p_ids[i], skeleton->get_bone_pose_rotation(p_ids[i]));
-			ur->add_undo_method(skeleton, "set_bone_pose_rotation", p_ids[i], se->get_bone_original_rotation());
-			ur->add_do_method(skeleton, "set_bone_pose_scale", p_ids[i], skeleton->get_bone_pose_scale(p_ids[i]));
-			ur->add_undo_method(skeleton, "set_bone_pose_scale", p_ids[i], se->get_bone_original_scale());
+			ur->add_do_method(skeleton, "set_bone_pose_rotation", id, skeleton->get_bone_pose_rotation(id));
+			ur->add_undo_method(skeleton, "set_bone_pose_rotation", id, se->get_bone_original_rotation());
+			ur->add_do_method(skeleton, "set_bone_pose_scale", id, skeleton->get_bone_pose_scale(id));
+			ur->add_undo_method(skeleton, "set_bone_pose_scale", id, se->get_bone_original_scale());
 		}
 	}
 	ur->commit_action();

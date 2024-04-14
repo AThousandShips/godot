@@ -85,8 +85,8 @@ bool TileSetEditor::_can_drop_data_fw(const Point2 &p_point, const Variant &p_da
 				return false;
 			}
 
-			for (int i = 0; i < files.size(); i++) {
-				String ftype = EditorFileSystem::get_singleton()->get_file_type(files[i]);
+			for (const String &file : files) {
+				String ftype = EditorFileSystem::get_singleton()->get_file_type(file);
 
 				if (!ClassDB::is_parent_class(ftype, "Texture2D")) {
 					return false;
@@ -413,8 +413,7 @@ void TileSetEditor::_patterns_item_list_gui_input(const Ref<InputEvent> &p_event
 		Vector<int> selected = patterns_item_list->get_selected_items();
 		EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 		undo_redo->create_action(TTR("Remove TileSet patterns"));
-		for (int i = 0; i < selected.size(); i++) {
-			int pattern_index = selected[i];
+		for (const int &pattern_index : selected) {
 			undo_redo->add_do_method(*tile_set, "remove_pattern", pattern_index);
 			undo_redo->add_undo_method(*tile_set, "add_pattern", tile_set->get_pattern(pattern_index), pattern_index);
 		}

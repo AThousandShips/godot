@@ -155,7 +155,7 @@ private:
 	void custom_action(const String &) override;
 
 public:
-	void show(Mode p_mode, const String &p_for_file, const Vector<String> &report);
+	void show(Mode p_mode, const String &p_for_file, const Vector<String> &p_report);
 	DependencyErrorDialog();
 };
 

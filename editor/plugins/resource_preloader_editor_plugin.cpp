@@ -51,9 +51,7 @@ void ResourcePreloaderEditor::_notification(int p_what) {
 }
 
 void ResourcePreloaderEditor::_files_load_request(const Vector<String> &p_paths) {
-	for (int i = 0; i < p_paths.size(); i++) {
-		const String &path = p_paths[i];
-
+	for (const String &path : p_paths) {
 		Ref<Resource> resource;
 		resource = ResourceLoader::load(path);
 
@@ -90,8 +88,8 @@ void ResourcePreloaderEditor::_load_pressed() {
 	file->clear_filters();
 	List<String> extensions;
 	ResourceLoader::get_recognized_extensions_for_type("", &extensions);
-	for (int i = 0; i < extensions.size(); i++) {
-		file->add_filter("*." + extensions[i]);
+	for (const String &extension : extensions) {
+		file->add_filter("*." + extension);
 	}
 
 	file->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILES);

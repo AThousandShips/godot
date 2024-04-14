@@ -37,10 +37,10 @@
 #include "scene/resources/image_texture.h"
 
 void EditorProfiler::_make_metric_ptrs(Metric &m) {
-	for (int i = 0; i < m.categories.size(); i++) {
-		m.category_ptrs[m.categories[i].signature] = &m.categories.write[i];
-		for (int j = 0; j < m.categories[i].items.size(); j++) {
-			m.item_ptrs[m.categories[i].items[j].signature] = &m.categories.write[i].items.write[j];
+	for (Metric::Category &category : m.categories) {
+		m.category_ptrs[category.signature] = &category;
+		for (Metric::Category::Item &item : category.items) {
+			m.item_ptrs[item.signature] = &item;
 		}
 	}
 }
@@ -337,23 +337,21 @@ void EditorProfiler::_update_frame() {
 
 	int dtime = display_time->get_selected();
 
-	for (int i = 0; i < m.categories.size(); i++) {
+	for (const Metric::Category &cat : m.categories) {
 		TreeItem *category = variables->create_item(root);
 		category->set_cell_mode(0, TreeItem::CELL_MODE_CHECK);
 		category->set_editable(0, true);
-		category->set_metadata(0, m.categories[i].signature);
-		category->set_text(0, String(m.categories[i].name));
-		category->set_text(1, _get_time_as_text(m, m.categories[i].total_time, 1));
+		category->set_metadata(0, cat.signature);
+		category->set_text(0, String(cat.name));
+		category->set_text(1, _get_time_as_text(m, cat.total_time, 1));
 
-		if (plot_sigs.has(m.categories[i].signature)) {
+		if (plot_sigs.has(cat.signature)) {
 			category->set_checked(0, true);
-			category->set_custom_color(0, _get_color_from_signature(m.categories[i].signature));
+			category->set_custom_color(0, _get_color_from_signature(cat.signature));
 		}
 
-		for (int j = 0; j < m.categories[i].items.size(); j++) {
-			const Metric::Category::Item &it = m.categories[i].items[j];
-
-			if (it.internal == it.total && !display_internal_profiles->is_pressed() && m.categories[i].name == "Script Functions") {
+		for (const Metric::Category::Item &it : cat.items) {
+			if (it.internal == it.total && !display_internal_profiles->is_pressed() && cat.name == "Script Functions") {
 				continue;
 			}
 			TreeItem *item = variables->create_item(category);
@@ -547,8 +545,7 @@ Vector<Vector<String>> EditorProfiler::get_data_as_csv() const {
 
 	// Different metrics may contain different number of categories.
 	HashSet<StringName> possible_signatures;
-	for (int i = 0; i < frame_metrics.size(); i++) {
-		const Metric &m = frame_metrics[i];
+	for (const Metric &m : frame_metrics) {
 		if (!m.valid) {
 			continue;
 		}

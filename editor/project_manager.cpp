@@ -446,14 +446,14 @@ void ProjectManager::_run_project() {
 void ProjectManager::_run_project_confirm() {
 	Vector<ProjectList::Item> selected_list = project_list->get_selected_projects();
 
-	for (int i = 0; i < selected_list.size(); ++i) {
-		const String &selected_main = selected_list[i].main_scene;
+	for (const ProjectList::Item &item : selected_list) {
+		const String &selected_main = item.main_scene;
 		if (selected_main.is_empty()) {
 			_show_error(TTR("Can't run project: Project has no main scene defined.\nPlease edit the project and set the main scene in the Project Settings under the \"Application\" category."));
 			continue;
 		}
 
-		const String &path = selected_list[i].path;
+		const String &path = item.path;
 
 		// `.substr(6)` on `ProjectSettings::get_singleton()->get_imported_files_path()` strips away the leading "res://".
 		if (!DirAccess::exists(path.path_join(ProjectSettings::get_singleton()->get_imported_files_path().substr(6)))) {
@@ -681,8 +681,8 @@ void ProjectManager::_update_project_buttons() {
 	bool empty_selection = selected_projects.is_empty();
 
 	bool is_missing_project_selected = false;
-	for (int i = 0; i < selected_projects.size(); ++i) {
-		if (selected_projects[i].missing) {
+	for (const ProjectList::Item &item : selected_projects) {
+		if (item.missing) {
 			is_missing_project_selected = true;
 			break;
 		}
@@ -700,8 +700,8 @@ void ProjectManager::_update_project_buttons() {
 void ProjectManager::_on_projects_updated() {
 	Vector<ProjectList::Item> selected_projects = project_list->get_selected_projects();
 	int index = 0;
-	for (int i = 0; i < selected_projects.size(); ++i) {
-		index = project_list->refresh_project(selected_projects[i].path);
+	for (const ProjectList::Item &item : selected_projects) {
+		index = project_list->refresh_project(item.path);
 	}
 	if (index != -1) {
 		project_list->ensure_project_visible(index);
@@ -1002,8 +1002,7 @@ void ProjectManager::_files_dropped(PackedStringArray p_files) {
 
 	HashSet<String> folders_set;
 	Ref<DirAccess> da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
-	for (int i = 0; i < p_files.size(); i++) {
-		const String &file = p_files[i];
+	for (const String &file : p_files) {
 		folders_set.insert(da->dir_exists(file) ? file : file.get_base_dir());
 	}
 	ERR_FAIL_COND(folders_set.is_empty()); // This can't really happen, we consume every dropped file path above.
@@ -1259,8 +1258,8 @@ ProjectManager::ProjectManager() {
 			sort_filter_titles.push_back(TTR("Path"));
 			sort_filter_titles.push_back(TTR("Tags"));
 
-			for (int i = 0; i < sort_filter_titles.size(); i++) {
-				filter_option->add_item(sort_filter_titles[i]);
+			for (const String &sort_filter_title : sort_filter_titles) {
+				filter_option->add_item(sort_filter_title);
 			}
 		}
 

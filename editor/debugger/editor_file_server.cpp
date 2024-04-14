@@ -180,12 +180,12 @@ void EditorFileServer::poll() {
 		Vector<String> files = files_text.split("\n");
 
 		print_verbose("EFS: Total cached files received: " + itos(files.size()));
-		for (int i = 0; i < files.size(); i++) {
-			if (files[i].get_slice_count("::") != 2) {
+		for (const String &f : files) {
+			if (f.get_slice_count("::") != 2) {
 				continue;
 			}
-			String file = files[i].get_slice("::", 0);
-			uint64_t modified_time = files[i].get_slice("::", 1).to_int();
+			String file = f.get_slice("::", 0);
+			uint64_t modified_time = f.get_slice("::", 1).to_int();
 
 			cached_files.insert(file, modified_time);
 		}
@@ -201,9 +201,9 @@ void EditorFileServer::poll() {
 	// Scan files to send.
 	_scan_files_changed(EditorFileSystem::get_singleton()->get_filesystem(), tags, files_to_send, cached_files);
 	// Add forced export files
-	Vector<String> forced_export = EditorExportPlatform::get_forced_export_files();
-	for (int i = 0; i < forced_export.size(); i++) {
-		_add_custom_file(forced_export[i], files_to_send, cached_files);
+	Vector<String> forced_exports = EditorExportPlatform::get_forced_export_files();
+	for (const String &forced_export : forced_exports) {
+		_add_custom_file(forced_export, files_to_send, cached_files);
 	}
 
 	_add_custom_file("res://project.godot", files_to_send, cached_files);

@@ -364,11 +364,11 @@ Dictionary DebugAdapterParser::req_setBreakpoints(const Dictionary &p_params) co
 	}
 
 	Array breakpoints = args["breakpoints"], lines;
-	for (int i = 0; i < breakpoints.size(); i++) {
-		DAP::SourceBreakpoint breakpoint;
-		breakpoint.from_json(breakpoints[i]);
+	for (const Variant &breakpoint : breakpoints) {
+		DAP::SourceBreakpoint src_breakpoint;
+		src_breakpoint.from_json(breakpoint);
 
-		lines.push_back(breakpoint.line + !lines_at_one);
+		lines.push_back(src_breakpoint.line + !lines_at_one);
 	}
 
 	Array updated_breakpoints = DebugAdapterProtocol::get_singleton()->update_breakpoints(source.path, lines);
@@ -451,8 +451,7 @@ Dictionary DebugAdapterParser::req_variables(const Dictionary &p_params) const {
 
 	if (E) {
 		if (!DebugAdapterProtocol::get_singleton()->get_current_peer()->supportsVariableType) {
-			for (int i = 0; i < E->value.size(); i++) {
-				Dictionary variable = E->value[i];
+			for (Dictionary variable : E->value) {
 				variable.erase("type");
 			}
 		}

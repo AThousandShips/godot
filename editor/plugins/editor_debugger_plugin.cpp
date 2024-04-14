@@ -140,8 +140,8 @@ EditorDebuggerPlugin::~EditorDebuggerPlugin() {
 }
 
 void EditorDebuggerPlugin::clear() {
-	for (int i = 0; i < sessions.size(); i++) {
-		sessions[i]->detach_debugger();
+	for (Ref<EditorDebuggerSession> &session : sessions) {
+		session->detach_debugger();
 	}
 	sessions.clear();
 }
@@ -162,8 +162,8 @@ Ref<EditorDebuggerSession> EditorDebuggerPlugin::get_session(int p_idx) {
 
 Array EditorDebuggerPlugin::get_sessions() {
 	Array ret;
-	for (int i = 0; i < sessions.size(); i++) {
-		ret.push_back(sessions[i]);
+	for (const Ref<EditorDebuggerSession> &session : sessions) {
+		ret.push_back(session);
 	}
 	return ret;
 }

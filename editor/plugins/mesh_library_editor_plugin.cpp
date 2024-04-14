@@ -88,10 +88,10 @@ void MeshLibraryEditor::_import_scene(Node *p_scene, Ref<MeshLibrary> p_library,
 		Vector<Ref<Mesh>> meshes;
 		Vector<Transform3D> transforms;
 		Vector<int> ids = p_library->get_item_list();
-		for (int i = 0; i < ids.size(); i++) {
-			if (mesh_instances.find(ids[i])) {
-				meshes.push_back(p_library->get_item_mesh(ids[i]));
-				transforms.push_back(mesh_instances[ids[i]]->get_transform());
+		for (const int &id : ids) {
+			if (mesh_instances.find(id)) {
+				meshes.push_back(p_library->get_item_mesh(id));
+				transforms.push_back(mesh_instances[id]->get_transform());
 			}
 		}
 
@@ -253,8 +253,8 @@ MeshLibraryEditor::MeshLibraryEditor() {
 	ResourceLoader::get_recognized_extensions_for_type("PackedScene", &extensions);
 	file->clear_filters();
 	file->set_title(TTR("Import Scene"));
-	for (int i = 0; i < extensions.size(); i++) {
-		file->add_filter("*." + extensions[i], extensions[i].to_upper());
+	for (const String &extension : extensions) {
+		file->add_filter("*." + extension, extension.to_upper());
 	}
 	add_child(file);
 	file->connect("file_selected", callable_mp(this, &MeshLibraryEditor::_import_scene_cbk));

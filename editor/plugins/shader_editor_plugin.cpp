@@ -307,13 +307,13 @@ void ShaderEditorPlugin::get_window_layout(Ref<ConfigFile> p_layout) {
 String ShaderEditorPlugin::get_unsaved_status(const String &p_for_scene) const {
 	// TODO: This should also include visual shaders and shader includes, but save_external_data() doesn't seem to save them...
 	PackedStringArray unsaved_shaders;
-	for (uint32_t i = 0; i < edited_shaders.size(); i++) {
-		if (edited_shaders[i].shader_editor) {
-			if (edited_shaders[i].shader_editor->is_unsaved()) {
+	for (const EditedShader &edited_shader : edited_shaders) {
+		if (edited_shader.shader_editor) {
+			if (edited_shader.shader_editor->is_unsaved()) {
 				if (unsaved_shaders.is_empty()) {
 					unsaved_shaders.append(TTR("Save changes to the following shaders(s) before quitting?"));
 				}
-				unsaved_shaders.append(edited_shaders[i].name.trim_suffix("(*)"));
+				unsaved_shaders.append(edited_shader.name.trim_suffix("(*)"));
 			}
 		}
 	}
@@ -544,8 +544,7 @@ bool ShaderEditorPlugin::can_drop_data_fw(const Point2 &p_point, const Variant &
 			return false;
 		}
 
-		for (int i = 0; i < files.size(); i++) {
-			const String &file = files[i];
+		for (const String &file : files) {
 			if (ResourceLoader::exists(file, "Shader")) {
 				Ref<Shader> shader = ResourceLoader::load(file);
 				if (shader.is_valid()) {
@@ -585,8 +584,7 @@ void ShaderEditorPlugin::drop_data_fw(const Point2 &p_point, const Variant &p_da
 	if (String(d["type"]) == "files") {
 		Vector<String> files = d["files"];
 
-		for (int i = 0; i < files.size(); i++) {
-			const String &file = files[i];
+		for (const String &file : files) {
 			Ref<Resource> res;
 			if (ResourceLoader::exists(file, "Shader") || ResourceLoader::exists(file, "ShaderInclude")) {
 				res = ResourceLoader::load(file);

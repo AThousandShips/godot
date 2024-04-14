@@ -343,10 +343,8 @@ void AnimationBezierTrackEdit::_notification(int p_what) {
 
 				float buttons_width = remove->get_width() + lock->get_width() + visibility_visible->get_width() + solo->get_width() + hsep * 3;
 
-				for (int i = 0; i < tracks.size(); ++i) {
+				for (int current_track : tracks) {
 					// RELATED TRACKS TITLES
-
-					int current_track = tracks[i];
 
 					String path = animation->track_get_path(current_track);
 					path = path.replace_first(base_path, "");
@@ -819,11 +817,11 @@ void AnimationBezierTrackEdit::_update_locked_tracks_after(int p_track) {
 		updated_locked_tracks.push_back(E);
 	}
 	locked_tracks.clear();
-	for (int i = 0; i < updated_locked_tracks.size(); ++i) {
-		if (updated_locked_tracks[i] > p_track) {
-			locked_tracks.insert(updated_locked_tracks[i] - 1);
+	for (const int &updated_locked_track : updated_locked_tracks) {
+		if (updated_locked_track > p_track) {
+			locked_tracks.insert(updated_locked_track - 1);
 		} else {
-			locked_tracks.insert(updated_locked_tracks[i]);
+			locked_tracks.insert(updated_locked_track);
 		}
 	}
 }
@@ -838,11 +836,11 @@ void AnimationBezierTrackEdit::_update_hidden_tracks_after(int p_track) {
 		updated_hidden_tracks.push_back(E);
 	}
 	hidden_tracks.clear();
-	for (int i = 0; i < updated_hidden_tracks.size(); ++i) {
-		if (updated_hidden_tracks[i] > p_track) {
-			hidden_tracks.insert(updated_hidden_tracks[i] - 1);
+	for (const int &updated_hidden_track : updated_hidden_tracks) {
+		if (updated_hidden_track > p_track) {
+			hidden_tracks.insert(updated_hidden_track - 1);
 		} else {
-			hidden_tracks.insert(updated_hidden_tracks[i]);
+			hidden_tracks.insert(updated_hidden_track);
 		}
 	}
 }
@@ -937,8 +935,8 @@ void AnimationBezierTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 		if (ED_IS_SHORTCUT("animation_bezier_editor/focus", p_event)) {
 			SelectionSet focused_keys;
 			if (selection.is_empty()) {
-				for (int i = 0; i < edit_points.size(); ++i) {
-					IntPair key_pair = IntPair(edit_points[i].track, edit_points[i].key);
+				for (const EditPoint &edit_point : edit_points) {
+					IntPair key_pair = IntPair(edit_point.track, edit_point.key);
 					focused_keys.insert(key_pair);
 				}
 			} else {
@@ -1001,8 +999,8 @@ void AnimationBezierTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 			accept_event();
 			return;
 		} else if (ED_IS_SHORTCUT("animation_bezier_editor/select_all_keys", p_event)) {
-			for (int i = 0; i < edit_points.size(); ++i) {
-				selection.insert(IntPair(edit_points[i].track, edit_points[i].key));
+			for (const EditPoint &edit_point : edit_points) {
+				selection.insert(IntPair(edit_point.track, edit_point.key));
 			}
 
 			queue_redraw();
@@ -1191,24 +1189,24 @@ void AnimationBezierTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 		}
 
 		// Second, check handles.
-		for (int i = 0; i < edit_points.size(); i++) {
+		for (const EditPoint &edit_point : edit_points) {
 			if (!read_only) {
-				if (edit_points[i].in_rect.has_point(mb->get_position())) {
+				if (edit_point.in_rect.has_point(mb->get_position())) {
 					moving_handle = -1;
-					moving_handle_key = edit_points[i].key;
-					moving_handle_track = edit_points[i].track;
-					moving_handle_left = animation->bezier_track_get_key_in_handle(edit_points[i].track, edit_points[i].key);
-					moving_handle_right = animation->bezier_track_get_key_out_handle(edit_points[i].track, edit_points[i].key);
+					moving_handle_key = edit_point.key;
+					moving_handle_track = edit_point.track;
+					moving_handle_left = animation->bezier_track_get_key_in_handle(edit_point.track, edit_point.key);
+					moving_handle_right = animation->bezier_track_get_key_out_handle(edit_point.track, edit_point.key);
 					queue_redraw();
 					return;
 				}
 
-				if (edit_points[i].out_rect.has_point(mb->get_position())) {
+				if (edit_point.out_rect.has_point(mb->get_position())) {
 					moving_handle = 1;
-					moving_handle_key = edit_points[i].key;
-					moving_handle_track = edit_points[i].track;
-					moving_handle_left = animation->bezier_track_get_key_in_handle(edit_points[i].track, edit_points[i].key);
-					moving_handle_right = animation->bezier_track_get_key_out_handle(edit_points[i].track, edit_points[i].key);
+					moving_handle_key = edit_point.key;
+					moving_handle_track = edit_point.track;
+					moving_handle_left = animation->bezier_track_get_key_in_handle(edit_point.track, edit_point.key);
+					moving_handle_right = animation->bezier_track_get_key_out_handle(edit_point.track, edit_point.key);
 					queue_redraw();
 					return;
 				}
@@ -1277,12 +1275,12 @@ void AnimationBezierTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 			Rect2 selection_rect(bs_from, bs_to - bs_from);
 
 			bool track_set = false;
-			for (int i = 0; i < edit_points.size(); i++) {
-				if (edit_points[i].point_rect.intersects(selection_rect)) {
-					selection.insert(IntPair(edit_points[i].track, edit_points[i].key));
+			for (const EditPoint &edit_point : edit_points) {
+				if (edit_point.point_rect.intersects(selection_rect)) {
+					selection.insert(IntPair(edit_point.track, edit_point.key));
 					if (!track_set) {
 						track_set = true;
-						set_animation_and_track(animation, edit_points[i].track, read_only);
+						set_animation_and_track(animation, edit_point.track, read_only);
 					}
 				}
 			}
@@ -1556,10 +1554,10 @@ void AnimationBezierTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 }
 
 bool AnimationBezierTrackEdit::_try_select_at_ui_pos(const Point2 &p_pos, bool p_aggregate, bool p_deselectable) {
-	for (int i = 0; i < edit_points.size(); i++) {
+	for (const EditPoint &edit_point : edit_points) {
 		// Path 2D editing in the 3D and 2D editors works the same way. (?)
-		if (edit_points[i].point_rect.has_point(p_pos)) {
-			IntPair pair = IntPair(edit_points[i].track, edit_points[i].key);
+		if (edit_point.point_rect.has_point(p_pos)) {
+			IntPair pair = IntPair(edit_point.track, edit_point.key);
 			if (p_aggregate) {
 				// Add to selection.
 				if (selection.has(pair)) {
@@ -1826,9 +1824,7 @@ void AnimationBezierTrackEdit::paste_keys(real_t p_ofs, bool p_ofs_valid) {
 		bool same_track = true;
 		bool all_compatible = true;
 
-		for (int i = 0; i < editor->key_clipboard.keys.size(); i++) {
-			const AnimationTrackEditor::KeyClipboard::Key key = editor->key_clipboard.keys[i];
-
+		for (const AnimationTrackEditor::KeyClipboard::Key &key : editor->key_clipboard.keys) {
 			if (key.track != 0) {
 				same_track = false;
 				break;
@@ -1846,9 +1842,7 @@ void AnimationBezierTrackEdit::paste_keys(real_t p_ofs, bool p_ofs_valid) {
 		}
 
 		List<Pair<int, float>> new_selection_values;
-		for (int i = 0; i < editor->key_clipboard.keys.size(); i++) {
-			const AnimationTrackEditor::KeyClipboard::Key key = editor->key_clipboard.keys[i];
-
+		for (const AnimationTrackEditor::KeyClipboard::Key &key : editor->key_clipboard.keys) {
 			float insert_pos = p_ofs_valid ? p_ofs : timeline->get_play_position();
 			if (p_ofs_valid) {
 				if (editor->snap->is_pressed() && editor->step->get_value() != 0) {

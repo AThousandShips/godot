@@ -59,9 +59,9 @@ bool EditorNode3DGizmo::is_editable() const {
 
 void EditorNode3DGizmo::clear() {
 	ERR_FAIL_NULL(RenderingServer::get_singleton());
-	for (int i = 0; i < instances.size(); i++) {
-		if (instances[i].instance.is_valid()) {
-			RS::get_singleton()->free(instances[i].instance);
+	for (const Instance &instance : instances) {
+		if (instance.instance.is_valid()) {
+			RS::get_singleton()->free(instance.instance);
 		}
 	}
 
@@ -282,8 +282,8 @@ void EditorNode3DGizmo::add_vertices(const Vector<Vector3> &p_vertices, const Re
 
 	if (p_billboard) {
 		float md = 0;
-		for (int i = 0; i < p_vertices.size(); i++) {
-			md = MAX(0, p_vertices[i].length());
+		for (const Vector3 &p : p_vertices) {
+			md = MAX(0, p.length());
 		}
 		if (md) {
 			mesh->set_custom_aabb(AABB(Vector3(-md, -md, -md), Vector3(md, md, md) * 2.0));
@@ -337,8 +337,8 @@ void EditorNode3DGizmo::add_unscaled_billboard(const Ref<Material> &p_material, 
 	mesh->surface_set_material(0, p_material);
 
 	float md = 0;
-	for (int i = 0; i < vs.size(); i++) {
-		md = MAX(0, vs[i].length());
+	for (const Vector3 &p : vs) {
+		md = MAX(0, p.length());
 	}
 	if (md) {
 		mesh->set_custom_aabb(AABB(Vector3(-md, -md, -md), Vector3(md, md, md) * 2.0));
@@ -422,8 +422,8 @@ void EditorNode3DGizmo::add_handles(const Vector<Vector3> &p_handles, const Ref<
 
 	if (p_billboard) {
 		float md = 0;
-		for (int i = 0; i < p_handles.size(); i++) {
-			md = MAX(0, p_handles[i].length());
+		for (const Vector3 &p : p_handles) {
+			md = MAX(0, p.length());
 		}
 		if (md) {
 			mesh->set_custom_aabb(AABB(Vector3(-md, -md, -md), Vector3(md, md, md) * 2.0));
@@ -761,8 +761,8 @@ void EditorNode3DGizmo::create() {
 	ERR_FAIL_COND(valid);
 	valid = true;
 
-	for (int i = 0; i < instances.size(); i++) {
-		instances.write[i].create_instance(spatial_node, hidden);
+	for (Instance &instance : instances) {
+		instance.create_instance(spatial_node, hidden);
 	}
 
 	transform();
@@ -771,8 +771,8 @@ void EditorNode3DGizmo::create() {
 void EditorNode3DGizmo::transform() {
 	ERR_FAIL_NULL(spatial_node);
 	ERR_FAIL_COND(!valid);
-	for (int i = 0; i < instances.size(); i++) {
-		RS::get_singleton()->instance_set_transform(instances[i].instance, spatial_node->get_global_transform() * instances[i].xform);
+	for (const Instance &instance : instances) {
+		RS::get_singleton()->instance_set_transform(instance.instance, spatial_node->get_global_transform() * instance.xform);
 	}
 }
 
@@ -781,11 +781,11 @@ void EditorNode3DGizmo::free() {
 	ERR_FAIL_NULL(spatial_node);
 	ERR_FAIL_COND(!valid);
 
-	for (int i = 0; i < instances.size(); i++) {
-		if (instances[i].instance.is_valid()) {
-			RS::get_singleton()->free(instances[i].instance);
+	for (Instance &instance : instances) {
+		if (instance.instance.is_valid()) {
+			RS::get_singleton()->free(instance.instance);
 		}
-		instances.write[i].instance = RID();
+		instance.instance = RID();
 	}
 
 	clear();
@@ -796,8 +796,8 @@ void EditorNode3DGizmo::free() {
 void EditorNode3DGizmo::set_hidden(bool p_hidden) {
 	hidden = p_hidden;
 	int layer = hidden ? 0 : 1 << Node3DEditorViewport::GIZMO_EDIT_LAYER;
-	for (int i = 0; i < instances.size(); ++i) {
-		RS::get_singleton()->instance_set_layer_mask(instances[i].instance, layer);
+	for (const Instance &instance : instances) {
+		RS::get_singleton()->instance_set_layer_mask(instance.instance, layer);
 	}
 }
 
@@ -1162,8 +1162,8 @@ void EditorNode3DGizmoPlugin::commit_subgizmos(const EditorNode3DGizmo *p_gizmo,
 
 void EditorNode3DGizmoPlugin::set_state(int p_state) {
 	current_state = p_state;
-	for (int i = 0; i < current_gizmos.size(); ++i) {
-		current_gizmos[i]->set_hidden(current_state == HIDDEN);
+	for (EditorNode3DGizmo *gizmo : current_gizmos) {
+		gizmo->set_hidden(current_state == HIDDEN);
 	}
 }
 
@@ -1180,9 +1180,9 @@ EditorNode3DGizmoPlugin::EditorNode3DGizmoPlugin() {
 }
 
 EditorNode3DGizmoPlugin::~EditorNode3DGizmoPlugin() {
-	for (int i = 0; i < current_gizmos.size(); ++i) {
-		current_gizmos[i]->set_plugin(nullptr);
-		current_gizmos[i]->get_node_3d()->remove_gizmo(current_gizmos[i]);
+	for (EditorNode3DGizmo *gizmo : current_gizmos) {
+		gizmo->set_plugin(nullptr);
+		gizmo->get_node_3d()->remove_gizmo(gizmo);
 	}
 	if (Node3DEditor::get_singleton()) {
 		Node3DEditor::get_singleton()->update_all_gizmos();

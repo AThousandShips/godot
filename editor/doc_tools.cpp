@@ -476,10 +476,10 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 				ResourceImporter *resimp = Object::cast_to<ResourceImporter>(ClassDB::instantiate(name));
 				List<ResourceImporter::ImportOption> options;
 				resimp->get_import_options("", &options);
-				for (int i = 0; i < options.size(); i++) {
-					const PropertyInfo &prop = options[i].option;
+				for (const ResourceImporter::ImportOption &option : options) {
+					const PropertyInfo &prop = option.option;
 					properties.push_back(prop);
-					import_options_default[prop.name] = options[i].default_value;
+					import_options_default[prop.name] = option.default_value;
 				}
 				own_properties = properties;
 				memdelete(resimp);
@@ -646,9 +646,9 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 					if (!errs.has(OK)) {
 						errs.insert(0, OK);
 					}
-					for (int i = 0; i < errs.size(); i++) {
-						if (!method.errors_returned.has(errs[i])) {
-							method.errors_returned.push_back(errs[i]);
+					for (const Error &err : errs) {
+						if (!method.errors_returned.has(err)) {
+							method.errors_returned.push_back(err);
 						}
 					}
 				}
@@ -665,8 +665,7 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 				for (List<MethodInfo>::Element *EV = signal_list.front(); EV; EV = EV->next()) {
 					DocData::MethodDoc signal;
 					signal.name = EV->get().name;
-					for (int i = 0; i < EV->get().arguments.size(); i++) {
-						const PropertyInfo &arginfo = EV->get().arguments[i];
+					for (const PropertyInfo &arginfo : EV->get().arguments) {
 						DocData::ArgumentDoc argument;
 						DocData::argument_doc_from_arginfo(argument, arginfo);
 
@@ -1535,9 +1534,7 @@ static void _write_string(Ref<FileAccess> f, int p_tablevel, const String &p_str
 static void _write_method_doc(Ref<FileAccess> f, const String &p_name, Vector<DocData::MethodDoc> &p_method_docs) {
 	if (!p_method_docs.is_empty()) {
 		_write_string(f, 1, "<" + p_name + "s>");
-		for (int i = 0; i < p_method_docs.size(); i++) {
-			const DocData::MethodDoc &m = p_method_docs[i];
-
+		for (const DocData::MethodDoc &m : p_method_docs) {
 			String additional_attributes;
 			if (!m.qualifiers.is_empty()) {
 				additional_attributes += " qualifiers=\"" + m.qualifiers.xml_escape(true) + "\"";
@@ -1565,8 +1562,8 @@ static void _write_method_doc(Ref<FileAccess> f, const String &p_name, Vector<Do
 				_write_string(f, 3, "<return type=\"" + m.return_type.xml_escape(true) + "\"" + enum_text + " />");
 			}
 			if (m.errors_returned.size() > 0) {
-				for (int j = 0; j < m.errors_returned.size(); j++) {
-					_write_string(f, 3, "<returns_error number=\"" + itos(m.errors_returned[j]) + "\"/>");
+				for (const int &err : m.errors_returned) {
+					_write_string(f, 3, "<returns_error number=\"" + itos(err) + "\"/>");
 				}
 			}
 
@@ -1651,8 +1648,7 @@ Error DocTools::save_classes(const String &p_default_path, const HashMap<String,
 		_write_string(f, 1, "</description>");
 
 		_write_string(f, 1, "<tutorials>");
-		for (int i = 0; i < c.tutorials.size(); i++) {
-			DocData::TutorialDoc tutorial = c.tutorials.get(i);
+		for (const DocData::TutorialDoc &tutorial : c.tutorials) {
 			String title_attribute = (!tutorial.title.is_empty()) ? " title=\"" + _translate_doc_string(tutorial.title).xml_escape(true) + "\"" : "";
 			_write_string(f, 2, "<link" + title_attribute + ">" + tutorial.link.xml_escape() + "</link>");
 		}
@@ -1665,30 +1661,28 @@ Error DocTools::save_classes(const String &p_default_path, const HashMap<String,
 		if (!c.properties.is_empty()) {
 			_write_string(f, 1, "<members>");
 
-			for (int i = 0; i < c.properties.size(); i++) {
+			for (const DocData::PropertyDoc &p : c.properties) {
 				String additional_attributes;
-				if (!c.properties[i].enumeration.is_empty()) {
-					additional_attributes += " enum=\"" + c.properties[i].enumeration.xml_escape(true) + "\"";
-					if (c.properties[i].is_bitfield) {
+				if (!p.enumeration.is_empty()) {
+					additional_attributes += " enum=\"" + p.enumeration.xml_escape(true) + "\"";
+					if (p.is_bitfield) {
 						additional_attributes += " is_bitfield=\"true\"";
 					}
 				}
-				if (!c.properties[i].default_value.is_empty()) {
-					additional_attributes += " default=\"" + c.properties[i].default_value.xml_escape(true) + "\"";
+				if (!p.default_value.is_empty()) {
+					additional_attributes += " default=\"" + p.default_value.xml_escape(true) + "\"";
 				}
-				if (c.properties[i].is_deprecated) {
-					additional_attributes += " deprecated=\"" + c.properties[i].deprecated_message.xml_escape(true) + "\"";
+				if (p.is_deprecated) {
+					additional_attributes += " deprecated=\"" + p.deprecated_message.xml_escape(true) + "\"";
 				}
-				if (c.properties[i].is_experimental) {
-					additional_attributes += " experimental=\"" + c.properties[i].experimental_message.xml_escape(true) + "\"";
+				if (p.is_experimental) {
+					additional_attributes += " experimental=\"" + p.experimental_message.xml_escape(true) + "\"";
 				}
-				if (!c.properties[i].keywords.is_empty()) {
-					additional_attributes += String(" keywords=\"") + c.properties[i].keywords.xml_escape(true) + "\"";
+				if (!p.keywords.is_empty()) {
+					additional_attributes += String(" keywords=\"") + p.keywords.xml_escape(true) + "\"";
 				}
 
-				const DocData::PropertyDoc &p = c.properties[i];
-
-				if (c.properties[i].overridden) {
+				if (p.overridden) {
 					_write_string(f, 2, "<member name=\"" + p.name.xml_escape(true) + "\" type=\"" + p.type.xml_escape(true) + "\" setter=\"" + p.setter.xml_escape(true) + "\" getter=\"" + p.getter.xml_escape(true) + "\" overrides=\"" + p.overrides.xml_escape(true) + "\"" + additional_attributes + " />");
 				} else {
 					_write_string(f, 2, "<member name=\"" + p.name.xml_escape(true) + "\" type=\"" + p.type.xml_escape(true) + "\" setter=\"" + p.setter.xml_escape(true) + "\" getter=\"" + p.getter.xml_escape(true) + "\"" + additional_attributes + ">");
@@ -1703,18 +1697,16 @@ Error DocTools::save_classes(const String &p_default_path, const HashMap<String,
 
 		if (!c.constants.is_empty()) {
 			_write_string(f, 1, "<constants>");
-			for (int i = 0; i < c.constants.size(); i++) {
-				const DocData::ConstantDoc &k = c.constants[i];
-
+			for (const DocData::ConstantDoc &k : c.constants) {
 				String additional_attributes;
-				if (c.constants[i].is_deprecated) {
-					additional_attributes += " deprecated=\"" + c.constants[i].deprecated_message.xml_escape(true) + "\"";
+				if (k.is_deprecated) {
+					additional_attributes += " deprecated=\"" + k.deprecated_message.xml_escape(true) + "\"";
 				}
-				if (c.constants[i].is_experimental) {
-					additional_attributes += " experimental=\"" + c.constants[i].experimental_message.xml_escape(true) + "\"";
+				if (k.is_experimental) {
+					additional_attributes += " experimental=\"" + k.experimental_message.xml_escape(true) + "\"";
 				}
-				if (!c.constants[i].keywords.is_empty()) {
-					additional_attributes += String(" keywords=\"") + c.constants[i].keywords.xml_escape(true) + "\"";
+				if (!k.keywords.is_empty()) {
+					additional_attributes += String(" keywords=\"") + k.keywords.xml_escape(true) + "\"";
 				}
 
 				if (k.is_value_valid) {
@@ -1745,9 +1737,7 @@ Error DocTools::save_classes(const String &p_default_path, const HashMap<String,
 
 		if (!c.theme_properties.is_empty()) {
 			_write_string(f, 1, "<theme_items>");
-			for (int i = 0; i < c.theme_properties.size(); i++) {
-				const DocData::ThemeItemDoc &ti = c.theme_properties[i];
-
+			for (const DocData::ThemeItemDoc &ti : c.theme_properties) {
 				String additional_attributes;
 				if (!ti.default_value.is_empty()) {
 					additional_attributes += String(" default=\"") + ti.default_value.xml_escape(true) + "\"";

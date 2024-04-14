@@ -216,8 +216,8 @@ void ProjectSettingsEditor::_update_property_box() {
 		}
 
 		const Vector<String> names = name.split("/");
-		for (int i = 0; i < names.size(); i++) {
-			if (!names[i].is_valid_identifier()) {
+		for (const String &setting_name : names) {
+			if (!setting_name.is_valid_identifier()) {
 				return;
 			}
 		}
@@ -317,8 +317,8 @@ void ProjectSettingsEditor::_add_feature_overrides() {
 
 		String custom = ee->get_export_preset(i)->get_custom_features();
 		Vector<String> custom_list = custom.split(",");
-		for (int j = 0; j < custom_list.size(); j++) {
-			String f = custom_list[j].strip_edges();
+		for (const String &custom_str : custom_list) {
+			String f = custom_str.strip_edges();
 			if (!f.is_empty()) {
 				presets.insert(f);
 			}

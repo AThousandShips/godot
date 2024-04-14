@@ -60,8 +60,8 @@ void SpriteFramesEditor::_open_sprite_sheet() {
 	file_split_sheet->clear_filters();
 	List<String> extensions;
 	ResourceLoader::get_recognized_extensions_for_type("Texture2D", &extensions);
-	for (int i = 0; i < extensions.size(); i++) {
-		file_split_sheet->add_filter("*." + extensions[i]);
+	for (const String &extension : extensions) {
+		file_split_sheet->add_filter("*." + extension);
 	}
 
 	file_split_sheet->popup_file_dialog();
@@ -607,9 +607,8 @@ void SpriteFramesEditor::_file_load_request(const Vector<String> &p_path, int p_
 
 	List<Ref<Texture2D>> resources;
 
-	for (int i = 0; i < p_path.size(); i++) {
-		Ref<Texture2D> resource;
-		resource = ResourceLoader::load(p_path[i]);
+	for (const String &path : p_path) {
+		Ref<Texture2D> resource = ResourceLoader::load(path);
 
 		if (resource.is_null()) {
 			dialog->set_text(TTR("ERROR: Couldn't load frame resource!"));
@@ -668,8 +667,8 @@ void SpriteFramesEditor::_load_pressed() {
 	file->clear_filters();
 	List<String> extensions;
 	ResourceLoader::get_recognized_extensions_for_type("Texture2D", &extensions);
-	for (int i = 0; i < extensions.size(); i++) {
-		file->add_filter("*." + extensions[i]);
+	for (const String &extension : extensions) {
+		file->add_filter("*." + extension);
 	}
 
 	file->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILES);
@@ -705,8 +704,7 @@ void SpriteFramesEditor::_paste_frame_array(const Ref<ClipboardSpriteFrames> &p_
 
 	int undo_index = frames->get_frame_count(edited_anim);
 
-	for (int index = 0; index < p_clipboard_frames->frames.size(); index++) {
-		const ClipboardSpriteFrames::Frame &frame = p_clipboard_frames->frames[index];
+	for (const ClipboardSpriteFrames::Frame &frame : p_clipboard_frames->frames) {
 		texture = frame.texture;
 		duration = frame.duration;
 

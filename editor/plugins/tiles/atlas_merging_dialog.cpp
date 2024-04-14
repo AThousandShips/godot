@@ -51,8 +51,7 @@ void AtlasMergingDialog::_generate_merged(const Vector<Ref<TileSetAtlasSource>> 
 
 		// Compute the new texture region size.
 		Vector2i new_texture_region_size;
-		for (int source_index = 0; source_index < p_atlas_sources.size(); source_index++) {
-			const Ref<TileSetAtlasSource> &atlas_source = p_atlas_sources[source_index];
+		for (const Ref<TileSetAtlasSource> &atlas_source : p_atlas_sources) {
 			new_texture_region_size = new_texture_region_size.max(atlas_source->get_texture_region_size());
 		}
 
@@ -157,8 +156,8 @@ void AtlasMergingDialog::_update_texture() {
 	Vector<int> selected = atlas_merging_atlases_list->get_selected_items();
 	if (selected.size() >= 2) {
 		Vector<Ref<TileSetAtlasSource>> to_merge;
-		for (int i = 0; i < selected.size(); i++) {
-			int source_id = atlas_merging_atlases_list->get_item_metadata(selected[i]);
+		for (const int &sel : selected) {
+			int source_id = atlas_merging_atlases_list->get_item_metadata(sel);
 			to_merge.push_back(tile_set->get_source(source_id));
 		}
 		_generate_merged(to_merge, next_line_after_column);

@@ -323,10 +323,10 @@ void editor_register_fonts(const Ref<Theme> &p_theme) {
 			mono_fc->set_opentype_features(ftrs);
 		} break;
 		case 2: { // Custom.
-			Vector<String> subtag = String(EDITOR_GET("interface/editor/code_font_custom_opentype_features")).split(",");
+			Vector<String> subtags = String(EDITOR_GET("interface/editor/code_font_custom_opentype_features")).split(",");
 			Dictionary ftrs;
-			for (int i = 0; i < subtag.size(); i++) {
-				Vector<String> subtag_a = subtag[i].split("=");
+			for (const String &subtag : subtags) {
+				Vector<String> subtag_a = subtag.split("=");
 				if (subtag_a.size() == 2) {
 					ftrs[TS->name_to_tag(subtag_a[0])] = subtag_a[1].to_int();
 				} else if (subtag_a.size() == 1) {

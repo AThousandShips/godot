@@ -207,8 +207,8 @@ void ScriptEditorDebugger::_file_selected(const String &p_file) {
 			file->store_string("\n");
 
 			Vector<Vector<String>> profiler_data = profiler->get_data_as_csv();
-			for (int i = 0; i < profiler_data.size(); i++) {
-				file->store_csv_line(profiler_data[i]);
+			for (const Vector<String> &prof_data : profiler_data) {
+				file->store_csv_line(prof_data);
 			}
 		} break;
 		case SAVE_VRAM_CSV: {
@@ -725,8 +725,7 @@ void ScriptEditorDebugger::_parse_message(const String &p_msg, uint64_t p_thread
 			metric.categories.push_back(frame_time);
 		}
 
-		for (int i = 0; i < frame.servers.size(); i++) {
-			const ServersDebugger::ServerInfo &srv = frame.servers[i];
+		for (const ServersDebugger::ServerInfo &srv : frame.servers) {
 			EditorProfiler::Metric::Category c;
 			const String name = srv.name;
 			c.name = EditorPropertyNameProcessor::get_singleton()->process_name(name, EditorPropertyNameProcessor::STYLE_CAPITALIZED);

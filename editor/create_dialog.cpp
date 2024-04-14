@@ -191,8 +191,8 @@ void CreateDialog::_update_search() {
 	}
 
 	// Build the type tree.
-	for (int i = 0; i < candidates.size(); i++) {
-		_add_type(candidates[i], ClassDB::class_exists(candidates[i]) ? TypeCategory::CPP_TYPE : TypeCategory::OTHER_TYPE);
+	for (const String &candidate : candidates) {
+		_add_type(candidate, ClassDB::class_exists(candidate) ? TypeCategory::CPP_TYPE : TypeCategory::OTHER_TYPE);
 	}
 
 	// Select the best result.
@@ -707,8 +707,7 @@ void CreateDialog::_save_and_update_favorite_list() {
 	{
 		Ref<FileAccess> f = FileAccess::open(EditorPaths::get_singleton()->get_project_settings_dir().path_join("favorites." + base_type), FileAccess::WRITE);
 		if (f.is_valid()) {
-			for (int i = 0; i < favorite_list.size(); i++) {
-				String l = favorite_list[i];
+			for (const String &l : favorite_list) {
 				String name = l.get_slicec(' ', 0);
 				if (!EditorNode::get_editor_data().is_type_recognized(name)) {
 					continue;

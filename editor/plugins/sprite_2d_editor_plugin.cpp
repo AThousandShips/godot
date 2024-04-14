@@ -61,24 +61,24 @@ void Sprite2DEditor::edit(Sprite2D *p_sprite) {
 
 #define PRECISION 10.0
 
-Vector<Vector2> expand(const Vector<Vector2> &points, const Rect2i &rect, float epsilon = 2.0) {
-	int size = points.size();
+Vector<Vector2> expand(const Vector<Vector2> &p_points, const Rect2i &p_rect, float p_epsilon = 2.0) {
+	int size = p_points.size();
 	ERR_FAIL_COND_V(size < 2, Vector<Vector2>());
 
 	ClipperLib::Path subj;
 	ClipperLib::PolyTree solution;
 	ClipperLib::PolyTree out;
 
-	for (int i = 0; i < points.size(); i++) {
-		subj << ClipperLib::IntPoint(points[i].x * PRECISION, points[i].y * PRECISION);
+	for (const Vector2 &p : p_points) {
+		subj << ClipperLib::IntPoint(p.x * PRECISION, p.y * PRECISION);
 	}
 	ClipperLib::ClipperOffset co;
 	co.AddPath(subj, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
-	co.Execute(solution, epsilon * PRECISION);
+	co.Execute(solution, p_epsilon * PRECISION);
 
 	ClipperLib::PolyNode *p = solution.GetFirst();
 
-	ERR_FAIL_NULL_V(p, points);
+	ERR_FAIL_NULL_V(p, p_points);
 
 	while (p->IsHole()) {
 		p = p->GetNext();
@@ -93,15 +93,15 @@ Vector<Vector2> expand(const Vector<Vector2> &points, const Rect2i &rect, float 
 	//create the clipping rect
 	ClipperLib::Path clamp;
 	clamp.push_back(ClipperLib::IntPoint(0, 0));
-	clamp.push_back(ClipperLib::IntPoint(rect.size.width * PRECISION, 0));
-	clamp.push_back(ClipperLib::IntPoint(rect.size.width * PRECISION, rect.size.height * PRECISION));
-	clamp.push_back(ClipperLib::IntPoint(0, rect.size.height * PRECISION));
+	clamp.push_back(ClipperLib::IntPoint(p_rect.size.width * PRECISION, 0));
+	clamp.push_back(ClipperLib::IntPoint(p_rect.size.width * PRECISION, p_rect.size.height * PRECISION));
+	clamp.push_back(ClipperLib::IntPoint(0, p_rect.size.height * PRECISION));
 	cl.AddPath(clamp, ClipperLib::ptClip, true);
 	cl.Execute(ClipperLib::ctIntersection, out);
 
-	Vector<Vector2> outPoints;
+	Vector<Vector2> out_points;
 	ClipperLib::PolyNode *p2 = out.GetFirst();
-	ERR_FAIL_NULL_V(p2, points);
+	ERR_FAIL_NULL_V(p2, p_points);
 
 	while (p2->IsHole()) {
 		p2 = p2->GetNext();
@@ -112,11 +112,11 @@ Vector<Vector2> expand(const Vector<Vector2> &points, const Rect2i &rect, float 
 	for (uint64_t i = 0; i < p2->Contour.size(); i++) {
 		Vector2 cur = Vector2(p2->Contour[i].X / PRECISION, p2->Contour[i].Y / PRECISION);
 		if (cur.distance_to(prev) > 0.5) {
-			outPoints.push_back(cur);
+			out_points.push_back(cur);
 			prev = cur;
 		}
 	}
-	return outPoints;
+	return out_points;
 }
 
 void Sprite2DEditor::_menu_option(int p_option) {
@@ -354,8 +354,8 @@ void Sprite2DEditor::_convert_to_polygon_2d_node() {
 	Polygon2D *polygon_2d_instance = memnew(Polygon2D);
 
 	int total_point_count = 0;
-	for (int i = 0; i < computed_outline_lines.size(); i++) {
-		total_point_count += computed_outline_lines[i].size();
+	for (const Vector<Vector2> &computed_outline_line : computed_outline_lines) {
+		total_point_count += computed_outline_line.size();
 	}
 
 	PackedVector2Array polygon;
@@ -406,9 +406,7 @@ void Sprite2DEditor::_create_collision_polygon_2d_node() {
 		return;
 	}
 
-	for (int i = 0; i < computed_outline_lines.size(); i++) {
-		Vector<Vector2> outline = computed_outline_lines[i];
-
+	for (const Vector<Vector2> &outline : computed_outline_lines) {
 		CollisionPolygon2D *collision_polygon_2d_instance = memnew(CollisionPolygon2D);
 		collision_polygon_2d_instance->set_polygon(outline);
 
@@ -428,17 +426,15 @@ void Sprite2DEditor::_create_light_occluder_2d_node() {
 		return;
 	}
 
-	for (int i = 0; i < computed_outline_lines.size(); i++) {
-		Vector<Vector2> outline = computed_outline_lines[i];
-
+	for (const Vector<Vector2> &outline : computed_outline_lines) {
 		Ref<OccluderPolygon2D> polygon;
 		polygon.instantiate();
 
 		PackedVector2Array a;
 		a.resize(outline.size());
 		Vector2 *aw = a.ptrw();
-		for (int io = 0; io < outline.size(); io++) {
-			aw[io] = outline[io];
+		for (int i = 0; i < outline.size(); i++) {
+			aw[i] = outline[i];
 		}
 		polygon->set_polygon(a);
 
@@ -486,9 +482,7 @@ void Sprite2DEditor::_debug_uv_draw() {
 		debug_uv->draw_multiline(uv_lines, color);
 
 	} else if ((selected_menu_item == MENU_OPTION_CONVERT_TO_POLYGON_2D || selected_menu_item == MENU_OPTION_CREATE_COLLISION_POLY_2D || selected_menu_item == MENU_OPTION_CREATE_LIGHT_OCCLUDER_2D) && outline_lines.size() > 0) {
-		for (int i = 0; i < outline_lines.size(); i++) {
-			Vector<Vector2> outline = outline_lines[i];
-
+		for (const Vector<Vector2> &outline : outline_lines) {
 			debug_uv->draw_polyline(outline, color);
 			debug_uv->draw_line(outline[0], outline[outline.size() - 1], color);
 		}

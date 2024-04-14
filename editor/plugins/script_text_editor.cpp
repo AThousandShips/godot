@@ -52,9 +52,9 @@ void ConnectionInfoDialog::popup_connections(const String &p_method, const Vecto
 	tree->clear();
 	TreeItem *root = tree->create_item();
 
-	for (int i = 0; i < p_nodes.size(); i++) {
+	for (Node *node : p_nodes) {
 		List<Connection> all_connections;
-		p_nodes[i]->get_signals_connected_to_this(&all_connections);
+		node->get_signals_connected_to_this(&all_connections);
 
 		for (const Connection &connection : all_connections) {
 			if (connection.callable.get_method() != p_method) {
@@ -721,18 +721,18 @@ void ScriptTextEditor::_update_bookmark_list() {
 
 	bookmarks_menu->add_separator();
 
-	for (int i = 0; i < bookmark_list.size(); i++) {
+	for (const int32_t &bookmark : bookmark_list) {
 		// Strip edges to remove spaces or tabs.
 		// Also replace any tabs by spaces, since we can't print tabs in the menu.
-		String line = code_editor->get_text_editor()->get_line(bookmark_list[i]).replace("\t", "  ").strip_edges();
+		String line = code_editor->get_text_editor()->get_line(bookmark).replace("\t", "  ").strip_edges();
 
 		// Limit the size of the line if too big.
 		if (line.length() > 50) {
 			line = line.substr(0, 50);
 		}
 
-		bookmarks_menu->add_item(String::num((int)bookmark_list[i] + 1) + " - `" + line + "`");
-		bookmarks_menu->set_item_metadata(-1, bookmark_list[i]);
+		bookmarks_menu->add_item(String::num((int)bookmark + 1) + " - `" + line + "`");
+		bookmarks_menu->set_item_metadata(-1, bookmark);
 	}
 }
 
@@ -876,18 +876,18 @@ void ScriptTextEditor::_update_breakpoint_list() {
 
 	breakpoints_menu->add_separator();
 
-	for (int i = 0; i < breakpoint_list.size(); i++) {
+	for (const int32_t &breakpoint : breakpoint_list) {
 		// Strip edges to remove spaces or tabs.
 		// Also replace any tabs by spaces, since we can't print tabs in the menu.
-		String line = code_editor->get_text_editor()->get_line(breakpoint_list[i]).replace("\t", "  ").strip_edges();
+		String line = code_editor->get_text_editor()->get_line(breakpoint).replace("\t", "  ").strip_edges();
 
 		// Limit the size of the line if too big.
 		if (line.length() > 50) {
 			line = line.substr(0, 50);
 		}
 
-		breakpoints_menu->add_item(String::num((int)breakpoint_list[i] + 1) + " - `" + line + "`");
-		breakpoints_menu->set_item_metadata(-1, breakpoint_list[i]);
+		breakpoints_menu->add_item(String::num((int)breakpoint + 1) + " - `" + line + "`");
+		breakpoints_menu->set_item_metadata(-1, breakpoint);
 	}
 }
 
@@ -1100,9 +1100,9 @@ void ScriptTextEditor::_update_connected_methods() {
 	// Add connection icons to methods.
 	Vector<Node *> nodes = _find_all_node_for_script(base, base, script);
 	HashSet<StringName> methods_found;
-	for (int i = 0; i < nodes.size(); i++) {
+	for (Node *node : nodes) {
 		List<Connection> signal_connections;
-		nodes[i]->get_signals_connected_to_this(&signal_connections);
+		node->get_signals_connected_to_this(&signal_connections);
 
 		for (const Connection &connection : signal_connections) {
 			if (!(connection.flags & CONNECT_PERSIST)) {
@@ -1123,13 +1123,13 @@ void ScriptTextEditor::_update_connected_methods() {
 			if (!ClassDB::has_method(script->get_instance_base_type(), method)) {
 				int line = -1;
 
-				for (int j = 0; j < functions.size(); j++) {
-					String name = functions[j].get_slice(":", 0);
+				for (const String &function : functions) {
+					String name = function.get_slice(":", 0);
 					if (name == method) {
 						Dictionary line_meta;
 						line_meta["type"] = "connection";
 						line_meta["method"] = method;
-						line = functions[j].get_slice(":", 1).to_int() - 1;
+						line = function.get_slice(":", 1).to_int() - 1;
 						text_edit->set_line_gutter_metadata(line, connection_gutter, line_meta);
 						text_edit->set_line_gutter_icon(line, connection_gutter, get_parent_control()->get_editor_theme_icon(SNAME("Slot")));
 						text_edit->set_line_gutter_clickable(line, connection_gutter, true);
@@ -1163,8 +1163,8 @@ void ScriptTextEditor::_update_connected_methods() {
 
 	// Add override icons to methods.
 	methods_found.clear();
-	for (int i = 0; i < functions.size(); i++) {
-		String raw_name = functions[i].get_slice(":", 0);
+	for (const String &function : functions) {
+		const String raw_name = function.get_slice(":", 0);
 		StringName name = StringName(raw_name);
 		if (methods_found.has(name)) {
 			continue;
@@ -1194,8 +1194,8 @@ void ScriptTextEditor::_update_connected_methods() {
 			while (base_class) {
 				List<MethodInfo> methods;
 				ClassDB::get_method_list(base_class, &methods, true);
-				for (int j = 0; j < methods.size(); j++) {
-					if (methods[j].name == name) {
+				for (const MethodInfo &method : methods) {
+					if (method.name == name) {
 						found_base_class = "builtin:" + base_class;
 						break;
 					}
@@ -1210,7 +1210,7 @@ void ScriptTextEditor::_update_connected_methods() {
 		}
 
 		if (!found_base_class.is_empty()) {
-			int line = functions[i].get_slice(":", 1).to_int() - 1;
+			int line = function.get_slice(":", 1).to_int() - 1;
 
 			Dictionary line_meta = text_edit->get_line_gutter_metadata(line, connection_gutter);
 			if (line_meta.is_empty()) {
@@ -1429,8 +1429,7 @@ void ScriptTextEditor::_edit_option(int p_op) {
 				Vector<String> lines = tx->get_selected_text(caret_idx).split("\n");
 				PackedStringArray results;
 
-				for (int i = 0; i < lines.size(); i++) {
-					const String &line = lines[i];
+				for (const String &line : lines) {
 					String whitespace = line.substr(0, line.size() - line.strip_edges(true, false).size()); // Extract the whitespace at the beginning.
 					if (expression.parse(line) == OK) {
 						Variant result = expression.execute(Array(), Variant(), false, true);
@@ -1530,8 +1529,7 @@ void ScriptTextEditor::_edit_option(int p_op) {
 		case DEBUG_REMOVE_ALL_BREAKPOINTS: {
 			PackedInt32Array bpoints = tx->get_breakpointed_lines();
 
-			for (int i = 0; i < bpoints.size(); i++) {
-				int line = bpoints[i];
+			for (const int32_t &line : bpoints) {
 				bool dobreak = !tx->is_line_breakpointed(line);
 				tx->set_line_as_breakpoint(line, dobreak);
 				EditorDebuggerNode::get_singleton()->set_breakpoint(script->get_path(), line + 1, dobreak);
@@ -1878,8 +1876,7 @@ void ScriptTextEditor::drop_data_fw(const Point2 &p_point, const Variant &p_data
 		if (drop_modifier_pressed) {
 			const bool use_type = EDITOR_GET("text_editor/completion/add_type_hints");
 
-			for (int i = 0; i < nodes.size(); i++) {
-				NodePath np = nodes[i];
+			for (NodePath np : nodes) {
 				Node *node = get_node(np);
 				if (!node) {
 					continue;

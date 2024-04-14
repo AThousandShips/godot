@@ -61,24 +61,24 @@ void TileProxiesManagerDialog::_delete_selected_bindings() {
 	undo_redo->create_action(TTR("Remove Tile Proxies"));
 
 	Vector<int> source_level_selected = source_level_list->get_selected_items();
-	for (int i = 0; i < source_level_selected.size(); i++) {
-		int key = source_level_list->get_item_metadata(source_level_selected[i]);
+	for (const int &source_level : source_level_selected) {
+		int key = source_level_list->get_item_metadata(source_level);
 		int val = tile_set->get_source_level_tile_proxy(key);
 		undo_redo->add_do_method(*tile_set, "remove_source_level_tile_proxy", key);
 		undo_redo->add_undo_method(*tile_set, "set_source_level_tile_proxy", key, val);
 	}
 
 	Vector<int> coords_level_selected = coords_level_list->get_selected_items();
-	for (int i = 0; i < coords_level_selected.size(); i++) {
-		Array key = coords_level_list->get_item_metadata(coords_level_selected[i]);
+	for (const int &coords_level : coords_level_selected) {
+		Array key = coords_level_list->get_item_metadata(coords_level);
 		Array val = tile_set->get_coords_level_tile_proxy(key[0], key[1]);
 		undo_redo->add_do_method(*tile_set, "remove_coords_level_tile_proxy", key[0], key[1]);
 		undo_redo->add_undo_method(*tile_set, "set_coords_level_tile_proxy", key[0], key[1], val[0], val[1]);
 	}
 
 	Vector<int> alternative_level_selected = alternative_level_list->get_selected_items();
-	for (int i = 0; i < alternative_level_selected.size(); i++) {
-		Array key = alternative_level_list->get_item_metadata(alternative_level_selected[i]);
+	for (const int &alternative_level : alternative_level_selected) {
+		Array key = alternative_level_list->get_item_metadata(alternative_level);
 		Array val = tile_set->get_alternative_level_tile_proxy(key[0], key[1], key[2]);
 		undo_redo->add_do_method(*tile_set, "remove_alternative_level_tile_proxy", key[0], key[1], key[2]);
 		undo_redo->add_undo_method(*tile_set, "set_alternative_level_tile_proxy", key[0], key[1], key[2], val[0], val[1], val[2]);

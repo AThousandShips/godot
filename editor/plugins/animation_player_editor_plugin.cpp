@@ -1573,9 +1573,9 @@ void AnimationPlayerEditor::_allocate_onion_layers() {
 }
 
 void AnimationPlayerEditor::_free_onion_layers() {
-	for (uint32_t i = 0; i < onion.captures.size(); i++) {
-		if (onion.captures[i].is_valid()) {
-			RS::get_singleton()->free(onion.captures[i]);
+	for (const RID &capture : onion.captures) {
+		if (capture.is_valid()) {
+			RS::get_singleton()->free(capture);
 		}
 	}
 	onion.captures.clear();

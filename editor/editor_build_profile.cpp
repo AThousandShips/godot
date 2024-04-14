@@ -287,8 +287,8 @@ Error EditorBuildProfile::load_from_file(const String &p_path) {
 
 	if (data.has("disabled_classes")) {
 		Array disabled_classes_arr = data["disabled_classes"];
-		for (int i = 0; i < disabled_classes_arr.size(); i++) {
-			disabled_classes.insert(disabled_classes_arr[i]);
+		for (const Variant &var : disabled_classes_arr) {
+			disabled_classes.insert(var);
 		}
 	}
 

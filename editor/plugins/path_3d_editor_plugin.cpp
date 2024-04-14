@@ -979,8 +979,8 @@ Vector<int> Path3DGizmoPlugin::subgizmos_intersect_frustum(const EditorNode3DGiz
 		for (int idx = 0; idx < curve->get_point_count(); ++idx) {
 			Vector3 pos = path->get_global_transform().xform(curve->get_point_position(idx));
 			bool is_contained_in_frustum = true;
-			for (int i = 0; i < p_frustum.size(); ++i) {
-				if (p_frustum[i].distance_to(pos) > 0) {
+			for (const Plane &p : p_frustum) {
+				if (p.distance_to(pos) > 0) {
 					is_contained_in_frustum = false;
 					break;
 				}

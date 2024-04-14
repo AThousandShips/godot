@@ -75,8 +75,8 @@ void VersionControlEditorPlugin::_notification(int p_what) {
 
 void VersionControlEditorPlugin::_populate_available_vcs_names() {
 	set_up_choice->clear();
-	for (int i = 0; i < available_plugins.size(); i++) {
-		set_up_choice->add_item(available_plugins[i]);
+	for (const StringName &available_plugin : available_plugins) {
+		set_up_choice->add_item(available_plugin);
 	}
 }
 
@@ -462,11 +462,11 @@ void VersionControlEditorPlugin::_force_push() {
 
 void VersionControlEditorPlugin::_update_opened_tabs() {
 	Vector<EditorData::EditedScene> open_scenes = EditorNode::get_editor_data().get_edited_scenes();
-	for (int i = 0; i < open_scenes.size(); i++) {
-		if (open_scenes[i].root == nullptr) {
+	for (const EditorData::EditedScene &open_scene : open_scenes) {
+		if (open_scene.root == nullptr) {
 			continue;
 		}
-		EditorNode::get_singleton()->reload_scene(open_scenes[i].path);
+		EditorNode::get_singleton()->reload_scene(open_scene.path);
 	}
 }
 
@@ -589,9 +589,7 @@ void VersionControlEditorPlugin::_display_diff(int p_idx) {
 		diff->pop();
 	}
 
-	for (int i = 0; i < diff_content.size(); i++) {
-		EditorVCSInterface::DiffFile diff_file = diff_content[i];
-
+	for (EditorVCSInterface::DiffFile diff_file : diff_content) {
 		diff->push_font(EditorNode::get_singleton()->get_editor_theme()->get_font(SNAME("doc_bold"), EditorStringName(EditorFonts)));
 		diff->push_color(EditorNode::get_singleton()->get_editor_theme()->get_color(SNAME("accent_color"), EditorStringName(Editor)));
 		diff->add_text(TTR("File:") + " " + diff_file.new_file);
@@ -599,13 +597,11 @@ void VersionControlEditorPlugin::_display_diff(int p_idx) {
 		diff->pop();
 
 		diff->push_font(EditorNode::get_singleton()->get_editor_theme()->get_font(SNAME("status_source"), EditorStringName(EditorFonts)));
-		for (int j = 0; j < diff_file.diff_hunks.size(); j++) {
-			EditorVCSInterface::DiffHunk hunk = diff_file.diff_hunks[j];
-
-			String old_start = String::num_int64(hunk.old_start);
-			String new_start = String::num_int64(hunk.new_start);
-			String old_lines = String::num_int64(hunk.old_lines);
-			String new_lines = String::num_int64(hunk.new_lines);
+		for (EditorVCSInterface::DiffHunk hunk : diff_file.diff_hunks) {
+			const String old_start = String::num_int64(hunk.old_start);
+			const String new_start = String::num_int64(hunk.new_start);
+			const String old_lines = String::num_int64(hunk.old_lines);
+			const String new_lines = String::num_int64(hunk.new_lines);
 
 			diff->add_newline();
 			diff->append_text("[center]@@ " + old_start + "," + old_lines + " " + new_start + "," + new_lines + " @@[/center]");
@@ -630,9 +626,8 @@ void VersionControlEditorPlugin::_display_diff(int p_idx) {
 void VersionControlEditorPlugin::_display_diff_split_view(List<EditorVCSInterface::DiffLine> &p_diff_content) {
 	List<EditorVCSInterface::DiffLine> parsed_diff;
 
-	for (int i = 0; i < p_diff_content.size(); i++) {
-		EditorVCSInterface::DiffLine diff_line = p_diff_content[i];
-		String line = diff_line.content.strip_edges(false, true);
+	for (EditorVCSInterface::DiffLine diff_line : p_diff_content) {
+		const String line = diff_line.content.strip_edges(false, true);
 
 		if (diff_line.new_line_no >= 0 && diff_line.old_line_no >= 0) {
 			diff_line.new_text = line;
@@ -677,9 +672,7 @@ void VersionControlEditorPlugin::_display_diff_split_view(List<EditorVCSInterfac
 	diff->set_table_column_expand(2, true);
 	diff->set_table_column_expand(5, true);
 
-	for (int i = 0; i < parsed_diff.size(); i++) {
-		EditorVCSInterface::DiffLine diff_line = parsed_diff[i];
-
+	for (EditorVCSInterface::DiffLine diff_line : parsed_diff) {
 		bool has_change = diff_line.status != " ";
 		static const Color red = EditorNode::get_singleton()->get_editor_theme()->get_color(SNAME("error_color"), EditorStringName(Editor));
 		static const Color green = EditorNode::get_singleton()->get_editor_theme()->get_color(SNAME("success_color"), EditorStringName(Editor));
@@ -757,9 +750,8 @@ void VersionControlEditorPlugin::_display_diff_unified_view(List<EditorVCSInterf
 		[cell]status[/cell]
 		[cell]code[/cell]
 	*/
-	for (int i = 0; i < p_diff_content.size(); i++) {
-		EditorVCSInterface::DiffLine diff_line = p_diff_content[i];
-		String line = diff_line.content.strip_edges(false, true);
+	for (EditorVCSInterface::DiffLine diff_line : p_diff_content) {
+		const String line = diff_line.content.strip_edges(false, true);
 
 		Color color;
 		if (diff_line.status == "+") {

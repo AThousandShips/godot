@@ -794,10 +794,10 @@ Array DebugAdapterProtocol::update_breakpoints(const String &p_path, const Array
 	Array updated_breakpoints;
 
 	// Add breakpoints
-	for (int i = 0; i < p_lines.size(); i++) {
-		EditorDebuggerNode::get_singleton()->get_default_debugger()->_set_breakpoint(p_path, p_lines[i], true);
+	for (const Variant &line : p_lines) {
+		EditorDebuggerNode::get_singleton()->get_default_debugger()->_set_breakpoint(p_path, line, true);
 		DAP::Breakpoint breakpoint;
-		breakpoint.line = p_lines[i];
+		breakpoint.line = line;
 		breakpoint.source.path = p_path;
 
 		ERR_FAIL_COND_V(!breakpoint_list.find(breakpoint), Array());
@@ -895,8 +895,7 @@ void DebugAdapterProtocol::on_debug_stack_dump(const Array &p_stack_dump) {
 	stackframe_list.clear();
 
 	// Fill in stacktrace information
-	for (int i = 0; i < p_stack_dump.size(); i++) {
-		Dictionary stack_info = p_stack_dump[i];
+	for (Dictionary stack_info : p_stack_dump) {
 		DAP::StackFrame stackframe;
 		stackframe.id = stackframe_id++;
 		stackframe.name = stack_info["function"];

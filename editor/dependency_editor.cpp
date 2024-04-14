@@ -296,8 +296,7 @@ void DependencyEditorOwners::_list_rmb_clicked(int p_item, const Vector2 &p_pos,
 		PackedInt32Array selected_items = owners->get_selected_items();
 		bool only_scenes_selected = true;
 
-		for (int i = 0; i < selected_items.size(); i++) {
-			int item_idx = selected_items[i];
+		for (const int32_t &item_idx : selected_items) {
 			if (ResourceLoader::get_resource_type(owners->get_item_text(item_idx)) != "PackedScene") {
 				only_scenes_selected = false;
 				break;
@@ -342,8 +341,7 @@ void DependencyEditorOwners::_file_option(int p_option) {
 	switch (p_option) {
 		case FILE_OPEN: {
 			PackedInt32Array selected_items = owners->get_selected_items();
-			for (int i = 0; i < selected_items.size(); i++) {
-				int item_idx = selected_items[i];
+			for (const int32_t &item_idx : selected_items) {
 				if (item_idx < 0 || item_idx >= owners->get_item_count()) {
 					break;
 				}
@@ -368,8 +366,8 @@ void DependencyEditorOwners::_fill_owners(EditorFileSystemDirectory *efsd) {
 	for (int i = 0; i < efsd->get_file_count(); i++) {
 		Vector<String> deps = efsd->get_file_deps(i);
 		bool found = false;
-		for (int j = 0; j < deps.size(); j++) {
-			if (deps[j] == editing) {
+		for (const String &dep : deps) {
+			if (dep == editing) {
 				found = true;
 				break;
 			}
@@ -443,13 +441,13 @@ void DependencyRemoveDialog::_find_all_removed_dependencies(EditorFileSystemDire
 		}
 
 		Vector<String> all_deps = efsd->get_file_deps(i);
-		for (int j = 0; j < all_deps.size(); ++j) {
-			if (all_remove_files.has(all_deps[j])) {
+		for (const String &dep_str : all_deps) {
+			if (all_remove_files.has(dep_str)) {
 				RemovedDependency dep;
 				dep.file = path;
 				dep.file_type = efsd->get_file_type(i);
-				dep.dependency = all_deps[j];
-				dep.dependency_folder = all_remove_files[all_deps[j]];
+				dep.dependency = dep_str;
+				dep.dependency_folder = all_remove_files[dep_str];
 				p_removed.push_back(dep);
 			}
 		}
@@ -474,16 +472,16 @@ void DependencyRemoveDialog::_find_localization_remaps_of_removed_files(Vector<R
 			}
 
 			Array remap_keys = remaps.keys();
-			for (int j = 0; j < remap_keys.size(); j++) {
-				PackedStringArray remapped_files = remaps[remap_keys[j]];
-				for (int k = 0; k < remapped_files.size(); k++) {
-					int splitter_pos = remapped_files[k].rfind(":");
-					String res_path = remapped_files[k].substr(0, splitter_pos);
+			for (const Variant &key : remap_keys) {
+				PackedStringArray remapped_files = remaps[key];
+				for (const String &remapped_file : remapped_files) {
+					int splitter_pos = remapped_file.rfind(":");
+					String res_path = remapped_file.substr(0, splitter_pos);
 					if (res_path == path) {
-						String locale_name = remapped_files[k].substr(splitter_pos + 1);
+						String locale_name = remapped_file.substr(splitter_pos + 1);
 
 						RemovedDependency dep;
-						dep.file = vformat(TTR("Localization remap for path '%s' and locale '%s'."), remap_keys[j], locale_name);
+						dep.file = vformat(TTR("Localization remap for path '%s' and locale '%s'."), key, locale_name);
 						dep.file_type = "";
 						dep.dependency = path;
 						dep.dependency_folder = files.value;
@@ -500,9 +498,7 @@ void DependencyRemoveDialog::_build_removed_dependency_tree(const Vector<Removed
 	owners->create_item(); // root
 
 	HashMap<String, TreeItem *> tree_items;
-	for (int i = 0; i < p_removed.size(); i++) {
-		RemovedDependency rd = p_removed[i];
-
+	for (const RemovedDependency &rd : p_removed) {
 		//Ensure that the dependency is already in the tree
 		if (!tree_items.has(rd.dependency)) {
 			if (rd.dependency_folder.length() > 0) {
@@ -539,14 +535,14 @@ void DependencyRemoveDialog::show(const Vector<String> &p_folders, const Vector<
 	files_to_delete.clear();
 	owners->clear();
 
-	for (int i = 0; i < p_folders.size(); ++i) {
-		String folder = p_folders[i].ends_with("/") ? p_folders[i] : (p_folders[i] + "/");
+	for (const String &folder_base : p_folders) {
+		String folder = folder_base.ends_with("/") ? folder_base : (folder_base + "/");
 		_find_files_in_removed_folder(EditorFileSystem::get_singleton()->get_filesystem_path(folder), folder);
 		dirs_to_delete.push_back(folder);
 	}
-	for (int i = 0; i < p_files.size(); ++i) {
-		all_remove_files[p_files[i]] = String();
-		files_to_delete.push_back(p_files[i]);
+	for (const String &file : p_files) {
+		all_remove_files[file] = String();
+		files_to_delete.push_back(file);
 	}
 
 	Vector<RemovedDependency> removed_deps;
@@ -578,58 +574,58 @@ void DependencyRemoveDialog::ok_pressed() {
 		}
 	}
 
-	for (int i = 0; i < files_to_delete.size(); ++i) {
+	for (const String &file_to_delete : files_to_delete) {
 		// If the file we are deleting for e.g. the main scene, default environment,
 		// or audio bus layout, we must clear its definition in Project Settings.
-		if (files_to_delete[i] == String(GLOBAL_GET("application/config/icon"))) {
+		if (file_to_delete == String(GLOBAL_GET("application/config/icon"))) {
 			ProjectSettings::get_singleton()->set("application/config/icon", "");
 		}
-		if (files_to_delete[i] == String(GLOBAL_GET("application/run/main_scene"))) {
+		if (file_to_delete == String(GLOBAL_GET("application/run/main_scene"))) {
 			ProjectSettings::get_singleton()->set("application/run/main_scene", "");
 		}
-		if (files_to_delete[i] == String(GLOBAL_GET("application/boot_splash/image"))) {
+		if (file_to_delete == String(GLOBAL_GET("application/boot_splash/image"))) {
 			ProjectSettings::get_singleton()->set("application/boot_splash/image", "");
 		}
-		if (files_to_delete[i] == String(GLOBAL_GET("rendering/environment/defaults/default_environment"))) {
+		if (file_to_delete == String(GLOBAL_GET("rendering/environment/defaults/default_environment"))) {
 			ProjectSettings::get_singleton()->set("rendering/environment/defaults/default_environment", "");
 		}
-		if (files_to_delete[i] == String(GLOBAL_GET("display/mouse_cursor/custom_image"))) {
+		if (file_to_delete == String(GLOBAL_GET("display/mouse_cursor/custom_image"))) {
 			ProjectSettings::get_singleton()->set("display/mouse_cursor/custom_image", "");
 		}
-		if (files_to_delete[i] == String(GLOBAL_GET("gui/theme/custom"))) {
+		if (file_to_delete == String(GLOBAL_GET("gui/theme/custom"))) {
 			ProjectSettings::get_singleton()->set("gui/theme/custom", "");
 		}
-		if (files_to_delete[i] == String(GLOBAL_GET("gui/theme/custom_font"))) {
+		if (file_to_delete == String(GLOBAL_GET("gui/theme/custom_font"))) {
 			ProjectSettings::get_singleton()->set("gui/theme/custom_font", "");
 		}
-		if (files_to_delete[i] == String(GLOBAL_GET("audio/buses/default_bus_layout"))) {
+		if (file_to_delete == String(GLOBAL_GET("audio/buses/default_bus_layout"))) {
 			ProjectSettings::get_singleton()->set("audio/buses/default_bus_layout", "");
 		}
 
-		String path = OS::get_singleton()->get_resource_dir() + files_to_delete[i].replace_first("res://", "/");
+		String path = OS::get_singleton()->get_resource_dir() + file_to_delete.replace_first("res://", "/");
 		print_verbose("Moving to trash: " + path);
 		Error err = OS::get_singleton()->move_to_trash(path);
 		if (err != OK) {
-			EditorNode::get_singleton()->add_io_error(TTR("Cannot remove:") + "\n" + files_to_delete[i] + "\n");
+			EditorNode::get_singleton()->add_io_error(TTR("Cannot remove:") + "\n" + file_to_delete + "\n");
 		} else {
-			emit_signal(SNAME("file_removed"), files_to_delete[i]);
+			emit_signal(SNAME("file_removed"), file_to_delete);
 		}
 	}
 
-	if (dirs_to_delete.size() == 0) {
+	if (dirs_to_delete.is_empty()) {
 		// If we only deleted files we should only need to tell the file system about the files we touched.
-		for (int i = 0; i < files_to_delete.size(); ++i) {
-			EditorFileSystem::get_singleton()->update_file(files_to_delete[i]);
+		for (const String &file_to_delete : files_to_delete) {
+			EditorFileSystem::get_singleton()->update_file(file_to_delete);
 		}
 	} else {
-		for (int i = 0; i < dirs_to_delete.size(); ++i) {
-			String path = OS::get_singleton()->get_resource_dir() + dirs_to_delete[i].replace_first("res://", "/");
+		for (const String &dir_to_delete : dirs_to_delete) {
+			String path = OS::get_singleton()->get_resource_dir() + dir_to_delete.replace_first("res://", "/");
 			print_verbose("Moving to trash: " + path);
 			Error err = OS::get_singleton()->move_to_trash(path);
 			if (err != OK) {
-				EditorNode::get_singleton()->add_io_error(TTR("Cannot remove:") + "\n" + dirs_to_delete[i] + "\n");
+				EditorNode::get_singleton()->add_io_error(TTR("Cannot remove:") + "\n" + dir_to_delete + "\n");
 			} else {
-				emit_signal(SNAME("folder_removed"), dirs_to_delete[i]);
+				emit_signal(SNAME("folder_removed"), dir_to_delete);
 			}
 		}
 
@@ -640,14 +636,14 @@ void DependencyRemoveDialog::ok_pressed() {
 	Vector<String> previous_favorites = EditorSettings::get_singleton()->get_favorites();
 	Vector<String> new_favorites;
 
-	for (int i = 0; i < previous_favorites.size(); ++i) {
-		if (previous_favorites[i].ends_with("/")) {
-			if (dirs_to_delete.find(previous_favorites[i]) < 0) {
-				new_favorites.push_back(previous_favorites[i]);
+	for (const String &previous_favorite : previous_favorites) {
+		if (previous_favorite.ends_with("/")) {
+			if (dirs_to_delete.find(previous_favorite) < 0) {
+				new_favorites.push_back(previous_favorite);
 			}
 		} else {
-			if (files_to_delete.find(previous_favorites[i]) < 0) {
-				new_favorites.push_back(previous_favorites[i]);
+			if (files_to_delete.find(previous_favorite) < 0) {
+				new_favorites.push_back(previous_favorite);
 			}
 		}
 	}
@@ -681,19 +677,19 @@ DependencyRemoveDialog::DependencyRemoveDialog() {
 
 //////////////
 
-void DependencyErrorDialog::show(Mode p_mode, const String &p_for_file, const Vector<String> &report) {
+void DependencyErrorDialog::show(Mode p_mode, const String &p_for_file, const Vector<String> &p_report) {
 	mode = p_mode;
 	for_file = p_for_file;
 	set_title(TTR("Error loading:") + " " + p_for_file.get_file());
 	files->clear();
 
 	TreeItem *root = files->create_item(nullptr);
-	for (int i = 0; i < report.size(); i++) {
+	for (const String &report : p_report) {
 		String dep;
 		String type = "Object";
-		dep = report[i].get_slice("::", 0);
-		if (report[i].get_slice_count("::") > 0) {
-			type = report[i].get_slice("::", 1);
+		dep = report.get_slice("::", 0);
+		if (report.get_slice_count("::") > 0) {
+			type = report.get_slice("::", 1);
 		}
 
 		Ref<Texture2D> icon = EditorNode::get_singleton()->get_class_icon(type);
@@ -788,9 +784,9 @@ bool OrphanResourcesDialog::_fill_owners(EditorFileSystemDirectory *efsd, HashMa
 	for (int i = 0; i < efsd->get_file_count(); i++) {
 		if (!p_parent) {
 			Vector<String> deps = efsd->get_file_deps(i);
-			for (int j = 0; j < deps.size(); j++) {
-				if (!refs.has(deps[j])) {
-					refs[deps[j]] = 1;
+			for (const String &dep : deps) {
+				if (!refs.has(dep)) {
+					refs[dep] = 1;
 				}
 			}
 		} else {

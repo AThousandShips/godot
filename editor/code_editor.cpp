@@ -1616,22 +1616,22 @@ void CodeTextEditor::set_edit_state(const Variant &p_state) {
 
 	if (state.has("folded_lines")) {
 		Vector<int> folded_lines = state["folded_lines"];
-		for (int i = 0; i < folded_lines.size(); i++) {
-			text_editor->fold_line(folded_lines[i]);
+		for (const int &folded_line : folded_lines) {
+			text_editor->fold_line(folded_line);
 		}
 	}
 
 	if (state.has("breakpoints")) {
 		Array breakpoints = state["breakpoints"];
-		for (int i = 0; i < breakpoints.size(); i++) {
-			text_editor->set_line_as_breakpoint(breakpoints[i], true);
+		for (const Variant &breakpoint : breakpoints) {
+			text_editor->set_line_as_breakpoint(breakpoint, true);
 		}
 	}
 
 	if (state.has("bookmarks")) {
 		Array bookmarks = state["bookmarks"];
-		for (int i = 0; i < bookmarks.size(); i++) {
-			text_editor->set_line_as_bookmarked(bookmarks[i], true);
+		for (const Variant &bookmark : bookmarks) {
+			text_editor->set_line_as_bookmarked(bookmark, true);
 		}
 	}
 }
@@ -1725,10 +1725,10 @@ void CodeTextEditor::_update_font_ligatures() {
 				fc->set_opentype_features(ftrs);
 			} break;
 			case 2: { // Custom.
-				Vector<String> subtag = String(EDITOR_GET("interface/editor/code_font_custom_opentype_features")).split(",");
+				Vector<String> subtags = String(EDITOR_GET("interface/editor/code_font_custom_opentype_features")).split(",");
 				Dictionary ftrs;
-				for (int i = 0; i < subtag.size(); i++) {
-					Vector<String> subtag_a = subtag[i].split("=");
+				for (const String &subtag : subtags) {
+					Vector<String> subtag_a = subtag.split("=");
 					if (subtag_a.size() == 2) {
 						ftrs[TS->name_to_tag(subtag_a[0])] = subtag_a[1].to_int();
 					} else if (subtag_a.size() == 1) {

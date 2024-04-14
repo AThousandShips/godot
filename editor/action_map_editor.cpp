@@ -393,8 +393,7 @@ bool ActionMapEditor::_should_display_action(const String &p_name, const Array &
 	bool event_match = true;
 	if (search_ev.is_valid()) {
 		event_match = false;
-		for (int i = 0; i < p_events.size(); ++i) {
-			const Ref<InputEvent> ev = p_events[i];
+		for (const Ref<InputEvent> ev : p_events) {
 			if (ev.is_valid() && ev->is_match(search_ev, true)) {
 				event_match = true;
 			}
@@ -412,9 +411,7 @@ void ActionMapEditor::update_action_list(const Vector<ActionInfo> &p_action_info
 	action_tree->clear();
 	TreeItem *root = action_tree->create_item();
 
-	for (int i = 0; i < actions_cache.size(); i++) {
-		ActionInfo action_info = actions_cache[i];
-
+	for (const ActionInfo &action_info : actions_cache) {
 		const Array events = action_info.action["events"];
 		if (!_should_display_action(action_info.name, events)) {
 			continue;

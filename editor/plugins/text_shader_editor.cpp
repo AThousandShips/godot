@@ -64,8 +64,8 @@ void GDShaderSyntaxHighlighter::add_disabled_branch_region(const Point2i &p_regi
 	ERR_FAIL_COND(p_region.x < 0);
 	ERR_FAIL_COND(p_region.y < 0);
 
-	for (int i = 0; i < disabled_branch_regions.size(); i++) {
-		ERR_FAIL_COND_MSG(disabled_branch_regions[i].x == p_region.x, "Branch region with a start line '" + itos(p_region.x) + "' already exists.");
+	for (const Point2i &region : disabled_branch_regions) {
+		ERR_FAIL_COND_MSG(region.x == p_region.x, "Branch region with a start line '" + itos(p_region.x) + "' already exists.");
 	}
 
 	Point2i disabled_branch_region;
@@ -265,12 +265,10 @@ void ShaderTextEditor::_load_theme_settings() {
 
 			const Vector<ShaderLanguage::ModeInfo> &modes = ShaderTypes::get_singleton()->get_modes(RenderingServer::ShaderMode(i));
 
-			for (int j = 0; j < modes.size(); j++) {
-				const ShaderLanguage::ModeInfo &mode_info = modes[j];
-
+			for (const ShaderLanguage::ModeInfo &mode_info : modes) {
 				if (!mode_info.options.is_empty()) {
-					for (int k = 0; k < mode_info.options.size(); k++) {
-						built_ins.push_back(String(mode_info.name) + "_" + String(mode_info.options[k]));
+					for (const StringName &option : mode_info.options) {
+						built_ins.push_back(String(mode_info.name) + "_" + String(option));
 					}
 				} else {
 					built_ins.push_back(String(mode_info.name));
@@ -286,12 +284,10 @@ void ShaderTextEditor::_load_theme_settings() {
 
 		const Vector<ShaderLanguage::ModeInfo> &modes = ShaderTypes::get_singleton()->get_modes(RenderingServer::ShaderMode(shader->get_mode()));
 
-		for (int i = 0; i < modes.size(); i++) {
-			const ShaderLanguage::ModeInfo &mode_info = modes[i];
-
+		for (const ShaderLanguage::ModeInfo &mode_info : modes) {
 			if (!mode_info.options.is_empty()) {
-				for (int j = 0; j < mode_info.options.size(); j++) {
-					built_ins.push_back(String(mode_info.name) + "_" + String(mode_info.options[j]));
+				for (const StringName &option : mode_info.options) {
+					built_ins.push_back(String(mode_info.name) + "_" + String(option));
 				}
 			} else {
 				built_ins.push_back(String(mode_info.name));
@@ -578,9 +574,7 @@ void ShaderTextEditor::_update_warning_panel() {
 	int warning_count = 0;
 
 	warnings_panel->push_table(2);
-	for (int i = 0; i < warnings.size(); i++) {
-		ShaderWarning &w = warnings[i];
-
+	for (ShaderWarning &w : warnings) {
 		if (warning_count == 0) {
 			if (saved_treat_warning_as_errors) {
 				String error_text = "error(" + itos(w.get_line()) + "): " + w.get_message() + " " + TTR("Warnings should be fixed to prevent errors.");
@@ -1039,15 +1033,15 @@ void TextShaderEditor::_update_bookmark_list() {
 
 	bookmarks_menu->add_separator();
 
-	for (int i = 0; i < bookmark_list.size(); i++) {
-		String line = code_editor->get_text_editor()->get_line(bookmark_list[i]).strip_edges();
+	for (const int32_t bookmark : bookmark_list) {
+		String line = code_editor->get_text_editor()->get_line(bookmark).strip_edges();
 		// Limit the size of the line if too big.
 		if (line.length() > 50) {
 			line = line.substr(0, 50);
 		}
 
-		bookmarks_menu->add_item(String::num((int)bookmark_list[i] + 1) + " - \"" + line + "\"");
-		bookmarks_menu->set_item_metadata(-1, bookmark_list[i]);
+		bookmarks_menu->add_item(String::num((int)bookmark + 1) + " - \"" + line + "\"");
+		bookmarks_menu->set_item_metadata(-1, bookmark);
 	}
 }
 

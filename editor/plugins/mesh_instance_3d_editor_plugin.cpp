@@ -235,11 +235,11 @@ void MeshInstance3DEditor::_menu_option(int p_option) {
 
 			ur->create_action(TTR("Create Multiple Convex Shapes"));
 
-			for (int i = 0; i < shapes.size(); i++) {
+			for (Ref<Shape3D> &shape : shapes) {
 				CollisionShape3D *cshape = memnew(CollisionShape3D);
 				cshape->set_name("CollisionShape3D");
 
-				cshape->set_shape(shapes[i]);
+				cshape->set_shape(shape);
 				cshape->set_transform(node->get_transform());
 
 				Node *owner = get_tree()->get_edited_scene_root();

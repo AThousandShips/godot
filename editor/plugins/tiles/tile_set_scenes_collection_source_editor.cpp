@@ -455,8 +455,8 @@ void TileSetScenesCollectionSourceEditor::_drop_data_fw(const Point2 &p_point, c
 		// Handle dropping a texture in the list of atlas resources.
 		Dictionary d = p_data;
 		Vector<String> files = d["files"];
-		for (int i = 0; i < files.size(); i++) {
-			Ref<PackedScene> resource = ResourceLoader::load(files[i]);
+		for (const String &file : files) {
+			Ref<PackedScene> resource = ResourceLoader::load(file);
 			if (resource.is_valid()) {
 				int scene_id = tile_set_scenes_collection_source->get_next_scene_tile_id();
 				EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
@@ -489,8 +489,8 @@ bool TileSetScenesCollectionSourceEditor::_can_drop_data_fw(const Point2 &p_poin
 				return false;
 			}
 
-			for (int i = 0; i < files.size(); i++) {
-				String ftype = EditorFileSystem::get_singleton()->get_file_type(files[i]);
+			for (const String &file : files) {
+				String ftype = EditorFileSystem::get_singleton()->get_file_type(file);
 
 				if (!ClassDB::is_parent_class(ftype, "PackedScene")) {
 					return false;

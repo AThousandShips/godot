@@ -137,8 +137,8 @@ void GDExtensionExportPlugin::_export_file(const String &p_path, const String &p
 		for (const String &E : dependencies) {
 			Vector<String> dependency_tags = E.split(".");
 			bool all_tags_met = true;
-			for (int i = 0; i < dependency_tags.size(); i++) {
-				String tag = dependency_tags[i].strip_edges();
+			for (const String &dependency_tag : dependency_tags) {
+				const String tag = dependency_tag.strip_edges();
 				if (!p_features.has(tag)) {
 					all_tags_met = false;
 					break;

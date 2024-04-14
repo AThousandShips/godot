@@ -730,10 +730,10 @@ void VisualShaderGraphPlugin::add_node(VisualShader::Type p_type, int p_id, bool
 		port_offset++;
 	}
 
-	for (int i = 0; i < editor->plugins.size(); i++) {
+	for (Ref<VisualShaderNodePlugin> &plugin : editor->plugins) {
 		vsnode->set_meta("id", p_id);
 		vsnode->set_meta("shader_type", (int)p_type);
-		custom_editor = editor->plugins.write[i]->create_editor(visual_shader, vsnode);
+		custom_editor = plugin->create_editor(visual_shader, vsnode);
 		vsnode->remove_meta("id");
 		vsnode->remove_meta("shader_type");
 		if (custom_editor) {
@@ -1459,9 +1459,7 @@ void VisualShaderEditor::add_custom_type(const String &p_name, const String &p_t
 	ERR_FAIL_COND(!p_name.is_valid_identifier());
 	ERR_FAIL_COND(p_type.is_empty() && !p_script.is_valid());
 
-	for (int i = 0; i < add_options.size(); i++) {
-		const AddOption &op = add_options[i];
-
+	for (const AddOption &op : add_options) {
 		if (op.is_custom) {
 			if (!p_type.is_empty()) {
 				if (op.type == p_type) {
@@ -1828,9 +1826,9 @@ void VisualShaderEditor::_update_nodes() {
 		List<StringName> class_list;
 		ScriptServer::get_global_class_list(&class_list);
 
-		for (int i = 0; i < class_list.size(); i++) {
-			if (ScriptServer::get_global_class_native_base(class_list[i]) == "VisualShaderNodeCustom") {
-				String script_path = ScriptServer::get_global_class_path(class_list[i]);
+		for (const StringName &class_ : class_list) {
+			if (ScriptServer::get_global_class_native_base(class_) == "VisualShaderNodeCustom") {
+				String script_path = ScriptServer::get_global_class_path(class_);
 				Ref<Resource> res = ResourceLoader::load(script_path);
 				ERR_CONTINUE(res.is_null());
 				ERR_CONTINUE(!res->is_class("Script"));
@@ -1858,16 +1856,16 @@ void VisualShaderEditor::_update_nodes() {
 		List<StringName> class_list;
 		ClassDB::get_class_list(&class_list);
 
-		for (int i = 0; i < class_list.size(); i++) {
-			if (ClassDB::get_parent_class(class_list[i]) == "VisualShaderNodeCustom") {
-				Object *instance = ClassDB::instantiate(class_list[i]);
+		for (const StringName &class_ : class_list) {
+			if (ClassDB::get_parent_class(class_) == "VisualShaderNodeCustom") {
+				Object *instance = ClassDB::instantiate(class_);
 				Ref<VisualShaderNodeCustom> ref = Object::cast_to<VisualShaderNodeCustom>(instance);
 				ERR_CONTINUE(ref.is_null());
 				if (!ref->is_available(visual_shader->get_mode(), visual_shader->get_shader_type())) {
 					continue;
 				}
 				Dictionary dict = get_custom_node_data(ref);
-				dict["type"] = class_list[i];
+				dict["type"] = class_;
 				dict["script"] = Ref<Script>();
 
 				String key;
@@ -1890,9 +1888,9 @@ void VisualShaderEditor::_update_nodes() {
 					item.disabled = false;
 				}
 			} else {
-				for (int i = 0; i < add_options.size(); i++) {
-					if (add_options[i].type == item.node->get_class_name()) {
-						if ((add_options[i].func != visual_shader->get_mode() && add_options[i].func != -1) || !_is_available(add_options[i].mode)) {
+				for (const AddOption &op : add_options) {
+					if (op.type == item.node->get_class_name()) {
+						if ((op.func != visual_shader->get_mode() && op.func != -1) || !_is_available(op.mode)) {
 							item.disabled = true;
 						} else {
 							item.disabled = false;
@@ -1907,9 +1905,7 @@ void VisualShaderEditor::_update_nodes() {
 	Array keys = added.keys();
 	keys.sort();
 
-	for (int i = 0; i < keys.size(); i++) {
-		const Variant &key = keys.get(i);
-
+	for (const Variant &key : keys) {
 		const Dictionary &value = (Dictionary)added[key];
 
 		add_custom_type(value["name"], value["type"], value["script"], value["description"], value["return_icon_type"], value["category"], value["highend"]);
@@ -2052,21 +2048,21 @@ void VisualShaderEditor::_update_options_menu() {
 	options.append_array(custom_options);
 	options.append_array(embedded_options);
 
-	for (int i = 0; i < options.size(); i++) {
-		String path = options[i].category;
+	for (const AddOption &op : options) {
+		const String path = op.category;
 		Vector<String> subfolders = path.split("/");
 		TreeItem *category = nullptr;
 
 		if (!folders.has(path)) {
 			category = root;
 			String path_temp = "";
-			for (int j = 0; j < subfolders.size(); j++) {
-				path_temp += subfolders[j];
+			for (const String &subfolder : subfolders) {
+				path_temp += subfolder;
 				if (!folders.has(path_temp)) {
 					category = members->create_item(category);
 					category->set_selectable(0, false);
 					category->set_collapsed(!use_filter);
-					category->set_text(0, subfolders[j]);
+					category->set_text(0, subfolder);
 					folders.insert(path_temp, category);
 				} else {
 					category = folders[path_temp];
@@ -2077,18 +2073,18 @@ void VisualShaderEditor::_update_options_menu() {
 		}
 
 		TreeItem *item = members->create_item(category);
-		if (options[i].highend && low_driver) {
+		if (op.highend && low_driver) {
 			item->set_custom_color(0, unsupported_color);
-		} else if (options[i].highend) {
+		} else if (op.highend) {
 			item->set_custom_color(0, supported_color);
 		}
-		item->set_text(0, options[i].name);
+		item->set_text(0, op.name);
 		if (is_first_item && use_filter) {
 			item->select(0);
-			node_desc->set_text(options[i].description);
+			node_desc->set_text(op.description);
 			is_first_item = false;
 		}
-		switch (options[i].return_type) {
+		switch (op.return_type) {
 			case VisualShaderNode::PORT_TYPE_SCALAR:
 				item->set_icon(0, get_editor_theme_icon(SNAME("float")));
 				break;
@@ -2119,7 +2115,7 @@ void VisualShaderEditor::_update_options_menu() {
 			default:
 				break;
 		}
-		item->set_meta("id", options[i].temp_idx);
+		item->set_meta("id", op.temp_idx);
 	}
 }
 
@@ -2187,8 +2183,8 @@ void VisualShaderEditor::_update_parameters(bool p_update_refs) {
 
 	for (int t = 0; t < VisualShader::TYPE_MAX; t++) {
 		Vector<int> tnodes = visual_shader->get_node_list((VisualShader::Type)t);
-		for (int i = 0; i < tnodes.size(); i++) {
-			Ref<VisualShaderNode> vsnode = visual_shader->get_node((VisualShader::Type)t, tnodes[i]);
+		for (const int &tnode : tnodes) {
+			Ref<VisualShaderNode> vsnode = visual_shader->get_node((VisualShader::Type)t, tnode);
 			Ref<VisualShaderNodeParameter> parameter = vsnode;
 
 			if (parameter.is_valid()) {
@@ -2291,9 +2287,9 @@ void VisualShaderEditor::_update_graph() {
 	graph_plugin->clear_links();
 	graph_plugin->update_theme();
 
-	for (int n_i = 0; n_i < nodes.size(); n_i++) {
+	for (const int &node : nodes) {
 		// Update frame related stuff later since we need to have all nodes in the graph.
-		graph_plugin->add_node(type, nodes[n_i], false, false);
+		graph_plugin->add_node(type, node, false, false);
 	}
 
 	for (const VisualShader::Connection &E : node_connections) {
@@ -3704,8 +3700,7 @@ void VisualShaderEditor::_remove_varying(const String &p_name) {
 		VisualShader::Type type = VisualShader::Type(i);
 		Vector<int> nodes = visual_shader->get_node_list(type);
 
-		for (int j = 0; j < nodes.size(); j++) {
-			int node_id = nodes[j];
+		for (const int &node_id : nodes) {
 			Ref<VisualShaderNode> vsnode = visual_shader->get_node(type, node_id);
 			Ref<VisualShaderNodeVarying> var = vsnode;
 
@@ -4413,8 +4408,8 @@ void VisualShaderEditor::_delete_nodes_request(const TypedArray<StringName> &p_n
 		}
 	} else {
 		VisualShader::Type type = get_current_shader_type();
-		for (int i = 0; i < p_nodes.size(); i++) {
-			int id = p_nodes[i].operator String().to_int();
+		for (const StringName node : p_nodes) {
+			int id = node.operator String().to_int();
 			Ref<VisualShaderNode> vsnode = visual_shader->get_node(type, id);
 			if (vsnode->is_deletable()) {
 				to_erase.push_back(id);
@@ -4862,8 +4857,8 @@ void VisualShaderEditor::_node_changed(int p_id) {
 
 void VisualShaderEditor::_nodes_linked_to_frame_request(const TypedArray<StringName> &p_nodes, const StringName &p_frame) {
 	Vector<int> node_ids;
-	for (int i = 0; i < p_nodes.size(); i++) {
-		node_ids.push_back(p_nodes[i].operator String().to_int());
+	for (const StringName node : p_nodes) {
+		node_ids.push_back(node.operator String().to_int());
 	}
 	frame_node_id_to_link_to = p_frame.operator String().to_int();
 	nodes_link_to_frame_buffer = node_ids;
@@ -7245,8 +7240,8 @@ public:
 		if (updating) {
 			return;
 		}
-		for (int i = 0; i < properties.size(); i++) {
-			properties[i]->update_property();
+		for (EditorProperty *property : properties) {
+			property->update_property();
 		}
 	}
 
@@ -7264,8 +7259,8 @@ public:
 	Vector<Label *> prop_names;
 
 	void _show_prop_names(bool p_show) {
-		for (int i = 0; i < prop_names.size(); i++) {
-			prop_names[i]->set_visible(p_show);
+		for (Label *prop_name : prop_names) {
+			prop_name->set_visible(p_show);
 		}
 	}
 
@@ -7351,8 +7346,8 @@ Control *VisualShaderNodePluginDefault::create_editor(const Ref<Resource> &p_par
 	Vector<PropertyInfo> pinfo;
 
 	for (const PropertyInfo &E : props) {
-		for (int i = 0; i < properties.size(); i++) {
-			if (E.name == String(properties[i])) {
+		for (const StringName &property : properties) {
+			if (E.name == String(property)) {
 				pinfo.push_back(E);
 			}
 		}
@@ -7367,8 +7362,8 @@ Control *VisualShaderNodePluginDefault::create_editor(const Ref<Resource> &p_par
 	Ref<VisualShaderNode> node = p_node;
 	Vector<EditorProperty *> editors;
 
-	for (int i = 0; i < pinfo.size(); i++) {
-		EditorProperty *prop = EditorInspector::instantiate_property_editor(node.ptr(), pinfo[i].type, pinfo[i].name, pinfo[i].hint, pinfo[i].hint_string, pinfo[i].usage);
+	for (const PropertyInfo &pi : pinfo) {
+		EditorProperty *prop = EditorInspector::instantiate_property_editor(node.ptr(), pi.type, pi.name, pi.hint, pi.hint_string, pi.usage);
 		if (!prop) {
 			return nullptr;
 		}
@@ -7390,7 +7385,7 @@ Control *VisualShaderNodePluginDefault::create_editor(const Ref<Resource> &p_par
 		}
 
 		editors.push_back(prop);
-		properties.push_back(pinfo[i].name);
+		properties.push_back(pi.name);
 	}
 	VisualShaderNodePluginDefaultEditor *editor = memnew(VisualShaderNodePluginDefaultEditor);
 	editor->setup(vseditor, p_parent_resource, editors, properties, p_node->get_editable_properties_names(), p_node);
@@ -7438,8 +7433,8 @@ void EditorPropertyVisualShaderMode::_option_selected(int p_which) {
 	for (int i = 0; i < VisualShader::TYPE_MAX; i++) {
 		VisualShader::Type type = VisualShader::Type(i);
 		Vector<int> nodes = visual_shader->get_node_list(type);
-		for (int j = 0; j < nodes.size(); j++) {
-			Ref<VisualShaderNodeInput> input = visual_shader->get_node(type, nodes[j]);
+		for (const int &node : nodes) {
+			Ref<VisualShaderNodeInput> input = visual_shader->get_node(type, node);
 			if (!input.is_valid()) {
 				continue;
 			}
@@ -7539,9 +7534,9 @@ void VisualShaderNodePortPreview::_shader_changed() {
 	Ref<Shader> preview_shader;
 	preview_shader.instantiate();
 	preview_shader->set_code(shader_code);
-	for (int i = 0; i < default_textures.size(); i++) {
-		for (int j = 0; j < default_textures[i].params.size(); j++) {
-			preview_shader->set_default_texture_parameter(default_textures[i].name, default_textures[i].params[j], j);
+	for (const VisualShader::DefaultTextureParam &default_texture : default_textures) {
+		for (int i = 0; i < default_texture.params.size(); i++) {
+			preview_shader->set_default_texture_parameter(default_texture.name, default_texture.params[i], i);
 		}
 	}
 

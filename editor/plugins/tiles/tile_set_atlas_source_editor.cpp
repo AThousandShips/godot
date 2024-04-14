@@ -1104,10 +1104,10 @@ void TileSetAtlasSourceEditor::_tile_atlas_control_gui_input(const Ref<InputEven
 				new_base_tiles_coords = new_base_tiles_coords.max(Vector2i(0, 0)).min(grid_size - Vector2i(1, 1));
 
 				Vector<Point2i> line = Geometry2D::bresenham_line(last_base_tiles_coords, new_base_tiles_coords);
-				for (int i = 0; i < line.size(); i++) {
-					if (tile_set_atlas_source->get_tile_at_coords(line[i]) == TileSetSource::INVALID_ATLAS_COORDS) {
-						tile_set_atlas_source->create_tile(line[i]);
-						drag_modified_tiles.insert(line[i]);
+				for (const Point2i &p : line) {
+					if (tile_set_atlas_source->get_tile_at_coords(p) == TileSetSource::INVALID_ATLAS_COORDS) {
+						tile_set_atlas_source->create_tile(p);
+						drag_modified_tiles.insert(p);
 					}
 				}
 
@@ -1119,8 +1119,8 @@ void TileSetAtlasSourceEditor::_tile_atlas_control_gui_input(const Ref<InputEven
 				new_base_tiles_coords = new_base_tiles_coords.max(Vector2i(0, 0)).min(grid_size - Vector2i(1, 1));
 
 				Vector<Point2i> line = Geometry2D::bresenham_line(last_base_tiles_coords, new_base_tiles_coords);
-				for (int i = 0; i < line.size(); i++) {
-					Vector2i base_tile_coords = tile_set_atlas_source->get_tile_at_coords(line[i]);
+				for (const Point2i &p : line) {
+					Vector2i base_tile_coords = tile_set_atlas_source->get_tile_at_coords(p);
 					if (base_tile_coords != TileSetSource::INVALID_ATLAS_COORDS) {
 						drag_modified_tiles.insert(base_tile_coords);
 					}

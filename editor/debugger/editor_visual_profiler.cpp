@@ -45,9 +45,9 @@ void EditorVisualProfiler::add_frame_metric(const Metric &p_metric) {
 	frame_metrics.write[last_metric] = p_metric;
 
 	List<String> stack;
-	for (int i = 0; i < frame_metrics[last_metric].areas.size(); i++) {
-		String name = frame_metrics[last_metric].areas[i].name;
-		frame_metrics.write[last_metric].areas.write[i].color_cache = _get_color_from_signature(name);
+	for (Metric::Area &area : frame_metrics.write[last_metric].areas) {
+		String name = area.name;
+		area.color_cache = _get_color_from_signature(name);
 		String full_name;
 
 		if (name[0] == '<') {
@@ -64,7 +64,7 @@ void EditorVisualProfiler::add_frame_metric(const Metric &p_metric) {
 			stack.push_back(full_name + "/");
 		}
 
-		frame_metrics.write[last_metric].areas.write[i].fullpath_cache = full_name;
+		area.fullpath_cache = full_name;
 	}
 
 	updating_frame = true;
@@ -174,8 +174,7 @@ void EditorVisualProfiler::_update_plot() {
 	float highest_cpu = 0;
 	float highest_gpu = 0;
 
-	for (int i = 0; i < frame_metrics.size(); i++) {
-		const Metric &m = frame_metrics[i];
+	for (const Metric &m : frame_metrics) {
 		if (!m.valid) {
 			continue;
 		}

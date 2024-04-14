@@ -222,15 +222,15 @@ void TextEditor::_update_bookmark_list() {
 
 	bookmarks_menu->add_separator();
 
-	for (int i = 0; i < bookmark_list.size(); i++) {
-		String line = code_editor->get_text_editor()->get_line(bookmark_list[i]).strip_edges();
+	for (const int32_t &bookmark : bookmark_list) {
+		String line = code_editor->get_text_editor()->get_line(bookmark).strip_edges();
 		// Limit the size of the line if too big.
 		if (line.length() > 50) {
 			line = line.substr(0, 50);
 		}
 
-		bookmarks_menu->add_item(String::num((int)bookmark_list[i] + 1) + " - \"" + line + "\"");
-		bookmarks_menu->set_item_metadata(-1, bookmark_list[i]);
+		bookmarks_menu->add_item(String::num((int)bookmark + 1) + " - \"" + line + "\"");
+		bookmarks_menu->set_item_metadata(-1, bookmark);
 	}
 }
 

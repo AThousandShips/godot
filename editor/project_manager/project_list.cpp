@@ -470,8 +470,7 @@ void ProjectList::update_project_list() {
 	// FIXME: Does it really have to be a full, hard reload? Runtime updates should be made much cheaper.
 
 	// Clear whole list
-	for (int i = 0; i < _projects.size(); ++i) {
-		Item &project = _projects.write[i];
+	for (Item &project : _projects) {
 		CRASH_COND(project.control == nullptr);
 		memdelete(project.control); // Why not queue_free()?
 	}
@@ -526,9 +525,7 @@ void ProjectList::sort_projects() {
 		}
 	}
 
-	for (int i = 0; i < _projects.size(); ++i) {
-		Item &item = _projects.write[i];
-
+	for (Item &item : _projects) {
 		bool item_visible = true;
 		if (!_search_term.is_empty()) {
 			String search_path;
@@ -577,8 +574,7 @@ void ProjectList::find_projects(const String &p_path) {
 void ProjectList::find_projects_multiple(const PackedStringArray &p_paths) {
 	List<String> projects;
 
-	for (int i = 0; i < p_paths.size(); i++) {
-		const String &base_path = p_paths.get(i);
+	for (const String &base_path : p_paths) {
 		print_verbose(vformat("Scanning for projects in \"%s\".", base_path));
 
 		_scan_folder_recursive(base_path, &projects);
@@ -752,8 +748,7 @@ void ProjectList::_list_item_input(const Ref<InputEvent> &p_ev, Node *p_hb) {
 	if (mb.is_valid() && mb->is_pressed() && mb->get_button_index() == MouseButton::LEFT) {
 		if (mb->is_shift_pressed() && _selected_project_paths.size() > 0 && !_last_clicked.is_empty() && clicked_project.path != _last_clicked) {
 			int anchor_index = -1;
-			for (int i = 0; i < _projects.size(); ++i) {
-				const Item &p = _projects[i];
+			for (const Item &p : _projects) {
 				if (p.path == _last_clicked) {
 					anchor_index = p.control->get_index();
 					break;
@@ -819,8 +814,8 @@ void ProjectList::_clear_project_selection() {
 	Vector<Item> previous_selected_items = get_selected_projects();
 	_selected_project_paths.clear();
 
-	for (int i = 0; i < previous_selected_items.size(); ++i) {
-		previous_selected_items[i].control->set_selected(false);
+	for (Item &previous_selected_item : previous_selected_items) {
+		previous_selected_item.control->set_selected(false);
 	}
 }
 
@@ -877,8 +872,7 @@ Vector<ProjectList::Item> ProjectList::get_selected_projects() const {
 	}
 	items.resize(_selected_project_paths.size());
 	int j = 0;
-	for (int i = 0; i < _projects.size(); ++i) {
-		const Item &item = _projects[i];
+	for (const Item &item : _projects) {
 		if (_selected_project_paths.has(item.path)) {
 			items.write[j++] = item;
 		}
@@ -945,8 +939,8 @@ void ProjectList::erase_selected_projects(bool p_delete_project_contents) {
 // Missing projects.
 
 bool ProjectList::is_any_project_missing() const {
-	for (int i = 0; i < _projects.size(); ++i) {
-		if (_projects[i].missing) {
+	for (const Item &item : _projects) {
+		if (item.missing) {
 			return true;
 		}
 	}

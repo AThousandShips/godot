@@ -583,8 +583,8 @@ void EditorDebuggerNode::set_breakpoint(const String &p_path, int p_line, bool p
 }
 
 void EditorDebuggerNode::set_breakpoints(const String &p_path, const Array &p_lines) {
-	for (int i = 0; i < p_lines.size(); i++) {
-		set_breakpoint(p_path, p_lines[i], true);
+	for (const Variant &line : p_lines) {
+		set_breakpoint(p_path, line, true);
 	}
 
 	for (const KeyValue<Breakpoint, bool> &E : breakpoints) {
