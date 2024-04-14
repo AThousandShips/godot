@@ -41,28 +41,28 @@ void CollisionPolygon3D::_build_polygon() {
 
 	collision_object->shape_owner_clear_shapes(owner_id);
 
-	if (polygon.size() == 0) {
+	if (polygon.is_empty()) {
 		return;
 	}
 
-	Vector<Vector<Vector2>> decomp = Geometry2D::decompose_polygon_in_convex(polygon);
-	if (decomp.size() == 0) {
+	Vector<Vector<Vector2>> decomps = Geometry2D::decompose_polygon_in_convex(polygon);
+	if (decomps.is_empty()) {
 		return;
 	}
 
 	//here comes the sun, lalalala
 	//decompose concave into multiple convex polygons and add them
 
-	for (int i = 0; i < decomp.size(); i++) {
+	for (const Vector<Vector2> &decomp : decomps) {
 		Ref<ConvexPolygonShape3D> convex = memnew(ConvexPolygonShape3D);
 		Vector<Vector3> cp;
-		int cs = decomp[i].size();
+		int cs = decomp.size();
 		cp.resize(cs * 2);
 		{
 			Vector3 *w = cp.ptrw();
 			int idx = 0;
 			for (int j = 0; j < cs; j++) {
-				Vector2 d = decomp[i][j];
+				Vector2 d = decomp[j];
 				w[idx++] = Vector3(d.x, d.y, depth * 0.5);
 				w[idx++] = Vector3(d.x, d.y, -depth * 0.5);
 			}

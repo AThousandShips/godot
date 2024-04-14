@@ -257,9 +257,9 @@ Ref<TriangleMesh> Label3D::generate_triangle_mesh() const {
 
 	float total_h = 0.0;
 	float max_line_w = 0.0;
-	for (int i = 0; i < lines_rid.size(); i++) {
-		total_h += TS->shaped_text_get_size(lines_rid[i]).y + line_spacing;
-		max_line_w = MAX(max_line_w, TS->shaped_text_get_width(lines_rid[i]));
+	for (const RID &line_rid : lines_rid) {
+		total_h += TS->shaped_text_get_size(line_rid).y + line_spacing;
+		max_line_w = MAX(max_line_w, TS->shaped_text_get_width(line_rid));
 	}
 
 	float vbegin = 0;
@@ -500,8 +500,8 @@ void Label3D::_shape() {
 	}
 
 	if (dirty_lines) {
-		for (int i = 0; i < lines_rid.size(); i++) {
-			TS->free_rid(lines_rid[i]);
+		for (const RID &line_rid : lines_rid) {
+			TS->free_rid(line_rid);
 		}
 		lines_rid.clear();
 
@@ -555,8 +555,8 @@ void Label3D::_shape() {
 
 	// Generate surfaces and materials.
 	float total_h = 0.0;
-	for (int i = 0; i < lines_rid.size(); i++) {
-		total_h += (TS->shaped_text_get_size(lines_rid[i]).y + line_spacing) * pixel_size;
+	for (const RID &line_rid : lines_rid) {
+		total_h += (TS->shaped_text_get_size(line_rid).y + line_spacing) * pixel_size;
 	}
 
 	float vbegin = 0.0;
@@ -574,10 +574,10 @@ void Label3D::_shape() {
 	}
 
 	Vector2 offset = Vector2(0, vbegin + lbl_offset.y * pixel_size);
-	for (int i = 0; i < lines_rid.size(); i++) {
-		const Glyph *glyphs = TS->shaped_text_get_glyphs(lines_rid[i]);
-		int gl_size = TS->shaped_text_get_glyph_count(lines_rid[i]);
-		float line_width = TS->shaped_text_get_width(lines_rid[i]) * pixel_size;
+	for (const RID &line_rid : lines_rid) {
+		const Glyph *glyphs = TS->shaped_text_get_glyphs(line_rid);
+		int gl_size = TS->shaped_text_get_glyph_count(line_rid);
+		float line_width = TS->shaped_text_get_width(line_rid) * pixel_size;
 
 		switch (horizontal_alignment) {
 			case HORIZONTAL_ALIGNMENT_LEFT:
@@ -594,26 +594,26 @@ void Label3D::_shape() {
 		offset.x += lbl_offset.x * pixel_size;
 		if (aabb == AABB()) {
 			aabb.position = Vector3(offset.x, offset.y, 0);
-			aabb.expand_to(Vector3(offset.x + line_width, offset.y - (TS->shaped_text_get_size(lines_rid[i]).y + line_spacing) * pixel_size, 0));
+			aabb.expand_to(Vector3(offset.x + line_width, offset.y - (TS->shaped_text_get_size(line_rid).y + line_spacing) * pixel_size, 0));
 		} else {
 			aabb.expand_to(Vector3(offset.x, offset.y, 0));
-			aabb.expand_to(Vector3(offset.x + line_width, offset.y - (TS->shaped_text_get_size(lines_rid[i]).y + line_spacing) * pixel_size, 0));
+			aabb.expand_to(Vector3(offset.x + line_width, offset.y - (TS->shaped_text_get_size(line_rid).y + line_spacing) * pixel_size, 0));
 		}
-		offset.y -= TS->shaped_text_get_ascent(lines_rid[i]) * pixel_size;
+		offset.y -= TS->shaped_text_get_ascent(line_rid) * pixel_size;
 
 		if (outline_modulate.a != 0.0 && outline_size > 0) {
 			// Outline surfaces.
 			Vector2 ol_offset = offset;
-			for (int j = 0; j < gl_size; j++) {
-				_generate_glyph_surfaces(glyphs[j], ol_offset, outline_modulate, outline_render_priority, outline_size);
+			for (int i = 0; i < gl_size; i++) {
+				_generate_glyph_surfaces(glyphs[i], ol_offset, outline_modulate, outline_render_priority, outline_size);
 			}
 		}
 
 		// Main text surfaces.
-		for (int j = 0; j < gl_size; j++) {
-			_generate_glyph_surfaces(glyphs[j], offset, modulate, render_priority);
+		for (int i = 0; i < gl_size; i++) {
+			_generate_glyph_surfaces(glyphs[i], offset, modulate, render_priority);
 		}
-		offset.y -= (TS->shaped_text_get_descent(lines_rid[i]) + line_spacing) * pixel_size;
+		offset.y -= (TS->shaped_text_get_descent(line_rid) + line_spacing) * pixel_size;
 	}
 
 	for (const KeyValue<SurfaceKey, SurfaceData> &E : surfaces) {
@@ -1056,8 +1056,8 @@ Label3D::Label3D() {
 }
 
 Label3D::~Label3D() {
-	for (int i = 0; i < lines_rid.size(); i++) {
-		TS->free_rid(lines_rid[i]);
+	for (const RID &line_rid : lines_rid) {
+		TS->free_rid(line_rid);
 	}
 	lines_rid.clear();
 

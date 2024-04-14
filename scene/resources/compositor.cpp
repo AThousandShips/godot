@@ -242,8 +242,8 @@ void Compositor::set_compositor_effects(const TypedArray<CompositorEffect> &p_co
 TypedArray<CompositorEffect> Compositor::get_compositor_effects() const {
 	TypedArray<CompositorEffect> arr;
 
-	for (uint32_t i = 0; i < effects.size(); i++) {
-		arr.push_back(effects[i]);
+	for (Ref<CompositorEffect> effect : effects) {
+		arr.push_back(effect);
 	}
 
 	return arr;

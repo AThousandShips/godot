@@ -306,9 +306,9 @@ Node *MeshInstance3D::create_multiple_convex_collisions_node(const Ref<MeshConve
 	}
 
 	StaticBody3D *static_body = memnew(StaticBody3D);
-	for (int i = 0; i < shapes.size(); i++) {
+	for (const Ref<Shape3D> &shape : shapes) {
 		CollisionShape3D *cshape = memnew(CollisionShape3D);
-		cshape->set_shape(shapes[i]);
+		cshape->set_shape(shape);
 		static_body->add_child(cshape, true);
 	}
 	return static_body;

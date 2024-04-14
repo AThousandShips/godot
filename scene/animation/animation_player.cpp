@@ -84,10 +84,10 @@ bool AnimationPlayer::_get(const StringName &p_name, Variant &r_ret) const {
 		}
 
 		Array array;
-		for (int i = 0; i < keys.size(); i++) {
-			array.push_back(keys[i].from);
-			array.push_back(keys[i].to);
-			array.push_back(blend_times.get(keys[i]));
+		for (const BlendKey &key : keys) {
+			array.push_back(key.from);
+			array.push_back(key.to);
+			array.push_back(blend_times.get(key));
 		}
 
 		r_ret = array;

@@ -566,9 +566,9 @@ void AnimationMixer::_clear_caches() {
 }
 
 void AnimationMixer::_clear_audio_streams() {
-	for (int i = 0; i < playing_audio_stream_players.size(); i++) {
-		playing_audio_stream_players[i]->call(SNAME("stop"));
-		playing_audio_stream_players[i]->call(SNAME("set_stream"), Ref<AudioStream>());
+	for (Node *playing_audio_stream_player : playing_audio_stream_players) {
+		playing_audio_stream_player->call(SNAME("stop"));
+		playing_audio_stream_player->call(SNAME("set_stream"), Ref<AudioStream>());
 	}
 	playing_audio_stream_players.clear();
 }
@@ -1804,15 +1804,15 @@ void AnimationMixer::_blend_apply() {
 							t->audio_stream_playback->set_stream_volume(pasi.index, db);
 						}
 					}
-					for (uint32_t erase_idx = 0; erase_idx < erase_streams.size(); erase_idx++) {
-						map.erase(erase_streams[erase_idx]);
+					for (const int &erase_stream : erase_streams) {
+						map.erase(erase_stream);
 					}
 					if (map.size() == 0) {
 						erase_maps.push_back(L.key);
 					}
 				}
-				for (uint32_t erase_idx = 0; erase_idx < erase_maps.size(); erase_idx++) {
-					t->playing_streams.erase(erase_maps[erase_idx]);
+				for (const ObjectID &erase_map : erase_maps) {
+					t->playing_streams.erase(erase_map);
 				}
 			} break;
 			default: {

@@ -91,8 +91,8 @@ int Label::get_line_height(int p_line) const {
 		return TS->shaped_text_get_size(lines_rid[p_line]).y;
 	} else if (lines_rid.size() > 0) {
 		int h = 0;
-		for (int i = 0; i < lines_rid.size(); i++) {
-			h = MAX(h, TS->shaped_text_get_size(lines_rid[i]).y);
+		for (const RID &line_rid : lines_rid) {
+			h = MAX(h, TS->shaped_text_get_size(line_rid).y);
 		}
 		return h;
 	} else {
@@ -139,8 +139,8 @@ void Label::_shape() {
 	}
 
 	if (lines_dirty) {
-		for (int i = 0; i < lines_rid.size(); i++) {
-			TS->free_rid(lines_rid[i]);
+		for (const RID &line_rid : lines_rid) {
+			TS->free_rid(line_rid);
 		}
 		lines_rid.clear();
 
@@ -177,9 +177,9 @@ void Label::_shape() {
 
 	if (autowrap_mode == TextServer::AUTOWRAP_OFF) {
 		minsize.width = 0.0f;
-		for (int i = 0; i < lines_rid.size(); i++) {
-			if (minsize.width < TS->shaped_text_get_size(lines_rid[i]).x) {
-				minsize.width = TS->shaped_text_get_size(lines_rid[i]).x;
+		for (const RID &line_rid : lines_rid) {
+			if (minsize.width < TS->shaped_text_get_size(line_rid).x) {
+				minsize.width = TS->shaped_text_get_size(line_rid).x;
 			}
 		}
 	}
@@ -1209,8 +1209,8 @@ Label::Label(const String &p_text) {
 }
 
 Label::~Label() {
-	for (int i = 0; i < lines_rid.size(); i++) {
-		TS->free_rid(lines_rid[i]);
+	for (const RID &line_rid : lines_rid) {
+		TS->free_rid(line_rid);
 	}
 	lines_rid.clear();
 	TS->free_rid(text_rid);

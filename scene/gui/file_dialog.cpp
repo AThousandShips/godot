@@ -449,10 +449,10 @@ void FileDialog::_action_pressed() {
 			valid = true; // match none
 		} else if (filters.size() > 1 && filter->get_selected() == 0) {
 			// match all filters
-			for (int i = 0; i < filters.size(); i++) {
-				String flt = filters[i].get_slice(";", 0);
-				for (int j = 0; j < flt.get_slice_count(","); j++) {
-					String str = flt.get_slice(",", j).strip_edges();
+			for (const String &E : filters) {
+				const String flt = E.get_slice(";", 0);
+				for (int i = 0; i < flt.get_slice_count(","); i++) {
+					String str = flt.get_slice(",", i).strip_edges();
 					if (f.match(str)) {
 						valid = true;
 						break;
@@ -712,10 +712,10 @@ void FileDialog::update_file_list() {
 		// match all
 	} else if (filters.size() > 1 && filter->get_selected() == 0) {
 		// match all filters
-		for (int i = 0; i < filters.size(); i++) {
-			String f = filters[i].get_slice(";", 0);
-			for (int j = 0; j < f.get_slice_count(","); j++) {
-				patterns.push_back(f.get_slice(",", j).strip_edges());
+		for (const String &E : filters) {
+			const String f = E.get_slice(";", 0);
+			for (int i = 0; i < f.get_slice_count(","); i++) {
+				patterns.push_back(f.get_slice(",", i).strip_edges());
 			}
 		}
 	} else {
@@ -810,9 +810,9 @@ void FileDialog::update_filters() {
 
 		filter->add_item(atr(ETR("All Recognized")) + " (" + all_filters + ")");
 	}
-	for (int i = 0; i < filters.size(); i++) {
-		String flt = filters[i].get_slice(";", 0).strip_edges();
-		String desc = filters[i].get_slice(";", 1).strip_edges();
+	for (const String &E : filters) {
+		const String flt = E.get_slice(";", 0).strip_edges();
+		const String desc = E.get_slice(";", 1).strip_edges();
 		if (desc.length()) {
 			filter->add_item(String(tr(desc)) + " (" + flt + ")");
 		} else {

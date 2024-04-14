@@ -322,11 +322,11 @@ void CollisionObject2D::shape_owner_set_disabled(uint32_t p_owner, bool p_disabl
 
 	ShapeData &sd = shapes[p_owner];
 	sd.disabled = p_disabled;
-	for (int i = 0; i < sd.shapes.size(); i++) {
+	for (const ShapeData::Shape &shape : sd.shapes) {
 		if (area) {
-			PhysicsServer2D::get_singleton()->area_set_shape_disabled(rid, sd.shapes[i].index, p_disabled);
+			PhysicsServer2D::get_singleton()->area_set_shape_disabled(rid, shape.index, p_disabled);
 		} else {
-			PhysicsServer2D::get_singleton()->body_set_shape_disabled(rid, sd.shapes[i].index, p_disabled);
+			PhysicsServer2D::get_singleton()->body_set_shape_disabled(rid, shape.index, p_disabled);
 		}
 	}
 }
@@ -346,8 +346,8 @@ void CollisionObject2D::shape_owner_set_one_way_collision(uint32_t p_owner, bool
 
 	ShapeData &sd = shapes[p_owner];
 	sd.one_way_collision = p_enable;
-	for (int i = 0; i < sd.shapes.size(); i++) {
-		PhysicsServer2D::get_singleton()->body_set_shape_as_one_way_collision(rid, sd.shapes[i].index, sd.one_way_collision, sd.one_way_collision_margin);
+	for (const ShapeData::Shape &shape : sd.shapes) {
+		PhysicsServer2D::get_singleton()->body_set_shape_as_one_way_collision(rid, shape.index, sd.one_way_collision, sd.one_way_collision_margin);
 	}
 }
 
@@ -366,8 +366,8 @@ void CollisionObject2D::shape_owner_set_one_way_collision_margin(uint32_t p_owne
 
 	ShapeData &sd = shapes[p_owner];
 	sd.one_way_collision_margin = p_margin;
-	for (int i = 0; i < sd.shapes.size(); i++) {
-		PhysicsServer2D::get_singleton()->body_set_shape_as_one_way_collision(rid, sd.shapes[i].index, sd.one_way_collision, sd.one_way_collision_margin);
+	for (const ShapeData::Shape &shape : sd.shapes) {
+		PhysicsServer2D::get_singleton()->body_set_shape_as_one_way_collision(rid, shape.index, sd.one_way_collision, sd.one_way_collision_margin);
 	}
 }
 
@@ -398,11 +398,11 @@ void CollisionObject2D::shape_owner_set_transform(uint32_t p_owner, const Transf
 	ShapeData &sd = shapes[p_owner];
 
 	sd.xform = p_transform;
-	for (int i = 0; i < sd.shapes.size(); i++) {
+	for (const ShapeData::Shape &shape : sd.shapes) {
 		if (area) {
-			PhysicsServer2D::get_singleton()->area_set_shape_transform(rid, sd.shapes[i].index, sd.xform);
+			PhysicsServer2D::get_singleton()->area_set_shape_transform(rid, shape.index, sd.xform);
 		} else {
-			PhysicsServer2D::get_singleton()->body_set_shape_transform(rid, sd.shapes[i].index, sd.xform);
+			PhysicsServer2D::get_singleton()->body_set_shape_transform(rid, shape.index, sd.xform);
 		}
 	}
 }
@@ -471,9 +471,9 @@ void CollisionObject2D::shape_owner_remove_shape(uint32_t p_owner, int p_shape) 
 	shapes[p_owner].shapes.remove_at(p_shape);
 
 	for (KeyValue<uint32_t, ShapeData> &E : shapes) {
-		for (int i = 0; i < E.value.shapes.size(); i++) {
-			if (E.value.shapes[i].index > index_to_remove) {
-				E.value.shapes.write[i].index -= 1;
+		for (ShapeData::Shape &shape : E.value.shapes) {
+			if (shape.index > index_to_remove) {
+				shape.index -= 1;
 			}
 		}
 	}
@@ -493,8 +493,8 @@ uint32_t CollisionObject2D::shape_find_owner(int p_shape_index) const {
 	ERR_FAIL_INDEX_V(p_shape_index, total_subshapes, UINT32_MAX);
 
 	for (const KeyValue<uint32_t, ShapeData> &E : shapes) {
-		for (int i = 0; i < E.value.shapes.size(); i++) {
-			if (E.value.shapes[i].index == p_shape_index) {
+		for (const ShapeData::Shape &shape : E.value.shapes) {
+			if (shape.index == p_shape_index) {
 				return E.key;
 			}
 		}

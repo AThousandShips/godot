@@ -1646,16 +1646,16 @@ void Node::_update_children_cache_impl() const {
 	data.internal_children_back_count_cache = 0;
 	data.internal_children_front_count_cache = 0;
 
-	for (uint32_t i = 0; i < data.children_cache.size(); i++) {
-		switch (data.children_cache[i]->data.internal_mode) {
+	for (Node *child_cache : data.children_cache) {
+		switch (child_cache->data.internal_mode) {
 			case INTERNAL_MODE_DISABLED: {
-				data.children_cache[i]->data.index = data.external_children_count_cache++;
+				child_cache->data.index = data.external_children_count_cache++;
 			} break;
 			case INTERNAL_MODE_FRONT: {
-				data.children_cache[i]->data.index = data.internal_children_front_count_cache++;
+				child_cache->data.index = data.internal_children_front_count_cache++;
 			} break;
 			case INTERNAL_MODE_BACK: {
-				data.children_cache[i]->data.index = data.internal_children_back_count_cache++;
+				child_cache->data.index = data.internal_children_back_count_cache++;
 			} break;
 		}
 	}
@@ -2375,8 +2375,8 @@ String Node::get_tree_string_pretty() {
 String Node::_get_tree_string(const Node *p_node) {
 	_update_children_cache();
 	String return_tree = String(p_node->get_path_to(this)) + "\n";
-	for (uint32_t i = 0; i < data.children_cache.size(); i++) {
-		return_tree += data.children_cache[i]->_get_tree_string(p_node);
+	for (Node *child_cache : data.children_cache) {
+		return_tree += child_cache->_get_tree_string(p_node);
 	}
 	return return_tree;
 }

@@ -385,9 +385,7 @@ bool ShapeCast2D::is_collide_with_bodies_enabled() const {
 Array ShapeCast2D::_get_collision_result() const {
 	Array ret;
 
-	for (int i = 0; i < result.size(); ++i) {
-		const PhysicsDirectSpaceState2D::ShapeRestInfo &sri = result[i];
-
+	for (const PhysicsDirectSpaceState2D::ShapeRestInfo &sri : result) {
 		Dictionary col;
 		col["point"] = sri.point;
 		col["normal"] = sri.normal;

@@ -847,8 +847,8 @@ void Skeleton3D::force_update_all_dirty_bones() {
 
 void Skeleton3D::force_update_all_bone_transforms() {
 	_update_process_order();
-	for (int i = 0; i < parentless_bones.size(); i++) {
-		force_update_bone_children_transforms(parentless_bones[i]);
+	for (const int &parentless_bone : parentless_bones) {
+		force_update_bone_children_transforms(parentless_bone);
 	}
 	rest_dirty = false;
 	dirty = false;

@@ -88,11 +88,11 @@ void LightmapGIData::_set_user_data(const Array &p_data) {
 
 Array LightmapGIData::_get_user_data() const {
 	Array ret;
-	for (int i = 0; i < users.size(); i++) {
-		ret.push_back(users[i].path);
-		ret.push_back(users[i].uv_scale);
-		ret.push_back(users[i].slice_index);
-		ret.push_back(users[i].sub_instance);
+	for (const User &user : users) {
+		ret.push_back(user.path);
+		ret.push_back(user.uv_scale);
+		ret.push_back(user.slice_index);
+		ret.push_back(user.sub_instance);
 	}
 	return ret;
 }
@@ -876,8 +876,8 @@ LightmapGI::BakeError LightmapGI::bake(Node *p_from_node, String p_image_data_pa
 	}
 
 	//bounds need to include the user probes
-	for (int i = 0; i < probes_found.size(); i++) {
-		bounds.expand_to(probes_found[i]);
+	for (const Vector3 &probe_found : probes_found) {
+		bounds.expand_to(probe_found);
 	}
 
 	bounds.grow_by(bounds.size.length() * 0.001);
@@ -960,18 +960,18 @@ LightmapGI::BakeError LightmapGI::bake(Node *p_from_node, String p_image_data_pa
 	}
 
 	{
-		for (int i = 0; i < mesh_data.size(); i++) {
-			lightmapper->add_mesh(mesh_data[i]);
+		for (const Lightmapper::MeshData &mesh : mesh_data) {
+			lightmapper->add_mesh(mesh);
 		}
-		for (int i = 0; i < lights_found.size(); i++) {
-			Light3D *light = lights_found[i].light;
+		for (const LightsFound &light_found : lights_found) {
+			Light3D *light = light_found.light;
 			if (light->is_editor_only()) {
 				// Don't include editor-only lights in the lightmap bake,
 				// as this results in inconsistent visuals when running the project.
 				continue;
 			}
 
-			Transform3D xf = lights_found[i].xform;
+			Transform3D xf = light_found.xform;
 
 			// For the lightmapper, the indirect energy represents the multiplier for the indirect bounces caused by the light, so the value is not converted when using physical units.
 			float indirect_energy = light->get_param(Light3D::PARAM_INDIRECT_ENERGY);
@@ -1001,8 +1001,8 @@ LightmapGI::BakeError LightmapGI::bake(Node *p_from_node, String p_image_data_pa
 				lightmapper->add_spot_light(light->get_bake_mode() == Light3D::BAKE_STATIC, xf.origin, -xf.basis.get_column(Vector3::AXIS_Z).normalized(), linear_color, energy, indirect_energy, l->get_param(Light3D::PARAM_RANGE), l->get_param(Light3D::PARAM_ATTENUATION), l->get_param(Light3D::PARAM_SPOT_ANGLE), l->get_param(Light3D::PARAM_SPOT_ATTENUATION), l->get_param(Light3D::PARAM_SIZE), l->get_param(Light3D::PARAM_SHADOW_BLUR));
 			}
 		}
-		for (int i = 0; i < probes_found.size(); i++) {
-			lightmapper->add_probe(probes_found[i]);
+		for (const Vector3 &probe_found : probes_found) {
+			lightmapper->add_probe(probe_found);
 		}
 	}
 
@@ -1185,30 +1185,30 @@ LightmapGI::BakeError LightmapGI::bake(Node *p_from_node, String p_image_data_pa
 		LocalVector<int32_t> bsp_simplex_indices;
 		PackedInt32Array tetrahedrons;
 
-		for (int i = 0; i < solved_simplices.size(); i++) {
+		for (const Delaunay3D::OutputSimplex &solved_simplex : solved_simplices) {
 			//Prepare a special representation of the simplex, which uses a BSP Tree
 			BSPSimplex bsp_simplex;
-			for (int j = 0; j < 4; j++) {
-				bsp_simplex.vertices[j] = solved_simplices[i].points[j];
+			for (int i = 0; i < 4; i++) {
+				bsp_simplex.vertices[i] = solved_simplex.points[i];
 			}
-			for (int j = 0; j < 4; j++) {
+			for (int i = 0; i < 4; i++) {
 				static const int face_order[4][3] = {
 					{ 0, 1, 2 },
 					{ 0, 2, 3 },
 					{ 0, 1, 3 },
 					{ 1, 2, 3 }
 				};
-				Vector3 a = points[solved_simplices[i].points[face_order[j][0]]];
-				Vector3 b = points[solved_simplices[i].points[face_order[j][1]]];
-				Vector3 c = points[solved_simplices[i].points[face_order[j][2]]];
+				Vector3 a = points[solved_simplex.points[face_order[i][0]]];
+				Vector3 b = points[solved_simplex.points[face_order[i][1]]];
+				Vector3 c = points[solved_simplex.points[face_order[i][2]]];
 
 				//store planes in an array, but ensure they are reused, to speed up processing
 
 				Plane p(a, b, c);
 				int plane_index = -1;
-				for (uint32_t k = 0; k < bsp_planes.size(); k++) {
-					if (bsp_planes[k].is_equal_approx_any_side(p)) {
-						plane_index = k;
+				for (uint32_t j = 0; j < bsp_planes.size(); j++) {
+					if (bsp_planes[j].is_equal_approx_any_side(p)) {
+						plane_index = j;
 						break;
 					}
 				}
@@ -1218,10 +1218,10 @@ LightmapGI::BakeError LightmapGI::bake(Node *p_from_node, String p_image_data_pa
 					bsp_planes.push_back(p);
 				}
 
-				bsp_simplex.planes[j] = plane_index;
+				bsp_simplex.planes[i] = plane_index;
 
 				//also fill simplex array
-				tetrahedrons.push_back(solved_simplices[i].points[j]);
+				tetrahedrons.push_back(solved_simplex.points[i]);
 			}
 
 			bsp_simplex_indices.push_back(bsp_simplices.size());

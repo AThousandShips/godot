@@ -218,8 +218,7 @@ void CodeEdit::_notification(int p_what) {
 
 						Point2 match_pos = Point2(code_completion_rect.position.x + icon_area_size.x + theme_cache.code_completion_icon_separation, code_completion_rect.position.y + i * row_height);
 
-						for (int j = 0; j < code_completion_options[l].matches.size(); j++) {
-							Pair<int, int> match_segment = code_completion_options[l].matches[j];
+						for (const Pair<int, int> &match_segment : code_completion_options[l].matches) {
 							int match_offset = theme_cache.font->get_string_size(code_completion_options[l].display.substr(0, match_segment.first), HORIZONTAL_ALIGNMENT_LEFT, -1, theme_cache.font_size).width;
 							int match_len = theme_cache.font->get_string_size(code_completion_options[l].display.substr(match_segment.first, match_segment.second), HORIZONTAL_ALIGNMENT_LEFT, -1, theme_cache.font_size).width;
 
@@ -808,8 +807,7 @@ bool CodeEdit::is_auto_indent_enabled() const {
 
 void CodeEdit::set_auto_indent_prefixes(const TypedArray<String> &p_prefixes) {
 	auto_indent_prefixes.clear();
-	for (int i = 0; i < p_prefixes.size(); i++) {
-		const String prefix = p_prefixes[i];
+	for (const String prefix : p_prefixes) {
 		auto_indent_prefixes.insert(prefix[0]);
 	}
 }
@@ -1243,9 +1241,9 @@ void CodeEdit::add_auto_brace_completion_pair(const String &p_open_key, const St
 	}
 
 	int at = 0;
-	for (int i = 0; i < auto_brace_completion_pairs.size(); i++) {
-		ERR_FAIL_COND_MSG(auto_brace_completion_pairs[i].open_key == p_open_key, "auto brace completion open key '" + p_open_key + "' already exists.");
-		if (p_open_key.length() < auto_brace_completion_pairs[i].open_key.length()) {
+	for (const BracePair &auto_brace_completion_pair : auto_brace_completion_pairs) {
+		ERR_FAIL_COND_MSG(auto_brace_completion_pair.open_key == p_open_key, "auto brace completion open key '" + p_open_key + "' already exists.");
+		if (p_open_key.length() < auto_brace_completion_pair.open_key.length()) {
 			at++;
 		}
 	}
@@ -1260,22 +1258,22 @@ void CodeEdit::set_auto_brace_completion_pairs(const Dictionary &p_auto_brace_co
 	auto_brace_completion_pairs.clear();
 
 	Array keys = p_auto_brace_completion_pairs.keys();
-	for (int i = 0; i < keys.size(); i++) {
-		add_auto_brace_completion_pair(keys[i], p_auto_brace_completion_pairs[keys[i]]);
+	for (const Variant &key : keys) {
+		add_auto_brace_completion_pair(key, p_auto_brace_completion_pairs[key]);
 	}
 }
 
 Dictionary CodeEdit::get_auto_brace_completion_pairs() const {
 	Dictionary brace_pairs;
-	for (int i = 0; i < auto_brace_completion_pairs.size(); i++) {
-		brace_pairs[auto_brace_completion_pairs[i].open_key] = auto_brace_completion_pairs[i].close_key;
+	for (const BracePair &auto_brace_completion_pair : auto_brace_completion_pairs) {
+		brace_pairs[auto_brace_completion_pair.open_key] = auto_brace_completion_pair.close_key;
 	}
 	return brace_pairs;
 }
 
 bool CodeEdit::has_auto_brace_completion_open_key(const String &p_open_key) const {
-	for (int i = 0; i < auto_brace_completion_pairs.size(); i++) {
-		if (auto_brace_completion_pairs[i].open_key == p_open_key) {
+	for (const BracePair &auto_brace_completion_pair : auto_brace_completion_pairs) {
+		if (auto_brace_completion_pair.open_key == p_open_key) {
 			return true;
 		}
 	}
@@ -1283,8 +1281,8 @@ bool CodeEdit::has_auto_brace_completion_open_key(const String &p_open_key) cons
 }
 
 bool CodeEdit::has_auto_brace_completion_close_key(const String &p_close_key) const {
-	for (int i = 0; i < auto_brace_completion_pairs.size(); i++) {
-		if (auto_brace_completion_pairs[i].close_key == p_close_key) {
+	for (const BracePair &auto_brace_completion_pair : auto_brace_completion_pairs) {
+		if (auto_brace_completion_pair.close_key == p_close_key) {
 			return true;
 		}
 	}
@@ -1292,9 +1290,9 @@ bool CodeEdit::has_auto_brace_completion_close_key(const String &p_close_key) co
 }
 
 String CodeEdit::get_auto_brace_completion_close_key(const String &p_open_key) const {
-	for (int i = 0; i < auto_brace_completion_pairs.size(); i++) {
-		if (auto_brace_completion_pairs[i].open_key == p_open_key) {
-			return auto_brace_completion_pairs[i].close_key;
+	for (const BracePair &auto_brace_completion_pair : auto_brace_completion_pairs) {
+		if (auto_brace_completion_pair.open_key == p_open_key) {
+			return auto_brace_completion_pair.close_key;
 		}
 	}
 	return String();
@@ -2073,9 +2071,7 @@ bool CodeEdit::is_code_completion_enabled() const {
 
 void CodeEdit::set_code_completion_prefixes(const TypedArray<String> &p_prefixes) {
 	code_completion_prefixes.clear();
-	for (int i = 0; i < p_prefixes.size(); i++) {
-		const String prefix = p_prefixes[i];
-
+	for (const String prefix : p_prefixes) {
 		ERR_CONTINUE_MSG(prefix.is_empty(), "Code completion prefix cannot be empty.");
 		code_completion_prefixes.insert(prefix[0]);
 	}
@@ -2121,8 +2117,7 @@ void CodeEdit::request_code_completion(bool p_force) {
 	if (ignored) {
 		ScriptLanguage::CodeCompletionKind kind = ScriptLanguage::CODE_COMPLETION_KIND_PLAIN_TEXT;
 		const ScriptLanguage::CodeCompletionOption *previous_option = nullptr;
-		for (int i = 0; i < code_completion_options.size(); i++) {
-			const ScriptLanguage::CodeCompletionOption &current_option = code_completion_options[i];
+		for (const ScriptLanguage::CodeCompletionOption &current_option : code_completion_options) {
 			if (!previous_option) {
 				previous_option = &current_option;
 				kind = current_option.kind;

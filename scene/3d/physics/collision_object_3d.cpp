@@ -547,11 +547,11 @@ void CollisionObject3D::shape_owner_set_disabled(uint32_t p_owner, bool p_disabl
 	}
 	sd.disabled = p_disabled;
 
-	for (int i = 0; i < sd.shapes.size(); i++) {
+	for (const ShapeData::ShapeBase &shape : sd.shapes) {
 		if (area) {
-			PhysicsServer3D::get_singleton()->area_set_shape_disabled(rid, sd.shapes[i].index, p_disabled);
+			PhysicsServer3D::get_singleton()->area_set_shape_disabled(rid, shape.index, p_disabled);
 		} else {
-			PhysicsServer3D::get_singleton()->body_set_shape_disabled(rid, sd.shapes[i].index, p_disabled);
+			PhysicsServer3D::get_singleton()->body_set_shape_disabled(rid, shape.index, p_disabled);
 		}
 	}
 	_update_shape_data(p_owner);
@@ -583,11 +583,11 @@ void CollisionObject3D::shape_owner_set_transform(uint32_t p_owner, const Transf
 
 	ShapeData &sd = shapes[p_owner];
 	sd.xform = p_transform;
-	for (int i = 0; i < sd.shapes.size(); i++) {
+	for (const ShapeData::ShapeBase &shape : sd.shapes) {
 		if (area) {
-			PhysicsServer3D::get_singleton()->area_set_shape_transform(rid, sd.shapes[i].index, p_transform);
+			PhysicsServer3D::get_singleton()->area_set_shape_transform(rid, shape.index, p_transform);
 		} else {
-			PhysicsServer3D::get_singleton()->body_set_shape_transform(rid, sd.shapes[i].index, p_transform);
+			PhysicsServer3D::get_singleton()->body_set_shape_transform(rid, shape.index, p_transform);
 		}
 	}
 
@@ -672,9 +672,9 @@ void CollisionObject3D::shape_owner_remove_shape(uint32_t p_owner, int p_shape) 
 	shapes[p_owner].shapes.remove_at(p_shape);
 
 	for (KeyValue<uint32_t, ShapeData> &E : shapes) {
-		for (int i = 0; i < E.value.shapes.size(); i++) {
-			if (E.value.shapes[i].index > index_to_remove) {
-				E.value.shapes.write[i].index -= 1;
+		for (ShapeData::ShapeBase &shape : E.value.shapes) {
+			if (shape.index > index_to_remove) {
+				shape.index -= 1;
 			}
 		}
 	}
@@ -696,8 +696,8 @@ uint32_t CollisionObject3D::shape_find_owner(int p_shape_index) const {
 	ERR_FAIL_INDEX_V(p_shape_index, total_subshapes, UINT32_MAX);
 
 	for (const KeyValue<uint32_t, ShapeData> &E : shapes) {
-		for (int i = 0; i < E.value.shapes.size(); i++) {
-			if (E.value.shapes[i].index == p_shape_index) {
+		for (const ShapeData::ShapeBase &shape : E.value.shapes) {
+			if (shape.index == p_shape_index) {
 				return E.key;
 			}
 		}

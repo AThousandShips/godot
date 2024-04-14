@@ -358,10 +358,10 @@ void PhysicalBoneSimulator3D::_process_modification() {
 		return;
 	}
 	if (!enabled) {
-		for (int i = 0; i < bones.size(); i++) {
-			if (bones[i].physical_bone) {
-				if (bones[i].physical_bone->is_simulating_physics() == false) {
-					bones[i].physical_bone->reset_to_rest_position();
+		for (const SimulatedBone &bone : bones) {
+			if (bone.physical_bone) {
+				if (bone.physical_bone->is_simulating_physics() == false) {
+					bone.physical_bone->reset_to_rest_position();
 				}
 			}
 		}

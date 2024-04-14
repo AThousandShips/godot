@@ -293,20 +293,20 @@ void MenuBar::_notification(int p_what) {
 			NativeMenu *nmenu = NativeMenu::get_singleton();
 			bool is_global = !global_menu_tag.is_empty();
 			RID main_menu = is_global ? nmenu->get_system_menu(NativeMenu::MAIN_MENU_ID) : RID();
-			for (int i = 0; i < menu_cache.size(); i++) {
-				shape(menu_cache.write[i]);
-				if (is_global && menu_cache[i].submenu_rid.is_valid()) {
-					int item_idx = nmenu->find_item_index_with_submenu(main_menu, menu_cache[i].submenu_rid);
+			for (Menu &menu : menu_cache) {
+				shape(menu);
+				if (is_global && menu.submenu_rid.is_valid()) {
+					int item_idx = nmenu->find_item_index_with_submenu(main_menu, menu.submenu_rid);
 					if (item_idx >= 0) {
-						nmenu->set_item_text(main_menu, item_idx, atr(menu_cache[i].name));
+						nmenu->set_item_text(main_menu, item_idx, atr(menu.name));
 					}
 				}
 			}
 		} break;
 		case NOTIFICATION_LAYOUT_DIRECTION_CHANGED:
 		case NOTIFICATION_THEME_CHANGED: {
-			for (int i = 0; i < menu_cache.size(); i++) {
-				shape(menu_cache.write[i]);
+			for (Menu &menu : menu_cache) {
+				shape(menu);
 			}
 		} break;
 		case NOTIFICATION_VISIBILITY_CHANGED: {
@@ -801,11 +801,11 @@ Size2 MenuBar::get_minimum_size() const {
 	Ref<StyleBox> style = theme_cache.normal;
 
 	Vector2 size;
-	for (int i = 0; i < menu_cache.size(); i++) {
-		if (menu_cache[i].hidden) {
+	for (const Menu &menu : menu_cache) {
+		if (menu.hidden) {
 			continue;
 		}
-		Size2 sz = menu_cache[i].text_buf->get_size() + style->get_minimum_size();
+		Size2 sz = menu.text_buf->get_size() + style->get_minimum_size();
 		size.y = MAX(size.y, sz.y);
 		size.x += sz.x;
 	}

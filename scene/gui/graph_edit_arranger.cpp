@@ -291,9 +291,8 @@ Vector<StringName> GraphEditArranger::_split(const Vector<StringName> &r_layer, 
 	Vector<StringName> left;
 	Vector<StringName> right;
 
-	for (int i = 0; i < r_layer.size(); i++) {
-		if (p != r_layer[i]) {
-			const StringName &q = r_layer[i];
+	for (const StringName &q : r_layer) {
+		if (p != q) {
 			int cross_pq = r_crossings[p][q];
 			int cross_qp = r_crossings[q][p];
 			if (cross_pq > cross_qp) {
@@ -324,13 +323,13 @@ void GraphEditArranger::_horizontal_alignment(Dictionary &r_root, Dictionary &r_
 		Vector<StringName> upper_layer = r_layers[i - 1];
 		int r = -1;
 
-		for (int j = 0; j < lower_layer.size(); j++) {
+		for (const StringName &lower : lower_layer) {
 			Vector<Pair<int, StringName>> up;
-			const StringName &current_node = lower_layer[j];
-			for (int k = 0; k < upper_layer.size(); k++) {
-				const StringName &adjacent_neighbour = upper_layer[k];
+			const StringName &current_node = lower;
+			for (int j = 0; j < upper_layer.size(); j++) {
+				const StringName &adjacent_neighbour = upper_layer[j];
 				if (r_upper_neighbours[current_node].has(adjacent_neighbour)) {
-					up.push_back(Pair<int, StringName>(k, adjacent_neighbour));
+					up.push_back(Pair<int, StringName>(j, adjacent_neighbour));
 				}
 			}
 
@@ -339,7 +338,7 @@ void GraphEditArranger::_horizontal_alignment(Dictionary &r_root, Dictionary &r_
 			for (int p = start; p <= end; p++) {
 				StringName Align = r_align[current_node];
 				if (Align == current_node && r < up[p].first) {
-					r_align[up[p].second] = lower_layer[j];
+					r_align[up[p].second] = lower;
 					r_root[current_node] = r_root[up[p].second];
 					r_align[current_node] = r_root[up[p].second];
 					r = up[p].first;

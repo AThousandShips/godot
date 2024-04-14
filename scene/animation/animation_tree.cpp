@@ -40,8 +40,7 @@ void AnimationNode::get_parameter_list(List<PropertyInfo> *r_list) const {
 	Array parameters;
 
 	if (GDVIRTUAL_CALL(_get_parameter_list, parameters)) {
-		for (int i = 0; i < parameters.size(); i++) {
-			Dictionary d = parameters[i];
+		for (const Dictionary d : parameters) {
 			ERR_CONTINUE(d.is_empty());
 			r_list->push_back(PropertyInfo::from_dict(d));
 		}
@@ -426,8 +425,8 @@ Array AnimationNode::_get_filters() const {
 
 void AnimationNode::_set_filters(const Array &p_filters) {
 	filter.clear();
-	for (int i = 0; i < p_filters.size(); i++) {
-		set_filter_path(p_filters[i], true);
+	for (const Variant &var : p_filters) {
+		set_filter_path(var, true);
 	}
 }
 
@@ -444,10 +443,10 @@ Ref<AnimationNode> AnimationNode::get_child_by_name(const StringName &p_name) co
 }
 
 Ref<AnimationNode> AnimationNode::find_node_by_path(const String &p_name) const {
-	Vector<String> split = p_name.split("/");
+	Vector<String> splits = p_name.split("/");
 	Ref<AnimationNode> ret = const_cast<AnimationNode *>(this);
-	for (int i = 0; i < split.size(); i++) {
-		ret = ret->get_child_by_name(split[i]);
+	for (const String &split : splits) {
+		ret = ret->get_child_by_name(split);
 		if (!ret.is_valid()) {
 			break;
 		}
@@ -854,10 +853,10 @@ void AnimationTree::_setup_animation_player() {
 		}
 		List<StringName> list;
 		player->get_animation_library_list(&list);
-		for (int i = 0; i < list.size(); i++) {
-			Ref<AnimationLibrary> lib = player->get_animation_library(list[i]);
+		for (const StringName &lib_name : list) {
+			Ref<AnimationLibrary> lib = player->get_animation_library(lib_name);
 			if (lib.is_valid()) {
-				add_animation_library(list[i], lib);
+				add_animation_library(lib_name, lib);
 			}
 		}
 	}

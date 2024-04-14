@@ -452,24 +452,24 @@ void ColorPicker::set_editor_settings(Object *p_editor_settings) {
 
 	if (preset_cache.is_empty()) {
 		PackedColorArray saved_presets = editor_settings->call(SNAME("get_project_metadata"), "color_picker", "presets", PackedColorArray());
-		for (int i = 0; i < saved_presets.size(); i++) {
-			preset_cache.push_back(saved_presets[i]);
+		for (const Color &saved_preset : saved_presets) {
+			preset_cache.push_back(saved_preset);
 		}
 	}
 
-	for (int i = 0; i < preset_cache.size(); i++) {
-		presets.push_back(preset_cache[i]);
+	for (const Color &preset : preset_cache) {
+		presets.push_back(preset);
 	}
 
 	if (recent_preset_cache.is_empty()) {
 		PackedColorArray saved_recent_presets = editor_settings->call(SNAME("get_project_metadata"), "color_picker", "recent_presets", PackedColorArray());
-		for (int i = 0; i < saved_recent_presets.size(); i++) {
-			recent_preset_cache.push_back(saved_recent_presets[i]);
+		for (const Color &saved_recent_preset : saved_recent_presets) {
+			recent_preset_cache.push_back(saved_recent_preset);
 		}
 	}
 
-	for (int i = 0; i < recent_preset_cache.size(); i++) {
-		recent_presets.push_back(recent_preset_cache[i]);
+	for (const Color &recent_preset : recent_preset_cache) {
+		recent_presets.push_back(recent_preset);
 	}
 
 	_update_presets();
@@ -659,8 +659,8 @@ void ColorPicker::_update_presets() {
 		for (int i = 1; i < preset_container->get_child_count(); i++) {
 			preset_container->get_child(i)->queue_free();
 		}
-		for (int i = 0; i < preset_cache.size(); i++) {
-			_add_preset_button(preset_size, preset_cache[i]);
+		for (const Color &preset : preset_cache) {
+			_add_preset_button(preset_size, preset);
 		}
 		_notification(NOTIFICATION_VISIBILITY_CHANGED);
 	}
@@ -676,13 +676,13 @@ void ColorPicker::_update_recent_presets() {
 		}
 
 		recent_presets.clear();
-		for (int i = 0; i < recent_preset_cache.size(); i++) {
-			recent_presets.push_back(recent_preset_cache[i]);
+		for (const Color &recent_preset : recent_preset_cache) {
+			recent_presets.push_back(recent_preset);
 		}
 
 		int preset_size = _get_preset_size();
-		for (int i = 0; i < recent_presets.size(); i++) {
-			_add_recent_preset_button(preset_size, recent_presets[i]);
+		for (const Color &preset : recent_presets) {
+			_add_recent_preset_button(preset_size, preset);
 		}
 
 		_notification(NOTIFICATION_VISIBILITY_CHANGED);
@@ -1575,8 +1575,7 @@ void ColorPicker::_pick_button_pressed_legacy() {
 		// Add the Texture of each Window to the Image.
 		Vector<DisplayServer::WindowID> wl = ds->get_window_list();
 		// FIXME: sort windows by visibility.
-		for (int index = 0; index < wl.size(); index++) {
-			DisplayServer::WindowID wid = wl[index];
+		for (const DisplayServer::WindowID &wid : wl) {
 			if (wid == DisplayServer::INVALID_WINDOW_ID) {
 				continue;
 			}
@@ -2028,8 +2027,8 @@ ColorPicker::ColorPicker() {
 }
 
 ColorPicker::~ColorPicker() {
-	for (int i = 0; i < modes.size(); i++) {
-		delete modes[i];
+	for (ColorMode *mode : modes) {
+		delete mode;
 	}
 }
 

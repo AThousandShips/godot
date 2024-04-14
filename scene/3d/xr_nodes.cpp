@@ -682,16 +682,16 @@ void XROrigin3D::_set_current(bool p_enabled, bool p_update_others) {
 	// Check if we need to update our other origin nodes accordingly
 	if (p_update_others) {
 		if (current) {
-			for (int i = 0; i < origin_nodes.size(); i++) {
-				if (origin_nodes[i] != this && origin_nodes[i]->current) {
-					origin_nodes[i]->_set_current(false, false);
+			for (XROrigin3D *origin_node : origin_nodes) {
+				if (origin_node != this && origin_node->current) {
+					origin_node->_set_current(false, false);
 				}
 			}
 		} else {
 			// We no longer have a current origin so find the first one we can make current
-			for (int i = 0; i < origin_nodes.size(); i++) {
-				if (origin_nodes[i] != this) {
-					origin_nodes[i]->_set_current(true, false);
+			for (XROrigin3D *origin_node : origin_nodes) {
+				if (origin_node != this) {
+					origin_node->_set_current(true, false);
 					return; // we are done.
 				}
 			}

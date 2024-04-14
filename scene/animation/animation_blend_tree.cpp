@@ -1472,9 +1472,9 @@ void AnimationNodeBlendTree::get_child_nodes(List<ChildNode> *r_child_nodes) {
 		ns.push_back(E.key);
 	}
 
-	for (int i = 0; i < ns.size(); i++) {
+	for (const StringName &n : ns) {
 		ChildNode cn;
-		cn.name = ns[i];
+		cn.name = n;
 		cn.node = nodes[cn.name].node;
 		r_child_nodes->push_back(cn);
 	}
@@ -1505,9 +1505,9 @@ void AnimationNodeBlendTree::remove_node(const StringName &p_name) {
 
 	// Erase connections to name.
 	for (KeyValue<StringName, Node> &E : nodes) {
-		for (int i = 0; i < E.value.connections.size(); i++) {
-			if (E.value.connections[i] == p_name) {
-				E.value.connections.write[i] = StringName();
+		for (StringName &connection : E.value.connections) {
+			if (connection == p_name) {
+				connection = StringName();
 			}
 		}
 	}
@@ -1530,9 +1530,9 @@ void AnimationNodeBlendTree::rename_node(const StringName &p_name, const StringN
 
 	// Rename connections.
 	for (KeyValue<StringName, Node> &E : nodes) {
-		for (int i = 0; i < E.value.connections.size(); i++) {
-			if (E.value.connections[i] == p_name) {
-				E.value.connections.write[i] = p_new_name;
+		for (StringName &connection : E.value.connections) {
+			if (connection == p_name) {
+				connection = p_new_name;
 			}
 		}
 	}
@@ -1553,8 +1553,7 @@ void AnimationNodeBlendTree::connect_node(const StringName &p_input_node, int p_
 	ERR_FAIL_INDEX(p_input_index, nodes[p_input_node].connections.size());
 
 	for (KeyValue<StringName, Node> &E : nodes) {
-		for (int i = 0; i < E.value.connections.size(); i++) {
-			StringName output = E.value.connections[i];
+		for (const StringName &output : E.value.connections) {
 			ERR_FAIL_COND(output == p_output_node);
 		}
 	}
@@ -1597,8 +1596,7 @@ AnimationNodeBlendTree::ConnectionError AnimationNodeBlendTree::can_connect_node
 	}
 
 	for (const KeyValue<StringName, Node> &E : nodes) {
-		for (int i = 0; i < E.value.connections.size(); i++) {
-			const StringName output = E.value.connections[i];
+		for (const StringName &output : E.value.connections) {
 			if (output == p_output_node) {
 				return CONNECTION_ERROR_CONNECTION_EXISTS;
 			}

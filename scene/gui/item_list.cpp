@@ -416,8 +416,8 @@ void ItemList::deselect_all() {
 		return;
 	}
 
-	for (int i = 0; i < items.size(); i++) {
-		items.write[i].selected = false;
+	for (Item &item : items) {
+		item.selected = false;
 	}
 	current = -1;
 	queue_redraw();
@@ -539,12 +539,12 @@ void ItemList::set_max_text_lines(int p_lines) {
 	ERR_FAIL_COND(p_lines < 1);
 	if (max_text_lines != p_lines) {
 		max_text_lines = p_lines;
-		for (int i = 0; i < items.size(); i++) {
+		for (Item &item : items) {
 			if (icon_mode == ICON_MODE_TOP && max_text_lines > 0) {
-				items.write[i].text_buf->set_break_flags(TextServer::BREAK_MANDATORY | TextServer::BREAK_WORD_BOUND | TextServer::BREAK_GRAPHEME_BOUND | TextServer::BREAK_TRIM_EDGE_SPACES);
-				items.write[i].text_buf->set_max_lines_visible(p_lines);
+				item.text_buf->set_break_flags(TextServer::BREAK_MANDATORY | TextServer::BREAK_WORD_BOUND | TextServer::BREAK_GRAPHEME_BOUND | TextServer::BREAK_TRIM_EDGE_SPACES);
+				item.text_buf->set_max_lines_visible(p_lines);
 			} else {
-				items.write[i].text_buf->set_break_flags(TextServer::BREAK_NONE);
+				item.text_buf->set_break_flags(TextServer::BREAK_NONE);
 			}
 		}
 		shape_changed = true;
@@ -1344,16 +1344,16 @@ void ItemList::force_update_list_size() {
 	float max_column_width = 0.0;
 
 	//1- compute item minimum sizes
-	for (int i = 0; i < items.size(); i++) {
+	for (Item &item : items) {
 		Size2 minsize;
-		if (items[i].icon.is_valid()) {
+		if (item.icon.is_valid()) {
 			if (fixed_icon_size.x > 0 && fixed_icon_size.y > 0) {
 				minsize = fixed_icon_size * icon_scale;
 			} else {
-				minsize = items[i].get_icon_size() * icon_scale;
+				minsize = item.get_icon_size() * icon_scale;
 			}
 
-			if (!items[i].text.is_empty()) {
+			if (!item.text.is_empty()) {
 				if (icon_mode == ICON_MODE_TOP) {
 					minsize.y += theme_cache.icon_margin;
 				} else {
@@ -1362,15 +1362,15 @@ void ItemList::force_update_list_size() {
 			}
 		}
 
-		if (!items[i].text.is_empty()) {
+		if (!item.text.is_empty()) {
 			int max_width = -1;
 			if (fixed_column_width) {
 				max_width = fixed_column_width;
 			} else if (same_column_width) {
-				max_width = items[i].rect_cache.size.x;
+				max_width = item.rect_cache.size.x;
 			}
-			items.write[i].text_buf->set_width(max_width);
-			Size2 s = items[i].text_buf->get_size();
+			item.text_buf->set_width(max_width);
+			Size2 s = item.text_buf->get_size();
 
 			if (icon_mode == ICON_MODE_TOP) {
 				minsize.x = MAX(minsize.x, s.width);
@@ -1395,8 +1395,8 @@ void ItemList::force_update_list_size() {
 		minsize.y += theme_cache.v_separation;
 		minsize.x += theme_cache.h_separation;
 
-		items.write[i].rect_cache.size = minsize;
-		items.write[i].min_rect_cache.size = minsize;
+		item.rect_cache.size = minsize;
+		item.min_rect_cache.size = minsize;
 	}
 
 	int fit_size = size.x - theme_cache.panel_style->get_minimum_size().width - scroll_bar_minwidth;
@@ -1639,8 +1639,8 @@ Vector<int> ItemList::get_selected_items() {
 }
 
 bool ItemList::is_anything_selected() {
-	for (int i = 0; i < items.size(); i++) {
-		if (items[i].selected) {
+	for (const Item &item : items) {
+		if (item.selected) {
 			return true;
 		}
 	}
@@ -1676,8 +1676,8 @@ bool ItemList::has_auto_height() const {
 void ItemList::set_text_overrun_behavior(TextServer::OverrunBehavior p_behavior) {
 	if (text_overrun_behavior != p_behavior) {
 		text_overrun_behavior = p_behavior;
-		for (int i = 0; i < items.size(); i++) {
-			items.write[i].text_buf->set_text_overrun_behavior(p_behavior);
+		for (Item &item : items) {
+			item.text_buf->set_text_overrun_behavior(p_behavior);
 		}
 		shape_changed = true;
 		queue_redraw();

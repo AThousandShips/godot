@@ -248,34 +248,34 @@ void Polygon2D::_notification(int p_what) {
 					weightsw[i] = 0;
 				}
 
-				for (int i = 0; i < bone_weights.size(); i++) {
-					if (bone_weights[i].weights.size() != points.size()) {
+				for (const Bone &bone_weight : bone_weights) {
+					if (bone_weight.weights.size() != points.size()) {
 						continue; //different number of vertices, sorry not using.
 					}
-					if (!skeleton_node->has_node(bone_weights[i].path)) {
+					if (!skeleton_node->has_node(bone_weight.path)) {
 						continue; //node does not exist
 					}
-					Bone2D *bone = Object::cast_to<Bone2D>(skeleton_node->get_node(bone_weights[i].path));
+					Bone2D *bone = Object::cast_to<Bone2D>(skeleton_node->get_node(bone_weight.path));
 					if (!bone) {
 						continue;
 					}
 
 					int bone_index = bone->get_index_in_skeleton();
-					const float *r = bone_weights[i].weights.ptr();
-					for (int j = 0; j < vc; j++) {
-						if (r[j] == 0.0) {
+					const float *r = bone_weight.weights.ptr();
+					for (int i = 0; i < vc; i++) {
+						if (r[i] == 0.0) {
 							continue; //weight is unpainted, skip
 						}
 						//find an index with a weight
-						for (int k = 0; k < 4; k++) {
-							if (weightsw[j * 4 + k] < r[j]) {
+						for (int j = 0; j < 4; j++) {
+							if (weightsw[i * 4 + j] < r[i]) {
 								//this is less than this weight, insert weight!
-								for (int l = 3; l > k; l--) {
-									weightsw[j * 4 + l] = weightsw[j * 4 + l - 1];
-									bonesw[j * 4 + l] = bonesw[j * 4 + l - 1];
+								for (int k = 3; k > j; k--) {
+									weightsw[i * 4 + k] = weightsw[i * 4 + k - 1];
+									bonesw[i * 4 + k] = bonesw[i * 4 + k - 1];
 								}
-								weightsw[j * 4 + k] = r[j];
-								bonesw[j * 4 + k] = bone_index;
+								weightsw[i * 4 + j] = r[i];
+								bonesw[i * 4 + j] = bone_index;
 								break;
 							}
 						}
@@ -319,8 +319,7 @@ void Polygon2D::_notification(int p_what) {
 				index_array = Geometry2D::triangulate_polygon(points);
 			} else {
 				//draw individual polygons
-				for (int i = 0; i < polygons.size(); i++) {
-					Vector<int> src_indices = polygons[i];
+				for (const Vector<int> src_indices : polygons) {
 					int ic = src_indices.size();
 					if (ic < 3) {
 						continue;
@@ -330,10 +329,10 @@ void Polygon2D::_notification(int p_what) {
 					Vector<Vector2> tmp_points;
 					tmp_points.resize(ic);
 
-					for (int j = 0; j < ic; j++) {
-						int idx = r[j];
+					for (int i = 0; i < ic; i++) {
+						int idx = r[i];
 						ERR_CONTINUE(idx < 0 || idx >= points.size());
-						tmp_points.write[j] = points[r[j]];
+						tmp_points.write[i] = points[r[i]];
 					}
 					Vector<int> indices = Geometry2D::triangulate_polygon(tmp_points);
 					int ic2 = indices.size();
@@ -343,8 +342,8 @@ void Polygon2D::_notification(int p_what) {
 					index_array.resize(bic + ic2);
 					int *w2 = index_array.ptrw();
 
-					for (int j = 0; j < ic2; j++) {
-						w2[j + bic] = r[r2[j]];
+					for (int i = 0; i < ic2; i++) {
+						w2[i + bic] = r[r2[i]];
 					}
 				}
 			}

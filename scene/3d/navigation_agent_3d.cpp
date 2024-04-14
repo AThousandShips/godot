@@ -1123,8 +1123,8 @@ void NavigationAgent3D::_update_debug_path() {
 	if (debug_path_custom_point_size > 0.0) {
 		Vector<Vector3> debug_path_points_vertex_array;
 
-		for (int i = 0; i < navigation_path.size(); i++) {
-			debug_path_points_vertex_array.push_back(navigation_path[i]);
+		for (const Vector3 &point : navigation_path) {
+			debug_path_points_vertex_array.push_back(point);
 		}
 
 		Array debug_path_points_mesh_array;

@@ -212,8 +212,7 @@ void TileMapLayer::_rendering_update(bool p_force_cleanup) {
 	// Free all quadrants.
 	if (forced_cleanup || quandrant_shape_changed) {
 		for (const KeyValue<Vector2i, Ref<RenderingQuadrant>> &kv : rendering_quadrant_map) {
-			for (int i = 0; i < kv.value->canvas_items.size(); i++) {
-				const RID &ci = kv.value->canvas_items[i];
+			for (const RID &ci : kv.value->canvas_items) {
 				if (ci.is_valid()) {
 					rs->free(ci);
 				}
@@ -354,8 +353,7 @@ void TileMapLayer::_rendering_update(bool p_force_cleanup) {
 
 			} else {
 				// Free the quadrant.
-				for (int i = 0; i < rendering_quadrant->canvas_items.size(); i++) {
-					const RID &ci = rendering_quadrant->canvas_items[i];
+				for (const RID &ci : rendering_quadrant->canvas_items) {
 					if (ci.is_valid()) {
 						rs->free(ci);
 					}
@@ -1003,8 +1001,7 @@ void TileMapLayer::_navigation_notification(int p_what) {
 void TileMapLayer::_navigation_clear_cell(CellData &r_cell_data) {
 	NavigationServer2D *ns = NavigationServer2D::get_singleton();
 	// Clear navigation shapes.
-	for (uint32_t i = 0; i < r_cell_data.navigation_regions.size(); i++) {
-		const RID &region = r_cell_data.navigation_regions[i];
+	for (const RID &region : r_cell_data.navigation_regions) {
 		if (region.is_valid()) {
 			ns->region_set_map(region, RID());
 			ns->free(region);
@@ -1891,9 +1888,7 @@ HashMap<Vector2i, TileSet::TerrainsPattern> TileMapLayer::terrain_fill_constrain
 	HashMap<Vector2i, TileSet::TerrainsPattern> output;
 
 	// Add all positions to a set.
-	for (int i = 0; i < p_to_replace.size(); i++) {
-		const Vector2i &coords = p_to_replace[i];
-
+	for (const Vector2i &coords : p_to_replace) {
 		// Select the best pattern for the given constraints.
 		TileSet::TerrainsPattern current_pattern = TileSet::TerrainsPattern(*tile_set, p_terrain_set);
 		TileMapCell cell = get_cell(coords);
@@ -2402,9 +2397,9 @@ void TileMapLayer::set_pattern(const Vector2i &p_position, const Ref<TileMapPatt
 	ERR_FAIL_COND(p_pattern.is_null());
 
 	TypedArray<Vector2i> used_cells = p_pattern->get_used_cells();
-	for (int i = 0; i < used_cells.size(); i++) {
-		Vector2i coords = tile_set->map_pattern(p_position, used_cells[i], p_pattern);
-		set_cell(coords, p_pattern->get_cell_source_id(used_cells[i]), p_pattern->get_cell_atlas_coords(used_cells[i]), p_pattern->get_cell_alternative_tile(used_cells[i]));
+	for (const Vector2i p : used_cells) {
+		Vector2i coords = tile_set->map_pattern(p_position, p, p_pattern);
+		set_cell(coords, p_pattern->get_cell_source_id(p), p_pattern->get_cell_atlas_coords(p), p_pattern->get_cell_alternative_tile(p));
 	}
 }
 
@@ -2414,9 +2409,9 @@ void TileMapLayer::set_cells_terrain_connect(TypedArray<Vector2i> p_cells, int p
 
 	Vector<Vector2i> cells_vector;
 	HashSet<Vector2i> painted_set;
-	for (int i = 0; i < p_cells.size(); i++) {
-		cells_vector.push_back(p_cells[i]);
-		painted_set.insert(p_cells[i]);
+	for (const Vector2i p : p_cells) {
+		cells_vector.push_back(p);
+		painted_set.insert(p);
 	}
 	HashMap<Vector2i, TileSet::TerrainsPattern> terrain_fill_output = terrain_fill_connect(cells_vector, p_terrain_set, p_terrain, p_ignore_empty_terrains);
 	for (const KeyValue<Vector2i, TileSet::TerrainsPattern> &kv : terrain_fill_output) {
@@ -2453,9 +2448,9 @@ void TileMapLayer::set_cells_terrain_path(TypedArray<Vector2i> p_path, int p_ter
 
 	Vector<Vector2i> vector_path;
 	HashSet<Vector2i> painted_set;
-	for (int i = 0; i < p_path.size(); i++) {
-		vector_path.push_back(p_path[i]);
-		painted_set.insert(p_path[i]);
+	for (const Vector2i p : p_path) {
+		vector_path.push_back(p);
+		painted_set.insert(p);
 	}
 
 	HashMap<Vector2i, TileSet::TerrainsPattern> terrain_fill_output = terrain_fill_path(vector_path, p_terrain_set, p_terrain, p_ignore_empty_terrains);

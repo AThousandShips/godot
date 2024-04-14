@@ -50,10 +50,10 @@ void CollisionPolygon2D::_build_polygon() {
 
 		//here comes the sun, lalalala
 		//decompose concave into multiple convex polygons and add them
-		Vector<Vector<Vector2>> decomp = _decompose_in_convex();
-		for (int i = 0; i < decomp.size(); i++) {
+		Vector<Vector<Vector2>> decomps = _decompose_in_convex();
+		for (const Vector<Vector2> &decomp : decomps) {
 			Ref<ConvexPolygonShape2D> convex = memnew(ConvexPolygonShape2D);
-			convex->set_points(decomp[i]);
+			convex->set_points(decomp);
 			collision_object->shape_owner_add_shape(owner_id, convex);
 		}
 
@@ -134,12 +134,12 @@ void CollisionPolygon2D::_notification(int p_what) {
 			if (polygon.size() > 2) {
 #ifdef TOOLS_ENABLED
 				if (build_mode == BUILD_SOLIDS) {
-					Vector<Vector<Vector2>> decomp = _decompose_in_convex();
+					Vector<Vector<Vector2>> decomps = _decompose_in_convex();
 
 					Color c(0.4, 0.9, 0.1);
-					for (int i = 0; i < decomp.size(); i++) {
+					for (const Vector<Vector2> &decomp : decomps) {
 						c.set_hsv(Math::fmod(c.get_h() + 0.738, 1), c.get_s(), c.get_v(), 0.5);
-						draw_colored_polygon(decomp[i], c);
+						draw_colored_polygon(decomp, c);
 					}
 				}
 #endif

@@ -302,12 +302,12 @@ PackedStringArray GPUParticles3D::get_configuration_warnings() const {
 	bool meshes_found = false;
 	bool anim_material_found = false;
 
-	for (int i = 0; i < draw_passes.size(); i++) {
-		if (draw_passes[i].is_valid()) {
+	for (Ref<Mesh> draw_pass : draw_passes) {
+		if (draw_pass.is_valid()) {
 			meshes_found = true;
-			for (int j = 0; j < draw_passes[i]->get_surface_count(); j++) {
-				anim_material_found = Object::cast_to<ShaderMaterial>(draw_passes[i]->surface_get_material(j).ptr()) != nullptr;
-				BaseMaterial3D *spat = Object::cast_to<BaseMaterial3D>(draw_passes[i]->surface_get_material(j).ptr());
+			for (int i = 0; i < draw_pass->get_surface_count(); i++) {
+				anim_material_found = Object::cast_to<ShaderMaterial>(draw_pass->surface_get_material(i).ptr()) != nullptr;
+				BaseMaterial3D *spat = Object::cast_to<BaseMaterial3D>(draw_pass->surface_get_material(i).ptr());
 				anim_material_found = anim_material_found || (spat && spat->get_billboard_mode() == StandardMaterial3D::BILLBOARD_PARTICLES);
 			}
 			if (anim_material_found) {
@@ -342,16 +342,15 @@ PackedStringArray GPUParticles3D::get_configuration_warnings() const {
 		bool missing_trails = false;
 		bool no_materials = false;
 
-		for (int i = 0; i < draw_passes.size(); i++) {
-			Ref<Mesh> draw_pass = draw_passes[i];
+		for (Ref<Mesh> draw_pass : draw_passes) {
 			if (draw_pass.is_valid() && draw_pass->get_builtin_bind_pose_count() > 0) {
 				dp_count++;
 			}
 
 			if (draw_pass.is_valid()) {
 				int mats_found = 0;
-				for (int j = 0; j < draw_passes[i]->get_surface_count(); j++) {
-					BaseMaterial3D *spat = Object::cast_to<BaseMaterial3D>(draw_passes[i]->surface_get_material(j).ptr());
+				for (int i = 0; i < draw_pass->get_surface_count(); i++) {
+					BaseMaterial3D *spat = Object::cast_to<BaseMaterial3D>(draw_pass->surface_get_material(i).ptr());
 					if (spat) {
 						mats_found++;
 					}
@@ -360,7 +359,7 @@ PackedStringArray GPUParticles3D::get_configuration_warnings() const {
 					}
 				}
 
-				if (mats_found != draw_passes[i]->get_surface_count()) {
+				if (mats_found != draw_pass->get_surface_count()) {
 					no_materials = true;
 				}
 			}
@@ -534,12 +533,11 @@ void GPUParticles3D::_skinning_changed() {
 			xforms.write[i] = skin->get_bind_pose(i);
 		}
 	} else {
-		for (int i = 0; i < draw_passes.size(); i++) {
-			Ref<Mesh> draw_pass = draw_passes[i];
+		for (Ref<Mesh> &draw_pass : draw_passes) {
 			if (draw_pass.is_valid() && draw_pass->get_builtin_bind_pose_count() > 0) {
 				xforms.resize(draw_pass->get_builtin_bind_pose_count());
-				for (int j = 0; j < draw_pass->get_builtin_bind_pose_count(); j++) {
-					xforms.write[j] = draw_pass->get_builtin_bind_pose(j);
+				for (int i = 0; i < draw_pass->get_builtin_bind_pose_count(); i++) {
+					xforms.write[i] = draw_pass->get_builtin_bind_pose(i);
 				}
 				break;
 			}

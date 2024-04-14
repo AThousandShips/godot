@@ -1064,8 +1064,7 @@ void NavigationAgent2D::_update_debug_path() {
 		half_point_size = debug_path_custom_point_size * 0.5;
 	}
 
-	for (int i = 0; i < navigation_path.size(); i++) {
-		const Vector2 &vert = navigation_path[i];
+	for (const Vector2 &vert : navigation_path) {
 		Rect2 path_point_rect = Rect2(vert.x - half_point_size, vert.y - half_point_size, point_size, point_size);
 		RenderingServer::get_singleton()->canvas_item_add_rect(debug_path_instance, path_point_rect, debug_path_color);
 	}

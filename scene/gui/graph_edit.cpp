@@ -1352,8 +1352,8 @@ void GraphEdit::_update_connections() {
 
 			// Compute bounding box of the line, including the line width.
 			c->_cache.aabb = Rect2(line_points[0], Vector2());
-			for (int i = 0; i < line_points.size(); i++) {
-				c->_cache.aabb.expand_to(line_points[i]);
+			for (const Vector2 &line_point : line_points) {
+				c->_cache.aabb.expand_to(line_point);
 			}
 			c->_cache.aabb.grow_by(lines_thickness * 0.5);
 

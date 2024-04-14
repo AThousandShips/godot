@@ -52,9 +52,8 @@ void Occluder3D::_update() {
 
 	aabb = AABB();
 
-	const Vector3 *ptr = vertices.ptr();
-	for (int i = 0; i < vertices.size(); i++) {
-		aabb.expand_to(ptr[i]);
+	for (const Vector3 &p : vertices) {
+		aabb.expand_to(p);
 	}
 
 	debug_lines.clear();

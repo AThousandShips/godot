@@ -1908,9 +1908,9 @@ SceneTree::~SceneTree() {
 	}
 
 	// Process groups are not deleted immediately, they may remain around. Delete them now.
-	for (uint32_t i = 0; i < process_groups.size(); i++) {
-		if (process_groups[i] != &default_process_group) {
-			memdelete(process_groups[i]);
+	for (ProcessGroup *process_group : process_groups) {
+		if (process_group != &default_process_group) {
+			memdelete(process_group);
 		}
 	}
 

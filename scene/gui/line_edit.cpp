@@ -926,8 +926,8 @@ void LineEdit::_notification(int p_what) {
 			Vector2 ofs = Point2(x_ofs + scroll_offset, y_ofs);
 			if (selection.enabled) {
 				Vector<Vector2> sel = TS->shaped_text_get_selection(text_rid, selection.begin, selection.end);
-				for (int i = 0; i < sel.size(); i++) {
-					Rect2 rect = Rect2(sel[i].x + ofs.x, ofs.y, sel[i].y - sel[i].x, text_height);
+				for (const Vector2 &p : sel) {
+					Rect2 rect = Rect2(p.x + ofs.x, ofs.y, p.y - p.x, text_height);
 					if (rect.position.x + rect.size.x <= x_ofs || rect.position.x > ofs_max) {
 						continue;
 					}
@@ -1049,8 +1049,8 @@ void LineEdit::_notification(int p_what) {
 					{
 						// IME intermediate text range.
 						Vector<Vector2> sel = TS->shaped_text_get_selection(text_rid, caret_column, caret_column + ime_text.length());
-						for (int i = 0; i < sel.size(); i++) {
-							Rect2 rect = Rect2(sel[i].x + ofs.x, ofs.y, sel[i].y - sel[i].x, text_height);
+						for (const Vector2 &p : sel) {
+							Rect2 rect = Rect2(p.x + ofs.x, ofs.y, p.y - p.x, text_height);
 							if (rect.position.x + rect.size.x <= x_ofs || rect.position.x > ofs_max) {
 								continue;
 							}
@@ -1068,8 +1068,8 @@ void LineEdit::_notification(int p_what) {
 						// IME caret.
 						if (ime_selection.y > 0) {
 							Vector<Vector2> sel = TS->shaped_text_get_selection(text_rid, caret_column + ime_selection.x, caret_column + ime_selection.x + ime_selection.y);
-							for (int i = 0; i < sel.size(); i++) {
-								Rect2 rect = Rect2(sel[i].x + ofs.x, ofs.y, sel[i].y - sel[i].x, text_height);
+							for (const Vector2 &p : sel) {
+								Rect2 rect = Rect2(p.x + ofs.x, ofs.y, p.y - p.x, text_height);
 								if (rect.position.x + rect.size.x <= x_ofs || rect.position.x > ofs_max) {
 									continue;
 								}

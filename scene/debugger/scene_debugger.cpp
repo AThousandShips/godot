@@ -421,9 +421,9 @@ void SceneDebuggerObject::_parse_script_properties(Script *p_script, ScriptInsta
 
 void SceneDebuggerObject::serialize(Array &r_arr, int p_max_size) {
 	Array send_props;
-	for (int i = 0; i < properties.size(); i++) {
-		const PropertyInfo &pi = properties[i].first;
-		Variant &var = properties[i].second;
+	for (SceneDebuggerProperty &property : properties) {
+		const PropertyInfo &pi = property.first;
+		Variant &var = property.second;
 
 		Ref<Resource> res = var;
 
@@ -895,8 +895,8 @@ void LiveEditor::_remove_node_func(const NodePath &p_at) {
 		to_delete.push_back(n2);
 	}
 
-	for (int i = 0; i < to_delete.size(); i++) {
-		memdelete(to_delete[i]);
+	for (Node *node : to_delete) {
+		memdelete(node);
 	}
 }
 
@@ -931,8 +931,7 @@ void LiveEditor::_remove_and_keep_node_func(const NodePath &p_at, ObjectID p_kee
 		to_remove.push_back(n);
 	}
 
-	for (int i = 0; i < to_remove.size(); i++) {
-		Node *n = to_remove[i];
+	for (Node *n : to_remove) {
 		Node *n2 = n->get_node(p_at);
 		n2->get_parent()->remove_child(n2);
 		live_edit_remove_list[n][p_keep_id] = n2;

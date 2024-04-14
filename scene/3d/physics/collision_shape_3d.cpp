@@ -56,8 +56,8 @@ void CollisionShape3D::make_convex_from_siblings() {
 					Array a = m->surface_get_arrays(j);
 					if (!a.is_empty()) {
 						Vector<Vector3> v = a[RenderingServer::ARRAY_VERTEX];
-						for (int k = 0; k < v.size(); k++) {
-							vertices.append(mi->get_transform().xform(v[k]));
+						for (const Vector3 &vert : v) {
+							vertices.append(mi->get_transform().xform(vert));
 						}
 					}
 				}
