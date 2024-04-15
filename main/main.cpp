@@ -3197,75 +3197,75 @@ int Main::start() {
 	main_timer_sync.init(OS::get_singleton()->get_ticks_usec());
 	List<String> args = OS::get_singleton()->get_cmdline_args();
 
-	for (int i = 0; i < args.size(); i++) {
+	for (List<String>::Element *E = args.front(); E; E = E->next()) {
 		// First check parameters that do not have an argument to the right.
 
 		// Doctest Unit Testing Handler
 		// Designed to override and pass arguments to the unit test handler.
-		if (args[i] == "--check-only") {
+		if (E->get() == "--check-only") {
 			check_only = true;
 #ifdef TOOLS_ENABLED
-		} else if (args[i] == "--no-docbase") {
+		} else if (E->get() == "--no-docbase") {
 			gen_flags.set_flag(DocTools::GENERATE_FLAG_SKIP_BASIC_TYPES);
 #ifndef DISABLE_DEPRECATED
-		} else if (args[i] == "--convert-3to4") {
+		} else if (E->get() == "--convert-3to4") {
 			converting_project = true;
-		} else if (args[i] == "--validate-conversion-3to4") {
+		} else if (E->get() == "--validate-conversion-3to4") {
 			validating_converting_project = true;
 #endif // DISABLE_DEPRECATED
-		} else if (args[i] == "-e" || args[i] == "--editor") {
+		} else if (E->get() == "-e" || E->get() == "--editor") {
 			editor = true;
-		} else if (args[i] == "-p" || args[i] == "--project-manager") {
+		} else if (E->get() == "-p" || E->get() == "--project-manager") {
 			project_manager = true;
-		} else if (args[i] == "--install-android-build-template") {
+		} else if (E->get() == "--install-android-build-template") {
 			install_android_build_template = true;
 #endif // TOOLS_ENABLED
-		} else if (args[i].length() && args[i][0] != '-' && positional_arg.is_empty()) {
-			positional_arg = args[i];
+		} else if (E->get().length() && E->get()[0] != '-' && positional_arg.is_empty()) {
+			positional_arg = E->get();
 
-			if (args[i].ends_with(".scn") ||
-					args[i].ends_with(".tscn") ||
-					args[i].ends_with(".escn") ||
-					args[i].ends_with(".res") ||
-					args[i].ends_with(".tres")) {
+			if (E->get().ends_with(".scn") ||
+					E->get().ends_with(".tscn") ||
+					E->get().ends_with(".escn") ||
+					E->get().ends_with(".res") ||
+					E->get().ends_with(".tres")) {
 				// Only consider the positional argument to be a scene path if it ends with
 				// a file extension associated with Godot scenes. This makes it possible
 				// for projects to parse command-line arguments for custom CLI arguments
 				// or other file extensions without trouble. This can be used to implement
 				// "drag-and-drop onto executable" logic, which can prove helpful
 				// for non-game applications.
-				game_path = args[i];
+				game_path = E->get();
 			}
 		}
 		// Then parameters that have an argument to the right.
-		else if (i < (args.size() - 1)) {
+		else if (E->next()) {
 			bool parsed_pair = true;
-			if (args[i] == "-s" || args[i] == "--script") {
-				script = args[i + 1];
-			} else if (args[i] == "--main-loop") {
-				main_loop_type = args[i + 1];
+			if (E->get() == "-s" || E->get() == "--script") {
+				script = E->next()->get();
+			} else if (E->get() == "--main-loop") {
+				main_loop_type = E->next()->get();
 #ifdef TOOLS_ENABLED
-			} else if (args[i] == "--doctool") {
-				doc_tool_path = args[i + 1];
+			} else if (E->get() == "--doctool") {
+				doc_tool_path = E->next()->get();
 				if (doc_tool_path.begins_with("-")) {
 					// Assuming other command line arg, so default to cwd.
 					doc_tool_path = ".";
 					parsed_pair = false;
 				}
 #ifdef MODULE_GDSCRIPT_ENABLED
-			} else if (args[i] == "--gdscript-docs") {
-				gdscript_docs_path = args[i + 1];
+			} else if (E->get() == "--gdscript-docs") {
+				gdscript_docs_path = E->next()->get();
 #endif
-			} else if (args[i] == "--export-release") {
+			} else if (E->get() == "--export-release") {
 				editor = true; //needs editor
-				_export_preset = args[i + 1];
-			} else if (args[i] == "--export-debug") {
+				_export_preset = E->next()->get();
+			} else if (E->get() == "--export-debug") {
 				editor = true; //needs editor
-				_export_preset = args[i + 1];
+				_export_preset = E->next()->get();
 				export_debug = true;
-			} else if (args[i] == "--export-pack") {
+			} else if (E->get() == "--export-pack") {
 				editor = true;
-				_export_preset = args[i + 1];
+				_export_preset = E->next()->get();
 				export_pack_only = true;
 #endif
 			} else {
@@ -3273,12 +3273,12 @@ int Main::start() {
 				parsed_pair = false;
 			}
 			if (parsed_pair) {
-				i++;
+				E = E->next();
 			}
 		}
 #ifdef TOOLS_ENABLED
 		// Handle case where no path is given to --doctool.
-		else if (args[i] == "--doctool") {
+		else if (E->get() == "--doctool") {
 			doc_tool_path = ".";
 		}
 #endif

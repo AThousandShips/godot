@@ -1316,8 +1316,8 @@ bool OpenXRAPI::on_state_synchronized() {
 	// Just in case, see if we already have active trackers...
 	List<RID> trackers;
 	tracker_owner.get_owned_list(&trackers);
-	for (int i = 0; i < trackers.size(); i++) {
-		tracker_check_profile(trackers[i]);
+	for (const RID &tracker : trackers) {
+		tracker_check_profile(tracker);
 	}
 
 	for (OpenXRExtensionWrapper *wrapper : registered_extension_wrappers) {
@@ -1910,8 +1910,8 @@ bool OpenXRAPI::poll_events() {
 
 				List<RID> trackers;
 				tracker_owner.get_owned_list(&trackers);
-				for (int i = 0; i < trackers.size(); i++) {
-					tracker_check_profile(trackers[i], event->session);
+				for (const RID &tracker : trackers) {
+					tracker_check_profile(tracker, event->session);
 				}
 
 			} break;
@@ -2535,10 +2535,10 @@ bool OpenXRAPI::xr_result(XrResult result, const char *format, Array args) const
 RID OpenXRAPI::get_tracker_rid(XrPath p_path) {
 	List<RID> current;
 	tracker_owner.get_owned_list(&current);
-	for (int i = 0; i < current.size(); i++) {
-		Tracker *tracker = tracker_owner.get_or_null(current[i]);
+	for (const RID &owned : current) {
+		Tracker *tracker = tracker_owner.get_or_null(owned);
 		if (tracker && tracker->toplevel_path == p_path) {
-			return current[i];
+			return owned;
 		}
 	}
 
@@ -2729,10 +2729,10 @@ void OpenXRAPI::action_set_free(RID p_action_set) {
 RID OpenXRAPI::get_action_rid(XrAction p_action) {
 	List<RID> current;
 	action_owner.get_owned_list(&current);
-	for (int i = 0; i < current.size(); i++) {
-		Action *action = action_owner.get_or_null(current[i]);
+	for (const RID &owned : current) {
+		Action *action = action_owner.get_or_null(owned);
 		if (action && action->handle == p_action) {
-			return current[i];
+			return owned;
 		}
 	}
 
@@ -2833,10 +2833,10 @@ void OpenXRAPI::action_free(RID p_action) {
 RID OpenXRAPI::get_interaction_profile_rid(XrPath p_path) {
 	List<RID> current;
 	interaction_profile_owner.get_owned_list(&current);
-	for (int i = 0; i < current.size(); i++) {
-		InteractionProfile *ip = interaction_profile_owner.get_or_null(current[i]);
+	for (const RID &owned : current) {
+		InteractionProfile *ip = interaction_profile_owner.get_or_null(owned);
 		if (ip && ip->path == p_path) {
-			return current[i];
+			return owned;
 		}
 	}
 

@@ -2525,7 +2525,7 @@ Error DisplayServerWindows::dialog_show(String p_title, String p_description, Ve
 
 	Char16String title = p_title.utf16();
 	Char16String message = p_description.utf16();
-	List<Char16String> buttons;
+	Vector<Char16String> buttons;
 	for (String s : p_buttons) {
 		buttons.push_back(s.utf16());
 	}
