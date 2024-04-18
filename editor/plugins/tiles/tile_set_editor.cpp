@@ -248,17 +248,17 @@ void TileSetEditor::_source_selected(int p_source_index) {
 
 	if (p_source_index >= 0) {
 		int source_id = sources_list->get_item_metadata(p_source_index);
-		TileSetAtlasSource *atlas_source = Object::cast_to<TileSetAtlasSource>(*tile_set->get_source(source_id));
-		TileSetScenesCollectionSource *scenes_collection_source = Object::cast_to<TileSetScenesCollectionSource>(*tile_set->get_source(source_id));
-		if (atlas_source) {
+		Ref<TileSetAtlasSource> atlas_source = tile_set->get_source(source_id);
+		Ref<TileSetScenesCollectionSource> scenes_collection_source = tile_set->get_source(source_id);
+		if (atlas_source.is_valid()) {
 			no_source_selected_label->hide();
-			tile_set_atlas_source_editor->edit(*tile_set, atlas_source, source_id);
+			tile_set_atlas_source_editor->edit(tile_set, atlas_source, source_id);
 			tile_set_atlas_source_editor->show();
 			tile_set_scenes_collection_source_editor->hide();
-		} else if (scenes_collection_source) {
+		} else if (scenes_collection_source.is_valid()) {
 			no_source_selected_label->hide();
 			tile_set_atlas_source_editor->hide();
-			tile_set_scenes_collection_source_editor->edit(*tile_set, scenes_collection_source, source_id);
+			tile_set_scenes_collection_source_editor->edit(tile_set, scenes_collection_source, source_id);
 			tile_set_scenes_collection_source_editor->show();
 		} else {
 			no_source_selected_label->show();

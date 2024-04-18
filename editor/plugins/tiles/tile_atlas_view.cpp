@@ -59,7 +59,6 @@ void TileAtlasView::_zoom_callback(float p_zoom_factor, Vector2 p_origin, Ref<In
 }
 
 Size2i TileAtlasView::_compute_base_tiles_control_size() {
-	Ref<TileSetAtlasSource> tile_set_atlas_source = get_tile_set_atlas_source();
 	if (tile_set_atlas_source.is_null()) {
 		return Size2i();
 	}
@@ -73,7 +72,6 @@ Size2i TileAtlasView::_compute_base_tiles_control_size() {
 }
 
 Size2i TileAtlasView::_compute_alternative_tiles_control_size() {
-	Ref<TileSetAtlasSource> tile_set_atlas_source = get_tile_set_atlas_source();
 	if (tile_set_atlas_source.is_null()) {
 		return Size2i();
 	}
@@ -97,7 +95,6 @@ Size2i TileAtlasView::_compute_alternative_tiles_control_size() {
 }
 
 void TileAtlasView::_update_zoom_and_panning(bool p_zoom_on_mouse_pos) {
-	Ref<TileSetAtlasSource> tile_set_atlas_source = get_tile_set_atlas_source();
 	if (tile_set_atlas_source.is_null()) {
 		return;
 	}
@@ -165,7 +162,6 @@ void TileAtlasView::_center_view() {
 }
 
 void TileAtlasView::_base_tiles_root_control_gui_input(const Ref<InputEvent> &p_event) {
-	Ref<TileSetAtlasSource> tile_set_atlas_source = get_tile_set_atlas_source();
 	if (tile_set_atlas_source.is_null()) {
 		return;
 	}
@@ -185,12 +181,7 @@ void TileAtlasView::_base_tiles_root_control_gui_input(const Ref<InputEvent> &p_
 }
 
 void TileAtlasView::_draw_base_tiles() {
-	Ref<TileSet> tile_set = get_tile_set();
-	if (tile_set.is_null()) {
-		return;
-	}
-	Ref<TileSetAtlasSource> tile_set_atlas_source = get_tile_set_atlas_source();
-	if (tile_set_atlas_source.is_null()) {
+	if (tile_set.is_null() || tile_set_atlas_source.is_null()) {
 		return;
 	}
 	Ref<Texture2D> texture = tile_set_atlas_source->get_texture();
@@ -338,7 +329,6 @@ void TileAtlasView::_clear_material_canvas_items() {
 }
 
 void TileAtlasView::_draw_base_tiles_texture_grid() {
-	Ref<TileSetAtlasSource> tile_set_atlas_source = get_tile_set_atlas_source();
 	if (tile_set_atlas_source.is_null()) {
 		return;
 	}
@@ -372,12 +362,7 @@ void TileAtlasView::_draw_base_tiles_texture_grid() {
 }
 
 void TileAtlasView::_draw_base_tiles_shape_grid() {
-	Ref<TileSet> tile_set = get_tile_set();
-	if (tile_set.is_null()) {
-		return;
-	}
-	Ref<TileSetAtlasSource> tile_set_atlas_source = get_tile_set_atlas_source();
-	if (tile_set_atlas_source.is_null()) {
+	if (tile_set.is_null() || tile_set_atlas_source.is_null()) {
 		return;
 	}
 	// Draw the shapes.
@@ -418,12 +403,7 @@ void TileAtlasView::_alternative_tiles_root_control_gui_input(const Ref<InputEve
 }
 
 void TileAtlasView::_draw_alternatives() {
-	Ref<TileSet> tile_set = get_tile_set();
-	if (tile_set.is_null()) {
-		return;
-	}
-	Ref<TileSetAtlasSource> tile_set_atlas_source = get_tile_set_atlas_source();
-	if (tile_set_atlas_source.is_null()) {
+	if (tile_set.is_null() || tile_set_atlas_source.is_null()) {
 		return;
 	}
 	// Draw the alternative tiles.
@@ -475,13 +455,13 @@ void TileAtlasView::_draw_background_right() {
 	background_right->draw_texture_rect(theme_cache.checkerboard, Rect2(Vector2(), background_right->get_size()), true);
 }
 
-void TileAtlasView::set_atlas_source(TileSet *p_tile_set, TileSetAtlasSource *p_tile_set_atlas_source, int p_source_id) {
-	tile_set_id = p_tile_set ? p_tile_set->get_instance_id() : ObjectID();
-	tile_set_atlas_source_id = p_tile_set_atlas_source ? p_tile_set_atlas_source->get_instance_id() : ObjectID();
+void TileAtlasView::set_atlas_source(Ref<TileSet> p_tile_set, Ref<TileSetAtlasSource> p_tile_set_atlas_source, int p_source_id) {
+	tile_set = p_tile_set;
+	tile_set_atlas_source = p_tile_set_atlas_source;
 
 	_clear_material_canvas_items();
 
-	if (!p_tile_set) {
+	if (tile_set.is_null()) {
 		return;
 	}
 
@@ -529,7 +509,6 @@ void TileAtlasView::set_padding(Side p_side, int p_padding) {
 }
 
 Vector2i TileAtlasView::get_atlas_tile_coords_at_pos(const Vector2 p_pos, bool p_clamp) const {
-	Ref<TileSetAtlasSource> tile_set_atlas_source = get_tile_set_atlas_source();
 	if (tile_set_atlas_source.is_null()) {
 		return Vector2i();
 	}
@@ -557,7 +536,6 @@ Vector2i TileAtlasView::get_atlas_tile_coords_at_pos(const Vector2 p_pos, bool p
 }
 
 void TileAtlasView::_update_alternative_tiles_rect_cache() {
-	Ref<TileSetAtlasSource> tile_set_atlas_source = get_tile_set_atlas_source();
 	if (tile_set_atlas_source.is_null()) {
 		return;
 	}
@@ -617,14 +595,6 @@ void TileAtlasView::queue_redraw() {
 	alternatives_draw->queue_redraw();
 	background_left->queue_redraw();
 	background_right->queue_redraw();
-}
-
-Ref<TileSet> TileAtlasView::get_tile_set() const {
-	return Object::cast_to<TileSet>(ObjectDB::get_instance(tile_set_id));
-}
-
-Ref<TileSetAtlasSource> TileAtlasView::get_tile_set_atlas_source() const {
-	return Object::cast_to<TileSetAtlasSource>(ObjectDB::get_instance(tile_set_atlas_source_id));
 }
 
 void TileAtlasView::_update_theme_item_cache() {

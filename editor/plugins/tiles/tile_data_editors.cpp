@@ -68,9 +68,8 @@ TileData *TileDataEditor::_get_tile_data(TileMapCell p_cell) {
 	ERR_FAIL_COND_V(!tile_set->has_source(p_cell.source_id), nullptr);
 
 	TileData *td = nullptr;
-	TileSetSource *source = *tile_set->get_source(p_cell.source_id);
-	TileSetAtlasSource *atlas_source = Object::cast_to<TileSetAtlasSource>(source);
-	if (atlas_source) {
+	Ref<TileSetAtlasSource> atlas_source = tile_set->get_source(p_cell.source_id);
+	if (atlas_source.is_valid()) {
 		ERR_FAIL_COND_V(!atlas_source->has_tile(p_cell.get_atlas_coords()), nullptr);
 		ERR_FAIL_COND_V(!atlas_source->has_alternative_tile(p_cell.get_atlas_coords(), p_cell.alternative_tile), nullptr);
 		td = atlas_source->get_tile_data(p_cell.get_atlas_coords(), p_cell.alternative_tile);

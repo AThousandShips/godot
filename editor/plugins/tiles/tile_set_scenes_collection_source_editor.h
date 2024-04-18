@@ -50,7 +50,7 @@ private:
 
 	private:
 		Ref<TileSet> tile_set;
-		TileSetScenesCollectionSource *tile_set_scenes_collection_source = nullptr;
+		Ref<TileSetScenesCollectionSource> tile_set_scenes_collection_source;
 		int source_id = -1;
 
 	protected:
@@ -63,7 +63,7 @@ private:
 		void set_id(int p_id);
 		int get_id();
 
-		void edit(Ref<TileSet> p_tile_set, TileSetScenesCollectionSource *p_tile_set_scenes_collection_source, int p_source_id);
+		void edit(Ref<TileSet> p_tile_set, Ref<TileSetScenesCollectionSource> p_tile_set_scenes_collection_source, int p_source_id);
 	};
 
 	// -- Proxy object for a tile, needed by the inspector --
@@ -73,7 +73,7 @@ private:
 	private:
 		TileSetScenesCollectionSourceEditor *tile_set_scenes_collection_source_editor = nullptr;
 
-		TileSetScenesCollectionSource *tile_set_scenes_collection_source = nullptr;
+		Ref<TileSetScenesCollectionSource> tile_set_scenes_collection_source;
 		int source_id;
 		int scene_id;
 
@@ -86,7 +86,7 @@ private:
 
 	public:
 		// Update the proxyed object.
-		void edit(TileSetScenesCollectionSource *p_tile_set_atlas_source, int p_scene_id);
+		void edit(Ref<TileSetScenesCollectionSource> p_tile_set_atlas_source, int p_scene_id);
 
 		SceneTileProxyObject(TileSetScenesCollectionSourceEditor *p_tiles_set_scenes_collection_source_editor) {
 			tile_set_scenes_collection_source_editor = p_tiles_set_scenes_collection_source_editor;
@@ -97,7 +97,7 @@ private:
 	bool read_only = false;
 
 	Ref<TileSet> tile_set;
-	TileSetScenesCollectionSource *tile_set_scenes_collection_source = nullptr;
+	Ref<TileSetScenesCollectionSource> tile_set_scenes_collection_source;
 	int tile_set_source_id = -1;
 
 	bool tile_set_scenes_collection_source_changed_needs_update = false;
@@ -140,7 +140,7 @@ protected:
 	static void _bind_methods();
 
 public:
-	void edit(Ref<TileSet> p_tile_set, TileSetScenesCollectionSource *p_tile_set_scenes_collection_source, int p_source_id);
+	void edit(Ref<TileSet> p_tile_set, Ref<TileSetScenesCollectionSource> p_tile_set_scenes_collection_source, int p_source_id);
 	TileSetScenesCollectionSourceEditor();
 	~TileSetScenesCollectionSourceEditor();
 };

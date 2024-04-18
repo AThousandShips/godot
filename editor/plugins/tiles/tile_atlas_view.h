@@ -45,8 +45,8 @@ class TileAtlasView : public Control {
 	GDCLASS(TileAtlasView, Control);
 
 private:
-	ObjectID tile_set_id;
-	ObjectID tile_set_atlas_source_id;
+	Ref<TileSet> tile_set;
+	Ref<TileSetAtlasSource> tile_set_atlas_source;
 	int source_id = TileSet::INVALID_SOURCE;
 
 	enum DragType {
@@ -119,9 +119,6 @@ private:
 		Ref<Texture2D> checkerboard;
 	} theme_cache;
 
-	Ref<TileSet> get_tile_set() const;
-	Ref<TileSetAtlasSource> get_tile_set_atlas_source() const;
-
 protected:
 	virtual void _update_theme_item_cache() override;
 
@@ -130,7 +127,7 @@ protected:
 
 public:
 	// Global.
-	void set_atlas_source(TileSet *p_tile_set, TileSetAtlasSource *p_tile_set_atlas_source, int p_source_id);
+	void set_atlas_source(Ref<TileSet> p_tile_set, Ref<TileSetAtlasSource> p_tile_set_atlas_source, int p_source_id);
 
 	float get_zoom() const;
 	void set_transform(float p_zoom, Vector2i p_panning);

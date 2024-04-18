@@ -125,7 +125,7 @@ private:
 	bool read_only = false;
 
 	Ref<TileSet> tile_set;
-	TileSetAtlasSource *tile_set_atlas_source = nullptr;
+	Ref<TileSetAtlasSource> tile_set_atlas_source;
 	int tile_set_atlas_source_id = TileSet::INVALID_SOURCE;
 	Ref<Texture2D> atlas_source_texture;
 
@@ -296,7 +296,7 @@ protected:
 	virtual void shortcut_input(const Ref<InputEvent> &p_event) override;
 
 public:
-	void edit(Ref<TileSet> p_tile_set, TileSetAtlasSource *p_tile_set_source, int p_source_id);
+	void edit(Ref<TileSet> p_tile_set, Ref<TileSetAtlasSource> p_tile_set_source, int p_source_id);
 	void init_new_atlases(const Vector<Ref<TileSetAtlasSource>> &p_atlases);
 
 	TileSetAtlasSourceEditor();
