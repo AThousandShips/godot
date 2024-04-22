@@ -551,8 +551,8 @@ Dictionary OS_Unix::execute_with_pipe(const String &p_path, const List<String> &
 		}
 
 		Vector<char *> args;
-		for (int i = 0; i < cs.size(); i++) {
-			args.push_back((char *)cs[i].get_data());
+		for (const CharString &E : cs) {
+			args.push_back((char *)E.get_data());
 		}
 		args.push_back(0);
 
@@ -652,8 +652,8 @@ Error OS_Unix::execute(const String &p_path, const List<String> &p_arguments, St
 		}
 
 		Vector<char *> args;
-		for (int i = 0; i < cs.size(); i++) {
-			args.push_back((char *)cs[i].get_data());
+		for (const CharString &E : cs) {
+			args.push_back((char *)E.get_data());
 		}
 		args.push_back(0);
 
@@ -694,8 +694,8 @@ Error OS_Unix::create_process(const String &p_path, const List<String> &p_argume
 		}
 
 		Vector<char *> args;
-		for (int i = 0; i < cs.size(); i++) {
-			args.push_back((char *)cs[i].get_data());
+		for (const CharString &E : cs) {
+			args.push_back((char *)E.get_data());
 		}
 		args.push_back(0);
 

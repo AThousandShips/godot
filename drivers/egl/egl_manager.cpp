@@ -394,8 +394,8 @@ EGLManager::EGLManager() {
 }
 
 EGLManager::~EGLManager() {
-	for (unsigned int i = 0; i < displays.size(); i++) {
-		eglTerminate(displays[i].egl_display);
+	for (GLDisplay &display : displays) {
+		eglTerminate(display.egl_display);
 	}
 }
 

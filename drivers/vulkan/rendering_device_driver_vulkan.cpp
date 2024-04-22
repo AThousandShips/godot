@@ -2145,8 +2145,8 @@ Error RenderingDeviceDriverVulkan::command_queue_execute_and_present(CommandQueu
 	wait_semaphores_stages.clear();
 
 	if (!command_queue->pending_semaphores_for_execute.is_empty()) {
-		for (uint32_t i = 0; i < command_queue->pending_semaphores_for_execute.size(); i++) {
-			VkSemaphore wait_semaphore = command_queue->image_semaphores[command_queue->pending_semaphores_for_execute[i]];
+		for (const uint32_t &pending_semaphore_for_execute : command_queue->pending_semaphores_for_execute) {
+			VkSemaphore wait_semaphore = command_queue->image_semaphores[pending_semaphore_for_execute];
 			wait_semaphores.push_back(wait_semaphore);
 			wait_semaphores_stages.push_back(VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT);
 		}
@@ -2216,8 +2216,8 @@ Error RenderingDeviceDriverVulkan::command_queue_execute_and_present(CommandQueu
 			fence->queue_signaled_from = command_queue;
 
 			// Indicate to the fence that it should release the semaphores that were waited on this submission the next time the fence is waited on.
-			for (uint32_t i = 0; i < command_queue->pending_semaphores_for_fence.size(); i++) {
-				command_queue->image_semaphores_for_fences.push_back({ fence, command_queue->pending_semaphores_for_fence[i] });
+			for (const uint32_t &pending_semaphore_for_fence : command_queue->pending_semaphores_for_fence) {
+				command_queue->image_semaphores_for_fences.push_back({ fence, pending_semaphore_for_fence });
 			}
 
 			command_queue->pending_semaphores_for_fence.clear();
@@ -2972,9 +2972,9 @@ Vector<uint8_t> RenderingDeviceDriverVulkan::shader_compile_binary_from_spirv(Ve
 
 	total_size += STEPIFY(binary_data.shader_name_len, 4);
 
-	for (int i = 0; i < uniforms.size(); i++) {
+	for (const Vector<ShaderBinary::DataBinding> &uniform : uniforms) {
 		total_size += sizeof(uint32_t);
-		total_size += uniforms[i].size() * sizeof(ShaderBinary::DataBinding);
+		total_size += uniform.size() * sizeof(ShaderBinary::DataBinding);
 	}
 
 	total_size += sizeof(ShaderBinary::SpecializationConstant) * specialization_constants.size();
@@ -3012,12 +3012,12 @@ Vector<uint8_t> RenderingDeviceDriverVulkan::shader_compile_binary_from_spirv(Ve
 			ADVANCE_OFFSET_WITH_ALIGNMENT(binary_data.shader_name_len);
 		}
 
-		for (int i = 0; i < uniforms.size(); i++) {
-			int count = uniforms[i].size();
+		for (const Vector<ShaderBinary::DataBinding> &uniform : uniforms) {
+			int count = uniform.size();
 			encode_uint32(count, binptr + offset);
 			offset += sizeof(uint32_t);
 			if (count > 0) {
-				memcpy(binptr + offset, uniforms[i].ptr(), sizeof(ShaderBinary::DataBinding) * count);
+				memcpy(binptr + offset, uniform.ptr(), sizeof(ShaderBinary::DataBinding) * count);
 				offset += sizeof(ShaderBinary::DataBinding) * count;
 			}
 		}
@@ -3290,8 +3290,8 @@ RDD::ShaderID RenderingDeviceDriverVulkan::shader_create_from_bytecode(const Vec
 
 	if (!error_text.is_empty()) {
 		// Clean up if failed.
-		for (uint32_t i = 0; i < shader_info.vk_stages_create_info.size(); i++) {
-			vkDestroyShaderModule(vk_device, shader_info.vk_stages_create_info[i].module, nullptr);
+		for (const VkPipelineShaderStageCreateInfo &vk_stage_create_info : shader_info.vk_stages_create_info) {
+			vkDestroyShaderModule(vk_device, vk_stage_create_info.module, nullptr);
 		}
 		for (uint32_t i = 0; i < binary_data.set_count; i++) {
 			vkDestroyDescriptorSetLayout(vk_device, shader_info.vk_descriptor_set_layouts[i], nullptr);
@@ -3310,14 +3310,14 @@ RDD::ShaderID RenderingDeviceDriverVulkan::shader_create_from_bytecode(const Vec
 void RenderingDeviceDriverVulkan::shader_free(ShaderID p_shader) {
 	ShaderInfo *shader_info = (ShaderInfo *)p_shader.id;
 
-	for (uint32_t i = 0; i < shader_info->vk_descriptor_set_layouts.size(); i++) {
-		vkDestroyDescriptorSetLayout(vk_device, shader_info->vk_descriptor_set_layouts[i], nullptr);
+	for (const VkDescriptorSetLayout &vk_descriptor_set_layout : shader_info->vk_descriptor_set_layouts) {
+		vkDestroyDescriptorSetLayout(vk_device, vk_descriptor_set_layout, nullptr);
 	}
 
 	vkDestroyPipelineLayout(vk_device, shader_info->vk_pipeline_layout, nullptr);
 
-	for (uint32_t i = 0; i < shader_info->vk_stages_create_info.size(); i++) {
-		vkDestroyShaderModule(vk_device, shader_info->vk_stages_create_info[i].module, nullptr);
+	for (const VkPipelineShaderStageCreateInfo &vk_stage_create_info : shader_info->vk_stages_create_info) {
+		vkDestroyShaderModule(vk_device, vk_stage_create_info.module, nullptr);
 	}
 
 	VersatileResource::free(resources_allocator, shader_info);
@@ -4731,8 +4731,8 @@ void RenderingDeviceDriverVulkan::set_object_name(ObjectType p_type, ID p_driver
 		} break;
 		case OBJECT_TYPE_SHADER: {
 			const ShaderInfo *shader_info = (const ShaderInfo *)p_driver_id.id;
-			for (uint32_t i = 0; i < shader_info->vk_descriptor_set_layouts.size(); i++) {
-				_set_object_name(VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT, (uint64_t)shader_info->vk_descriptor_set_layouts[i], p_name);
+			for (const VkDescriptorSetLayout &vk_descriptor_set_layout : shader_info->vk_descriptor_set_layouts) {
+				_set_object_name(VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT, (uint64_t)vk_descriptor_set_layout, p_name);
 			}
 			_set_object_name(VK_OBJECT_TYPE_PIPELINE_LAYOUT, (uint64_t)shader_info->vk_pipeline_layout, p_name + " Pipeline Layout");
 		} break;

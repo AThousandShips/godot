@@ -663,24 +663,24 @@ void LightStorage::reflection_atlas_set_size(RID p_ref_atlas, int p_reflection_s
 
 	if (ra->depth != 0) {
 		//clear and invalidate everything
-		for (int i = 0; i < ra->reflections.size(); i++) {
-			for (int j = 0; j < 7; j++) {
-				if (ra->reflections[i].fbos[j] != 0) {
-					glDeleteFramebuffers(1, &ra->reflections[i].fbos[j]);
-					ra->reflections.write[i].fbos[j] = 0;
+		for (ReflectionAtlas::Reflection &reflection : ra->reflections) {
+			for (int i = 0; i < 7; i++) {
+				if (reflection.fbos[i] != 0) {
+					glDeleteFramebuffers(1, &reflection.fbos[i]);
+					reflection.fbos[i] = 0;
 				}
 			}
 
-			GLES3::Utilities::get_singleton()->texture_free_data(ra->reflections[i].color);
-			ra->reflections.write[i].color = 0;
+			GLES3::Utilities::get_singleton()->texture_free_data(reflection.color);
+			reflection.color = 0;
 
-			GLES3::Utilities::get_singleton()->texture_free_data(ra->reflections[i].radiance);
-			ra->reflections.write[i].radiance = 0;
+			GLES3::Utilities::get_singleton()->texture_free_data(reflection.radiance);
+			reflection.radiance = 0;
 
-			if (ra->reflections[i].owner.is_null()) {
+			if (reflection.owner.is_null()) {
 				continue;
 			}
-			reflection_probe_release_atlas_index(ra->reflections[i].owner);
+			reflection_probe_release_atlas_index(reflection.owner);
 			//rp->atlasindex clear
 		}
 
@@ -1276,10 +1276,10 @@ void LightStorage::shadow_atlas_set_quadrant_subdivision(RID p_atlas, int p_quad
 	}
 
 	// Erase all data from quadrant.
-	for (int i = 0; i < shadow_atlas->quadrants[p_quadrant].shadows.size(); i++) {
-		if (shadow_atlas->quadrants[p_quadrant].shadows[i].owner.is_valid()) {
-			shadow_atlas->shadow_owners.erase(shadow_atlas->quadrants[p_quadrant].shadows[i].owner);
-			LightInstance *li = light_instance_owner.get_or_null(shadow_atlas->quadrants[p_quadrant].shadows[i].owner);
+	for (const ShadowAtlas::Quadrant::Shadow &shadow : shadow_atlas->quadrants[p_quadrant].shadows) {
+		if (shadow.owner.is_valid()) {
+			shadow_atlas->shadow_owners.erase(shadow.owner);
+			LightInstance *li = light_instance_owner.get_or_null(shadow.owner);
 			ERR_CONTINUE(!li);
 			li->shadow_atlases.erase(p_atlas);
 		}

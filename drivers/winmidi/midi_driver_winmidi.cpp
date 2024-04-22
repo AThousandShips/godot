@@ -84,8 +84,7 @@ PackedStringArray MIDIDriverWinMidi::get_connected_inputs() {
 }
 
 void MIDIDriverWinMidi::close() {
-	for (int i = 0; i < connected_sources.size(); i++) {
-		HMIDIIN midi_in = connected_sources[i];
+	for (HMIDIIN midi_in : connected_sources) {
 		midiInStop(midi_in);
 		midiInClose(midi_in);
 	}

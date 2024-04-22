@@ -74,8 +74,7 @@ Error MIDIDriverCoreMidi::open() {
 }
 
 void MIDIDriverCoreMidi::close() {
-	for (int i = 0; i < connected_sources.size(); i++) {
-		MIDIEndpointRef source = connected_sources[i];
+	for (const MIDIEndpointRef &source : connected_sources) {
 		MIDIPortDisconnectSource(port_in, source);
 	}
 	connected_sources.clear();
@@ -94,8 +93,7 @@ void MIDIDriverCoreMidi::close() {
 PackedStringArray MIDIDriverCoreMidi::get_connected_inputs() {
 	PackedStringArray list;
 
-	for (int i = 0; i < connected_sources.size(); i++) {
-		MIDIEndpointRef source = connected_sources[i];
+	for (const MIDIEndpointRef &source : connected_sources) {
 		CFStringRef ref = nullptr;
 		char name[256];
 

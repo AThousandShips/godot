@@ -1338,8 +1338,7 @@ void RasterizerSceneGLES3::_fill_render_list(RenderListType p_render_list, const
 				// We only support two probes for now and we handle them first come, first serve.
 				// This should be improved one day, at minimum the list should be sorted by priority.
 
-				for (uint32_t pi = 0; pi < inst->paired_reflection_probes.size(); pi++) {
-					RID probe_instance = inst->paired_reflection_probes[pi];
+				for (const RID &probe_instance : inst->paired_reflection_probes) {
 					RID atlas = light_storage->reflection_probe_instance_get_atlas(probe_instance);
 					RID probe = light_storage->reflection_probe_instance_get_probe(probe_instance);
 					uint32_t reflection_mask = light_storage->reflection_probe_get_reflection_mask(probe);
@@ -2018,12 +2017,12 @@ void RasterizerSceneGLES3::_render_shadows(const RenderDataGLES3 *p_render_data,
 			_render_shadow_pass(p_render_data->render_shadows[index].light, p_render_data->shadow_atlas, p_render_data->render_shadows[index].pass, p_render_data->render_shadows[index].instances, camera_plane, lod_distance_multiplier, p_render_data->screen_mesh_lod_threshold, p_render_data->render_info, p_viewport_size, p_render_data->cam_transform);
 		}
 		// Render directional shadows.
-		for (uint32_t i = 0; i < directional_shadows.size(); i++) {
-			_render_shadow_pass(p_render_data->render_shadows[directional_shadows[i]].light, p_render_data->shadow_atlas, p_render_data->render_shadows[directional_shadows[i]].pass, p_render_data->render_shadows[directional_shadows[i]].instances, camera_plane, lod_distance_multiplier, p_render_data->screen_mesh_lod_threshold, p_render_data->render_info, p_viewport_size, p_render_data->cam_transform);
+		for (const int &directional_shadow : directional_shadows) {
+			_render_shadow_pass(p_render_data->render_shadows[directional_shadow].light, p_render_data->shadow_atlas, p_render_data->render_shadows[directional_shadow].pass, p_render_data->render_shadows[directional_shadow].instances, camera_plane, lod_distance_multiplier, p_render_data->screen_mesh_lod_threshold, p_render_data->render_info, p_viewport_size, p_render_data->cam_transform);
 		}
 		// Render positional shadows (Spotlight and Omnilight with dual-paraboloid).
-		for (uint32_t i = 0; i < shadows.size(); i++) {
-			_render_shadow_pass(p_render_data->render_shadows[shadows[i]].light, p_render_data->shadow_atlas, p_render_data->render_shadows[shadows[i]].pass, p_render_data->render_shadows[shadows[i]].instances, camera_plane, lod_distance_multiplier, p_render_data->screen_mesh_lod_threshold, p_render_data->render_info, p_viewport_size, p_render_data->cam_transform);
+		for (const int &shadow : shadows) {
+			_render_shadow_pass(p_render_data->render_shadows[shadow].light, p_render_data->shadow_atlas, p_render_data->render_shadows[shadow].pass, p_render_data->render_shadows[shadow].instances, camera_plane, lod_distance_multiplier, p_render_data->screen_mesh_lod_threshold, p_render_data->render_info, p_viewport_size, p_render_data->cam_transform);
 		}
 	}
 }

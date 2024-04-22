@@ -985,11 +985,11 @@ void MaterialData::update_textures(const HashMap<StringName, Variant> &p_paramet
 				p_textures[k++] = gl_texture;
 			}
 		} else {
-			for (int j = 0; j < textures.size(); j++) {
-				Texture *tex = TextureStorage::get_singleton()->get_texture(textures[j]);
+			for (const RID &texture : textures) {
+				Texture *tex = TextureStorage::get_singleton()->get_texture(texture);
 
 				if (tex) {
-					gl_texture = textures[j];
+					gl_texture = texture;
 #ifdef TOOLS_ENABLED
 					if (tex->detect_3d_callback && p_is_3d_shader_type) {
 						tex->detect_3d_callback(tex->detect_3d_callback_ud);
@@ -1068,8 +1068,8 @@ void MaterialData::update_parameters_internal(const HashMap<StringName, Variant>
 	}
 
 	uint32_t tex_uniform_count = 0U;
-	for (int i = 0; i < p_texture_uniforms.size(); i++) {
-		tex_uniform_count += uint32_t(p_texture_uniforms[i].array_size > 0 ? p_texture_uniforms[i].array_size : 1);
+	for (const ShaderCompiler::GeneratedCode::Texture &texture_uniform : p_texture_uniforms) {
+		tex_uniform_count += uint32_t(texture_uniform.array_size > 0 ? texture_uniform.array_size : 1);
 	}
 
 	if ((uint32_t)texture_cache.size() != tex_uniform_count || p_textures_dirty) {
@@ -2519,12 +2519,12 @@ void MaterialStorage::material_update_dependency(RID p_material, DependencyTrack
 
 LocalVector<ShaderGLES3::TextureUniformData> get_texture_uniform_data(const Vector<ShaderCompiler::GeneratedCode::Texture> &texture_uniforms) {
 	LocalVector<ShaderGLES3::TextureUniformData> texture_uniform_data;
-	for (int i = 0; i < texture_uniforms.size(); i++) {
-		int num_textures = texture_uniforms[i].array_size;
+	for (const ShaderCompiler::GeneratedCode::Texture &texture_uniform : texture_uniforms) {
+		int num_textures = texture_uniform.array_size;
 		if (num_textures == 0) {
 			num_textures = 1;
 		}
-		texture_uniform_data.push_back({ texture_uniforms[i].name, num_textures });
+		texture_uniform_data.push_back({ texture_uniform.name, num_textures });
 	}
 	return texture_uniform_data;
 }

@@ -1148,8 +1148,7 @@ RDD::TextureID RenderingDeviceDriverD3D12::texture_create(const TextureFormat &p
 		}
 
 		HashMap<DataFormat, D3D12_RESOURCE_FLAGS> aliases_forbidden_flags;
-		for (int i = 0; i < p_format.shareable_formats.size(); i++) {
-			DataFormat curr_format = p_format.shareable_formats[i];
+		for (const DataFormat &curr_format : p_format.shareable_formats) {
 			String format_text = "'" + String(FORMAT_NAMES[p_format.format]) + "'";
 
 			ERR_FAIL_COND_V_MSG(RD_TO_D3D12_FORMAT[curr_format].family == DXGI_FORMAT_UNKNOWN, TextureID(), "Format " + format_text + " is not supported.");
@@ -1341,8 +1340,8 @@ RDD::TextureID RenderingDeviceDriverD3D12::texture_create(const TextureFormat &p
 	tex_info->owner_info.resource = main_texture;
 	tex_info->owner_info.allocation = allocation;
 	tex_info->owner_info.states.subresource_states.resize(p_format.mipmaps * p_format.array_layers);
-	for (uint32_t i = 0; i < tex_info->owner_info.states.subresource_states.size(); i++) {
-		tex_info->owner_info.states.subresource_states[i] = initial_state;
+	for (D3D12_RESOURCE_STATES &subresource_state : tex_info->owner_info.states.subresource_states) {
+		subresource_state = initial_state;
 	}
 	tex_info->states_ptr = &tex_info->owner_info.states;
 	tex_info->format = p_format.format;
@@ -1545,8 +1544,8 @@ RDD::TextureID RenderingDeviceDriverD3D12::_texture_create_shared_from_slice(Tex
 		tex_info->owner_info.resource = new_texture;
 		tex_info->owner_info.allocation = new_allocation;
 		tex_info->owner_info.states.subresource_states.resize(new_texture_subresorce_count);
-		for (uint32_t i = 0; i < tex_info->owner_info.states.subresource_states.size(); i++) {
-			tex_info->owner_info.states.subresource_states[i] = D3D12_RESOURCE_STATE_COPY_DEST;
+		for (D3D12_RESOURCE_STATES &subresource_state : tex_info->owner_info.states.subresource_states) {
+			subresource_state = D3D12_RESOURCE_STATE_COPY_DEST;
 		}
 		tex_info->states_ptr = &tex_info->owner_info.states;
 

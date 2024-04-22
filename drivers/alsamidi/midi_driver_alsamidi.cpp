@@ -211,8 +211,8 @@ void MIDIDriverALSAMidi::close() {
 		thread.wait_to_finish();
 	}
 
-	for (int i = 0; i < connected_inputs.size(); i++) {
-		snd_rawmidi_t *midi_in = connected_inputs[i].rawmidi_ptr;
+	for (InputConnection &connected_input : connected_inputs) {
+		snd_rawmidi_t *midi_in = connected_input.rawmidi_ptr;
 		snd_rawmidi_close(midi_in);
 	}
 	connected_inputs.clear();
@@ -230,8 +230,8 @@ PackedStringArray MIDIDriverALSAMidi::get_connected_inputs() {
 	PackedStringArray list;
 
 	lock();
-	for (int i = 0; i < connected_inputs.size(); i++) {
-		snd_rawmidi_t *midi_in = connected_inputs[i].rawmidi_ptr;
+	for (InputConnection &connected_input : connected_inputs) {
+		snd_rawmidi_t *midi_in = connected_input.rawmidi_ptr;
 		snd_rawmidi_info_t *info;
 
 		snd_rawmidi_info_malloc(&info);

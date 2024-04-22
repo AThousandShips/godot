@@ -48,8 +48,7 @@ void ShaderGLES3::_add_stage(const char *p_code, StageType p_stage_type) {
 
 	String text;
 
-	for (int i = 0; i < lines.size(); i++) {
-		const String &l = lines[i];
+	for (const String &l : lines) {
 		bool push_chunk = false;
 
 		StageTemplate::Chunk chunk;
@@ -183,8 +182,8 @@ void ShaderGLES3::_build_variant_code(StringBuilder &builder, uint32_t p_variant
 	builder.append(general_defines.get_data());
 	builder.append(variant_defines[p_variant]);
 	builder.append("\n");
-	for (int j = 0; j < p_version->custom_defines.size(); j++) {
-		builder.append(p_version->custom_defines[j].get_data());
+	for (const CharString &custom_define : p_version->custom_defines) {
+		builder.append(custom_define.get_data());
 	}
 	builder.append("\n"); //make sure defines begin at newline
 
@@ -217,8 +216,7 @@ void ShaderGLES3::_build_variant_code(StringBuilder &builder, uint32_t p_variant
 	}
 
 	const StageTemplate &stage_template = stage_templates[p_stage_type];
-	for (uint32_t i = 0; i < stage_template.chunks.size(); i++) {
-		const StageTemplate::Chunk &chunk = stage_template.chunks[i];
+	for (const StageTemplate::Chunk &chunk : stage_template.chunks) {
 		switch (chunk.type) {
 			case StageTemplate::Chunk::TYPE_MATERIAL_UNIFORMS: {
 				builder.append(p_version->uniforms.get_data()); //uniforms (same for vertex and fragment)
@@ -245,8 +243,8 @@ static void _display_error_with_code(const String &p_error, const String &p_code
 	int line = 1;
 	Vector<String> lines = p_code.split("\n");
 
-	for (int j = 0; j < lines.size(); j++) {
-		print_line(itos(line) + ": " + lines[j]);
+	for (const String &l : lines) {
+		print_line(itos(line) + ": " + l);
 		line++;
 	}
 
@@ -280,12 +278,12 @@ void ShaderGLES3::_get_uniform_locations(Version::Specialization &spec, Version 
 	}
 	// textures
 	int texture_index = 0;
-	for (uint32_t i = 0; i < p_version->texture_uniforms.size(); i++) {
-		String native_uniform_name = _mkid(p_version->texture_uniforms[i].name);
+	for (const TextureUniformData &texture_uniform : p_version->texture_uniforms) {
+		String native_uniform_name = _mkid(texture_uniform.name);
 		GLint location = glGetUniformLocation(spec.id, (native_uniform_name).ascii().get_data());
 		Vector<int32_t> texture_uniform_bindings;
-		int texture_count = p_version->texture_uniforms[i].array_size;
-		for (int j = 0; j < texture_count; j++) {
+		int texture_count = texture_uniform.array_size;
+		for (int i = 0; i < texture_count; i++) {
 			texture_uniform_bindings.append(texture_index + base_texture_index);
 			texture_index++;
 		}

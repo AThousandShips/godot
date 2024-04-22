@@ -2891,17 +2891,17 @@ RasterizerCanvasGLES3::~RasterizerCanvasGLES3() {
 		state.shadow_depth_buffer = 0;
 	}
 
-	for (uint32_t i = 0; i < state.canvas_instance_data_buffers.size(); i++) {
-		for (int j = 0; j < state.canvas_instance_data_buffers[i].instance_buffers.size(); j++) {
-			if (state.canvas_instance_data_buffers[i].instance_buffers[j]) {
-				GLES3::Utilities::get_singleton()->buffer_free_data(state.canvas_instance_data_buffers[i].instance_buffers[j]);
+	for (const DataBuffer &canvas_instance_data_buffer : state.canvas_instance_data_buffers) {
+		for (const GLuint &instance_buffer : canvas_instance_data_buffer.instance_buffers) {
+			if (instance_buffer) {
+				GLES3::Utilities::get_singleton()->buffer_free_data(instance_buffer);
 			}
 		}
-		if (state.canvas_instance_data_buffers[i].light_ubo) {
-			GLES3::Utilities::get_singleton()->buffer_free_data(state.canvas_instance_data_buffers[i].light_ubo);
+		if (canvas_instance_data_buffer.light_ubo) {
+			GLES3::Utilities::get_singleton()->buffer_free_data(canvas_instance_data_buffer.light_ubo);
 		}
-		if (state.canvas_instance_data_buffers[i].state_ubo) {
-			GLES3::Utilities::get_singleton()->buffer_free_data(state.canvas_instance_data_buffers[i].state_ubo);
+		if (canvas_instance_data_buffer.state_ubo) {
+			GLES3::Utilities::get_singleton()->buffer_free_data(canvas_instance_data_buffer.state_ubo);
 		}
 	}
 }

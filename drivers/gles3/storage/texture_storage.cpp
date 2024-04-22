@@ -738,8 +738,8 @@ void TextureStorage::texture_free(RID p_texture) {
 
 	texture_atlas_remove_texture(p_texture);
 
-	for (int i = 0; i < t->proxies.size(); i++) {
-		Texture *p = texture_owner.get_or_null(t->proxies[i]);
+	for (const RID &proxy : t->proxies) {
+		Texture *p = texture_owner.get_or_null(proxy);
 		ERR_CONTINUE(!p);
 		p->proxy_to = RID();
 		p->tex_id = 0;
@@ -831,8 +831,8 @@ void TextureStorage::texture_3d_initialize(RID p_texture, Image::Format p_format
 	int mipmap_count = 0;
 	{
 		Size2i prev_size;
-		for (int i = 0; i < p_data.size(); i++) {
-			Size2i img_size(p_data[i]->get_width(), p_data[i]->get_height());
+		for (const Ref<Image> &data : p_data) {
+			Size2i img_size(data->get_width(), data->get_height());
 			if (img_size != prev_size) {
 				mipmap_count++;
 			}
@@ -1311,11 +1311,11 @@ void TextureStorage::texture_replace(RID p_texture, RID p_by_texture) {
 		tex_to->canvas_texture->diffuse = p_texture; //update
 	}
 
-	for (int i = 0; i < proxies_to_update.size(); i++) {
-		texture_proxy_update(proxies_to_update[i], p_texture);
+	for (const RID &proxy_to_update : proxies_to_update) {
+		texture_proxy_update(proxy_to_update, p_texture);
 	}
-	for (int i = 0; i < proxies_to_redirect.size(); i++) {
-		texture_proxy_update(proxies_to_redirect[i], p_texture);
+	for (const RID &proxy_to_redirect : proxies_to_redirect) {
+		texture_proxy_update(proxy_to_redirect, p_texture);
 	}
 	//delete last, so proxies can be updated
 	texture_owner.free(p_by_texture);
@@ -1579,8 +1579,7 @@ void TextureStorage::_texture_set_3d_data(RID p_texture, const Vector<Ref<Image>
 	int layer = 0;
 	int depth = texture->depth;
 	Size2i prev_size(images[0]->get_width(), images[0]->get_height());
-	for (int i = 0; i < images.size(); i++) {
-		Ref<Image> image = images[i];
+	for (const Ref<Image> &image : images) {
 		Size2i img_size(image->get_width(), image->get_height());
 
 		if (img_size != prev_size) {

@@ -183,8 +183,8 @@ Error RenderingContextDriverD3D12::_initialize_devices() {
 	}
 
 	// Release all created adapters.
-	for (uint32_t i = 0; i < adapters.size(); ++i) {
-		adapters[i]->Release();
+	for (IDXGIAdapter1 *E : adapters) {
+		E->Release();
 	}
 
 	ComPtr<IDXGIFactory5> factory_5;
