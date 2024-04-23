@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   build-macos:
-    runs-on: [macos, x64]
+    runs-on: [macos-12, macos-13]
     name: ${{ matrix.name }}
     strategy:
       fail-fast: false
