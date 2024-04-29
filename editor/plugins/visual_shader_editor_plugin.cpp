@@ -302,7 +302,7 @@ void VisualShaderGraphPlugin::attach_node_to_frame(VisualShader::Type p_type, in
 
 	// Get the hint label and hide it before attaching the node to prevent resizing issues with the frame.
 	GraphFrame *frame = Object::cast_to<GraphFrame>(links[p_frame_id].graph_element);
-	ERR_FAIL_COND_MSG(!frame, "VisualShader node to attach to is not a frame node.");
+	ERR_FAIL_NULL_MSG(frame, "VisualShader node to attach to is not a frame node.");
 
 	Label *frame_hint_label = Object::cast_to<Label>(frame->get_child(0, false));
 	if (frame_hint_label) {
@@ -331,7 +331,7 @@ void VisualShaderGraphPlugin::detach_node_from_frame(VisualShader::Type p_type, 
 	if (no_more_frames_attached) {
 		// Get the hint label and show it.
 		Label *frame_hint_label = Object::cast_to<Label>(frame->get_child(0, false));
-		ERR_FAIL_COND_MSG(!frame_hint_label, "Frame node does not have a hint label.");
+		ERR_FAIL_NULL_MSG(frame_hint_label, "Frame node does not have a hint label.");
 
 		frame_hint_label->show();
 	}
@@ -339,7 +339,7 @@ void VisualShaderGraphPlugin::detach_node_from_frame(VisualShader::Type p_type, 
 
 void VisualShaderGraphPlugin::set_frame_color_enabled(VisualShader::Type p_type, int p_node_id, bool p_enable) {
 	GraphEdit *graph = editor->graph;
-	ERR_FAIL_COND(!graph);
+	ERR_FAIL_NULL(graph);
 
 	const NodePath node_name = itos(p_node_id);
 	GraphFrame *frame = Object::cast_to<GraphFrame>(graph->get_node_or_null(node_name));
@@ -352,7 +352,7 @@ void VisualShaderGraphPlugin::set_frame_color_enabled(VisualShader::Type p_type,
 
 void VisualShaderGraphPlugin::set_frame_color(VisualShader::Type p_type, int p_node_id, const Color &p_color) {
 	GraphEdit *graph = editor->graph;
-	ERR_FAIL_COND(!graph);
+	ERR_FAIL_NULL(graph);
 
 	const NodePath node_name = itos(p_node_id);
 	GraphFrame *frame = Object::cast_to<GraphFrame>(graph->get_node_or_null(node_name));
@@ -365,7 +365,7 @@ void VisualShaderGraphPlugin::set_frame_color(VisualShader::Type p_type, int p_n
 
 void VisualShaderGraphPlugin::set_frame_autoshrink_enabled(VisualShader::Type p_type, int p_node_id, bool p_enable) {
 	GraphEdit *graph = editor->graph;
-	ERR_FAIL_COND(!graph);
+	ERR_FAIL_NULL(graph);
 
 	const NodePath node_name = itos(p_node_id);
 	GraphFrame *frame = Object::cast_to<GraphFrame>(graph->get_node_or_null(node_name));

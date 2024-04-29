@@ -78,7 +78,7 @@ void PluginConfigDialog::_on_confirmed() {
 
 void PluginConfigDialog::_create_script_for_plugin(const String &p_plugin_path, Ref<ConfigFile> p_config_file, int p_script_lang_index) {
 	ScriptLanguage *language = ScriptServer::get_language(p_script_lang_index);
-	ERR_FAIL_COND(language == nullptr);
+	ERR_FAIL_NULL(language);
 	String ext = language->get_extension();
 	String script_name = script_edit->get_text().is_empty() ? _get_subfolder() : script_edit->get_text();
 	if (script_name.get_extension() != ext) {
