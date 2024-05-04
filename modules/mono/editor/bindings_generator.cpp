@@ -219,7 +219,7 @@ String BindingsGenerator::bbcode_to_text(const String &p_bbcode, const TypeInter
 		String tag = bbcode.substr(brk_pos + 1, brk_end - brk_pos - 1);
 
 		if (tag.begins_with("/")) {
-			bool tag_ok = tag_stack.size() && tag_stack.front()->get() == tag.substr(1, tag.length());
+			bool tag_ok = tag_stack.size() && tag_stack.get_front() == tag.substr(1, tag.length());
 
 			if (!tag_ok) {
 				output.append("]");
@@ -512,7 +512,7 @@ String BindingsGenerator::bbcode_to_xml(const String &p_bbcode, const TypeInterf
 		String tag = bbcode.substr(brk_pos + 1, brk_end - brk_pos - 1);
 
 		if (tag.begins_with("/")) {
-			bool tag_ok = tag_stack.size() && tag_stack.front()->get() == tag.substr(1, tag.length());
+			bool tag_ok = tag_stack.size() && tag_stack.get_front() == tag.substr(1, tag.length());
 
 			if (!tag_ok) {
 				if (!line_del) {
@@ -1377,7 +1377,7 @@ void BindingsGenerator::_append_xml_undeclared(StringBuilder &p_xml_output, cons
 int BindingsGenerator::_determine_enum_prefix(const EnumInterface &p_ienum) {
 	CRASH_COND(p_ienum.constants.is_empty());
 
-	const ConstantInterface &front_iconstant = p_ienum.constants.front()->get();
+	const ConstantInterface &front_iconstant = p_ienum.constants.get_front();
 	Vector<String> front_parts = front_iconstant.name.split("_", /* p_allow_empty: */ true);
 	int candidate_len = front_parts.size() - 1;
 
@@ -2097,7 +2097,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 		output.append(" : long");
 		output.append(MEMBER_BEGIN OPEN_BLOCK);
 
-		const ConstantInterface &last = ienum.constants.back()->get();
+		const ConstantInterface &last = ienum.constants.get_back();
 		for (const ConstantInterface &iconstant : ienum.constants) {
 			if (iconstant.const_doc && iconstant.const_doc->description.size()) {
 				String xml_summary = bbcode_to_xml(fix_doc_description(iconstant.const_doc->description), &itype);
@@ -2536,7 +2536,7 @@ Error BindingsGenerator::_generate_cs_property(const BindingsGenerator::TypeInte
 	}
 
 	if (getter && setter) {
-		const ArgumentInterface &setter_first_arg = setter->arguments.back()->get();
+		const ArgumentInterface &setter_first_arg = setter->arguments.get_back();
 		if (getter->return_type.cname != setter_first_arg.type.cname) {
 			// Special case for Node::set_name
 			bool whitelisted = getter->return_type.cname == name_cache.type_StringName &&
@@ -2548,7 +2548,7 @@ Error BindingsGenerator::_generate_cs_property(const BindingsGenerator::TypeInte
 		}
 	}
 
-	const TypeReference &proptype_name = getter ? getter->return_type : setter->arguments.back()->get().type;
+	const TypeReference &proptype_name = getter ? getter->return_type : setter->arguments.get_back().type;
 
 	const TypeInterface *prop_itype = _get_type_or_singleton_or_null(proptype_name);
 	ERR_FAIL_NULL_V(prop_itype, ERR_BUG); // Property type not found
@@ -2612,7 +2612,7 @@ Error BindingsGenerator::_generate_cs_property(const BindingsGenerator::TypeInte
 		p_output.append("return ");
 		p_output.append(getter->proxy_name + "(");
 		if (p_iprop.index != -1) {
-			const ArgumentInterface &idx_arg = getter->arguments.front()->get();
+			const ArgumentInterface &idx_arg = getter->arguments.get_front();
 			if (idx_arg.type.cname != name_cache.type_int) {
 				// Assume the index parameter is an enum
 				const TypeInterface *idx_arg_type = _get_type_or_null(idx_arg.type);
@@ -2630,7 +2630,7 @@ Error BindingsGenerator::_generate_cs_property(const BindingsGenerator::TypeInte
 
 		p_output.append(setter->proxy_name + "(");
 		if (p_iprop.index != -1) {
-			const ArgumentInterface &idx_arg = setter->arguments.front()->get();
+			const ArgumentInterface &idx_arg = setter->arguments.get_front();
 			if (idx_arg.type.cname != name_cache.type_int) {
 				// Assume the index parameter is an enum
 				const TypeInterface *idx_arg_type = _get_type_or_null(idx_arg.type);
@@ -2685,8 +2685,8 @@ Error BindingsGenerator::_generate_cs_method(const BindingsGenerator::TypeInterf
 
 	StringBuilder default_args_doc;
 
-	// Retrieve information from the arguments
-	const ArgumentInterface &first = p_imethod.arguments.front()->get();
+	// Retrieve information from the arguments.
+	const List<ArgumentInterface>::Element *first = p_imethod.arguments.front();
 	for (const ArgumentInterface &iarg : p_imethod.arguments) {
 		const TypeInterface *arg_type = _get_type_or_singleton_or_null(iarg.type);
 		ERR_FAIL_NULL_V(arg_type, ERR_BUG); // Argument type not found
@@ -2710,7 +2710,7 @@ Error BindingsGenerator::_generate_cs_method(const BindingsGenerator::TypeInterf
 		// Add the current arguments to the signature
 		// If the argument has a default value which is not a constant, we will make it Nullable
 		{
-			if (&iarg != &first) {
+			if (&iarg != &first->get()) {
 				arguments_sig += ", ";
 			}
 
@@ -2939,8 +2939,8 @@ Error BindingsGenerator::_generate_cs_signal(const BindingsGenerator::TypeInterf
 		delegate_type_params += "<";
 	}
 
-	// Retrieve information from the arguments
-	const ArgumentInterface &first = p_isignal.arguments.front()->get();
+	// Retrieve information from the arguments.
+	const List<ArgumentInterface>::Element *first = p_isignal.arguments.front();
 	for (const ArgumentInterface &iarg : p_isignal.arguments) {
 		const TypeInterface *arg_type = _get_type_or_singleton_or_null(iarg.type);
 		ERR_FAIL_NULL_V(arg_type, ERR_BUG); // Argument type not found
@@ -2956,7 +2956,7 @@ Error BindingsGenerator::_generate_cs_signal(const BindingsGenerator::TypeInterf
 
 		// Add the current arguments to the signature
 
-		if (&iarg != &first) {
+		if (&iarg != &first->get()) {
 			arguments_sig += ", ";
 			delegate_type_params += ", ";
 		}
@@ -3574,7 +3574,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 	class_list.sort_custom<StringName::AlphCompare>();
 
 	while (class_list.size()) {
-		StringName type_cname = class_list.front()->get();
+		StringName type_cname = class_list.get_front();
 
 		ClassDB::APIType api_type = ClassDB::get_api_type(type_cname);
 
