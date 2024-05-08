@@ -103,7 +103,7 @@ void RenderingServerDefault::_draw(bool p_swap_buffers, double frame_step) {
 	RSG::scene->update_visibility_notifiers();
 
 	while (frame_drawn_callbacks.front()) {
-		Callable c = frame_drawn_callbacks.front()->get();
+		Callable c = frame_drawn_callbacks.get_front();
 		Variant result;
 		Callable::CallError ce;
 		c.callp(nullptr, 0, result, ce);
