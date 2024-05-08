@@ -764,7 +764,7 @@ void Node3DEditorViewport::_select_clicked(bool p_allow_locked) {
 		}
 
 		if (editor_selection->get_selected_node_list().size() == 1) {
-			EditorNode::get_singleton()->edit_node(editor_selection->get_selected_node_list().front()->get());
+			EditorNode::get_singleton()->edit_node(editor_selection->get_selected_node_list().get_front());
 		}
 	}
 }
@@ -1084,7 +1084,7 @@ void Node3DEditorViewport::_select_region() {
 	}
 
 	if (editor_selection->get_selected_node_list().size() == 1) {
-		EditorNode::get_singleton()->edit_node(editor_selection->get_selected_node_list().front()->get());
+		EditorNode::get_singleton()->edit_node(editor_selection->get_selected_node_list().get_front());
 	}
 }
 
@@ -4592,7 +4592,7 @@ void Node3DEditorViewport::drop_data_fw(const Point2 &p_point, const Variant &p_
 	List<Node *> selected_nodes = EditorNode::get_singleton()->get_editor_selection()->get_selected_node_list();
 	Node *root_node = EditorNode::get_singleton()->get_edited_scene();
 	if (selected_nodes.size() > 0) {
-		Node *selected_node = selected_nodes.front()->get();
+		Node *selected_node = selected_nodes.get_front();
 		target_node = selected_node;
 		if (is_alt) {
 			target_node = root_node;

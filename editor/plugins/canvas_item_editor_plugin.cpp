@@ -453,8 +453,8 @@ Point2 CanvasItemEditor::snap_point(Point2 p_target, unsigned int p_modes, unsig
 		Point2 offset = grid_offset;
 		if (snap_relative) {
 			List<CanvasItem *> selection = _get_edited_canvas_items();
-			if (selection.size() == 1 && Object::cast_to<Node2D>(selection.front()->get())) {
-				offset = Object::cast_to<Node2D>(selection.front()->get())->get_global_position();
+			if (selection.size() == 1 && Object::cast_to<Node2D>(selection.get_front())) {
+				offset = Object::cast_to<Node2D>(selection.get_front())->get_global_position();
 			} else if (selection.size() > 0) {
 				offset = _get_encompassing_rect_from_list(selection).position;
 			}
@@ -756,7 +756,7 @@ bool CanvasItemEditor::_select_click_on_item(CanvasItem *item, Point2 p_click_po
 			still_selected = false;
 
 			if (editor_selection->get_selected_node_list().size() == 1) {
-				EditorNode::get_singleton()->push_item(editor_selection->get_selected_node_list().front()->get());
+				EditorNode::get_singleton()->push_item(editor_selection->get_selected_node_list().get_front());
 			}
 		} else {
 			// Add the item to the selection
@@ -1373,7 +1373,7 @@ bool CanvasItemEditor::_gui_input_pivot(const Ref<InputEvent> &p_event) {
 				drag_from = transform.affine_inverse().xform(event_pos);
 				Vector2 new_pos;
 				if (drag_selection.size() == 1) {
-					new_pos = snap_point(drag_from, SNAP_NODE_SIDES | SNAP_NODE_CENTER | SNAP_NODE_ANCHORS | SNAP_OTHER_NODES | SNAP_GRID | SNAP_PIXEL, 0, drag_selection.front()->get());
+					new_pos = snap_point(drag_from, SNAP_NODE_SIDES | SNAP_NODE_CENTER | SNAP_NODE_ANCHORS | SNAP_OTHER_NODES | SNAP_GRID | SNAP_PIXEL, 0, drag_selection.get_front());
 				} else {
 					new_pos = snap_point(drag_from, SNAP_OTHER_NODES | SNAP_GRID | SNAP_PIXEL, 0, nullptr, drag_selection);
 				}
@@ -1394,7 +1394,7 @@ bool CanvasItemEditor::_gui_input_pivot(const Ref<InputEvent> &p_event) {
 			_restore_canvas_item_state(drag_selection);
 			Vector2 new_pos;
 			if (drag_selection.size() == 1) {
-				new_pos = snap_point(drag_to, SNAP_NODE_SIDES | SNAP_NODE_CENTER | SNAP_NODE_ANCHORS | SNAP_OTHER_NODES | SNAP_GRID | SNAP_PIXEL, 0, drag_selection.front()->get());
+				new_pos = snap_point(drag_to, SNAP_NODE_SIDES | SNAP_NODE_CENTER | SNAP_NODE_ANCHORS | SNAP_OTHER_NODES | SNAP_GRID | SNAP_PIXEL, 0, drag_selection.get_front());
 			} else {
 				new_pos = snap_point(drag_to, SNAP_OTHER_NODES | SNAP_GRID | SNAP_PIXEL);
 			}
@@ -1412,9 +1412,9 @@ bool CanvasItemEditor::_gui_input_pivot(const Ref<InputEvent> &p_event) {
 					drag_selection,
 					vformat(
 							TTR("Set CanvasItem \"%s\" Pivot Offset to (%d, %d)"),
-							drag_selection.front()->get()->get_name(),
-							drag_selection.front()->get()->_edit_get_pivot().x,
-							drag_selection.front()->get()->_edit_get_pivot().y));
+							drag_selection.get_front()->get_name(),
+							drag_selection.get_front()->_edit_get_pivot().x,
+							drag_selection.get_front()->_edit_get_pivot().y));
 			_reset_drag();
 			return true;
 		}
@@ -1465,7 +1465,7 @@ bool CanvasItemEditor::_gui_input_rotate(const Ref<InputEvent> &p_event) {
 				if (drag_selection.size() > 0) {
 					drag_type = DRAG_ROTATE;
 					drag_from = transform.affine_inverse().xform(b->get_position());
-					CanvasItem *ci = drag_selection.front()->get();
+					CanvasItem *ci = drag_selection.get_front();
 					if (!Math::is_inf(temp_pivot.x) || !Math::is_inf(temp_pivot.y)) {
 						drag_rotation_center = temp_pivot;
 					} else if (ci->_edit_use_pivot()) {
@@ -1514,8 +1514,8 @@ bool CanvasItemEditor::_gui_input_rotate(const Ref<InputEvent> &p_event) {
 				_commit_canvas_item_state(
 						drag_selection,
 						vformat(TTR("Rotate CanvasItem \"%s\" to %d degrees"),
-								drag_selection.front()->get()->get_name(),
-								Math::rad_to_deg(drag_selection.front()->get()->_edit_get_rotation())),
+								drag_selection.get_front()->get_name(),
+								Math::rad_to_deg(drag_selection.get_front()->_edit_get_rotation())),
 						true);
 			}
 
@@ -1545,7 +1545,7 @@ bool CanvasItemEditor::_gui_input_open_scene_on_double_click(const Ref<InputEven
 	if (b.is_valid() && b->get_button_index() == MouseButton::LEFT && b->is_pressed() && b->is_double_click() && tool == TOOL_SELECT) {
 		List<CanvasItem *> selection = _get_edited_canvas_items();
 		if (selection.size() == 1) {
-			CanvasItem *ci = selection.front()->get();
+			CanvasItem *ci = selection.get_front();
 			if (!ci->get_scene_file_path().is_empty() && ci != EditorNode::get_singleton()->get_edited_scene()) {
 				EditorNode::get_singleton()->open_request(ci->get_scene_file_path());
 				return true;
@@ -1564,7 +1564,7 @@ bool CanvasItemEditor::_gui_input_anchors(const Ref<InputEvent> &p_event) {
 		if (b.is_valid() && b->get_button_index() == MouseButton::LEFT && b->is_pressed() && tool == TOOL_SELECT) {
 			List<CanvasItem *> selection = _get_edited_canvas_items();
 			if (selection.size() == 1) {
-				Control *control = Object::cast_to<Control>(selection.front()->get());
+				Control *control = Object::cast_to<Control>(selection.get_front());
 				if (control && _is_node_movable(control)) {
 					Vector2 anchor_pos[4];
 					anchor_pos[0] = Vector2(control->get_anchor(SIDE_LEFT), control->get_anchor(SIDE_TOP));
@@ -1613,7 +1613,7 @@ bool CanvasItemEditor::_gui_input_anchors(const Ref<InputEvent> &p_event) {
 		// Drag the anchor
 		if (m.is_valid()) {
 			_restore_canvas_item_state(drag_selection);
-			Control *control = Object::cast_to<Control>(drag_selection.front()->get());
+			Control *control = Object::cast_to<Control>(drag_selection.get_front());
 
 			drag_to = transform.affine_inverse().xform(m->get_position());
 
@@ -1684,7 +1684,7 @@ bool CanvasItemEditor::_gui_input_anchors(const Ref<InputEvent> &p_event) {
 		if (drag_selection.size() >= 1 && b.is_valid() && b->get_button_index() == MouseButton::LEFT && !b->is_pressed()) {
 			_commit_canvas_item_state(
 					drag_selection,
-					vformat(TTR("Move CanvasItem \"%s\" Anchor"), drag_selection.front()->get()->get_name()));
+					vformat(TTR("Move CanvasItem \"%s\" Anchor"), drag_selection.get_front()->get_name()));
 			_reset_drag();
 			return true;
 		}
@@ -1709,7 +1709,7 @@ bool CanvasItemEditor::_gui_input_resize(const Ref<InputEvent> &p_event) {
 		if (b.is_valid() && b->get_button_index() == MouseButton::LEFT && b->is_pressed() && tool == TOOL_SELECT) {
 			List<CanvasItem *> selection = _get_edited_canvas_items();
 			if (selection.size() == 1) {
-				CanvasItem *ci = selection.front()->get();
+				CanvasItem *ci = selection.get_front();
 				if (ci->_edit_use_rect() && _is_node_movable(ci)) {
 					Rect2 rect = ci->_edit_get_rect();
 					Transform2D xform = transform * ci->get_global_transform_with_canvas();
@@ -1770,7 +1770,7 @@ bool CanvasItemEditor::_gui_input_resize(const Ref<InputEvent> &p_event) {
 			drag_type == DRAG_TOP_LEFT || drag_type == DRAG_TOP_RIGHT || drag_type == DRAG_BOTTOM_LEFT || drag_type == DRAG_BOTTOM_RIGHT) {
 		// Resize the node
 		if (m.is_valid()) {
-			CanvasItem *ci = drag_selection.front()->get();
+			CanvasItem *ci = drag_selection.get_front();
 			CanvasItemEditorSelectedItem *se = editor_selection->get_node_editor_data<CanvasItemEditorSelectedItem>(ci);
 			//Reset state
 			ci->_edit_set_state(se->undo_state);
@@ -1855,7 +1855,7 @@ bool CanvasItemEditor::_gui_input_resize(const Ref<InputEvent> &p_event) {
 
 		// Confirm resize
 		if (drag_selection.size() >= 1 && b.is_valid() && b->get_button_index() == MouseButton::LEFT && !b->is_pressed()) {
-			const Node2D *node2d = Object::cast_to<Node2D>(drag_selection.front()->get());
+			const Node2D *node2d = Object::cast_to<Node2D>(drag_selection.get_front());
 			if (node2d) {
 				// Extends from Node2D.
 				// Node2D doesn't have an actual stored rect size, unlike Controls.
@@ -1863,9 +1863,9 @@ bool CanvasItemEditor::_gui_input_resize(const Ref<InputEvent> &p_event) {
 						drag_selection,
 						vformat(
 								TTR("Scale Node2D \"%s\" to (%s, %s)"),
-								drag_selection.front()->get()->get_name(),
-								Math::snapped(drag_selection.front()->get()->_edit_get_scale().x, 0.01),
-								Math::snapped(drag_selection.front()->get()->_edit_get_scale().y, 0.01)),
+								drag_selection.get_front()->get_name(),
+								Math::snapped(drag_selection.get_front()->_edit_get_scale().x, 0.01),
+								Math::snapped(drag_selection.get_front()->_edit_get_scale().y, 0.01)),
 						true);
 			} else {
 				// Extends from Control.
@@ -1873,9 +1873,9 @@ bool CanvasItemEditor::_gui_input_resize(const Ref<InputEvent> &p_event) {
 						drag_selection,
 						vformat(
 								TTR("Resize Control \"%s\" to (%d, %d)"),
-								drag_selection.front()->get()->get_name(),
-								drag_selection.front()->get()->_edit_get_rect().size.x,
-								drag_selection.front()->get()->_edit_get_rect().size.y),
+								drag_selection.get_front()->get_name(),
+								drag_selection.get_front()->_edit_get_rect().size.x,
+								drag_selection.get_front()->_edit_get_rect().size.y),
 						true);
 			}
 
@@ -1912,7 +1912,7 @@ bool CanvasItemEditor::_gui_input_scale(const Ref<InputEvent> &p_event) {
 		if (b.is_valid() && b->get_button_index() == MouseButton::LEFT && b->is_pressed() && ((b->is_alt_pressed() && b->is_command_or_control_pressed()) || tool == TOOL_SCALE)) {
 			List<CanvasItem *> selection = _get_edited_canvas_items();
 			if (selection.size() == 1) {
-				CanvasItem *ci = selection.front()->get();
+				CanvasItem *ci = selection.get_front();
 
 				if (_is_node_movable(ci)) {
 					Transform2D xform = transform * ci->get_global_transform_with_canvas();
@@ -1947,7 +1947,7 @@ bool CanvasItemEditor::_gui_input_scale(const Ref<InputEvent> &p_event) {
 		// Resize the node
 		if (m.is_valid()) {
 			_restore_canvas_item_state(drag_selection);
-			CanvasItem *ci = drag_selection.front()->get();
+			CanvasItem *ci = drag_selection.get_front();
 
 			drag_to = transform.affine_inverse().xform(m->get_position());
 
@@ -2015,9 +2015,9 @@ bool CanvasItemEditor::_gui_input_scale(const Ref<InputEvent> &p_event) {
 				_commit_canvas_item_state(
 						drag_selection,
 						vformat(TTR("Scale CanvasItem \"%s\" to (%s, %s)"),
-								drag_selection.front()->get()->get_name(),
-								Math::snapped(drag_selection.front()->get()->_edit_get_scale().x, 0.01),
-								Math::snapped(drag_selection.front()->get()->_edit_get_scale().y, 0.01)),
+								drag_selection.get_front()->get_name(),
+								Math::snapped(drag_selection.get_front()->_edit_get_scale().x, 0.01),
+								Math::snapped(drag_selection.get_front()->_edit_get_scale().y, 0.01)),
 						true);
 			}
 			if (key_auto_insert_button->is_pressed()) {
@@ -2061,7 +2061,7 @@ bool CanvasItemEditor::_gui_input_move(const Ref<InputEvent> &p_event) {
 
 					drag_type = DRAG_MOVE;
 
-					CanvasItem *ci = selection.front()->get();
+					CanvasItem *ci = selection.get_front();
 					Transform2D parent_xform = ci->get_global_transform_with_canvas() * ci->get_transform().affine_inverse();
 					Transform2D unscaled_transform = (transform * parent_xform * ci->_edit_get_transform()).orthonormalized();
 					Transform2D simple_xform = viewport->get_transform() * unscaled_transform;
@@ -2095,8 +2095,8 @@ bool CanvasItemEditor::_gui_input_move(const Ref<InputEvent> &p_event) {
 			drag_to = transform.affine_inverse().xform(m->get_position());
 			Point2 previous_pos;
 			if (drag_selection.size() == 1) {
-				Transform2D parent_xform = drag_selection.front()->get()->get_global_transform_with_canvas() * drag_selection.front()->get()->get_transform().affine_inverse();
-				previous_pos = parent_xform.xform(drag_selection.front()->get()->_edit_get_position());
+				Transform2D parent_xform = drag_selection.get_front()->get_global_transform_with_canvas() * drag_selection.get_front()->get_transform().affine_inverse();
+				previous_pos = parent_xform.xform(drag_selection.get_front()->_edit_get_position());
 			} else {
 				previous_pos = _get_encompassing_rect_from_list(drag_selection).position;
 			}
@@ -2147,9 +2147,9 @@ bool CanvasItemEditor::_gui_input_move(const Ref<InputEvent> &p_event) {
 							drag_selection,
 							vformat(
 									TTR("Move CanvasItem \"%s\" to (%d, %d)"),
-									drag_selection.front()->get()->get_name(),
-									drag_selection.front()->get()->_edit_get_position().x,
-									drag_selection.front()->get()->_edit_get_position().y),
+									drag_selection.get_front()->get_name(),
+									drag_selection.get_front()->_edit_get_position().x,
+									drag_selection.get_front()->_edit_get_position().y),
 							true);
 				}
 			}
@@ -2225,15 +2225,15 @@ bool CanvasItemEditor::_gui_input_move(const Ref<InputEvent> &p_event) {
 
 			Point2 previous_pos;
 			if (drag_selection.size() == 1) {
-				Transform2D xform = drag_selection.front()->get()->get_global_transform_with_canvas() * drag_selection.front()->get()->get_transform().affine_inverse();
-				previous_pos = xform.xform(drag_selection.front()->get()->_edit_get_position());
+				Transform2D xform = drag_selection.get_front()->get_global_transform_with_canvas() * drag_selection.get_front()->get_transform().affine_inverse();
+				previous_pos = xform.xform(drag_selection.get_front()->_edit_get_position());
 			} else {
 				previous_pos = _get_encompassing_rect_from_list(drag_selection).position;
 			}
 
 			Point2 new_pos;
 			if (drag_selection.size() == 1) {
-				Node2D *node_2d = Object::cast_to<Node2D>(drag_selection.front()->get());
+				Node2D *node_2d = Object::cast_to<Node2D>(drag_selection.get_front());
 				if (node_2d && move_local_base_rotated) {
 					Transform2D m2;
 					m2.rotate(node_2d->get_rotation());
@@ -2271,9 +2271,9 @@ bool CanvasItemEditor::_gui_input_move(const Ref<InputEvent> &p_event) {
 				_commit_canvas_item_state(
 						drag_selection,
 						vformat(TTR("Move CanvasItem \"%s\" to (%d, %d)"),
-								drag_selection.front()->get()->get_name(),
-								drag_selection.front()->get()->_edit_get_position().x,
-								drag_selection.front()->get()->_edit_get_position().y),
+								drag_selection.get_front()->get_name(),
+								drag_selection.get_front()->_edit_get_position().x,
+								drag_selection.get_front()->_edit_get_position().y),
 						true);
 			}
 			_reset_drag();
@@ -2474,7 +2474,7 @@ bool CanvasItemEditor::_gui_input_select(const Ref<InputEvent> &p_event) {
 
 				_find_canvas_items_in_rect(Rect2(bsfrom, bsto - bsfrom), scene, &selitems);
 				if (selitems.size() == 1 && editor_selection->get_selected_node_list().is_empty()) {
-					EditorNode::get_singleton()->push_item(selitems.front()->get());
+					EditorNode::get_singleton()->push_item(selitems.get_front());
 				}
 				for (CanvasItem *E : selitems) {
 					editor_selection->add_node(E);
@@ -2722,7 +2722,7 @@ Control::CursorShape CanvasItemEditor::get_cursor_shape(const Point2 &p_pos) con
 
 	List<CanvasItem *> selection = _get_edited_canvas_items();
 	if (selection.size() == 1) {
-		const double angle = Math::fposmod((double)selection.front()->get()->get_global_transform_with_canvas().get_rotation(), Math_PI);
+		const double angle = Math::fposmod((double)selection.get_front()->get_global_transform_with_canvas().get_rotation(), Math_PI);
 		if (angle > Math_PI * 7.0 / 8.0) {
 			rotation_array_index = 0;
 		} else if (angle > Math_PI * 5.0 / 8.0) {
@@ -6091,7 +6091,7 @@ void CanvasItemEditorViewport::drop_data(const Point2 &p_point, const Variant &p
 	List<Node *> selected_nodes = EditorNode::get_singleton()->get_editor_selection()->get_selected_node_list();
 	Node *root_node = EditorNode::get_singleton()->get_edited_scene();
 	if (selected_nodes.size() > 0) {
-		Node *selected_node = selected_nodes.front()->get();
+		Node *selected_node = selected_nodes.get_front();
 		target_node = selected_node;
 		if (is_alt) {
 			target_node = root_node;
