@@ -1391,7 +1391,7 @@ void VisualShaderGraphPlugin::add_node(VisualShader::Type p_type, int p_id, bool
 
 		expression_box->begin_bulk_theme_override();
 		expression_box->add_theme_font_override(SceneStringName(font), editor->get_theme_font(SNAME("expression"), EditorStringName(EditorFonts)));
-		expression_box->add_theme_font_size_override("font_size", editor->get_theme_font_size(SNAME("expression_size"), EditorStringName(EditorFonts)));
+		expression_box->add_theme_font_size_override(SceneStringName(font), editor->get_theme_font_size(SNAME("expression_size"), EditorStringName(EditorFonts)));
 		expression_box->add_theme_color_override("font_color", text_color);
 		expression_box->end_bulk_theme_override();
 
@@ -4914,7 +4914,7 @@ void VisualShaderEditor::_notification(int p_what) {
 
 				preview_text->begin_bulk_theme_override();
 				preview_text->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("expression"), EditorStringName(EditorFonts)));
-				preview_text->add_theme_font_size_override("font_size", get_theme_font_size(SNAME("expression_size"), EditorStringName(EditorFonts)));
+				preview_text->add_theme_font_size_override(SceneStringName(font), get_theme_font_size(SNAME("expression_size"), EditorStringName(EditorFonts)));
 				preview_text->add_theme_color_override("font_color", text_color);
 				preview_text->end_bulk_theme_override();
 
@@ -4933,7 +4933,7 @@ void VisualShaderEditor::_notification(int p_what) {
 				error_panel->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SceneStringName(panel), SNAME("Panel")));
 				error_label->begin_bulk_theme_override();
 				error_label->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("status_source"), EditorStringName(EditorFonts)));
-				error_label->add_theme_font_size_override("font_size", get_theme_font_size(SNAME("status_source_size"), EditorStringName(EditorFonts)));
+				error_label->add_theme_font_size_override(SceneStringName(font), get_theme_font_size(SNAME("status_source_size"), EditorStringName(EditorFonts)));
 				error_label->add_theme_color_override("font_color", error_color);
 				error_label->end_bulk_theme_override();
 			}

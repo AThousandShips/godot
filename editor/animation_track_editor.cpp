@@ -1433,7 +1433,7 @@ void AnimationTimelineEdit::_notification(int p_what) {
 			}
 
 			Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
-			int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+			int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 			Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
 
 			int zoomw = key_range;
@@ -1625,7 +1625,7 @@ void AnimationTimelineEdit::set_animation(const Ref<Animation> &p_animation, boo
 Size2 AnimationTimelineEdit::get_minimum_size() const {
 	Size2 ms = add_track->get_minimum_size();
 	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
-	int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+	int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 	ms.height = MAX(ms.height, font->get_height(font_size));
 	ms.width = get_buttons_width() + add_track->get_minimum_size().width + get_editor_theme_icon(SNAME("Hsize"))->get_width() + 2;
 	return ms;
@@ -1981,7 +1981,7 @@ void AnimationTrackEdit::_notification(int p_what) {
 			}
 
 			Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
-			int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+			int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 			Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
 			int hsep = get_theme_constant(SNAME("h_separation"), SNAME("ItemList"));
 			Color linecolor = color;
@@ -2358,7 +2358,7 @@ void AnimationTrackEdit::draw_key(int p_index, float p_pixels_sec, int p_x, bool
 
 	if (animation->track_get_type(track) == Animation::TYPE_METHOD) {
 		Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
-		int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+		int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 		Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
 		color.a = 0.5;
 
@@ -2483,7 +2483,7 @@ NodePath AnimationTrackEdit::get_path() const {
 Size2 AnimationTrackEdit::get_minimum_size() const {
 	Ref<Texture2D> texture = get_editor_theme_icon(SNAME("Object"));
 	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
-	int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+	int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 	int separation = get_theme_constant(SNAME("v_separation"), SNAME("ItemList"));
 
 	int max_h = MAX(texture->get_height(), font->get_height(font_size));
@@ -3400,7 +3400,7 @@ void AnimationTrackEditGroup::_notification(int p_what) {
 
 		case NOTIFICATION_DRAW: {
 			Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
-			int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+			int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 			int separation = get_theme_constant(SNAME("h_separation"), SNAME("ItemList"));
 			Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
 
@@ -3465,7 +3465,7 @@ void AnimationTrackEditGroup::set_type_and_name(const Ref<Texture2D> &p_type, co
 
 Size2 AnimationTrackEditGroup::get_minimum_size() const {
 	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
-	int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+	int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 	int separation = get_theme_constant(SNAME("v_separation"), SNAME("ItemList"));
 
 	return Vector2(0, MAX(font->get_height(font_size), icon_size.y) + separation);

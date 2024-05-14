@@ -166,7 +166,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox(SceneStringName(focus), "Button", focus);
 
 	theme->set_font(SceneStringName(font), "Button", Ref<Font>());
-	theme->set_font_size("font_size", "Button", -1);
+	theme->set_font_size(SceneStringName(font), "Button", -1);
 	theme->set_constant("outline_size", "Button", 0);
 
 	theme->set_color("font_color", "Button", control_font_color);
@@ -194,7 +194,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox(SceneStringName(disabled), "MenuBar", button_disabled);
 
 	theme->set_font(SceneStringName(font), "MenuBar", Ref<Font>());
-	theme->set_font_size("font_size", "MenuBar", -1);
+	theme->set_font_size(SceneStringName(font), "MenuBar", -1);
 	theme->set_constant("outline_size", "MenuBar", 0);
 
 	theme->set_color("font_color", "MenuBar", control_font_color);
@@ -212,7 +212,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox(SceneStringName(focus), "LinkButton", focus);
 
 	theme->set_font(SceneStringName(font), "LinkButton", Ref<Font>());
-	theme->set_font_size("font_size", "LinkButton", -1);
+	theme->set_font_size(SceneStringName(font), "LinkButton", -1);
 
 	theme->set_color("font_color", "LinkButton", control_font_color);
 	theme->set_color("font_pressed_color", "LinkButton", control_font_pressed_color);
@@ -249,7 +249,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("arrow", "OptionButton", icons["option_button_arrow"]);
 
 	theme->set_font(SceneStringName(font), "OptionButton", Ref<Font>());
-	theme->set_font_size("font_size", "OptionButton", -1);
+	theme->set_font_size(SceneStringName(font), "OptionButton", -1);
 
 	theme->set_color("font_color", "OptionButton", control_font_color);
 	theme->set_color("font_pressed_color", "OptionButton", control_font_pressed_color);
@@ -273,7 +273,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox(SceneStringName(focus), "MenuButton", focus);
 
 	theme->set_font(SceneStringName(font), "MenuButton", Ref<Font>());
-	theme->set_font_size("font_size", "MenuButton", -1);
+	theme->set_font_size(SceneStringName(font), "MenuButton", -1);
 
 	theme->set_color("font_color", "MenuButton", control_font_color);
 	theme->set_color("font_pressed_color", "MenuButton", control_font_pressed_color);
@@ -309,7 +309,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("radio_unchecked_disabled", "CheckBox", icons["radio_unchecked_disabled"]);
 
 	theme->set_font(SceneStringName(font), "CheckBox", Ref<Font>());
-	theme->set_font_size("font_size", "CheckBox", -1);
+	theme->set_font_size(SceneStringName(font), "CheckBox", -1);
 
 	theme->set_color("font_color", "CheckBox", control_font_color);
 	theme->set_color("font_pressed_color", "CheckBox", control_font_pressed_color);
@@ -346,7 +346,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("unchecked_disabled_mirrored", "CheckButton", icons["toggle_off_disabled_mirrored"]);
 
 	theme->set_font(SceneStringName(font), "CheckButton", Ref<Font>());
-	theme->set_font_size("font_size", "CheckButton", -1);
+	theme->set_font_size(SceneStringName(font), "CheckButton", -1);
 
 	theme->set_color("font_color", "CheckButton", control_font_color);
 	theme->set_color("font_pressed_color", "CheckButton", control_font_pressed_color);
@@ -386,7 +386,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_stylebox(CoreStringName(normal), "Label", memnew(StyleBoxEmpty));
 	theme->set_font(SceneStringName(font), "Label", Ref<Font>());
-	theme->set_font_size("font_size", "Label", -1);
+	theme->set_font_size(SceneStringName(font), "Label", -1);
 
 	theme->set_color("font_color", "Label", Color(1, 1, 1));
 	theme->set_color("font_shadow_color", "Label", Color(0, 0, 0, 0));
@@ -399,13 +399,13 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant("line_spacing", "Label", Math::round(3 * scale));
 
 	theme->set_type_variation("HeaderSmall", "Label");
-	theme->set_font_size("font_size", "HeaderSmall", default_font_size + 4);
+	theme->set_font_size(SceneStringName(font), "HeaderSmall", default_font_size + 4);
 
 	theme->set_type_variation("HeaderMedium", "Label");
-	theme->set_font_size("font_size", "HeaderMedium", default_font_size + 8);
+	theme->set_font_size(SceneStringName(font), "HeaderMedium", default_font_size + 8);
 
 	theme->set_type_variation("HeaderLarge", "Label");
-	theme->set_font_size("font_size", "HeaderLarge", default_font_size + 12);
+	theme->set_font_size(SceneStringName(font), "HeaderLarge", default_font_size + 12);
 
 	// LineEdit
 
@@ -424,7 +424,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox("read_only", "LineEdit", style_line_edit_read_only);
 
 	theme->set_font(SceneStringName(font), "LineEdit", Ref<Font>());
-	theme->set_font_size("font_size", "LineEdit", -1);
+	theme->set_font_size(SceneStringName(font), "LineEdit", -1);
 
 	theme->set_color("font_color", "LineEdit", control_font_color);
 	theme->set_color("font_selected_color", "LineEdit", control_font_pressed_color);
@@ -448,7 +448,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox("fill", "ProgressBar", make_flat_stylebox(style_progress_color, 2, 2, 2, 2, 6));
 
 	theme->set_font(SceneStringName(font), "ProgressBar", Ref<Font>());
-	theme->set_font_size("font_size", "ProgressBar", -1);
+	theme->set_font_size(SceneStringName(font), "ProgressBar", -1);
 
 	theme->set_color("font_color", "ProgressBar", control_font_hover_color);
 	theme->set_color("font_outline_color", "ProgressBar", Color(0, 0, 0));
@@ -465,7 +465,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("space", "TextEdit", icons["text_edit_space"]);
 
 	theme->set_font(SceneStringName(font), "TextEdit", Ref<Font>());
-	theme->set_font_size("font_size", "TextEdit", -1);
+	theme->set_font_size(SceneStringName(font), "TextEdit", -1);
 
 	theme->set_color("background_color", "TextEdit", Color(0, 0, 0, 0));
 	theme->set_color("font_color", "TextEdit", control_font_color);
@@ -504,7 +504,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("folded_eol_icon", "CodeEdit", icons["text_edit_ellipsis"]);
 
 	theme->set_font(SceneStringName(font), "CodeEdit", Ref<Font>());
-	theme->set_font_size("font_size", "CodeEdit", -1);
+	theme->set_font_size(SceneStringName(font), "CodeEdit", -1);
 
 	theme->set_color("background_color", "CodeEdit", Color(0, 0, 0, 0));
 	theme->set_color("completion_background_color", "CodeEdit", Color(0.17, 0.16, 0.2));
@@ -699,7 +699,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_font(SceneStringName(font), "PopupMenu", Ref<Font>());
 	theme->set_font("font_separator", "PopupMenu", Ref<Font>());
-	theme->set_font_size("font_size", "PopupMenu", -1);
+	theme->set_font_size(SceneStringName(font), "PopupMenu", -1);
 	theme->set_font_size("font_separator_size", "PopupMenu", -1);
 
 	theme->set_color("font_color", "PopupMenu", control_font_color);
@@ -748,7 +748,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_stylebox(CoreStringName(normal), "GraphNodeTitleLabel", make_empty_stylebox(0, 0, 0, 0));
 	theme->set_font(SceneStringName(font), "GraphNodeTitleLabel", Ref<Font>());
-	theme->set_font_size("font_size", "GraphNodeTitleLabel", -1);
+	theme->set_font_size(SceneStringName(font), "GraphNodeTitleLabel", -1);
 	theme->set_color("font_color", "GraphNodeTitleLabel", control_font_color);
 	theme->set_color("font_shadow_color", "GraphNodeTitleLabel", Color(0, 0, 0, 0));
 	theme->set_color("font_outline_color", "GraphNodeTitleLabel", Color(0, 0, 0));
@@ -778,7 +778,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_type_variation("GraphFrameTitleLabel", "Label");
 
 	theme->set_stylebox(CoreStringName(normal), "GraphFrameTitleLabel", memnew(StyleBoxEmpty));
-	theme->set_font_size("font_size", "GraphFrameTitleLabel", 22);
+	theme->set_font_size(SceneStringName(font), "GraphFrameTitleLabel", 22);
 	theme->set_color("font_color", "GraphFrameTitleLabel", Color(1, 1, 1));
 	theme->set_color("font_shadow_color", "GraphFrameTitleLabel", Color(0, 0, 0, 0));
 	theme->set_color("font_outline_color", "GraphFrameTitleLabel", Color(1, 1, 1));
@@ -818,7 +818,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_font("title_button_font", "Tree", Ref<Font>());
 	theme->set_font(SceneStringName(font), "Tree", Ref<Font>());
-	theme->set_font_size("font_size", "Tree", -1);
+	theme->set_font_size(SceneStringName(font), "Tree", -1);
 	theme->set_font_size("title_button_font_size", "Tree", -1);
 
 	theme->set_color("title_button_color", "Tree", control_font_color);
@@ -868,7 +868,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant(SceneStringName(line_separation), "ItemList", Math::round(2 * scale));
 
 	theme->set_font(SceneStringName(font), "ItemList", Ref<Font>());
-	theme->set_font_size("font_size", "ItemList", -1);
+	theme->set_font_size(SceneStringName(font), "ItemList", -1);
 
 	theme->set_color("font_color", "ItemList", control_font_lower_color);
 	theme->set_color("font_hovered_color", "ItemList", control_font_hover_color);
@@ -916,7 +916,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("menu_highlight", "TabContainer", icons["tabs_menu_hl"]);
 
 	theme->set_font(SceneStringName(font), "TabContainer", Ref<Font>());
-	theme->set_font_size("font_size", "TabContainer", -1);
+	theme->set_font_size(SceneStringName(font), "TabContainer", -1);
 
 	theme->set_color("font_selected_color", "TabContainer", control_font_hover_color);
 	theme->set_color("font_hovered_color", "TabContainer", control_font_hover_color);
@@ -948,7 +948,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("close", "TabBar", icons["close"]);
 
 	theme->set_font(SceneStringName(font), "TabBar", Ref<Font>());
-	theme->set_font_size("font_size", "TabBar", -1);
+	theme->set_font_size(SceneStringName(font), "TabBar", -1);
 
 	theme->set_color("font_selected_color", "TabBar", control_font_hover_color);
 	theme->set_color("font_hovered_color", "TabBar", control_font_hover_color);
@@ -1057,7 +1057,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox(SceneStringName(focus), "ColorPickerButton", focus);
 
 	theme->set_font(SceneStringName(font), "ColorPickerButton", Ref<Font>());
-	theme->set_font_size("font_size", "ColorPickerButton", -1);
+	theme->set_font_size(SceneStringName(font), "ColorPickerButton", -1);
 
 	theme->set_color("font_color", "ColorPickerButton", Color(1, 1, 1, 1));
 	theme->set_color("font_pressed_color", "ColorPickerButton", Color(0.8, 0.8, 0.8, 1));
@@ -1087,7 +1087,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 			make_flat_stylebox(Color(0, 0, 0, 0.5), 2 * default_margin, 0.5 * default_margin, 2 * default_margin, 0.5 * default_margin));
 
 	theme->set_type_variation("TooltipLabel", "Label");
-	theme->set_font_size("font_size", "TooltipLabel", -1);
+	theme->set_font_size(SceneStringName(font), "TooltipLabel", -1);
 	theme->set_font(SceneStringName(font), "TooltipLabel", Ref<Font>());
 
 	theme->set_color("font_color", "TooltipLabel", control_font_color);

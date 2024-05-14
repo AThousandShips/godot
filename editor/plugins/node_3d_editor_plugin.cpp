@@ -3108,7 +3108,7 @@ void Node3DEditorViewport::_draw() {
 
 	if (message_time > 0) {
 		Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
-		int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+		int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 		Point2 msgpos = Point2(5, get_size().y - 20);
 		font->draw_string(ci, msgpos + Point2(1, 1), message, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, Color(0, 0, 0, 0.8));
 		font->draw_string(ci, msgpos + Point2(-1, -1), message, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, Color(0, 0, 0, 0.8));
@@ -3187,7 +3187,7 @@ void Node3DEditorViewport::_draw() {
 							1.0 - logscale_t,
 							get_editor_theme_icon(SNAME("ViewportSpeed")),
 							get_theme_font(SceneStringName(font), SNAME("Label")),
-							get_theme_font_size(SNAME("font_size"), SNAME("Label")),
+							get_theme_font_size(SceneStringName(font), SNAME("Label")),
 							vformat("%s m/s", String::num(freelook_speed).pad_decimals(precision)),
 							Color(1.0, 0.95, 0.7));
 				}
@@ -3210,7 +3210,7 @@ void Node3DEditorViewport::_draw() {
 							logscale_t,
 							get_editor_theme_icon(SNAME("ViewportZoom")),
 							get_theme_font(SceneStringName(font), SNAME("Label")),
-							get_theme_font_size(SNAME("font_size"), SNAME("Label")),
+							get_theme_font_size(SceneStringName(font), SNAME("Label")),
 							vformat("%s m", String::num(cursor.distance).pad_decimals(precision)),
 							Color(0.7, 0.95, 1.0));
 				}

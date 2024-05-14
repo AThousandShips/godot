@@ -69,7 +69,7 @@ bool EditorInspector::_property_path_matches(const String &p_property_path, cons
 Size2 EditorProperty::get_minimum_size() const {
 	Size2 ms;
 	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Tree"));
-	int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Tree"));
+	int font_size = get_theme_font_size(SceneStringName(font), SNAME("Tree"));
 	ms.height = label.is_empty() ? 0 : font->get_height(font_size) + 4 * EDSCALE;
 
 	for (int i = 0; i < get_child_count(); i++) {
@@ -132,7 +132,7 @@ void EditorProperty::_notification(int p_what) {
 			{
 				int child_room = size.width * (1.0 - split_ratio);
 				Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Tree"));
-				int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Tree"));
+				int font_size = get_theme_font_size(SceneStringName(font), SNAME("Tree"));
 				int height = label.is_empty() ? 0 : font->get_height(font_size) + 4 * EDSCALE;
 				bool no_children = true;
 
@@ -229,7 +229,7 @@ void EditorProperty::_notification(int p_what) {
 
 		case NOTIFICATION_DRAW: {
 			Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Tree"));
-			int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Tree"));
+			int font_size = get_theme_font_size(SceneStringName(font), SNAME("Tree"));
 			bool rtl = is_layout_rtl();
 
 			Size2 size = get_size();
@@ -1520,7 +1520,7 @@ Size2 EditorInspectorSection::get_minimum_size() const {
 	}
 
 	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Tree"));
-	int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Tree"));
+	int font_size = get_theme_font_size(SceneStringName(font), SNAME("Tree"));
 	ms.height += font->get_height(font_size) + get_theme_constant(SNAME("v_separation"), SNAME("Tree"));
 	ms.width += get_theme_constant(SNAME("inspector_margin"), EditorStringName(Editor));
 

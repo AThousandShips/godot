@@ -348,7 +348,7 @@ void ScreenSelect::_build_advanced_menu() {
 	}
 
 	// Populate screen list.
-	const real_t height = real_t(get_theme_font_size("font_size")) * 1.5;
+	const real_t height = real_t(get_theme_font_size(SceneStringName(font))) * 1.5;
 
 	int current_screen = get_window()->get_current_screen();
 	for (int i = 0; i < DisplayServer::get_singleton()->get_screen_count(); i++) {
@@ -393,7 +393,7 @@ void ScreenSelect::_notification(int p_what) {
 			set_icon(get_editor_theme_icon("MakeFloating"));
 			popup_background->add_theme_style_override(SceneStringName(panel), get_theme_stylebox("PanelForeground", EditorStringName(EditorStyles)));
 
-			const real_t popup_height = real_t(get_theme_font_size("font_size")) * 2.0;
+			const real_t popup_height = real_t(get_theme_font_size(SceneStringName(font))) * 2.0;
 			popup->set_min_size(Size2(0, popup_height * 3));
 		} break;
 	}

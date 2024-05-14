@@ -166,7 +166,7 @@ void EditorPropertyMultilineText::_open_big_text() {
 		if (expression) {
 			big_text->set_syntax_highlighter(text->get_syntax_highlighter());
 			big_text->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("expression"), EditorStringName(EditorFonts)));
-			big_text->add_theme_font_size_override("font_size", get_theme_font_size(SNAME("expression_size"), EditorStringName(EditorFonts)));
+			big_text->add_theme_font_size_override(SceneStringName(font), get_theme_font_size(SNAME("expression_size"), EditorStringName(EditorFonts)));
 		}
 		big_text->connect(SceneStringName(text_changed), callable_mp(this, &EditorPropertyMultilineText::_big_text_changed));
 		big_text->set_line_wrapping_mode(TextEdit::LineWrappingMode::LINE_WRAPPING_BOUNDARY);
@@ -205,14 +205,14 @@ void EditorPropertyMultilineText::_notification(int p_what) {
 				font_size = get_theme_font_size(SNAME("expression_size"), EditorStringName(EditorFonts));
 
 				text->add_theme_font_override(SceneStringName(font), font);
-				text->add_theme_font_size_override("font_size", font_size);
+				text->add_theme_font_size_override(SceneStringName(font), font_size);
 				if (big_text) {
 					big_text->add_theme_font_override(SceneStringName(font), font);
-					big_text->add_theme_font_size_override("font_size", font_size);
+					big_text->add_theme_font_size_override(SceneStringName(font), font_size);
 				}
 			} else {
 				font = get_theme_font(SceneStringName(font), SNAME("TextEdit"));
-				font_size = get_theme_font_size(SNAME("font_size"), SNAME("TextEdit"));
+				font_size = get_theme_font_size(SceneStringName(font), SNAME("TextEdit"));
 			}
 			text->set_custom_minimum_size(Vector2(0, font->get_height(font_size) * 6));
 		} break;
@@ -859,7 +859,7 @@ EditorPropertyLayersGrid::EditorPropertyLayersGrid() {
 
 Size2 EditorPropertyLayersGrid::get_grid_size() const {
 	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
-	int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+	int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 	return Vector2(0, font->get_height(font_size) * 3);
 }
 
@@ -1030,7 +1030,7 @@ void EditorPropertyLayersGrid::_notification(int p_what) {
 						flag_rects.push_back(rect2);
 
 						Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
-						int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+						int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 						Vector2 offset;
 						offset.y = rect2.size.y * 0.75;
 
@@ -1571,7 +1571,7 @@ void EditorPropertyEasing::_draw_easing() {
 	const float exp = get_edited_property_value();
 
 	const Ref<Font> f = get_theme_font(SceneStringName(font), SNAME("Label"));
-	int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
+	int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 	const Color font_color = get_theme_color(is_read_only() ? SNAME("font_uneditable_color") : SNAME("font_color"), SNAME("LineEdit"));
 	Color line_color;
 	if (dragging) {
@@ -1670,7 +1670,7 @@ void EditorPropertyEasing::_notification(int p_what) {
 				preset->add_icon_item(get_editor_theme_icon(SNAME("CurveInOut")), "Ease In-Out", EASING_IN_OUT);
 				preset->add_icon_item(get_editor_theme_icon(SNAME("CurveOutIn")), "Ease Out-In", EASING_OUT_IN);
 			}
-			easing_draw->set_custom_minimum_size(Size2(0, get_theme_font(SceneStringName(font), SNAME("Label"))->get_height(get_theme_font_size(SNAME("font_size"), SNAME("Label"))) * 2));
+			easing_draw->set_custom_minimum_size(Size2(0, get_theme_font(SceneStringName(font), SNAME("Label"))->get_height(get_theme_font_size(SceneStringName(font), SNAME("Label"))) * 2));
 		} break;
 	}
 }

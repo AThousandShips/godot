@@ -488,7 +488,7 @@ void DynamicFontImportSettingsDialog::_main_prop_changed(const String &p_edited_
 	}
 
 	font_preview_label->add_theme_font_override(SceneStringName(font), font_preview);
-	font_preview_label->add_theme_font_size_override("font_size", 200 * EDSCALE);
+	font_preview_label->add_theme_font_size_override(SceneStringName(font), 200 * EDSCALE);
 	font_preview_label->queue_redraw();
 }
 
@@ -837,7 +837,7 @@ void DynamicFontImportSettingsDialog::_edit_range(int32_t p_start, int32_t p_end
 		item->set_selectable(col + 1, true);
 
 		item->set_custom_font(col + 1, font_main_big);
-		item->set_custom_font_size(col + 1, get_theme_font_size(SNAME("font_size")) * 2);
+		item->set_custom_font_size(col + 1, get_theme_font_size(SceneStringName(font)) * 2);
 
 		col++;
 		if (col == 16) {
@@ -1227,7 +1227,7 @@ void DynamicFontImportSettingsDialog::open_settings(const String &p_path) {
 		font_preview->set_oversampling(import_settings_data->get("oversampling"));
 	}
 	font_preview_label->add_theme_font_override(SceneStringName(font), font_preview);
-	font_preview_label->add_theme_font_size_override("font_size", 200 * EDSCALE);
+	font_preview_label->add_theme_font_size_override(SceneStringName(font), 200 * EDSCALE);
 	font_preview_label->queue_redraw();
 
 	_variations_validate();

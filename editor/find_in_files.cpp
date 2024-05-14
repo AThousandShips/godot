@@ -715,9 +715,9 @@ void FindInFilesPanel::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			_search_text_label->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("source"), EditorStringName(EditorFonts)));
-			_search_text_label->add_theme_font_size_override("font_size", get_theme_font_size(SNAME("source_size"), EditorStringName(EditorFonts)));
+			_search_text_label->add_theme_font_size_override(SceneStringName(font), get_theme_font_size(SNAME("source_size"), EditorStringName(EditorFonts)));
 			_results_display->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("source"), EditorStringName(EditorFonts)));
-			_results_display->add_theme_font_size_override("font_size", get_theme_font_size(SNAME("source_size"), EditorStringName(EditorFonts)));
+			_results_display->add_theme_font_size_override(SceneStringName(font), get_theme_font_size(SNAME("source_size"), EditorStringName(EditorFonts)));
 
 			// Rebuild search tree.
 			if (!_finder->get_search_text().is_empty()) {
@@ -797,7 +797,7 @@ void FindInFilesPanel::draw_result_text(Object *item_obj, Rect2 rect) {
 	Result r = E->value;
 	String item_text = item->get_text(_with_replace ? 1 : 0);
 	Ref<Font> font = _results_display->get_theme_font(SceneStringName(font));
-	int font_size = _results_display->get_theme_font_size(SNAME("font_size"));
+	int font_size = _results_display->get_theme_font_size(SceneStringName(font));
 
 	Rect2 match_rect = rect;
 	match_rect.position.x += font->get_string_size(item_text.left(r.begin_trimmed), HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x - 1;

@@ -148,7 +148,7 @@ TexturePreview::TexturePreview(Ref<Texture2D> p_texture, bool p_show_metadata) {
 		metadata_label->add_theme_color_override("font_color", Color::named("white"));
 		metadata_label->add_theme_color_override("font_shadow_color", Color::named("black"));
 
-		metadata_label->add_theme_font_size_override("font_size", 14 * EDSCALE);
+		metadata_label->add_theme_font_size_override(SceneStringName(font), 14 * EDSCALE);
 		metadata_label->add_theme_color_override("font_outline_color", Color::named("black"));
 		metadata_label->add_theme_constant_override("outline_size", 8 * EDSCALE);
 		metadata_label->set_h_size_flags(Control::SIZE_SHRINK_END);

@@ -403,7 +403,7 @@ void editor_register_fonts(const Ref<Theme> &p_theme) {
 
 	p_theme->set_type_variation("MainScreenButton", "Button");
 	p_theme->set_font(SceneStringName(font), "MainScreenButton", bold_fc);
-	p_theme->set_font_size("font_size", "MainScreenButton", default_font_size + 2 * EDSCALE);
+	p_theme->set_font_size(SceneStringName(font), "MainScreenButton", default_font_size + 2 * EDSCALE);
 
 	// Labels.
 
@@ -411,15 +411,15 @@ void editor_register_fonts(const Ref<Theme> &p_theme) {
 
 	p_theme->set_type_variation("HeaderSmall", "Label");
 	p_theme->set_font(SceneStringName(font), "HeaderSmall", bold_fc);
-	p_theme->set_font_size("font_size", "HeaderSmall", default_font_size);
+	p_theme->set_font_size(SceneStringName(font), "HeaderSmall", default_font_size);
 
 	p_theme->set_type_variation("HeaderMedium", "Label");
 	p_theme->set_font(SceneStringName(font), "HeaderMedium", bold_fc);
-	p_theme->set_font_size("font_size", "HeaderMedium", default_font_size + 1 * EDSCALE);
+	p_theme->set_font_size(SceneStringName(font), "HeaderMedium", default_font_size + 1 * EDSCALE);
 
 	p_theme->set_type_variation("HeaderLarge", "Label");
 	p_theme->set_font(SceneStringName(font), "HeaderLarge", bold_fc);
-	p_theme->set_font_size("font_size", "HeaderLarge", default_font_size + 3 * EDSCALE);
+	p_theme->set_font_size(SceneStringName(font), "HeaderLarge", default_font_size + 3 * EDSCALE);
 
 	p_theme->set_font("normal_font", "RichTextLabel", default_fc);
 	p_theme->set_font("bold_font", "RichTextLabel", bold_fc);
