@@ -3011,7 +3011,7 @@ void Node3DEditorViewport::_notification(int p_what) {
 			Control *gui_base = EditorNode::get_singleton()->get_gui_base();
 
 			view_menu->begin_bulk_theme_override();
-			view_menu->add_theme_style_override("normal", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
+			view_menu->add_theme_style_override(CoreStringName(normal), gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
 			view_menu->add_theme_style_override("hover", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
 			view_menu->add_theme_style_override(SceneStringName(pressed), gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
 			view_menu->add_theme_style_override("focus", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
@@ -3019,7 +3019,7 @@ void Node3DEditorViewport::_notification(int p_what) {
 			view_menu->end_bulk_theme_override();
 
 			preview_camera->begin_bulk_theme_override();
-			preview_camera->add_theme_style_override("normal", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
+			preview_camera->add_theme_style_override(CoreStringName(normal), gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
 			preview_camera->add_theme_style_override("hover", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
 			preview_camera->add_theme_style_override(SceneStringName(pressed), gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
 			preview_camera->add_theme_style_override("focus", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
@@ -3030,12 +3030,12 @@ void Node3DEditorViewport::_notification(int p_what) {
 			frame_time_gradient->set_color(1, get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
 			frame_time_gradient->set_color(2, get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
 
-			info_label->add_theme_style_override("normal", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
-			cpu_time_label->add_theme_style_override("normal", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
-			gpu_time_label->add_theme_style_override("normal", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
-			fps_label->add_theme_style_override("normal", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
-			cinema_label->add_theme_style_override("normal", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
-			locked_label->add_theme_style_override("normal", gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
+			info_label->add_theme_style_override(CoreStringName(normal), gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
+			cpu_time_label->add_theme_style_override(CoreStringName(normal), gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
+			gpu_time_label->add_theme_style_override(CoreStringName(normal), gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
+			fps_label->add_theme_style_override(CoreStringName(normal), gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
+			cinema_label->add_theme_style_override(CoreStringName(normal), gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
+			locked_label->add_theme_style_override(CoreStringName(normal), gui_base->get_theme_stylebox(SNAME("Information3dViewport"), EditorStringName(EditorStyles)));
 		} break;
 
 		case NOTIFICATION_DRAG_END: {

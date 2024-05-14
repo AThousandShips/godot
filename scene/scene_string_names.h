@@ -218,7 +218,6 @@ public:
 	StringName text_changed;
 
 	StringName panel;
-	StringName normal;
 	StringName hover;
 	StringName hover_pressed;
 	StringName disabled;

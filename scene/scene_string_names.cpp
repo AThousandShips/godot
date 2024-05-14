@@ -210,7 +210,6 @@ SceneStringNames::SceneStringNames() {
 	text_changed = StaticCString::create("text_changed");
 
 	panel = StaticCString::create("panel");
-	normal = StaticCString::create("normal");
 	hover = StaticCString::create("hover");
 	hover_pressed = StaticCString::create("hover_pressed");
 	disabled = StaticCString::create("disabled");
