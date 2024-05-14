@@ -8072,7 +8072,7 @@ void TextEdit::_text_changed() {
 }
 
 void TextEdit::_emit_text_changed() {
-	emit_signal(SNAME("text_changed"));
+	emit_signal(SceneStringName(text_changed));
 	text_changed_dirty = false;
 }
 

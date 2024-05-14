@@ -1286,7 +1286,7 @@ GridMapEditor::GridMapEditor() {
 	search_box->set_placeholder(TTR("Filter Meshes"));
 	search_box->set_clear_button_enabled(true);
 	hb->add_child(search_box);
-	search_box->connect("text_changed", callable_mp(this, &GridMapEditor::_text_changed));
+	search_box->connect(SceneStringName(text_changed), callable_mp(this, &GridMapEditor::_text_changed));
 	search_box->connect(SceneStringName(gui_input), callable_mp(this, &GridMapEditor::_sbox_input));
 
 	mode_thumbnail = memnew(Button);

@@ -313,14 +313,14 @@ RunInstancesDialog::RunInstancesDialog() {
 	args_gc->add_child(main_args_edit);
 	_fetch_main_args();
 	ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &RunInstancesDialog::_fetch_main_args));
-	main_args_edit->connect("text_changed", callable_mp(this, &RunInstancesDialog::_start_main_timer).unbind(1));
+	main_args_edit->connect(SceneStringName(text_changed), callable_mp(this, &RunInstancesDialog::_start_main_timer).unbind(1));
 
 	main_features_edit = memnew(LineEdit);
 	main_features_edit->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	main_features_edit->set_placeholder(TTR("Comma-separated tags, example: demo, steam, event"));
 	main_features_edit->set_text(EditorSettings::get_singleton()->get_project_metadata("debug_options", "run_main_feature_tags", ""));
 	args_gc->add_child(main_features_edit);
-	main_features_edit->connect("text_changed", callable_mp(this, &RunInstancesDialog::_start_main_timer).unbind(1));
+	main_features_edit->connect(SceneStringName(text_changed), callable_mp(this, &RunInstancesDialog::_start_main_timer).unbind(1));
 
 	{
 		Label *l = memnew(Label);

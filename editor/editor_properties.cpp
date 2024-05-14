@@ -140,7 +140,7 @@ EditorPropertyText::EditorPropertyText() {
 	hb->add_child(text);
 	add_focusable(text);
 	text->set_h_size_flags(SIZE_EXPAND_FILL);
-	text->connect("text_changed", callable_mp(this, &EditorPropertyText::_text_changed));
+	text->connect(SceneStringName(text_changed), callable_mp(this, &EditorPropertyText::_text_changed));
 	text->connect("text_submitted", callable_mp(this, &EditorPropertyText::_text_submitted));
 }
 
@@ -168,7 +168,7 @@ void EditorPropertyMultilineText::_open_big_text() {
 			big_text->add_theme_font_override("font", get_theme_font(SNAME("expression"), EditorStringName(EditorFonts)));
 			big_text->add_theme_font_size_override("font_size", get_theme_font_size(SNAME("expression_size"), EditorStringName(EditorFonts)));
 		}
-		big_text->connect("text_changed", callable_mp(this, &EditorPropertyMultilineText::_big_text_changed));
+		big_text->connect(SceneStringName(text_changed), callable_mp(this, &EditorPropertyMultilineText::_big_text_changed));
 		big_text->set_line_wrapping_mode(TextEdit::LineWrappingMode::LINE_WRAPPING_BOUNDARY);
 		big_text_dialog = memnew(AcceptDialog);
 		big_text_dialog->add_child(big_text);
@@ -228,7 +228,7 @@ EditorPropertyMultilineText::EditorPropertyMultilineText(bool p_expression) {
 	add_child(hb);
 	set_bottom_editor(hb);
 	text = memnew(TextEdit);
-	text->connect("text_changed", callable_mp(this, &EditorPropertyMultilineText::_text_changed));
+	text->connect(SceneStringName(text_changed), callable_mp(this, &EditorPropertyMultilineText::_text_changed));
 	text->set_line_wrapping_mode(TextEdit::LineWrappingMode::LINE_WRAPPING_BOUNDARY);
 	add_focusable(text);
 	hb->add_child(text);
