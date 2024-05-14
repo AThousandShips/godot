@@ -83,7 +83,7 @@ void ProjectListItemControl::_notification(int p_what) {
 
 		case NOTIFICATION_DRAW: {
 			if (is_selected) {
-				draw_style_box(get_theme_stylebox(SNAME("selected"), SNAME("Tree")), Rect2(Point2(), get_size()));
+				draw_style_box(get_theme_stylebox(SceneStringName(selected), SNAME("Tree")), Rect2(Point2(), get_size()));
 			}
 			if (is_hovering) {
 				draw_style_box(get_theme_stylebox(SceneStringName(hover), SNAME("Tree")), Rect2(Point2(), get_size()));

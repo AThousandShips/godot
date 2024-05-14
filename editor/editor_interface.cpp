@@ -274,7 +274,7 @@ void EditorInterface::set_current_feature_profile(const String &p_profile_name) 
 void EditorInterface::popup_node_selector(const Callable &p_callback, const TypedArray<StringName> &p_valid_types) {
 	// TODO: Should reuse dialog instance instead of creating a fresh one, but need to rework set_valid_types first.
 	if (node_selector) {
-		node_selector->disconnect(SNAME("selected"), callable_mp(this, &EditorInterface::_node_selected).bind(p_callback));
+		node_selector->disconnect(SceneStringName(selected), callable_mp(this, &EditorInterface::_node_selected).bind(p_callback));
 		node_selector->disconnect(SNAME("canceled"), callable_mp(this, &EditorInterface::_node_selection_canceled).bind(p_callback));
 		get_base_control()->remove_child(node_selector);
 		node_selector->queue_free();
@@ -294,7 +294,7 @@ void EditorInterface::popup_node_selector(const Callable &p_callback, const Type
 	node_selector->popup_scenetree_dialog();
 
 	const Callable selected_callback = callable_mp(this, &EditorInterface::_node_selected).bind(p_callback);
-	node_selector->connect(SNAME("selected"), selected_callback, CONNECT_DEFERRED);
+	node_selector->connect(SceneStringName(selected), selected_callback, CONNECT_DEFERRED);
 
 	const Callable canceled_callback = callable_mp(this, &EditorInterface::_node_selection_canceled).bind(p_callback);
 	node_selector->connect(SNAME("canceled"), canceled_callback, CONNECT_DEFERRED);
@@ -303,7 +303,7 @@ void EditorInterface::popup_node_selector(const Callable &p_callback, const Type
 void EditorInterface::popup_property_selector(Object *p_object, const Callable &p_callback, const PackedInt32Array &p_type_filter) {
 	// TODO: Should reuse dialog instance instead of creating a fresh one, but need to rework set_type_filter first.
 	if (property_selector) {
-		property_selector->disconnect(SNAME("selected"), callable_mp(this, &EditorInterface::_property_selected).bind(p_callback));
+		property_selector->disconnect(SceneStringName(selected), callable_mp(this, &EditorInterface::_property_selected).bind(p_callback));
 		property_selector->disconnect(SNAME("canceled"), callable_mp(this, &EditorInterface::_property_selection_canceled).bind(p_callback));
 		get_base_control()->remove_child(property_selector);
 		property_selector->queue_free();
@@ -323,7 +323,7 @@ void EditorInterface::popup_property_selector(Object *p_object, const Callable &
 	property_selector->select_property_from_instance(p_object);
 
 	const Callable selected_callback = callable_mp(this, &EditorInterface::_property_selected).bind(p_callback);
-	property_selector->connect(SNAME("selected"), selected_callback, CONNECT_DEFERRED);
+	property_selector->connect(SceneStringName(selected), selected_callback, CONNECT_DEFERRED);
 
 	const Callable canceled_callback = callable_mp(this, &EditorInterface::_property_selection_canceled).bind(p_callback);
 	property_selector->connect(SNAME("canceled"), canceled_callback, CONNECT_DEFERRED);

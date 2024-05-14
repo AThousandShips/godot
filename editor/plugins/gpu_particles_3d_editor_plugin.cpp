@@ -227,7 +227,7 @@ GPUParticles3DEditorBase::GPUParticles3DEditorBase() {
 	valid_types.push_back("MeshInstance3D");
 	emission_tree_dialog->set_valid_types(valid_types);
 	add_child(emission_tree_dialog);
-	emission_tree_dialog->connect("selected", callable_mp(this, &GPUParticles3DEditorBase::_node_selected));
+	emission_tree_dialog->connect(SceneStringName(selected), callable_mp(this, &GPUParticles3DEditorBase::_node_selected));
 }
 
 void GPUParticles3DEditor::_node_removed(Node *p_node) {

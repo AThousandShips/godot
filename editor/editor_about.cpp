@@ -134,7 +134,7 @@ ScrollContainer *EditorAbout::_populate_list(const String &p_name, const List<St
 				il->connect(SceneStringName(focus_exited), callable_mp(il, &ItemList::deselect_all));
 
 				il->add_theme_style_override(SceneStringName(focus), empty_stylebox);
-				il->add_theme_style_override("selected", empty_stylebox);
+				il->add_theme_style_override(SceneStringName(selected), empty_stylebox);
 
 				while (*names_ptr) {
 					const String name = String::utf8(*names_ptr++);

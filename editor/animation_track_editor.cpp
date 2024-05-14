@@ -7370,17 +7370,17 @@ AnimationTrackEditor::AnimationTrackEditor() {
 	add_child(pick_track);
 	pick_track->register_text_enter(pick_track->get_filter_line_edit());
 	pick_track->set_title(TTR("Pick a node to animate:"));
-	pick_track->connect("selected", callable_mp(this, &AnimationTrackEditor::_new_track_node_selected));
+	pick_track->connect(SceneStringName(selected), callable_mp(this, &AnimationTrackEditor::_new_track_node_selected));
 	pick_track->get_filter_line_edit()->connect(SceneStringName(text_changed), callable_mp(this, &AnimationTrackEditor::_pick_track_filter_text_changed));
 	pick_track->get_filter_line_edit()->connect(SceneStringName(gui_input), callable_mp(this, &AnimationTrackEditor::_pick_track_filter_input));
 
 	prop_selector = memnew(PropertySelector);
 	add_child(prop_selector);
-	prop_selector->connect("selected", callable_mp(this, &AnimationTrackEditor::_new_track_property_selected));
+	prop_selector->connect(SceneStringName(selected), callable_mp(this, &AnimationTrackEditor::_new_track_property_selected));
 
 	method_selector = memnew(PropertySelector);
 	add_child(method_selector);
-	method_selector->connect("selected", callable_mp(this, &AnimationTrackEditor::_add_method_key));
+	method_selector->connect(SceneStringName(selected), callable_mp(this, &AnimationTrackEditor::_add_method_key));
 
 	insert_confirm = memnew(ConfirmationDialog);
 	add_child(insert_confirm);
