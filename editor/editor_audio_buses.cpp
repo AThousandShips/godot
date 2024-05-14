@@ -123,7 +123,7 @@ void EditorAudioBus::_notification(int p_what) {
 
 		case NOTIFICATION_DRAW: {
 			if (is_master) {
-				draw_style_box(get_theme_stylebox(SNAME("disabled"), SNAME("Button")), Rect2(Vector2(), get_size()));
+				draw_style_box(get_theme_stylebox(SceneStringName(disabled), SNAME("Button")), Rect2(Vector2(), get_size()));
 			} else if (has_focus()) {
 				draw_style_box(get_theme_stylebox(SNAME("focus"), SNAME("Button")), Rect2(Vector2(), get_size()));
 			} else {
