@@ -2570,7 +2570,7 @@ void ThemeTypeEditor::_update_type_items() {
 
 			if (E.value) {
 				item_editor->set_value(edited_theme->get_constant(E.key, edited_type));
-				item_editor->connect("value_changed", callable_mp(this, &ThemeTypeEditor::_constant_item_changed).bind(E.key));
+				item_editor->connect(SceneStringName(value_changed), callable_mp(this, &ThemeTypeEditor::_constant_item_changed).bind(E.key));
 			} else {
 				item_editor->set_value(ThemeDB::get_singleton()->get_default_theme()->get_constant(E.key, edited_type));
 				item_editor->set_editable(false);
@@ -2641,7 +2641,7 @@ void ThemeTypeEditor::_update_type_items() {
 
 			if (E.value) {
 				item_editor->set_value(edited_theme->get_font_size(E.key, edited_type));
-				item_editor->connect("value_changed", callable_mp(this, &ThemeTypeEditor::_font_size_item_changed).bind(E.key));
+				item_editor->connect(SceneStringName(value_changed), callable_mp(this, &ThemeTypeEditor::_font_size_item_changed).bind(E.key));
 			} else {
 				item_editor->set_value(ThemeDB::get_singleton()->get_default_theme()->get_font_size(E.key, edited_type));
 				item_editor->set_editable(false);

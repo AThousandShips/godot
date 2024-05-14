@@ -2453,7 +2453,7 @@ EditorInspectorArray::EditorInspectorArray(bool p_read_only) {
 
 	new_size_spin_box = memnew(SpinBox);
 	new_size_spin_box->set_max(16384);
-	new_size_spin_box->connect("value_changed", callable_mp(this, &EditorInspectorArray::_new_size_spin_box_value_changed));
+	new_size_spin_box->connect(SceneStringName(value_changed), callable_mp(this, &EditorInspectorArray::_new_size_spin_box_value_changed));
 	new_size_spin_box->get_line_edit()->connect("text_submitted", callable_mp(this, &EditorInspectorArray::_new_size_spin_box_text_submitted));
 	new_size_spin_box->set_editable(!read_only);
 	resize_dialog_vbox->add_margin_child(TTRC("New Size:"), new_size_spin_box);
@@ -4315,7 +4315,7 @@ EditorInspector::EditorInspector() {
 	property_focusable = -1;
 	property_clipboard = Variant();
 
-	get_v_scroll_bar()->connect("value_changed", callable_mp(this, &EditorInspector::_vscroll_changed));
+	get_v_scroll_bar()->connect(SceneStringName(value_changed), callable_mp(this, &EditorInspector::_vscroll_changed));
 	update_scroll_request = -1;
 	if (EditorSettings::get_singleton()) {
 		refresh_countdown = float(EDITOR_GET("docks/property_editor/auto_refresh_interval"));

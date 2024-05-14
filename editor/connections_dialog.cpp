@@ -818,7 +818,7 @@ ConnectDialog::ConnectDialog() {
 
 	unbind_count = memnew(SpinBox);
 	unbind_count->set_tooltip_text(TTR("Allows to drop arguments sent by signal emitter."));
-	unbind_count->connect("value_changed", callable_mp(this, &ConnectDialog::_unbind_count_changed));
+	unbind_count->connect(SceneStringName(value_changed), callable_mp(this, &ConnectDialog::_unbind_count_changed));
 
 	vbc_right->add_margin_child(TTR("Unbind Signal Arguments:"), unbind_count);
 

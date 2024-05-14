@@ -322,9 +322,9 @@ RenameDialog::RenameDialog(SceneTreeEditor *p_scene_tree_editor) {
 	lne_suffix->connect("text_changed", callable_mp(this, &RenameDialog::_update_preview));
 	lne_search->connect("text_changed", callable_mp(this, &RenameDialog::_update_preview));
 	lne_replace->connect("text_changed", callable_mp(this, &RenameDialog::_update_preview));
-	spn_count_start->connect("value_changed", callable_mp(this, &RenameDialog::_update_preview_int));
-	spn_count_step->connect("value_changed", callable_mp(this, &RenameDialog::_update_preview_int));
-	spn_count_padding->connect("value_changed", callable_mp(this, &RenameDialog::_update_preview_int));
+	spn_count_start->connect(SceneStringName(value_changed), callable_mp(this, &RenameDialog::_update_preview_int));
+	spn_count_step->connect(SceneStringName(value_changed), callable_mp(this, &RenameDialog::_update_preview_int));
+	spn_count_padding->connect(SceneStringName(value_changed), callable_mp(this, &RenameDialog::_update_preview_int));
 	opt_style->connect("item_selected", callable_mp(this, &RenameDialog::_update_preview_int));
 	opt_case->connect("item_selected", callable_mp(this, &RenameDialog::_update_preview_int));
 	cbut_substitute->connect(SceneStringName(pressed), callable_mp(this, &RenameDialog::_update_preview).bind(""));

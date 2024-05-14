@@ -428,7 +428,7 @@ void ColorPicker::create_slider(GridContainer *gc, int idx) {
 	slider->set_h_size_flags(SIZE_EXPAND_FILL);
 
 	slider->connect("drag_started", callable_mp(this, &ColorPicker::_slider_drag_started));
-	slider->connect("value_changed", callable_mp(this, &ColorPicker::_slider_value_changed).unbind(1));
+	slider->connect(SceneStringName(value_changed), callable_mp(this, &ColorPicker::_slider_value_changed).unbind(1));
 	slider->connect("drag_ended", callable_mp(this, &ColorPicker::_slider_drag_ended).unbind(1));
 	slider->connect(SceneStringName(draw), callable_mp(this, &ColorPicker::_slider_draw).bind(idx));
 	slider->connect(SceneStringName(gui_input), callable_mp(this, &ColorPicker::_slider_or_spin_input));
