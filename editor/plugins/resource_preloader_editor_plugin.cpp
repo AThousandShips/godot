@@ -348,7 +348,7 @@ void ResourcePreloaderEditor::_bind_methods() {
 }
 
 ResourcePreloaderEditor::ResourcePreloaderEditor() {
-	//add_style_override("panel", EditorNode::get_singleton()->get_gui_base()->get_stylebox("panel","Panel"));
+	//add_style_override(SceneStringName(panel), EditorNode::get_singleton()->get_gui_base()->get_stylebox(SceneStringName(panel),"Panel"));
 
 	VBoxContainer *vbc = memnew(VBoxContainer);
 	add_child(vbc);
