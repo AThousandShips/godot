@@ -131,4 +131,7 @@ SceneStringNames::SceneStringNames() {
 	id_pressed = StaticCString::create("id_pressed");
 
 	panel = StaticCString::create("panel");
+
+	text_changed = StaticCString::create("text_changed");
+	value_changed = StaticCString::create("value_changed");
 }
