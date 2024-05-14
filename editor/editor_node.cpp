@@ -6177,13 +6177,13 @@ void EditorNode::_update_renderer_color() {
 
 	// TODO: Use theme colors instead of hardcoded values.
 	if (rendering_method == "forward_plus") {
-		renderer->add_theme_color_override("font_color", Color::hex(0x5d8c3fff));
+		renderer->add_theme_color_override(SceneStringName(font_color), Color::hex(0x5d8c3fff));
 	}
 	if (rendering_method == "mobile") {
-		renderer->add_theme_color_override("font_color", Color::hex(0xa5557dff));
+		renderer->add_theme_color_override(SceneStringName(font_color), Color::hex(0xa5557dff));
 	}
 	if (rendering_method == "gl_compatibility") {
-		renderer->add_theme_color_override("font_color", Color::hex(0x5586a4ff));
+		renderer->add_theme_color_override(SceneStringName(font_color), Color::hex(0x5586a4ff));
 	}
 }
 
@@ -6991,8 +6991,8 @@ EditorNode::EditorNode() {
 
 	if (can_expand && global_menu) {
 		project_title = memnew(Label);
-		project_title->add_theme_font_override("font", theme->get_font(SNAME("bold"), EditorStringName(EditorFonts)));
-		project_title->add_theme_font_size_override("font_size", theme->get_font_size(SNAME("bold_size"), EditorStringName(EditorFonts)));
+		project_title->add_theme_font_override(SceneStringName(font), theme->get_font(SNAME("bold"), EditorStringName(EditorFonts)));
+		project_title->add_theme_font_size_override(SceneStringName(font_size), theme->get_font_size(SNAME("bold_size"), EditorStringName(EditorFonts)));
 		project_title->set_focus_mode(Control::FOCUS_NONE);
 		project_title->set_text_overrun_behavior(TextServer::OVERRUN_TRIM_ELLIPSIS);
 		project_title->set_vertical_alignment(VERTICAL_ALIGNMENT_CENTER);
