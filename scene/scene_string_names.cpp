@@ -207,6 +207,8 @@ SceneStringNames::SceneStringNames() {
 
 	pressed = StaticCString::create("pressed");
 
+	text_changed = StaticCString::create("text_changed");
+
 #ifndef DISABLE_DEPRECATED
 	use_in_baked_light = StaticCString::create("use_in_baked_light");
 	use_dynamic_gi = StaticCString::create("use_dynamic_gi");

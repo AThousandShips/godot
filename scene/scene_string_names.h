@@ -215,6 +215,8 @@ public:
 
 	StringName pressed;
 
+	StringName text_changed;
+
 #ifndef DISABLE_DEPRECATED
 	StringName use_in_baked_light;
 	StringName use_dynamic_gi;
