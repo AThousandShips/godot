@@ -209,6 +209,18 @@ SceneStringNames::SceneStringNames() {
 
 	text_changed = StaticCString::create("text_changed");
 
+	panel = StaticCString::create("panel");
+	normal = StaticCString::create("normal");
+	hover = StaticCString::create("hover");
+	hover_pressed = StaticCString::create("hover_pressed");
+	disabled = StaticCString::create("disabled");
+	focus = StaticCString::create("focus");
+	selected = StaticCString::create("selected");
+	font = StaticCString::create("font");
+	font_size = StaticCString::create("font_size");
+	font_color = StaticCString::create("font_color");
+	outline_size = StaticCString::create("outline_size");
+
 #ifndef DISABLE_DEPRECATED
 	use_in_baked_light = StaticCString::create("use_in_baked_light");
 	use_dynamic_gi = StaticCString::create("use_dynamic_gi");

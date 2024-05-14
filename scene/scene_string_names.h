@@ -217,6 +217,18 @@ public:
 
 	StringName text_changed;
 
+	StringName panel;
+	StringName normal;
+	StringName hover;
+	StringName hover_pressed;
+	StringName disabled;
+	StringName focus;
+	StringName selected;
+	StringName font;
+	StringName font_size;
+	StringName font_color;
+	StringName outline_size;
+
 #ifndef DISABLE_DEPRECATED
 	StringName use_in_baked_light;
 	StringName use_dynamic_gi;
