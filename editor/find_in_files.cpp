@@ -750,7 +750,7 @@ void FindInFilesPanel::_on_result_found(const String &fpath, int line_number, in
 		file_item = E->value;
 	}
 
-	Color file_item_color = _results_display->get_theme_color(SNAME("font_color")) * Color(1, 1, 1, 0.67);
+	Color file_item_color = _results_display->get_theme_color(SceneStringName(font_color)) * Color(1, 1, 1, 0.67);
 	file_item->set_custom_color(0, file_item_color);
 	file_item->set_selectable(0, false);
 
@@ -815,7 +815,7 @@ void FindInFilesPanel::_on_item_edited() {
 	TreeItem *item = _results_display->get_selected();
 
 	// Change opacity to half if checkbox is checked, otherwise full.
-	Color use_color = _results_display->get_theme_color(SNAME("font_color"));
+	Color use_color = _results_display->get_theme_color(SceneStringName(font_color));
 	if (!item->is_checked(0)) {
 		use_color.a *= 0.5;
 	}

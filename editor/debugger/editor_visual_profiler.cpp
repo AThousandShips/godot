@@ -448,7 +448,7 @@ void EditorVisualProfiler::_graph_tex_draw() {
 
 	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 	int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
-	const Color color = get_theme_color(SNAME("font_color"), EditorStringName(Editor));
+	const Color color = get_theme_color(SceneStringName(font_color), EditorStringName(Editor));
 
 	if (seeking) {
 		int max_frames = frame_metrics.size();

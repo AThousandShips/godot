@@ -2938,14 +2938,14 @@ void Node3DEditorViewport::_notification(int p_what) {
 				// Middle point is at 15 ms.
 				cpu_time_label->set_text(vformat(TTR("CPU Time: %s ms"), rtos(cpu_time).pad_decimals(2)));
 				cpu_time_label->add_theme_color_override(
-						"font_color",
+						SceneStringName(font_color),
 						frame_time_gradient->get_color_at_offset(
 								Math::remap(cpu_time, 0, 30, 0, 1)));
 
 				gpu_time_label->set_text(vformat(TTR("GPU Time: %s ms"), rtos(gpu_time).pad_decimals(2)));
 				// Middle point is at 15 ms.
 				gpu_time_label->add_theme_color_override(
-						"font_color",
+						SceneStringName(font_color),
 						frame_time_gradient->get_color_at_offset(
 								Math::remap(gpu_time, 0, 30, 0, 1)));
 
@@ -2953,7 +2953,7 @@ void Node3DEditorViewport::_notification(int p_what) {
 				fps_label->set_text(vformat(TTR("FPS: %d"), fps));
 				// Middle point is at 60 FPS.
 				fps_label->add_theme_color_override(
-						"font_color",
+						SceneStringName(font_color),
 						frame_time_gradient->get_color_at_offset(
 								Math::remap(fps, 110, 10, 0, 1)));
 			}
@@ -5283,7 +5283,7 @@ Node3DEditorViewport::Node3DEditorViewport(Node3DEditor *p_spatial_editor, int p
 	zoom_limit_label = memnew(Label);
 	zoom_limit_label->set_text(TTR("To zoom further, change the camera's clipping planes (View -> Settings...)"));
 	zoom_limit_label->set_name("ZoomLimitMessageLabel");
-	zoom_limit_label->add_theme_color_override("font_color", Color(1, 1, 1, 1));
+	zoom_limit_label->add_theme_color_override(SceneStringName(font_color), Color(1, 1, 1, 1));
 	zoom_limit_label->hide();
 	bottom_center_vbox->add_child(zoom_limit_label);
 
@@ -5291,7 +5291,7 @@ Node3DEditorViewport::Node3DEditorViewport(Node3DEditor *p_spatial_editor, int p
 	preview_material_label->set_anchors_and_offsets_preset(LayoutPreset::PRESET_BOTTOM_LEFT);
 	preview_material_label->set_offset(Side::SIDE_TOP, -70 * EDSCALE);
 	preview_material_label->set_text(TTR("Overriding material..."));
-	preview_material_label->add_theme_color_override("font_color", Color(1, 1, 1, 1));
+	preview_material_label->add_theme_color_override(SceneStringName(font_color), Color(1, 1, 1, 1));
 	preview_material_label->hide();
 	surface->add_child(preview_material_label);
 
@@ -5300,7 +5300,7 @@ Node3DEditorViewport::Node3DEditorViewport(Node3DEditor *p_spatial_editor, int p
 	preview_material_label_desc->set_offset(Side::SIDE_TOP, -50 * EDSCALE);
 	Key key = (OS::get_singleton()->has_feature("macos") || OS::get_singleton()->has_feature("web_macos") || OS::get_singleton()->has_feature("web_ios")) ? Key::META : Key::CTRL;
 	preview_material_label_desc->set_text(vformat(TTR("Drag and drop to override the material of any geometry node.\nHold %s when dropping to override a specific surface."), find_keycode_name(key)));
-	preview_material_label_desc->add_theme_color_override("font_color", Color(0.8, 0.8, 0.8, 1));
+	preview_material_label_desc->add_theme_color_override(SceneStringName(font_color), Color(0.8, 0.8, 0.8, 1));
 	preview_material_label_desc->add_theme_constant_override("line_spacing", 0);
 	preview_material_label_desc->hide();
 	surface->add_child(preview_material_label_desc);

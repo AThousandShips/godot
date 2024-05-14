@@ -6049,13 +6049,13 @@ void EditorNode::_update_renderer_color() {
 
 	// TODO: Use theme colors instead of hardcoded values.
 	if (rendering_method == "forward_plus") {
-		renderer->add_theme_color_override("font_color", Color::hex(0x5d8c3fff));
+		renderer->add_theme_color_override(SceneStringName(font_color), Color::hex(0x5d8c3fff));
 	}
 	if (rendering_method == "mobile") {
-		renderer->add_theme_color_override("font_color", Color::hex(0xa5557dff));
+		renderer->add_theme_color_override(SceneStringName(font_color), Color::hex(0xa5557dff));
 	}
 	if (rendering_method == "gl_compatibility") {
-		renderer->add_theme_color_override("font_color", Color::hex(0x5586a4ff));
+		renderer->add_theme_color_override(SceneStringName(font_color), Color::hex(0x5586a4ff));
 	}
 }
 

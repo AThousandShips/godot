@@ -339,7 +339,7 @@ void AnimationTrackEditAudio::draw_key(int p_index, float p_pixels_sec, int p_x,
 		int fh = font->get_height(font_size) * 0.8;
 		Rect2 rect(Vector2(p_x, int(get_size().height - fh) / 2), Size2(fh, fh));
 
-		Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+		Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 		draw_rect_clipped(rect, color);
 
 		if (p_selected) {
@@ -660,7 +660,7 @@ void AnimationTrackEditSubAnim::draw_key(int p_index, float p_pixels_sec, int p_
 
 		Rect2 rect(from_x, int(get_size().height - fh) / 2, to_x - from_x, fh);
 
-		Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+		Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 		Color bg = color;
 		bg.r = 1 - color.r;
 		bg.g = 1 - color.g;
@@ -710,7 +710,7 @@ void AnimationTrackEditSubAnim::draw_key(int p_index, float p_pixels_sec, int p_
 		int fh = font->get_height(font_size) * 0.8;
 		Rect2 rect(Vector2(p_x, int(get_size().height - fh) / 2), Size2(fh, fh));
 
-		Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+		Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 		draw_rect_clipped(rect, color);
 
 		if (p_selected) {
@@ -783,7 +783,7 @@ void AnimationTrackEditVolumeDB::draw_key_link(int p_index, float p_pixels_sec, 
 
 	int y_from = (get_size().height - tex_h) / 2;
 
-	Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+	Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 	color.a *= 0.7;
 
 	draw_line(Point2(from_x, y_from + h * tex_h), Point2(to_x, y_from + h_n * tex_h), color, 2);
@@ -1265,7 +1265,7 @@ void AnimationTrackEditTypeAnimation::draw_key(int p_index, float p_pixels_sec, 
 
 		Rect2 rect(from_x, int(get_size().height - fh) / 2, to_x - from_x, fh);
 
-		Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+		Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 		Color bg = color;
 		bg.r = 1 - color.r;
 		bg.g = 1 - color.g;
@@ -1315,7 +1315,7 @@ void AnimationTrackEditTypeAnimation::draw_key(int p_index, float p_pixels_sec, 
 		int fh = font->get_height(font_size) * 0.8;
 		Rect2 rect(Vector2(p_x, int(get_size().height - fh) / 2), Size2(fh, fh));
 
-		Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+		Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 		draw_rect_clipped(rect, color);
 
 		if (p_selected) {

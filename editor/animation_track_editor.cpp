@@ -1434,7 +1434,7 @@ void AnimationTimelineEdit::_notification(int p_what) {
 
 			Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 			int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
-			Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+			Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 
 			int zoomw = key_range;
 			float scale = get_zoom_scale();
@@ -1982,7 +1982,7 @@ void AnimationTrackEdit::_notification(int p_what) {
 
 			Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 			int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
-			Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+			Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 			int hsep = get_theme_constant(SNAME("h_separation"), SNAME("ItemList"));
 			Color linecolor = color;
 			linecolor.a = 0.2;
@@ -2320,7 +2320,7 @@ void AnimationTrackEdit::draw_key_link(int p_index, float p_pixels_sec, int p_x,
 		return;
 	}
 
-	Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+	Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 	color.a = 0.5;
 
 	int from_x = MAX(p_x, p_clip_left);
@@ -2359,7 +2359,7 @@ void AnimationTrackEdit::draw_key(int p_index, float p_pixels_sec, int p_x, bool
 	if (animation->track_get_type(track) == Animation::TYPE_METHOD) {
 		Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 		int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
-		Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+		Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 		color.a = 0.5;
 
 		Dictionary d = animation->track_get_key_value(track, p_index);
@@ -3402,7 +3402,7 @@ void AnimationTrackEditGroup::_notification(int p_what) {
 			Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 			int font_size = get_theme_font_size(SceneStringName(font), SNAME("Label"));
 			int separation = get_theme_constant(SNAME("h_separation"), SNAME("ItemList"));
-			Color color = get_theme_color(SNAME("font_color"), SNAME("Label"));
+			Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 
 			if (root) {
 				Node *n = root->get_node_or_null(node);
