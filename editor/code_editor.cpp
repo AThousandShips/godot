@@ -1405,7 +1405,7 @@ void CodeTextEditor::_update_text_editor_theme() {
 	for (int i = 0; i < count; i++) {
 		Control *n = Object::cast_to<Control>(status_bar->get_child(i));
 		if (n) {
-			n->add_theme_font_override(SNAME("font"), status_bar_font);
+			n->add_theme_font_override(SceneStringName(font), status_bar_font);
 			n->add_theme_font_size_override(SNAME("font_size"), status_bar_font_size);
 		}
 	}
@@ -1423,7 +1423,7 @@ void CodeTextEditor::_update_text_editor_theme() {
 void CodeTextEditor::_update_font_ligatures() {
 	int ot_mode = EDITOR_GET("interface/editor/code_font_contextual_ligatures");
 
-	Ref<FontVariation> fc = text_editor->get_theme_font(SNAME("font"));
+	Ref<FontVariation> fc = text_editor->get_theme_font(SceneStringName(font));
 	if (fc.is_valid()) {
 		switch (ot_mode) {
 			case 1: { // Disable ligatures.

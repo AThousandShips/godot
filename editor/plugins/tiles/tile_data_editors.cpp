@@ -240,7 +240,7 @@ void GenericTilePolygonEditor::_base_control_draw() {
 
 	// Draw the text on top of the selected point.
 	if (tinted_polygon_index >= 0) {
-		Ref<Font> font = get_theme_font(SNAME("font"), SNAME("Label"));
+		Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 		int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
 		String text = multiple_polygon_mode ? vformat("%d:%d", tinted_polygon_index, tinted_point_index) : vformat("%d", tinted_point_index);
 		Size2 text_size = font->get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size);

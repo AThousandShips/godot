@@ -487,7 +487,7 @@ void DynamicFontImportSettingsDialog::_main_prop_changed(const String &p_edited_
 		}
 	}
 
-	font_preview_label->add_theme_font_override("font", font_preview);
+	font_preview_label->add_theme_font_override(SceneStringName(font), font_preview);
 	font_preview_label->add_theme_font_size_override("font_size", 200 * EDSCALE);
 	font_preview_label->queue_redraw();
 }
@@ -643,7 +643,7 @@ void DynamicFontImportSettingsDialog::_change_text_opts() {
 	font_main_text->set_variation_face_index(import_variation_data->get("variation_face_index"));
 	font_main_text->set_variation_transform(import_variation_data->get("variation_transform"));
 
-	text_edit->add_theme_font_override("font", font_main_text);
+	text_edit->add_theme_font_override(SceneStringName(font), font_main_text);
 }
 
 void DynamicFontImportSettingsDialog::_glyph_update_lbl() {
@@ -1097,7 +1097,7 @@ void DynamicFontImportSettingsDialog::open_settings(const String &p_path) {
 	font_main->set_data(font_data);
 	font_main->set_multichannel_signed_distance_field(false);
 
-	text_edit->add_theme_font_override("font", font_main);
+	text_edit->add_theme_font_override(SceneStringName(font), font_main);
 
 	base_path = p_path;
 
@@ -1119,7 +1119,7 @@ void DynamicFontImportSettingsDialog::open_settings(const String &p_path) {
 
 	inspector_text->edit(text_settings_data.ptr());
 
-	int gww = get_theme_font(SNAME("font"))->get_string_size("00000").x + 50;
+	int gww = get_theme_font(SceneStringName(font))->get_string_size("00000").x + 50;
 	glyph_table->set_column_custom_minimum_width(0, gww);
 	glyph_table->clear();
 	vars_list->clear();
@@ -1226,7 +1226,7 @@ void DynamicFontImportSettingsDialog::open_settings(const String &p_path) {
 		font_preview->set_subpixel_positioning((TextServer::SubpixelPositioning)import_settings_data->get("subpixel_positioning").operator int());
 		font_preview->set_oversampling(import_settings_data->get("oversampling"));
 	}
-	font_preview_label->add_theme_font_override("font", font_preview);
+	font_preview_label->add_theme_font_override(SceneStringName(font), font_preview);
 	font_preview_label->add_theme_font_size_override("font_size", 200 * EDSCALE);
 	font_preview_label->queue_redraw();
 

@@ -43,7 +43,7 @@ String ResourceImporterBMFont::get_visible_name() const {
 
 void ResourceImporterBMFont::get_recognized_extensions(List<String> *p_extensions) const {
 	if (p_extensions) {
-		p_extensions->push_back("font");
+		p_extensions->push_back(SceneStringName(font));
 		p_extensions->push_back("fnt");
 	}
 }

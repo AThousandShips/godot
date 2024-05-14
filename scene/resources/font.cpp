@@ -2889,7 +2889,7 @@ Ref<Font> FontVariation::_get_base_font_or_default() const {
 		return base_font;
 	}
 
-	StringName theme_name = "font";
+	StringName theme_name = SceneStringName(font);
 	List<StringName> theme_types;
 	ThemeDB::get_singleton()->get_native_type_dependencies(get_class_name(), &theme_types);
 
@@ -3258,7 +3258,7 @@ Ref<Font> SystemFont::_get_base_font_or_default() const {
 		return base_font;
 	}
 
-	StringName theme_name = "font";
+	StringName theme_name = SceneStringName(font);
 	List<StringName> theme_types;
 	ThemeDB::get_singleton()->get_native_type_dependencies(get_class_name(), &theme_types);
 

@@ -68,7 +68,7 @@ bool EditorInspector::_property_path_matches(const String &p_property_path, cons
 
 Size2 EditorProperty::get_minimum_size() const {
 	Size2 ms;
-	Ref<Font> font = get_theme_font(SNAME("font"), SNAME("Tree"));
+	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Tree"));
 	int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Tree"));
 	ms.height = label.is_empty() ? 0 : font->get_height(font_size) + 4 * EDSCALE;
 
@@ -131,7 +131,7 @@ void EditorProperty::_notification(int p_what) {
 
 			{
 				int child_room = size.width * (1.0 - split_ratio);
-				Ref<Font> font = get_theme_font(SNAME("font"), SNAME("Tree"));
+				Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Tree"));
 				int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Tree"));
 				int height = label.is_empty() ? 0 : font->get_height(font_size) + 4 * EDSCALE;
 				bool no_children = true;
@@ -228,7 +228,7 @@ void EditorProperty::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_DRAW: {
-			Ref<Font> font = get_theme_font(SNAME("font"), SNAME("Tree"));
+			Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Tree"));
 			int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Tree"));
 			bool rtl = is_layout_rtl();
 
@@ -1519,7 +1519,7 @@ Size2 EditorInspectorSection::get_minimum_size() const {
 		ms = ms.max(minsize);
 	}
 
-	Ref<Font> font = get_theme_font(SNAME("font"), SNAME("Tree"));
+	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Tree"));
 	int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Tree"));
 	ms.height += font->get_height(font_size) + get_theme_constant(SNAME("v_separation"), SNAME("Tree"));
 	ms.width += get_theme_constant(SNAME("inspector_margin"), EditorStringName(Editor));
@@ -2226,7 +2226,7 @@ void EditorInspectorArray::_setup() {
 
 		if (numbered) {
 			ae.number = memnew(Label);
-			ae.number->add_theme_font_override("font", numbers_font);
+			ae.number->add_theme_font_override(SceneStringName(font), numbers_font);
 			ae.number->set_custom_minimum_size(Size2(numbers_min_w, 0));
 			ae.number->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_RIGHT);
 			ae.number->set_vertical_alignment(VERTICAL_ALIGNMENT_CENTER);

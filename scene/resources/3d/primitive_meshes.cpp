@@ -3467,7 +3467,7 @@ Ref<Font> TextMesh::_get_font_or_default() const {
 		return font_override;
 	}
 
-	StringName theme_name = "font";
+	StringName theme_name = SceneStringName(font);
 	List<StringName> theme_types;
 	ThemeDB::get_singleton()->get_native_type_dependencies(get_class_name(), &theme_types);
 

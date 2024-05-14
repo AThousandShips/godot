@@ -52,12 +52,12 @@ void AudioStreamImportSettingsDialog::_notification(int p_what) {
 			color_rect->set_color(get_theme_color(SNAME("dark_color_1"), EditorStringName(Editor)));
 
 			_current_label->begin_bulk_theme_override();
-			_current_label->add_theme_font_override("font", get_theme_font(SNAME("status_source"), EditorStringName(EditorFonts)));
+			_current_label->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("status_source"), EditorStringName(EditorFonts)));
 			_current_label->add_theme_font_size_override("font_size", get_theme_font_size(SNAME("status_source_size"), EditorStringName(EditorFonts)));
 			_current_label->end_bulk_theme_override();
 
 			_duration_label->begin_bulk_theme_override();
-			_duration_label->add_theme_font_override("font", get_theme_font(SNAME("status_source"), EditorStringName(EditorFonts)));
+			_duration_label->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("status_source"), EditorStringName(EditorFonts)));
 			_duration_label->add_theme_font_size_override("font_size", get_theme_font_size(SNAME("status_source_size"), EditorStringName(EditorFonts)));
 			_duration_label->end_bulk_theme_override();
 

@@ -3107,7 +3107,7 @@ void Node3DEditorViewport::_draw() {
 	RID ci = surface->get_canvas_item();
 
 	if (message_time > 0) {
-		Ref<Font> font = get_theme_font(SNAME("font"), SNAME("Label"));
+		Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 		int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
 		Point2 msgpos = Point2(5, get_size().y - 20);
 		font->draw_string(ci, msgpos + Point2(1, 1), message, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, Color(0, 0, 0, 0.8));
@@ -3186,7 +3186,7 @@ void Node3DEditorViewport::_draw() {
 							*surface,
 							1.0 - logscale_t,
 							get_editor_theme_icon(SNAME("ViewportSpeed")),
-							get_theme_font(SNAME("font"), SNAME("Label")),
+							get_theme_font(SceneStringName(font), SNAME("Label")),
 							get_theme_font_size(SNAME("font_size"), SNAME("Label")),
 							vformat("%s m/s", String::num(freelook_speed).pad_decimals(precision)),
 							Color(1.0, 0.95, 0.7));
@@ -3209,7 +3209,7 @@ void Node3DEditorViewport::_draw() {
 							*surface,
 							logscale_t,
 							get_editor_theme_icon(SNAME("ViewportZoom")),
-							get_theme_font(SNAME("font"), SNAME("Label")),
+							get_theme_font(SceneStringName(font), SNAME("Label")),
 							get_theme_font_size(SNAME("font_size"), SNAME("Label")),
 							vformat("%s m", String::num(cursor.distance).pad_decimals(precision)),
 							Color(0.7, 0.95, 1.0));
@@ -7698,8 +7698,8 @@ void Node3DEditor::_update_theme() {
 	environ_button->set_icon(get_editor_theme_icon(SNAME("PreviewEnvironment")));
 	sun_environ_settings->set_icon(get_editor_theme_icon(SNAME("GuiTabMenuHl")));
 
-	sun_title->add_theme_font_override("font", get_theme_font(SNAME("title_font"), SNAME("Window")));
-	environ_title->add_theme_font_override("font", get_theme_font(SNAME("title_font"), SNAME("Window")));
+	sun_title->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("title_font"), SNAME("Window")));
+	environ_title->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("title_font"), SNAME("Window")));
 
 	sun_color->set_custom_minimum_size(Size2(0, get_theme_constant(SNAME("color_picker_button_height"), EditorStringName(Editor))));
 	environ_sky_color->set_custom_minimum_size(Size2(0, get_theme_constant(SNAME("color_picker_button_height"), EditorStringName(Editor))));
@@ -7746,8 +7746,8 @@ void Node3DEditor::_notification(int p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			_update_theme();
 			_update_gizmos_menu_theme();
-			sun_title->add_theme_font_override("font", get_theme_font(SNAME("title_font"), SNAME("Window")));
-			environ_title->add_theme_font_override("font", get_theme_font(SNAME("title_font"), SNAME("Window")));
+			sun_title->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("title_font"), SNAME("Window")));
+			environ_title->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("title_font"), SNAME("Window")));
 		} break;
 
 		case EditorSettings::NOTIFICATION_EDITOR_SETTINGS_CHANGED: {

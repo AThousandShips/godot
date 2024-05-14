@@ -1880,7 +1880,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 
 		// Header LinkButton variation.
 		p_theme->set_type_variation("HeaderSmallLink", "LinkButton");
-		p_theme->set_font("font", "HeaderSmallLink", p_theme->get_font(SNAME("font"), SNAME("HeaderSmall")));
+		p_theme->set_font(SceneStringName(font), "HeaderSmallLink", p_theme->get_font(SceneStringName(font), SNAME("HeaderSmall")));
 		p_theme->set_font_size("font_size", "HeaderSmallLink", p_theme->get_font_size(SNAME("font_size"), SNAME("HeaderSmall")));
 
 		// Flat button variations.
@@ -1960,7 +1960,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 		// Top bar selectors.
 		{
 			p_theme->set_type_variation("TopBarOptionButton", "OptionButton");
-			p_theme->set_font("font", "TopBarOptionButton", p_theme->get_font(SNAME("bold"), EditorStringName(EditorFonts)));
+			p_theme->set_font(SceneStringName(font), "TopBarOptionButton", p_theme->get_font(SNAME("bold"), EditorStringName(EditorFonts)));
 			p_theme->set_font_size("font_size", "TopBarOptionButton", p_theme->get_font_size(SNAME("bold_size"), EditorStringName(EditorFonts)));
 		}
 
@@ -2344,7 +2344,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 			sm_node_end_style->set_border_color(p_config.error_color);
 			p_theme->set_stylebox("node_frame_end", "GraphStateMachine", sm_node_end_style);
 
-			p_theme->set_font("node_title_font", "GraphStateMachine", p_theme->get_font(SNAME("font"), SNAME("Label")));
+			p_theme->set_font("node_title_font", "GraphStateMachine", p_theme->get_font(SceneStringName(font), SNAME("Label")));
 			p_theme->set_font_size("node_title_font_size", "GraphStateMachine", p_theme->get_font_size(SNAME("font_size"), SNAME("Label")));
 			p_theme->set_color("node_title_font_color", "GraphStateMachine", p_config.font_color);
 
@@ -2468,7 +2468,7 @@ void EditorThemeManager::_populate_text_editor_styles(const Ref<EditorTheme> &p_
 	}
 
 	// Now theme is loaded, apply it to CodeEdit.
-	p_theme->set_font("font", "CodeEdit", p_theme->get_font(SNAME("source"), EditorStringName(EditorFonts)));
+	p_theme->set_font(SceneStringName(font), "CodeEdit", p_theme->get_font(SNAME("source"), EditorStringName(EditorFonts)));
 	p_theme->set_font_size("font_size", "CodeEdit", p_theme->get_font_size(SNAME("source_size"), EditorStringName(EditorFonts)));
 
 	/* clang-format off */

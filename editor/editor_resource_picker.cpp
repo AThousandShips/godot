@@ -1231,7 +1231,7 @@ void EditorAudioStreamPicker::_notification(int p_what) {
 void EditorAudioStreamPicker::_update_resource() {
 	EditorResourcePicker::_update_resource();
 
-	Ref<Font> font = get_theme_font(SNAME("font"), SNAME("Label"));
+	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 	int font_size = get_theme_font_size(SNAME("font_size"), SNAME("Label"));
 	Ref<AudioStream> audio_stream = get_edited_resource();
 	if (audio_stream.is_valid() && audio_stream->get_length() > 0.0) {
@@ -1255,7 +1255,7 @@ void EditorAudioStreamPicker::_preview_draw() {
 	get_assign_button()->set_text("");
 
 	Size2i size = stream_preview_rect->get_size();
-	Ref<Font> font = get_theme_font(SNAME("font"), SNAME("Label"));
+	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 
 	Rect2 rect(Point2(), size);
 

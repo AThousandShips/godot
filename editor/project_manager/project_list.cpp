@@ -55,7 +55,7 @@ void ProjectListItemControl::_notification(int p_what) {
 			}
 
 			project_title->begin_bulk_theme_override();
-			project_title->add_theme_font_override("font", get_theme_font(SNAME("title"), EditorStringName(EditorFonts)));
+			project_title->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("title"), EditorStringName(EditorFonts)));
 			project_title->add_theme_font_size_override("font_size", get_theme_font_size(SNAME("title_size"), EditorStringName(EditorFonts)));
 			project_title->add_theme_color_override("font_color", get_theme_color(SNAME("font_color"), SNAME("Tree")));
 			project_title->end_bulk_theme_override();

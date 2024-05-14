@@ -58,7 +58,7 @@ void TexturePreview::_notification(int p_what) {
 
 			if (metadata_label) {
 				Ref<Font> metadata_label_font = get_theme_font(SNAME("expression"), EditorStringName(EditorFonts));
-				metadata_label->add_theme_font_override("font", metadata_label_font);
+				metadata_label->add_theme_font_override(SceneStringName(font), metadata_label_font);
 			}
 
 			checkerboard->set_texture(get_editor_theme_icon(SNAME("Checkerboard")));
