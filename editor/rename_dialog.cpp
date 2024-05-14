@@ -318,10 +318,10 @@ RenameDialog::RenameDialog(SceneTreeEditor *p_scene_tree_editor) {
 
 	// Preview
 
-	lne_prefix->connect("text_changed", callable_mp(this, &RenameDialog::_update_preview));
-	lne_suffix->connect("text_changed", callable_mp(this, &RenameDialog::_update_preview));
-	lne_search->connect("text_changed", callable_mp(this, &RenameDialog::_update_preview));
-	lne_replace->connect("text_changed", callable_mp(this, &RenameDialog::_update_preview));
+	lne_prefix->connect(SceneStringName(text_changed), callable_mp(this, &RenameDialog::_update_preview));
+	lne_suffix->connect(SceneStringName(text_changed), callable_mp(this, &RenameDialog::_update_preview));
+	lne_search->connect(SceneStringName(text_changed), callable_mp(this, &RenameDialog::_update_preview));
+	lne_replace->connect(SceneStringName(text_changed), callable_mp(this, &RenameDialog::_update_preview));
 	spn_count_start->connect("value_changed", callable_mp(this, &RenameDialog::_update_preview_int));
 	spn_count_step->connect("value_changed", callable_mp(this, &RenameDialog::_update_preview_int));
 	spn_count_padding->connect("value_changed", callable_mp(this, &RenameDialog::_update_preview_int));

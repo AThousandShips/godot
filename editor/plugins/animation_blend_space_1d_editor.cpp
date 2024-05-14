@@ -789,7 +789,7 @@ AnimationNodeBlendSpace1DEditor::AnimationNodeBlendSpace1DEditor() {
 	snap_value->connect("value_changed", callable_mp(this, &AnimationNodeBlendSpace1DEditor::_config_changed));
 	min_value->connect("value_changed", callable_mp(this, &AnimationNodeBlendSpace1DEditor::_config_changed));
 	max_value->connect("value_changed", callable_mp(this, &AnimationNodeBlendSpace1DEditor::_config_changed));
-	label_value->connect("text_changed", callable_mp(this, &AnimationNodeBlendSpace1DEditor::_labels_changed));
+	label_value->connect(SceneStringName(text_changed), callable_mp(this, &AnimationNodeBlendSpace1DEditor::_labels_changed));
 
 	error_panel = memnew(PanelContainer);
 	add_child(error_panel);
