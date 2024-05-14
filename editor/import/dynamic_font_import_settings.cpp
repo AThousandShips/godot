@@ -965,7 +965,7 @@ void DynamicFontImportSettingsDialog::_re_import() {
 			if (E.key == "size") {
 				conf_size.x = E.value;
 			}
-			if (E.key == "outline_size") {
+			if (E.key == SceneStringName(outline_size)) {
 				conf_size.y = E.value;
 			} else {
 				preload_config[E.key] = E.value;
