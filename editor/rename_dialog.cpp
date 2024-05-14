@@ -326,8 +326,8 @@ RenameDialog::RenameDialog(SceneTreeEditor *p_scene_tree_editor) {
 	spn_count_start->connect(SceneStringName(value_changed), callable_mp(this, &RenameDialog::_update_preview_int));
 	spn_count_step->connect(SceneStringName(value_changed), callable_mp(this, &RenameDialog::_update_preview_int));
 	spn_count_padding->connect(SceneStringName(value_changed), callable_mp(this, &RenameDialog::_update_preview_int));
-	opt_style->connect("item_selected", callable_mp(this, &RenameDialog::_update_preview_int));
-	opt_case->connect("item_selected", callable_mp(this, &RenameDialog::_update_preview_int));
+	opt_style->connect(SceneStringName(item_selected), callable_mp(this, &RenameDialog::_update_preview_int));
+	opt_case->connect(SceneStringName(item_selected), callable_mp(this, &RenameDialog::_update_preview_int));
 	cbut_substitute->connect(SceneStringName(pressed), callable_mp(this, &RenameDialog::_update_preview).bind(""));
 	cbut_regex->connect(SceneStringName(pressed), callable_mp(this, &RenameDialog::_update_preview).bind(""));
 	cbut_process->connect(SceneStringName(pressed), callable_mp(this, &RenameDialog::_update_preview).bind(""));

@@ -147,6 +147,10 @@ public:
 
 	StringName text_changed;
 	StringName value_changed;
+
+	StringName item_selected;
+
+	StringName confirmed;
 };
 
 #define SceneStringName(m_name) SceneStringNames::get_singleton()->m_name
