@@ -341,7 +341,7 @@ void EditorSpinSlider::_draw_spin_slider() {
 	}
 
 	if (has_focus()) {
-		Ref<StyleBox> focus = get_theme_stylebox(SNAME("focus"), SNAME("LineEdit"));
+		Ref<StyleBox> focus = get_theme_stylebox(SceneStringName(focus), SNAME("LineEdit"));
 		draw_style_box(focus, Rect2(Vector2(), size));
 	}
 

@@ -133,7 +133,7 @@ ScrollContainer *EditorAbout::_populate_list(const String &p_name, const List<St
 				il->connect(SceneStringName(resized), callable_mp(this, &EditorAbout::_item_list_resized).bind(il));
 				il->connect(SceneStringName(focus_exited), callable_mp(il, &ItemList::deselect_all));
 
-				il->add_theme_style_override("focus", empty_stylebox);
+				il->add_theme_style_override(SceneStringName(focus), empty_stylebox);
 				il->add_theme_style_override("selected", empty_stylebox);
 
 				while (*names_ptr) {

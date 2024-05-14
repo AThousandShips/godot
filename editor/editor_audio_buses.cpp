@@ -125,7 +125,7 @@ void EditorAudioBus::_notification(int p_what) {
 			if (is_master) {
 				draw_style_box(get_theme_stylebox(SceneStringName(disabled), SNAME("Button")), Rect2(Vector2(), get_size()));
 			} else if (has_focus()) {
-				draw_style_box(get_theme_stylebox(SNAME("focus"), SNAME("Button")), Rect2(Vector2(), get_size()));
+				draw_style_box(get_theme_stylebox(SceneStringName(focus), SNAME("Button")), Rect2(Vector2(), get_size()));
 			} else {
 				draw_style_box(get_theme_stylebox(SceneStringName(panel), SNAME("TabContainer")), Rect2(Vector2(), get_size()));
 			}
@@ -608,7 +608,7 @@ Variant EditorAudioBus::get_drag_data(const Point2 &p_point) {
 	Panel *p = memnew(Panel);
 	c->add_child(p);
 	p->set_modulate(Color(1, 1, 1, 0.7));
-	p->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SNAME("focus"), SNAME("Button")));
+	p->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SceneStringName(focus), SNAME("Button")));
 	p->set_size(get_size());
 	p->set_position(-p_point);
 	set_drag_preview(c);
@@ -839,7 +839,7 @@ EditorAudioBus::EditorAudioBus(EditorAudioBuses *p_buses, bool p_is_master) {
 		child->begin_bulk_theme_override();
 		child->add_theme_style_override(CoreStringName(normal), sbempty);
 		child->add_theme_style_override(SceneStringName(hover), sbempty);
-		child->add_theme_style_override("focus", sbempty);
+		child->add_theme_style_override(SceneStringName(focus), sbempty);
 
 		Ref<StyleBoxFlat> sbflat = memnew(StyleBoxFlat);
 		sbflat->set_content_margin_all(0);
