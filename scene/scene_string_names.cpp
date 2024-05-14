@@ -139,4 +139,6 @@ SceneStringNames::SceneStringNames() {
 	value_changed = StaticCString::create("value_changed");
 
 	item_selected = StaticCString::create("item_selected");
+
+	confirmed = StaticCString::create("confirmed");
 }
