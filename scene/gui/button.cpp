@@ -65,7 +65,7 @@ Ref<StyleBox> Button::_get_current_stylebox() const {
 
 		case DRAW_HOVER_PRESSED: {
 			// Edge case for CheckButton and CheckBox.
-			if (has_theme_stylebox("hover_pressed")) {
+			if (has_theme_stylebox(SceneStringName(hover_pressed))) {
 				if (rtl && has_theme_stylebox(SNAME("hover_pressed_mirrored"))) {
 					stylebox = theme_cache.hover_pressed_mirrored;
 				} else {
@@ -223,7 +223,7 @@ void Button::_notification(int p_what) {
 				} break;
 				case DRAW_HOVER_PRESSED: {
 					// Edge case for CheckButton and CheckBox.
-					if (has_theme_stylebox("hover_pressed")) {
+					if (has_theme_stylebox(SceneStringName(hover_pressed))) {
 						if (has_theme_color(SNAME("font_hover_pressed_color"))) {
 							font_color = theme_cache.font_hover_pressed_color;
 						}

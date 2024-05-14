@@ -820,7 +820,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_stylebox(SceneStringName(pressed), "CheckButton", p_config.panel_container_style);
 		p_theme->set_stylebox("disabled", "CheckButton", p_config.panel_container_style);
 		p_theme->set_stylebox(SceneStringName(hover), "CheckButton", p_config.panel_container_style);
-		p_theme->set_stylebox("hover_pressed", "CheckButton", p_config.panel_container_style);
+		p_theme->set_stylebox(SceneStringName(hover_pressed), "CheckButton", p_config.panel_container_style);
 
 		p_theme->set_icon("checked", "CheckButton", p_theme->get_icon(SNAME("GuiToggleOn"), EditorStringName(EditorIcons)));
 		p_theme->set_icon("checked_disabled", "CheckButton", p_theme->get_icon(SNAME("GuiToggleOnDisabled"), EditorStringName(EditorIcons)));
@@ -859,7 +859,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_stylebox(SceneStringName(pressed), "CheckBox", checkbox_style);
 			p_theme->set_stylebox("disabled", "CheckBox", checkbox_style);
 			p_theme->set_stylebox(SceneStringName(hover), "CheckBox", checkbox_style);
-			p_theme->set_stylebox("hover_pressed", "CheckBox", checkbox_style);
+			p_theme->set_stylebox(SceneStringName(hover_pressed), "CheckBox", checkbox_style);
 			p_theme->set_icon("checked", "CheckBox", p_theme->get_icon(SNAME("GuiChecked"), EditorStringName(EditorIcons)));
 			p_theme->set_icon("unchecked", "CheckBox", p_theme->get_icon(SNAME("GuiUnchecked"), EditorStringName(EditorIcons)));
 			p_theme->set_icon("radio_checked", "CheckBox", p_theme->get_icon(SNAME("GuiRadioChecked"), EditorStringName(EditorIcons)));
@@ -1812,13 +1812,13 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 		p_theme->set_stylebox(CoreStringName(normal), "MainScreenButton", menu_transparent_style);
 		p_theme->set_stylebox(SceneStringName(pressed), "MainScreenButton", menu_transparent_style);
 		p_theme->set_stylebox(SceneStringName(hover), "MainScreenButton", main_screen_button_hover);
-		p_theme->set_stylebox("hover_pressed", "MainScreenButton", main_screen_button_hover);
+		p_theme->set_stylebox(SceneStringName(hover_pressed), "MainScreenButton", main_screen_button_hover);
 
 		p_theme->set_type_variation("MainMenuBar", "FlatMenuButton");
 		p_theme->set_stylebox(CoreStringName(normal), "MainMenuBar", menu_transparent_style);
 		p_theme->set_stylebox(SceneStringName(pressed), "MainMenuBar", main_screen_button_hover);
 		p_theme->set_stylebox(SceneStringName(hover), "MainMenuBar", main_screen_button_hover);
-		p_theme->set_stylebox("hover_pressed", "MainMenuBar", main_screen_button_hover);
+		p_theme->set_stylebox(SceneStringName(hover_pressed), "MainMenuBar", main_screen_button_hover);
 
 		// Run bar.
 		p_theme->set_type_variation("RunBarButton", "FlatMenuButton");
@@ -1832,7 +1832,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 		p_theme->set_type_variation("BottomPanelButton", "FlatMenuButton");
 		p_theme->set_stylebox(CoreStringName(normal), "BottomPanelButton", menu_transparent_style);
 		p_theme->set_stylebox(SceneStringName(pressed), "BottomPanelButton", menu_transparent_style);
-		p_theme->set_stylebox("hover_pressed", "BottomPanelButton", main_screen_button_hover);
+		p_theme->set_stylebox(SceneStringName(hover_pressed), "BottomPanelButton", main_screen_button_hover);
 		p_theme->set_stylebox(SceneStringName(hover), "BottomPanelButton", main_screen_button_hover);
 	}
 

@@ -296,7 +296,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox(SceneStringName(pressed), "CheckBox", cbx_empty);
 	theme->set_stylebox("disabled", "CheckBox", cbx_empty);
 	theme->set_stylebox(SceneStringName(hover), "CheckBox", cbx_empty);
-	theme->set_stylebox("hover_pressed", "CheckBox", cbx_empty);
+	theme->set_stylebox(SceneStringName(hover_pressed), "CheckBox", cbx_empty);
 	theme->set_stylebox("focus", "CheckBox", cbx_focus);
 
 	theme->set_icon("checked", "CheckBox", icons["checked"]);
@@ -332,7 +332,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox(SceneStringName(pressed), "CheckButton", cb_empty);
 	theme->set_stylebox("disabled", "CheckButton", cb_empty);
 	theme->set_stylebox(SceneStringName(hover), "CheckButton", cb_empty);
-	theme->set_stylebox("hover_pressed", "CheckButton", cb_empty);
+	theme->set_stylebox(SceneStringName(hover_pressed), "CheckButton", cb_empty);
 	theme->set_stylebox("focus", "CheckButton", focus);
 
 	theme->set_icon("checked", "CheckButton", icons["toggle_on"]);

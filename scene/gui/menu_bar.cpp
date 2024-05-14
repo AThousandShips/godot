@@ -423,7 +423,7 @@ void MenuBar::_draw_menu_item(int p_index) {
 			style->draw(ci, item_rect);
 		}
 		color = theme_cache.font_disabled_color;
-	} else if (hovered && pressed && has_theme_stylebox("hover_pressed")) {
+	} else if (hovered && pressed && has_theme_stylebox(SceneStringName(hover_pressed))) {
 		if (rtl && has_theme_stylebox(SNAME("hover_pressed_mirrored"))) {
 			style = theme_cache.hover_pressed_mirrored;
 		} else {
