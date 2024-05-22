@@ -121,7 +121,7 @@ void Camera3DGizmoPlugin::set_handle(const EditorNode3DGizmo *p_gizmo, int p_id,
 
 		d = CLAMP(d, 0.1, 16384);
 
-		camera->set("size", d);
+		camera->set(CoreStringName(size), d);
 	}
 }
 
@@ -141,12 +141,12 @@ void Camera3DGizmoPlugin::commit_handle(const EditorNode3DGizmo *p_gizmo, int p_
 
 	} else {
 		if (p_cancel) {
-			camera->set("size", p_restore);
+			camera->set(CoreStringName(size), p_restore);
 		} else {
 			EditorUndoRedoManager *ur = EditorUndoRedoManager::get_singleton();
 			ur->create_action(TTR("Change Camera Size"));
-			ur->add_do_property(camera, "size", camera->get_size());
-			ur->add_undo_property(camera, "size", p_restore);
+			ur->add_do_property(camera, CoreStringName(size), camera->get_size());
+			ur->add_undo_property(camera, CoreStringName(size), p_restore);
 			ur->commit_action();
 		}
 	}
