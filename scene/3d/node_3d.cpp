@@ -1060,7 +1060,7 @@ void Node3D::_validate_property(PropertyInfo &p_property) const {
 }
 
 bool Node3D::_property_can_revert(const StringName &p_name) const {
-	if (p_name == "basis") {
+	if (p_name == CoreStringName(basis)) {
 		return true;
 	} else if (p_name == "scale") {
 		return true;
@@ -1068,7 +1068,7 @@ bool Node3D::_property_can_revert(const StringName &p_name) const {
 		return true;
 	} else if (p_name == "rotation") {
 		return true;
-	} else if (p_name == "position") {
+	} else if (p_name == CoreStringName(position)) {
 		return true;
 	}
 	return false;
@@ -1077,7 +1077,7 @@ bool Node3D::_property_can_revert(const StringName &p_name) const {
 bool Node3D::_property_get_revert(const StringName &p_name, Variant &r_property) const {
 	bool valid = false;
 
-	if (p_name == "basis") {
+	if (p_name == CoreStringName(basis)) {
 		Variant variant = PropertyUtils::get_property_default_value(this, "transform", &valid);
 		if (valid && variant.get_type() == Variant::Type::TRANSFORM3D) {
 			r_property = Transform3D(variant).get_basis();
@@ -1105,7 +1105,7 @@ bool Node3D::_property_get_revert(const StringName &p_name, Variant &r_property)
 		} else {
 			r_property = Vector3();
 		}
-	} else if (p_name == "position") {
+	} else if (p_name == CoreStringName(position)) {
 		Variant variant = PropertyUtils::get_property_default_value(this, "transform", &valid);
 		if (valid) {
 			r_property = Transform3D(variant).get_origin();

@@ -5837,7 +5837,7 @@ void CanvasItemEditorViewport::_create_texture_node(Node *p_parent, Node *p_chil
 	// make visible for certain node type
 	if (Object::cast_to<Control>(p_child)) {
 		Size2 texture_size = texture->get_size();
-		undo_redo->add_do_property(p_child, "size", texture_size);
+		undo_redo->add_do_property(p_child, CoreStringName(size), texture_size);
 	} else if (Object::cast_to<Polygon2D>(p_child)) {
 		Size2 texture_size = texture->get_size();
 		Vector<Vector2> list = {

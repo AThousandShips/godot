@@ -49,7 +49,7 @@ public:
 	Vector<Vector3> box_get_handles(const Vector3 &p_box_size);
 	String box_get_handle_name(int p_id) const;
 	void box_set_handle(const Vector3 p_segment[2], int p_id, Vector3 &r_box_size, Vector3 &r_box_position);
-	void box_commit_handle(const String &p_action_name, bool p_cancel, Object *p_position_object, Object *p_size_object = nullptr, const StringName &p_position_property = "global_position", const StringName &p_size_property = "size");
+	void box_commit_handle(const String &p_action_name, bool p_cancel, Object *p_position_object, Object *p_size_object = nullptr, const StringName &p_position_property = "global_position", const StringName &p_size_property = CoreStringName(size));
 };
 
 #endif // GIZMO_3D_HELPER_H
