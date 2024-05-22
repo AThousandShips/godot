@@ -159,7 +159,7 @@ void AnimationNodeBlendTreeEditor::update_graph() {
 		node->set_name(E);
 
 		int base = 0;
-		if (String(E) != "output") {
+		if (E != SceneStringName(output)) {
 			LineEdit *name = memnew(LineEdit);
 			name->set_text(E);
 			name->set_editable(!read_only);
