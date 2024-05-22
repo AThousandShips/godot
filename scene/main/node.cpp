@@ -1815,7 +1815,7 @@ Node *Node::get_node_or_null(const NodePath &p_path) const {
 		if (name == SNAME(".")) {
 			next = current;
 
-		} else if (name == SNAME("..")) {
+		} else if (name == SceneStringName(path_pp)) {
 			if (current == nullptr || !current->data.parent) {
 				return nullptr;
 			}
@@ -2264,7 +2264,7 @@ NodePath Node::get_path_to(const Node *p_node, bool p_use_unique_path) const {
 	visited.clear();
 
 	Vector<StringName> path;
-	StringName up = String("..");
+	StringName up = SNAME("..");
 
 	if (p_use_unique_path) {
 		n = p_node;
