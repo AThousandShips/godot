@@ -1146,7 +1146,7 @@ String String::to_camel_case() const {
 }
 
 String String::to_pascal_case() const {
-	return capitalize().replace(" ", "");
+	return capitalize().remove_char(' ');
 }
 
 String String::to_snake_case() const {
