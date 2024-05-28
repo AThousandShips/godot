@@ -3333,6 +3333,35 @@ String String::remove_string(const char *p_what) const {
 	return new_string;
 }
 
+String String::remove_char(char32_t p_char) const {
+	if (p_char == 0 || is_empty()) {
+		return *this;
+	}
+
+	String new_string;
+
+	new_string.resize(size());
+
+	char32_t *new_ptrw = new_string.ptrw();
+	const char32_t *old_ptr = ptr();
+
+	int new_size = 0;
+
+	while (*old_ptr) {
+		if (*old_ptr != p_char) {
+			new_ptrw[new_size] = *old_ptr;
+			++new_size;
+		}
+		old_ptr++;
+	}
+
+	new_ptrw[new_size] = 0;
+
+	new_string.resize(new_size + 1);
+
+	return new_string;
+}
+
 String String::substr(int p_from, int p_chars) const {
 	if (p_chars == -1) {
 		p_chars = length() - p_from;

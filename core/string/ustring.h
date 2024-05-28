@@ -322,6 +322,7 @@ public:
 	String erase(int p_pos, int p_chars = 1) const;
 	String remove_string(const String &p_what) const;
 	String remove_string(const char *p_what) const;
+	String remove_char(char32_t p_what) const;
 	String pad_decimals(int p_digits) const;
 	String pad_zeros(int p_digits) const;
 	String trim_prefix(const String &p_prefix) const;
