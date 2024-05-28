@@ -3150,6 +3150,73 @@ String String::remove_char(char32_t p_char) const {
 	return new_string;
 }
 
+template <class T>
+static bool _contains_char(char32_t p_c, const T *p_chars, int p_chars_len) {
+	for (int i = 0; i < p_chars_len; ++i) {
+		if (p_c == (char32_t)p_chars[i]) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+template <class T>
+static String _remove_chars_common(const String &p_this, const T *p_chars, int p_chars_len) {
+	int len = p_this.length();
+
+	if (p_chars_len == 0 || len == 0) {
+		return p_this;
+	}
+
+	int index = 0;
+	const char32_t *old_ptr = p_this.ptr();
+	for (; index < len; ++index) {
+		if (_contains_char(old_ptr[index], p_chars, p_chars_len)) {
+			break;
+		}
+	}
+
+	// If no occurrence of `chars` was found, return this.
+	if (index == len) {
+		return p_this;
+	}
+
+	// If we found at least one occurrence of `chars`, create new string, allocating enough space for the current length minus one.
+	String new_string;
+	new_string.resize(len);
+	char32_t *new_ptr = new_string.ptrw();
+
+	// Copy part of input before `char`.
+	memcpy(new_ptr, old_ptr, index * sizeof(char32_t));
+
+	int new_size = index;
+
+	// Copy rest, skipping `chars`.
+	for (++index; index < len; ++index) {
+		const char32_t old_char = old_ptr[index];
+		if (!_contains_char(old_char, p_chars, p_chars_len)) {
+			new_ptr[new_size] = old_char;
+			++new_size;
+		}
+	}
+
+	new_ptr[new_size] = 0;
+
+	// Shrink new string to fit.
+	new_string.resize(new_size + 1);
+
+	return new_string;
+}
+
+String String::remove_chars(const String &p_chars) const {
+	return _remove_chars_common(*this, p_chars.ptr(), p_chars.length());
+}
+
+String String::remove_chars(const char *p_chars) const {
+	return _remove_chars_common(*this, p_chars, strlen(p_chars));
+}
+
 String String::substr(int p_from, int p_chars) const {
 	if (p_chars == -1) {
 		p_chars = length() - p_from;
