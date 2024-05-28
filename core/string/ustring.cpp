@@ -4088,6 +4088,47 @@ String String::replace_first(const char *p_key, const char *p_with) const {
 	return *this;
 }
 
+String String::replace_char(char32_t p_key, char32_t p_with) const {
+	ERR_FAIL_COND_V_MSG(p_with == 0, *this, "`with` must not be the NUL character.");
+
+	int len = length();
+	if (p_key == 0 || len == 0) {
+		return *this;
+	}
+
+	int index = find_char(p_key);
+
+	// If no occurrence of `key` was found, return this.
+	if (index == -1) {
+		return *this;
+	}
+
+	const char32_t *old_ptr = ptr();
+
+	// If we found at least one occurrence of `key`, create new string.
+	String new_string;
+	new_string.resize(len + 1);
+	char32_t *new_ptr = new_string.ptrw();
+
+	// Copy part of input before `key`.
+	memcpy(new_ptr, old_ptr, index * sizeof(char32_t));
+
+	new_ptr[index] = p_with;
+
+	// Copy or replace rest of input.
+	for (++index; index < len; ++index) {
+		if (old_ptr[index] == p_key) {
+			new_ptr[index] = p_with;
+		} else {
+			new_ptr[index] = old_ptr[index];
+		}
+	}
+
+	new_ptr[index] = _null;
+
+	return new_string;
+}
+
 String String::replacen(const String &p_key, const String &p_with) const {
 	return _replace_common(*this, p_key, p_with, true);
 }
