@@ -473,6 +473,13 @@ TEST_CASE("[String] remove_char") {
 	CHECK(s.remove_char('x') == "Banana");
 }
 
+TEST_CASE("[String] remove_chars") {
+	String s = "Banana";
+	CHECK(s.remove_chars({ 'B', 'a' }) == "nn");
+	CHECK(s.remove_chars({}) == "Banana");
+	CHECK(s.remove_chars({ 'x', 'y' }) == "Banana");
+}
+
 TEST_CASE("[String] Number to string") {
 	CHECK(String::num(0) == "0");
 	CHECK(String::num(0.0) == "0"); // No trailing zeros.
