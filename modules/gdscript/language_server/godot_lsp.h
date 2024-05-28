@@ -1940,8 +1940,8 @@ static String marked_documentation(const String &p_bbcode) {
 			line = line.replace("[signal ", "`");
 			line = line.replace("[enum ", "`");
 			line = line.replace("[constant ", "`");
-			line = line.replace("[", "`");
-			line = line.replace("]", "`");
+			line = line.replace_char('[', '`');
+			line = line.replace_char(']', '`');
 		}
 
 		if (!in_code_block && i < lines.size() - 1) {
