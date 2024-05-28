@@ -1146,7 +1146,7 @@ String String::to_camel_case() const {
 }
 
 String String::to_pascal_case() const {
-	return capitalize().replace(" ", "");
+	return capitalize().remove_char(' ');
 }
 
 String String::to_snake_case() const {
@@ -3329,6 +3329,71 @@ String String::remove_string(const char *p_what) const {
 	}
 
 	*new_ptrw = 0;
+
+	return new_string;
+}
+
+String String::remove_char(char32_t p_char) const {
+	if (p_char == 0 || is_empty()) {
+		return *this;
+	}
+
+	String new_string;
+
+	new_string.resize(size());
+
+	char32_t *new_ptrw = new_string.ptrw();
+	const char32_t *old_ptr = ptr();
+
+	int new_size = 0;
+
+	while (*old_ptr) {
+		if (*old_ptr != p_char) {
+			new_ptrw[new_size] = *old_ptr;
+			++new_size;
+		}
+		old_ptr++;
+	}
+
+	new_ptrw[new_size] = 0;
+
+	new_string.resize(new_size + 1);
+
+	return new_string;
+}
+
+String String::remove_chars(const Vector<char32_t> &p_chars) const {
+	if (p_chars.is_empty() || is_empty()) {
+		return *this;
+	}
+
+	String new_string;
+
+	new_string.resize(size());
+
+	char32_t *new_ptrw = new_string.ptrw();
+	const char32_t *old_ptr = ptr();
+
+	int new_size = 0;
+
+	while (*old_ptr) {
+		bool found = false;
+		for (const char32_t &chr : p_chars) {
+			if (*old_ptr == chr) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			new_ptrw[new_size] = *old_ptr;
+			++new_size;
+		}
+		old_ptr++;
+	}
+
+	new_ptrw[new_size] = 0;
+
+	new_string.resize(new_size + 1);
 
 	return new_string;
 }
