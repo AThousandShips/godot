@@ -4369,6 +4369,35 @@ String String::replace_char(char32_t p_key, char32_t p_with) const {
 	return new_string;
 }
 
+String String::replace_chars(const Vector<char32_t> &p_keys, char32_t p_with) const {
+	ERR_FAIL_COND_V_MSG(p_with == 0, String(), "`with` must not be null.");
+
+	if (p_keys.is_empty() || is_empty()) {
+		return *this;
+	}
+
+	String new_string;
+
+	new_string.resize(size());
+
+	char32_t *new_ptrw = new_string.ptrw();
+	const char32_t *old_ptr = ptr();
+
+	while (*old_ptr) {
+		if (p_keys.has(*old_ptr)) {
+			*new_ptrw = p_with;
+		} else {
+			*new_ptrw = *old_ptr;
+		}
+		++new_ptrw;
+		++old_ptr;
+	}
+
+	*new_ptrw = 0;
+
+	return new_string;
+}
+
 String String::replacen(const String &p_key, const String &p_with) const {
 	return _replace_common(*this, p_key, p_with, true);
 }
