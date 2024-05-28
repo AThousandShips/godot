@@ -1121,7 +1121,7 @@ String String::_camelcase_to_underscore() const {
 }
 
 String String::capitalize() const {
-	String aux = _camelcase_to_underscore().replace("_", " ").strip_edges();
+	String aux = _camelcase_to_underscore().replace_char('_', ' ').strip_edges();
 	String cap;
 	for (int i = 0; i < aux.get_slice_count(" "); i++) {
 		String slice = aux.get_slicec(' ', i);
@@ -1150,7 +1150,7 @@ String String::to_pascal_case() const {
 }
 
 String String::to_snake_case() const {
-	return _camelcase_to_underscore().replace(" ", "_").strip_edges();
+	return _camelcase_to_underscore().replace_char(' ', '_').strip_edges();
 }
 
 String String::get_with_code_lines() const {
@@ -4680,7 +4680,7 @@ String String::simplify_path() const {
 		}
 	}
 
-	s = s.replace("\\", "/");
+	s = s.replace_char('\\', '/');
 	while (true) { // in case of using 2 or more slash
 		String compare = s.replace("//", "/");
 		if (s == compare) {
@@ -5255,8 +5255,8 @@ bool String::is_valid_float() const {
 
 String String::path_to_file(const String &p_path) const {
 	// Don't get base dir for src, this is expected to be a dir already.
-	String src = replace("\\", "/");
-	String dst = p_path.replace("\\", "/").get_base_dir();
+	String src = replace_char('\\', '/');
+	String dst = p_path.replace_char('\\', '/').get_base_dir();
 	String rel = src.path_to(dst);
 	if (rel == dst) { // failed
 		return p_path;
@@ -5266,8 +5266,8 @@ String String::path_to_file(const String &p_path) const {
 }
 
 String String::path_to(const String &p_path) const {
-	String src = replace("\\", "/");
-	String dst = p_path.replace("\\", "/");
+	String src = replace_char('\\', '/');
+	String dst = p_path.replace_char('\\', '/');
 	if (!src.ends_with("/")) {
 		src += "/";
 	}
