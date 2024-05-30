@@ -439,6 +439,8 @@ TEST_CASE("[String] Erasing") {
 	String s = "Josephine is such a cute girl!";
 	s = s.erase(s.find("cute "), String("cute ").length());
 	CHECK(s == "Josephine is such a girl!");
+	s = s.erase(0, String("Josephine ").length());
+	CHECK(s == "is such a girl!");
 }
 
 TEST_CASE("[String] Number to string") {

@@ -3173,7 +3173,38 @@ String String::insert(int p_at_pos, const String &p_string) const {
 String String::erase(int p_pos, int p_chars) const {
 	ERR_FAIL_COND_V_MSG(p_pos < 0, "", vformat("Invalid starting position for `String.erase()`: %d. Starting position must be positive or zero.", p_pos));
 	ERR_FAIL_COND_V_MSG(p_chars < 0, "", vformat("Invalid character count for `String.erase()`: %d. Character count must be positive or zero.", p_chars));
-	return left(p_pos) + substr(p_pos + p_chars);
+	if (p_chars == 0) {
+		return *this;
+	}
+	const int this_length = length();
+
+	if (p_pos + p_chars >= this_length) {
+		return left(p_pos);
+	}
+
+	if (p_pos == 0) {
+		return substr(p_chars);
+	}
+
+	const int new_length = this_length - p_chars;
+	const int post_pos = p_pos + p_chars;
+
+	String new_string;
+	new_string.resize(new_length + 1);
+	char32_t *new_ptrw = new_string.ptrw();
+	const char32_t *this_ptr = ptr();
+
+	if (p_pos) {
+		memcpy(new_ptrw, this_ptr, p_pos * sizeof(char32_t));
+	}
+
+	if (post_pos != this_length) {
+		memcpy(new_ptrw + p_pos, this_ptr + post_pos, (this_length - post_pos) * sizeof(char32_t));
+	}
+
+	new_ptrw[new_length] = 0;
+
+	return new_string;
 }
 
 String String::substr(int p_from, int p_chars) const {
