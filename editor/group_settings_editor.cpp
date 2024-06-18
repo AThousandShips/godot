@@ -83,8 +83,8 @@ void GroupSettingsEditor::_item_edited() {
 		undo_redo->add_do_method(this, CoreStringName(call_deferred), "update_groups");
 		undo_redo->add_undo_method(this, CoreStringName(call_deferred), "update_groups");
 
-		undo_redo->add_do_method(this, "emit_signal", group_changed);
-		undo_redo->add_undo_method(this, "emit_signal", group_changed);
+		undo_redo->add_do_method(this, CoreStringName(emit_signal), group_changed);
+		undo_redo->add_undo_method(this, CoreStringName(emit_signal), group_changed);
 
 		undo_redo->commit_action();
 	}
@@ -160,8 +160,8 @@ void GroupSettingsEditor::_add_group(const String &p_name, const String &p_descr
 	undo_redo->add_do_method(this, CoreStringName(call_deferred), "update_groups");
 	undo_redo->add_undo_method(this, CoreStringName(call_deferred), "update_groups");
 
-	undo_redo->add_do_method(this, "emit_signal", group_changed);
-	undo_redo->add_undo_method(this, "emit_signal", group_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), group_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), group_changed);
 
 	undo_redo->commit_action();
 
@@ -357,8 +357,8 @@ void GroupSettingsEditor::_confirm_rename() {
 	undo_redo->add_do_method(this, CoreStringName(call_deferred), "update_groups");
 	undo_redo->add_undo_method(this, CoreStringName(call_deferred), "update_groups");
 
-	undo_redo->add_do_method(this, "emit_signal", group_changed);
-	undo_redo->add_undo_method(this, "emit_signal", group_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), group_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), group_changed);
 
 	undo_redo->commit_action();
 }
@@ -386,8 +386,8 @@ void GroupSettingsEditor::_confirm_delete() {
 	undo_redo->add_do_method(this, CoreStringName(call_deferred), "update_groups");
 	undo_redo->add_undo_method(this, CoreStringName(call_deferred), "update_groups");
 
-	undo_redo->add_do_method(this, "emit_signal", group_changed);
-	undo_redo->add_undo_method(this, "emit_signal", group_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), group_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), group_changed);
 
 	undo_redo->commit_action();
 }

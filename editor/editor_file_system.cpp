@@ -1823,7 +1823,7 @@ void EditorFileSystem::update_files(const Vector<String> &p_script_paths) {
 	if (updated) {
 		_update_pending_script_classes();
 		_update_pending_scene_groups();
-		call_deferred(SNAME("emit_signal"), "filesystem_changed"); //update later
+		call_deferred(CoreStringName(emit_signal), "filesystem_changed"); //update later
 	}
 }
 

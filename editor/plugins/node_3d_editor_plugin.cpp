@@ -6548,8 +6548,8 @@ void Node3DEditor::_menu_item_pressed(int p_option) {
 
 				undo_redo->add_do_method(spatial, "set_meta", "_edit_lock_", true);
 				undo_redo->add_undo_method(spatial, "remove_meta", "_edit_lock_");
-				undo_redo->add_do_method(this, "emit_signal", "item_lock_status_changed");
-				undo_redo->add_undo_method(this, "emit_signal", "item_lock_status_changed");
+				undo_redo->add_do_method(this, CoreStringName(emit_signal), "item_lock_status_changed");
+				undo_redo->add_undo_method(this, CoreStringName(emit_signal), "item_lock_status_changed");
 			}
 
 			undo_redo->add_do_method(this, "_refresh_menu_icons");
@@ -6573,8 +6573,8 @@ void Node3DEditor::_menu_item_pressed(int p_option) {
 
 				undo_redo->add_do_method(spatial, "remove_meta", "_edit_lock_");
 				undo_redo->add_undo_method(spatial, "set_meta", "_edit_lock_", true);
-				undo_redo->add_do_method(this, "emit_signal", "item_lock_status_changed");
-				undo_redo->add_undo_method(this, "emit_signal", "item_lock_status_changed");
+				undo_redo->add_do_method(this, CoreStringName(emit_signal), "item_lock_status_changed");
+				undo_redo->add_undo_method(this, CoreStringName(emit_signal), "item_lock_status_changed");
 			}
 
 			undo_redo->add_do_method(this, "_refresh_menu_icons");
@@ -6598,8 +6598,8 @@ void Node3DEditor::_menu_item_pressed(int p_option) {
 
 				undo_redo->add_do_method(spatial, "set_meta", "_edit_group_", true);
 				undo_redo->add_undo_method(spatial, "remove_meta", "_edit_group_");
-				undo_redo->add_do_method(this, "emit_signal", "item_group_status_changed");
-				undo_redo->add_undo_method(this, "emit_signal", "item_group_status_changed");
+				undo_redo->add_do_method(this, CoreStringName(emit_signal), "item_group_status_changed");
+				undo_redo->add_undo_method(this, CoreStringName(emit_signal), "item_group_status_changed");
 			}
 
 			undo_redo->add_do_method(this, "_refresh_menu_icons");
@@ -6622,8 +6622,8 @@ void Node3DEditor::_menu_item_pressed(int p_option) {
 
 				undo_redo->add_do_method(spatial, "remove_meta", "_edit_group_");
 				undo_redo->add_undo_method(spatial, "set_meta", "_edit_group_", true);
-				undo_redo->add_do_method(this, "emit_signal", "item_group_status_changed");
-				undo_redo->add_undo_method(this, "emit_signal", "item_group_status_changed");
+				undo_redo->add_do_method(this, CoreStringName(emit_signal), "item_group_status_changed");
+				undo_redo->add_undo_method(this, CoreStringName(emit_signal), "item_group_status_changed");
 			}
 
 			undo_redo->add_do_method(this, "_refresh_menu_icons");

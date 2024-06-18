@@ -87,8 +87,8 @@ void LocalizationEditor::_translation_add(const PackedStringArray &p_paths) {
 	undo_redo->add_undo_property(ProjectSettings::get_singleton(), "internationalization/locale/translations", GLOBAL_GET("internationalization/locale/translations"));
 	undo_redo->add_do_method(this, "update_translations");
 	undo_redo->add_undo_method(this, "update_translations");
-	undo_redo->add_do_method(this, "emit_signal", localization_changed);
-	undo_redo->add_undo_method(this, "emit_signal", localization_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), localization_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), localization_changed);
 	undo_redo->commit_action();
 }
 
@@ -118,8 +118,8 @@ void LocalizationEditor::_translation_delete(Object *p_item, int p_column, int p
 	undo_redo->add_undo_property(ProjectSettings::get_singleton(), "internationalization/locale/translations", GLOBAL_GET("internationalization/locale/translations"));
 	undo_redo->add_do_method(this, "update_translations");
 	undo_redo->add_undo_method(this, "update_translations");
-	undo_redo->add_do_method(this, "emit_signal", localization_changed);
-	undo_redo->add_undo_method(this, "emit_signal", localization_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), localization_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), localization_changed);
 	undo_redo->commit_action();
 }
 
@@ -149,8 +149,8 @@ void LocalizationEditor::_translation_res_add(const PackedStringArray &p_paths) 
 	undo_redo->add_undo_property(ProjectSettings::get_singleton(), "internationalization/locale/translation_remaps", prev);
 	undo_redo->add_do_method(this, "update_translations");
 	undo_redo->add_undo_method(this, "update_translations");
-	undo_redo->add_do_method(this, "emit_signal", localization_changed);
-	undo_redo->add_undo_method(this, "emit_signal", localization_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), localization_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), localization_changed);
 	undo_redo->commit_action();
 }
 
@@ -181,8 +181,8 @@ void LocalizationEditor::_translation_res_option_add(const PackedStringArray &p_
 	undo_redo->add_undo_property(ProjectSettings::get_singleton(), "internationalization/locale/translation_remaps", GLOBAL_GET("internationalization/locale/translation_remaps"));
 	undo_redo->add_do_method(this, "update_translations");
 	undo_redo->add_undo_method(this, "update_translations");
-	undo_redo->add_do_method(this, "emit_signal", localization_changed);
-	undo_redo->add_undo_method(this, "emit_signal", localization_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), localization_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), localization_changed);
 	undo_redo->commit_action();
 }
 
@@ -245,8 +245,8 @@ void LocalizationEditor::_translation_res_option_changed() {
 	undo_redo->add_undo_property(ProjectSettings::get_singleton(), "internationalization/locale/translation_remaps", GLOBAL_GET("internationalization/locale/translation_remaps"));
 	undo_redo->add_do_method(this, "update_translations");
 	undo_redo->add_undo_method(this, "update_translations");
-	undo_redo->add_do_method(this, "emit_signal", localization_changed);
-	undo_redo->add_undo_method(this, "emit_signal", localization_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), localization_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), localization_changed);
 	undo_redo->commit_action();
 	updating_translations = false;
 }
@@ -279,8 +279,8 @@ void LocalizationEditor::_translation_res_delete(Object *p_item, int p_column, i
 	undo_redo->add_undo_property(ProjectSettings::get_singleton(), "internationalization/locale/translation_remaps", GLOBAL_GET("internationalization/locale/translation_remaps"));
 	undo_redo->add_do_method(this, "update_translations");
 	undo_redo->add_undo_method(this, "update_translations");
-	undo_redo->add_do_method(this, "emit_signal", localization_changed);
-	undo_redo->add_undo_method(this, "emit_signal", localization_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), localization_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), localization_changed);
 	undo_redo->commit_action();
 }
 
@@ -319,8 +319,8 @@ void LocalizationEditor::_translation_res_option_delete(Object *p_item, int p_co
 	undo_redo->add_undo_property(ProjectSettings::get_singleton(), "internationalization/locale/translation_remaps", GLOBAL_GET("internationalization/locale/translation_remaps"));
 	undo_redo->add_do_method(this, "update_translations");
 	undo_redo->add_undo_method(this, "update_translations");
-	undo_redo->add_do_method(this, "emit_signal", localization_changed);
-	undo_redo->add_undo_method(this, "emit_signal", localization_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), localization_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), localization_changed);
 	undo_redo->commit_action();
 }
 
@@ -338,8 +338,8 @@ void LocalizationEditor::_pot_add(const PackedStringArray &p_paths) {
 	undo_redo->add_undo_property(ProjectSettings::get_singleton(), "internationalization/locale/translations_pot_files", GLOBAL_GET("internationalization/locale/translations_pot_files"));
 	undo_redo->add_do_method(this, "update_translations");
 	undo_redo->add_undo_method(this, "update_translations");
-	undo_redo->add_do_method(this, "emit_signal", localization_changed);
-	undo_redo->add_undo_method(this, "emit_signal", localization_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), localization_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), localization_changed);
 	undo_redo->commit_action();
 }
 
@@ -365,8 +365,8 @@ void LocalizationEditor::_pot_delete(Object *p_item, int p_column, int p_button,
 	undo_redo->add_undo_property(ProjectSettings::get_singleton(), "internationalization/locale/translations_pot_files", GLOBAL_GET("internationalization/locale/translations_pot_files"));
 	undo_redo->add_do_method(this, "update_translations");
 	undo_redo->add_undo_method(this, "update_translations");
-	undo_redo->add_do_method(this, "emit_signal", localization_changed);
-	undo_redo->add_undo_method(this, "emit_signal", localization_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), localization_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), localization_changed);
 	undo_redo->commit_action();
 }
 

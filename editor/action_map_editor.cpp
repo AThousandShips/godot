@@ -146,7 +146,7 @@ void ActionMapEditor::_action_edited() {
 		new_action["deadzone"] = ti->get_range(1);
 
 		// Call deferred so that input can finish propagating through tree, allowing re-making of tree to occur.
-		call_deferred(SNAME("emit_signal"), "action_edited", name, new_action);
+		call_deferred(CoreStringName(emit_signal), "action_edited", name, new_action);
 	}
 }
 
