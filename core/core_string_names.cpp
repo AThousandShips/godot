@@ -71,5 +71,6 @@ CoreStringNames::CoreStringNames() :
 		call_deferred(StaticCString::create("call_deferred")),
 		bind(StaticCString::create("bind")),
 		notification(StaticCString::create("notification")),
-		property_list_changed(StaticCString::create("property_list_changed")) {
+		property_list_changed(StaticCString::create("property_list_changed")),
+		emit_signal(StaticCString::create("emit_signal")) {
 }

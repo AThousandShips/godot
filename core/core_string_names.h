@@ -89,6 +89,7 @@ public:
 	StringName bind;
 	StringName notification;
 	StringName property_list_changed;
+	StringName emit_signal;
 };
 
 #define CoreStringName(m_name) CoreStringNames::get_singleton()->m_name
