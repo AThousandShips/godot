@@ -101,6 +101,7 @@ SceneStringNames::SceneStringNames() {
 	area_exited = StaticCString::create("area_exited");
 
 	line_separation = StaticCString::create("line_separation");
+	separation = StaticCString::create("separation");
 	font = StaticCString::create("font");
 	font_size = StaticCString::create("font_size");
 	font_color = StaticCString::create("font_color");

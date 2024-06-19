@@ -70,6 +70,7 @@ public:
 	StringName updated;
 
 	StringName line_separation;
+	StringName separation;
 	StringName font;
 	StringName font_size;
 	StringName font_color;
