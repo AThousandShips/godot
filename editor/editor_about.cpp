@@ -185,7 +185,7 @@ EditorAbout::EditorAbout() {
 	HBoxContainer *hbc = memnew(HBoxContainer);
 	hbc->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	hbc->set_alignment(BoxContainer::ALIGNMENT_CENTER);
-	hbc->add_theme_constant_override("separation", 30 * EDSCALE);
+	hbc->add_theme_constant_override(SceneStringName(separation), 30 * EDSCALE);
 	vbc->add_child(hbc);
 
 	_logo = memnew(TextureRect);

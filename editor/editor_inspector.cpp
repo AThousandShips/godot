@@ -2455,7 +2455,7 @@ EditorInspectorArray::EditorInspectorArray(bool p_read_only) {
 	add_child(rmb_popup);
 
 	elements_vbox = memnew(VBoxContainer);
-	elements_vbox->add_theme_constant_override("separation", 0);
+	elements_vbox->add_theme_constant_override(SceneStringName(separation), 0);
 	vbox->add_child(elements_vbox);
 
 	add_button = EditorInspector::create_inspector_action_button(TTR("Add Element"));
@@ -4337,7 +4337,7 @@ EditorInspector::EditorInspector() {
 	object = nullptr;
 	main_vbox = memnew(VBoxContainer);
 	main_vbox->set_h_size_flags(SIZE_EXPAND_FILL);
-	main_vbox->add_theme_constant_override("separation", 0);
+	main_vbox->add_theme_constant_override(SceneStringName(separation), 0);
 	add_child(main_vbox);
 	set_horizontal_scroll_mode(SCROLL_MODE_DISABLED);
 	set_follow_focus(true);

@@ -49,7 +49,7 @@ const String ProjectTag::get_tag() const {
 }
 
 ProjectTag::ProjectTag(const String &p_text, bool p_display_close) {
-	add_theme_constant_override(SNAME("separation"), 0);
+	add_theme_constant_override(SceneStringName(separation), 0);
 	set_v_size_flags(SIZE_SHRINK_CENTER);
 	tag_string = p_text;
 	display_close = p_display_close;

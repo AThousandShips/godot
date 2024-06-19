@@ -218,7 +218,7 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 		root_container->add_theme_constant_override("margin_top", top_bar_separation);
 		root_container->add_theme_constant_override("margin_bottom", top_bar_separation);
 		root_container->add_theme_constant_override("margin_right", top_bar_separation);
-		main_vbox->add_theme_constant_override("separation", top_bar_separation);
+		main_vbox->add_theme_constant_override(SceneStringName(separation), top_bar_separation);
 
 		background_panel->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SNAME("Background"), EditorStringName(EditorStyles)));
 		main_view_container->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SceneStringName(panel), SNAME("TabContainer")));
@@ -1289,7 +1289,7 @@ ProjectManager::ProjectManager() {
 			{
 				empty_list_placeholder = memnew(VBoxContainer);
 				empty_list_placeholder->set_v_size_flags(Control::SIZE_SHRINK_CENTER);
-				empty_list_placeholder->add_theme_constant_override("separation", 16 * EDSCALE);
+				empty_list_placeholder->add_theme_constant_override(SceneStringName(separation), 16 * EDSCALE);
 				empty_list_placeholder->hide();
 				project_list_panel->add_child(empty_list_placeholder);
 
@@ -1400,7 +1400,7 @@ ProjectManager::ProjectManager() {
 	{
 		HBoxContainer *footer_bar = memnew(HBoxContainer);
 		footer_bar->set_alignment(BoxContainer::ALIGNMENT_END);
-		footer_bar->add_theme_constant_override("separation", 20 * EDSCALE);
+		footer_bar->add_theme_constant_override(SceneStringName(separation), 20 * EDSCALE);
 		main_vbox->add_child(footer_bar);
 
 #ifdef ENGINE_UPDATE_CHECK_ENABLED

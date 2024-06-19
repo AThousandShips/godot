@@ -1086,7 +1086,7 @@ void VisualShaderGraphPlugin::add_node(VisualShader::Type p_type, int p_id, bool
 		} else {
 			hb = memnew(HBoxContainer);
 		}
-		hb->add_theme_constant_override("separation", 7 * EDSCALE);
+		hb->add_theme_constant_override(SceneStringName(separation), 7 * EDSCALE);
 
 		// Default value button/property editor.
 		Variant default_value;
@@ -6223,7 +6223,7 @@ VisualShaderEditor::VisualShaderEditor() {
 
 	preview_vbox = memnew(VBoxContainer);
 	preview_window->add_child(preview_vbox);
-	preview_vbox->add_theme_constant_override("separation", 0);
+	preview_vbox->add_theme_constant_override(SceneStringName(separation), 0);
 
 	preview_text = memnew(CodeEdit);
 	syntax_highlighter.instantiate();

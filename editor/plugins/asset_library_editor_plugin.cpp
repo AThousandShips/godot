@@ -131,7 +131,7 @@ EditorAssetLibraryItem::EditorAssetLibraryItem(bool p_clickable) {
 
 	HBoxContainer *hb = memnew(HBoxContainer);
 	// Add some spacing to visually separate the icon from the asset details.
-	hb->add_theme_constant_override("separation", 15 * EDSCALE);
+	hb->add_theme_constant_override(SceneStringName(separation), 15 * EDSCALE);
 	add_child(hb);
 
 	icon = memnew(TextureButton);
@@ -153,7 +153,7 @@ EditorAssetLibraryItem::EditorAssetLibraryItem(bool p_clickable) {
 	vb->add_child(category);
 
 	HBoxContainer *author_price_hbox = memnew(HBoxContainer);
-	author_price_hbox->add_theme_constant_override("separation", 5 * EDSCALE);
+	author_price_hbox->add_theme_constant_override(SceneStringName(separation), 5 * EDSCALE);
 	vb->add_child(author_price_hbox);
 
 	author = memnew(LinkButton);
@@ -319,7 +319,7 @@ EditorAssetLibraryItemDescription::EditorAssetLibraryItemDescription() {
 	add_child(hbox);
 	VBoxContainer *desc_vbox = memnew(VBoxContainer);
 	hbox->add_child(desc_vbox);
-	hbox->add_theme_constant_override("separation", 15 * EDSCALE);
+	hbox->add_theme_constant_override(SceneStringName(separation), 15 * EDSCALE);
 
 	item = memnew(EditorAssetLibraryItem);
 
@@ -336,7 +336,7 @@ EditorAssetLibraryItemDescription::EditorAssetLibraryItemDescription() {
 	previews_vbox->hide(); // Will be shown if we add any previews later.
 
 	hbox->add_child(previews_vbox);
-	previews_vbox->add_theme_constant_override("separation", 15 * EDSCALE);
+	previews_vbox->add_theme_constant_override(SceneStringName(separation), 15 * EDSCALE);
 	previews_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	previews_vbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 
@@ -1128,7 +1128,7 @@ HBoxContainer *EditorAssetLibrary::_make_pages(int p_page, int p_page_count, int
 	}
 
 	hbc->add_spacer();
-	hbc->add_theme_constant_override("separation", 5 * EDSCALE);
+	hbc->add_theme_constant_override(SceneStringName(separation), 5 * EDSCALE);
 
 	Button *first = memnew(Button);
 	first->set_text(TTR("First", "Pagination"));
@@ -1590,7 +1590,7 @@ EditorAssetLibrary::EditorAssetLibrary(bool p_templates_only) {
 	HBoxContainer *search_hb = memnew(HBoxContainer);
 
 	library_main->add_child(search_hb);
-	library_main->add_theme_constant_override("separation", 10 * EDSCALE);
+	library_main->add_theme_constant_override(SceneStringName(separation), 10 * EDSCALE);
 
 	filter = memnew(LineEdit);
 	if (templates_only) {
@@ -1739,7 +1739,7 @@ EditorAssetLibrary::EditorAssetLibrary(bool p_templates_only) {
 
 	last_queue_id = 0;
 
-	library_vb->add_theme_constant_override("separation", 20 * EDSCALE);
+	library_vb->add_theme_constant_override(SceneStringName(separation), 20 * EDSCALE);
 
 	error_hb = memnew(HBoxContainer);
 	library_main->add_child(error_hb);

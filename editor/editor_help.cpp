@@ -3731,7 +3731,7 @@ void EditorHelpBit::update_content_height() {
 }
 
 EditorHelpBit::EditorHelpBit(const String &p_symbol) {
-	add_theme_constant_override("separation", 0);
+	add_theme_constant_override(SceneStringName(separation), 0);
 
 	title = memnew(RichTextLabel);
 	title->set_theme_type_variation("EditorHelpBitTitle");

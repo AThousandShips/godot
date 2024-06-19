@@ -741,7 +741,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("port", "GraphNode", icons["graph_port"]);
 	theme->set_icon("resizer", "GraphNode", icons["resizer_se"]);
 	theme->set_color("resizer_color", "GraphNode", control_font_color);
-	theme->set_constant("separation", "GraphNode", Math::round(2 * scale));
+	theme->set_constant(SceneStringName(separation), "GraphNode", Math::round(2 * scale));
 	theme->set_constant("port_h_offset", "GraphNode", 0);
 
 	// GraphNodes's title Label.
@@ -970,8 +970,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_icon("close", "Icons", icons["close"]);
 
-	theme->set_constant("separation", "HSeparator", Math::round(4 * scale));
-	theme->set_constant("separation", "VSeparator", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "HSeparator", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "VSeparator", Math::round(4 * scale));
 
 	// ColorPicker
 
@@ -1148,18 +1148,18 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("grabber", "VSplitContainer", icons["vsplitter"]);
 	theme->set_icon("grabber", "HSplitContainer", icons["hsplitter"]);
 
-	theme->set_constant("separation", "BoxContainer", Math::round(4 * scale));
-	theme->set_constant("separation", "HBoxContainer", Math::round(4 * scale));
-	theme->set_constant("separation", "VBoxContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "BoxContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "HBoxContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "VBoxContainer", Math::round(4 * scale));
 	theme->set_constant("margin_left", "MarginContainer", 0);
 	theme->set_constant("margin_top", "MarginContainer", 0);
 	theme->set_constant("margin_right", "MarginContainer", 0);
 	theme->set_constant("margin_bottom", "MarginContainer", 0);
 	theme->set_constant("h_separation", "GridContainer", Math::round(4 * scale));
 	theme->set_constant("v_separation", "GridContainer", Math::round(4 * scale));
-	theme->set_constant("separation", "SplitContainer", Math::round(12 * scale));
-	theme->set_constant("separation", "HSplitContainer", Math::round(12 * scale));
-	theme->set_constant("separation", "VSplitContainer", Math::round(12 * scale));
+	theme->set_constant(SceneStringName(separation), "SplitContainer", Math::round(12 * scale));
+	theme->set_constant(SceneStringName(separation), "HSplitContainer", Math::round(12 * scale));
+	theme->set_constant(SceneStringName(separation), "VSplitContainer", Math::round(12 * scale));
 	theme->set_constant("minimum_grab_thickness", "SplitContainer", Math::round(6 * scale));
 	theme->set_constant("minimum_grab_thickness", "HSplitContainer", Math::round(6 * scale));
 	theme->set_constant("minimum_grab_thickness", "VSplitContainer", Math::round(6 * scale));

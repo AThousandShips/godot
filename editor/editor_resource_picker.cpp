@@ -1065,7 +1065,7 @@ EditorResourcePicker::EditorResourcePicker(bool p_hide_assign_button_controls) {
 	add_child(edit_button);
 	edit_button->connect(SceneStringName(gui_input), callable_mp(this, &EditorResourcePicker::_button_input));
 
-	add_theme_constant_override("separation", 0);
+	add_theme_constant_override(SceneStringName(separation), 0);
 }
 
 // EditorScriptPicker

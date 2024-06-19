@@ -516,7 +516,7 @@ void EditorNode::_update_theme(bool p_skip_creation) {
 	{
 		gui_base->add_theme_style_override(SceneStringName(panel), theme->get_stylebox(SNAME("Background"), EditorStringName(EditorStyles)));
 		main_vbox->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT, Control::PRESET_MODE_MINSIZE, theme->get_constant(SNAME("window_border_margin"), EditorStringName(Editor)));
-		main_vbox->add_theme_constant_override("separation", theme->get_constant(SNAME("top_bar_separation"), EditorStringName(Editor)));
+		main_vbox->add_theme_constant_override(SceneStringName(separation), theme->get_constant(SNAME("top_bar_separation"), EditorStringName(Editor)));
 
 		scene_root_parent->add_theme_style_override(SceneStringName(panel), theme->get_stylebox(SNAME("Content"), EditorStringName(EditorStyles)));
 		bottom_panel->add_theme_style_override(SceneStringName(panel), theme->get_stylebox(SNAME("BottomPanel"), EditorStringName(EditorStyles)));
@@ -6785,7 +6785,7 @@ EditorNode::EditorNode() {
 
 	VBoxContainer *srt = memnew(VBoxContainer);
 	srt->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	srt->add_theme_constant_override("separation", 0);
+	srt->add_theme_constant_override(SceneStringName(separation), 0);
 	top_split->add_child(srt);
 
 	scene_tabs = memnew(EditorSceneTabs);
@@ -6820,7 +6820,7 @@ EditorNode::EditorNode() {
 	main_screen_vbox = memnew(VBoxContainer);
 	main_screen_vbox->set_name("MainScreen");
 	main_screen_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	main_screen_vbox->add_theme_constant_override("separation", 0);
+	main_screen_vbox->add_theme_constant_override(SceneStringName(separation), 0);
 	scene_root_parent->add_child(main_screen_vbox);
 
 	bool global_menu = !bool(EDITOR_GET("interface/editor/use_embedded_menu")) && NativeMenu::get_singleton()->has_feature(NativeMenu::FEATURE_GLOBAL_MENU);

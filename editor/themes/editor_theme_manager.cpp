@@ -1233,9 +1233,9 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 
 	// Containers.
 	{
-		p_theme->set_constant("separation", "BoxContainer", p_config.separation_margin);
-		p_theme->set_constant("separation", "HBoxContainer", p_config.separation_margin);
-		p_theme->set_constant("separation", "VBoxContainer", p_config.separation_margin);
+		p_theme->set_constant(SceneStringName(separation), "BoxContainer", p_config.separation_margin);
+		p_theme->set_constant(SceneStringName(separation), "HBoxContainer", p_config.separation_margin);
+		p_theme->set_constant(SceneStringName(separation), "VBoxContainer", p_config.separation_margin);
 		p_theme->set_constant("margin_left", "MarginContainer", 0);
 		p_theme->set_constant("margin_top", "MarginContainer", 0);
 		p_theme->set_constant("margin_right", "MarginContainer", 0);
@@ -1256,9 +1256,9 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_icon("grabber", "VSplitContainer", p_theme->get_icon(SNAME("GuiVsplitter"), EditorStringName(EditorIcons)));
 		p_theme->set_icon("grabber", "HSplitContainer", p_theme->get_icon(SNAME("GuiHsplitter"), EditorStringName(EditorIcons)));
 
-		p_theme->set_constant("separation", "SplitContainer", p_config.separation_margin);
-		p_theme->set_constant("separation", "HSplitContainer", p_config.separation_margin);
-		p_theme->set_constant("separation", "VSplitContainer", p_config.separation_margin);
+		p_theme->set_constant(SceneStringName(separation), "SplitContainer", p_config.separation_margin);
+		p_theme->set_constant(SceneStringName(separation), "HSplitContainer", p_config.separation_margin);
+		p_theme->set_constant(SceneStringName(separation), "VSplitContainer", p_config.separation_margin);
 
 		p_theme->set_constant("minimum_grab_thickness", "SplitContainer", p_config.increased_margin * EDSCALE);
 		p_theme->set_constant("minimum_grab_thickness", "HSplitContainer", p_config.increased_margin * EDSCALE);
@@ -1623,7 +1623,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_color("resizer_color", "GraphNode", gn_decoration_color);
 
 			p_theme->set_constant("port_h_offset", "GraphNode", 1);
-			p_theme->set_constant("separation", "GraphNode", 1 * EDSCALE);
+			p_theme->set_constant(SceneStringName(separation), "GraphNode", 1 * EDSCALE);
 
 			Ref<ImageTexture> port_icon = p_theme->get_icon(SNAME("GuiGraphNodePort"), EditorStringName(EditorIcons));
 			// The true size is 24x24 This is necessary for sharp port icons at high zoom levels in GraphEdit (up to ~200%).

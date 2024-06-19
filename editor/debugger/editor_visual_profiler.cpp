@@ -772,7 +772,7 @@ EditorVisualProfiler::EditorVisualProfiler() {
 	hb->add_child(cursor_metric_edit);
 	cursor_metric_edit->connect(SceneStringName(value_changed), callable_mp(this, &EditorVisualProfiler::_cursor_metric_changed));
 
-	hb->add_theme_constant_override("separation", 8 * EDSCALE);
+	hb->add_theme_constant_override(SceneStringName(separation), 8 * EDSCALE);
 
 	h_split = memnew(HSplitContainer);
 	add_child(h_split);

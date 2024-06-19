@@ -170,7 +170,7 @@ FileSystemList::FileSystemList() {
 	add_child(popup_editor);
 
 	popup_editor_vb = memnew(VBoxContainer);
-	popup_editor_vb->add_theme_constant_override("separation", 0);
+	popup_editor_vb->add_theme_constant_override(SceneStringName(separation), 0);
 	popup_editor_vb->set_anchors_and_offsets_preset(PRESET_FULL_RECT);
 	popup_editor->add_child(popup_editor_vb);
 
@@ -3952,7 +3952,7 @@ FileSystemDock::FileSystemDock() {
 	add_child(top_vbc);
 
 	HBoxContainer *toolbar_hbc = memnew(HBoxContainer);
-	toolbar_hbc->add_theme_constant_override("separation", 0);
+	toolbar_hbc->add_theme_constant_override(SceneStringName(separation), 0);
 	top_vbc->add_child(toolbar_hbc);
 
 	button_hist_prev = memnew(Button);
@@ -3996,7 +3996,7 @@ FileSystemDock::FileSystemDock() {
 	toolbar_hbc->add_child(button_dock_placement);
 
 	toolbar2_hbc = memnew(HBoxContainer);
-	toolbar2_hbc->add_theme_constant_override("separation", 0);
+	toolbar2_hbc->add_theme_constant_override(SceneStringName(separation), 0);
 	top_vbc->add_child(toolbar2_hbc);
 
 	tree_search_box = memnew(LineEdit);

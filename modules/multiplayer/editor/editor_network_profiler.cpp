@@ -254,7 +254,7 @@ bool EditorNetworkProfiler::is_profiling() {
 
 EditorNetworkProfiler::EditorNetworkProfiler() {
 	HBoxContainer *hb = memnew(HBoxContainer);
-	hb->add_theme_constant_override("separation", 8 * EDSCALE);
+	hb->add_theme_constant_override(SceneStringName(separation), 8 * EDSCALE);
 	add_child(hb);
 
 	activate = memnew(Button);
