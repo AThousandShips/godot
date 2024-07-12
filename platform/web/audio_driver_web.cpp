@@ -74,7 +74,7 @@ void AudioDriverWeb::_sample_playback_finished_callback(const char *p_playback_o
 		return;
 	}
 
-	const StringName finished = SNAME("finished");
+	const StringName finished = SceneStringName(finished);
 	if (player->has_signal(finished)) {
 		player->emit_signal(finished);
 	}
