@@ -1901,7 +1901,7 @@ void Object::set_instance_binding(void *p_token, void *p_binding, const GDExtens
 
 void *Object::get_instance_binding(void *p_token, const GDExtensionInstanceBindingCallbacks *p_callbacks) {
 	void *binding = nullptr;
-	_instance_binding_mutex.lock();
+	MutexLock lock(_instance_binding_mutex);
 	for (uint32_t i = 0; i < _instance_binding_count; i++) {
 		if (_instance_bindings[i].token == p_token) {
 			binding = _instance_bindings[i].binding;
@@ -1932,14 +1932,12 @@ void *Object::get_instance_binding(void *p_token, const GDExtensionInstanceBindi
 		_instance_binding_count++;
 	}
 
-	_instance_binding_mutex.unlock();
-
 	return binding;
 }
 
 bool Object::has_instance_binding(void *p_token) {
 	bool found = false;
-	_instance_binding_mutex.lock();
+	MutexLock lock(_instance_binding_mutex);
 	for (uint32_t i = 0; i < _instance_binding_count; i++) {
 		if (_instance_bindings[i].token == p_token) {
 			found = true;
@@ -1947,14 +1945,12 @@ bool Object::has_instance_binding(void *p_token) {
 		}
 	}
 
-	_instance_binding_mutex.unlock();
-
 	return found;
 }
 
 void Object::free_instance_binding(void *p_token) {
 	bool found = false;
-	_instance_binding_mutex.lock();
+	MutexLock lock(_instance_binding_mutex);
 	for (uint32_t i = 0; i < _instance_binding_count; i++) {
 		if (!found && _instance_bindings[i].token == p_token) {
 			if (_instance_bindings[i].free_callback) {
@@ -1973,7 +1969,6 @@ void Object::free_instance_binding(void *p_token) {
 	if (found) {
 		_instance_binding_count--;
 	}
-	_instance_binding_mutex.unlock();
 }
 
 #ifdef TOOLS_ENABLED
@@ -1988,17 +1983,18 @@ void Object::clear_internal_extension() {
 	_extension_instance = nullptr;
 
 	// Clear the instance bindings.
-	_instance_binding_mutex.lock();
-	if (_instance_bindings) {
-		if (_instance_bindings[0].free_callback) {
-			_instance_bindings[0].free_callback(_instance_bindings[0].token, this, _instance_bindings[0].binding);
+	{
+		MutexLock lock(_instance_binding_mutex);
+		if (_instance_bindings) {
+			if (_instance_bindings[0].free_callback) {
+				_instance_bindings[0].free_callback(_instance_bindings[0].token, this, _instance_bindings[0].binding);
+			}
+			_instance_bindings[0].binding = nullptr;
+			_instance_bindings[0].token = nullptr;
+			_instance_bindings[0].free_callback = nullptr;
+			_instance_bindings[0].reference_callback = nullptr;
 		}
-		_instance_bindings[0].binding = nullptr;
-		_instance_bindings[0].token = nullptr;
-		_instance_bindings[0].free_callback = nullptr;
-		_instance_bindings[0].reference_callback = nullptr;
 	}
-	_instance_binding_mutex.unlock();
 
 	// Clear the virtual methods.
 	while (virtual_method_list) {

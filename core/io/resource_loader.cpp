@@ -246,7 +246,7 @@ Ref<Resource> ResourceLoader::_load(const String &p_path, const String &p_origin
 	const String &original_path = p_original_path.is_empty() ? p_path : p_original_path;
 	load_nesting++;
 	if (load_paths_stack->size()) {
-		thread_load_mutex.lock();
+		MutexLock thread_load_lock(thread_load_mutex);
 		const String &parent_task_path = load_paths_stack->get(load_paths_stack->size() - 1);
 		HashMap<String, ThreadLoadTask>::Iterator E = thread_load_tasks.find(parent_task_path);
 		// Avoid double-tracking, for progress reporting, resources that boil down to a remapped path containing the real payload (e.g., imported resources).
@@ -254,7 +254,6 @@ Ref<Resource> ResourceLoader::_load(const String &p_path, const String &p_origin
 		if (E && !is_remapped_load) {
 			E->value.sub_tasks.insert(p_original_path);
 		}
-		thread_load_mutex.unlock();
 	}
 	load_paths_stack->push_back(original_path);
 
@@ -424,12 +423,11 @@ Error ResourceLoader::load_threaded_request(const String &p_path, const String &
 
 	Ref<ResourceLoader::LoadToken> token = _load_start(p_path, p_type_hint, p_use_sub_threads ? LOAD_THREAD_DISTRIBUTE : LOAD_THREAD_SPAWN_SINGLE, p_cache_mode);
 	if (token.is_valid()) {
-		thread_load_mutex.lock();
+		MutexLock thread_load_lock(thread_load_mutex);
 		token->user_path = p_path;
 		token->reference(); // First request.
 		user_load_tokens[p_path] = token.ptr();
 		print_lt("REQUEST: user load tokens: " + itos(user_load_tokens.size()));
-		thread_load_mutex.unlock();
 		return OK;
 	} else {
 		return FAILED;

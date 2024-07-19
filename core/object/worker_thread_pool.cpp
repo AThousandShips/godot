@@ -344,15 +344,13 @@ WorkerThreadPool::TaskID WorkerThreadPool::add_task(const Callable &p_action, bo
 }
 
 bool WorkerThreadPool::is_task_completed(TaskID p_task_id) const {
-	task_mutex.lock();
+	MutexLock lock(task_mutex);
 	const Task *const *taskp = tasks.getptr(p_task_id);
 	if (!taskp) {
-		task_mutex.unlock();
 		ERR_FAIL_V_MSG(false, "Invalid Task ID"); // Invalid task
 	}
 
 	bool completed = (*taskp)->completed;
-	task_mutex.unlock();
 
 	return completed;
 }
@@ -410,7 +408,7 @@ Error WorkerThreadPool::wait_for_task_completion(TaskID p_task_id) {
 	} else {
 		task_mutex.unlock();
 		task->done_semaphore.wait();
-		task_mutex.lock();
+		MutexLock lock(task_mutex);
 		task->waiting_user--;
 		if (task->waiting_pool == 0 && task->waiting_user == 0) {
 			tasks.erase(p_task_id);
@@ -522,10 +520,9 @@ void WorkerThreadPool::yield() {
 }
 
 void WorkerThreadPool::notify_yield_over(TaskID p_task_id) {
-	task_mutex.lock();
+	MutexLock lock(task_mutex);
 	Task **taskp = tasks.getptr(p_task_id);
 	if (!taskp) {
-		task_mutex.unlock();
 		ERR_FAIL_MSG("Invalid Task ID.");
 	}
 	Task *task = *taskp;
@@ -534,7 +531,6 @@ void WorkerThreadPool::notify_yield_over(TaskID p_task_id) {
 			// This avoids a race condition where a task is created and yield-over called before it's processed.
 			task->pending_notify_yield_over = true;
 		}
-		task_mutex.unlock();
 		return;
 	}
 
@@ -542,8 +538,6 @@ void WorkerThreadPool::notify_yield_over(TaskID p_task_id) {
 	td.yield_is_over = true;
 	td.signaled = true;
 	td.cond_var.notify_one();
-
-	task_mutex.unlock();
 }
 
 WorkerThreadPool::GroupID WorkerThreadPool::_add_group_task(const Callable &p_callable, void (*p_func)(void *, uint32_t), void *p_userdata, BaseTemplateUserdata *p_template_userdata, int p_elements, int p_tasks, bool p_high_priority, const String &p_description) {
@@ -601,25 +595,21 @@ WorkerThreadPool::GroupID WorkerThreadPool::add_group_task(const Callable &p_act
 }
 
 uint32_t WorkerThreadPool::get_group_processed_element_count(GroupID p_group) const {
-	task_mutex.lock();
+	MutexLock lock(task_mutex);
 	const Group *const *groupp = groups.getptr(p_group);
 	if (!groupp) {
-		task_mutex.unlock();
 		ERR_FAIL_V_MSG(0, "Invalid Group ID");
 	}
 	uint32_t elements = (*groupp)->completed_index.get();
-	task_mutex.unlock();
 	return elements;
 }
 bool WorkerThreadPool::is_group_task_completed(GroupID p_group) const {
-	task_mutex.lock();
+	MutexLock lock(task_mutex);
 	const Group *const *groupp = groups.getptr(p_group);
 	if (!groupp) {
-		task_mutex.unlock();
 		ERR_FAIL_V_MSG(false, "Invalid Group ID");
 	}
 	bool completed = (*groupp)->completed.is_set();
-	task_mutex.unlock();
 	return completed;
 }
 
@@ -644,15 +634,13 @@ void WorkerThreadPool::wait_for_group_task_completion(GroupID p_group) {
 
 		if (finished_users == max_users) {
 			// All tasks using this group are gone (finished before the group), so clear the group too.
-			task_mutex.lock();
+			MutexLock lock(task_mutex);
 			group_allocator.free(group);
-			task_mutex.unlock();
 		}
 	}
 
-	task_mutex.lock(); // This mutex is needed when Physics 2D and/or 3D is selected to run on a separate thread.
+	MutexLock lock(task_mutex); // This mutex is needed when Physics 2D and/or 3D is selected to run on a separate thread.
 	groups.erase(p_group);
-	task_mutex.unlock();
 #endif
 }
 
