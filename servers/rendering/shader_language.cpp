@@ -6042,7 +6042,7 @@ ShaderLanguage::Node *ShaderLanguage::_parse_expression(BlockNode *p_block, cons
 				bool ok = true;
 				bool repeated = false;
 				DataType member_type = TYPE_VOID;
-				StringName member_struct_name = "";
+				StringName member_struct_name;
 				int array_size = 0;
 
 				RBSet<char> position_symbols;
@@ -7358,7 +7358,7 @@ Error ShaderLanguage::_parse_block(BlockNode *p_block, const FunctionInfo &p_fun
 								}
 
 								DataType type2;
-								StringName struct_name2 = "";
+								StringName struct_name2;
 
 								if (shader->structs.has(tk.text)) {
 									type2 = TYPE_STRUCT;
@@ -8446,7 +8446,7 @@ Error ShaderLanguage::_parse_shader(const HashMap<StringName, FunctionInfo> &p_f
 					if (tk.type == TK_CURLY_BRACKET_CLOSE) {
 						break;
 					}
-					StringName struct_name = "";
+					StringName struct_name;
 					bool struct_dt = false;
 					DataPrecision precision = PRECISION_DEFAULT;
 
