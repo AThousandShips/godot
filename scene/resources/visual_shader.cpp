@@ -1687,7 +1687,7 @@ bool VisualShader::_set(const StringName &p_name, const Variant &p_value) {
 		return true;
 	} else if (prop_name.begins_with("varyings/")) {
 		String var_name = prop_name.get_slicec('/', 1);
-		Varying value = Varying();
+		Varying value;
 		value.name = var_name;
 		if (value.from_string(p_value) && !varyings.has(var_name)) {
 			varyings[var_name] = value;
