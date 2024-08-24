@@ -1162,7 +1162,7 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 				}
 			}
 
-			Array array = Array();
+			Array array;
 			bool got_bracket_token = false;
 			if (builtin_types.has(token.value)) {
 				array.set_typed(builtin_types.get(token.value), StringName(), Variant());
