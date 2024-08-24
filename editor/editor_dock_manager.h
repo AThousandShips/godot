@@ -157,7 +157,7 @@ public:
 	void set_docks_visible(bool p_show);
 	bool are_docks_visible() const;
 
-	void add_dock(Control *p_dock, const String &p_title = "", DockSlot p_slot = DOCK_SLOT_NONE, const Ref<Shortcut> &p_shortcut = nullptr, const StringName &p_icon_name = StringName());
+	void add_dock(Control *p_dock, const String &p_title = "", DockSlot p_slot = DOCK_SLOT_NONE, const Ref<Shortcut> &p_shortcut = Ref<Shortcut>(), const StringName &p_icon_name = StringName());
 	void remove_dock(Control *p_dock);
 
 	void set_dock_tab_icon(Control *p_dock, const Ref<Texture2D> &p_icon);

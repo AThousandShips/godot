@@ -148,7 +148,7 @@ class EditorThemeManager {
 		uint32_t hash_icons();
 	};
 
-	static Ref<EditorTheme> _create_base_theme(const Ref<EditorTheme> &p_old_theme = nullptr);
+	static Ref<EditorTheme> _create_base_theme(const Ref<EditorTheme> &p_old_theme = Ref<Shortcut>());
 	static ThemeConfiguration _create_theme_config(const Ref<EditorTheme> &p_theme);
 
 	static void _create_shared_styles(const Ref<EditorTheme> &p_theme, ThemeConfiguration &p_config);
@@ -162,7 +162,7 @@ class EditorThemeManager {
 	static void _reset_dirty_flag();
 
 public:
-	static Ref<EditorTheme> generate_theme(const Ref<EditorTheme> &p_old_theme = nullptr);
+	static Ref<EditorTheme> generate_theme(const Ref<EditorTheme> &p_old_theme = Ref<Shortcut>());
 	static bool is_generated_theme_outdated();
 
 	static bool is_dark_theme();
