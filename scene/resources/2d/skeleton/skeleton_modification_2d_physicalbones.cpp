@@ -190,7 +190,7 @@ void SkeletonModification2DPhysicalBones::fetch_physical_bones() {
 
 	physical_bone_chain.clear();
 
-	List<Node *> node_queue = List<Node *>();
+	List<Node *> node_queue;
 	node_queue.push_back(stack->skeleton);
 
 	while (node_queue.size() > 0) {

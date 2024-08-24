@@ -418,7 +418,7 @@ Point2 CanvasItemEditor::snap_point(Point2 p_target, unsigned int p_modes, unsig
 	// Other nodes sides
 	if ((is_snap_active && snap_other_nodes && (p_modes & SNAP_OTHER_NODES)) || (p_forced_modes & SNAP_OTHER_NODES)) {
 		Transform2D to_snap_transform;
-		List<const CanvasItem *> exceptions = List<const CanvasItem *>();
+		List<const CanvasItem *> exceptions;
 		for (const CanvasItem *E : p_other_nodes_exceptions) {
 			exceptions.push_back(E);
 		}

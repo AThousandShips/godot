@@ -144,7 +144,7 @@ TypedArray<StringName> InputMap::_get_actions() {
 }
 
 List<StringName> InputMap::get_actions() const {
-	List<StringName> actions = List<StringName>();
+	List<StringName> actions;
 	if (input_map.is_empty()) {
 		return actions;
 	}
