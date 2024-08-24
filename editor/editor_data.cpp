@@ -792,7 +792,7 @@ int EditorData::get_edited_scene_count() const {
 }
 
 Vector<EditorData::EditedScene> EditorData::get_edited_scenes() const {
-	Vector<EditedScene> out_edited_scenes_list = Vector<EditedScene>();
+	Vector<EditedScene> out_edited_scenes_list;
 
 	for (int i = 0; i < edited_scene.size(); i++) {
 		out_edited_scenes_list.push_back(edited_scene[i]);

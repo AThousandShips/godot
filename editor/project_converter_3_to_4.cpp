@@ -691,9 +691,9 @@ bool ProjectConverter3To4::validate_conversion() {
 
 // Collect files which will be checked, excluding ".txt", ".mp4", ".wav" etc. files.
 Vector<String> ProjectConverter3To4::check_for_files() {
-	Vector<String> collected_files = Vector<String>();
+	Vector<String> collected_files;
 
-	Vector<String> directories_to_check = Vector<String>();
+	Vector<String> directories_to_check;
 	directories_to_check.push_back("res://");
 
 	while (!directories_to_check.is_empty()) {
@@ -1152,7 +1152,7 @@ bool ProjectConverter3To4::test_conversion(RegExContainer &reg_container) {
 // Validate in all arrays if names don't do cyclic renames "Node" -> "Node2D" | "Node2D" -> "2DNode"
 bool ProjectConverter3To4::test_array_names() {
 	bool valid = true;
-	Vector<String> names = Vector<String>();
+	Vector<String> names;
 
 	// Validate if all classes are valid.
 	{
@@ -1242,7 +1242,7 @@ bool ProjectConverter3To4::test_array_names() {
 // Also checks if names contain leading or trailing spaces.
 bool ProjectConverter3To4::test_single_array(const char *p_array[][2], bool p_ignore_4_0_name) {
 	bool valid = true;
-	Vector<String> names = Vector<String>();
+	Vector<String> names;
 
 	for (unsigned int current_index = 0; p_array[current_index][0]; current_index++) {
 		String name_3_x = p_array[current_index][0];
