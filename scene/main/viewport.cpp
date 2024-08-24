@@ -985,7 +985,7 @@ void Viewport::update_canvas_items() {
 }
 
 bool Viewport::_set_size(const Size2i &p_size, const Size2i &p_size_2d_override, bool p_allocated) {
-	Transform2D stretch_transform_new = Transform2D();
+	Transform2D stretch_transform_new;
 	if (is_size_2d_override_stretch_enabled() && p_size_2d_override.width > 0 && p_size_2d_override.height > 0) {
 		Size2 scale = Size2(p_size) / Size2(p_size_2d_override);
 		stretch_transform_new.scale(scale);

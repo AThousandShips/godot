@@ -747,7 +747,7 @@ void NavMeshGenerator2D::generator_parse_source_geometry_data(Ref<NavigationPoly
 		p_root_node->get_tree()->get_nodes_in_group(p_navigation_mesh->get_source_geometry_group_name(), &parse_nodes);
 	}
 
-	Transform2D root_node_transform = Transform2D();
+	Transform2D root_node_transform;
 	if (Object::cast_to<Node2D>(p_root_node)) {
 		root_node_transform = Object::cast_to<Node2D>(p_root_node)->get_global_transform().affine_inverse();
 	}
