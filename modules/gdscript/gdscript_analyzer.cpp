@@ -5053,7 +5053,7 @@ Array GDScriptAnalyzer::make_array_from_element_datatype(const GDScriptParser::D
 }
 
 Variant GDScriptAnalyzer::make_variable_default_value(GDScriptParser::VariableNode *p_variable) {
-	Variant result = Variant();
+	Variant result;
 
 	if (p_variable->initializer) {
 		bool is_initializer_value_reduced = false;

@@ -373,7 +373,7 @@ bool DocTools::has_doc(const String &p_class_name) {
 }
 
 static Variant get_documentation_default_value(const StringName &p_class_name, const StringName &p_property_name, bool &r_default_value_valid) {
-	Variant default_value = Variant();
+	Variant default_value;
 	r_default_value_valid = false;
 
 	if (ClassDB::can_instantiate(p_class_name) && !ClassDB::is_virtual(p_class_name)) { // Keep this condition in sync with ClassDB::class_get_default_property_value.

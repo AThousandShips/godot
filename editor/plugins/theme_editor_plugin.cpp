@@ -763,7 +763,7 @@ void ThemeItemImportTree::_import_selected() {
 		ThemeItem ti = E.key;
 
 		if (cs == SELECT_IMPORT_DEFINITION || cs == SELECT_IMPORT_FULL) {
-			Variant item_value = Variant();
+			Variant item_value;
 
 			if (cs == SELECT_IMPORT_FULL) {
 				item_value = base_theme->get_theme_item(ti.data_type, ti.item_name, ti.type_name);
