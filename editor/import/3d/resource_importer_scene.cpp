@@ -497,7 +497,7 @@ void _rescale_importer_mesh(Vector3 p_scale, Ref<ImporterMesh> p_mesh, bool is_s
 			blendshapes.push_back(current_bsarr);
 		}
 
-		LocalSurfData surf_data_dictionary = LocalSurfData();
+		LocalSurfData surf_data_dictionary;
 		surf_data_dictionary.prim = prim;
 		surf_data_dictionary.arr = arr;
 		surf_data_dictionary.bsarr = blendshapes;
