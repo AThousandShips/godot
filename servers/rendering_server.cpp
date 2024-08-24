@@ -321,7 +321,7 @@ void _get_axis_angle(const Vector3 &p_normal, const Vector4 &p_tangent, float &r
 	Vector3 binormal = normal.cross(tangent).normalized();
 	real_t angle;
 
-	Basis tbn = Basis();
+	Basis tbn;
 	tbn.rows[0] = tangent;
 	tbn.rows[1] = binormal;
 	tbn.rows[2] = normal;
