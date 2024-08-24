@@ -200,7 +200,7 @@ void SkeletonModification2DPhysicalBones::fetch_physical_bones() {
 		if (node_to_process != nullptr) {
 			PhysicalBone2D *potential_bone = Object::cast_to<PhysicalBone2D>(node_to_process);
 			if (potential_bone) {
-				PhysicalBone_Data2D new_data = PhysicalBone_Data2D();
+				PhysicalBone_Data2D new_data;
 				new_data.physical_bone_node = stack->skeleton->get_path_to(potential_bone);
 				new_data.physical_bone_node_cache = potential_bone->get_instance_id();
 				physical_bone_chain.push_back(new_data);
