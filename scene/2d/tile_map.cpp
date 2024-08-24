@@ -768,7 +768,7 @@ TypedArray<Vector2i> TileMap::get_used_cells_by_id(int p_layer, int p_source_id,
 Rect2i TileMap::get_used_rect() const {
 	// Return the visible rect of the tilemap.
 	bool first = true;
-	Rect2i rect = Rect2i();
+	Rect2i rect;
 	for (const TileMapLayer *layer : layers) {
 		Rect2i layer_rect = layer->get_used_rect();
 		if (layer_rect == Rect2i()) {
