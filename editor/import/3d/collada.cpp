@@ -440,7 +440,7 @@ Transform3D Collada::_read_transform(XMLParser &p_parser) {
 }
 
 String Collada::_read_empty_draw_type(XMLParser &p_parser) {
-	String empty_draw_type = "";
+	String empty_draw_type;
 
 	if (p_parser.is_empty()) {
 		return empty_draw_type;
@@ -1451,7 +1451,7 @@ Collada::Node *Collada::_parse_visual_scene_node(XMLParser &p_parser) {
 	Vector<Node::XForm> xform_list;
 	Vector<Node *> children;
 
-	String empty_draw_type = "";
+	String empty_draw_type;
 
 	Node *node = nullptr;
 
@@ -1654,7 +1654,7 @@ void Collada::_parse_animation(XMLParser &p_parser) {
 	HashMap<String, Vector<String>> source_param_names;
 	HashMap<String, Vector<String>> source_param_types;
 
-	String id = "";
+	String id;
 	if (p_parser.has_attribute("id")) {
 		id = p_parser.get_named_attribute_value("id");
 	}

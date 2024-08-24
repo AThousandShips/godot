@@ -1464,7 +1464,7 @@ String VisualShader::generate_preview_shader(Type p_type, int p_node, int p_port
 		for (const KeyValue<int, Node> &E : graph[i].nodes) {
 			Ref<VisualShaderNodeGlobalExpression> global_expression = E.value.node;
 			if (global_expression.is_valid()) {
-				String expr = "";
+				String expr;
 				expr += "// " + global_expression->get_caption() + ":" + itos(index++) + "\n";
 				expr += global_expression->generate_global(get_mode(), Type(i), -1);
 				expr = expr.replace("\n", "\n	");
@@ -2538,7 +2538,7 @@ void VisualShader::_update_shader() const {
 		for (const KeyValue<int, Node> &E : graph[i].nodes) {
 			Ref<VisualShaderNodeGlobalExpression> global_expression = E.value.node;
 			if (global_expression.is_valid()) {
-				String expr = "";
+				String expr;
 				expr += "// " + global_expression->get_caption() + ":" + itos(index++) + "\n";
 				expr += global_expression->generate_global(get_mode(), Type(i), -1);
 				expr = expr.replace("\n", "\n	");
@@ -4981,7 +4981,7 @@ String VisualShaderNodeExpression::generate_code(Shader::Mode p_mode, VisualShad
 
 	for (int i = 0; i < get_output_port_count(); i++) {
 		int port_type = get_output_port_type(i);
-		String tk = "";
+		String tk;
 		switch (port_type) {
 			case PORT_TYPE_SCALAR:
 				tk = "0.0";

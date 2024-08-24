@@ -1268,7 +1268,7 @@ void ThemeItemEditorDialog::_update_edit_types() {
 	base_theme->get_type_list(&default_types);
 	default_types.sort_custom<StringName::AlphCompare>();
 
-	String selected_type = "";
+	String selected_type;
 	TreeItem *selected_item = edit_type_list->get_selected();
 	if (selected_item) {
 		selected_type = selected_item->get_text(0);

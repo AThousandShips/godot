@@ -73,9 +73,9 @@ class AnimationNodeBlendTreeEditor : public AnimationTreeNodeEditorPlugin {
 	HashMap<StringName, ProgressBar *> animations;
 	Vector<EditorProperty *> visible_properties;
 
-	String to_node = "";
+	String to_node;
 	int to_slot = -1;
-	String from_node = "";
+	String from_node;
 
 	struct AddOption {
 		String name;

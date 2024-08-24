@@ -82,7 +82,7 @@ bool HTTPRequest::has_header(const PackedStringArray &p_headers, const String &p
 }
 
 String HTTPRequest::get_header_value(const PackedStringArray &p_headers, const String &p_header_name) {
-	String value = "";
+	String value;
 
 	String lowwer_case_header_name = p_header_name.to_lower();
 	for (int i = 0; i < p_headers.size(); i++) {

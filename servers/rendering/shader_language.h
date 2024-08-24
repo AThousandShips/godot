@@ -482,7 +482,7 @@ public:
 
 	struct ConstantNode : public Node {
 		DataType datatype = TYPE_VOID;
-		String struct_name = "";
+		String struct_name;
 		int array_size = 0;
 
 		union Value {

@@ -361,7 +361,7 @@ void AnimationPlayerEditor::_animation_selected(int p_which) {
 void AnimationPlayerEditor::_animation_new() {
 	int count = 1;
 	String base = "new_animation";
-	String current_library_name = "";
+	String current_library_name;
 	if (animation->has_selectable_items()) {
 		String current_animation_name = animation->get_item_text(animation->get_selected());
 		Ref<Animation> current_animation = player->get_animation(current_animation_name);
@@ -504,7 +504,7 @@ void AnimationPlayerEditor::_animation_name_edited() {
 		return;
 	}
 
-	String test_name_prefix = "";
+	String test_name_prefix;
 	if (library->is_visible() && library->get_selected_id() != -1) {
 		test_name_prefix = library->get_item_metadata(library->get_selected_id());
 		test_name_prefix += (test_name_prefix != "") ? "/" : "";
@@ -526,7 +526,7 @@ void AnimationPlayerEditor::_animation_name_edited() {
 			ERR_FAIL_COND(al.is_null());
 
 			// Extract library prefix if present.
-			String new_library_prefix = "";
+			String new_library_prefix;
 			if (current.contains("/")) {
 				new_library_prefix = current.get_slice("/", 0) + "/";
 				current = current.get_slice("/", 1);

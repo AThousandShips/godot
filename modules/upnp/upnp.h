@@ -41,7 +41,7 @@ class UPNP : public RefCounted {
 	GDCLASS(UPNP, RefCounted);
 
 private:
-	String discover_multicast_if = "";
+	String discover_multicast_if;
 	int discover_local_port = 0;
 	bool discover_ipv6 = false;
 

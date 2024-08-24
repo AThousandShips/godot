@@ -215,7 +215,7 @@ PluginConfigIOS PluginConfigIOS::load_plugin_config(Ref<ConfigFile> config_file,
 		for (const String &key : keys) {
 			Vector<String> key_components = key.split(":");
 
-			String key_value = "";
+			String key_value;
 			PluginConfigIOS::PlistItemType key_type = PluginConfigIOS::PlistItemType::UNKNOWN;
 
 			if (key_components.size() == 1) {

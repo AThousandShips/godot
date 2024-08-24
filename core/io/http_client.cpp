@@ -69,7 +69,7 @@ Error HTTPClient::_request(Method p_method, const String &p_url, const Vector<St
 }
 
 String HTTPClient::query_string_from_dict(const Dictionary &p_dict) {
-	String query = "";
+	String query;
 	Array keys = p_dict.keys();
 	for (int i = 0; i < keys.size(); ++i) {
 		String encoded_key = String(keys[i]).uri_encode();

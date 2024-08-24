@@ -596,7 +596,7 @@ public:
 	};
 
 private:
-	String parameter_name = "";
+	String parameter_name;
 	Qualifier qualifier = QUAL_NONE;
 	bool global_code_generated = false;
 
@@ -800,8 +800,8 @@ private:
 	void _apply_port_changes();
 
 protected:
-	String inputs = "";
-	String outputs = "";
+	String inputs;
+	String outputs;
 	bool editable = false;
 
 	struct Port {
@@ -871,7 +871,7 @@ private:
 	String _replace_port_names(const Vector<Pair<String, String>> &p_pairs, const String &p_expression) const;
 
 protected:
-	String expression = "";
+	String expression;
 
 	static void _bind_methods();
 

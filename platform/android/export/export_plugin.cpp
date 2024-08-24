@@ -2350,12 +2350,12 @@ bool EditorExportPlatformAndroid::has_valid_username_and_password(const Ref<Edit
 
 	bool valid = true;
 	if (!dk.is_empty() && !dk_user.is_empty() && !dk_password.is_empty()) {
-		String err = "";
+		String err;
 		valid = has_valid_keystore_credentials(err, dk, dk_user, dk_password, "Debug");
 		r_error += err;
 	}
 	if (!rk.is_empty() && !rk_user.is_empty() && !rk_password.is_empty()) {
-		String err = "";
+		String err;
 		valid = has_valid_keystore_credentials(err, rk, rk_user, rk_password, "Release");
 		r_error += err;
 	}

@@ -457,10 +457,10 @@ bool EditorFileSystem::_test_for_reimport(const String &p_path, bool p_only_impo
 	List<String> to_check;
 
 	String importer_name;
-	String source_file = "";
-	String source_md5 = "";
+	String source_file;
+	String source_md5;
 	Vector<String> dest_files;
-	String dest_md5 = "";
+	String dest_md5;
 	int version = 0;
 	bool found_uid = false;
 

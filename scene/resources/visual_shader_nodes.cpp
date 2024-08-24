@@ -767,7 +767,7 @@ String VisualShaderNodeTexture::generate_global(Shader::Mode p_mode, VisualShade
 		case SOURCE_3D_NORMAL:
 		case SOURCE_ROUGHNESS: {
 			if (p_mode == Shader::MODE_SPATIAL && p_type == VisualShader::TYPE_FRAGMENT) {
-				String sampler_name = "";
+				String sampler_name;
 				String hint = " : ";
 				if (source == SOURCE_DEPTH) {
 					sampler_name = "depth_tex";
@@ -848,8 +848,8 @@ String VisualShaderNodeTexture::generate_code(Shader::Mode p_mode, VisualShader:
 		case SOURCE_ROUGHNESS:
 		case SOURCE_DEPTH: {
 			if (!p_for_preview && p_mode == Shader::MODE_SPATIAL && p_type == VisualShader::TYPE_FRAGMENT) {
-				String var_name = "";
-				String sampler_name = "";
+				String var_name;
+				String sampler_name;
 
 				switch (source) {
 					case SOURCE_DEPTH: {
@@ -5172,7 +5172,7 @@ String VisualShaderNodeFloatParameter::get_output_port_name(int p_port) const {
 }
 
 String VisualShaderNodeFloatParameter::generate_global(Shader::Mode p_mode, VisualShader::Type p_type, int p_id) const {
-	String code = "";
+	String code;
 	if (hint == HINT_RANGE) {
 		code += _get_qual_str() + "uniform float " + get_parameter_name() + " : hint_range(" + rtos(hint_range_min) + ", " + rtos(hint_range_max) + ")";
 	} else if (hint == HINT_RANGE_STEP) {
@@ -5363,7 +5363,7 @@ String VisualShaderNodeIntParameter::get_output_port_name(int p_port) const {
 }
 
 String VisualShaderNodeIntParameter::generate_global(Shader::Mode p_mode, VisualShader::Type p_type, int p_id) const {
-	String code = "";
+	String code;
 	if (hint == HINT_RANGE) {
 		code += _get_qual_str() + "uniform int " + get_parameter_name() + " : hint_range(" + itos(hint_range_min) + ", " + itos(hint_range_max) + ")";
 	} else if (hint == HINT_RANGE_STEP) {

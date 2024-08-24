@@ -1387,7 +1387,7 @@ Error CodeSign::_codesign_file(bool p_use_hardened_runtime, bool p_force, const 
 
 	print_verbose("CodeSign: Generating requirements...");
 	Ref<CodeSignRequirements> rq;
-	String team_id = "";
+	String team_id;
 	rq = Ref<CodeSignRequirements>(memnew(CodeSignRequirements()));
 
 	// Sign executables.

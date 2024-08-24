@@ -5707,7 +5707,7 @@ bool RichTextLabel::is_using_bbcode() const {
 }
 
 String RichTextLabel::get_parsed_text() const {
-	String txt = "";
+	String txt;
 	Item *it = main;
 	while (it) {
 		if (it->type == ITEM_DROPCAP) {

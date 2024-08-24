@@ -1306,7 +1306,7 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 									}
 								}
 
-								String data_type_name = "";
+								String data_type_name;
 								if (actions.check_multiview_samplers && (is_screen_texture || is_depth_texture || is_normal_roughness_texture)) {
 									data_type_name = "multiviewSampler";
 									multiview_uv_needed = true;

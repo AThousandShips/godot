@@ -315,7 +315,7 @@ EditorAbout::EditorAbout() {
 	TreeItem *tpl_ti_lc = _tpl_tree->create_item(root);
 	tpl_ti_lc->set_text(0, TTR("Licenses"));
 	tpl_ti_lc->set_selectable(0, false);
-	String long_text = "";
+	String long_text;
 	for (int component_index = 0; component_index < COPYRIGHT_INFO_COUNT; component_index++) {
 		const ComponentCopyright &component = COPYRIGHT_INFO[component_index];
 		TreeItem *ti = _tpl_tree->create_item(tpl_ti_tp);

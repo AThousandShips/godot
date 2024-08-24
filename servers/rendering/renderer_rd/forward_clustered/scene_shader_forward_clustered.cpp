@@ -516,7 +516,7 @@ void SceneShaderForwardClustered::init(const String p_defines) {
 		};
 
 		for (int i = 0; i < SHADER_COLOR_PASS_FLAG_COUNT; i++) {
-			String version = "";
+			String version;
 			for (int j = 0; (1 << j) < SHADER_COLOR_PASS_FLAG_COUNT; j += 1) {
 				if ((1 << j) & i) {
 					version += color_pass_flags[j];

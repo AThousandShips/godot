@@ -355,7 +355,7 @@ Error GDScriptWorkspace::initialize() {
 			symbol.native_class = class_name;
 			symbol.kind = i >= signal_start_idx ? lsp::SymbolKind::Event : lsp::SymbolKind::Method;
 
-			String params = "";
+			String params;
 			bool arg_default_value_started = false;
 			for (int j = 0; j < data.arguments.size(); j++) {
 				const DocData::ArgumentDoc &arg = data.arguments[j];

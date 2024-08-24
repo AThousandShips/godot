@@ -54,7 +54,7 @@ String JSON::_stringify(const Variant &p_var, const String &p_indent, int p_cur_
 	ERR_FAIL_COND_V_MSG(p_cur_indent > Variant::MAX_RECURSION_DEPTH, "...", "JSON structure is too deep. Bailing.");
 
 	String colon = ":";
-	String end_statement = "";
+	String end_statement;
 
 	if (!p_indent.is_empty()) {
 		colon += " ";

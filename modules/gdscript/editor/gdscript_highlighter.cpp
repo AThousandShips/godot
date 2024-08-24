@@ -44,7 +44,7 @@ Dictionary GDScriptSyntaxHighlighter::_get_line_syntax_highlighting_impl(int p_l
 	Type current_type = NONE;
 	Type prev_type = NONE;
 
-	String prev_text = "";
+	String prev_text;
 	int prev_column = 0;
 	bool prev_is_char = false;
 	bool prev_is_digit = false;

@@ -173,11 +173,11 @@ static bool _start_success = false;
 
 // Drivers
 
-String display_driver = "";
-String tablet_driver = "";
-String text_driver = "";
-String rendering_driver = "";
-String rendering_method = "";
+String display_driver;
+String tablet_driver;
+String text_driver;
+String rendering_driver;
+String rendering_method;
 static int text_driver_idx = -1;
 static int audio_driver_idx = -1;
 
@@ -963,10 +963,10 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 		I = I->next();
 	}
 
-	String audio_driver = "";
+	String audio_driver;
 	String project_path = ".";
 	bool upwards = false;
-	String debug_uri = "";
+	String debug_uri;
 	bool skip_breakpoints = false;
 	String main_pack;
 	bool quiet_stdout = false;
@@ -980,9 +980,9 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 	bool force_res = false;
 	bool delta_smoothing_override = false;
 
-	String default_renderer = "";
-	String default_renderer_mobile = "";
-	String renderer_hints = "";
+	String default_renderer;
+	String default_renderer_mobile;
+	String renderer_hints;
 
 	packed_data = PackedData::get_singleton();
 	if (!packed_data) {
@@ -1933,9 +1933,9 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 	OS::get_singleton()->set_cmdline(execpath, main_args, user_args);
 
 	{
-		String driver_hints = "";
-		String driver_hints_with_d3d12 = "";
-		String driver_hints_with_metal = "";
+		String driver_hints;
+		String driver_hints_with_d3d12;
+		String driver_hints_with_metal;
 
 		{
 			Vector<String> driver_hints_arr;
@@ -1973,9 +1973,9 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 	}
 
 	{
-		String driver_hints = "";
-		String driver_hints_angle = "";
-		String driver_hints_egl = "";
+		String driver_hints;
+		String driver_hints_angle;
+		String driver_hints_egl;
 #ifdef GLES3_ENABLED
 		driver_hints = "opengl3";
 		driver_hints_angle = "opengl3,opengl3_angle"; // macOS, Windows.

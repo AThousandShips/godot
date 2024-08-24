@@ -693,7 +693,7 @@ void NavMeshGenerator3D::generator_bake_from_source_geometry_data(Ref<Navigation
 	rcContext ctx;
 
 	// added to keep track of steps, no functionality right now
-	String bake_state = "";
+	String bake_state;
 
 	bake_state = "Setting up Configuration..."; // step #1
 

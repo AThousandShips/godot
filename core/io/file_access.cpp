@@ -692,7 +692,7 @@ void FileAccess::store_line(const String &p_line) {
 void FileAccess::store_csv_line(const Vector<String> &p_values, const String &p_delim) {
 	ERR_FAIL_COND(p_delim.length() != 1);
 
-	String line = "";
+	String line;
 	int size = p_values.size();
 	for (int i = 0; i < size; ++i) {
 		String value = p_values[i];

@@ -948,7 +948,7 @@ Error ResourceLoaderText::rename_dependencies(Ref<FileAccess> p_f, const String 
 					res_uid = ResourceSaver::get_resource_id_for_path(p_path);
 				}
 
-				String uid_text = "";
+				String uid_text;
 				if (res_uid != ResourceUID::INVALID_ID) {
 					uid_text = " uid=\"" + ResourceUID::get_singleton()->id_to_text(res_uid) + "\"";
 				}

@@ -925,7 +925,7 @@ void FileSystemDock::_update_file_list(bool p_keep_selection) {
 	_set_current_path_line_edit_text(current_path);
 
 	String directory = current_path;
-	String file = "";
+	String file;
 
 	int thumbnail_size = EDITOR_GET("docks/filesystem/thumbnail_size");
 	thumbnail_size *= EDSCALE;
@@ -2071,7 +2071,7 @@ Vector<String> FileSystemDock::_remove_self_included_paths(Vector<String> select
 	// Remove paths or files that are included into another.
 	if (selected_strings.size() > 1) {
 		selected_strings.sort_custom<FileNoCaseComparator>();
-		String last_path = "";
+		String last_path;
 		for (int i = 0; i < selected_strings.size(); i++) {
 			if (!last_path.is_empty() && selected_strings[i].begins_with(last_path)) {
 				selected_strings.remove_at(i);

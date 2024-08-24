@@ -124,7 +124,7 @@ public:
 private:
 	struct GutterInfo {
 		GutterType type = GutterType::GUTTER_TYPE_STRING;
-		String name = "";
+		String name;
 		int width = 24;
 		bool draw = true;
 		bool clickable = false;
@@ -140,7 +140,7 @@ private:
 			bool clickable = false;
 
 			Ref<Texture2D> icon = Ref<Texture2D>();
-			String text = "";
+			String text;
 			Color color = Color(1, 1, 1);
 		};
 
@@ -284,11 +284,11 @@ private:
 	uint32_t alt_code = 0;
 
 	// Text properties.
-	String ime_text = "";
+	String ime_text;
 	Point2 ime_selection;
 
 	// Placeholder
-	String placeholder_text = "";
+	String placeholder_text;
 	Array placeholder_bidi_override;
 	Ref<TextParagraph> placeholder_data_buf;
 	int placeholder_line_height = -1;
@@ -305,7 +305,7 @@ private:
 	TextDirection text_direction = TEXT_DIRECTION_AUTO;
 	TextDirection input_direction = TEXT_DIRECTION_LTR;
 
-	String language = "";
+	String language;
 
 	TextServer::StructuredTextParser st_parser = TextServer::STRUCTURED_TEXT_DEFAULT;
 	Array st_args;
@@ -325,7 +325,7 @@ private:
 	bool middle_mouse_paste_enabled = true;
 
 	// Overridable actions.
-	String cut_copy_line = "";
+	String cut_copy_line;
 
 	// Context menu.
 	PopupMenu *menu = nullptr;
@@ -383,7 +383,7 @@ private:
 	void _clear_redo();
 
 	/* Search */
-	String search_text = "";
+	String search_text;
 	uint32_t search_flags = 0;
 
 	int _get_column_pos_of_word(const String &p_key, const String &p_search, uint32_t p_search_flags, int p_from_column) const;

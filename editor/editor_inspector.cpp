@@ -3034,7 +3034,7 @@ void EditorInspector::update_tree() {
 		String path = p.name;
 
 		// First check if we have an array that fits the prefix.
-		String array_prefix = "";
+		String array_prefix;
 		int array_index = -1;
 		for (KeyValue<String, EditorInspectorArray *> &E : editor_inspector_array_per_prefix) {
 			if (p.name.begins_with(E.key) && E.key.length() > array_prefix.length()) {
@@ -3153,7 +3153,7 @@ void EditorInspector::update_tree() {
 		}
 
 		VBoxContainer *current_vbox = root_vbox;
-		String acc_path = "";
+		String acc_path;
 		int level = 1;
 
 		Vector<String> components = path.split("/");

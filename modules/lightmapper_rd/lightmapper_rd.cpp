@@ -1394,7 +1394,7 @@ LightmapperRD::BakeError LightmapperRD::bake(BakeQuality p_quality, bool p_use_d
 	/* Plot direct light */
 
 	Ref<RDShaderFile> compute_shader;
-	String defines = "";
+	String defines;
 	defines += "\n#define CLUSTER_SIZE " + uitos(cluster_size) + "\n";
 
 	if (p_bake_sh) {

@@ -80,8 +80,8 @@ private:
 
 	/* BracePair open_key must be uniquie and ordered by length. */
 	struct BracePair {
-		String open_key = "";
-		String close_key = "";
+		String open_key;
+		String close_key;
 	};
 	Vector<BracePair> auto_brace_completion_pairs;
 
@@ -139,8 +139,8 @@ private:
 
 	struct Delimiter {
 		DelimiterType type;
-		String start_key = "";
-		String end_key = "";
+		String start_key;
+		String end_key;
 		bool line_only = true;
 	};
 	bool setting_delimiters = false;
@@ -194,7 +194,7 @@ private:
 	TypedArray<String> _get_delimiters(DelimiterType p_type) const;
 
 	/* Code Hint */
-	String code_hint = "";
+	String code_hint;
 
 	bool code_hint_draw_below = true;
 	int code_hint_xpos = -0xFFFF;
@@ -231,8 +231,8 @@ private:
 	/* Symbol lookup */
 	bool symbol_lookup_on_click_enabled = false;
 
-	String symbol_lookup_new_word = "";
-	String symbol_lookup_word = "";
+	String symbol_lookup_new_word;
+	String symbol_lookup_word;
 	Point2i symbol_lookup_pos;
 
 	/* Visual */

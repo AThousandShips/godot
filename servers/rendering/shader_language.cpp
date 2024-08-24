@@ -516,7 +516,7 @@ ShaderLanguage::Token ShaderLanguage::_get_token() {
 
 			} break;
 			case '"': {
-				String _content = "";
+				String _content;
 				bool _previous_backslash = false;
 
 				while (true) {
@@ -3438,7 +3438,7 @@ bool ShaderLanguage::_validate_function_call(BlockNode *p_block, const FunctionI
 	}
 
 	if (unsupported_builtin) {
-		String arglist = "";
+		String arglist;
 		for (int i = 0; i < argcount; i++) {
 			if (i > 0) {
 				arglist += ", ";
@@ -3493,7 +3493,7 @@ bool ShaderLanguage::_validate_function_call(BlockNode *p_block, const FunctionI
 
 	int last_arg_count = 0;
 	bool exists = false;
-	String arg_list = "";
+	String arg_list;
 
 	for (int i = 0; i < shader->vfunctions.size(); i++) {
 		if (name != shader->vfunctions[i].name) {
@@ -4990,7 +4990,7 @@ Error ShaderLanguage::_parse_array_size(BlockNode *p_block, const FunctionInfo &
 
 ShaderLanguage::Node *ShaderLanguage::_parse_array_constructor(BlockNode *p_block, const FunctionInfo &p_function_info) {
 	DataType type = TYPE_VOID;
-	String struct_name = "";
+	String struct_name;
 	int array_size = 0;
 	bool auto_size = false;
 	bool undefined_size = false;
@@ -5079,7 +5079,7 @@ ShaderLanguage::Node *ShaderLanguage::_parse_array_constructor(BlockNode *p_bloc
 
 ShaderLanguage::Node *ShaderLanguage::_parse_array_constructor(BlockNode *p_block, const FunctionInfo &p_function_info, DataType p_type, const StringName &p_struct_name, int p_array_size) {
 	DataType type = TYPE_VOID;
-	String struct_name = "";
+	String struct_name;
 	int array_size = 0;
 	bool auto_size = false;
 	TkPos prev_pos = _get_tkpos();
@@ -7122,7 +7122,7 @@ Error ShaderLanguage::_parse_block(BlockNode *p_block, const FunctionInfo &p_fun
 		} else if (tk.type == TK_CONST || is_token_precision(tk.type) || is_token_nonvoid_datatype(tk.type) || is_struct) {
 			is_var_init = true;
 
-			String struct_name = "";
+			String struct_name;
 			if (is_struct) {
 				struct_name = tk.text;
 #ifdef DEBUG_ENABLED

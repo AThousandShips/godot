@@ -489,7 +489,7 @@ String InputEventKey::to_string() {
 	String p = is_pressed() ? "true" : "false";
 	String e = is_echo() ? "true" : "false";
 
-	String kc = "";
+	String kc;
 	String physical = "false";
 
 	String loc = as_text_location();

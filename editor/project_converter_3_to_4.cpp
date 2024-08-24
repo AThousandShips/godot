@@ -1064,7 +1064,7 @@ bool ProjectConverter3To4::test_conversion(RegExContainer &reg_container) {
 	}
 	{
 		String base = "mortadela(";
-		String expected = "";
+		String expected;
 		String got = get_object_of_execution(base);
 		if (got != expected) {
 			ERR_PRINT(vformat("Failed to get proper data from get_object_of_execution. \"%s\" should return \"%s\"(%d), got \"%s\"(%d), instead.", base, expected, expected.size(), got, got.size()));
@@ -1096,8 +1096,8 @@ bool ProjectConverter3To4::test_conversion(RegExContainer &reg_container) {
 	{
 		String line = "( )";
 		Vector<String> got_vector = parse_arguments(line);
-		String got = "";
-		String expected = "";
+		String got;
+		String expected;
 		for (String &part : got_vector) {
 			got += part + "|||";
 		}
@@ -1109,7 +1109,7 @@ bool ProjectConverter3To4::test_conversion(RegExContainer &reg_container) {
 	{
 		String line = "(a , b , c)";
 		Vector<String> got_vector = parse_arguments(line);
-		String got = "";
+		String got;
 		String expected = "a|||b|||c|||";
 		for (String &part : got_vector) {
 			got += part + "|||";
@@ -1122,7 +1122,7 @@ bool ProjectConverter3To4::test_conversion(RegExContainer &reg_container) {
 	{
 		String line = "(a , \"b,\" , c)";
 		Vector<String> got_vector = parse_arguments(line);
-		String got = "";
+		String got;
 		String expected = "a|||\"b,\"|||c|||";
 		for (String &part : got_vector) {
 			got += part + "|||";
@@ -1135,7 +1135,7 @@ bool ProjectConverter3To4::test_conversion(RegExContainer &reg_container) {
 	{
 		String line = "(a , \"(,),,,,\" , c)";
 		Vector<String> got_vector = parse_arguments(line);
-		String got = "";
+		String got;
 		String expected = "a|||\"(,),,,,\"|||c|||";
 		for (String &part : got_vector) {
 			got += part + "|||";
@@ -2945,7 +2945,7 @@ String ProjectConverter3To4::simple_line_formatter(int current_line, String old_
 
 // Collects string from vector strings
 String ProjectConverter3To4::collect_string_from_vector(Vector<SourceLine> &vector) {
-	String string = "";
+	String string;
 	for (int i = 0; i < vector.size(); i++) {
 		string += vector[i].line;
 

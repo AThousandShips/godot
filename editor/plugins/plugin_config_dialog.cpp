@@ -89,7 +89,7 @@ void PluginConfigDialog::_create_script_for_plugin(const String &p_plugin_path, 
 	// If the requested script does not exist, create it.
 	if (!_edit_mode && !FileAccess::exists(script_path)) {
 		String class_name = script_name.get_basename();
-		String template_content = "";
+		String template_content;
 		Vector<ScriptLanguage::ScriptTemplate> templates = language->get_built_in_templates("EditorPlugin");
 		if (!templates.is_empty()) {
 			template_content = templates[0].content;

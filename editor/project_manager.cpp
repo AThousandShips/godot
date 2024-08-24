@@ -577,7 +577,7 @@ void ProjectManager::_open_selected_projects_ask() {
 	}
 	// Check if the project is using features not supported by this build of Godot.
 	if (!unsupported_features.is_empty()) {
-		String warning_message = "";
+		String warning_message;
 		for (int i = 0; i < unsupported_features.size(); i++) {
 			String feature = unsupported_features[i];
 			if (feature == "Double Precision") {

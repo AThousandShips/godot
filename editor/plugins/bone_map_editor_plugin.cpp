@@ -541,7 +541,7 @@ int BoneMapper::search_bone_by_name(Skeleton3D *p_skeleton, const Vector<String>
 	// There may be multiple candidates hit by existing the subsidiary bone.
 	// The one with the shortest name is probably the original.
 	LocalVector<String> hit_list;
-	String shortest = "";
+	String shortest;
 
 	for (int word_idx = 0; word_idx < p_picklist.size(); word_idx++) {
 		if (p_child == -1) {

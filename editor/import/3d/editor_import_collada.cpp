@@ -515,7 +515,7 @@ Error ColladaImport::_create_mesh_surfaces(bool p_optimize, Ref<ImporterMesh> &p
 		int normal_ofs = 0;
 
 		{
-			String normal_source_id = "";
+			String normal_source_id;
 
 			if (p.sources.has("NORMAL")) {
 				normal_source_id = p.sources["NORMAL"].source;
@@ -535,7 +535,7 @@ Error ColladaImport::_create_mesh_surfaces(bool p_optimize, Ref<ImporterMesh> &p
 		int binormal_ofs = 0;
 
 		{
-			String binormal_source_id = "";
+			String binormal_source_id;
 
 			if (p.sources.has("TEXBINORMAL")) {
 				binormal_source_id = p.sources["TEXBINORMAL"].source;
@@ -555,7 +555,7 @@ Error ColladaImport::_create_mesh_surfaces(bool p_optimize, Ref<ImporterMesh> &p
 		int tangent_ofs = 0;
 
 		{
-			String tangent_source_id = "";
+			String tangent_source_id;
 
 			if (p.sources.has("TEXTANGENT")) {
 				tangent_source_id = p.sources["TEXTANGENT"].source;
@@ -575,7 +575,7 @@ Error ColladaImport::_create_mesh_surfaces(bool p_optimize, Ref<ImporterMesh> &p
 		int uv_ofs = 0;
 
 		{
-			String uv_source_id = "";
+			String uv_source_id;
 
 			if (p.sources.has("TEXCOORD0")) {
 				uv_source_id = p.sources["TEXCOORD0"].source;
@@ -595,7 +595,7 @@ Error ColladaImport::_create_mesh_surfaces(bool p_optimize, Ref<ImporterMesh> &p
 		int uv2_ofs = 0;
 
 		{
-			String uv2_source_id = "";
+			String uv2_source_id;
 
 			if (p.sources.has("TEXCOORD1")) {
 				uv2_source_id = p.sources["TEXCOORD1"].source;
@@ -615,7 +615,7 @@ Error ColladaImport::_create_mesh_surfaces(bool p_optimize, Ref<ImporterMesh> &p
 		int color_ofs = 0;
 
 		{
-			String color_source_id = "";
+			String color_source_id;
 
 			if (p.sources.has("COLOR")) {
 				color_source_id = p.sources["COLOR"].source;

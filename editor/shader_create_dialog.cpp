@@ -286,7 +286,7 @@ void ShaderCreateDialog::_type_changed(int p_language) {
 
 	String selected_ext = "." + shader_type_data.default_extension;
 	String path = file_path->get_text();
-	String extension = "";
+	String extension;
 
 	if (!path.is_empty()) {
 		if (path.contains(".")) {

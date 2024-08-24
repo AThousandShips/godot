@@ -1516,7 +1516,7 @@ void EditorExportPlatformIOS::_add_assets_to_project(const String &p_out_dir, co
 
 		String build_id = (++current_id).str();
 		String ref_id = (++current_id).str();
-		String framework_id = "";
+		String framework_id;
 
 		const IOSExportAsset &asset = p_additional_assets[i];
 

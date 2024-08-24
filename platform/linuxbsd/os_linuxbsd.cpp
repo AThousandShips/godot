@@ -1034,7 +1034,7 @@ Error OS_LinuxBSD::move_to_trash(const String &p_path) {
 	}
 
 	// If the commands `kioclient5`, `gio` or `gvfs-trash` don't work on the system we do it manually.
-	String trash_path = "";
+	String trash_path;
 	String mnt = get_mountpoint(path);
 
 	// If there is a directory "[Mountpoint]/.Trash-[UID], use it as the trash can.

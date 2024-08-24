@@ -656,7 +656,7 @@ void VisualShaderGraphPlugin::add_node(VisualShader::Type p_type, int p_id, bool
 
 	Ref<VisualShaderNodeExpression> expression_node = group_node;
 	bool is_expression = expression_node.is_valid();
-	String expression = "";
+	String expression;
 
 	Ref<VisualShaderNodeReroute> reroute_node = vsnode;
 	bool is_reroute = reroute_node.is_valid();
@@ -2190,7 +2190,7 @@ void VisualShaderEditor::_update_options_menu() {
 
 		if (!folders.has(path)) {
 			category = root;
-			String path_temp = "";
+			String path_temp;
 			for (int j = 0; j < subfolders.size(); j++) {
 				path_temp += subfolders[j];
 				if (!folders.has(path_temp)) {

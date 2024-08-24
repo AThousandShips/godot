@@ -368,7 +368,7 @@ void JoypadLinux::open_joypad(const char *p_path) {
 
 		char uid[128];
 		char namebuf[128];
-		String name = "";
+		String name;
 		input_id inpid;
 		if (ioctl(fd, EVIOCGNAME(sizeof(namebuf)), namebuf) >= 0) {
 			name = namebuf;

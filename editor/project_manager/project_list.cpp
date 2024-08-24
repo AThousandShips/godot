@@ -142,7 +142,7 @@ void ProjectListItemControl::set_project_version(const String &p_info) {
 
 void ProjectListItemControl::set_unsupported_features(PackedStringArray p_features) {
 	if (p_features.size() > 0) {
-		String tooltip_text = "";
+		String tooltip_text;
 		for (int i = 0; i < p_features.size(); i++) {
 			if (ProjectList::project_feature_looks_like_version(p_features[i])) {
 				PackedStringArray project_version_split = p_features[i].split(".");

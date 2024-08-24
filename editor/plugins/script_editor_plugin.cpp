@@ -3023,7 +3023,7 @@ Variant ScriptEditor::get_drag_data_fw(const Point2 &p_point, Control *p_from) {
 	Node *cur_node = tab_container->get_tab_control(tab_container->get_current_tab());
 
 	HBoxContainer *drag_preview = memnew(HBoxContainer);
-	String preview_name = "";
+	String preview_name;
 	Ref<Texture2D> preview_icon;
 
 	ScriptEditorBase *se = Object::cast_to<ScriptEditorBase>(cur_node);
@@ -3812,8 +3812,8 @@ void ScriptEditor::_on_find_in_files_result_selected(const String &fpath, int li
 			int scr_start_line = 1;
 
 			String scr_header = "[sub_resource type=\"GDScript\" id=\"";
-			String scr_id = "";
-			String line = "";
+			String scr_id;
+			String line;
 
 			int l = 0;
 

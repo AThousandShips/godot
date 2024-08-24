@@ -107,7 +107,7 @@ void POTGenerator::_write_to_pot(const String &p_file) {
 
 	String project_name = GLOBAL_GET("application/config/name").operator String().replace("\n", "\\n");
 	Vector<String> files = GLOBAL_GET("internationalization/locale/translations_pot_files");
-	String extracted_files = "";
+	String extracted_files;
 	for (int i = 0; i < files.size(); i++) {
 		extracted_files += "# " + files[i].replace("\n", "\\n") + "\n";
 	}

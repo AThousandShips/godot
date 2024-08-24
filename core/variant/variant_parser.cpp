@@ -2077,7 +2077,7 @@ Error VariantWriter::write(const Variant &p_variant, StoreStringFunc p_store_str
 				Ref<Script> script = array.get_typed_script();
 
 				if (script.is_valid()) {
-					String resource_text = String();
+					String resource_text;
 					if (p_encode_res_func) {
 						resource_text = p_encode_res_func(p_encode_res_ud, script);
 					}

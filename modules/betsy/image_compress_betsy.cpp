@@ -119,7 +119,7 @@ Error _compress_betsy(BetsyFormat p_format, Image *r_img) {
 	// Destination format.
 	Image::Format dest_format = Image::FORMAT_MAX;
 
-	String version = "";
+	String version;
 
 	switch (p_format) {
 		case BETSY_FORMAT_BC6: {

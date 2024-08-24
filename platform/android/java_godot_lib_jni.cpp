@@ -471,7 +471,7 @@ JNIEXPORT jstring JNICALL Java_org_godotengine_godot_GodotLib_getGlobal(JNIEnv *
 }
 
 JNIEXPORT jstring JNICALL Java_org_godotengine_godot_GodotLib_getEditorSetting(JNIEnv *env, jclass clazz, jstring p_setting_key) {
-	String editor_setting = "";
+	String editor_setting;
 #ifdef TOOLS_ENABLED
 	String godot_setting_key = jstring_to_string(p_setting_key, env);
 	editor_setting = EDITOR_GET(godot_setting_key).operator String();

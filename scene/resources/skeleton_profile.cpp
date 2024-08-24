@@ -130,7 +130,7 @@ void SkeletonProfile::_validate_property(PropertyInfo &p_property) const {
 	}
 
 	if (p_property.name == ("root_bone") || p_property.name == ("scale_base_bone")) {
-		String hint = "";
+		String hint;
 		for (int i = 0; i < bones.size(); i++) {
 			hint += i == 0 ? String(bones[i].bone_name) : "," + String(bones[i].bone_name);
 		}
@@ -149,7 +149,7 @@ void SkeletonProfile::_get_property_list(List<PropertyInfo> *p_list) const {
 	if (is_read_only) {
 		return;
 	}
-	String group_names = "";
+	String group_names;
 	for (int i = 0; i < groups.size(); i++) {
 		String path = "groups/" + itos(i) + "/";
 		p_list->push_back(PropertyInfo(Variant::STRING_NAME, path + "group_name"));

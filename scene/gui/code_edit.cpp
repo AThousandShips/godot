@@ -1067,7 +1067,7 @@ void CodeEdit::_new_line(bool p_split_current_line, bool p_above) {
 
 		const String line = get_line(cl);
 
-		String ins = "";
+		String ins;
 		if (!p_above) {
 			ins = "\n";
 		}

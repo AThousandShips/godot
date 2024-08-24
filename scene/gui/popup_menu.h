@@ -147,7 +147,7 @@ class PopupMenu : public Popup {
 
 	bool allow_search = true;
 	uint64_t search_time_msec = 0;
-	String search_string = "";
+	String search_string;
 
 	ScrollContainer *scroll_container = nullptr;
 	Control *control = nullptr;
