@@ -1491,7 +1491,7 @@ Error CodeSign::_codesign_file(bool p_use_hardened_runtime, bool p_force, const 
 
 		print_verbose("CodeSign: Writing signature superblob...");
 		// Write signature data to the executable.
-		CodeSignSuperBlob sb = CodeSignSuperBlob();
+		CodeSignSuperBlob sb;
 		sb.add_blob(cd2);
 		sb.add_blob(cd1);
 		sb.add_blob(rq);
