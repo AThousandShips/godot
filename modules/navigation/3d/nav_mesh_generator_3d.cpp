@@ -652,7 +652,7 @@ void NavMeshGenerator3D::generator_parse_source_geometry_data(const Ref<Navigati
 		p_root_node->get_tree()->get_nodes_in_group(p_navigation_mesh->get_source_group_name(), &parse_nodes);
 	}
 
-	Transform3D root_node_transform = Transform3D();
+	Transform3D root_node_transform;
 	if (Object::cast_to<Node3D>(p_root_node)) {
 		root_node_transform = Object::cast_to<Node3D>(p_root_node)->get_global_transform().affine_inverse();
 	}

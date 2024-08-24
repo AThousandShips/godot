@@ -6807,7 +6807,7 @@ void fragment() {
 			axis[i] = 1;
 
 			for (int j = 0; j < 4; j++) {
-				Transform3D t = Transform3D();
+				Transform3D t;
 				if (distances[j] > 0.0) {
 					t = t.scaled(axis * distances[j + 1]);
 					t = t.translated(axis * distances[j]);
