@@ -54,9 +54,9 @@ private:
 	real_t height = 2.0;
 	bool is_trigger = false;
 	GLTFMeshIndex mesh_index = -1;
-	Ref<ImporterMesh> importer_mesh = nullptr;
+	Ref<ImporterMesh> importer_mesh;
 	// Internal only, for caching Godot shape resources. Used in `to_resource` and `to_node`.
-	Ref<Shape3D> _shape_cache = nullptr;
+	Ref<Shape3D> _shape_cache;
 
 public:
 	String get_shape_type() const;

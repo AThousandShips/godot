@@ -524,7 +524,7 @@ Vector<Face3> Mesh::get_surface_faces(int p_surface) const {
 #ifndef _3D_DISABLED
 Ref<ConvexPolygonShape3D> Mesh::create_convex_shape(bool p_clean, bool p_simplify) const {
 	if (p_simplify) {
-		Ref<MeshConvexDecompositionSettings> settings = Ref<MeshConvexDecompositionSettings>();
+		Ref<MeshConvexDecompositionSettings> settings;
 		settings.instantiate();
 		settings->set_max_convex_hulls(1);
 		settings->set_max_concavity(1.0);

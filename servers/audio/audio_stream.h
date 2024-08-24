@@ -293,7 +293,7 @@ private:
 	Ref<AudioStreamPlayback> instance_playback_no_repeats();
 	Ref<AudioStreamPlayback> instance_playback_sequential();
 
-	Ref<AudioStream> last_playback = nullptr;
+	Ref<AudioStream> last_playback;
 	PlaybackMode playback_mode = PLAYBACK_RANDOM_NO_REPEATS;
 
 protected:

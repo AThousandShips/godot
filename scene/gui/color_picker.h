@@ -160,7 +160,7 @@ private:
 	HBoxContainer *hex_hbc = nullptr;
 	MenuButton *btn_mode = nullptr;
 	Button *mode_btns[MODE_BUTTON_COUNT];
-	Ref<ButtonGroup> mode_group = nullptr;
+	Ref<ButtonGroup> mode_group;
 	ColorPresetButton *selected_recent_preset = nullptr;
 	Ref<ButtonGroup> preset_group;
 	Ref<ButtonGroup> recent_preset_group;

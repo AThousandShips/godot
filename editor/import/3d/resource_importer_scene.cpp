@@ -1977,7 +1977,7 @@ void ResourceImporterScene::get_internal_import_options(InternalImportCategory p
 			r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "mesh_instance/cast_shadow", PROPERTY_HINT_ENUM, "Off,On,Double-Sided,Shadows Only"), GeometryInstance3D::SHADOW_CASTING_SETTING_ON));
 
 			// Decomposition
-			Ref<MeshConvexDecompositionSettings> decomposition_default = Ref<MeshConvexDecompositionSettings>();
+			Ref<MeshConvexDecompositionSettings> decomposition_default;
 			decomposition_default.instantiate();
 			r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "decomposition/advanced", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED), false));
 			r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "decomposition/precision", PROPERTY_HINT_RANGE, "1,10,1"), 5));
@@ -2985,7 +2985,7 @@ Error ResourceImporterScene::import(const String &p_source_file, const String &p
 	String root_type = p_options["nodes/root_type"];
 	if (!root_type.is_empty()) {
 		root_type = root_type.split(" ")[0]; // Full root_type is "ClassName (filename.gd)" for a script global class.
-		Ref<Script> root_script = nullptr;
+		Ref<Script> root_script;
 		if (ScriptServer::is_global_class(root_type)) {
 			root_script = ResourceLoader::load(ScriptServer::get_global_class_path(root_type));
 			root_type = ScriptServer::get_global_class_base(root_type);

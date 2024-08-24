@@ -45,7 +45,7 @@ public:
 	String save_path;
 	HashMap<StringName, Variant> options;
 	List<String> *platform_variants = nullptr;
-	Ref<Image> image = nullptr;
+	Ref<Image> image;
 	Array formats_imported;
 	Vector<Ref<Image>> *slices = nullptr;
 	int compress_mode = 0;

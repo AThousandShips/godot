@@ -781,7 +781,7 @@ bool PList::load_string(const String &p_string, String &r_err_out) {
 		if (token == "key") {
 			key = value;
 		} else {
-			Ref<PListNode> var = nullptr;
+			Ref<PListNode> var;
 			if (token == "true") {
 				var = PListNode::new_bool(true);
 			} else if (token == "false") {

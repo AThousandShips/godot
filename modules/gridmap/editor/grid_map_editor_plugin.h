@@ -92,7 +92,7 @@ class GridMapEditor : public VBoxContainer {
 	List<SetItem> set_items;
 
 	GridMap *node = nullptr;
-	Ref<MeshLibrary> mesh_library = nullptr;
+	Ref<MeshLibrary> mesh_library;
 
 	Transform3D grid_xform;
 	Transform3D edit_grid_xform;

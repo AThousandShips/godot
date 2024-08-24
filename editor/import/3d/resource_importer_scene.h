@@ -341,7 +341,7 @@ Vector<Ref<Shape3D>> ResourceImporterScene::get_collision_shapes(const Ref<Impor
 	}
 
 	if (generate_shape_type == SHAPE_TYPE_DECOMPOSE_CONVEX) {
-		Ref<MeshConvexDecompositionSettings> decomposition_settings = Ref<MeshConvexDecompositionSettings>();
+		Ref<MeshConvexDecompositionSettings> decomposition_settings;
 		decomposition_settings.instantiate();
 		bool advanced = false;
 		if (p_options.has(SNAME("decomposition/advanced"))) {

@@ -225,7 +225,7 @@ class VisualShaderEditor : public ShaderEditor {
 	Window *preview_window = nullptr;
 	VBoxContainer *preview_vbox = nullptr;
 	CodeEdit *preview_text = nullptr;
-	Ref<CodeHighlighter> syntax_highlighter = nullptr;
+	Ref<CodeHighlighter> syntax_highlighter;
 	PanelContainer *error_panel = nullptr;
 	Label *error_label = nullptr;
 

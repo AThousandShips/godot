@@ -45,11 +45,11 @@ class GLTFSpecGloss : public Resource {
 	friend class GLTFDocument;
 
 private:
-	Ref<Image> diffuse_img = nullptr;
+	Ref<Image> diffuse_img;
 	Color diffuse_factor = Color(1.0f, 1.0f, 1.0f);
 	float gloss_factor = 1.0f;
 	Color specular_factor = Color(1.0f, 1.0f, 1.0f);
-	Ref<Image> spec_gloss_img = nullptr;
+	Ref<Image> spec_gloss_img;
 
 protected:
 	static void _bind_methods();
