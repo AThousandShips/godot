@@ -7596,7 +7596,7 @@ void Node3DEditor::_refresh_menu_icons() {
 
 template <typename T>
 HashSet<T *> _get_child_nodes(Node *parent_node) {
-	HashSet<T *> nodes = HashSet<T *>();
+	HashSet<T *> nodes;
 	T *node = Node::cast_to<T>(parent_node);
 	if (node) {
 		nodes.insert(node);
@@ -7614,7 +7614,7 @@ HashSet<T *> _get_child_nodes(Node *parent_node) {
 }
 
 HashSet<RID> _get_physics_bodies_rid(Node *node) {
-	HashSet<RID> rids = HashSet<RID>();
+	HashSet<RID> rids;
 	PhysicsBody3D *pb = Node::cast_to<PhysicsBody3D>(node);
 	if (pb) {
 		rids.insert(pb->get_rid());
