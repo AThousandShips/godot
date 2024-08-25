@@ -106,7 +106,7 @@ bool JavaClass::_call_method(JavaObject *p_instance, const StringName &p_method,
 						arg_expected = Variant::OBJECT;
 					} else {
 						Ref<RefCounted> ref = *p_args[i];
-						if (!ref.is_null()) {
+						if (ref.is_valid()) {
 							if (Object::cast_to<JavaObject>(ref.ptr())) {
 								Ref<JavaObject> jo = ref;
 								//could be faster

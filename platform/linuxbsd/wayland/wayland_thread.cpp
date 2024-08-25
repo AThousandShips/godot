@@ -3813,7 +3813,7 @@ void WaylandThread::cursor_set_custom_shape(DisplayServer::CursorShape p_cursor_
 }
 
 void WaylandThread::cursor_shape_set_custom_image(DisplayServer::CursorShape p_cursor_shape, Ref<Image> p_image, const Point2i &p_hotspot) {
-	ERR_FAIL_COND(!p_image.is_valid());
+	ERR_FAIL_COND(p_image.is_null());
 
 	Size2i image_size = p_image->get_size();
 
