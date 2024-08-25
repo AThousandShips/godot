@@ -1316,7 +1316,7 @@ void ScriptEditor::_menu_option(int p_option) {
 				}
 
 				Ref<Resource> scr = ResourceLoader::load(path);
-				if (!scr.is_valid()) {
+				if (scr.is_null()) {
 					EditorNode::get_singleton()->show_warning(TTR("Could not load file at:") + "\n\n" + path, TTR("Error!"));
 					file_dialog_option = -1;
 					return;
@@ -1792,7 +1792,7 @@ void ScriptEditor::_close_builtin_scripts_from_scene(const String &p_scene) {
 
 		if (se) {
 			Ref<Script> scr = se->get_edited_resource();
-			if (scr == nullptr || !scr.is_valid()) {
+			if (scr == nullptr || scr.is_null()) {
 				continue;
 			}
 
@@ -2737,7 +2737,7 @@ void ScriptEditor::reload_scripts(bool p_refresh_only) {
 			Ref<Script> scr = edited_res;
 			if (scr.is_valid()) {
 				Ref<Script> rel_scr = ResourceLoader::load(scr->get_path(), scr->get_class(), ResourceFormatLoader::CACHE_MODE_IGNORE);
-				ERR_CONTINUE(!rel_scr.is_valid());
+				ERR_CONTINUE(rel_scr.is_null());
 				scr->set_source_code(rel_scr->get_source_code());
 				scr->set_last_modified_time(rel_scr->get_last_modified_time());
 				scr->reload(true);
@@ -2746,7 +2746,7 @@ void ScriptEditor::reload_scripts(bool p_refresh_only) {
 			Ref<JSON> json = edited_res;
 			if (json != nullptr) {
 				Ref<JSON> rel_json = ResourceLoader::load(json->get_path(), json->get_class(), ResourceFormatLoader::CACHE_MODE_IGNORE);
-				ERR_CONTINUE(!rel_json.is_valid());
+				ERR_CONTINUE(rel_json.is_null());
 				json->parse(rel_json->get_parsed_text(), true);
 				json->set_last_modified_time(rel_json->get_last_modified_time());
 			}
@@ -2782,7 +2782,7 @@ Ref<Resource> ScriptEditor::open_file(const String &p_file) {
 	ResourceLoader::get_recognized_extensions_for_type("JSON", &extensions);
 	if (extensions.find(p_file.get_extension())) {
 		Ref<Resource> scr = ResourceLoader::load(p_file);
-		if (!scr.is_valid()) {
+		if (scr.is_null()) {
 			EditorNode::get_singleton()->show_warning(TTR("Could not load file at:") + "\n\n" + p_file, TTR("Error!"));
 			return Ref<Resource>();
 		}
@@ -2819,7 +2819,7 @@ void ScriptEditor::_editor_stop() {
 void ScriptEditor::_add_callback(Object *p_obj, const String &p_function, const PackedStringArray &p_args) {
 	ERR_FAIL_NULL(p_obj);
 	Ref<Script> scr = p_obj->get_script();
-	ERR_FAIL_COND(!scr.is_valid());
+	ERR_FAIL_COND(scr.is_null());
 
 	if (!scr->get_language()->can_make_function()) {
 		return;
@@ -3037,7 +3037,7 @@ Variant ScriptEditor::get_drag_data_fw(const Point2 &p_point, Control *p_from) {
 		preview_icon = get_editor_theme_icon(SNAME("Help"));
 	}
 
-	if (!preview_icon.is_null()) {
+	if (preview_icon.is_valid()) {
 		TextureRect *tf = memnew(TextureRect);
 		tf->set_texture(preview_icon);
 		tf->set_stretch_mode(TextureRect::STRETCH_KEEP_CENTERED);
@@ -3295,7 +3295,7 @@ void ScriptEditor::_make_script_list_context_menu() {
 	if (se) {
 		Ref<Script> scr = se->get_edited_resource();
 		if (scr != nullptr) {
-			if (!scr.is_null() && scr->is_tool()) {
+			if (scr.is_valid() && scr->is_tool()) {
 				context_menu->add_shortcut(ED_GET_SHORTCUT("script_editor/reload_script_soft"), FILE_TOOL_RELOAD_SOFT);
 				context_menu->add_shortcut(ED_GET_SHORTCUT("script_editor/run_file"), FILE_RUN);
 				context_menu->add_separator();
@@ -3363,7 +3363,7 @@ void ScriptEditor::set_window_layout(Ref<ConfigFile> p_layout) {
 
 		if (extensions.find(path.get_extension())) {
 			Ref<Resource> scr = ResourceLoader::load(path);
-			if (!scr.is_valid()) {
+			if (scr.is_null()) {
 				continue;
 			}
 			if (!edit(scr, false)) {
@@ -3372,7 +3372,7 @@ void ScriptEditor::set_window_layout(Ref<ConfigFile> p_layout) {
 		} else {
 			Error error;
 			Ref<TextFile> text_file = _load_text_file(path, &error);
-			if (error != OK || !text_file.is_valid()) {
+			if (error != OK || text_file.is_null()) {
 				continue;
 			}
 			if (!edit(text_file, false)) {

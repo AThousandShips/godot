@@ -242,9 +242,9 @@ void EditorExport::load_config() {
 			}
 		}
 
-		if (!preset.is_valid()) {
+		if (preset.is_null()) {
 			index++;
-			ERR_CONTINUE(!preset.is_valid());
+			ERR_CONTINUE(preset.is_null());
 		}
 
 		preset->set_name(config->get_value(section, "name"));

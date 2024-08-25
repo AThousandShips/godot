@@ -147,7 +147,7 @@ void BoneMapperItem::_notification(int p_what) {
 			bone_map->connect("bone_map_updated", callable_mp(this, &BoneMapperItem::_update_property));
 		} break;
 		case NOTIFICATION_EXIT_TREE: {
-			if (!bone_map.is_null() && bone_map->is_connected("bone_map_updated", callable_mp(this, &BoneMapperItem::_update_property))) {
+			if (bone_map.is_valid() && bone_map->is_connected("bone_map_updated", callable_mp(this, &BoneMapperItem::_update_property))) {
 				bone_map->disconnect("bone_map_updated", callable_mp(this, &BoneMapperItem::_update_property));
 			}
 		} break;
@@ -327,7 +327,7 @@ void BoneMapper::create_editor() {
 }
 
 void BoneMapper::update_group_idx() {
-	if (!bone_map->get_profile().is_valid()) {
+	if (bone_map->get_profile().is_null()) {
 		return;
 	}
 
@@ -412,7 +412,7 @@ void BoneMapper::recreate_editor() {
 		profile_texture->set_texture(Ref<Texture2D>());
 	}
 
-	if (!profile.is_valid()) {
+	if (profile.is_null()) {
 		return;
 	}
 
@@ -1390,7 +1390,7 @@ void BoneMapper::_notification(int p_what) {
 		} break;
 		case NOTIFICATION_EXIT_TREE: {
 			clear_items();
-			if (!bone_map.is_null()) {
+			if (bone_map.is_valid()) {
 				if (bone_map->is_connected("bone_map_updated", callable_mp(this, &BoneMapper::_update_state))) {
 					bone_map->disconnect("bone_map_updated", callable_mp(this, &BoneMapper::_update_state));
 				}

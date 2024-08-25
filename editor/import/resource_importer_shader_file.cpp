@@ -97,7 +97,7 @@ Error ResourceImporterShaderFile::import(const String &p_source_file, const Stri
 	Error err;
 	Ref<FileAccess> file = FileAccess::open(p_source_file, FileAccess::READ, &err);
 	ERR_FAIL_COND_V(err != OK, ERR_CANT_OPEN);
-	ERR_FAIL_COND_V(!file.is_valid(), ERR_CANT_OPEN);
+	ERR_FAIL_COND_V(file.is_null(), ERR_CANT_OPEN);
 
 	String file_txt = file->get_as_utf8_string();
 	Ref<RDShaderFile> shader_file;
