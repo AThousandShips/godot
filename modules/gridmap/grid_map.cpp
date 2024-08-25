@@ -255,11 +255,11 @@ RID GridMap::get_navigation_map() const {
 }
 
 void GridMap::set_mesh_library(const Ref<MeshLibrary> &p_mesh_library) {
-	if (!mesh_library.is_null()) {
+	if (mesh_library.is_valid()) {
 		mesh_library->disconnect_changed(callable_mp(this, &GridMap::_recreate_octant_data));
 	}
 	mesh_library = p_mesh_library;
-	if (!mesh_library.is_null()) {
+	if (mesh_library.is_valid()) {
 		mesh_library->connect_changed(callable_mp(this, &GridMap::_recreate_octant_data));
 	}
 
@@ -596,7 +596,7 @@ bool GridMap::_octant_update(const OctantKey &p_key) {
 		ERR_CONTINUE(!cell_map.has(E));
 		const Cell &c = cell_map[E];
 
-		if (!mesh_library.is_valid() || !mesh_library->has_item(c.item)) {
+		if (mesh_library.is_null() || !mesh_library->has_item(c.item)) {
 			continue;
 		}
 
@@ -625,7 +625,7 @@ bool GridMap::_octant_update(const OctantKey &p_key) {
 		// add the item's shape at given xform to octant's static_body
 		for (int i = 0; i < shapes.size(); i++) {
 			// add the item's shape
-			if (!shapes[i].shape.is_valid()) {
+			if (shapes[i].shape.is_null()) {
 				continue;
 			}
 			PhysicsServer3D::get_singleton()->body_add_shape(g.static_body, shapes[i].shape->get_rid(), xform * shapes[i].local_transform);
@@ -801,7 +801,7 @@ void GridMap::_octant_enter_world(const OctantKey &p_key) {
 			if (!g.navigation_debug_edge_connections_instance.is_valid()) {
 				g.navigation_debug_edge_connections_instance = RenderingServer::get_singleton()->instance_create();
 			}
-			if (!g.navigation_debug_edge_connections_mesh.is_valid()) {
+			if (g.navigation_debug_edge_connections_mesh.is_null()) {
 				g.navigation_debug_edge_connections_mesh = Ref<ArrayMesh>(memnew(ArrayMesh));
 			}
 
@@ -1224,7 +1224,7 @@ void GridMap::clear_baked_meshes() {
 }
 
 void GridMap::make_baked_meshes(bool p_gen_lightmap_uv, float p_lightmap_uv_texel_size) {
-	if (!mesh_library.is_valid()) {
+	if (mesh_library.is_null()) {
 		return;
 	}
 
@@ -1240,7 +1240,7 @@ void GridMap::make_baked_meshes(bool p_gen_lightmap_uv, float p_lightmap_uv_texe
 		}
 
 		Ref<Mesh> mesh = mesh_library->get_item_mesh(item);
-		if (!mesh.is_valid()) {
+		if (mesh.is_null()) {
 			continue;
 		}
 
@@ -1386,7 +1386,7 @@ void GridMap::_update_octant_navigation_debug_edge_connections_mesh(const Octant
 		g.navigation_debug_edge_connections_instance = RenderingServer::get_singleton()->instance_create();
 	}
 
-	if (!g.navigation_debug_edge_connections_mesh.is_valid()) {
+	if (g.navigation_debug_edge_connections_mesh.is_null()) {
 		g.navigation_debug_edge_connections_mesh = Ref<ArrayMesh>(memnew(ArrayMesh));
 	}
 
