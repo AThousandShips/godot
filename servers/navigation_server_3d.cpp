@@ -932,8 +932,8 @@ bool NavigationServer3D::get_debug_avoidance_enabled() const {
 #endif // DEBUG_ENABLED
 
 void NavigationServer3D::query_path(const Ref<NavigationPathQueryParameters3D> &p_query_parameters, Ref<NavigationPathQueryResult3D> p_query_result) const {
-	ERR_FAIL_COND(!p_query_parameters.is_valid());
-	ERR_FAIL_COND(!p_query_result.is_valid());
+	ERR_FAIL_COND(p_query_parameters.is_null());
+	ERR_FAIL_COND(p_query_result.is_null());
 
 	const NavigationUtilities::PathQueryResult _query_result = _query_path(p_query_parameters->get_parameters());
 
