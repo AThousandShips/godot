@@ -378,7 +378,7 @@ Rect2 PointLight2D::_edit_get_rect() const {
 }
 
 bool PointLight2D::_edit_use_rect() const {
-	return !texture.is_null();
+	return texture.is_valid();
 }
 #endif
 
@@ -419,7 +419,7 @@ Vector2 PointLight2D::get_texture_offset() const {
 PackedStringArray PointLight2D::get_configuration_warnings() const {
 	PackedStringArray warnings = Node::get_configuration_warnings();
 
-	if (!texture.is_valid()) {
+	if (texture.is_null()) {
 		warnings.push_back(RTR("A texture with the shape of the light must be supplied to the \"Texture\" property."));
 	}
 

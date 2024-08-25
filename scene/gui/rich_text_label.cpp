@@ -1181,7 +1181,7 @@ int RichTextLabel::_draw_line(ItemFrame *p_frame, int p_line, const Vector2 &p_o
 							Ref<CharFXTransform> charfx = item_custom->char_fx_transform;
 							Ref<RichTextEffect> custom_effect = item_custom->custom_effect;
 
-							if (!custom_effect.is_null()) {
+							if (custom_effect.is_valid()) {
 								charfx->elapsed_time = item_custom->elapsed_time;
 								charfx->range = Vector2i(l.char_offset + glyphs[i].start, l.char_offset + glyphs[i].end);
 								charfx->relative_index = l.char_offset + glyphs[i].start - item_fx->char_ofs;
@@ -5112,7 +5112,7 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 				Dictionary properties = parse_expressions_for_values(expr);
 				Ref<RichTextEffect> effect = _get_custom_effect_by_code(identifier);
 
-				if (!effect.is_null()) {
+				if (effect.is_valid()) {
 					push_customfx(effect, properties);
 					pos = brk_end + 1;
 					tag_stack.push_front(identifier);
@@ -6362,7 +6362,7 @@ void RichTextLabel::menu_option(int p_option) {
 Ref<RichTextEffect> RichTextLabel::_get_custom_effect_by_code(String p_bbcode_identifier) {
 	for (int i = 0; i < custom_effects.size(); i++) {
 		Ref<RichTextEffect> effect = custom_effects[i];
-		if (!effect.is_valid()) {
+		if (effect.is_null()) {
 			continue;
 		}
 
