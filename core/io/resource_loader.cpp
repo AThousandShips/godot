@@ -267,7 +267,7 @@ Ref<Resource> ResourceLoader::_load(const String &p_path, const String &p_origin
 		}
 		found = true;
 		res = loader[i]->load(p_path, original_path, r_error, p_use_sub_threads, r_progress, p_cache_mode);
-		if (!res.is_null()) {
+		if (res.is_valid()) {
 			break;
 		}
 	}
@@ -276,7 +276,7 @@ Ref<Resource> ResourceLoader::_load(const String &p_path, const String &p_origin
 	res_ref_overrides.erase(load_nesting);
 	load_nesting--;
 
-	if (!res.is_null()) {
+	if (res.is_valid()) {
 		return res;
 	}
 
@@ -456,7 +456,7 @@ Ref<Resource> ResourceLoader::load(const String &p_path, const String &p_type_hi
 	}
 
 	Ref<LoadToken> load_token = _load_start(p_path, p_type_hint, LOAD_THREAD_FROM_CURRENT, p_cache_mode);
-	if (!load_token.is_valid()) {
+	if (load_token.is_null()) {
 		if (r_error) {
 			*r_error = FAILED;
 		}
@@ -759,7 +759,7 @@ Ref<Resource> ResourceLoader::_load_complete_inner(LoadToken &p_load_token, Erro
 		// Special case of an unregistered task.
 		// The resource should have been loaded by now.
 		Ref<Resource> resource = p_load_token.res_if_unregistered;
-		if (!resource.is_valid()) {
+		if (resource.is_null()) {
 			if (r_error) {
 				*r_error = FAILED;
 			}
@@ -790,7 +790,7 @@ Ref<Resource> ResourceLoader::ensure_resource_ref_override_for_outer_load(const 
 		Object *obj = ClassDB::instantiate(p_res_type);
 		ERR_FAIL_NULL_V(obj, Ref<Resource>());
 		Ref<Resource> res(obj);
-		if (!res.is_valid()) {
+		if (res.is_null()) {
 			memdelete(obj);
 			ERR_FAIL_V(Ref<Resource>());
 		}

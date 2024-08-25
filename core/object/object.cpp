@@ -1556,7 +1556,7 @@ void Object::_clear_internal_resource_paths(const Variant &p_var) {
 	switch (p_var.get_type()) {
 		case Variant::OBJECT: {
 			Ref<Resource> r = p_var;
-			if (!r.is_valid()) {
+			if (r.is_null()) {
 				return;
 			}
 

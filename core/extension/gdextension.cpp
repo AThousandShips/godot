@@ -145,7 +145,7 @@ String GDExtension::find_extension_library(const String &p_path, Ref<ConfigFile>
 
 		// Open the folder.
 		Ref<DirAccess> dir = DirAccess::open(folder);
-		ERR_FAIL_COND_V_MSG(!dir.is_valid(), String(), vformat("Error in extension: %s. Could not open folder for automatic detection of libraries files. autodetect_library_prefix=\"%s\"", p_path, autodetect_library_prefix));
+		ERR_FAIL_COND_V_MSG(dir.is_null(), String(), vformat("Error in extension: %s. Could not open folder for automatic detection of libraries files. autodetect_library_prefix=\"%s\"", p_path, autodetect_library_prefix));
 
 		// Iterate the files and check the prefixes, finding the best matching file.
 		String best_file;
