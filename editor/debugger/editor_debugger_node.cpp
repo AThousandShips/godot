@@ -514,8 +514,8 @@ void EditorDebuggerNode::_break_state_changed() {
 		return;
 	}
 	PopupMenu *p = script_menu->get_popup();
-	p->set_item_disabled(p->get_item_index(DEBUG_NEXT), !(breaked && can_debug));
-	p->set_item_disabled(p->get_item_index(DEBUG_STEP), !(breaked && can_debug));
+	p->set_item_disabled(p->get_item_index(DEBUG_NEXT), !breaked || !can_debug);
+	p->set_item_disabled(p->get_item_index(DEBUG_STEP), !breaked || !can_debug);
 	p->set_item_disabled(p->get_item_index(DEBUG_BREAK), breaked);
 	p->set_item_disabled(p->get_item_index(DEBUG_CONTINUE), !breaked);
 }

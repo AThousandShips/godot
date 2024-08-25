@@ -3124,7 +3124,7 @@ void CanvasItemEditor::_draw_ruler_tool() {
 		// Draw lines.
 		viewport->draw_line(begin, end, ruler_primary_color, Math::round(EDSCALE * 3));
 
-		bool draw_secondary_lines = !(Math::is_equal_approx(begin.y, corner.y) || Math::is_equal_approx(end.x, corner.x));
+		bool draw_secondary_lines = !Math::is_equal_approx(begin.y, corner.y) && !Math::is_equal_approx(end.x, corner.x);
 		if (draw_secondary_lines) {
 			viewport->draw_line(begin, corner, ruler_secondary_color, Math::round(EDSCALE));
 			viewport->draw_line(corner, end, ruler_secondary_color, Math::round(EDSCALE));

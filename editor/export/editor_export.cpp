@@ -212,7 +212,7 @@ void EditorExport::load_config() {
 	Ref<ConfigFile> credentials;
 	credentials.instantiate();
 	err = credentials->load("res://.godot/export_credentials.cfg");
-	if (!(err == OK || err == ERR_FILE_NOT_FOUND)) {
+	if (err != OK && err != ERR_FILE_NOT_FOUND) {
 		return;
 	}
 

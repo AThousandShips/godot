@@ -225,7 +225,7 @@ void FindReplaceBar::_replace() {
 		if (selection_enabled && is_selection_only()) {
 			Point2i match_from(result_line, result_col);
 			Point2i match_to(result_line, result_col + search_text_len);
-			if (!(match_from < selection_begin || match_to > selection_end)) {
+			if (match_from >= selection_begin && match_to <= selection_end) {
 				text_editor->insert_text_at_caret(repl_text, 0);
 				if (match_to.x == selection_end.x) {
 					// Adjust selection bounds if necessary.

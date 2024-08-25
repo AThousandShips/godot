@@ -87,7 +87,7 @@ void PostImportPluginSkeletonTrackOrganizer::internal_process(InternalImportCate
 					}
 					Skeleton3D *track_skeleton = Object::cast_to<Skeleton3D>(node);
 					if (track_skeleton && track_skeleton == src_skeleton) {
-						if (anim->track_get_path(i).get_subname_count() != 1 || !(anim->track_get_type(i) == Animation::TYPE_POSITION_3D || anim->track_get_type(i) == Animation::TYPE_ROTATION_3D || anim->track_get_type(i) == Animation::TYPE_SCALE_3D)) {
+						if (anim->track_get_path(i).get_subname_count() != 1 || (anim->track_get_type(i) != Animation::TYPE_POSITION_3D && anim->track_get_type(i) != Animation::TYPE_ROTATION_3D && anim->track_get_type(i) != Animation::TYPE_SCALE_3D)) {
 							if (remove_except_bone) {
 								remove_indices.push_back(i);
 							}

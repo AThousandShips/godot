@@ -2108,7 +2108,7 @@ void ScriptTextEditor::_text_edit_gui_input(const Ref<InputEvent> &ev) {
 				} else if (expression_pattern == COLOR_NAME && end < 0 && (line[i] == ' ' || line[i] == '\t')) {
 					// Including '.' and spaces.
 					continue;
-				} else if (expression_pattern == COLOR_NAME && !(line[i] == '_' || ('A' <= line[i] && line[i] <= 'Z'))) {
+				} else if (expression_pattern == COLOR_NAME && line[i] != '_' && ('A' > line[i] || line[i] > 'Z')) {
 					end = i;
 
 					break;

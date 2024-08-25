@@ -7413,11 +7413,11 @@ void Node3DEditor::_init_grid() {
 			const real_t position_b = center_b + i * small_step_size;
 
 			// Don't draw lines over the origin if it's enabled.
-			if (!(origin_enabled && Math::is_zero_approx(position_a))) {
+			if (!origin_enabled || !Math::is_zero_approx(position_a)) {
 				expected_size += 2;
 			}
 
-			if (!(origin_enabled && Math::is_zero_approx(position_b))) {
+			if (!origin_enabled || !Math::is_zero_approx(position_b)) {
 				expected_size += 2;
 			}
 		}
@@ -7442,7 +7442,7 @@ void Node3DEditor::_init_grid() {
 			real_t position_b = center_b + i * small_step_size;
 
 			// Don't draw lines over the origin if it's enabled.
-			if (!(origin_enabled && Math::is_zero_approx(position_a))) {
+			if (!origin_enabled || !Math::is_zero_approx(position_a)) {
 				Vector3 line_bgn;
 				Vector3 line_end;
 				line_bgn[a] = position_a;
@@ -7458,7 +7458,7 @@ void Node3DEditor::_init_grid() {
 				idx += 2;
 			}
 
-			if (!(origin_enabled && Math::is_zero_approx(position_b))) {
+			if (!origin_enabled || !Math::is_zero_approx(position_b)) {
 				Vector3 line_bgn;
 				Vector3 line_end;
 				line_bgn[b] = position_b;

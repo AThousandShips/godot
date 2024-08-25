@@ -1703,7 +1703,7 @@ void ED_SHORTCUT_OVERRIDE_ARRAY(const String &p_path, const String &p_feature, c
 
 	// Only add the override if the OS supports the provided feature.
 	if (!OS::get_singleton()->has_feature(p_feature)) {
-		if (!(p_feature == "macos" && (OS::get_singleton()->has_feature("web_macos") || OS::get_singleton()->has_feature("web_ios")))) {
+		if (p_feature != "macos" || (!OS::get_singleton()->has_feature("web_macos") && !OS::get_singleton()->has_feature("web_ios"))) {
 			return;
 		}
 	}

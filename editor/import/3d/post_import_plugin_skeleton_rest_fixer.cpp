@@ -159,7 +159,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 						Ref<Animation> anim = ap->get_animation(name);
 						int track_len = anim->get_track_count();
 						for (int i = 0; i < track_len; i++) {
-							if (anim->track_get_path(i).get_subname_count() != 1 || !(anim->track_get_type(i) == Animation::TYPE_POSITION_3D || anim->track_get_type(i) == Animation::TYPE_ROTATION_3D || anim->track_get_type(i) == Animation::TYPE_SCALE_3D)) {
+							if (anim->track_get_path(i).get_subname_count() != 1 || (anim->track_get_type(i) != Animation::TYPE_POSITION_3D && anim->track_get_type(i) != Animation::TYPE_ROTATION_3D && anim->track_get_type(i) != Animation::TYPE_SCALE_3D)) {
 								continue;
 							}
 
@@ -231,7 +231,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 					String track_path;
 					bool found_skeleton = false;
 					for (int i = 0; i < track_len; i++) {
-						if (anim->track_get_path(i).get_subname_count() != 1 || !(anim->track_get_type(i) == Animation::TYPE_POSITION_3D || anim->track_get_type(i) == Animation::TYPE_ROTATION_3D || anim->track_get_type(i) == Animation::TYPE_SCALE_3D)) {
+						if (anim->track_get_path(i).get_subname_count() != 1 || (anim->track_get_type(i) != Animation::TYPE_POSITION_3D && anim->track_get_type(i) != Animation::TYPE_ROTATION_3D && anim->track_get_type(i) != Animation::TYPE_SCALE_3D)) {
 							continue;
 						}
 						track_path = String(anim->track_get_path(i).get_concatenated_names());
@@ -560,7 +560,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 						Ref<Animation> anim = ap->get_animation(name);
 						int track_len = anim->get_track_count();
 						for (int i = 0; i < track_len; i++) {
-							if (anim->track_get_path(i).get_subname_count() != 1 || !(anim->track_get_type(i) == Animation::TYPE_POSITION_3D || anim->track_get_type(i) == Animation::TYPE_ROTATION_3D || anim->track_get_type(i) == Animation::TYPE_SCALE_3D)) {
+							if (anim->track_get_path(i).get_subname_count() != 1 || (anim->track_get_type(i) != Animation::TYPE_POSITION_3D && anim->track_get_type(i) != Animation::TYPE_ROTATION_3D && anim->track_get_type(i) != Animation::TYPE_SCALE_3D)) {
 								continue;
 							}
 

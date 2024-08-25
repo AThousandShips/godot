@@ -2375,7 +2375,7 @@ bool ScriptEditor::edit(const Ref<Resource> &p_resource, int p_line, int p_col, 
 	bool use_external_editor =
 			external_editor_active ||
 			(scr.is_valid() && scr->get_language()->overrides_external_editor());
-	use_external_editor = use_external_editor && !(scr.is_valid() && scr->is_built_in()); // Ignore external editor for built-in scripts.
+	use_external_editor = use_external_editor && (scr.is_null() || !scr->is_built_in()); // Ignore external editor for built-in scripts.
 	const bool open_dominant = EDITOR_GET("text_editor/behavior/files/open_dominant_script_on_scene_change");
 
 	const bool should_open = (open_dominant && !use_external_editor) || !EditorNode::get_singleton()->is_changing_scene();
@@ -3705,7 +3705,7 @@ void ScriptEditor::set_scene_root_script(Ref<Script> p_script) {
 	bool use_external_editor =
 			external_editor_active ||
 			(p_script.is_valid() && p_script->get_language()->overrides_external_editor());
-	use_external_editor = use_external_editor && !(p_script.is_valid() && p_script->is_built_in()); // Ignore external editor for built-in scripts.
+	use_external_editor = use_external_editor && (p_script.is_null() || !p_script->is_built_in()); // Ignore external editor for built-in scripts.
 	const bool open_dominant = EDITOR_GET("text_editor/behavior/files/open_dominant_script_on_scene_change");
 
 	if (open_dominant && !use_external_editor && p_script.is_valid()) {

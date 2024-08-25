@@ -102,7 +102,7 @@ void PostImportPluginSkeletonRenamer::_internal_process(InternalImportCategory p
 				Ref<Animation> anim = ap->get_animation(name);
 				int len = anim->get_track_count();
 				for (int i = 0; i < len; i++) {
-					if (anim->track_get_path(i).get_subname_count() != 1 || !(anim->track_get_type(i) == Animation::TYPE_POSITION_3D || anim->track_get_type(i) == Animation::TYPE_ROTATION_3D || anim->track_get_type(i) == Animation::TYPE_SCALE_3D)) {
+					if (anim->track_get_path(i).get_subname_count() != 1 || (anim->track_get_type(i) != Animation::TYPE_POSITION_3D && anim->track_get_type(i) != Animation::TYPE_ROTATION_3D && anim->track_get_type(i) != Animation::TYPE_SCALE_3D)) {
 						continue;
 					}
 					String track_path = String(anim->track_get_path(i).get_concatenated_names());

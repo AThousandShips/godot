@@ -394,7 +394,7 @@ void AnimationNodeBlendSpace2DEditor::_add_animation_type(int p_index) {
 
 void AnimationNodeBlendSpace2DEditor::_update_tool_erase() {
 	tool_erase->set_disabled(
-			(!(selected_point >= 0 && selected_point < blend_space->get_blend_point_count()) && !(selected_triangle >= 0 && selected_triangle < blend_space->get_triangle_count())) ||
+			((selected_point < 0 || selected_point >= blend_space->get_blend_point_count()) && (selected_triangle < 0 || selected_triangle >= blend_space->get_triangle_count())) ||
 			read_only);
 
 	if (selected_point >= 0 && selected_point < blend_space->get_blend_point_count()) {
