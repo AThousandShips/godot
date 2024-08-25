@@ -886,7 +886,7 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 			SL::VariableNode *vnode = (SL::VariableNode *)p_node;
 			bool use_fragment_varying = false;
 
-			if (!vnode->is_local && !(p_actions.entry_point_stages.has(current_func_name) && p_actions.entry_point_stages[current_func_name] == STAGE_VERTEX)) {
+			if (!vnode->is_local && (!p_actions.entry_point_stages.has(current_func_name) || p_actions.entry_point_stages[current_func_name] != STAGE_VERTEX)) {
 				if (p_assigning) {
 					if (shader->varyings.has(vnode->name)) {
 						use_fragment_varying = true;
@@ -999,7 +999,7 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 			SL::ArrayNode *anode = (SL::ArrayNode *)p_node;
 			bool use_fragment_varying = false;
 
-			if (!anode->is_local && !(p_actions.entry_point_stages.has(current_func_name) && p_actions.entry_point_stages[current_func_name] == STAGE_VERTEX)) {
+			if (!anode->is_local && (!p_actions.entry_point_stages.has(current_func_name) || p_actions.entry_point_stages[current_func_name] != STAGE_VERTEX)) {
 				if (anode->assign_expression != nullptr && shader->varyings.has(anode->name)) {
 					use_fragment_varying = true;
 				} else {

@@ -999,7 +999,7 @@ void RendererCanvasRenderRD::_render_item(RD::DrawListID p_draw_list, RID p_rend
 				const Item::CommandAnimationSlice *as = static_cast<const Item::CommandAnimationSlice *>(c);
 				double current_time = RendererCompositorRD::get_singleton()->get_total_time();
 				double local_time = Math::fposmod(current_time - as->offset, as->animation_length);
-				skipping = !(local_time >= as->slice_begin && local_time < as->slice_end);
+				skipping = local_time < as->slice_begin || local_time >= as->slice_end;
 
 				RenderingServerDefault::redraw_request(); // animation visible means redraw request
 			} break;

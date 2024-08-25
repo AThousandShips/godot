@@ -782,9 +782,9 @@ struct	GJK
 					const real_t	l=face->n.length();
 					const bool		v=l>EPA_ACCURACY;
 					if (v) {
-						if (!(getedgedist(face, a, b, face->d) ||
-							  getedgedist(face, b, c, face->d) ||
-							  getedgedist(face, c, a, face->d))) {
+						if (!getedgedist(face, a, b, face->d) &&
+							  !getedgedist(face, b, c, face->d) &&
+							  !getedgedist(face, c, a, face->d)) {
 							// Origin projects to the interior of the triangle
 							// Use distance to triangle plane
 							face->d = vec3_dot(a->w, face->n) / l;

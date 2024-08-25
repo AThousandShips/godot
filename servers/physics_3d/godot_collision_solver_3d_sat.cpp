@@ -332,7 +332,7 @@ static void _generate_contacts_face_face(const Vector3 *p_points_A, int p_point_
 
 			// check for different sides and non coplanar
 			//if ( (dist0*dist1) < -CMP_EPSILON && !(edge && j)) {
-			if ((dist0 * dist1) < 0 && !(edge && j)) {
+			if ((dist0 * dist1) < 0 && (!edge || !j)) {
 				// calculate intersection
 				Vector3 rel = edge1_A - edge0_A;
 				real_t den = clip.normal.dot(rel);

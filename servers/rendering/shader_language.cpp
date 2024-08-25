@@ -4804,7 +4804,7 @@ bool ShaderLanguage::_validate_assign(Node *p_node, const FunctionInfo &p_functi
 			return _validate_varying_assign(shader->varyings[var->name], r_message);
 		}
 
-		if (!(p_function_info.built_ins.has(var->name) && p_function_info.built_ins[var->name].constant)) {
+		if (!p_function_info.built_ins.has(var->name) || !p_function_info.built_ins[var->name].constant) {
 			return true;
 		}
 	} else if (p_node->type == Node::NODE_TYPE_ARRAY) {
