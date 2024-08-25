@@ -169,7 +169,7 @@ void GPUParticles2DEditorPlugin::_generate_visibility_rect() {
 
 void GPUParticles2DEditorPlugin::_generate_emission_mask() {
 	Ref<ParticleProcessMaterial> pm = particles->get_process_material();
-	if (!pm.is_valid()) {
+	if (pm.is_null()) {
 		EditorNode::get_singleton()->show_warning(TTR("Can only set point into a ParticleProcessMaterial process material"));
 		return;
 	}

@@ -1434,7 +1434,7 @@ void AnimationTimelineEdit::_notification(int p_what) {
 		case NOTIFICATION_DRAW: {
 			int key_range = get_size().width - get_buttons_width() - get_name_limit();
 
-			if (!animation.is_valid()) {
+			if (animation.is_null()) {
 				return;
 			}
 
@@ -1663,7 +1663,7 @@ void AnimationTimelineEdit::set_zoom(Range *p_zoom) {
 }
 
 void AnimationTimelineEdit::auto_fit() {
-	if (!animation.is_valid()) {
+	if (animation.is_null()) {
 		return;
 	}
 
@@ -1742,7 +1742,7 @@ void AnimationTimelineEdit::update_play_position() {
 }
 
 void AnimationTimelineEdit::update_values() {
-	if (!animation.is_valid() || editing) {
+	if (animation.is_null() || editing) {
 		return;
 	}
 
@@ -1783,7 +1783,7 @@ void AnimationTimelineEdit::update_values() {
 }
 
 void AnimationTimelineEdit::_play_position_draw() {
-	if (!animation.is_valid() || play_position_pos < 0) {
+	if (animation.is_null() || play_position_pos < 0) {
 		return;
 	}
 
@@ -2314,7 +2314,7 @@ void AnimationTrackEdit::_notification(int p_what) {
 }
 
 int AnimationTrackEdit::get_key_height() const {
-	if (!animation.is_valid()) {
+	if (animation.is_null()) {
 		return 0;
 	}
 
@@ -2322,7 +2322,7 @@ int AnimationTrackEdit::get_key_height() const {
 }
 
 Rect2 AnimationTrackEdit::get_key_rect(int p_index, float p_pixels_sec) {
-	if (!animation.is_valid()) {
+	if (animation.is_null()) {
 		return Rect2();
 	}
 	Rect2 rect = Rect2(-type_icon->get_width() / 2, 0, type_icon->get_width(), get_size().height);
@@ -2361,7 +2361,7 @@ void AnimationTrackEdit::draw_key_link(int p_index, float p_pixels_sec, int p_x,
 }
 
 void AnimationTrackEdit::draw_key(int p_index, float p_pixels_sec, int p_x, bool p_selected, int p_clip_left, int p_clip_right) {
-	if (!animation.is_valid()) {
+	if (animation.is_null()) {
 		return;
 	}
 
@@ -2535,7 +2535,7 @@ void AnimationTrackEdit::set_editor(AnimationTrackEditor *p_editor) {
 }
 
 void AnimationTrackEdit::_play_position_draw() {
-	if (!animation.is_valid() || play_position_pos < 0) {
+	if (animation.is_null() || play_position_pos < 0) {
 		return;
 	}
 
@@ -3987,7 +3987,7 @@ void AnimationTrackEditor::insert_transform_key(Node3D *p_node, const String &p_
 	if (!keying) {
 		return;
 	}
-	if (!animation.is_valid()) {
+	if (animation.is_null()) {
 		return;
 	}
 
@@ -4027,7 +4027,7 @@ bool AnimationTrackEditor::has_track(Node3D *p_node, const String &p_sub, const 
 	if (!keying) {
 		return false;
 	}
-	if (!animation.is_valid()) {
+	if (animation.is_null()) {
 		return false;
 	}
 
@@ -4323,7 +4323,7 @@ void AnimationTrackEditor::_confirm_insert_list() {
 
 PropertyInfo AnimationTrackEditor::_find_hint_for_track(int p_idx, NodePath &r_base_path, Variant *r_current_val) {
 	r_base_path = NodePath();
-	ERR_FAIL_COND_V(!animation.is_valid(), PropertyInfo());
+	ERR_FAIL_COND_V(animation.is_null(), PropertyInfo());
 	ERR_FAIL_INDEX_V(p_idx, animation->get_track_count(), PropertyInfo());
 
 	if (!root) {
@@ -4841,7 +4841,7 @@ void AnimationTrackEditor::_snap_mode_changed(int p_mode) {
 }
 
 void AnimationTrackEditor::_update_step_spinbox() {
-	if (!animation.is_valid()) {
+	if (animation.is_null()) {
 		return;
 	}
 	step->set_block_signals(true);
@@ -5488,7 +5488,7 @@ void AnimationTrackEditor::_clear_selection(bool p_update) {
 
 void AnimationTrackEditor::_update_key_edit() {
 	_clear_key_edit();
-	if (!animation.is_valid()) {
+	if (animation.is_null()) {
 		return;
 	}
 
@@ -7719,7 +7719,7 @@ void AnimationTrackKeyEditEditor::_time_edit_exited() {
 }
 
 AnimationTrackKeyEditEditor::AnimationTrackKeyEditEditor(Ref<Animation> p_animation, int p_track, real_t p_key_ofs, bool p_use_fps) {
-	if (!p_animation.is_valid()) {
+	if (p_animation.is_null()) {
 		return;
 	}
 

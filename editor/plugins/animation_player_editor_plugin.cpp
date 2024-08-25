@@ -98,7 +98,7 @@ void AnimationPlayerEditor::_notification(int p_what) {
 
 					if (player->has_animation(animname)) {
 						Ref<Animation> anim = player->get_animation(animname);
-						if (!anim.is_null()) {
+						if (anim.is_valid()) {
 							frame->set_max((double)anim->get_length());
 						}
 					}
@@ -478,7 +478,7 @@ float AnimationPlayerEditor::_get_editor_step() const {
 	if (track_editor->is_snap_enabled()) {
 		const String current = player->get_assigned_animation();
 		const Ref<Animation> anim = player->get_animation(current);
-		ERR_FAIL_COND_V(!anim.is_valid(), 0.0);
+		ERR_FAIL_COND_V(anim.is_null(), 0.0);
 
 		// Use more precise snapping when holding Shift
 		return Input::get_singleton()->is_key_pressed(Key::SHIFT) ? anim->get_step() * 0.25 : anim->get_step();
@@ -1217,7 +1217,7 @@ void AnimationPlayerEditor::_animation_duplicate() {
 
 	String current = animation->get_item_text(animation->get_selected());
 	Ref<Animation> anim = player->get_animation(current);
-	if (!anim.is_valid()) {
+	if (anim.is_null()) {
 		return;
 	}
 
@@ -1612,7 +1612,7 @@ void AnimationPlayerEditor::_prepare_onion_layers_1() {
 
 void AnimationPlayerEditor::_prepare_onion_layers_2_prolog() {
 	Ref<Animation> anim = player->get_animation(player->get_assigned_animation());
-	if (!anim.is_valid()) {
+	if (anim.is_null()) {
 		return;
 	}
 
@@ -1826,7 +1826,7 @@ AnimationMixer *AnimationPlayerEditor::fetch_mixer_for_library() const {
 
 bool AnimationPlayerEditor::_validate_tracks(const Ref<Animation> p_anim) {
 	bool is_valid = true;
-	if (!p_anim.is_valid()) {
+	if (p_anim.is_null()) {
 		return true; // There is a problem outside of the animation track.
 	}
 	int len = p_anim->get_track_count();
