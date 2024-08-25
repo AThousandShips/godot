@@ -255,7 +255,7 @@ void GridMapEditor::_update_cursor_transform() {
 	cursor_transform = node->get_global_transform() * cursor_transform;
 
 	if (selected_palette >= 0) {
-		if (node && !node->get_mesh_library().is_null()) {
+		if (node && node->get_mesh_library().is_valid()) {
 			cursor_transform *= node->get_mesh_library()->get_item_mesh_transform(selected_palette);
 		}
 	}
@@ -903,7 +903,7 @@ void GridMapEditor::update_palette() {
 		}
 
 		mesh_library_palette->add_item("");
-		if (!preview.is_null()) {
+		if (preview.is_valid()) {
 			mesh_library_palette->set_item_icon(item, preview);
 			mesh_library_palette->set_item_tooltip(item, name);
 		}
@@ -1143,9 +1143,9 @@ void GridMapEditor::_update_cursor_instance() {
 	cursor_instance = RID();
 
 	if (selected_palette >= 0) {
-		if (node && !node->get_mesh_library().is_null()) {
+		if (node && node->get_mesh_library().is_valid()) {
 			Ref<Mesh> mesh = node->get_mesh_library()->get_item_mesh(selected_palette);
-			if (!mesh.is_null() && mesh->get_rid().is_valid()) {
+			if (mesh.is_valid() && mesh->get_rid().is_valid()) {
 				cursor_instance = RenderingServer::get_singleton()->instance_create2(mesh->get_rid(), get_tree()->get_root()->get_world_3d()->get_scenario());
 				RenderingServer::get_singleton()->instance_set_transform(cursor_instance, cursor_transform);
 			}

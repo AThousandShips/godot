@@ -657,7 +657,7 @@ void GDScriptWorkspace::completion(const lsp::CompletionParams &p_params, List<S
 			}
 
 			Ref<GDScript> scr = current->get_script();
-			if (!scr.is_valid() || !GDScript::is_canonically_equal_paths(scr->get_path(), path)) {
+			if (scr.is_null() || !GDScript::is_canonically_equal_paths(scr->get_path(), path)) {
 				current = owner_scene_node;
 			}
 		}
@@ -701,7 +701,7 @@ const lsp::DocumentSymbol *GDScriptWorkspace::resolve_symbol(const lsp::TextDocu
 				if (OK == GDScriptLanguage::get_singleton()->lookup_code(parser->get_text_for_lookup_symbol(pos, symbol_identifier, p_func_required), symbol_identifier, path, nullptr, ret)) {
 					if (ret.type == ScriptLanguage::LOOKUP_RESULT_SCRIPT_LOCATION) {
 						String target_script_path = path;
-						if (!ret.script.is_null()) {
+						if (ret.script.is_valid()) {
 							target_script_path = ret.script->get_path();
 						} else if (!ret.class_path.is_empty()) {
 							target_script_path = ret.class_path;

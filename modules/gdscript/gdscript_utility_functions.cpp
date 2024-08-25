@@ -335,7 +335,7 @@ struct GDScriptUtilityFunctionsDefinitions {
 		}
 
 		Ref<Script> scr = ResourceLoader::load(d["@path"]);
-		if (!scr.is_valid()) {
+		if (scr.is_null()) {
 			r_error.error = Callable::CallError::CALL_ERROR_INVALID_ARGUMENT;
 			r_error.argument = 0;
 			r_error.expected = Variant::OBJECT;
@@ -345,7 +345,7 @@ struct GDScriptUtilityFunctionsDefinitions {
 
 		Ref<GDScript> gdscr = scr;
 
-		if (!gdscr.is_valid()) {
+		if (gdscr.is_null()) {
 			r_error.error = Callable::CallError::CALL_ERROR_INVALID_ARGUMENT;
 			r_error.argument = 0;
 			r_error.expected = Variant::OBJECT;
@@ -361,7 +361,7 @@ struct GDScriptUtilityFunctionsDefinitions {
 
 		for (int i = 0; i < sub.get_name_count(); i++) {
 			gdscr = gdscr->subclasses[sub.get_name(i)];
-			if (!gdscr.is_valid()) {
+			if (gdscr.is_null()) {
 				r_error.error = Callable::CallError::CALL_ERROR_INVALID_ARGUMENT;
 				r_error.argument = 0;
 				r_error.expected = Variant::OBJECT;
