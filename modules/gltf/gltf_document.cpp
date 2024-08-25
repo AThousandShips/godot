@@ -2235,7 +2235,7 @@ Vector<Color> GLTFDocument::_decode_accessor_as_color(Ref<GLTFState> p_state, co
 	}
 
 	const int accessor_type = p_state->accessors[p_accessor]->accessor_type;
-	ERR_FAIL_COND_V(!(accessor_type == GLTFAccessor::TYPE_VEC3 || accessor_type == GLTFAccessor::TYPE_VEC4), ret);
+	ERR_FAIL_COND_V(accessor_type != GLTFAccessor::TYPE_VEC3 && accessor_type != GLTFAccessor::TYPE_VEC4, ret);
 	int vec_len = 3;
 	if (accessor_type == GLTFAccessor::TYPE_VEC4) {
 		vec_len = 4;

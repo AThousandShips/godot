@@ -207,7 +207,7 @@ void GridMapEditor::_menu_option(int p_option) {
 
 		case MENU_OPTION_SELECTION_DUPLICATE:
 		case MENU_OPTION_SELECTION_CUT: {
-			if (!(selection.active && input_action == INPUT_NONE)) {
+			if (!selection.active || input_action != INPUT_NONE) {
 				break;
 			}
 

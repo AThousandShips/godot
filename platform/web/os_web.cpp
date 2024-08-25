@@ -211,7 +211,7 @@ String OS_Web::get_data_path() const {
 
 void OS_Web::file_access_close_callback(const String &p_file, int p_flags) {
 	OS_Web *os = OS_Web::get_singleton();
-	if (!(os->is_userfs_persistent() && (p_flags & FileAccess::WRITE))) {
+	if (!os->is_userfs_persistent() || !(p_flags & FileAccess::WRITE)) {
 		return; // FS persistence is not working or we are not writing.
 	}
 	bool is_file_persistent = p_file.begins_with("/userfs");

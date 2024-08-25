@@ -208,7 +208,7 @@ bool DisplayServerX11::_refresh_device_info() {
 		if (!dev->enabled) {
 			continue;
 		}
-		if (!(dev->use == XISlavePointer || dev->use == XIFloatingSlave)) {
+		if (dev->use != XISlavePointer && dev->use != XIFloatingSlave) {
 			continue;
 		}
 
@@ -913,7 +913,7 @@ Ref<Image> DisplayServerX11::clipboard_get_image() const {
 							incr_data.resize(MAX(data_size + len, prev_size));
 							memcpy(incr_data.ptr() + data_size, data, len);
 							data_size += len;
-						} else if (!(format == 0 && len == 0)) {
+						} else if (format != 0 || len != 0) {
 							// For unclear reasons the first GetWindowProperty always returns a length and format of 0.
 							// Otherwise, last chunk, process finished.
 							done = true;

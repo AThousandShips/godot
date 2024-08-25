@@ -352,7 +352,7 @@ static msdfgen::Point2 ft_point2(const FT_Vector &vector) {
 
 static int ft_move_to(const FT_Vector *to, void *user) {
 	MSContext *context = static_cast<MSContext *>(user);
-	if (!(context->contour && context->contour->edges.empty())) {
+	if (!context->contour || !context->contour->edges.empty()) {
 		context->contour = &context->shape->addContour();
 	}
 	context->position = ft_point2(*to);
@@ -3954,7 +3954,7 @@ void TextServerFallback::_shaped_text_overrun_trim_to_width(const RID &p_shaped_
 
 	Glyph *sd_glyphs = sd->glyphs.ptrw();
 
-	if ((p_trim_flags & OVERRUN_TRIM) == OVERRUN_NO_TRIM || sd_glyphs == nullptr || p_width <= 0 || !(sd->width > p_width || enforce_ellipsis)) {
+	if ((p_trim_flags & OVERRUN_TRIM) == OVERRUN_NO_TRIM || sd_glyphs == nullptr || p_width <= 0 || (sd->width <= p_width && !enforce_ellipsis)) {
 		sd->overrun_trim_data.trim_pos = -1;
 		sd->overrun_trim_data.ellipsis_pos = -1;
 		return;

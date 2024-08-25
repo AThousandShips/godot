@@ -1727,7 +1727,7 @@ void GDScriptAnalyzer::resolve_function_signature(GDScriptParser::FunctionNode *
 				} else if (return_type.kind == GDScriptParser::DataType::BUILTIN && return_type.builtin_type == Variant::NIL) {
 					// `is_type_compatible()` returns `true` if target is an `Object` and source is `null`.
 					// Don't allow `void` if the parent return type is a hard non-`void` type.
-					if (parent_return_type.is_hard_type() && !(parent_return_type.kind == GDScriptParser::DataType::BUILTIN && parent_return_type.builtin_type == Variant::NIL)) {
+					if (parent_return_type.is_hard_type() && (parent_return_type.kind != GDScriptParser::DataType::BUILTIN || parent_return_type.builtin_type != Variant::NIL)) {
 						valid = false;
 					}
 				} else {
@@ -2257,7 +2257,7 @@ void GDScriptAnalyzer::resolve_assert(GDScriptParser::AssertNode *p_assert) {
 	if (p_assert->condition->is_constant) {
 		if (p_assert->condition->reduced_value.booleanize()) {
 			parser->push_warning(p_assert->condition, GDScriptWarning::ASSERT_ALWAYS_TRUE);
-		} else if (!(p_assert->condition->type == GDScriptParser::Node::LITERAL && static_cast<GDScriptParser::LiteralNode *>(p_assert->condition)->value.get_type() == Variant::BOOL)) {
+		} else if (p_assert->condition->type != GDScriptParser::Node::LITERAL || static_cast<GDScriptParser::LiteralNode *>(p_assert->condition)->value.get_type() != Variant::BOOL) {
 			parser->push_warning(p_assert->condition, GDScriptWarning::ASSERT_ALWAYS_FALSE);
 		}
 	}
@@ -3198,7 +3198,7 @@ void GDScriptAnalyzer::reduce_call(GDScriptParser::CallNode *p_call, bool p_is_a
 								update_const_expression_builtin_type(p_call->arguments[i], par_type, "pass");
 							}
 #ifdef DEBUG_ENABLED
-							if (!(par_type.is_variant() && par_type.is_hard_type())) {
+							if (!par_type.is_variant() || !par_type.is_hard_type()) {
 								GDScriptParser::DataType arg_type = p_call->arguments[i]->get_datatype();
 								if (arg_type.is_variant() || !arg_type.is_hard_type()) {
 									mark_node_unsafe(p_call);
@@ -3450,7 +3450,7 @@ void GDScriptAnalyzer::reduce_call(GDScriptParser::CallNode *p_call, bool p_is_a
 #ifdef DEBUG_ENABLED
 		// FIXME: No warning for built-in constructors and utilities due to early return.
 		if (p_is_root && return_type.kind != GDScriptParser::DataType::UNRESOLVED && return_type.builtin_type != Variant::NIL &&
-				!(p_call->is_super && p_call->function_name == GDScriptLanguage::get_singleton()->strings._init)) {
+				(!p_call->is_super || p_call->function_name != GDScriptLanguage::get_singleton()->strings._init)) {
 			parser->push_warning(p_call, GDScriptWarning::RETURN_VALUE_DISCARDED, p_call->function_name);
 		}
 
@@ -3491,7 +3491,7 @@ void GDScriptAnalyzer::reduce_call(GDScriptParser::CallNode *p_call, bool p_is_a
 						push_error(vformat(R"*(Name "%s" called as a function but is a "%s".)*", p_call->function_name, callee_datatype.to_string()), p_call->callee);
 					}
 #ifdef DEBUG_ENABLED
-				} else if (!is_self && !(base_type.is_hard_type() && base_type.kind == GDScriptParser::DataType::BUILTIN)) {
+				} else if (!is_self && (!base_type.is_hard_type() || base_type.kind != GDScriptParser::DataType::BUILTIN)) {
 					parser->push_warning(p_call, GDScriptWarning::UNSAFE_METHOD_ACCESS, p_call->function_name, base_type.to_string());
 					mark_node_unsafe(p_call);
 #endif
@@ -4147,7 +4147,7 @@ void GDScriptAnalyzer::reduce_identifier(GDScriptParser::IdentifierNode *p_ident
 			p_identifier->set_datatype(p_identifier->variable_source->get_datatype());
 			found_source = true;
 #ifdef DEBUG_ENABLED
-			if (p_identifier->variable_source && p_identifier->variable_source->assignments == 0 && !(p_identifier->get_datatype().is_hard_type() && p_identifier->get_datatype().kind == GDScriptParser::DataType::BUILTIN)) {
+			if (p_identifier->variable_source && p_identifier->variable_source->assignments == 0 && (!p_identifier->get_datatype().is_hard_type() || p_identifier->get_datatype().kind != GDScriptParser::DataType::BUILTIN)) {
 				parser->push_warning(p_identifier, GDScriptWarning::UNASSIGNED_VARIABLE, p_identifier->name);
 			}
 #endif
@@ -5445,7 +5445,7 @@ void GDScriptAnalyzer::validate_call_arg(const List<GDScriptParser::DataType> &p
 		if (arg_type.is_variant() || !arg_type.is_hard_type()) {
 #ifdef DEBUG_ENABLED
 			// Argument can be anything, so this is unsafe (unless the parameter is a hard variant).
-			if (!(par_type.is_hard_type() && par_type.is_variant())) {
+			if (!par_type.is_hard_type() || !par_type.is_variant()) {
 				mark_node_unsafe(p_call->arguments[i]);
 				parser->push_warning(p_call->arguments[i], GDScriptWarning::UNSAFE_CALL_ARGUMENT, itos(i + 1), "function", p_call->function_name, par_type.to_string(), arg_type.to_string_strict());
 			}

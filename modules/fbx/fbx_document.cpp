@@ -1986,7 +1986,7 @@ void FBXDocument::_process_mesh_instances(Ref<FBXState> p_state, Node *p_scene_r
 	for (GLTFNodeIndex node_i = 0; node_i < p_state->nodes.size(); ++node_i) {
 		Ref<GLTFNode> node = p_state->nodes[node_i];
 
-		if (node.is_null() || !(node->skin >= 0 && node->mesh >= 0)) {
+		if (node.is_null() || node->skin < 0 || node->mesh < 0) {
 			continue;
 		}
 
@@ -2410,7 +2410,7 @@ Error FBXDocument::_parse_skins(Ref<FBXState> p_state) {
 			if (!p_state->nodes.write[node]->joint) {
 				p_state->nodes.write[node]->joint = true;
 
-				if (!(fbx_node->parent && fbx_node->parent->attrib_type == UFBX_ELEMENT_BONE)) {
+				if (!fbx_node->parent || fbx_node->parent->attrib_type != UFBX_ELEMENT_BONE) {
 					Ref<GLTFSkin> skin;
 					skin.instantiate();
 					skin->joints.push_back(node);

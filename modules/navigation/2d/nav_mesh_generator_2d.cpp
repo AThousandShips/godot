@@ -279,7 +279,7 @@ void NavMeshGenerator2D::generator_parse_meshinstance2d_node(const Ref<Navigatio
 
 	NavigationPolygon::ParsedGeometryType parsed_geometry_type = p_navigation_mesh->get_parsed_geometry_type();
 
-	if (!(parsed_geometry_type == NavigationPolygon::PARSED_GEOMETRY_MESH_INSTANCES || parsed_geometry_type == NavigationPolygon::PARSED_GEOMETRY_BOTH)) {
+	if (parsed_geometry_type != NavigationPolygon::PARSED_GEOMETRY_MESH_INSTANCES && parsed_geometry_type != NavigationPolygon::PARSED_GEOMETRY_BOTH) {
 		return;
 	}
 
@@ -364,12 +364,12 @@ void NavMeshGenerator2D::generator_parse_multimeshinstance2d_node(const Ref<Navi
 	}
 
 	NavigationPolygon::ParsedGeometryType parsed_geometry_type = p_navigation_mesh->get_parsed_geometry_type();
-	if (!(parsed_geometry_type == NavigationPolygon::PARSED_GEOMETRY_MESH_INSTANCES || parsed_geometry_type == NavigationPolygon::PARSED_GEOMETRY_BOTH)) {
+	if (parsed_geometry_type != NavigationPolygon::PARSED_GEOMETRY_MESH_INSTANCES && parsed_geometry_type != NavigationPolygon::PARSED_GEOMETRY_BOTH) {
 		return;
 	}
 
 	Ref<MultiMesh> multimesh = multimesh_instance->get_multimesh();
-	if (!(multimesh.is_valid() && multimesh->get_transform_format() == MultiMesh::TRANSFORM_2D)) {
+	if (multimesh.is_null() || multimesh->get_transform_format() != MultiMesh::TRANSFORM_2D) {
 		return;
 	}
 
@@ -480,7 +480,7 @@ void NavMeshGenerator2D::generator_parse_staticbody2d_node(const Ref<NavigationP
 	}
 
 	NavigationPolygon::ParsedGeometryType parsed_geometry_type = p_navigation_mesh->get_parsed_geometry_type();
-	if (!(parsed_geometry_type == NavigationPolygon::PARSED_GEOMETRY_STATIC_COLLIDERS || parsed_geometry_type == NavigationPolygon::PARSED_GEOMETRY_BOTH)) {
+	if (parsed_geometry_type != NavigationPolygon::PARSED_GEOMETRY_STATIC_COLLIDERS && parsed_geometry_type != NavigationPolygon::PARSED_GEOMETRY_BOTH) {
 		return;
 	}
 

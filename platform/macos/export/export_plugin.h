@@ -116,7 +116,7 @@ class EditorExportPlatformMacOS : public EditorExportPlatform {
 
 		for (int i = 0; i < pname.length(); i++) {
 			char32_t c = pname[i];
-			if (!(is_ascii_alphanumeric_char(c) || c == '-' || c == '.')) {
+			if (!is_ascii_alphanumeric_char(c) && c != '-' && c != '.') {
 				if (r_error) {
 					*r_error = vformat(TTR("The character '%s' is not allowed in Identifier."), String::chr(c));
 				}

@@ -354,11 +354,11 @@ Dictionary GDScriptSyntaxHighlighter::_get_line_syntax_highlighting_impl(int p_l
 				is_bin_notation = true;
 			} else if (str[j] == 'x' && str[j - 1] == '0') {
 				is_hex_notation = true;
-			} else if (!((str[j] == '-' || str[j] == '+') && str[j - 1] == 'e' && !prev_is_digit) &&
-					!(str[j] == '_' && (prev_is_digit || str[j - 1] == 'b' || str[j - 1] == 'x' || str[j - 1] == '.')) &&
-					!(str[j] == 'e' && (prev_is_digit || str[j - 1] == '_')) &&
-					!(str[j] == '.' && (prev_is_digit || (!prev_is_binary_op && (j > 0 && (str[j - 1] == '_' || str[j - 1] == '-' || str[j - 1] == '+' || str[j - 1] == '~'))))) &&
-					!((str[j] == '-' || str[j] == '+' || str[j] == '~') && !is_binary_op && !prev_is_binary_op && str[j - 1] != 'e')) {
+			} else if (((str[j] != '-' && str[j] != '+') || str[j - 1] != 'e' || prev_is_digit) &&
+					(str[j] != '_' || (!prev_is_digit && str[j - 1] != 'b' && str[j - 1] != 'x' && str[j - 1] != '.')) &&
+					(str[j] != 'e' || (!prev_is_digit && str[j - 1] != '_')) &&
+					(str[j] != '.' || (!prev_is_digit && (prev_is_binary_op || j <= 0 || (str[j - 1] != '_' && str[j - 1] != '-' && str[j - 1] != '+' && str[j - 1] != '~')))) &&
+					((str[j] != '-' && str[j] != '+' && str[j] != '~') || is_binary_op || prev_is_binary_op || str[j - 1] == 'e')) {
 				/* This condition continues number highlighting in special cases.
 				1st row: '+' or '-' after scientific notation (like 3e-4);
 				2nd row: '_' as a numeric separator;

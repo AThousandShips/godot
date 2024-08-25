@@ -914,7 +914,7 @@ static msdfgen::Point2 ft_point2(const FT_Vector &vector) {
 
 static int ft_move_to(const FT_Vector *to, void *user) {
 	MSContext *context = static_cast<MSContext *>(user);
-	if (!(context->contour && context->contour->edges.empty())) {
+	if (!context->contour || !context->contour->edges.empty()) {
 		context->contour = &context->shape->addContour();
 	}
 	context->position = ft_point2(*to);
@@ -5131,7 +5131,7 @@ void TextServerAdvanced::_shaped_text_overrun_trim_to_width(const RID &p_shaped_
 
 	Glyph *sd_glyphs = sd->glyphs.ptrw();
 
-	if ((p_trim_flags & OVERRUN_TRIM) == OVERRUN_NO_TRIM || sd_glyphs == nullptr || p_width <= 0 || !(sd->width > p_width || enforce_ellipsis)) {
+	if ((p_trim_flags & OVERRUN_TRIM) == OVERRUN_NO_TRIM || sd_glyphs == nullptr || p_width <= 0 || (sd->width <= p_width && !enforce_ellipsis)) {
 		sd->overrun_trim_data.trim_pos = -1;
 		sd->overrun_trim_data.ellipsis_pos = -1;
 		return;
@@ -7402,11 +7402,11 @@ bool TextServerAdvanced::_is_valid_identifier(const String &p_string) const {
 			return false; // Not a XID_Start or XID_Continue character.
 		}
 		if (i == 0) {
-			if (!(cat == U_LOWERCASE_LETTER || cat == U_UPPERCASE_LETTER || cat == U_TITLECASE_LETTER || cat == U_OTHER_LETTER || cat == U_MODIFIER_LETTER || cat == U_LETTER_NUMBER || str[0] == 0x2118 || str[0] == 0x212E || str[0] == 0x309B || str[0] == 0x309C || str[0] == 0x005F)) {
+			if (cat != U_LOWERCASE_LETTER && cat != U_UPPERCASE_LETTER && cat != U_TITLECASE_LETTER && cat != U_OTHER_LETTER && cat != U_MODIFIER_LETTER && cat != U_LETTER_NUMBER && str[0] != 0x2118 && str[0] != 0x212E && str[0] != 0x309B && str[0] != 0x309C && str[0] != 0x005F) {
 				return false; // Not a XID_Start character.
 			}
 		} else {
-			if (!(cat == U_LOWERCASE_LETTER || cat == U_UPPERCASE_LETTER || cat == U_TITLECASE_LETTER || cat == U_OTHER_LETTER || cat == U_MODIFIER_LETTER || cat == U_LETTER_NUMBER || cat == U_NON_SPACING_MARK || cat == U_COMBINING_SPACING_MARK || cat == U_DECIMAL_DIGIT_NUMBER || cat == U_CONNECTOR_PUNCTUATION || str[i] == 0x2118 || str[i] == 0x212E || str[i] == 0x309B || str[i] == 0x309C || str[i] == 0x1369 || str[i] == 0x1371 || str[i] == 0x00B7 || str[i] == 0x0387 || str[i] == 0x19DA || str[i] == 0x0E33 || str[i] == 0x0EB3 || str[i] == 0xFF9E || str[i] == 0xFF9F)) {
+			if (cat != U_LOWERCASE_LETTER && cat != U_UPPERCASE_LETTER && cat != U_TITLECASE_LETTER && cat != U_OTHER_LETTER && cat != U_MODIFIER_LETTER && cat != U_LETTER_NUMBER && cat != U_NON_SPACING_MARK && cat != U_COMBINING_SPACING_MARK && cat != U_DECIMAL_DIGIT_NUMBER && cat != U_CONNECTOR_PUNCTUATION && str[i] != 0x2118 && str[i] != 0x212E && str[i] != 0x309B && str[i] != 0x309C && str[i] != 0x1369 && str[i] != 0x1371 && str[i] != 0x00B7 && str[i] != 0x0387 && str[i] != 0x19DA && str[i] != 0x0E33 && str[i] != 0x0EB3 && str[i] != 0xFF9E && str[i] != 0xFF9F) {
 				return false; // Not a XID_Continue character.
 			}
 		}

@@ -305,7 +305,7 @@ Error ImageLoaderTGA::load_image(Ref<Image> p_image, Ref<FileAccess> f, BitField
 		err = FAILED;
 	}
 
-	if (!(tga_header.pixel_depth == 8 || tga_header.pixel_depth == 16 || tga_header.pixel_depth == 24 || tga_header.pixel_depth == 32)) {
+	if (tga_header.pixel_depth != 8 && tga_header.pixel_depth != 16 && tga_header.pixel_depth != 24 && tga_header.pixel_depth != 32) {
 		err = FAILED;
 	}
 
