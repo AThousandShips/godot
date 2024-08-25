@@ -56,7 +56,7 @@ void NavigationLink3D::_update_debug_mesh() {
 		debug_instance = RenderingServer::get_singleton()->instance_create();
 	}
 
-	if (!debug_mesh.is_valid()) {
+	if (debug_mesh.is_null()) {
 		debug_mesh = Ref<ArrayMesh>(memnew(ArrayMesh));
 	}
 
