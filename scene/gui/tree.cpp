@@ -3303,7 +3303,7 @@ void Tree::_go_left() {
 		} else {
 			if (columns.size() == 1) { // goto parent with one column
 				TreeItem *parent = selected_item->get_parent();
-				if (selected_item != get_root() && parent && parent->is_selectable(selected_col) && !(hide_root && parent == get_root())) {
+				if (selected_item != get_root() && parent && parent->is_selectable(selected_col) && (!hide_root || parent != get_root())) {
 					select_single_item(parent, get_root(), selected_col);
 				}
 			} else if (selected_item->get_prev_visible()) {

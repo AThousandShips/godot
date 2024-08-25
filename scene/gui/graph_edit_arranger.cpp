@@ -158,7 +158,7 @@ void GraphEditArranger::arrange_nodes() {
 			} else {
 				float current_node_start_pos = start_from;
 				if (current_node_size < largest_node_size / 2) {
-					if (!(i || j)) {
+					if (!i && !j) {
 						start_from -= (largest_node_size - current_node_size);
 					}
 					current_node_start_pos = start_from + largest_node_size - current_node_size;

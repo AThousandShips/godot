@@ -479,7 +479,7 @@ void CodeEdit::gui_input(const Ref<InputEvent> &p_gui_input) {
 
 	// Allow unicode handling if:
 	// No modifiers are pressed (except Shift and CapsLock)
-	bool allow_unicode_handling = !(k->is_ctrl_pressed() || k->is_alt_pressed() || k->is_meta_pressed());
+	bool allow_unicode_handling = !k->is_ctrl_pressed() && !k->is_alt_pressed() && !k->is_meta_pressed();
 
 	/* AUTO-COMPLETE */
 	if (code_completion_enabled && k->is_action("ui_text_completion_query", true)) {
@@ -3150,7 +3150,7 @@ int CodeEdit::_is_in_delimiter(int p_line, int p_column, DelimiterType p_type) c
 
 void CodeEdit::_add_delimiter(const String &p_start_key, const String &p_end_key, bool p_line_only, DelimiterType p_type) {
 	// If we are the editor allow "null" as a valid start key, otherwise users cannot add delimiters via the inspector.
-	if (!(Engine::get_singleton()->is_editor_hint() && p_start_key == "null")) {
+	if (!Engine::get_singleton()->is_editor_hint() || p_start_key != "null") {
 		ERR_FAIL_COND_MSG(p_start_key.is_empty(), "delimiter start key cannot be empty");
 
 		for (int i = 0; i < p_start_key.length(); i++) {

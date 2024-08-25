@@ -1079,11 +1079,11 @@ void NavigationAgent3D::_update_debug_path() {
 
 	debug_path_mesh->clear_surfaces();
 
-	if (!(debug_enabled && NavigationServer3D::get_singleton()->get_debug_navigation_enable_agent_paths())) {
+	if (!debug_enabled || !NavigationServer3D::get_singleton()->get_debug_navigation_enable_agent_paths()) {
 		return;
 	}
 
-	if (!(agent_parent && agent_parent->is_inside_tree())) {
+	if (!agent_parent || !agent_parent->is_inside_tree()) {
 		return;
 	}
 

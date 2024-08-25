@@ -5407,7 +5407,7 @@ bool RichTextLabel::search(const String &p_string, bool p_from_selection, bool p
 	if (p_from_selection && selection.active) {
 		// First check to see if other results exist in current line
 		char_idx = p_search_previous ? selection.from_char - 1 : selection.to_char;
-		if (!(p_search_previous && char_idx < 0) &&
+		if ((!p_search_previous || char_idx >= 0) &&
 				_search_line(selection.from_frame, selection.from_line, p_string, char_idx, p_search_previous)) {
 			scroll_to_selection();
 			queue_redraw();
@@ -5427,7 +5427,7 @@ bool RichTextLabel::search(const String &p_string, bool p_from_selection, bool p
 			}
 
 			// Search remainder of table
-			if (!(p_search_previous && parent_element == parent_table->subitems.front()) &&
+			if ((!p_search_previous || parent_element != parent_table->subitems.front()) &&
 					parent_element != parent_table->subitems.back()) {
 				parent_element = p_search_previous ? parent_element->prev() : parent_element->next(); // Don't want to search current item
 				ERR_FAIL_NULL_V(parent_element, false);

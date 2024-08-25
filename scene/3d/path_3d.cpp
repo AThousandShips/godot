@@ -84,7 +84,7 @@ void Path3D::_notification(int p_what) {
 
 void Path3D::_update_debug_mesh() {
 	SceneTree *st = SceneTree::get_singleton();
-	if (!(st && st->is_debugging_paths_hint())) {
+	if (!st || !st->is_debugging_paths_hint()) {
 		return;
 	}
 

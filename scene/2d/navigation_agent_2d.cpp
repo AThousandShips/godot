@@ -1020,11 +1020,11 @@ void NavigationAgent2D::_update_debug_path() {
 
 	RenderingServer::get_singleton()->canvas_item_clear(debug_path_instance);
 
-	if (!(debug_enabled && NavigationServer2D::get_singleton()->get_debug_navigation_enable_agent_paths())) {
+	if (!debug_enabled || !NavigationServer2D::get_singleton()->get_debug_navigation_enable_agent_paths()) {
 		return;
 	}
 
-	if (!(agent_parent && agent_parent->is_inside_tree())) {
+	if (!agent_parent || !agent_parent->is_inside_tree()) {
 		return;
 	}
 

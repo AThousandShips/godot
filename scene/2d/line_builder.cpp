@@ -348,9 +348,9 @@ void LineBuilder::build() {
 				cend = pos_up0;
 			}
 
-			if (current_joint_mode == Line2D::LINE_JOINT_BEVEL && !(wrap_around && i == segments_count)) {
+			if (current_joint_mode == Line2D::LINE_JOINT_BEVEL && (!wrap_around || i != segments_count)) {
 				strip_add_tri(cend, orientation);
-			} else if (current_joint_mode == Line2D::LINE_JOINT_ROUND && !(wrap_around && i == segments_count)) {
+			} else if (current_joint_mode == Line2D::LINE_JOINT_ROUND && (!wrap_around || i != segments_count)) {
 				Vector2 vbegin = cbegin - pos1;
 				Vector2 vend = cend - pos1;
 				// We want to use vbegin.angle_to(vend) below, which evaluates to

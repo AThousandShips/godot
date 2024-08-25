@@ -537,7 +537,7 @@ void Camera2D::_make_current(Object *p_which) {
 }
 
 void Camera2D::_update_process_internal_for_smoothing() {
-	bool is_not_in_scene_or_editor = !(is_inside_tree() && _is_editing_in_editor());
+	bool is_not_in_scene_or_editor = !is_inside_tree() || !_is_editing_in_editor();
 	bool is_any_smoothing_valid = position_smoothing_speed > 0 || rotation_smoothing_speed > 0;
 
 	bool enable = is_any_smoothing_valid && is_not_in_scene_or_editor;

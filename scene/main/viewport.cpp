@@ -1575,7 +1575,7 @@ bool Viewport::_gui_call_input(Control *p_control, const Ref<InputEvent> &p_inpu
 				stopped = true;
 				break;
 			}
-			if (control->data.mouse_filter == Control::MOUSE_FILTER_STOP && is_pointer_event && !(is_scroll_event && control->data.force_pass_scroll_events)) {
+			if (control->data.mouse_filter == Control::MOUSE_FILTER_STOP && is_pointer_event && (!is_scroll_event || !control->data.force_pass_scroll_events)) {
 				// Mouse, ScreenDrag and ScreenTouch events are stopped by default with MOUSE_FILTER_STOP, unless we have a scroll event and force_pass_scroll_events set to true
 				stopped = true;
 				break;
@@ -2591,7 +2591,7 @@ void Viewport::_drop_physics_mouseover(bool p_paused_only) {
 			if (!co->is_inside_tree()) {
 				physics_object_over = ObjectID();
 				physics_object_capture = ObjectID();
-			} else if (!(p_paused_only && co->can_process())) {
+			} else if (!p_paused_only || !co->can_process()) {
 				co->_mouse_exit();
 				physics_object_over = ObjectID();
 				physics_object_capture = ObjectID();

@@ -60,7 +60,7 @@ void RemoteTransform2D::_update_remote() {
 		return;
 	}
 
-	if (!(update_remote_position || update_remote_rotation || update_remote_scale)) {
+	if (!update_remote_position && !update_remote_rotation && !update_remote_scale) {
 		return; // The transform data of the RemoteTransform2D is not used at all.
 	}
 
