@@ -600,7 +600,7 @@ void ResourceCache::clear() {
 }
 
 bool ResourceCache::has(const String &p_path) {
-	lock.lock();
+	MutexLock mutex_lock(lock);
 
 	Resource **res = resources.getptr(p_path);
 
@@ -610,8 +610,6 @@ bool ResourceCache::has(const String &p_path) {
 		resources.erase(p_path);
 		res = nullptr;
 	}
-
-	lock.unlock();
 
 	if (!res) {
 		return false;
@@ -643,7 +641,7 @@ Ref<Resource> ResourceCache::get_ref(const String &p_path) {
 }
 
 void ResourceCache::get_cached_resources(List<Ref<Resource>> *p_resources) {
-	lock.lock();
+	MutexLock mutex_lock(lock);
 
 	LocalVector<String> to_remove;
 
@@ -663,14 +661,9 @@ void ResourceCache::get_cached_resources(List<Ref<Resource>> *p_resources) {
 	for (const String &E : to_remove) {
 		resources.erase(E);
 	}
-
-	lock.unlock();
 }
 
 int ResourceCache::get_cached_resource_count() {
-	lock.lock();
-	int rc = resources.size();
-	lock.unlock();
-
-	return rc;
+	MutexLock mutex_lock(lock);
+	return resources.size();
 }

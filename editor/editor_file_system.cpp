@@ -1945,7 +1945,7 @@ void EditorFileSystem::_process_update_pending() {
 }
 
 void EditorFileSystem::_queue_update_script_class(const String &p_path, const String &p_type, const String &p_script_class_name, const String &p_script_class_extends, const String &p_script_class_icon_path) {
-	update_script_mutex.lock();
+	MutexLock update_script_lock(update_script_mutex);
 
 	ScriptInfo si;
 	si.type = p_type;
@@ -1955,8 +1955,6 @@ void EditorFileSystem::_queue_update_script_class(const String &p_path, const St
 	update_script_paths.insert(p_path, si);
 
 	update_script_paths_documentation.insert(p_path);
-
-	update_script_mutex.unlock();
 }
 
 void EditorFileSystem::_update_scene_groups() {
@@ -2009,9 +2007,8 @@ void EditorFileSystem::_update_pending_scene_groups() {
 }
 
 void EditorFileSystem::_queue_update_scene_groups(const String &p_path) {
-	update_scene_mutex.lock();
+	MutexLock update_scene_lock(update_scene_mutex);
 	update_scene_paths.insert(p_path);
-	update_scene_mutex.unlock();
 }
 
 void EditorFileSystem::_get_all_scenes(EditorFileSystemDirectory *p_dir, HashSet<String> &r_list) {

@@ -117,8 +117,8 @@ void NavMeshGenerator2D::sync() {
 }
 
 void NavMeshGenerator2D::cleanup() {
-	baking_navmesh_mutex.lock();
-	generator_task_mutex.lock();
+	MutexLock baking_navmesh_lock(baking_navmesh_mutex);
+	MutexLock generator_task_lock(generator_task_mutex);
 
 	baking_navmeshes.clear();
 
@@ -135,9 +135,6 @@ void NavMeshGenerator2D::cleanup() {
 	}
 	generator_parsers.clear();
 	generator_rid_rwlock.write_unlock();
-
-	generator_task_mutex.unlock();
-	baking_navmesh_mutex.unlock();
 }
 
 void NavMeshGenerator2D::finish() {
@@ -224,10 +221,8 @@ void NavMeshGenerator2D::bake_from_source_geometry_data_async(Ref<NavigationPoly
 }
 
 bool NavMeshGenerator2D::is_baking(Ref<NavigationPolygon> p_navigation_polygon) {
-	baking_navmesh_mutex.lock();
-	bool baking = baking_navmeshes.has(p_navigation_polygon);
-	baking_navmesh_mutex.unlock();
-	return baking;
+	MutexLock baking_navmesh_lock(baking_navmesh_mutex);
+	return baking_navmeshes.has(p_navigation_polygon);
 }
 
 void NavMeshGenerator2D::generator_thread_bake(void *p_arg) {

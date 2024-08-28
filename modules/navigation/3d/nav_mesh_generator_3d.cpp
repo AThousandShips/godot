@@ -130,8 +130,8 @@ void NavMeshGenerator3D::sync() {
 }
 
 void NavMeshGenerator3D::cleanup() {
-	baking_navmesh_mutex.lock();
-	generator_task_mutex.lock();
+	MutexLock baking_navmesh_lock(baking_navmesh_mutex);
+	MutexLock generator_task_lock(generator_task_mutex);
 
 	baking_navmeshes.clear();
 
@@ -148,9 +148,6 @@ void NavMeshGenerator3D::cleanup() {
 	}
 	generator_parsers.clear();
 	generator_rid_rwlock.write_unlock();
-
-	generator_task_mutex.unlock();
-	baking_navmesh_mutex.unlock();
 }
 
 void NavMeshGenerator3D::finish() {
@@ -238,10 +235,8 @@ void NavMeshGenerator3D::bake_from_source_geometry_data_async(Ref<NavigationMesh
 }
 
 bool NavMeshGenerator3D::is_baking(Ref<NavigationMesh> p_navigation_mesh) {
-	baking_navmesh_mutex.lock();
-	bool baking = baking_navmeshes.has(p_navigation_mesh);
-	baking_navmesh_mutex.unlock();
-	return baking;
+	MutexLock baking_navmesh_lock(baking_navmesh_mutex);
+	return baking_navmeshes.has(p_navigation_mesh);
 }
 
 void NavMeshGenerator3D::generator_thread_bake(void *p_arg) {
