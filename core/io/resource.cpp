@@ -486,15 +486,13 @@ void Resource::set_as_translation_remapped(bool p_remapped) {
 		return;
 	}
 
-	ResourceCache::lock.lock();
+	MutexLock lock(ResourceCache::lock);
 
 	if (p_remapped) {
 		ResourceLoader::remapped_list.add(&remapped_list);
 	} else {
 		ResourceLoader::remapped_list.remove(&remapped_list);
 	}
-
-	ResourceCache::lock.unlock();
 }
 
 #ifdef TOOLS_ENABLED
@@ -564,14 +562,13 @@ Resource::~Resource() {
 		return;
 	}
 
-	ResourceCache::lock.lock();
+	MutexLock lock(ResourceCache::lock);
 	// Only unregister from the cache if this is the actual resource listed there.
 	// (Other resources can have the same value in `path_cache` if loaded with `CACHE_IGNORE`.)
 	HashMap<String, Resource *>::Iterator E = ResourceCache::resources.find(path_cache);
 	if (likely(E && E->value == this)) {
 		ResourceCache::resources.remove(E);
 	}
-	ResourceCache::lock.unlock();
 }
 
 HashMap<String, Resource *> ResourceCache::resources;

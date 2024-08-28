@@ -631,9 +631,8 @@ void WorkerThreadPool::wait_for_group_task_completion(GroupID p_group) {
 		}
 	}
 
-	task_mutex.lock(); // This mutex is needed when Physics 2D and/or 3D is selected to run on a separate thread.
+	MutexLock task_lock(task_mutex); // This mutex is needed when Physics 2D and/or 3D is selected to run on a separate thread.
 	groups.erase(p_group);
-	task_mutex.unlock();
 #endif
 }
 

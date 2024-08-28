@@ -87,8 +87,8 @@ void NavMeshGenerator2D::sync() {
 		return;
 	}
 
-	baking_navmesh_mutex.lock();
-	generator_task_mutex.lock();
+	MutexLock baking_navmesh_lock(baking_navmesh_mutex);
+	MutexLock generator_task_lock(generator_task_mutex);
 
 	LocalVector<WorkerThreadPool::TaskID> finished_task_ids;
 
@@ -111,9 +111,6 @@ void NavMeshGenerator2D::sync() {
 	for (WorkerThreadPool::TaskID finished_task_id : finished_task_ids) {
 		generator_tasks.erase(finished_task_id);
 	}
-
-	generator_task_mutex.unlock();
-	baking_navmesh_mutex.unlock();
 }
 
 void NavMeshGenerator2D::cleanup() {
@@ -209,7 +206,7 @@ void NavMeshGenerator2D::bake_from_source_geometry_data_async(Ref<NavigationPoly
 	baking_navmeshes.insert(p_navigation_mesh);
 	baking_navmesh_mutex.unlock();
 
-	generator_task_mutex.lock();
+	MutexLock generator_task_lock(generator_task_mutex);
 	NavMeshGeneratorTask2D *generator_task = memnew(NavMeshGeneratorTask2D);
 	generator_task->navigation_mesh = p_navigation_mesh;
 	generator_task->source_geometry_data = p_source_geometry_data;
@@ -217,7 +214,6 @@ void NavMeshGenerator2D::bake_from_source_geometry_data_async(Ref<NavigationPoly
 	generator_task->status = NavMeshGeneratorTask2D::TaskStatus::BAKING_STARTED;
 	generator_task->thread_task_id = WorkerThreadPool::get_singleton()->add_native_task(&NavMeshGenerator2D::generator_thread_bake, generator_task, NavMeshGenerator2D::baking_use_high_priority_threads, "NavMeshGeneratorBake2D");
 	generator_tasks.insert(generator_task->thread_task_id, generator_task);
-	generator_task_mutex.unlock();
 }
 
 bool NavMeshGenerator2D::is_baking(Ref<NavigationPolygon> p_navigation_polygon) {

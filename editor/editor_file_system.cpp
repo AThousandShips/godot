@@ -1895,7 +1895,7 @@ void EditorFileSystem::_update_script_documentation() {
 		return;
 	}
 
-	update_script_mutex.lock();
+	MutexLock update_script_lock(update_script_mutex);
 
 	EditorProgress *ep = nullptr;
 	if (update_script_paths_documentation.size() > 1) {
@@ -1934,7 +1934,6 @@ void EditorFileSystem::_update_script_documentation() {
 	memdelete_notnull(ep);
 
 	update_script_paths_documentation.clear();
-	update_script_mutex.unlock();
 }
 
 void EditorFileSystem::_process_update_pending() {
