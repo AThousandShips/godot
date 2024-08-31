@@ -4342,6 +4342,8 @@ bool GDScriptParser::export_annotations(AnnotationNode *p_annotation, Node *p_ta
 			}
 		}
 
+		// TODO: Add checks for explicit `@export_enum` duplicate values.
+
 		if (i > 0) {
 			hint_string += ",";
 		}
@@ -4432,6 +4434,11 @@ bool GDScriptParser::export_annotations(AnnotationNode *p_annotation, Node *p_ta
 					variable->export_info.type = Variant::INT;
 					variable->export_info.hint = PROPERTY_HINT_ENUM;
 
+#ifdef DEBUG_ENABLED
+					RBSet<int64_t> values;
+					bool has_duplicates = false;
+#endif // DEBUG_ENABLED
+
 					String enum_hint_string;
 					bool first = true;
 					for (const KeyValue<StringName, int64_t> &E : export_type.enum_values) {
@@ -4443,6 +4450,17 @@ bool GDScriptParser::export_annotations(AnnotationNode *p_annotation, Node *p_ta
 						enum_hint_string += E.key.operator String().capitalize().xml_escape();
 						enum_hint_string += ":";
 						enum_hint_string += String::num_int64(E.value).xml_escape();
+
+#ifdef DEBUG_ENABLED
+						if (!has_duplicates) {
+							if (values.has(E.value)) {
+								push_warning(p_annotation, GDScriptWarning::EXPORTED_DUPLICATE_ENUM_VALUE);
+								has_duplicates = true;
+							} else {
+								values.insert(E.value);
+							}
+						}
+#endif // DEBUG_ENABLED
 					}
 
 					variable->export_info.hint_string = enum_hint_string;
