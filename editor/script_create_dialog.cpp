@@ -124,6 +124,7 @@ void ScriptCreateDialog::_notification(int p_what) {
 				language_menu->select(default_language);
 			}
 			is_using_templates = EDITOR_DEF("_script_setup_use_script_templates", false);
+			EDITOR_DEF("_script_setup_templates_dictionary", Dictionary());
 			use_templates->set_pressed(is_using_templates);
 		} break;
 
@@ -834,8 +835,6 @@ void ScriptCreateDialog::_bind_methods() {
 }
 
 ScriptCreateDialog::ScriptCreateDialog() {
-	EDITOR_DEF("_script_setup_templates_dictionary", Dictionary());
-
 	/* Main Controls */
 
 	GridContainer *gc = memnew(GridContainer);
