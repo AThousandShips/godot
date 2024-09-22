@@ -261,7 +261,6 @@ void CanvasItem::_enter_canvas() {
 		}
 	}
 
-	pending_update = false;
 	queue_redraw();
 
 	notification(NOTIFICATION_ENTER_CANVAS);
@@ -275,6 +274,8 @@ void CanvasItem::_exit_canvas() {
 		remove_from_group(canvas_group);
 		canvas_group = StringName();
 	}
+	// Clear pending update in case node is manipulated during a _draw call.
+	pending_update = false;
 }
 
 void CanvasItem::_notification(int p_what) {
