@@ -607,6 +607,13 @@
 				These are [Variant] reference types: [Object], [Dictionary], [Array], [PackedByteArray], [PackedInt32Array], [PackedInt64Array], [PackedFloat32Array], [PackedFloat64Array], [PackedStringArray], [PackedVector2Array], [PackedVector3Array], [PackedVector4Array], and [PackedColorArray].
 			</description>
 		</method>
+		<method name="is_semantic_equal" keywords="nan">
+			<return type="bool" />
+			<param index="0" name="a" type="float" />
+			<param index="1" name="b" type="float" />
+			<description>
+			</description>
+		</method>
 		<method name="is_zero_approx">
 			<return type="bool" />
 			<param index="0" name="x" type="float" />

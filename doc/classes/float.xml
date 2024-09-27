@@ -54,7 +54,7 @@
 			<param index="0" name="right" type="float" />
 			<description>
 				Returns [code]true[/code] if two floats are different from each other.
-				[b]Note:[/b] [constant @GDScript.NAN] doesn't behave the same as other numbers. Therefore, the results from this operator may not be accurate if NaNs are included.
+				[b]Note:[/b] [constant @GDScript.NAN] doesn't behave the same as other numbers. Therefore, the results from this operator may not be accurate if NaNs are included. See also [method @GlobalScope.is_semantic_equal].
 			</description>
 		</operator>
 		<operator name="operator !=">

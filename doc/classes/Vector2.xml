@@ -238,6 +238,12 @@
 				Returns [code]true[/code] if the vector is normalized, i.e. its length is approximately equal to 1.
 			</description>
 		</method>
+		<method name="is_semantic_equal" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="to" type="Vector2" />
+			<description>
+			</description>
+		</method>
 		<method name="is_zero_approx" qualifiers="const">
 			<return type="bool" />
 			<description>
@@ -459,7 +465,7 @@
 			<description>
 				Returns [code]true[/code] if the vectors are not equal.
 				[b]Note:[/b] Due to floating-point precision errors, consider using [method is_equal_approx] instead, which is more reliable.
-				[b]Note:[/b] Vectors with [constant @GDScript.NAN] elements don't behave the same as other vectors. Therefore, the results from this operator may not be accurate if NaNs are included.
+				[b]Note:[/b] Vectors with [constant @GDScript.NAN] elements don't behave the same as other vectors. Therefore, the results from this operator may not be accurate if NaNs are included. See also [method is_semantic_equal].
 			</description>
 		</operator>
 		<operator name="operator *">
@@ -561,7 +567,7 @@
 			<description>
 				Returns [code]true[/code] if the vectors are exactly equal.
 				[b]Note:[/b] Due to floating-point precision errors, consider using [method is_equal_approx] instead, which is more reliable.
-				[b]Note:[/b] Vectors with [constant @GDScript.NAN] elements don't behave the same as other vectors. Therefore, the results from this operator may not be accurate if NaNs are included.
+				[b]Note:[/b] Vectors with [constant @GDScript.NAN] elements don't behave the same as other vectors. Therefore, the results from this operator may not be accurate if NaNs are included. See also [method is_semantic_equal].
 			</description>
 		</operator>
 		<operator name="operator &gt;">

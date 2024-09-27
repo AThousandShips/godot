@@ -352,6 +352,10 @@ bool VariantUtilityFunctions::is_equal_approx(double x, double y) {
 	return Math::is_equal_approx(x, y);
 }
 
+bool VariantUtilityFunctions::is_semantic_equal(double x, double y) {
+	return Math::is_semantic_equal(x, y);
+}
+
 bool VariantUtilityFunctions::is_zero_approx(double x) {
 	return Math::is_zero_approx(x);
 }
@@ -1740,6 +1744,7 @@ void Variant::_register_variant_utility_functions() {
 	FUNCBINDR(is_inf, sarray("x"), Variant::UTILITY_FUNC_TYPE_MATH);
 
 	FUNCBINDR(is_equal_approx, sarray("a", "b"), Variant::UTILITY_FUNC_TYPE_MATH);
+	FUNCBINDR(is_semantic_equal, sarray("a", "b"), Variant::UTILITY_FUNC_TYPE_MATH);
 	FUNCBINDR(is_zero_approx, sarray("x"), Variant::UTILITY_FUNC_TYPE_MATH);
 	FUNCBINDR(is_finite, sarray("x"), Variant::UTILITY_FUNC_TYPE_MATH);
 

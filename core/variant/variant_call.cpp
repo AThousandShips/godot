@@ -1796,6 +1796,7 @@ static void _register_variant_builtin_methods_math() {
 	bind_method(Vector2, normalized, sarray(), varray());
 	bind_method(Vector2, is_normalized, sarray(), varray());
 	bind_method(Vector2, is_equal_approx, sarray("to"), varray());
+	bind_method(Vector2, is_semantic_equal, sarray("to"), varray());
 	bind_method(Vector2, is_zero_approx, sarray(), varray());
 	bind_method(Vector2, is_finite, sarray(), varray());
 	bind_method(Vector2, posmod, sarray("mod"), varray());
@@ -1904,6 +1905,7 @@ static void _register_variant_builtin_methods_math() {
 	bind_method(Vector3, normalized, sarray(), varray());
 	bind_method(Vector3, is_normalized, sarray(), varray());
 	bind_method(Vector3, is_equal_approx, sarray("to"), varray());
+	bind_method(Vector3, is_semantic_equal, sarray("to"), varray());
 	bind_method(Vector3, is_zero_approx, sarray(), varray());
 	bind_method(Vector3, is_finite, sarray(), varray());
 	bind_method(Vector3, inverse, sarray(), varray());
@@ -1987,6 +1989,7 @@ static void _register_variant_builtin_methods_math() {
 	bind_method(Vector4, dot, sarray("with"), varray());
 	bind_method(Vector4, inverse, sarray(), varray());
 	bind_method(Vector4, is_equal_approx, sarray("to"), varray());
+	bind_method(Vector4, is_semantic_equal, sarray("to"), varray());
 	bind_method(Vector4, is_zero_approx, sarray(), varray());
 	bind_method(Vector4, is_finite, sarray(), varray());
 	bind_method(Vector4, min, sarray("with"), varray());
@@ -2034,6 +2037,7 @@ static void _register_variant_builtin_methods_math() {
 	bind_method(Quaternion, normalized, sarray(), varray());
 	bind_method(Quaternion, is_normalized, sarray(), varray());
 	bind_method(Quaternion, is_equal_approx, sarray("to"), varray());
+	bind_method(Quaternion, is_semantic_equal, sarray("to"), varray());
 	bind_method(Quaternion, is_finite, sarray(), varray());
 	bind_method(Quaternion, inverse, sarray(), varray());
 	bind_method(Quaternion, log, sarray(), varray());
@@ -2070,6 +2074,7 @@ static void _register_variant_builtin_methods_math() {
 	bind_method(Color, linear_to_srgb, sarray(), varray());
 
 	bind_method(Color, is_equal_approx, sarray("to"), varray());
+	bind_method(Color, is_semantic_equal, sarray("to"), varray());
 
 	bind_static_method(Color, hex, sarray("hex"), varray());
 	bind_static_method(Color, hex64, sarray("hex"), varray());

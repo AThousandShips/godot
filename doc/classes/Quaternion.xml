@@ -143,6 +143,12 @@
 				Returns [code]true[/code] if this quaternion is normalized. See also [method normalized].
 			</description>
 		</method>
+		<method name="is_semantic_equal" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="to" type="Quaternion" />
+			<description>
+			</description>
+		</method>
 		<method name="length" qualifiers="const" keywords="size">
 			<return type="float" />
 			<description>

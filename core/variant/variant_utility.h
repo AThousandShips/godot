@@ -73,6 +73,7 @@ struct VariantUtilityFunctions {
 	static bool is_nan(double x);
 	static bool is_inf(double x);
 	static bool is_equal_approx(double x, double y);
+	static bool is_semantic_equal(double x, double y);
 	static bool is_zero_approx(double x);
 	static bool is_finite(double x);
 	static double ease(float x, float curve);

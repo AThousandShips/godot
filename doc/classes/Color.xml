@@ -301,6 +301,12 @@
 				Returns [code]true[/code] if this color and [param to] are approximately equal, by running [method @GlobalScope.is_equal_approx] on each component.
 			</description>
 		</method>
+		<method name="is_semantic_equal" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="to" type="Color" />
+			<description>
+			</description>
+		</method>
 		<method name="lerp" qualifiers="const" keywords="interpolate">
 			<return type="Color" />
 			<param index="0" name="to" type="Color" />
