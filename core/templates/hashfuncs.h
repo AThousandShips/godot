@@ -404,49 +404,49 @@ struct HashMapComparatorDefault {
 template <>
 struct HashMapComparatorDefault<float> {
 	static bool compare(const float &p_lhs, const float &p_rhs) {
-		return (p_lhs == p_rhs) || (Math::is_nan(p_lhs) && Math::is_nan(p_rhs));
+		return Math::is_semantic_equal(p_lhs, p_rhs);
 	}
 };
 
 template <>
 struct HashMapComparatorDefault<double> {
 	static bool compare(const double &p_lhs, const double &p_rhs) {
-		return (p_lhs == p_rhs) || (Math::is_nan(p_lhs) && Math::is_nan(p_rhs));
+		return Math::is_semantic_equal(p_lhs, p_rhs);
 	}
 };
 
 template <>
 struct HashMapComparatorDefault<Color> {
 	static bool compare(const Color &p_lhs, const Color &p_rhs) {
-		return ((p_lhs.r == p_rhs.r) || (Math::is_nan(p_lhs.r) && Math::is_nan(p_rhs.r))) && ((p_lhs.g == p_rhs.g) || (Math::is_nan(p_lhs.g) && Math::is_nan(p_rhs.g))) && ((p_lhs.b == p_rhs.b) || (Math::is_nan(p_lhs.b) && Math::is_nan(p_rhs.b))) && ((p_lhs.a == p_rhs.a) || (Math::is_nan(p_lhs.a) && Math::is_nan(p_rhs.a)));
+		return p_lhs.is_semantic_equal(p_rhs);
 	}
 };
 
 template <>
 struct HashMapComparatorDefault<Vector2> {
 	static bool compare(const Vector2 &p_lhs, const Vector2 &p_rhs) {
-		return ((p_lhs.x == p_rhs.x) || (Math::is_nan(p_lhs.x) && Math::is_nan(p_rhs.x))) && ((p_lhs.y == p_rhs.y) || (Math::is_nan(p_lhs.y) && Math::is_nan(p_rhs.y)));
+		return p_lhs.is_semantic_equal(p_rhs);
 	}
 };
 
 template <>
 struct HashMapComparatorDefault<Vector3> {
 	static bool compare(const Vector3 &p_lhs, const Vector3 &p_rhs) {
-		return ((p_lhs.x == p_rhs.x) || (Math::is_nan(p_lhs.x) && Math::is_nan(p_rhs.x))) && ((p_lhs.y == p_rhs.y) || (Math::is_nan(p_lhs.y) && Math::is_nan(p_rhs.y))) && ((p_lhs.z == p_rhs.z) || (Math::is_nan(p_lhs.z) && Math::is_nan(p_rhs.z)));
+		return p_lhs.is_semantic_equal(p_rhs);
 	}
 };
 
 template <>
 struct HashMapComparatorDefault<Vector4> {
 	static bool compare(const Vector4 &p_lhs, const Vector4 &p_rhs) {
-		return ((p_lhs.x == p_rhs.x) || (Math::is_nan(p_lhs.x) && Math::is_nan(p_rhs.x))) && ((p_lhs.y == p_rhs.y) || (Math::is_nan(p_lhs.y) && Math::is_nan(p_rhs.y))) && ((p_lhs.z == p_rhs.z) || (Math::is_nan(p_lhs.z) && Math::is_nan(p_rhs.z))) && ((p_lhs.w == p_rhs.w) || (Math::is_nan(p_lhs.w) && Math::is_nan(p_rhs.w)));
+		return p_lhs.is_semantic_equal(p_rhs);
 	}
 };
 
 template <>
 struct HashMapComparatorDefault<Quaternion> {
 	static bool compare(const Quaternion &p_lhs, const Quaternion &p_rhs) {
-		return ((p_lhs.x == p_rhs.x) || (Math::is_nan(p_lhs.x) && Math::is_nan(p_rhs.x))) && ((p_lhs.y == p_rhs.y) || (Math::is_nan(p_lhs.y) && Math::is_nan(p_rhs.y))) && ((p_lhs.z == p_rhs.z) || (Math::is_nan(p_lhs.z) && Math::is_nan(p_rhs.z))) && ((p_lhs.w == p_rhs.w) || (Math::is_nan(p_lhs.w) && Math::is_nan(p_rhs.w)));
+		return p_lhs.is_semantic_equal(p_rhs);
 	}
 };
 

@@ -3254,32 +3254,20 @@ uint32_t Variant::recursive_hash(int recursion_count) const {
 #define hash_compare_scalar(p_lhs, p_rhs) \
 	(hash_compare_scalar_base(p_lhs, p_rhs, true))
 
-#define hash_compare_vector2(p_lhs, p_rhs)        \
-	(hash_compare_scalar((p_lhs).x, (p_rhs).x) && \
-			hash_compare_scalar((p_lhs).y, (p_rhs).y))
+#define hash_compare_vector2(p_lhs, p_rhs) \
+	(p_lhs).is_semantic_equal(p_rhs)
 
-#define hash_compare_vector3(p_lhs, p_rhs)               \
-	(hash_compare_scalar((p_lhs).x, (p_rhs).x) &&        \
-			hash_compare_scalar((p_lhs).y, (p_rhs).y) && \
-			hash_compare_scalar((p_lhs).z, (p_rhs).z))
+#define hash_compare_vector3(p_lhs, p_rhs) \
+	(p_lhs).is_semantic_equal(p_rhs)
 
-#define hash_compare_vector4(p_lhs, p_rhs)               \
-	(hash_compare_scalar((p_lhs).x, (p_rhs).x) &&        \
-			hash_compare_scalar((p_lhs).y, (p_rhs).y) && \
-			hash_compare_scalar((p_lhs).z, (p_rhs).z) && \
-			hash_compare_scalar((p_lhs).w, (p_rhs).w))
+#define hash_compare_vector4(p_lhs, p_rhs) \
+	(p_lhs).is_semantic_equal(p_rhs)
 
-#define hash_compare_quaternion(p_lhs, p_rhs)            \
-	(hash_compare_scalar((p_lhs).x, (p_rhs).x) &&        \
-			hash_compare_scalar((p_lhs).y, (p_rhs).y) && \
-			hash_compare_scalar((p_lhs).z, (p_rhs).z) && \
-			hash_compare_scalar((p_lhs).w, (p_rhs).w))
+#define hash_compare_quaternion(p_lhs, p_rhs) \
+	(p_lhs).is_semantic_equal(p_rhs)
 
-#define hash_compare_color(p_lhs, p_rhs)                 \
-	(hash_compare_scalar((p_lhs).r, (p_rhs).r) &&        \
-			hash_compare_scalar((p_lhs).g, (p_rhs).g) && \
-			hash_compare_scalar((p_lhs).b, (p_rhs).b) && \
-			hash_compare_scalar((p_lhs).a, (p_rhs).a))
+#define hash_compare_color(p_lhs, p_rhs) \
+	(p_lhs).is_semantic_equal(p_rhs)
 
 #define hash_compare_packed_array(p_lhs, p_rhs, p_type, p_compare_func) \
 	const Vector<p_type> &l = PackedArrayRef<p_type>::get_array(p_lhs); \

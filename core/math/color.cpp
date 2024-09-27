@@ -259,6 +259,10 @@ bool Color::is_equal_approx(const Color &p_color) const {
 	return Math::is_equal_approx(r, p_color.r) && Math::is_equal_approx(g, p_color.g) && Math::is_equal_approx(b, p_color.b) && Math::is_equal_approx(a, p_color.a);
 }
 
+bool Color::is_semantic_equal(const Color &p_color) const {
+	return Math::is_semantic_equal(r, p_color.r) && Math::is_semantic_equal(g, p_color.g) && Math::is_semantic_equal(b, p_color.b) && Math::is_semantic_equal(a, p_color.a);
+}
+
 Color Color::clamp(const Color &p_min, const Color &p_max) const {
 	return Color(
 			CLAMP(r, p_min.r, p_max.r),

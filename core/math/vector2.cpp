@@ -194,6 +194,10 @@ bool Vector2::is_equal_approx(const Vector2 &p_v) const {
 	return Math::is_equal_approx(x, p_v.x) && Math::is_equal_approx(y, p_v.y);
 }
 
+bool Vector2::is_semantic_equal(const Vector2 &p_v) const {
+	return Math::is_semantic_equal(x, p_v.x) && Math::is_semantic_equal(y, p_v.y);
+}
+
 bool Vector2::is_zero_approx() const {
 	return Math::is_zero_approx(x) && Math::is_zero_approx(y);
 }

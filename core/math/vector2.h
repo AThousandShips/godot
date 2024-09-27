@@ -129,6 +129,7 @@ struct [[nodiscard]] Vector2 {
 	Vector2 reflect(const Vector2 &p_normal) const;
 
 	bool is_equal_approx(const Vector2 &p_v) const;
+	bool is_semantic_equal(const Vector2 &p_v) const;
 	bool is_zero_approx() const;
 	bool is_finite() const;
 

@@ -156,6 +156,10 @@ bool Vector3::is_equal_approx(const Vector3 &p_v) const {
 	return Math::is_equal_approx(x, p_v.x) && Math::is_equal_approx(y, p_v.y) && Math::is_equal_approx(z, p_v.z);
 }
 
+bool Vector3::is_semantic_equal(const Vector3 &p_v) const {
+	return Math::is_semantic_equal(x, p_v.x) && Math::is_semantic_equal(y, p_v.y) && Math::is_semantic_equal(z, p_v.z);
+}
+
 bool Vector3::is_zero_approx() const {
 	return Math::is_zero_approx(x) && Math::is_zero_approx(y) && Math::is_zero_approx(z);
 }
