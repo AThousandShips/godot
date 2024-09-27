@@ -427,6 +427,13 @@ struct HashMapComparatorDefault<Vector3> {
 	}
 };
 
+template <>
+struct HashMapComparatorDefault<Vector4> {
+	static bool compare(const Vector4 &p_lhs, const Vector4 &p_rhs) {
+		return ((p_lhs.x == p_rhs.x) || (Math::is_nan(p_lhs.x) && Math::is_nan(p_rhs.x))) && ((p_lhs.y == p_rhs.y) || (Math::is_nan(p_lhs.y) && Math::is_nan(p_rhs.y))) && ((p_lhs.z == p_rhs.z) || (Math::is_nan(p_lhs.z) && Math::is_nan(p_rhs.z))) && ((p_lhs.w == p_rhs.w) || (Math::is_nan(p_lhs.w) && Math::is_nan(p_rhs.w)));
+	}
+};
+
 constexpr uint32_t HASH_TABLE_SIZE_MAX = 29;
 
 inline constexpr uint32_t hash_table_size_primes[HASH_TABLE_SIZE_MAX] = {
