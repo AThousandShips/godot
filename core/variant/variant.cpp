@@ -3338,13 +3338,7 @@ bool Variant::hash_compare(const Variant &p_variant, int recursion_count, bool s
 			Transform2D *l = _data._transform2d;
 			Transform2D *r = p_variant._data._transform2d;
 
-			for (int i = 0; i < 3; i++) {
-				if (!hash_compare_vector2(l->columns[i], r->columns[i])) {
-					return false;
-				}
-			}
-
-			return true;
+			return l->is_semantic_equal(*r);
 		} break;
 
 		case VECTOR3: {
@@ -3376,17 +3370,14 @@ bool Variant::hash_compare(const Variant &p_variant, int recursion_count, bool s
 			const Plane *l = reinterpret_cast<const Plane *>(_data._mem);
 			const Plane *r = reinterpret_cast<const Plane *>(p_variant._data._mem);
 
-			return hash_compare_vector3(l->normal, r->normal) &&
-					hash_compare_scalar(l->d, r->d);
+			return l->is_semantic_equal(*r);
 		} break;
 
 		case AABB: {
 			const ::AABB *l = _data._aabb;
 			const ::AABB *r = p_variant._data._aabb;
 
-			return hash_compare_vector3(l->position, r->position) &&
-					hash_compare_vector3(l->size, r->size);
-
+			return l->is_semantic_equal(*r);
 		} break;
 
 		case QUATERNION: {
@@ -3400,38 +3391,20 @@ bool Variant::hash_compare(const Variant &p_variant, int recursion_count, bool s
 			const Basis *l = _data._basis;
 			const Basis *r = p_variant._data._basis;
 
-			for (int i = 0; i < 3; i++) {
-				if (!hash_compare_vector3(l->rows[i], r->rows[i])) {
-					return false;
-				}
-			}
-
-			return true;
+			return l->is_semantic_equal(*r);
 		} break;
 
 		case TRANSFORM3D: {
 			const Transform3D *l = _data._transform3d;
 			const Transform3D *r = p_variant._data._transform3d;
 
-			for (int i = 0; i < 3; i++) {
-				if (!hash_compare_vector3(l->basis.rows[i], r->basis.rows[i])) {
-					return false;
-				}
-			}
-
-			return hash_compare_vector3(l->origin, r->origin);
+			return l->is_semantic_equal(*r);
 		} break;
 		case PROJECTION: {
 			const Projection *l = _data._projection;
 			const Projection *r = p_variant._data._projection;
 
-			for (int i = 0; i < 4; i++) {
-				if (!hash_compare_vector4(l->columns[i], r->columns[i])) {
-					return false;
-				}
-			}
-
-			return true;
+			return l->is_semantic_equal(*r);
 		} break;
 
 		case COLOR: {

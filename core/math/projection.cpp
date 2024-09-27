@@ -699,6 +699,10 @@ void Projection::flip_y() {
 	}
 }
 
+bool Projection::is_semantic_equal(const Projection &p_cam) const {
+	return columns[0].is_semantic_equal(p_cam.columns[0]) && columns[1].is_semantic_equal(p_cam.columns[1]) && columns[2].is_semantic_equal(p_cam.columns[2]) && columns[3].is_semantic_equal(p_cam.columns[3]);
+}
+
 Projection::Projection() {
 	set_identity();
 }
