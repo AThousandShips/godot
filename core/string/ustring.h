@@ -513,20 +513,29 @@ String rtos(double p_val);
 String rtoss(double p_val); //scientific version
 
 struct NoCaseComparator {
-	bool operator()(const String &p_a, const String &p_b) const {
+	static bool compare(const String &p_a, const String &p_b) {
 		return p_a.nocasecmp_to(p_b) < 0;
+	}
+	bool operator()(const String &p_a, const String &p_b) const {
+		return compare(p_a, p_b);
 	}
 };
 
 struct NaturalNoCaseComparator {
-	bool operator()(const String &p_a, const String &p_b) const {
+	static bool compare(const String &p_a, const String &p_b) {
 		return p_a.naturalnocasecmp_to(p_b) < 0;
+	}
+	bool operator()(const String &p_a, const String &p_b) const {
+		return compare(p_a, p_b);
 	}
 };
 
 struct FileNoCaseComparator {
-	bool operator()(const String &p_a, const String &p_b) const {
+	static bool compare(const String &p_a, const String &p_b) {
 		return p_a.filenocasecmp_to(p_b) < 0;
+	}
+	bool operator()(const String &p_a, const String &p_b) const {
+		return compare(p_a, p_b);
 	}
 };
 
