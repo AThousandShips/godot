@@ -135,6 +135,12 @@
 				Returns [code]true[/code] if [param point] is located above the plane.
 			</description>
 		</method>
+		<method name="is_semantic_equal" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="to_plane" type="Plane" />
+			<description>
+			</description>
+		</method>
 		<method name="normalized" qualifiers="const">
 			<return type="Plane" />
 			<description>

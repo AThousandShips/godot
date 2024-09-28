@@ -199,6 +199,12 @@
 				Returns [code]true[/code] if this basis is finite, by calling [method @GlobalScope.is_finite] on all vector components.
 			</description>
 		</method>
+		<method name="is_semantic_equal" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="b" type="Basis" />
+			<description>
+			</description>
+		</method>
 		<method name="looking_at" qualifiers="static">
 			<return type="Basis" />
 			<param index="0" name="target" type="Vector3" />

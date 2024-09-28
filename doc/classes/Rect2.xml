@@ -211,6 +211,12 @@
 				Returns [code]true[/code] if this rectangle's values are finite, by calling [method Vector2.is_finite] on the [member position] and the [member size].
 			</description>
 		</method>
+		<method name="is_semantic_equal" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="rect" type="Rect2" />
+			<description>
+			</description>
+		</method>
 		<method name="merge" qualifiers="const">
 			<return type="Rect2" />
 			<param index="0" name="b" type="Rect2" />

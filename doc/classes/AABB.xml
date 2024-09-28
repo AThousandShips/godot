@@ -335,6 +335,12 @@
 				Returns [code]true[/code] if this bounding box's values are finite, by calling [method Vector2.is_finite] on the [member position] and the [member size].
 			</description>
 		</method>
+		<method name="is_semantic_equal" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="aabb" type="AABB" />
+			<description>
+			</description>
+		</method>
 		<method name="merge" qualifiers="const">
 			<return type="AABB" />
 			<param index="0" name="with" type="AABB" />

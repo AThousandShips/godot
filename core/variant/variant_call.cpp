@@ -1862,6 +1862,7 @@ static void _register_variant_builtin_methods_math() {
 	bind_method(Rect2, has_area, sarray(), varray());
 	bind_method(Rect2, has_point, sarray("point"), varray());
 	bind_method(Rect2, is_equal_approx, sarray("rect"), varray());
+	bind_method(Rect2, is_semantic_equal, sarray("rect"), varray());
 	bind_method(Rect2, is_finite, sarray(), varray());
 	bind_method(Rect2, intersects, sarray("b", "include_borders"), varray(false));
 	bind_method(Rect2, encloses, sarray("b"), varray());
@@ -2021,6 +2022,7 @@ static void _register_variant_builtin_methods_math() {
 	bind_method(Plane, normalized, sarray(), varray());
 	bind_method(Plane, get_center, sarray(), varray());
 	bind_method(Plane, is_equal_approx, sarray("to_plane"), varray());
+	bind_method(Plane, is_semantic_equal, sarray("to_plane"), varray());
 	bind_method(Plane, is_finite, sarray(), varray());
 	bind_method(Plane, is_point_over, sarray("point"), varray());
 	bind_method(Plane, distance_to, sarray("point"), varray());
@@ -2167,6 +2169,7 @@ static void _register_variant_builtin_methods_misc() {
 	bind_method(Transform2D, interpolate_with, sarray("xform", "weight"), varray());
 	bind_method(Transform2D, is_conformal, sarray(), varray());
 	bind_method(Transform2D, is_equal_approx, sarray("xform"), varray());
+	bind_method(Transform2D, is_semantic_equal, sarray("xform"), varray());
 	bind_method(Transform2D, is_finite, sarray(), varray());
 	// Do not bind functions like set_rotation, set_scale, set_skew, etc because this type is immutable and can't be modified.
 	bind_method(Transform2D, looking_at, sarray("target"), varray(Vector2()));
@@ -2187,6 +2190,7 @@ static void _register_variant_builtin_methods_misc() {
 	bind_method(Basis, slerp, sarray("to", "weight"), varray());
 	bind_method(Basis, is_conformal, sarray(), varray());
 	bind_method(Basis, is_equal_approx, sarray("b"), varray());
+	bind_method(Basis, is_semantic_equal, sarray("b"), varray());
 	bind_method(Basis, is_finite, sarray(), varray());
 	bind_method(Basis, get_rotation_quaternion, sarray(), varray());
 	bind_static_method(Basis, looking_at, sarray("target", "up", "use_model_front"), varray(Vector3(0, 1, 0), false));
@@ -2202,6 +2206,7 @@ static void _register_variant_builtin_methods_misc() {
 	bind_method(AABB, has_surface, sarray(), varray());
 	bind_method(AABB, has_point, sarray("point"), varray());
 	bind_method(AABB, is_equal_approx, sarray("aabb"), varray());
+	bind_method(AABB, is_semantic_equal, sarray("aabb"), varray());
 	bind_method(AABB, is_finite, sarray(), varray());
 	bind_method(AABB, intersects, sarray("with"), varray());
 	bind_method(AABB, encloses, sarray("with"), varray());
@@ -2235,6 +2240,7 @@ static void _register_variant_builtin_methods_misc() {
 	bind_method(Transform3D, looking_at, sarray("target", "up", "use_model_front"), varray(Vector3(0, 1, 0), false));
 	bind_method(Transform3D, interpolate_with, sarray("xform", "weight"), varray());
 	bind_method(Transform3D, is_equal_approx, sarray("xform"), varray());
+	bind_method(Transform3D, is_semantic_equal, sarray("xform"), varray());
 	bind_method(Transform3D, is_finite, sarray(), varray());
 
 	/* Projection */
@@ -2270,6 +2276,8 @@ static void _register_variant_builtin_methods_misc() {
 	bind_method(Projection, inverse, sarray(), varray());
 	bind_method(Projection, get_pixels_per_meter, sarray("for_pixel_width"), varray());
 	bind_method(Projection, get_lod_multiplier, sarray(), varray());
+
+	bind_method(Projection, is_semantic_equal, sarray("with"), varray());
 
 	/* Dictionary */
 

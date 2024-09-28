@@ -94,6 +94,12 @@
 				Returns [code]true[/code] if this transform is finite, by calling [method @GlobalScope.is_finite] on each component.
 			</description>
 		</method>
+		<method name="is_semantic_equal" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="xform" type="Transform3D" />
+			<description>
+			</description>
+		</method>
 		<method name="looking_at" qualifiers="const">
 			<return type="Transform3D" />
 			<param index="0" name="target" type="Vector3" />
