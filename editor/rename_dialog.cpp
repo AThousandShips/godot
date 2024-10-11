@@ -597,7 +597,7 @@ void RenameDialog::rename() {
 			const String &new_name = E->get().second;
 
 			if (!n) {
-				ERR_PRINT("Skipping missing node: " + E->get().first.get_concatenated_subnames());
+				ERR_PRINT(vformat("Skipping missing node: %s.", E->get().first.get_concatenated_subnames()));
 				continue;
 			}
 			scene_tree_editor->rename_node(n, new_name);

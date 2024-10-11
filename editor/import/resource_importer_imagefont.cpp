@@ -274,7 +274,7 @@ Error ResourceImporterImageFont::import(const String &p_source_file, const Strin
 		}
 
 		for (int32_t idx = MIN(start, end); idx <= MAX(start, end); idx++) {
-			ERR_FAIL_COND_V_MSG(pos >= count, ERR_CANT_CREATE, "Too many characters in range, should be " + itos(columns * rows));
+			ERR_FAIL_COND_V_MSG(pos >= count, ERR_CANT_CREATE, vformat("Too many characters in range, should be %d.", columns * rows));
 			int x = pos % columns;
 			int y = pos / columns;
 			font->set_glyph_advance(0, chr_height, idx, Vector2(chr_width + chr_adv, 0));
@@ -339,7 +339,7 @@ Error ResourceImporterImageFont::import(const String &p_source_file, const Strin
 
 	print_verbose("Saving to: " + p_save_path + ".fontdata");
 	err = ResourceSaver::save(font, p_save_path + ".fontdata", flg);
-	ERR_FAIL_COND_V_MSG(err != OK, err, "Cannot save font to file \"" + p_save_path + ".res\".");
+	ERR_FAIL_COND_V_MSG(err != OK, err, vformat(R"(Cannot save font to file ".res".)", p_save_path));
 	print_verbose("Done saving to: " + p_save_path + ".fontdata");
 	return OK;
 }

@@ -70,7 +70,7 @@ void EditorPluginSettings::update_plugins() {
 		Error err = cfg->load(path);
 
 		if (err != OK) {
-			WARN_PRINT("Can't load plugin config at: " + path);
+			WARN_PRINT(vformat("Can't load plugin config at: '%s'.", path));
 		} else {
 			Vector<String> missing_keys;
 			for (const String required_key : { "name", "author", "version", "description", "script" }) {

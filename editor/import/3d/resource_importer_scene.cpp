@@ -1809,7 +1809,7 @@ Ref<Animation> ResourceImporterScene::_save_animation_to_file(Ref<Animation> ani
 	}
 	anim->set_path(p_save_to_path, true); // Set path to save externally.
 	Error err = ResourceSaver::save(anim, p_save_to_path, ResourceSaver::FLAG_CHANGE_PATH);
-	ERR_FAIL_COND_V_MSG(err != OK, anim, "Saving of animation failed: " + p_save_to_path);
+	ERR_FAIL_COND_V_MSG(err != OK, anim, vformat("Saving of animation failed: '%s'.", p_save_to_path));
 	return anim;
 }
 
@@ -3157,15 +3157,15 @@ Error ResourceImporterScene::import(const String &p_source_file, const String &p
 
 		print_verbose("Saving animation to: " + p_save_path + ".res");
 		err = ResourceSaver::save(library, p_save_path + ".res", flags); //do not take over, let the changed files reload themselves
-		ERR_FAIL_COND_V_MSG(err != OK, err, "Cannot save animation to file '" + p_save_path + ".res'.");
+		ERR_FAIL_COND_V_MSG(err != OK, err, vformat("Cannot save animation to file '%s.res'.", p_save_path));
 	} else if (_scene_import_type == "PackedScene") {
 		Ref<PackedScene> packer = memnew(PackedScene);
 		packer->pack(scene);
 		print_verbose("Saving scene to: " + p_save_path + ".scn");
 		err = ResourceSaver::save(packer, p_save_path + ".scn", flags); //do not take over, let the changed files reload themselves
-		ERR_FAIL_COND_V_MSG(err != OK, err, "Cannot save scene to file '" + p_save_path + ".scn'.");
+		ERR_FAIL_COND_V_MSG(err != OK, err, vformat("Cannot save scene to file '%s.scn'.", p_save_path));
 	} else {
-		ERR_FAIL_V_MSG(ERR_FILE_UNRECOGNIZED, "Unknown scene import type: " + _scene_import_type);
+		ERR_FAIL_V_MSG(ERR_FILE_UNRECOGNIZED, vformat("Unknown scene import type: %s.", _scene_import_type));
 	}
 
 	memdelete(scene);
@@ -3262,7 +3262,7 @@ void EditorSceneFormatImporterESCN::get_extensions(List<String> *r_extensions) c
 Node *EditorSceneFormatImporterESCN::import_scene(const String &p_path, uint32_t p_flags, const HashMap<StringName, Variant> &p_options, List<String> *r_missing_deps, Error *r_err) {
 	Error error;
 	Ref<PackedScene> ps = ResourceFormatLoaderText::singleton->load(p_path, p_path, &error);
-	ERR_FAIL_COND_V_MSG(!ps.is_valid(), nullptr, "Cannot load scene as text resource from path '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(!ps.is_valid(), nullptr, vformat("Cannot load scene as text resource from path '%s'.", p_path));
 	Node *scene = ps->instantiate();
 	TypedArray<Node> nodes = scene->find_children("*", "MeshInstance3D");
 	for (int32_t node_i = 0; node_i < nodes.size(); node_i++) {

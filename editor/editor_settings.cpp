@@ -1180,7 +1180,7 @@ void EditorSettings::create() {
 	if (EditorPaths::get_singleton()->is_self_contained()) {
 		Error err = extra_config->load(EditorPaths::get_singleton()->get_self_contained_file());
 		if (err != OK) {
-			ERR_PRINT("Can't load extra config from path: " + EditorPaths::get_singleton()->get_self_contained_file());
+			ERR_PRINT(vformat("Can't load extra config from path: '%s'.", EditorPaths::get_singleton()->get_self_contained_file()));
 		}
 	}
 
@@ -1196,7 +1196,7 @@ void EditorSettings::create() {
 
 		singleton = ResourceLoader::load(config_file_path, "EditorSettings");
 		if (singleton.is_null()) {
-			ERR_PRINT("Could not load editor settings from path: " + config_file_path);
+			ERR_PRINT(vformat("Could not load editor settings from path: '%s'.", config_file_path));
 			config_file_path = get_newest_settings_path();
 			goto fail;
 		}
@@ -1460,13 +1460,13 @@ void EditorSettings::set_project_metadata(const String &p_section, const String 
 
 		Error err = project_metadata->load(path);
 		if (err != OK && err != ERR_FILE_NOT_FOUND) {
-			ERR_PRINT("Cannot load project metadata from file '" + path + "'.");
+			ERR_PRINT(vformat("Cannot load project metadata from file '%s'.", path));
 		}
 	}
 	project_metadata->set_value(p_section, p_key, p_data);
 
 	Error err = project_metadata->save(path);
-	ERR_FAIL_COND_MSG(err != OK, "Cannot save project metadata to file '" + path + "'.");
+	ERR_FAIL_COND_MSG(err != OK, vformat("Cannot save project metadata to file '%s'.", path));
 }
 
 Variant EditorSettings::get_project_metadata(const String &p_section, const String &p_key, const Variant &p_default) const {
@@ -1475,7 +1475,7 @@ Variant EditorSettings::get_project_metadata(const String &p_section, const Stri
 
 		const String path = _get_project_metadata_path();
 		Error err = project_metadata->load(path);
-		ERR_FAIL_COND_V_MSG(err != OK && err != ERR_FILE_NOT_FOUND, p_default, "Cannot load project metadata from file '" + path + "'.");
+		ERR_FAIL_COND_V_MSG(err != OK && err != ERR_FILE_NOT_FOUND, p_default, vformat("Cannot load project metadata from file '%s'.", path));
 	}
 	return project_metadata->get_value(p_section, p_key, p_default);
 }
@@ -1750,7 +1750,7 @@ void EditorSettings::add_shortcut(const String &p_name, const Ref<Shortcut> &p_s
 
 bool EditorSettings::is_shortcut(const String &p_name, const Ref<InputEvent> &p_event) const {
 	HashMap<String, Ref<Shortcut>>::ConstIterator E = shortcuts.find(p_name);
-	ERR_FAIL_COND_V_MSG(!E, false, "Unknown Shortcut: " + p_name + ".");
+	ERR_FAIL_COND_V_MSG(!E, false, vformat("Unknown Shortcut: %s.", p_name));
 
 	return E->value->matches_event(p_event);
 }
@@ -1802,7 +1802,7 @@ Ref<Shortcut> ED_GET_SHORTCUT(const String &p_path) {
 
 	Ref<Shortcut> sc = EditorSettings::get_singleton()->get_shortcut(p_path);
 
-	ERR_FAIL_COND_V_MSG(!sc.is_valid(), sc, "Used ED_GET_SHORTCUT with invalid shortcut: " + p_path);
+	ERR_FAIL_COND_V_MSG(!sc.is_valid(), sc, vformat("Used ED_GET_SHORTCUT with invalid shortcut: %s.", p_path));
 
 	return sc;
 }
@@ -1813,7 +1813,7 @@ void ED_SHORTCUT_OVERRIDE(const String &p_path, const String &p_feature, Key p_k
 	}
 
 	Ref<Shortcut> sc = EditorSettings::get_singleton()->get_shortcut(p_path);
-	ERR_FAIL_COND_MSG(!sc.is_valid(), "Used ED_SHORTCUT_OVERRIDE with invalid shortcut: " + p_path);
+	ERR_FAIL_COND_MSG(!sc.is_valid(), vformat("Used ED_SHORTCUT_OVERRIDE with invalid shortcut: %s.", p_path));
 
 	PackedInt32Array arr;
 	arr.push_back((int32_t)p_keycode);
@@ -1827,7 +1827,7 @@ void ED_SHORTCUT_OVERRIDE_ARRAY(const String &p_path, const String &p_feature, c
 	}
 
 	Ref<Shortcut> sc = EditorSettings::get_singleton()->get_shortcut(p_path);
-	ERR_FAIL_COND_MSG(!sc.is_valid(), "Used ED_SHORTCUT_OVERRIDE_ARRAY with invalid shortcut: " + p_path);
+	ERR_FAIL_COND_MSG(!sc.is_valid(), vformat("Used ED_SHORTCUT_OVERRIDE_ARRAY with invalid shortcut: %s.", p_path));
 
 	// Only add the override if the OS supports the provided feature.
 	if (!OS::get_singleton()->has_feature(p_feature)) {

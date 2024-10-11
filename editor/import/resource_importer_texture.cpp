@@ -510,7 +510,7 @@ Error ResourceImporterTexture::import(const String &p_source_file, const String 
 		editor_image.instantiate();
 		err = ImageLoader::load_image(p_source_file, editor_image, nullptr, editor_loader_flags, editor_scale);
 		if (err != OK) {
-			WARN_PRINT("Failed to import an image resource for editor use from '" + p_source_file + "'");
+			WARN_PRINT(vformat("Failed to import an image resource for editor use from '%s'.", p_source_file));
 		} else {
 			images_imported.push_back(editor_image);
 		}
@@ -781,7 +781,7 @@ bool ResourceImporterTexture::are_import_settings_valid(const String &p_path, co
 				}
 			}
 		} else {
-			WARN_PRINT("Setting for imported format not found: " + setting_path);
+			WARN_PRINT(vformat("Setting for imported format not found: '%s'.", setting_path));
 		}
 		index++;
 	}

@@ -75,7 +75,7 @@ void POTGenerator::generate_pot(const String &p_file) {
 		if (EditorTranslationParser::get_singleton()->can_parse(file_extension)) {
 			EditorTranslationParser::get_singleton()->get_parser(file_extension)->parse_file(file_path, &msgids, &msgids_context_plural);
 		} else {
-			ERR_PRINT("Unrecognized file extension " + file_extension + " in generate_pot()");
+			ERR_PRINT(vformat("Unrecognized file extension '%s' in generate_pot()", file_extension));
 			return;
 		}
 
@@ -101,7 +101,7 @@ void POTGenerator::_write_to_pot(const String &p_file) {
 	Error err;
 	Ref<FileAccess> file = FileAccess::open(p_file, FileAccess::WRITE, &err);
 	if (err != OK) {
-		ERR_PRINT("Failed to open " + p_file);
+		ERR_PRINT(vformat("Failed to open '%s'.", p_file));
 		return;
 	}
 

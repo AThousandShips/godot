@@ -100,7 +100,7 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
 	Error err;
 	Ref<FileAccess> file = FileAccess::open(p_source_file, FileAccess::READ, &err);
 
-	ERR_FAIL_COND_V_MSG(err != OK, ERR_CANT_OPEN, "Cannot open file '" + p_source_file + "'.");
+	ERR_FAIL_COND_V_MSG(err != OK, ERR_CANT_OPEN, vformat("Cannot open file '%s'.", p_source_file));
 
 	/* CHECK RIFF */
 	char riff[5];

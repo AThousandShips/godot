@@ -482,7 +482,7 @@ void EditorFileSystem::_save_filesystem_cache() {
 	String fscache = EditorPaths::get_singleton()->get_project_settings_dir().path_join(CACHE_FILE_NAME);
 
 	Ref<FileAccess> f = FileAccess::open(fscache, FileAccess::WRITE);
-	ERR_FAIL_COND_MSG(f.is_null(), "Cannot create file '" + fscache + "'. Check user write permissions.");
+	ERR_FAIL_COND_MSG(f.is_null(), vformat("Cannot create file '%s'. Check user write permissions.", fscache));
 
 	f->store_line(filesystem_settings_version_for_import);
 	_save_filesystem_cache(filesystem, f);
@@ -560,7 +560,7 @@ bool EditorFileSystem::_test_for_reimport(const String &p_path, const String &p_
 		if (err == ERR_FILE_EOF) {
 			break;
 		} else if (err != OK) {
-			ERR_PRINT("ResourceFormatImporter::load - '" + p_path + ".import:" + itos(lines) + "' error '" + error_text + "'.");
+			ERR_PRINT(vformat("ResourceFormatImporter::load - '%s.import:%d' error '%s'.", p_path, lines, error_text));
 			// Parse error, skip and let user attempt manual reimport to avoid reimport loop.
 			return false;
 		}
@@ -646,7 +646,7 @@ bool EditorFileSystem::_test_for_reimport(const String &p_path, const String &p_
 		if (err == ERR_FILE_EOF) {
 			break;
 		} else if (err != OK) {
-			ERR_PRINT("ResourceFormatImporter::load - '" + p_path + ".import.md5:" + itos(lines) + "' error '" + error_text + "'.");
+			ERR_PRINT(vformat("ResourceFormatImporter::load - '%s.import.md5:%d' error '%s'.", p_path, lines, error_text));
 			return false; // Parse error.
 		}
 		if (!assign.is_empty()) {
@@ -712,7 +712,7 @@ Vector<String> EditorFileSystem::_get_import_dest_paths(const String &p_path) {
 		if (err == ERR_FILE_EOF) {
 			break;
 		} else if (err != OK) {
-			ERR_PRINT("ResourceFormatImporter::load - '" + p_path + ".import:" + itos(lines) + "' error '" + error_text + "'.");
+			ERR_PRINT(vformat("ResourceFormatImporter::load - '%s.import:%d' error '%s'.", p_path, lines, error_text));
 			// Parse error, skip and let user attempt manual reimport to avoid reimport loop.
 			return Vector<String>();
 		}
@@ -1091,7 +1091,7 @@ int EditorFileSystem::_scan_new_dir(ScannedDirectory *p_dir, Ref<DirAccess> &da)
 				da->change_dir("..");
 			}
 		} else {
-			ERR_PRINT("Cannot go into subdir '" + E->get() + "'.");
+			ERR_PRINT(vformat("Cannot go into subdir '%s'.", E->get()));
 		}
 	}
 
@@ -1324,7 +1324,7 @@ void EditorFileSystem::_scan_fs_changes(EditorFileSystemDirectory *p_dir, ScanPr
 		Ref<DirAccess> da = DirAccess::create(DirAccess::ACCESS_RESOURCES);
 
 		Error ret = da->change_dir(cd);
-		ERR_FAIL_COND_MSG(ret != OK, "Cannot change to '" + cd + "' folder.");
+		ERR_FAIL_COND_MSG(ret != OK, vformat("Cannot change to '%s' folder.", cd));
 
 		da->list_dir_begin();
 		while (true) {
@@ -1921,7 +1921,7 @@ void EditorFileSystem::_save_late_updated_files() {
 	//files that already existed, and were modified, need re-scanning for dependencies upon project restart. This is done via saving this special file
 	String fscache = EditorPaths::get_singleton()->get_project_settings_dir().path_join("filesystem_update4");
 	Ref<FileAccess> f = FileAccess::open(fscache, FileAccess::WRITE);
-	ERR_FAIL_COND_MSG(f.is_null(), "Cannot create file '" + fscache + "'. Check user write permissions.");
+	ERR_FAIL_COND_MSG(f.is_null(), vformat("Cannot create file '%s'. Check user write permissions.", fscache));
 	for (const String &E : late_update_files) {
 		f->store_line(E);
 	}
@@ -2502,7 +2502,7 @@ Error EditorFileSystem::_reimport_group(const String &p_group_file, const Vector
 		ResourceUID::ID uid = uids[file];
 		{
 			Ref<FileAccess> f = FileAccess::open(file + ".import", FileAccess::WRITE);
-			ERR_FAIL_COND_V_MSG(f.is_null(), ERR_FILE_CANT_OPEN, "Cannot open import file '" + file + ".import'.");
+			ERR_FAIL_COND_V_MSG(f.is_null(), ERR_FILE_CANT_OPEN, vformat("Cannot open import file '%s.import'.", file));
 
 			//write manually, as order matters ([remap] has to go first for performance).
 			f->store_line("[remap]");
@@ -2570,7 +2570,7 @@ Error EditorFileSystem::_reimport_group(const String &p_group_file, const Vector
 		// Store the md5's of the various files. These are stored separately so that the .import files can be version controlled.
 		{
 			Ref<FileAccess> md5s = FileAccess::open(base_path + ".md5", FileAccess::WRITE);
-			ERR_FAIL_COND_V_MSG(md5s.is_null(), ERR_FILE_CANT_OPEN, "Cannot open MD5 file '" + base_path + ".md5'.");
+			ERR_FAIL_COND_V_MSG(md5s.is_null(), ERR_FILE_CANT_OPEN, vformat("Cannot open MD5 file '%s.md5'.", base_path));
 
 			md5s->store_line("source_md5=\"" + FileAccess::get_md5(file) + "\"");
 			if (dest_paths.size()) {
@@ -2710,7 +2710,7 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 		importer = ResourceFormatImporter::get_singleton()->get_importer_by_extension(p_file.get_extension());
 		load_default = true;
 		if (importer.is_null()) {
-			ERR_FAIL_V_MSG(ERR_FILE_CANT_OPEN, "BUG: File queued for import, but can't be imported, importer for type '" + importer_name + "' not found.");
+			ERR_FAIL_V_MSG(ERR_FILE_CANT_OPEN, vformat("BUG: File queued for import, but can't be imported, importer for type '%s' not found.", importer_name));
 		}
 	}
 
@@ -2753,7 +2753,7 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 	Vector<String> dest_paths;
 	{
 		Ref<FileAccess> f = FileAccess::open(p_file + ".import", FileAccess::WRITE);
-		ERR_FAIL_COND_V_MSG(f.is_null(), ERR_FILE_CANT_OPEN, "Cannot open file from path '" + p_file + ".import'.");
+		ERR_FAIL_COND_V_MSG(f.is_null(), ERR_FILE_CANT_OPEN, vformat("Cannot open file from path '%s.import'.", p_file));
 
 		// Write manually, as order matters ([remap] has to go first for performance).
 		f->store_line("[remap]");
@@ -2846,7 +2846,7 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 	// Store the md5's of the various files. These are stored separately so that the .import files can be version controlled.
 	{
 		Ref<FileAccess> md5s = FileAccess::open(base_path + ".md5", FileAccess::WRITE);
-		ERR_FAIL_COND_V_MSG(md5s.is_null(), ERR_FILE_CANT_OPEN, "Cannot open MD5 file '" + base_path + ".md5'.");
+		ERR_FAIL_COND_V_MSG(md5s.is_null(), ERR_FILE_CANT_OPEN, vformat("Cannot open MD5 file '%s.md5'.", base_path));
 
 		md5s->store_line("source_md5=\"" + FileAccess::get_md5(p_file) + "\"");
 		if (dest_paths.size()) {
@@ -2890,7 +2890,7 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 
 	print_verbose(vformat("EditorFileSystem: \"%s\" import took %d ms.", p_file, OS::get_singleton()->get_ticks_msec() - start_time));
 
-	ERR_FAIL_COND_V_MSG(err != OK, ERR_FILE_UNRECOGNIZED, "Error importing '" + p_file + "'.");
+	ERR_FAIL_COND_V_MSG(err != OK, ERR_FILE_UNRECOGNIZED, vformat("Error importing '%s'.", p_file));
 	return OK;
 }
 
@@ -3322,7 +3322,7 @@ Error EditorFileSystem::make_dir_recursive(const String &p_path, const String &p
 	Ref<DirAccess> da = DirAccess::create(DirAccess::ACCESS_RESOURCES);
 	if (!p_base_path.is_empty()) {
 		err = da->change_dir(p_base_path);
-		ERR_FAIL_COND_V_MSG(err != OK, err, "Cannot open base directory '" + p_base_path + "'.");
+		ERR_FAIL_COND_V_MSG(err != OK, err, vformat("Cannot open base directory '%s'.", p_base_path));
 	}
 
 	if (da->dir_exists(p_path)) {

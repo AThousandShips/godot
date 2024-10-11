@@ -170,7 +170,7 @@ void PluginConfigDialog::config(const String &p_config_path) {
 	if (!p_config_path.is_empty()) {
 		Ref<ConfigFile> cf = memnew(ConfigFile);
 		Error err = cf->load(p_config_path);
-		ERR_FAIL_COND_MSG(err != OK, "Cannot load config file from path '" + p_config_path + "'.");
+		ERR_FAIL_COND_MSG(err != OK, vformat("Cannot load config file from path '%s'.", p_config_path));
 
 		name_edit->set_text(cf->get_value("plugin", "name", ""));
 		subfolder_edit->set_text(p_config_path.get_base_dir().get_file());

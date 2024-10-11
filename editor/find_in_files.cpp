@@ -945,7 +945,7 @@ void FindInFilesPanel::apply_replaces_in_file(const String &fpath, const Vector<
 	// however that means either losing changes or losing replaces.
 
 	Ref<FileAccess> f = FileAccess::open(fpath, FileAccess::READ);
-	ERR_FAIL_COND_MSG(f.is_null(), "Cannot open file from path '" + fpath + "'.");
+	ERR_FAIL_COND_MSG(f.is_null(), vformat("Cannot open file from path '%s'.", fpath));
 
 	String buffer;
 	int current_line = 1;
@@ -991,7 +991,7 @@ void FindInFilesPanel::apply_replaces_in_file(const String &fpath, const Vector<
 	// Now the modified contents are in the buffer, rewrite the file with our changes.
 
 	Error err = f->reopen(fpath, FileAccess::WRITE);
-	ERR_FAIL_COND_MSG(err != OK, "Cannot create file in path '" + fpath + "'.");
+	ERR_FAIL_COND_MSG(err != OK, vformat("Cannot create file in path '%s'.", fpath));
 
 	f->store_string(buffer);
 }

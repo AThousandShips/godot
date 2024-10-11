@@ -459,7 +459,7 @@ bool ResourceImporterLayeredTexture::are_import_settings_valid(const String &p_p
 				}
 			}
 		} else {
-			WARN_PRINT("Setting for imported format not found: " + setting_path);
+			WARN_PRINT(vformat("Setting for imported format not found: '%s'.", setting_path));
 		}
 		index++;
 	}

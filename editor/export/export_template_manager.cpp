@@ -80,7 +80,7 @@ void ExportTemplateManager::_update_template_status() {
 	const String &templates_dir = EditorPaths::get_singleton()->get_export_templates_dir();
 
 	Error err = da->change_dir(templates_dir);
-	ERR_FAIL_COND_MSG(err != OK, "Could not access templates directory at '" + templates_dir + "'.");
+	ERR_FAIL_COND_MSG(err != OK, vformat("Could not access templates directory at '%s'.", templates_dir));
 
 	RBSet<String> templates;
 	da->list_dir_begin();
@@ -553,7 +553,7 @@ bool ExportTemplateManager::_install_file_selected(const String &p_file, bool p_
 		if (f.is_null()) {
 			ret = unzGoToNextFile(pkg);
 			fc++;
-			ERR_CONTINUE_MSG(true, "Can't open file from path '" + String(to_write) + "'.");
+			ERR_CONTINUE_MSG(true, vformat("Can't open file from path '%s'.", String(to_write)));
 		}
 
 		f->store_buffer(uncomp_data.ptr(), uncomp_data.size());
@@ -587,16 +587,16 @@ void ExportTemplateManager::_uninstall_template_confirmed() {
 	const String &templates_dir = EditorPaths::get_singleton()->get_export_templates_dir();
 
 	Error err = da->change_dir(templates_dir);
-	ERR_FAIL_COND_MSG(err != OK, "Could not access templates directory at '" + templates_dir + "'.");
+	ERR_FAIL_COND_MSG(err != OK, vformat("Could not access templates directory at '%s'.", templates_dir));
 	err = da->change_dir(uninstall_version);
-	ERR_FAIL_COND_MSG(err != OK, "Could not access templates directory at '" + templates_dir.path_join(uninstall_version) + "'.");
+	ERR_FAIL_COND_MSG(err != OK, vformat("Could not access templates directory at '%s'.", templates_dir.path_join(uninstall_version)));
 
 	err = da->erase_contents_recursive();
-	ERR_FAIL_COND_MSG(err != OK, "Could not remove all templates in '" + templates_dir.path_join(uninstall_version) + "'.");
+	ERR_FAIL_COND_MSG(err != OK, vformat("Could not remove all templates in '%s'.", templates_dir.path_join(uninstall_version)));
 
 	da->change_dir("..");
 	err = da->remove(uninstall_version);
-	ERR_FAIL_COND_MSG(err != OK, "Could not remove templates directory at '" + templates_dir.path_join(uninstall_version) + "'.");
+	ERR_FAIL_COND_MSG(err != OK, vformat("Could not remove templates directory at '%s'.", templates_dir.path_join(uninstall_version)));
 
 	_update_template_status();
 }
@@ -865,7 +865,7 @@ Error ExportTemplateManager::install_android_template_from_file(const String &p_
 				FileAccess::set_unix_permissions(to_write, (info.external_fa >> 16) & 0x01FF);
 #endif
 			} else {
-				ERR_PRINT("Can't uncompress file: " + to_write);
+				ERR_PRINT(vformat("Can't uncompress file: '%s'.", to_write));
 			}
 		}
 

@@ -593,12 +593,12 @@ void Collada::_parse_effect_material(XMLParser &p_parser, Effect &p_effect, Stri
 									} else if (p_parser.get_node_name() == "texture") {
 										String sampler = p_parser.get_named_attribute_value("texture");
 										if (!p_effect.params.has(sampler)) {
-											ERR_PRINT(String("Couldn't find sampler: " + sampler + " in material:" + p_id).utf8().get_data());
+											ERR_PRINT(vformat("Couldn't find sampler: %s in material: %s.", sampler, p_id));
 										} else {
 											String surface = p_effect.params[sampler];
 
 											if (!p_effect.params.has(surface)) {
-												ERR_PRINT(String("Couldn't find surface: " + surface + " in material:" + p_id).utf8().get_data());
+												ERR_PRINT(vformat("Couldn't find surface: %s in material: %s.", surface, p_id));
 											} else {
 												String uri = p_effect.params[surface];
 
@@ -656,12 +656,12 @@ void Collada::_parse_effect_material(XMLParser &p_parser, Effect &p_effect, Stri
 						if (p_parser.get_node_name() == "texture") {
 							String sampler = p_parser.get_named_attribute_value("texture");
 							if (!p_effect.params.has(sampler)) {
-								ERR_PRINT(String("Couldn't find sampler: " + sampler + " in material:" + p_id).utf8().get_data());
+								ERR_PRINT(vformat("Couldn't find sampler: %s in material: %s.", sampler, p_id));
 							} else {
 								String surface = p_effect.params[sampler];
 
 								if (!p_effect.params.has(surface)) {
-									ERR_PRINT(String("Couldn't find surface: " + surface + " in material:" + p_id).utf8().get_data());
+									ERR_PRINT(vformat("Couldn't find surface: %s in material: %s.", surface, p_id));
 								} else {
 									String uri = p_effect.params[surface];
 
@@ -2325,7 +2325,7 @@ Error Collada::load(const String &p_path, int p_flags) {
 	Ref<XMLParser> parserr = memnew(XMLParser);
 	XMLParser &parser = *parserr.ptr();
 	Error err = parser.open(p_path);
-	ERR_FAIL_COND_V_MSG(err, err, "Cannot open Collada file '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(err, err, vformat("Cannot open Collada file '%s'.", p_path));
 
 	state.local_path = ProjectSettings::get_singleton()->localize_path(p_path);
 	state.import_flags = p_flags;
@@ -2340,7 +2340,7 @@ Error Collada::load(const String &p_path, int p_flags) {
 		}
 	}
 
-	ERR_FAIL_COND_V_MSG(err != OK, ERR_FILE_CORRUPT, "Corrupted Collada file '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(err != OK, ERR_FILE_CORRUPT, vformat("Corrupted Collada file '%s'.", p_path));
 
 	/* Start loading Collada */
 

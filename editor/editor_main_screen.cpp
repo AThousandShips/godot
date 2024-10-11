@@ -162,7 +162,7 @@ void EditorMainScreen::select_by_name(const String &p_name) {
 		}
 	}
 
-	ERR_FAIL_MSG("The editor name '" + p_name + "' was not found.");
+	ERR_FAIL_MSG(vformat("The editor name '%s' was not found.", p_name));
 }
 
 void EditorMainScreen::select(int p_index) {

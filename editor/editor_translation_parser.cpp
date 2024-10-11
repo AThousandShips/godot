@@ -134,7 +134,7 @@ Ref<EditorTranslationParserPlugin> EditorTranslationParser::get_parser(const Str
 		}
 	}
 
-	WARN_PRINT("No translation parser available for \"" + p_extension + "\" extension.");
+	WARN_PRINT(vformat("No translation parser available for \"%s\" extension.", p_extension));
 
 	return nullptr;
 }

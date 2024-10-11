@@ -62,7 +62,7 @@ static Error _parse_material_library(const String &p_path, HashMap<String, Ref<S
 			material_map[current_name] = current;
 		} else if (l.begins_with("Ka ")) {
 			//uv
-			WARN_PRINT("OBJ: Ambient light for material '" + current_name + "' is ignored in PBR");
+			WARN_PRINT(vformat("OBJ: Ambient light for material '%s' is ignored in PBR.", current_name));
 
 		} else if (l.begins_with("Kd ")) {
 			//normal
@@ -118,7 +118,7 @@ static Error _parse_material_library(const String &p_path, HashMap<String, Ref<S
 
 		} else if (l.begins_with("map_Ka ")) {
 			//uv
-			WARN_PRINT("OBJ: Ambient light texture for material '" + current_name + "' is ignored in PBR");
+			WARN_PRINT(vformat("OBJ: Ambient light texture for material '%s' is ignored in PBR.", current_name));
 
 		} else if (l.begins_with("map_Kd ")) {
 			//normal
@@ -681,7 +681,7 @@ Error ResourceImporterOBJ::import(const String &p_source_file, const String &p_s
 
 	err = ResourceSaver::save(meshes.front()->get()->get_mesh(), save_path);
 
-	ERR_FAIL_COND_V_MSG(err != OK, err, "Cannot save Mesh to file '" + save_path + "'.");
+	ERR_FAIL_COND_V_MSG(err != OK, err, vformat("Cannot save Mesh to file '%s'.", save_path));
 
 	r_gen_files->push_back(save_path);
 

@@ -915,7 +915,7 @@ Error ColladaImport::_create_mesh_surfaces(bool p_optimize, Ref<ImporterMesh> &p
 					}
 
 				} else if (!p.material.is_empty()) {
-					WARN_PRINT("Collada: Unreferenced material in geometry instance: " + p.material);
+					WARN_PRINT(vformat("Collada: Unreferenced material in geometry instance: %s.", p.material));
 				}
 			}
 
@@ -1249,7 +1249,7 @@ Error ColladaImport::_create_resources(Collada::Node *p_node, bool p_use_compres
 					}
 				}
 
-				ERR_FAIL_COND_V_MSG(!ngsource.is_empty(), ERR_INVALID_DATA, "Controller instance source '" + ngsource + "' is neither skin or morph!");
+				ERR_FAIL_COND_V_MSG(!ngsource.is_empty(), ERR_INVALID_DATA, vformat("Controller instance source '%s' is neither skin or morph!", ngsource));
 
 			} else {
 				meshid = ng2->source;
@@ -1286,7 +1286,7 @@ Error ColladaImport::_create_resources(Collada::Node *p_node, bool p_use_compres
 
 					mesh_cache[meshid] = mesh;
 				} else {
-					WARN_PRINT("Collada: Will not import geometry: " + meshid);
+					WARN_PRINT(vformat("Collada: Will not import geometry: %s.", meshid));
 				}
 			}
 
@@ -1332,7 +1332,7 @@ Error ColladaImport::_create_resources(Collada::Node *p_node, bool p_use_compres
 
 Error ColladaImport::load(const String &p_path, int p_flags, bool p_force_make_tangents, bool p_use_compression) {
 	Error err = collada.load(p_path, p_flags);
-	ERR_FAIL_COND_V_MSG(err, err, "Cannot load file '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(err, err, vformat("Cannot load file '%s'.", p_path));
 
 	force_make_tangents = p_force_make_tangents;
 	ERR_FAIL_COND_V(!collada.state.visual_scene_map.has(collada.state.root_visual_scene), ERR_INVALID_DATA);
@@ -1461,7 +1461,7 @@ void ColladaImport::create_animations(bool p_import_value_tracks) {
 			if (node_name_map.has(at.target)) {
 				node = node_name_map[at.target];
 			} else {
-				WARN_PRINT("Collada: Couldn't find node: " + at.target);
+				WARN_PRINT(vformat("Collada: Couldn't find node: %s.", at.target));
 				continue;
 			}
 		} else {
@@ -1671,7 +1671,7 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 				}
 
 				if (xform_idx == -1) {
-					WARN_PRINT("Collada: Couldn't find matching node " + at.target + " xform for track " + at.param + ".");
+					WARN_PRINT(vformat("Collada: Couldn't find matching node %s xform for track %s.", at.target, at.param));
 					continue;
 				}
 
@@ -1693,7 +1693,7 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 				} else if (data.size() == xf.data.size()) {
 					xf.data = data;
 				} else {
-					ERR_CONTINUE_MSG(data.size() != xf.data.size(), "Component " + at.component + " has datasize " + itos(data.size()) + ", xfdatasize " + itos(xf.data.size()) + ".");
+					ERR_CONTINUE_MSG(data.size() != xf.data.size(), vformat("Component %s has datasize %d, xfdatasize %d.", at.component, data.size(), xf.data.size()));
 				}
 			}
 
@@ -1780,7 +1780,7 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 					//matrix
 					WARN_PRINT("Collada: Value keys for matrices not supported.");
 				} else {
-					WARN_PRINT("Collada: Unexpected amount of value keys: " + itos(data.size()));
+					WARN_PRINT(vformat("Collada: Unexpected amount of value keys: %d.", data.size()));
 				}
 
 				animation->blend_shape_track_insert_key(track, time, value);
@@ -1826,7 +1826,7 @@ Node *EditorSceneFormatImporterCollada::import_scene(const String &p_path, uint3
 		*r_err = err;
 	}
 
-	ERR_FAIL_COND_V_MSG(err != OK, nullptr, "Cannot load scene from file '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(err != OK, nullptr, vformat("Cannot load scene from file '%s'.", p_path));
 
 	if (state.missing_textures.size()) {
 		if (r_missing_deps) {

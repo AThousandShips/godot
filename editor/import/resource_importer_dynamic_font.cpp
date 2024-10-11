@@ -262,7 +262,7 @@ Error ResourceImporterDynamicFont::import(const String &p_source_file, const Str
 
 	print_verbose("Saving to: " + p_save_path + ".fontdata");
 	Error err = ResourceSaver::save(font, p_save_path + ".fontdata", flg);
-	ERR_FAIL_COND_V_MSG(err != OK, err, "Cannot save font to file \"" + p_save_path + ".res\".");
+	ERR_FAIL_COND_V_MSG(err != OK, err, vformat(R"(Cannot save font to file "%s.res".)", p_save_path));
 	print_verbose("Done saving to: " + p_save_path + ".fontdata");
 	return OK;
 }

@@ -254,7 +254,7 @@ void EditorFileServer::start() {
 	port = EDITOR_GET("filesystem/file_server/port");
 	password = EDITOR_GET("filesystem/file_server/password");
 	Error err = server->listen(port);
-	ERR_FAIL_COND_MSG(err != OK, "EditorFileServer: Unable to listen on port " + itos(port));
+	ERR_FAIL_COND_MSG(err != OK, vformat("EditorFileServer: Unable to listen on port %d.", port));
 	active = true;
 }
 

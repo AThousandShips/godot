@@ -70,7 +70,7 @@ void GDShaderSyntaxHighlighter::add_disabled_branch_region(const Point2i &p_regi
 	ERR_FAIL_COND(p_region.y < 0);
 
 	for (int i = 0; i < disabled_branch_regions.size(); i++) {
-		ERR_FAIL_COND_MSG(disabled_branch_regions[i].x == p_region.x, "Branch region with a start line '" + itos(p_region.x) + "' already exists.");
+		ERR_FAIL_COND_MSG(disabled_branch_regions[i].x == p_region.x, vformat("Branch region with a start line '%d' already exists.", p_region.x));
 	}
 
 	Point2i disabled_branch_region;

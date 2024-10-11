@@ -2959,7 +2959,7 @@ void EditorHelp::_gen_doc_thread(void *p_udata) {
 	cache_res->set_meta("classes", classes);
 	Error err = ResourceSaver::save(cache_res, get_cache_full_path(), ResourceSaver::FLAG_COMPRESS);
 	if (err) {
-		ERR_PRINT("Cannot save editor help cache (" + get_cache_full_path() + ").");
+		ERR_PRINT(vformat("Cannot save editor help cache (%s).", get_cache_full_path()));
 	}
 
 	OS::get_singleton()->benchmark_end_measure("EditorHelp", vformat("Generate Documentation (Run %d)", doc_generation_count));
@@ -3724,7 +3724,7 @@ void EditorHelpBit::parse_symbol(const String &p_symbol) {
 		visible_type = TTR("Theme Property:");
 		help_data = _get_theme_item_help_data(class_name, item_name);
 	} else {
-		ERR_FAIL_MSG("Invalid tooltip type '" + item_type + "'. Valid types are 'class', 'property', 'internal_property', 'method', 'signal', and 'theme_item'.");
+		ERR_FAIL_MSG(vformat("Invalid tooltip type '%s'. Valid types are 'class', 'property', 'internal_property', 'method', 'signal', and 'theme_item'.", item_type));
 	}
 
 	symbol_class_name = class_name;

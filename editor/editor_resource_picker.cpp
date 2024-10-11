@@ -139,7 +139,7 @@ void EditorResourcePicker::_resource_changed() {
 
 void EditorResourcePicker::_file_selected(const String &p_path) {
 	Ref<Resource> loaded_resource = ResourceLoader::load(p_path);
-	ERR_FAIL_COND_MSG(loaded_resource.is_null(), "Cannot load resource from path '" + p_path + "'.");
+	ERR_FAIL_COND_MSG(loaded_resource.is_null(), vformat("Cannot load resource from path '%s'.", p_path));
 
 	if (!base_type.is_empty()) {
 		bool any_type_matches = false;

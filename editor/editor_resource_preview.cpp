@@ -236,7 +236,7 @@ void EditorResourcePreview::_generate_preview(Ref<ImageTexture> &r_texture, Ref<
 				ResourceSaver::save(r_small_texture, cache_base + "_small.png");
 			}
 			Ref<FileAccess> f = FileAccess::open(cache_base + ".txt", FileAccess::WRITE);
-			ERR_FAIL_COND_MSG(f.is_null(), "Cannot create file '" + cache_base + ".txt'. Check user write permissions.");
+			ERR_FAIL_COND_MSG(f.is_null(), vformat("Cannot create file '%s.txt'. Check user write permissions.", cache_base));
 			_write_preview_cache(f, thumbnail_size, has_small_texture, FileAccess::get_modified_time(p_item.path), FileAccess::get_md5(p_item.path), p_metadata);
 		}
 	}
@@ -327,7 +327,7 @@ void EditorResourcePreview::_iterate() {
 				if (f2.is_null()) {
 					// Not returning as this would leave the thread hanging and would require
 					// some proper cleanup/disabling of resource preview generation.
-					ERR_PRINT("Cannot create file '" + file + "'. Check user write permissions.");
+					ERR_PRINT(vformat("Cannot create file '%s'. Check user write permissions.", file));
 				} else {
 					_write_preview_cache(f2, thumbnail_size, has_small_texture, modtime, md5, preview_metadata);
 				}

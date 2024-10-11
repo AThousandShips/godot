@@ -78,7 +78,7 @@ Error ResourceImporterBMFont::import(const String &p_source_file, const String &
 
 	List<String> image_files;
 	Error err = font->_load_bitmap_font(p_source_file, &image_files);
-	ERR_FAIL_COND_V_MSG(err != OK, err, "Cannot load font to file \"" + p_source_file + "\".");
+	ERR_FAIL_COND_V_MSG(err != OK, err, vformat(R"(Cannot load font to file "%s".)", p_source_file));
 
 	// Update import settings for the image files used by font.
 	for (List<String>::Element *E = image_files.front(); E; E = E->next()) {
@@ -105,7 +105,7 @@ Error ResourceImporterBMFont::import(const String &p_source_file, const String &
 
 	print_verbose("Saving to: " + p_save_path + ".fontdata");
 	err = ResourceSaver::save(font, p_save_path + ".fontdata", flg);
-	ERR_FAIL_COND_V_MSG(err != OK, err, "Cannot save font to file \"" + p_save_path + ".res\".");
+	ERR_FAIL_COND_V_MSG(err != OK, err, vformat(R"(Cannot save font to file "%s.res".)", p_save_path));
 	print_verbose("Done saving to: " + p_save_path + ".fontdata");
 	return OK;
 }

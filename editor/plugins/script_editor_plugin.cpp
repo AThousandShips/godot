@@ -2421,7 +2421,7 @@ Ref<TextFile> ScriptEditor::_load_text_file(const String &p_path, Error *r_error
 	Ref<TextFile> text_res(text_file);
 	Error err = text_file->load_text(path);
 
-	ERR_FAIL_COND_V_MSG(err != OK, Ref<Resource>(), "Cannot load text file '" + path + "'.");
+	ERR_FAIL_COND_V_MSG(err != OK, Ref<Resource>(), vformat("Cannot load text file '%s'.", path));
 
 	text_file->set_file_path(local_path);
 	text_file->set_path(local_path, true);
@@ -2447,7 +2447,7 @@ Error ScriptEditor::_save_text_file(Ref<TextFile> p_text_file, const String &p_p
 	{
 		Ref<FileAccess> file = FileAccess::open(p_path, FileAccess::WRITE, &err);
 
-		ERR_FAIL_COND_V_MSG(err, err, "Cannot save text file '" + p_path + "'.");
+		ERR_FAIL_COND_V_MSG(err, err, vformat("Cannot save text file '%s'.", p_path));
 
 		file->store_string(source);
 		if (file->get_error() != OK && file->get_error() != ERR_FILE_EOF) {

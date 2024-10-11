@@ -151,7 +151,7 @@ void Particles2DEditorPlugin::_get_base_emission_mask(PackedVector2Array &r_vali
 	Ref<Image> img;
 	img.instantiate();
 	Error err = ImageLoader::load_image(source_emission_file, img);
-	ERR_FAIL_COND_MSG(err != OK, "Error loading image '" + source_emission_file + "'.");
+	ERR_FAIL_COND_MSG(err != OK, vformat("Error loading image '%s'.", source_emission_file));
 
 	if (img->is_compressed()) {
 		img->decompress();

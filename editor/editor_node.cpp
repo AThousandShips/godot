@@ -1563,7 +1563,7 @@ void EditorNode::_save_editor_states(const String &p_file, int p_idx) {
 	cf->set_value("editor_states", "selected_nodes", selection_paths);
 
 	Error err = cf->save(path);
-	ERR_FAIL_COND_MSG(err != OK, "Cannot save config file to '" + path + "'.");
+	ERR_FAIL_COND_MSG(err != OK, vformat("Cannot save config file to '%s'.", path));
 }
 
 bool EditorNode::_find_and_save_resource(Ref<Resource> p_res, HashMap<Ref<Resource>, bool> &processed, int32_t flags) {
@@ -3244,7 +3244,7 @@ void EditorNode::_save_screenshot(NodePath p_path) {
 	Ref<Image> img = texture->get_image();
 	ERR_FAIL_COND_MSG(img.is_null(), "Cannot get an image from a viewport texture of the editor main screen.");
 	Error error = img->save_png(p_path);
-	ERR_FAIL_COND_MSG(error != OK, "Cannot save screenshot to file '" + p_path + "'.");
+	ERR_FAIL_COND_MSG(error != OK, vformat("Cannot save screenshot to file '%s'.", p_path));
 }
 
 void EditorNode::_check_system_theme_changed() {
@@ -3296,7 +3296,7 @@ void EditorNode::_tool_menu_option(int p_idx) {
 
 				if (ce.error != Callable::CallError::CALL_OK) {
 					String err = Variant::get_callable_error_text(callback, nullptr, 0, ce);
-					ERR_PRINT("Error calling function from tool menu: " + err);
+					ERR_PRINT(vformat("Error calling function from tool menu: %s.", err));
 				}
 			} // Else it's a submenu so don't do anything.
 		} break;
@@ -3331,7 +3331,7 @@ void EditorNode::_export_as_menu_option(int p_idx) {
 
 			if (ce.error != Callable::CallError::CALL_OK) {
 				String err = Variant::get_callable_error_text(callback, nullptr, 0, ce);
-				ERR_PRINT("Error calling function from export_as menu: " + err);
+				ERR_PRINT(vformat("Error calling function from export_as menu: %s.", err));
 			}
 		}
 	}

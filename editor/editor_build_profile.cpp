@@ -255,7 +255,7 @@ Error EditorBuildProfile::save_to_file(const String &p_path) {
 	}
 
 	Ref<FileAccess> f = FileAccess::open(p_path, FileAccess::WRITE);
-	ERR_FAIL_COND_V_MSG(f.is_null(), ERR_CANT_CREATE, "Cannot create file '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(f.is_null(), ERR_CANT_CREATE, vformat("Cannot create file '%s'.", p_path));
 
 	String text = JSON::stringify(data, "\t");
 	f->store_string(text);
@@ -272,14 +272,14 @@ Error EditorBuildProfile::load_from_file(const String &p_path) {
 	JSON json;
 	err = json.parse(text);
 	if (err != OK) {
-		ERR_PRINT("Error parsing '" + p_path + "' on line " + itos(json.get_error_line()) + ": " + json.get_error_message());
+		ERR_PRINT(vformat("Error parsing '%s' on line %d: %s.", p_path, json.get_error_line(), json.get_error_message()));
 		return ERR_PARSE_ERROR;
 	}
 
 	Dictionary data = json.get_data();
 
 	if (!data.has("type") || String(data["type"]) != "build_profile") {
-		ERR_PRINT("Error parsing '" + p_path + "', it's not a build profile.");
+		ERR_PRINT(vformat("Error parsing '%s', it's not a build profile.", p_path));
 		return ERR_PARSE_ERROR;
 	}
 

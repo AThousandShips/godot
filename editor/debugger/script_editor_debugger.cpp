@@ -172,7 +172,7 @@ void ScriptEditorDebugger::_file_selected(const String &p_file) {
 			Ref<FileAccess> file = FileAccess::open(p_file, FileAccess::WRITE, &err);
 
 			if (err != OK) {
-				ERR_PRINT("Failed to open " + p_file);
+				ERR_PRINT(vformat("Failed to open '%s'.", p_file));
 				return;
 			}
 			Vector<String> line;
@@ -217,7 +217,7 @@ void ScriptEditorDebugger::_file_selected(const String &p_file) {
 			Ref<FileAccess> file = FileAccess::open(p_file, FileAccess::WRITE, &err);
 
 			if (err != OK) {
-				ERR_PRINT("Failed to open " + p_file);
+				ERR_PRINT(vformat("Failed to open '%s'.", p_file));
 				return;
 			}
 
@@ -499,7 +499,7 @@ void ScriptEditorDebugger::_parse_message(const String &p_msg, uint64_t p_thread
 					msg_type = EditorLog::MSG_TYPE_ERROR;
 				} break;
 				default: {
-					WARN_PRINT("Unhandled script debugger message type: " + itos(type));
+					WARN_PRINT(vformat("Unhandled script debugger message type: %d.", type));
 					msg_type = EditorLog::MSG_TYPE_STD;
 				} break;
 			}
@@ -831,7 +831,7 @@ void ScriptEditorDebugger::_parse_message(const String &p_msg, uint64_t p_thread
 
 		bool parsed = EditorDebuggerNode::get_singleton()->plugins_capture(this, p_msg, p_data);
 		if (!parsed) {
-			WARN_PRINT("Unknown message: " + p_msg);
+			WARN_PRINT(vformat("Unknown message: %s.", p_msg));
 		}
 	}
 }

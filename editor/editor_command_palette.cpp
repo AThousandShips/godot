@@ -223,13 +223,13 @@ void EditorCommandPalette::get_actions_list(List<String> *p_list) const {
 }
 
 void EditorCommandPalette::remove_command(String p_key_name) {
-	ERR_FAIL_COND_MSG(!commands.has(p_key_name), "The Command '" + String(p_key_name) + "' doesn't exists. Unable to remove it.");
+	ERR_FAIL_COND_MSG(!commands.has(p_key_name), vformat("The Command '%s' doesn't exists. Unable to remove it.", String(p_key_name)));
 
 	commands.erase(p_key_name);
 }
 
 void EditorCommandPalette::add_command(String p_command_name, String p_key_name, Callable p_action, Vector<Variant> arguments, const Ref<Shortcut> &p_shortcut) {
-	ERR_FAIL_COND_MSG(commands.has(p_key_name), "The Command '" + String(p_command_name) + "' already exists. Unable to add it.");
+	ERR_FAIL_COND_MSG(commands.has(p_key_name), vformat("The Command '%s' already exists. Unable to add it.", String(p_command_name)));
 
 	const Variant **argptrs = (const Variant **)alloca(sizeof(Variant *) * arguments.size());
 	for (int i = 0; i < arguments.size(); i++) {
@@ -249,7 +249,7 @@ void EditorCommandPalette::add_command(String p_command_name, String p_key_name,
 }
 
 void EditorCommandPalette::_add_command(String p_command_name, String p_key_name, Callable p_binded_action, String p_shortcut_text) {
-	ERR_FAIL_COND_MSG(commands.has(p_key_name), "The Command '" + String(p_command_name) + "' already exists. Unable to add it.");
+	ERR_FAIL_COND_MSG(commands.has(p_key_name), vformat("The Command '%s' already exists. Unable to add it.", String(p_command_name)));
 
 	Command command;
 	command.name = p_command_name;
@@ -266,7 +266,7 @@ void EditorCommandPalette::_add_command(String p_command_name, String p_key_name
 }
 
 void EditorCommandPalette::execute_command(const String &p_command_key) {
-	ERR_FAIL_COND_MSG(!commands.has(p_command_key), p_command_key + " not found.");
+	ERR_FAIL_COND_MSG(!commands.has(p_command_key), vformat("%s not found.", p_command_key));
 	commands[p_command_key].last_used = OS::get_singleton()->get_unix_time();
 	_save_history();
 

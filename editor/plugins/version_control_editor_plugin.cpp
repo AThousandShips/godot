@@ -105,7 +105,7 @@ void VersionControlEditorPlugin::popup_vcs_set_up_dialog(const Control *p_gui_ba
 }
 
 void VersionControlEditorPlugin::_initialize_vcs() {
-	ERR_FAIL_COND_MSG(EditorVCSInterface::get_singleton(), EditorVCSInterface::get_singleton()->get_vcs_name() + " is already active.");
+	ERR_FAIL_COND_MSG(EditorVCSInterface::get_singleton(), vformat("%s is already active.", EditorVCSInterface::get_singleton()->get_vcs_name()));
 
 	const int id = set_up_choice->get_selected_id();
 	String selected_plugin = set_up_choice->get_item_text(id);
@@ -153,7 +153,7 @@ bool VersionControlEditorPlugin::_load_plugin(const String &p_name) {
 
 	String res_dir = OS::get_singleton()->get_resource_dir();
 
-	ERR_FAIL_COND_V_MSG(!vcs_plugin->initialize(res_dir), false, "Could not initialize " + p_name);
+	ERR_FAIL_COND_V_MSG(!vcs_plugin->initialize(res_dir), false, vformat("Could not initialize %s.", p_name));
 
 	EditorVCSInterface::set_singleton(vcs_plugin);
 

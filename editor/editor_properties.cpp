@@ -1299,7 +1299,7 @@ void EditorPropertyInteger::update_property() {
 #ifdef DEBUG_ENABLED
 	// If spin (currently EditorSplinSlider : Range) is changed so that it can use int64_t, then the below warning wouldn't be a problem.
 	if (val != (int64_t)(double)(val)) {
-		WARN_PRINT("Cannot reliably represent '" + itos(val) + "' in the inspector, value is too large.");
+		WARN_PRINT(vformat("Cannot reliably represent '%d' in the inspector, value is too large.", val));
 	}
 #endif
 }

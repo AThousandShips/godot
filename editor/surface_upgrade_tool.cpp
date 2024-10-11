@@ -142,7 +142,7 @@ void SurfaceUpgradeTool::finish_upgrade() {
 		config.instantiate();
 		Error err = config->load(file_path);
 		if (err != OK) {
-			ERR_PRINT("Could not open " + file_path + " for upgrade.");
+			ERR_PRINT(vformat("Could not open '%s' for upgrade.", file_path));
 			continue;
 		}
 

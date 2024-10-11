@@ -188,7 +188,7 @@ EditorPaths::EditorPaths() {
 		if (dir->change_dir(data_dir) != OK) {
 			dir->make_dir_recursive(data_dir);
 			if (dir->change_dir(data_dir) != OK) {
-				ERR_PRINT("Could not create editor data directory: " + data_dir);
+				ERR_PRINT(vformat("Could not create editor data directory: '%s'.", data_dir));
 				paths_valid = false;
 			}
 		}
@@ -203,7 +203,7 @@ EditorPaths::EditorPaths() {
 		if (dir->change_dir(config_dir) != OK) {
 			dir->make_dir_recursive(config_dir);
 			if (dir->change_dir(config_dir) != OK) {
-				ERR_PRINT("Could not create editor config directory: " + config_dir);
+				ERR_PRINT(vformat("Could not create editor config directory: '%s'.", config_dir));
 				paths_valid = false;
 			}
 		}
@@ -224,7 +224,7 @@ EditorPaths::EditorPaths() {
 		if (dir->change_dir(cache_dir) != OK) {
 			dir->make_dir_recursive(cache_dir);
 			if (dir->change_dir(cache_dir) != OK) {
-				ERR_PRINT("Could not create editor cache directory: " + cache_dir);
+				ERR_PRINT(vformat("Could not create editor cache directory: '%s'.", cache_dir));
 				paths_valid = false;
 			}
 		}
@@ -240,7 +240,7 @@ EditorPaths::EditorPaths() {
 		if (dir_res->change_dir(project_data_dir) != OK) {
 			dir_res->make_dir_recursive(project_data_dir);
 			if (dir_res->change_dir(project_data_dir) != OK) {
-				ERR_PRINT("Could not create project data directory (" + project_data_dir + ") in: " + dir_res->get_current_dir());
+				ERR_PRINT(vformat("Could not create project data directory (%s) in: %s.", project_data_dir, dir_res->get_current_dir()));
 				paths_valid = false;
 			}
 		}
@@ -253,7 +253,7 @@ EditorPaths::EditorPaths() {
 			if (f.is_valid()) {
 				f->store_line("");
 			} else {
-				ERR_PRINT("Failed to create file " + project_data_gdignore_file_path.quote() + ".");
+				ERR_PRINT(vformat("Failed to create file %s.", project_data_gdignore_file_path.quote()));
 			}
 		}
 

@@ -207,7 +207,7 @@ Error EditorFeatureProfile::save_to_file(const String &p_path) {
 	data["disabled_features"] = dis_features;
 
 	Ref<FileAccess> f = FileAccess::open(p_path, FileAccess::WRITE);
-	ERR_FAIL_COND_V_MSG(f.is_null(), ERR_CANT_CREATE, "Cannot create file '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(f.is_null(), ERR_CANT_CREATE, vformat("Cannot create file '%s'.", p_path));
 
 	JSON json;
 	String text = json.stringify(data, "\t");
@@ -225,14 +225,14 @@ Error EditorFeatureProfile::load_from_file(const String &p_path) {
 	JSON json;
 	err = json.parse(text);
 	if (err != OK) {
-		ERR_PRINT("Error parsing '" + p_path + "' on line " + itos(json.get_error_line()) + ": " + json.get_error_message());
+		ERR_PRINT(vformat("Error parsing '%s' on line %d: %s.", p_path, json.get_error_line(), json.get_error_message()));
 		return ERR_PARSE_ERROR;
 	}
 
 	Dictionary data = json.get_data();
 
 	if (!data.has("type") || String(data["type"]) != "feature_profile") {
-		ERR_PRINT("Error parsing '" + p_path + "', it's not a feature profile.");
+		ERR_PRINT(vformat("Error parsing '%s', it's not a feature profile.", p_path));
 		return ERR_PARSE_ERROR;
 	}
 
@@ -330,7 +330,7 @@ void EditorFeatureProfileManager::_notification(int p_what) {
 				current.instantiate();
 				Error err = current->load_from_file(EditorPaths::get_singleton()->get_feature_profiles_dir().path_join(current_profile + ".profile"));
 				if (err != OK) {
-					ERR_PRINT("Error loading default feature profile: " + current_profile);
+					ERR_PRINT(vformat("Error loading default feature profile: %s.", current_profile));
 					current_profile = String();
 					current.unref();
 				}
@@ -369,7 +369,7 @@ void EditorFeatureProfileManager::_update_profile_list(const String &p_select_pr
 
 	Vector<String> profiles;
 	Ref<DirAccess> d = DirAccess::open(EditorPaths::get_singleton()->get_feature_profiles_dir());
-	ERR_FAIL_COND_MSG(d.is_null(), "Cannot open directory '" + EditorPaths::get_singleton()->get_feature_profiles_dir() + "'.");
+	ERR_FAIL_COND_MSG(d.is_null(), vformat("Cannot open directory '%s'.", EditorPaths::get_singleton()->get_feature_profiles_dir()));
 
 	d->list_dir_begin();
 	while (true) {
@@ -460,7 +460,7 @@ void EditorFeatureProfileManager::_erase_selected_profile() {
 	String selected = _get_selected_profile();
 	ERR_FAIL_COND(selected.is_empty());
 	Ref<DirAccess> da = DirAccess::open(EditorPaths::get_singleton()->get_feature_profiles_dir());
-	ERR_FAIL_COND_MSG(da.is_null(), "Cannot open directory '" + EditorPaths::get_singleton()->get_feature_profiles_dir() + "'.");
+	ERR_FAIL_COND_MSG(da.is_null(), vformat("Cannot open directory '%s'.", EditorPaths::get_singleton()->get_feature_profiles_dir()));
 
 	da->remove(selected + ".profile");
 	if (selected == current_profile) {
@@ -761,7 +761,7 @@ void EditorFeatureProfileManager::_update_selected_profile() {
 		//reload edited, if different from current
 		edited.instantiate();
 		Error err = edited->load_from_file(EditorPaths::get_singleton()->get_feature_profiles_dir().path_join(profile + ".profile"));
-		ERR_FAIL_COND_MSG(err != OK, "Error when loading editor feature profile from file '" + EditorPaths::get_singleton()->get_feature_profiles_dir().path_join(profile + ".profile") + "'.");
+		ERR_FAIL_COND_MSG(err != OK, vformat("Error when loading editor feature profile from file '%s'.", EditorPaths::get_singleton()->get_feature_profiles_dir().path_join(profile + ".profile")));
 	}
 
 	updating_features = true;
@@ -882,8 +882,8 @@ void EditorFeatureProfileManager::set_current_profile(const String &p_profile_na
 	if (p_validate_profile && !p_profile_name.is_empty()) {
 		// Profile may not exist.
 		Ref<DirAccess> da = DirAccess::open(EditorPaths::get_singleton()->get_feature_profiles_dir());
-		ERR_FAIL_COND_MSG(da.is_null(), "Cannot open directory '" + EditorPaths::get_singleton()->get_feature_profiles_dir() + "'.");
-		ERR_FAIL_COND_MSG(!da->file_exists(p_profile_name + ".profile"), "Feature profile '" + p_profile_name + "' does not exist.");
+		ERR_FAIL_COND_MSG(da.is_null(), vformat("Cannot open directory '%s'.", EditorPaths::get_singleton()->get_feature_profiles_dir()));
+		ERR_FAIL_COND_MSG(!da->file_exists(p_profile_name + ".profile"), vformat("Feature profile '%s' does not exist.", p_profile_name));
 
 		// Change profile selection to emulate the UI interaction. Otherwise, the wrong profile would get activated.
 		// FIXME: Ideally, _update_selected_profile() should not rely on the user interface state to function properly.

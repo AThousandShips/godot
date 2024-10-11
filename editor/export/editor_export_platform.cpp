@@ -819,7 +819,7 @@ String EditorExportPlatform::_export_customize(const String &p_path, LocalVector
 			s.instantiate();
 			s->pack(node);
 			Error err = ResourceSaver::save(s, save_path);
-			ERR_FAIL_COND_V_MSG(err != OK, p_path, "Unable to save export scene file to: " + save_path);
+			ERR_FAIL_COND_V_MSG(err != OK, p_path, vformat("Unable to save export scene file to: '%s'.", save_path));
 		}
 
 		node->queue_free();
@@ -851,7 +851,7 @@ String EditorExportPlatform::_export_customize(const String &p_path, LocalVector
 			save_path = export_base_path.path_join("export-" + p_path.md5_text() + "-" + base_file);
 
 			Error err = ResourceSaver::save(res, save_path);
-			ERR_FAIL_COND_V_MSG(err != OK, p_path, "Unable to save export resource file to: " + save_path);
+			ERR_FAIL_COND_V_MSG(err != OK, p_path, vformat("Unable to save export resource file to: '%s'.", save_path));
 		}
 	}
 
@@ -1189,7 +1189,7 @@ Error EditorExportPlatform::export_project_files(const Ref<EditorExportPreset> &
 			config.instantiate();
 			err = config->load(path + ".import");
 			if (err != OK) {
-				ERR_PRINT("Could not parse: '" + path + "', not exported.");
+				ERR_PRINT(vformat("Could not parse: '%s', not exported.", path));
 				continue;
 			}
 
@@ -1402,7 +1402,7 @@ Error EditorExportPlatform::export_project_files(const Ref<EditorExportPreset> &
 				}
 			}
 		} else {
-			ERR_PRINT("Error opening export file cache: " + fcache);
+			ERR_PRINT(vformat("Error opening export file cache: '%s'.", fcache));
 		}
 
 		for (Ref<EditorExportPlugin> &plugin : customize_resources_plugins) {

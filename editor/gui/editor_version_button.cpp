@@ -46,7 +46,7 @@ String _get_version_string(EditorVersionButton::VersionFormat p_format) {
 			main = VERSION_FULL_NAME;
 		} break;
 		default: {
-			ERR_FAIL_V_MSG(VERSION_FULL_NAME, "Unexpected format: " + itos(p_format));
+			ERR_FAIL_V_MSG(VERSION_FULL_NAME, vformat("Unexpected format: %d.", p_format));
 		} break;
 	}
 

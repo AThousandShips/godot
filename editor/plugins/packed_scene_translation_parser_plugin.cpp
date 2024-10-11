@@ -46,7 +46,7 @@ Error PackedSceneEditorTranslationParserPlugin::parse_file(const String &p_path,
 	Error err;
 	Ref<Resource> loaded_res = ResourceLoader::load(p_path, "PackedScene", ResourceFormatLoader::CACHE_MODE_REUSE, &err);
 	if (err) {
-		ERR_PRINT("Failed to load " + p_path);
+		ERR_PRINT(vformat("Failed to load '%s'.", p_path));
 		return err;
 	}
 	Ref<SceneState> state = Ref<PackedScene>(loaded_res)->get_state();

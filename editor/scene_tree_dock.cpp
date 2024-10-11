@@ -1482,7 +1482,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 
 				if (!new_node) {
 					new_node = memnew(Node);
-					ERR_PRINT("Creating root from favorite '" + selected_favorite_root + "' failed. Creating 'Node' instead.");
+					ERR_PRINT(vformat("Creating root from favorite '%s' failed. Creating 'Node' instead.", selected_favorite_root));
 				}
 			} else {
 				switch (p_tool) {
@@ -1935,7 +1935,7 @@ void SceneTreeDock::fill_path_renames(Node *p_node, Node *p_new_parent, HashMap<
 
 bool SceneTreeDock::_update_node_path(Node *p_root_node, NodePath &r_node_path, HashMap<Node *, NodePath> *p_renames) const {
 	Node *target_node = p_root_node->get_node_or_null(r_node_path);
-	ERR_FAIL_NULL_V_MSG(target_node, false, "Found invalid node path '" + String(r_node_path) + "' on node '" + String(scene_root->get_path_to(p_root_node)) + "'");
+	ERR_FAIL_NULL_V_MSG(target_node, false, vformat("Found invalid node path '%s' on node '%s'.", String(r_node_path), String(scene_root->get_path_to(p_root_node))));
 
 	// Try to find the target node in modified node paths.
 	HashMap<Node *, NodePath>::Iterator found_node_path = p_renames->find(target_node);
@@ -2403,7 +2403,7 @@ void SceneTreeDock::_do_reparent(Node *p_new_parent, int p_position_in_parent, V
 				NodePath fixed_node_path = NodePath(fixed_new_names, true);
 				path_renames[node] = fixed_node_path;
 			} else {
-				ERR_PRINT("Internal error. Can't find renamed path for node '" + node->get_path() + "'");
+				ERR_PRINT(vformat("Internal error. Can't find renamed path for node '%s'.", node->get_path()));
 			}
 		}
 
