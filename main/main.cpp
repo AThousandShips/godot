@@ -3440,7 +3440,7 @@ void Main::setup_boot_logo() {
 				Error load_err = ImageLoader::load_image(boot_logo_path, boot_logo);
 				if (load_err) {
 					String msg = (boot_logo_path.ends_with(".png") ? "" : "The only supported format is PNG.");
-					ERR_PRINT("Non-existing or invalid boot splash at '" + boot_logo_path + +"'. " + msg + " Loading default splash.");
+					ERR_PRINT(vformat("Non-existing or invalid boot splash at '%s'. %s Loading default splash.", boot_logo_path, msg));
 				}
 			}
 		} else {
@@ -3698,11 +3698,11 @@ int Main::start() {
 					// Create the module documentation directory if it doesn't exist
 					Ref<DirAccess> da = DirAccess::create_for_path(path);
 					err = da->make_dir_recursive(path);
-					ERR_FAIL_COND_V_MSG(err != OK, EXIT_FAILURE, "Error: Can't create directory: " + path + ": " + itos(err));
+					ERR_FAIL_COND_V_MSG(err != OK, EXIT_FAILURE, vformat("Error: Can't create directory: '%s': %d.", path, err));
 
 					print_line("Loading docs from: " + path);
 					err = docsrc.load_classes(path);
-					ERR_FAIL_COND_V_MSG(err != OK, EXIT_FAILURE, "Error loading docs from: " + path + ": " + itos(err));
+					ERR_FAIL_COND_V_MSG(err != OK, EXIT_FAILURE, vformat("Error loading docs from: '%s': %d.", path, err));
 				}
 			}
 		}
@@ -3712,11 +3712,11 @@ int Main::start() {
 		// Create the main documentation directory if it doesn't exist
 		Ref<DirAccess> da = DirAccess::create_for_path(index_path);
 		err = da->make_dir_recursive(index_path);
-		ERR_FAIL_COND_V_MSG(err != OK, EXIT_FAILURE, "Error: Can't create index directory: " + index_path + ": " + itos(err));
+		ERR_FAIL_COND_V_MSG(err != OK, EXIT_FAILURE, vformat("Error: Can't create index directory: '%s': %d.", index_path, err));
 
 		print_line("Loading classes from: " + index_path);
 		err = docsrc.load_classes(index_path);
-		ERR_FAIL_COND_V_MSG(err != OK, EXIT_FAILURE, "Error loading classes from: " + index_path + ": " + itos(err));
+		ERR_FAIL_COND_V_MSG(err != OK, EXIT_FAILURE, vformat("Error loading classes from: '%s': %d.", index_path, err));
 		checked_paths.insert(index_path);
 
 		print_line("Merging docs...");
@@ -3725,7 +3725,7 @@ int Main::start() {
 		for (const String &E : checked_paths) {
 			print_line("Erasing old docs at: " + E);
 			err = DocTools::erase_classes(E);
-			ERR_FAIL_COND_V_MSG(err != OK, EXIT_FAILURE, "Error erasing old docs at: " + E + ": " + itos(err));
+			ERR_FAIL_COND_V_MSG(err != OK, EXIT_FAILURE, vformat("Error erasing old docs at: '%s': %d.", E, err));
 		}
 
 		print_line("Generating new docs...");

@@ -335,7 +335,7 @@ Variant Performance::get_custom_monitor(const StringName &p_id) {
 	bool error;
 	String error_message;
 	Variant return_value = _monitor_map[p_id].call(error, error_message);
-	ERR_FAIL_COND_V_MSG(error, return_value, "Error calling from custom monitor '" + String(p_id) + "' to callable: " + error_message);
+	ERR_FAIL_COND_V_MSG(error, return_value, vformat("Error calling from custom monitor '%s' to callable: %s.", String(p_id), error_message));
 	return return_value;
 }
 
