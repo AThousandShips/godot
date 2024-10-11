@@ -2132,7 +2132,7 @@ void RasterizerCanvasGLES3::set_shadow_texture_size(int p_size) {
 
 	if (p_size > config->max_texture_size) {
 		p_size = config->max_texture_size;
-		WARN_PRINT("Attempting to set CanvasItem shadow atlas size to " + itos(p_size) + " which is beyond limit of " + itos(config->max_texture_size) + "supported by hardware.");
+		WARN_PRINT(vformat("Attempting to set CanvasItem shadow atlas size to %d which is beyond limit of %d supported by hardware.", p_size, config->max_texture_size));
 	}
 
 	if (p_size == state.shadow_texture_size) {

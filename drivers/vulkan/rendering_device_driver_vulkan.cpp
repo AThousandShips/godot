@@ -1455,11 +1455,11 @@ RDD::BufferID RenderingDeviceDriverVulkan::buffer_create(uint64_t p_size, BitFie
 	VmaAllocationInfo alloc_info = {};
 
 	VkResult err = vkCreateBuffer(vk_device, &create_info, VKC::get_allocation_callbacks(VK_OBJECT_TYPE_BUFFER), &vk_buffer);
-	ERR_FAIL_COND_V_MSG(err, BufferID(), "Can't create buffer of size: " + itos(p_size) + ", error " + itos(err) + ".");
+	ERR_FAIL_COND_V_MSG(err, BufferID(), vformat("Can't create buffer of size: %d error %d.", p_size, err));
 	err = vmaAllocateMemoryForBuffer(allocator, vk_buffer, &alloc_create_info, &allocation, &alloc_info);
-	ERR_FAIL_COND_V_MSG(err, BufferID(), "Can't allocate memory for buffer of size: " + itos(p_size) + ", error " + itos(err) + ".");
+	ERR_FAIL_COND_V_MSG(err, BufferID(), vformat("Can't allocate memory for buffer of size: %d error %d.", p_size, err));
 	err = vmaBindBufferMemory2(allocator, allocation, 0, vk_buffer, NULL);
-	ERR_FAIL_COND_V_MSG(err, BufferID(), "Can't bind memory to buffer of size: " + itos(p_size) + ", error " + itos(err) + ".");
+	ERR_FAIL_COND_V_MSG(err, BufferID(), vformat("Can't bind memory to buffer of size: %d error %d.", p_size, err));
 
 	// Bookkeep.
 	BufferInfo *buf_info = VersatileResource::allocate<BufferInfo>(resources_allocator);

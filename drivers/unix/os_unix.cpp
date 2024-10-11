@@ -830,7 +830,7 @@ Error OS_Unix::get_dynamic_library_symbol_handle(void *p_library_handle, const S
 
 	error = dlerror();
 	if (error != nullptr) {
-		ERR_FAIL_COND_V_MSG(!p_optional, ERR_CANT_RESOLVE, "Can't resolve symbol " + p_name + ". Error: " + error + ".");
+		ERR_FAIL_COND_V_MSG(!p_optional, ERR_CANT_RESOLVE, vformat("Can't resolve symbol '%s'. Error: %s.", p_name, error));
 
 		return ERR_CANT_RESOLVE;
 	}

@@ -74,9 +74,9 @@ Utilities::~Utilities() {
 		uint32_t leaked_data_size = 0;
 		for (const KeyValue<GLuint, ResourceAllocation> &E : texture_allocs_cache) {
 #ifdef DEV_ENABLED
-			ERR_PRINT(E.value.name + ": leaked " + itos(E.value.size) + " bytes.");
+			ERR_PRINT(vformat("%s: leaked %d bytes.", E.value.name, E.value.size));
 #else
-			ERR_PRINT("Texture with GL ID of " + itos(E.key) + ": leaked " + itos(E.value.size) + " bytes.");
+			ERR_PRINT(vformat("Texture with GL ID of %d: leaked %s bytes.", E.key, E.value.size));
 #endif
 			leaked_data_size += E.value.size;
 		}
@@ -89,9 +89,9 @@ Utilities::~Utilities() {
 		uint32_t leaked_data_size = 0;
 		for (const KeyValue<GLuint, ResourceAllocation> &E : render_buffer_allocs_cache) {
 #ifdef DEV_ENABLED
-			ERR_PRINT(E.value.name + ": leaked " + itos(E.value.size) + " bytes.");
+			ERR_PRINT(vformat("%s: leaked %d bytes.", E.value.name, E.value.size));
 #else
-			ERR_PRINT("Render buffer with GL ID of " + itos(E.key) + ": leaked " + itos(E.value.size) + " bytes.");
+			ERR_PRINT(vformat("Render buffer with GL ID of %d: leaked %d bytes.", E.key, E.value.size));
 #endif
 			leaked_data_size += E.value.size;
 		}
@@ -105,9 +105,9 @@ Utilities::~Utilities() {
 
 		for (const KeyValue<GLuint, ResourceAllocation> &E : buffer_allocs_cache) {
 #ifdef DEV_ENABLED
-			ERR_PRINT(E.value.name + ": leaked " + itos(E.value.size) + " bytes.");
+			ERR_PRINT(vformat("%s: leaked %d bytes.", E.value.name, E.value.size));
 #else
-			ERR_PRINT("Buffer with GL ID of " + itos(E.key) + ": leaked " + itos(E.value.size) + " bytes.");
+			ERR_PRINT(vformat("Buffer with GL ID of %d: leaked %d bytes.", E.key, E.value.size));
 #endif
 			leaked_data_size += E.value.size;
 		}

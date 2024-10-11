@@ -180,7 +180,7 @@ Error FileAccessWindows::open_internal(const String &p_path, int p_mode_flags) {
 		}
 
 		if (mismatch) {
-			WARN_PRINT("Case mismatch opening requested file '" + p_path + "', stored as '" + proper_path + "' in the filesystem. This file will not open when exported to other case-sensitive platforms.");
+			WARN_PRINT(vformat("Case mismatch opening requested file '%s', stored as '%s' in the filesystem. This file will not open when exported to other case-sensitive platforms.", p_path, proper_path));
 		}
 	}
 #endif
