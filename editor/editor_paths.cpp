@@ -240,7 +240,7 @@ EditorPaths::EditorPaths() {
 		if (dir_res->change_dir(project_data_dir) != OK) {
 			dir_res->make_dir_recursive(project_data_dir);
 			if (dir_res->change_dir(project_data_dir) != OK) {
-				ERR_PRINT("Could not create project data directory (" + project_data_dir + ") in: " + dir_res->get_current_dir());
+				ERR_PRINT(vformat("Could not create project data directory (%s) in: %s.", project_data_dir, dir_res->get_current_dir()));
 				paths_valid = false;
 			}
 		}

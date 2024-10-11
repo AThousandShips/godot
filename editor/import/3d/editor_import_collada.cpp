@@ -1671,7 +1671,7 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 				}
 
 				if (xform_idx == -1) {
-					WARN_PRINT("Collada: Couldn't find matching node " + at.target + " xform for track " + at.param + ".");
+					WARN_PRINT(vformat("Collada: Couldn't find matching node %s xform for track %s.", at.target, at.param));
 					continue;
 				}
 
@@ -1693,7 +1693,7 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 				} else if (data.size() == xf.data.size()) {
 					xf.data = data;
 				} else {
-					ERR_CONTINUE_MSG(data.size() != xf.data.size(), "Component " + at.component + " has datasize " + itos(data.size()) + ", xfdatasize " + itos(xf.data.size()) + ".");
+					ERR_CONTINUE_MSG(data.size() != xf.data.size(), vformat("Component %s has datasize %d, xfdatasize %d.", at.component, data.size(), xf.data.size()));
 				}
 			}
 

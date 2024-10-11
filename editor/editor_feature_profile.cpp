@@ -222,7 +222,7 @@ Error EditorFeatureProfile::load_from_file(const String &p_path) {
 	JSON json;
 	err = json.parse(text);
 	if (err != OK) {
-		ERR_PRINT("Error parsing '" + p_path + "' on line " + itos(json.get_error_line()) + ": " + json.get_error_message());
+		ERR_PRINT(vformat("Error parsing '%s' on line %d: %s.", p_path, json.get_error_line(), json.get_error_message()));
 		return ERR_PARSE_ERROR;
 	}
 

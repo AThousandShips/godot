@@ -550,7 +550,7 @@ bool EditorFileSystem::_test_for_reimport(const String &p_path, const String &p_
 		if (err == ERR_FILE_EOF) {
 			break;
 		} else if (err != OK) {
-			ERR_PRINT("ResourceFormatImporter::load - '" + p_path + ".import:" + itos(lines) + "' error '" + error_text + "'.");
+			ERR_PRINT(vformat("ResourceFormatImporter::load - '%s.import:%d' error '%s'.", p_path, lines, error_text));
 			// Parse error, skip and let user attempt manual reimport to avoid reimport loop.
 			return false;
 		}
@@ -636,7 +636,7 @@ bool EditorFileSystem::_test_for_reimport(const String &p_path, const String &p_
 		if (err == ERR_FILE_EOF) {
 			break;
 		} else if (err != OK) {
-			ERR_PRINT("ResourceFormatImporter::load - '" + p_path + ".import.md5:" + itos(lines) + "' error '" + error_text + "'.");
+			ERR_PRINT(vformat("ResourceFormatImporter::load - '%s.import.md5:%d' error '%s'.", p_path, lines, error_text));
 			return false; // Parse error.
 		}
 		if (!assign.is_empty()) {
@@ -702,7 +702,7 @@ Vector<String> EditorFileSystem::_get_import_dest_paths(const String &p_path) {
 		if (err == ERR_FILE_EOF) {
 			break;
 		} else if (err != OK) {
-			ERR_PRINT("ResourceFormatImporter::load - '" + p_path + ".import:" + itos(lines) + "' error '" + error_text + "'.");
+			ERR_PRINT(vformat("ResourceFormatImporter::load - '%s.import:%d' error '%s'.", p_path, lines, error_text));
 			// Parse error, skip and let user attempt manual reimport to avoid reimport loop.
 			return Vector<String>();
 		}
