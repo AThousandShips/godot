@@ -113,18 +113,18 @@ void SkeletonModification2DPhysicalBones::_execute(float p_delta) {
 	for (int i = 0; i < physical_bone_chain.size(); i++) {
 		PhysicalBone_Data2D bone_data = physical_bone_chain[i];
 		if (bone_data.physical_bone_node_cache.is_null()) {
-			WARN_PRINT_ONCE("PhysicalBone2D cache " + itos(i) + " is out of date. Attempting to update...");
+			WARN_PRINT_ONCE(vformat("PhysicalBone2D cache %d is out of date. Attempting to update...", i));
 			_physical_bone_update_cache(i);
 			continue;
 		}
 
 		PhysicalBone2D *physical_bone = Object::cast_to<PhysicalBone2D>(ObjectDB::get_instance(bone_data.physical_bone_node_cache));
 		if (!physical_bone) {
-			ERR_PRINT_ONCE("PhysicalBone2D not found at index " + itos(i) + "!");
+			ERR_PRINT_ONCE(vformat("PhysicalBone2D not found at index %d!", i));
 			return;
 		}
 		if (physical_bone->get_bone2d_index() < 0 || physical_bone->get_bone2d_index() > stack->skeleton->get_bone_count()) {
-			ERR_PRINT_ONCE("PhysicalBone2D at index " + itos(i) + " has invalid Bone2D!");
+			ERR_PRINT_ONCE(vformat("PhysicalBone2D at index %d has invalid Bone2D!", i));
 			return;
 		}
 		Bone2D *bone_2d = stack->skeleton->get_bone(physical_bone->get_bone2d_index());
@@ -165,9 +165,9 @@ void SkeletonModification2DPhysicalBones::_physical_bone_update_cache(int p_join
 			if (stack->skeleton->has_node(physical_bone_chain[p_joint_idx].physical_bone_node)) {
 				Node *node = stack->skeleton->get_node(physical_bone_chain[p_joint_idx].physical_bone_node);
 				ERR_FAIL_COND_MSG(!node || stack->skeleton == node,
-						"Cannot update Physical Bone2D " + itos(p_joint_idx) + " cache: node is this modification's skeleton or cannot be found!");
+						vformat("Cannot update Physical Bone2D %d cache: node is this modification's skeleton or cannot be found!", p_joint_idx));
 				ERR_FAIL_COND_MSG(!node->is_inside_tree(),
-						"Cannot update Physical Bone2D " + itos(p_joint_idx) + " cache: node is not in scene tree!");
+						vformat("Cannot update Physical Bone2D %d cache: node is not in scene tree!", p_joint_idx));
 				physical_bone_chain.write[p_joint_idx].physical_bone_node_cache = node->get_instance_id();
 			}
 		}

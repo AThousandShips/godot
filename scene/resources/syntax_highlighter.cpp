@@ -501,7 +501,7 @@ void CodeHighlighter::add_color_region(const String &p_start_key, const String &
 
 	int at = 0;
 	for (int i = 0; i < color_regions.size(); i++) {
-		ERR_FAIL_COND_MSG(color_regions[i].start_key == p_start_key, "color region with start key '" + p_start_key + "' already exists.");
+		ERR_FAIL_COND_MSG(color_regions[i].start_key == p_start_key, vformat("Color region with start key '%s' already exists.", p_start_key));
 		if (p_start_key.length() < color_regions[i].start_key.length()) {
 			at++;
 		}

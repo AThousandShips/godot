@@ -78,7 +78,7 @@ bool Tween::_validate_type_match(const Variant &p_from, Variant &r_to) {
 		} else if (p_from.get_type() == Variant::INT && r_to.get_type() == Variant::FLOAT) {
 			r_to = int(r_to);
 		} else {
-			ERR_FAIL_V_MSG(false, "Type mismatch between initial and final value: " + Variant::get_type_name(p_from.get_type()) + " and " + Variant::get_type_name(r_to.get_type()));
+			ERR_FAIL_V_MSG(false, vformat("Type mismatch between initial and final value: %s and %s.", Variant::get_type_name(p_from.get_type()), Variant::get_type_name(r_to.get_type())));
 		}
 	}
 	return true;
@@ -315,7 +315,7 @@ bool Tween::step(double p_delta) {
 			} else {
 				tween_id = to_string();
 			}
-			ERR_FAIL_V_MSG(false, tween_id + ": started with no Tweeners.");
+			ERR_FAIL_V_MSG(false, vformat("%s: started with no Tweeners.", tween_id));
 		}
 		current_step = 0;
 		loops_done = 0;
@@ -605,7 +605,7 @@ bool PropertyTweener::step(double &r_delta) {
 			Callable::CallError ce;
 			custom_method.callp(&argptr, 1, result, ce);
 			if (ce.error != Callable::CallError::CALL_OK) {
-				ERR_FAIL_V_MSG(false, "Error calling custom method from PropertyTweener: " + Variant::get_callable_error_text(custom_method, &argptr, 1, ce) + ".");
+				ERR_FAIL_V_MSG(false, vformat("Error calling custom method from PropertyTweener: %s.", Variant::get_callable_error_text(custom_method, &argptr, 1, ce)));
 			} else if (result.get_type() != Variant::FLOAT) {
 				ERR_FAIL_V_MSG(false, vformat("Wrong return type in PropertyTweener custom method. Expected float, got %s.", Variant::get_type_name(result.get_type())));
 			}
@@ -717,7 +717,7 @@ bool CallbackTweener::step(double &r_delta) {
 		Callable::CallError ce;
 		callback.callp(nullptr, 0, result, ce);
 		if (ce.error != Callable::CallError::CALL_OK) {
-			ERR_FAIL_V_MSG(false, "Error calling method from CallbackTweener: " + Variant::get_callable_error_text(callback, nullptr, 0, ce) + ".");
+			ERR_FAIL_V_MSG(false, vformat("Error calling method from CallbackTweener: %s.", Variant::get_callable_error_text(callback, nullptr, 0, ce)));
 		}
 
 		r_delta = elapsed_time - delay;
@@ -799,7 +799,7 @@ bool MethodTweener::step(double &r_delta) {
 	Callable::CallError ce;
 	callback.callp(argptr, 1, result, ce);
 	if (ce.error != Callable::CallError::CALL_OK) {
-		ERR_FAIL_V_MSG(false, "Error calling method from MethodTweener: " + Variant::get_callable_error_text(callback, argptr, 1, ce) + ".");
+		ERR_FAIL_V_MSG(false, vformat("Error calling method from MethodTweener: %s.", Variant::get_callable_error_text(callback, argptr, 1, ce)));
 	}
 
 	if (time < duration) {

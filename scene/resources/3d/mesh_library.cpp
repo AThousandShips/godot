@@ -137,91 +137,91 @@ void MeshLibrary::create_item(int p_item) {
 }
 
 void MeshLibrary::set_item_name(int p_item, const String &p_name) {
-	ERR_FAIL_COND_MSG(!item_map.has(p_item), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_MSG(!item_map.has(p_item), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	item_map[p_item].name = p_name;
 	emit_changed();
 }
 
 void MeshLibrary::set_item_mesh(int p_item, const Ref<Mesh> &p_mesh) {
-	ERR_FAIL_COND_MSG(!item_map.has(p_item), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_MSG(!item_map.has(p_item), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	item_map[p_item].mesh = p_mesh;
 	emit_changed();
 }
 
 void MeshLibrary::set_item_mesh_transform(int p_item, const Transform3D &p_transform) {
-	ERR_FAIL_COND_MSG(!item_map.has(p_item), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_MSG(!item_map.has(p_item), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	item_map[p_item].mesh_transform = p_transform;
 	emit_changed();
 }
 
 void MeshLibrary::set_item_shapes(int p_item, const Vector<ShapeData> &p_shapes) {
-	ERR_FAIL_COND_MSG(!item_map.has(p_item), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_MSG(!item_map.has(p_item), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	item_map[p_item].shapes = p_shapes;
 	emit_changed();
 	notify_property_list_changed();
 }
 
 void MeshLibrary::set_item_navigation_mesh(int p_item, const Ref<NavigationMesh> &p_navigation_mesh) {
-	ERR_FAIL_COND_MSG(!item_map.has(p_item), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_MSG(!item_map.has(p_item), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	item_map[p_item].navigation_mesh = p_navigation_mesh;
 	emit_changed();
 }
 
 void MeshLibrary::set_item_navigation_mesh_transform(int p_item, const Transform3D &p_transform) {
-	ERR_FAIL_COND_MSG(!item_map.has(p_item), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_MSG(!item_map.has(p_item), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	item_map[p_item].navigation_mesh_transform = p_transform;
 	emit_changed();
 }
 
 void MeshLibrary::set_item_navigation_layers(int p_item, uint32_t p_navigation_layers) {
-	ERR_FAIL_COND_MSG(!item_map.has(p_item), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_MSG(!item_map.has(p_item), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	item_map[p_item].navigation_layers = p_navigation_layers;
 	emit_changed();
 }
 
 void MeshLibrary::set_item_preview(int p_item, const Ref<Texture2D> &p_preview) {
-	ERR_FAIL_COND_MSG(!item_map.has(p_item), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_MSG(!item_map.has(p_item), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	item_map[p_item].preview = p_preview;
 	emit_changed();
 }
 
 String MeshLibrary::get_item_name(int p_item) const {
-	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), "", "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), "", vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	return item_map[p_item].name;
 }
 
 Ref<Mesh> MeshLibrary::get_item_mesh(int p_item) const {
-	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Ref<Mesh>(), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Ref<Mesh>(), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	return item_map[p_item].mesh;
 }
 
 Transform3D MeshLibrary::get_item_mesh_transform(int p_item) const {
-	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Transform3D(), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Transform3D(), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	return item_map[p_item].mesh_transform;
 }
 
 Vector<MeshLibrary::ShapeData> MeshLibrary::get_item_shapes(int p_item) const {
-	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Vector<ShapeData>(), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Vector<ShapeData>(), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	return item_map[p_item].shapes;
 }
 
 Ref<NavigationMesh> MeshLibrary::get_item_navigation_mesh(int p_item) const {
-	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Ref<NavigationMesh>(), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Ref<NavigationMesh>(), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	return item_map[p_item].navigation_mesh;
 }
 
 Transform3D MeshLibrary::get_item_navigation_mesh_transform(int p_item) const {
-	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Transform3D(), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Transform3D(), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	return item_map[p_item].navigation_mesh_transform;
 }
 
 uint32_t MeshLibrary::get_item_navigation_layers(int p_item) const {
-	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), 0, "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), 0, vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	return item_map[p_item].navigation_layers;
 }
 
 Ref<Texture2D> MeshLibrary::get_item_preview(int p_item) const {
-	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Ref<Texture2D>(), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_V_MSG(!item_map.has(p_item), Ref<Texture2D>(), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	return item_map[p_item].preview;
 }
 
@@ -230,7 +230,7 @@ bool MeshLibrary::has_item(int p_item) const {
 }
 
 void MeshLibrary::remove_item(int p_item) {
-	ERR_FAIL_COND_MSG(!item_map.has(p_item), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+	ERR_FAIL_COND_MSG(!item_map.has(p_item), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 	item_map.erase(p_item);
 	notify_property_list_changed();
 	emit_changed();
@@ -274,7 +274,7 @@ void MeshLibrary::_set_item_shapes(int p_item, const Array &p_shapes) {
 	Array arr_shapes = p_shapes;
 	int size = p_shapes.size();
 	if (size & 1) {
-		ERR_FAIL_COND_MSG(!item_map.has(p_item), "Requested for nonexistent MeshLibrary item '" + itos(p_item) + "'.");
+		ERR_FAIL_COND_MSG(!item_map.has(p_item), vformat("Requested for nonexistent MeshLibrary item '%d'.", p_item));
 		int prev_size = item_map[p_item].shapes.size() * 2;
 
 		if (prev_size < size) {

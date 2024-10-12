@@ -1549,7 +1549,7 @@ String ItemList::_atr(int p_idx, const String &p_text) const {
 		} break;
 	}
 
-	ERR_FAIL_V_MSG(atr(p_text), "Unexpected auto translate mode: " + itos(items[p_idx].auto_translate_mode));
+	ERR_FAIL_V_MSG(atr(p_text), vformat("Unexpected auto translate mode: %d.", items[p_idx].auto_translate_mode));
 }
 
 int ItemList::get_item_at_position(const Point2 &p_pos, bool p_exact) const {

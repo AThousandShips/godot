@@ -2177,7 +2177,7 @@ bool LineEdit::is_secret() const {
 void LineEdit::set_secret_character(const String &p_string) {
 	String c = p_string;
 	if (c.length() > 1) {
-		WARN_PRINT("Secret character must be exactly one character long (" + itos(c.length()) + " characters given).");
+		WARN_PRINT(vformat("Secret character must be exactly one character long (%d characters given).", c.length()));
 		c = c.left(1);
 	}
 	if (secret_character == c) {

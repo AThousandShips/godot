@@ -5099,7 +5099,7 @@ void TextEdit::set_caret_line(int p_line, bool p_adjust_viewport, bool p_can_be_
 				if (p_line - move_up > 0 && !_is_line_hidden(p_line - move_up)) {
 					p_line -= move_up;
 				} else {
-					WARN_PRINT("Caret set to hidden line " + itos(p_line) + " and there are no nonhidden lines.");
+					WARN_PRINT(vformat("Caret set to hidden line %d and there are no nonhidden lines.", p_line));
 				}
 			}
 		}
@@ -5535,7 +5535,7 @@ void TextEdit::set_selection_origin_line(int p_line, bool p_can_be_hidden, int p
 				if (p_line - move_up > 0 && !_is_line_hidden(p_line - move_up)) {
 					p_line -= move_up;
 				} else {
-					WARN_PRINT("Selection origin set to hidden line " + itos(p_line) + " and there are no nonhidden lines.");
+					WARN_PRINT(vformat("Selection origin set to hidden line %d and there are no nonhidden lines.", p_line));
 				}
 			}
 		}

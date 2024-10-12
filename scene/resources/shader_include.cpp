@@ -90,12 +90,12 @@ Ref<Resource> ResourceFormatLoaderShaderInclude::load(const String &p_path, cons
 
 	Error error = OK;
 	Vector<uint8_t> buffer = FileAccess::get_file_as_bytes(p_path, &error);
-	ERR_FAIL_COND_V_MSG(error, nullptr, "Cannot load shader include: " + p_path);
+	ERR_FAIL_COND_V_MSG(error, nullptr, vformat("Cannot load shader include: '%s'.", p_path));
 
 	String str;
 	if (buffer.size() > 0) {
 		error = str.parse_utf8((const char *)buffer.ptr(), buffer.size());
-		ERR_FAIL_COND_V_MSG(error, nullptr, "Cannot parse shader include: " + p_path);
+		ERR_FAIL_COND_V_MSG(error, nullptr, vformat("Cannot parse shader include: '%s'.", p_path));
 	}
 
 	Ref<ShaderInclude> shader_inc;
@@ -138,7 +138,7 @@ Error ResourceFormatSaverShaderInclude::save(const Ref<Resource> &p_resource, co
 	Error error;
 	Ref<FileAccess> file = FileAccess::open(p_path, FileAccess::WRITE, &error);
 
-	ERR_FAIL_COND_V_MSG(error, error, "Cannot save shader include '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(error, error, vformat("Cannot save shader include '%s'.", p_path));
 
 	file->store_string(source);
 	if (file->get_error() != OK && file->get_error() != ERR_FILE_EOF) {

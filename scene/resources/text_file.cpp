@@ -53,7 +53,7 @@ Error TextFile::load_text(const String &p_path) {
 	Error err;
 	Ref<FileAccess> f = FileAccess::open(p_path, FileAccess::READ, &err);
 
-	ERR_FAIL_COND_V_MSG(err, err, "Cannot open TextFile '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(err, err, vformat("Cannot open TextFile '%s'.", p_path));
 
 	uint64_t len = f->get_length();
 	sourcef.resize(len + 1);
@@ -64,7 +64,7 @@ Error TextFile::load_text(const String &p_path) {
 	w[len] = 0;
 
 	String s;
-	ERR_FAIL_COND_V_MSG(s.parse_utf8((const char *)w) != OK, ERR_INVALID_DATA, "Script '" + p_path + "' contains invalid unicode (UTF-8), so it was not loaded. Please ensure that scripts are saved in valid UTF-8 unicode.");
+	ERR_FAIL_COND_V_MSG(s.parse_utf8((const char *)w) != OK, ERR_INVALID_DATA, vformat("Script '%s' contains invalid unicode (UTF-8), so it was not loaded. Please ensure that scripts are saved in valid UTF-8 unicode.", p_path));
 	text = s;
 	path = p_path;
 #ifdef TOOLS_ENABLED

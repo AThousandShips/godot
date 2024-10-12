@@ -1212,7 +1212,7 @@ void CodeEdit::add_auto_brace_completion_pair(const String &p_open_key, const St
 
 	int at = 0;
 	for (int i = 0; i < auto_brace_completion_pairs.size(); i++) {
-		ERR_FAIL_COND_MSG(auto_brace_completion_pairs[i].open_key == p_open_key, "auto brace completion open key '" + p_open_key + "' already exists.");
+		ERR_FAIL_COND_MSG(auto_brace_completion_pairs[i].open_key == p_open_key, vformat("Auto brace completion open key '%s' already exists.", p_open_key));
 		if (p_open_key.length() < auto_brace_completion_pairs[i].open_key.length()) {
 			at++;
 		}
@@ -3235,7 +3235,7 @@ void CodeEdit::_add_delimiter(const String &p_start_key, const String &p_end_key
 
 	int at = 0;
 	for (int i = 0; i < delimiters.size(); i++) {
-		ERR_FAIL_COND_MSG(delimiters[i].start_key == p_start_key, "delimiter with start key '" + p_start_key + "' already exists.");
+		ERR_FAIL_COND_MSG(delimiters[i].start_key == p_start_key, vformat("Delimiter with start key '%s' already exists.", p_start_key));
 		if (p_start_key.length() < delimiters[i].start_key.length()) {
 			at++;
 		} else {

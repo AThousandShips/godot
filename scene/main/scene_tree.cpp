@@ -173,7 +173,7 @@ SceneTree::Group *SceneTree::add_to_group(const StringName &p_group, Node *p_nod
 		E = group_map.insert(p_group, Group());
 	}
 
-	ERR_FAIL_COND_V_MSG(E->value.nodes.has(p_node), &E->value, "Already in group: " + p_group + ".");
+	ERR_FAIL_COND_V_MSG(E->value.nodes.has(p_node), &E->value, vformat("Already in group: %s.", p_group));
 	E->value.nodes.push_back(p_node);
 	E->value.changed = true;
 	return &E->value;
@@ -1655,7 +1655,7 @@ void SceneTree::set_multiplayer(Ref<MultiplayerAPI> p_multiplayer, const NodePat
 						break;
 					}
 				}
-				ERR_FAIL_COND_MSG(valid, "Multiplayer is already configured for a parent of this path: '" + p_root_path + "' in '" + E.key + "'.");
+				ERR_FAIL_COND_MSG(valid, vformat("Multiplayer is already configured for a parent of this path: '%s' in '%s'.", p_root_path, E.key));
 			}
 		}
 		if (p_multiplayer.is_valid()) {
@@ -1909,7 +1909,7 @@ SceneTree::SceneTree() {
 		vrs_image.instantiate();
 		Error load_err = ImageLoader::load_image(vrs_texture_path, vrs_image);
 		if (load_err) {
-			ERR_PRINT("Non-existing or invalid VRS texture at '" + vrs_texture_path + "'.");
+			ERR_PRINT(vformat("Non-existing or invalid VRS texture at '%s'.", vrs_texture_path));
 		} else {
 			Ref<ImageTexture> vrs_texture;
 			vrs_texture.instantiate();

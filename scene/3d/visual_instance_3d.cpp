@@ -118,10 +118,10 @@ void VisualInstance3D::_notification(int p_what) {
 
 				String node_name = is_inside_tree() ? String(get_path()) : String(get_name());
 				if (!_is_vi_visible()) {
-					WARN_PRINT("[Physics interpolation] NOTIFICATION_RESET_PHYSICS_INTERPOLATION only works with unhidden nodes: \"" + node_name + "\".");
+					WARN_PRINT(vformat(R"([Physics interpolation] NOTIFICATION_RESET_PHYSICS_INTERPOLATION only works with unhidden nodes: "%s".)", node_name));
 				}
 				if (!is_physics_interpolated()) {
-					WARN_PRINT("[Physics interpolation] NOTIFICATION_RESET_PHYSICS_INTERPOLATION only works with interpolated nodes: \"" + node_name + "\".");
+					WARN_PRINT(vformat(R"([Physics interpolation] NOTIFICATION_RESET_PHYSICS_INTERPOLATION only works with interpolated nodes: "%s".)", node_name));
 				}
 			}
 #endif

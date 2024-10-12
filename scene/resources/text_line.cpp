@@ -315,7 +315,7 @@ TextServer::OverrunBehavior TextLine::get_text_overrun_behavior() const {
 void TextLine::set_ellipsis_char(const String &p_char) {
 	String c = p_char;
 	if (c.length() > 1) {
-		WARN_PRINT("Ellipsis must be exactly one character long (" + itos(c.length()) + " characters given).");
+		WARN_PRINT(vformat("Ellipsis must be exactly one character long (%d characters given).", c.length()));
 		c = c.left(1);
 	}
 	if (el_char == c) {

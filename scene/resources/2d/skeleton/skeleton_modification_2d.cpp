@@ -56,7 +56,7 @@ void SkeletonModification2D::_setup_modification(SkeletonModificationStack2D *p_
 	if (stack) {
 		is_setup = true;
 	} else {
-		WARN_PRINT("Could not setup modification with name " + get_name());
+		WARN_PRINT(vformat("Could not setup modification with name %s.", get_name()));
 	}
 
 	GDVIRTUAL_CALL(_setup_modification, Ref<SkeletonModificationStack2D>(p_stack));

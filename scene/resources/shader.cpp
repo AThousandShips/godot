@@ -308,12 +308,12 @@ Ref<Resource> ResourceFormatLoaderShader::load(const String &p_path, const Strin
 
 	Error error = OK;
 	Vector<uint8_t> buffer = FileAccess::get_file_as_bytes(p_path, &error);
-	ERR_FAIL_COND_V_MSG(error, nullptr, "Cannot load shader: " + p_path);
+	ERR_FAIL_COND_V_MSG(error, nullptr, vformat("Cannot load shader: '%s'.", p_path));
 
 	String str;
 	if (buffer.size() > 0) {
 		error = str.parse_utf8((const char *)buffer.ptr(), buffer.size());
-		ERR_FAIL_COND_V_MSG(error, nullptr, "Cannot parse shader: " + p_path);
+		ERR_FAIL_COND_V_MSG(error, nullptr, vformat("Cannot parse shader: '%s'.", p_path));
 	}
 
 	Ref<Shader> shader;
@@ -354,7 +354,7 @@ Error ResourceFormatSaverShader::save(const Ref<Resource> &p_resource, const Str
 	Error err;
 	Ref<FileAccess> file = FileAccess::open(p_path, FileAccess::WRITE, &err);
 
-	ERR_FAIL_COND_V_MSG(err, err, "Cannot save shader '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(err, err, vformat("Cannot save shader '%s'.", p_path));
 
 	file->store_string(source);
 	if (file->get_error() != OK && file->get_error() != ERR_FILE_EOF) {

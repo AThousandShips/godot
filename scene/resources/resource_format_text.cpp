@@ -38,7 +38,7 @@
 ///
 
 void ResourceLoaderText::_printerr() {
-	ERR_PRINT(String(res_path + ":" + itos(lines) + " - Parse Error: " + error_text).utf8().get_data());
+	ERR_PRINT(vformat("%s:%d - Parse Error: %s.", res_path, lines, error_text));
 }
 
 Ref<Resource> ResourceLoaderText::get_resource() {
@@ -445,10 +445,10 @@ Error ResourceLoaderText::load() {
 #ifdef TOOLS_ENABLED
 				// Silence a warning that can happen during the initial filesystem scan due to cache being regenerated.
 				if (ResourceLoader::get_resource_uid(path) != uid) {
-					WARN_PRINT(String(res_path + ":" + itos(lines) + " - ext_resource, invalid UID: " + uidt + " - using text path instead: " + path).utf8().get_data());
+					WARN_PRINT(vformat("%s:%d - ext_resource, invalid UID: %s - using text path instead: '%s'.", res_path, lines, uidt, path));
 				}
 #else
-				WARN_PRINT(String(res_path + ":" + itos(lines) + " - ext_resource, invalid UID: " + uidt + " - using text path instead: " + path).utf8().get_data());
+				WARN_PRINT(vformat("%s:%d - ext_resource, invalid UID: %s - using text path instead: '%s'.", res_path, lines, uidt, path));
 #endif
 			}
 		}
@@ -1386,7 +1386,7 @@ Ref<Resource> ResourceFormatLoaderText::load(const String &p_path, const String 
 
 	Ref<FileAccess> f = FileAccess::open(p_path, FileAccess::READ, &err);
 
-	ERR_FAIL_COND_V_MSG(err != OK, Ref<Resource>(), "Cannot open file '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(err != OK, Ref<Resource>(), vformat("Cannot open file '%s'.", p_path));
 
 	ResourceLoaderText loader;
 	String path = !p_original_path.is_empty() ? p_original_path : p_path;
@@ -1605,7 +1605,7 @@ void ResourceFormatSaverTextInstance::_find_resources(const Variant &p_variant, 
 
 			if (!p_main && (!bundle_resources) && !res->is_built_in()) {
 				if (res->get_path() == local_path) {
-					ERR_PRINT("Circular reference to resource being saved found: '" + local_path + "' will be null next time it's loaded.");
+					ERR_PRINT(vformat("Circular reference to resource being saved found: '%s' will be null next time it's loaded.", local_path));
 					return;
 				}
 
@@ -1713,7 +1713,7 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 
 	Error err;
 	Ref<FileAccess> f = FileAccess::open(p_path, FileAccess::WRITE, &err);
-	ERR_FAIL_COND_V_MSG(err, ERR_CANT_OPEN, "Cannot save file '" + p_path + "'.");
+	ERR_FAIL_COND_V_MSG(err, ERR_CANT_OPEN, vformat("Cannot save file '%s'.", p_path));
 	Ref<FileAccess> _fref(f);
 
 	local_path = ProjectSettings::get_singleton()->localize_path(p_path);

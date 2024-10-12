@@ -282,7 +282,7 @@ String TreeItem::atr(int p_column, const String &p_text) const {
 		} break;
 	}
 
-	ERR_FAIL_V_MSG(tree->atr(p_text), "Unexpected auto translate mode: " + itos(cells[p_column].auto_translate_mode));
+	ERR_FAIL_V_MSG(tree->atr(p_text), vformat("Unexpected auto translate mode: %d.", cells[p_column].auto_translate_mode));
 }
 
 void TreeItem::_propagate_check_through_children(int p_column, bool p_checked, bool p_emit_signal) {
@@ -2467,7 +2467,7 @@ int Tree::draw_item(const Point2i &p_pos, const Point2 &p_draw_ofs, const Size2 
 						Variant ret;
 						p_item->cells[i].custom_draw_callback.callp(argptrs, 2, ret, ce);
 						if (ce.error != Callable::CallError::CALL_OK) {
-							ERR_PRINT("Error calling custom draw method: " + Variant::get_callable_error_text(p_item->cells[i].custom_draw_callback, argptrs, 2, ce) + ".");
+							ERR_PRINT(vformat("Error calling custom draw method: %s.", Variant::get_callable_error_text(p_item->cells[i].custom_draw_callback, argptrs, 2, ce)));
 						}
 					}
 

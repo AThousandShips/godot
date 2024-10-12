@@ -3551,7 +3551,7 @@ void Node::call_thread_safep(const StringName &p_method, const Variant **p_args,
 		Callable::CallError ce;
 		callp(p_method, p_args, p_argcount, ce);
 		if (p_show_error && ce.error != Callable::CallError::CALL_OK) {
-			ERR_FAIL_MSG("Error calling method from 'call_threadp': " + Variant::get_call_error_text(this, p_method, p_args, p_argcount, ce) + ".");
+			ERR_FAIL_MSG(vformat("Error calling method from 'call_threadp': %s.", Variant::get_call_error_text(this, p_method, p_args, p_argcount, ce)));
 		}
 	} else {
 		call_deferred_thread_groupp(p_method, p_args, p_argcount, p_show_error);

@@ -1931,7 +1931,7 @@ Variant Control::get_drag_data(const Point2 &p_point) {
 		Callable::CallError ce;
 		data.forward_drag.callp((const Variant **)vp, 1, ret, ce);
 		if (ce.error != Callable::CallError::CALL_OK) {
-			ERR_FAIL_V_MSG(Variant(), "Error calling forwarded method from 'get_drag_data': " + Variant::get_callable_error_text(data.forward_drag, (const Variant **)vp, 1, ce) + ".");
+			ERR_FAIL_V_MSG(Variant(), vformat("Error calling forwarded method from 'get_drag_data': %s.", Variant::get_callable_error_text(data.forward_drag, (const Variant **)vp, 1, ce)));
 		}
 		return ret;
 	}
@@ -1949,7 +1949,7 @@ bool Control::can_drop_data(const Point2 &p_point, const Variant &p_data) const 
 		Callable::CallError ce;
 		data.forward_can_drop.callp((const Variant **)vp, 2, ret, ce);
 		if (ce.error != Callable::CallError::CALL_OK) {
-			ERR_FAIL_V_MSG(Variant(), "Error calling forwarded method from 'can_drop_data': " + Variant::get_callable_error_text(data.forward_can_drop, (const Variant **)vp, 2, ce) + ".");
+			ERR_FAIL_V_MSG(Variant(), vformat("Error calling forwarded method from 'can_drop_data': %s.", Variant::get_callable_error_text(data.forward_can_drop, (const Variant **)vp, 2, ce)));
 		}
 		return ret;
 	}
@@ -1968,7 +1968,7 @@ void Control::drop_data(const Point2 &p_point, const Variant &p_data) {
 		Callable::CallError ce;
 		data.forward_drop.callp((const Variant **)vp, 2, ret, ce);
 		if (ce.error != Callable::CallError::CALL_OK) {
-			ERR_FAIL_MSG("Error calling forwarded method from 'drop_data': " + Variant::get_callable_error_text(data.forward_drop, (const Variant **)vp, 2, ce) + ".");
+			ERR_FAIL_MSG(vformat("Error calling forwarded method from 'drop_data': %s.", Variant::get_callable_error_text(data.forward_drop, (const Variant **)vp, 2, ce)));
 		}
 		return;
 	}
@@ -2084,9 +2084,9 @@ Control *Control::find_next_valid_focus() const {
 
 		if (!data.focus_next.is_empty()) {
 			Node *n = get_node_or_null(data.focus_next);
-			ERR_FAIL_NULL_V_MSG(n, nullptr, "Next focus node path is invalid: '" + data.focus_next + "'.");
+			ERR_FAIL_NULL_V_MSG(n, nullptr, vformat("Next focus node path is invalid: '%s'.", data.focus_next));
 			Control *c = Object::cast_to<Control>(n);
-			ERR_FAIL_NULL_V_MSG(c, nullptr, "Next focus node is not a control: '" + n->get_name() + "'.");
+			ERR_FAIL_NULL_V_MSG(c, nullptr, vformat("Next focus node is not a control: '%s'.", n->get_name()));
 			if (c->is_visible() && c->get_focus_mode() != FOCUS_NONE) {
 				return c;
 			}
@@ -2171,9 +2171,9 @@ Control *Control::find_prev_valid_focus() const {
 
 		if (!data.focus_prev.is_empty()) {
 			Node *n = get_node_or_null(data.focus_prev);
-			ERR_FAIL_NULL_V_MSG(n, nullptr, "Previous focus node path is invalid: '" + data.focus_prev + "'.");
+			ERR_FAIL_NULL_V_MSG(n, nullptr, vformat("Previous focus node path is invalid: '%s'.", data.focus_prev));
 			Control *c = Object::cast_to<Control>(n);
-			ERR_FAIL_NULL_V_MSG(c, nullptr, "Previous focus node is not a control: '" + n->get_name() + "'.");
+			ERR_FAIL_NULL_V_MSG(c, nullptr, vformat("Previous focus node is not a control: '%s'.", n->get_name()));
 			if (c->is_visible() && c->get_focus_mode() != FOCUS_NONE) {
 				return c;
 			}
@@ -2263,9 +2263,9 @@ Control *Control::_get_focus_neighbor(Side p_side, int p_count) {
 	}
 	if (!data.focus_neighbor[p_side].is_empty()) {
 		Node *n = get_node_or_null(data.focus_neighbor[p_side]);
-		ERR_FAIL_NULL_V_MSG(n, nullptr, "Neighbor focus node path is invalid: '" + data.focus_neighbor[p_side] + "'.");
+		ERR_FAIL_NULL_V_MSG(n, nullptr, vformat("Neighbor focus node path is invalid: '%s'.", data.focus_neighbor[p_side]));
 		Control *c = Object::cast_to<Control>(n);
-		ERR_FAIL_NULL_V_MSG(c, nullptr, "Neighbor focus node is not a control: '" + n->get_name() + "'.");
+		ERR_FAIL_NULL_V_MSG(c, nullptr, vformat("Neighbor focus node is not a control: '%s'.", n->get_name()));
 		bool valid = true;
 		if (!c->is_visible()) {
 			valid = false;

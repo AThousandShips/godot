@@ -210,7 +210,7 @@ bool ShaderMaterial::_set(const StringName &p_name, const Variant &p_value) {
 			return false; // Not a shader parameter.
 		}
 
-		WARN_PRINT("This material (containing shader with path: '" + shader->get_path() + "') uses an old deprecated parameter names. Consider re-saving this resource (or scene which contains it) in order for it to continue working in future versions.");
+		WARN_PRINT(vformat("This material (containing shader with path: '%s') uses an old deprecated parameter names. Consider re-saving this resource (or scene which contains it) in order for it to continue working in future versions.", shader->get_path()));
 		String param = s.replace_first("shader_parameter/", "");
 		remap_cache[s] = param;
 		set_shader_parameter(param, p_value);
@@ -3627,7 +3627,7 @@ bool StandardMaterial3D::_set(const StringName &p_name, const Variant &p_value) 
 			idx++;
 		}
 
-		WARN_PRINT("Godot 3.x SpatialMaterial remapped parameter not found: " + String(p_name));
+		WARN_PRINT(vformat("Godot 3.x SpatialMaterial remapped parameter not found: %s.", String(p_name)));
 		return true;
 	}
 }

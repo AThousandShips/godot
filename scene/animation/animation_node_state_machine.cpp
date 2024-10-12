@@ -750,7 +750,7 @@ AnimationNode::NodeTimeInfo AnimationNodeStateMachinePlayback::_process(const St
 			_start(p_state_machine);
 		} else {
 			StringName node = start_request;
-			ERR_FAIL_V_MSG(AnimationNode::NodeTimeInfo(), "No such node: '" + node + "'");
+			ERR_FAIL_V_MSG(AnimationNode::NodeTimeInfo(), vformat("No such node: '%s'.", node));
 		}
 	}
 
@@ -784,7 +784,7 @@ AnimationNode::NodeTimeInfo AnimationNodeStateMachinePlayback::_process(const St
 					teleport_request = true;
 				}
 			} else {
-				ERR_FAIL_V_MSG(AnimationNode::NodeTimeInfo(), "No such node: '" + temp_travel_request + "'");
+				ERR_FAIL_V_MSG(AnimationNode::NodeTimeInfo(), vformat("No such node: '%s'.", temp_travel_request));
 			}
 		}
 	}
@@ -915,7 +915,7 @@ bool AnimationNodeStateMachinePlayback::_transition_to_next_recursive(AnimationT
 		}
 
 		if (transition_path.has(next.node)) {
-			WARN_PRINT_ONCE_ED("AnimationNodeStateMachinePlayback: " + base_path + "playback aborts the transition by detecting one or more looped transitions in the same frame to prevent to infinity loop. You may need to check the transition settings.");
+			WARN_PRINT_ONCE_ED(vformat("AnimationNodeStateMachinePlayback: %splayback aborts the transition by detecting one or more looped transitions in the same frame to prevent to infinity loop. You may need to check the transition settings.", base_path));
 			break; // Maybe infinity loop, do nothing more.
 		}
 
@@ -1153,7 +1153,7 @@ Ref<AnimationNodeStateMachinePlayback> AnimationNodeStateMachinePlayback::_get_p
 	String playback_path = String("/").join(split) + "playback";
 	Ref<AnimationNodeStateMachinePlayback> playback = p_tree->get(playback_path);
 	if (!playback.is_valid()) {
-		ERR_PRINT_ONCE("Can't get parent AnimationNodeStateMachinePlayback with path: " + playback_path + ". Maybe there is no Root/Nested AnimationNodeStateMachine in the parent of the Grouped AnimationNodeStateMachine.");
+		ERR_PRINT_ONCE(vformat("Can't get parent AnimationNodeStateMachinePlayback with path: %s. Maybe there is no Root/Nested AnimationNodeStateMachine in the parent of the Grouped AnimationNodeStateMachine.", playback_path));
 		return Ref<AnimationNodeStateMachinePlayback>();
 	}
 	if (playback->get_current_node() != self_path) {
@@ -1170,10 +1170,10 @@ Ref<AnimationNodeStateMachine> AnimationNodeStateMachinePlayback::_get_parent_st
 	ERR_FAIL_COND_V_MSG(split.size() < 3, Ref<AnimationNodeStateMachine>(), "Path is too short.");
 	split = split.slice(1, split.size() - 2);
 	Ref<AnimationNode> root = p_tree->get_root_animation_node();
-	ERR_FAIL_COND_V_MSG(root.is_null(), Ref<AnimationNodeStateMachine>(), "There is no root AnimationNode in AnimationTree: " + String(p_tree->get_name()));
+	ERR_FAIL_COND_V_MSG(root.is_null(), Ref<AnimationNodeStateMachine>(), vformat("There is no root AnimationNode in AnimationTree: %s.", String(p_tree->get_name())));
 	String anodesm_path = String("/").join(split);
 	Ref<AnimationNodeStateMachine> anodesm = !anodesm_path.size() ? root : root->find_node_by_path(anodesm_path);
-	ERR_FAIL_COND_V_MSG(anodesm.is_null(), Ref<AnimationNodeStateMachine>(), "Can't get state machine with path: " + anodesm_path);
+	ERR_FAIL_COND_V_MSG(anodesm.is_null(), Ref<AnimationNodeStateMachine>(), vformat("Can't get state machine with path: %s.", anodesm_path));
 	return anodesm;
 }
 

@@ -325,16 +325,16 @@ void SkeletonModification2DCCDIK::ccdik_joint_update_bone2d_cache(int p_joint_id
 			if (stack->skeleton->has_node(ccdik_data_chain[p_joint_idx].bone2d_node)) {
 				Node *node = stack->skeleton->get_node(ccdik_data_chain[p_joint_idx].bone2d_node);
 				ERR_FAIL_COND_MSG(!node || stack->skeleton == node,
-						"Cannot update CCDIK joint " + itos(p_joint_idx) + " Bone2D cache: node is this modification's skeleton or cannot be found!");
+						vformat("Cannot update CCDIK joint %d Bone2D cache: node is this modification's skeleton or cannot be found!", p_joint_idx));
 				ERR_FAIL_COND_MSG(!node->is_inside_tree(),
-						"Cannot update CCDIK joint " + itos(p_joint_idx) + " Bone2D cache: node is not in the scene tree!");
+						vformat("Cannot update CCDIK joint %d Bone2D cache: node is not in the scene tree!", p_joint_idx));
 				ccdik_data_chain.write[p_joint_idx].bone2d_node_cache = node->get_instance_id();
 
 				Bone2D *bone = Object::cast_to<Bone2D>(node);
 				if (bone) {
 					ccdik_data_chain.write[p_joint_idx].bone_idx = bone->get_index_in_skeleton();
 				} else {
-					ERR_FAIL_MSG("CCDIK joint " + itos(p_joint_idx) + " Bone2D cache: Nodepath to Bone2D is not a Bone2D node!");
+					ERR_FAIL_MSG(vformat("CCDIK joint %d Bone2D cache: Nodepath to Bone2D is not a Bone2D node!", p_joint_idx));
 				}
 			}
 		}
@@ -392,7 +392,7 @@ void SkeletonModification2DCCDIK::set_ccdik_joint_bone_index(int p_joint_idx, in
 			ccdik_data_chain.write[p_joint_idx].bone2d_node_cache = stack->skeleton->get_bone(p_bone_idx)->get_instance_id();
 			ccdik_data_chain.write[p_joint_idx].bone2d_node = stack->skeleton->get_path_to(stack->skeleton->get_bone(p_bone_idx));
 		} else {
-			WARN_PRINT("Cannot verify the CCDIK joint " + itos(p_joint_idx) + " bone index for this modification...");
+			WARN_PRINT(vformat("Cannot verify the CCDIK joint %d bone index for this modification...", p_joint_idx));
 			ccdik_data_chain.write[p_joint_idx].bone_idx = p_bone_idx;
 		}
 	} else {

@@ -1256,7 +1256,7 @@ AnimationNode::NodeTimeInfo AnimationNodeTransition::_process(const AnimationMix
 				set_parameter(current_state, cur_transition_request);
 			}
 		} else {
-			ERR_PRINT("No such input: '" + cur_transition_request + "'");
+			ERR_PRINT(vformat("No such input: '%s'.", cur_transition_request));
 		}
 		cur_transition_request = String();
 		set_parameter(transition_request, cur_transition_request);
