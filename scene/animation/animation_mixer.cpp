@@ -286,7 +286,7 @@ Error AnimationMixer::add_animation_library(const StringName &p_name, const Ref<
 
 	for (const AnimationLibraryData &lib : animation_libraries) {
 		ERR_FAIL_COND_V_MSG(lib.name == p_name, ERR_ALREADY_EXISTS, "Can't add animation library twice with name: " + String(p_name));
-		ERR_FAIL_COND_V_MSG(lib.library == p_animation_library, ERR_ALREADY_EXISTS, "Can't add animation library twice (adding as '" + p_name.operator String() + "', exists as '" + lib.name.operator String() + "'.");
+		ERR_FAIL_COND_V_MSG(lib.library == p_animation_library, ERR_ALREADY_EXISTS, vformat("Can't add animation library twice (adding as '%s', exists as '%s'.", p_name.operator String(), lib.name.operator String()));
 
 		if (lib.name.operator String() >= p_name.operator String()) {
 			break;
@@ -664,7 +664,7 @@ bool AnimationMixer::_update_caches() {
 				Node *child = parent->get_node_and_resource(path, resource, leftover_path);
 				if (!child) {
 					if (check_path) {
-						WARN_PRINT_ED(mixer_name + ": '" + String(E) + "', couldn't resolve track:  '" + String(path) + "'. This warning can be disabled in Project Settings.");
+						WARN_PRINT_ED(vformat("%s: '%s', couldn't resolve track: '%s'. This warning can be disabled in Project Settings.", mixer_name, String(E), String(path)));
 					}
 					continue;
 				}
@@ -674,7 +674,7 @@ bool AnimationMixer::_update_caches() {
 					case Animation::TYPE_VALUE: {
 						// If a value track without a key is cached first, the initial value cannot be determined.
 						// It is a corner case, but which may cause problems with blending.
-						ERR_CONTINUE_MSG(anim->track_get_key_count(i) == 0, mixer_name + ": '" + String(E) + "', Value Track:  '" + String(path) + "' must have at least one key to cache for blending.");
+						ERR_CONTINUE_MSG(anim->track_get_key_count(i) == 0, vformat("%s: '%s', Value Track: '%s' must have at least one key to cache for blending.", mixer_name, String(E), String(path)));
 
 						TrackCacheValue *track_value = memnew(TrackCacheValue);
 
@@ -724,7 +724,7 @@ bool AnimationMixer::_update_caches() {
 						Node3D *node_3d = Object::cast_to<Node3D>(child);
 
 						if (!node_3d) {
-							ERR_PRINT(mixer_name + ": '" + String(E) + "', transform track does not point to Node3D:  '" + String(path) + "'.");
+							ERR_PRINT(vformat("%s: '%s', transform track does not point to Node3D: '%s'.", mixer_name, String(E), String(path)));
 							continue;
 						}
 
@@ -790,20 +790,20 @@ bool AnimationMixer::_update_caches() {
 					case Animation::TYPE_BLEND_SHAPE: {
 #ifndef _3D_DISABLED
 						if (path.get_subname_count() != 1) {
-							ERR_PRINT(mixer_name + ": '" + String(E) + "', blend shape track does not contain a blend shape subname:  '" + String(path) + "'.");
+							ERR_PRINT(vformat("%s: '%s', blend shape track does not contain a blend shape subname: '%s'.", mixer_name, String(E), String(path)));
 							continue;
 						}
 						MeshInstance3D *mesh_3d = Object::cast_to<MeshInstance3D>(child);
 
 						if (!mesh_3d) {
-							ERR_PRINT(mixer_name + ": '" + String(E) + "', blend shape track does not point to MeshInstance3D:  '" + String(path) + "'.");
+							ERR_PRINT(vformat("%s: '%s', blend shape track does not point to MeshInstance3D: '%s'.", mixer_name, String(E), String(path)));
 							continue;
 						}
 
 						StringName blend_shape_name = path.get_subname(0);
 						int blend_shape_idx = mesh_3d->find_blend_shape_by_name(blend_shape_name);
 						if (blend_shape_idx == -1) {
-							ERR_PRINT(mixer_name + ": '" + String(E) + "', blend shape track points to a non-existing name:  '" + String(blend_shape_name) + "'.");
+							ERR_PRINT(vformat("%s: '%s', blend shape track points to a non-existing name: '%s'.", mixer_name, String(E), String(blend_shape_name)));
 							continue;
 						}
 
@@ -886,12 +886,12 @@ bool AnimationMixer::_update_caches() {
 				bool was_using_angle = track_value->is_using_angle;
 				if (track_src_type == Animation::TYPE_VALUE) {
 					if (track_value->init_value.is_string() && anim->value_track_get_update_mode(i) != Animation::UPDATE_DISCRETE) {
-						WARN_PRINT_ONCE_ED(mixer_name + ": '" + String(E) + "', Value Track: '" + String(path) + "' blends String types. This is an experimental algorithm.");
+						WARN_PRINT_ONCE_ED(vformat("%s: '%s', Value Track: '%s' blends String types. This is an experimental algorithm.", mixer_name, String(E), String(path)));
 					}
 					track_value->is_using_angle = track_value->is_using_angle || anim->track_get_interpolation_type(i) == Animation::INTERPOLATION_LINEAR_ANGLE || anim->track_get_interpolation_type(i) == Animation::INTERPOLATION_CUBIC_ANGLE;
 				}
 				if (check_angle_interpolation && (was_using_angle != track_value->is_using_angle)) {
-					WARN_PRINT_ED(mixer_name + ": '" + String(E) + "', Value Track: '" + String(path) + "' has different interpolation types for rotation between some animations which may be blended together. Blending prioritizes angle interpolation, so the blending result uses the shortest path referenced to the initial (RESET animation) value.");
+					WARN_PRINT_ED(vformat("%s: '%s', Value Track: '%s' has different interpolation types for rotation between some animations which may be blended together. Blending prioritizes angle interpolation, so the blending result uses the shortest path referenced to the initial (RESET animation) value.", mixer_name, String(E), String(path)));
 				}
 			}
 

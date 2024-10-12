@@ -521,7 +521,7 @@ void ImporterMesh::generate_lods(float p_normal_merge_angle, float p_normal_spli
 				// as an ad-hoc fix to prevent a crash with complex meshes.
 				// The crash still happens with limit of 6000000, but 5000000 works.
 				// In the future, identify what's causing that crash and fix it.
-				WARN_PRINT("Mesh LOD generation failed for mesh " + get_name() + " surface " + itos(i) + ", mesh is too complex. Some automatic LODs were not generated.");
+				WARN_PRINT(vformat("Mesh LOD generation failed for mesh '%s' surface %d, mesh is too complex. Some automatic LODs were not generated.", get_name(), i));
 				break;
 			}
 

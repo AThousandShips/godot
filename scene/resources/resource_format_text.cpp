@@ -38,7 +38,7 @@
 ///
 
 void ResourceLoaderText::_printerr() {
-	ERR_PRINT(String(res_path + ":" + itos(lines) + " - Parse Error: " + error_text).utf8().get_data());
+	ERR_PRINT(vformat("%s:%d - Parse Error: %s.", res_path, lines, error_text));
 }
 
 Ref<Resource> ResourceLoaderText::get_resource() {
@@ -445,10 +445,10 @@ Error ResourceLoaderText::load() {
 #ifdef TOOLS_ENABLED
 				// Silence a warning that can happen during the initial filesystem scan due to cache being regenerated.
 				if (ResourceLoader::get_resource_uid(path) != uid) {
-					WARN_PRINT(String(res_path + ":" + itos(lines) + " - ext_resource, invalid UID: " + uidt + " - using text path instead: " + path).utf8().get_data());
+					WARN_PRINT(vformat("%s:%d - ext_resource, invalid UID: %s - using text path instead: '%s'.", res_path, lines, uidt, path));
 				}
 #else
-				WARN_PRINT(String(res_path + ":" + itos(lines) + " - ext_resource, invalid UID: " + uidt + " - using text path instead: " + path).utf8().get_data());
+				WARN_PRINT(vformat("%s:%d - ext_resource, invalid UID: %s - using text path instead: '%s'.", res_path, lines, uidt, path));
 #endif
 			}
 		}

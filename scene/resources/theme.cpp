@@ -299,8 +299,8 @@ bool Theme::has_icon_nocheck(const StringName &p_name, const StringName &p_theme
 void Theme::rename_icon(const StringName &p_old_name, const StringName &p_name, const StringName &p_theme_type) {
 	ERR_FAIL_COND_MSG(!is_valid_item_name(p_name), vformat("Invalid item name: '%s'", p_name));
 	ERR_FAIL_COND_MSG(!is_valid_type_name(p_theme_type), vformat("Invalid type name: '%s'", p_theme_type));
-	ERR_FAIL_COND_MSG(!icon_map.has(p_theme_type), "Cannot rename the icon '" + String(p_old_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
-	ERR_FAIL_COND_MSG(icon_map[p_theme_type].has(p_name), "Cannot rename the icon '" + String(p_old_name) + "' because the new name '" + String(p_name) + "' already exists.");
+	ERR_FAIL_COND_MSG(!icon_map.has(p_theme_type), vformat("Cannot rename the icon '%s' because the node type '%s' does not exist.", String(p_old_name), String(p_theme_type)));
+	ERR_FAIL_COND_MSG(icon_map[p_theme_type].has(p_name), vformat("Cannot rename the icon '%s' because the new name '%s' already exists.", String(p_old_name), String(p_name)));
 	ERR_FAIL_COND_MSG(!icon_map[p_theme_type].has(p_old_name), "Cannot rename the icon '" + String(p_old_name) + "' because it does not exist.");
 
 	icon_map[p_theme_type][p_name] = icon_map[p_theme_type][p_old_name];
@@ -310,7 +310,7 @@ void Theme::rename_icon(const StringName &p_old_name, const StringName &p_name, 
 }
 
 void Theme::clear_icon(const StringName &p_name, const StringName &p_theme_type) {
-	ERR_FAIL_COND_MSG(!icon_map.has(p_theme_type), "Cannot clear the icon '" + String(p_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
+	ERR_FAIL_COND_MSG(!icon_map.has(p_theme_type), vformat("Cannot clear the icon '%s' because the node type '%s' does not exist.", String(p_name), String(p_theme_type)));
 	ERR_FAIL_COND_MSG(!icon_map[p_theme_type].has(p_name), "Cannot clear the icon '" + String(p_name) + "' because it does not exist.");
 
 	if (icon_map[p_theme_type][p_name].is_valid()) {
@@ -409,8 +409,8 @@ bool Theme::has_stylebox_nocheck(const StringName &p_name, const StringName &p_t
 void Theme::rename_stylebox(const StringName &p_old_name, const StringName &p_name, const StringName &p_theme_type) {
 	ERR_FAIL_COND_MSG(!is_valid_item_name(p_name), vformat("Invalid item name: '%s'", p_name));
 	ERR_FAIL_COND_MSG(!is_valid_type_name(p_theme_type), vformat("Invalid type name: '%s'", p_theme_type));
-	ERR_FAIL_COND_MSG(!style_map.has(p_theme_type), "Cannot rename the stylebox '" + String(p_old_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
-	ERR_FAIL_COND_MSG(style_map[p_theme_type].has(p_name), "Cannot rename the stylebox '" + String(p_old_name) + "' because the new name '" + String(p_name) + "' already exists.");
+	ERR_FAIL_COND_MSG(!style_map.has(p_theme_type), vformat("Cannot rename the stylebox '%s' because the node type '%s' does not exist.", String(p_old_name), String(p_theme_type)));
+	ERR_FAIL_COND_MSG(style_map[p_theme_type].has(p_name), vformat("Cannot rename the stylebox '%s' because the new name '%s' already exists.", String(p_old_name), String(p_name)));
 	ERR_FAIL_COND_MSG(!style_map[p_theme_type].has(p_old_name), "Cannot rename the stylebox '" + String(p_old_name) + "' because it does not exist.");
 
 	style_map[p_theme_type][p_name] = style_map[p_theme_type][p_old_name];
@@ -420,7 +420,7 @@ void Theme::rename_stylebox(const StringName &p_old_name, const StringName &p_na
 }
 
 void Theme::clear_stylebox(const StringName &p_name, const StringName &p_theme_type) {
-	ERR_FAIL_COND_MSG(!style_map.has(p_theme_type), "Cannot clear the stylebox '" + String(p_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
+	ERR_FAIL_COND_MSG(!style_map.has(p_theme_type), vformat("Cannot clear the stylebox '%s' because the node type '%s' does not exist.", String(p_name), String(p_theme_type)));
 	ERR_FAIL_COND_MSG(!style_map[p_theme_type].has(p_name), "Cannot clear the stylebox '" + String(p_name) + "' because it does not exist.");
 
 	if (style_map[p_theme_type][p_name].is_valid()) {
@@ -521,8 +521,8 @@ bool Theme::has_font_nocheck(const StringName &p_name, const StringName &p_theme
 void Theme::rename_font(const StringName &p_old_name, const StringName &p_name, const StringName &p_theme_type) {
 	ERR_FAIL_COND_MSG(!is_valid_item_name(p_name), vformat("Invalid item name: '%s'", p_name));
 	ERR_FAIL_COND_MSG(!is_valid_type_name(p_theme_type), vformat("Invalid type name: '%s'", p_theme_type));
-	ERR_FAIL_COND_MSG(!font_map.has(p_theme_type), "Cannot rename the font '" + String(p_old_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
-	ERR_FAIL_COND_MSG(font_map[p_theme_type].has(p_name), "Cannot rename the font '" + String(p_old_name) + "' because the new name '" + String(p_name) + "' already exists.");
+	ERR_FAIL_COND_MSG(!font_map.has(p_theme_type), vformat("Cannot rename the font '%s' because the node type '%s' does not exist.", String(p_old_name), String(p_theme_type)));
+	ERR_FAIL_COND_MSG(font_map[p_theme_type].has(p_name), vformat("Cannot rename the font '%s' because the new name '%s' already exists.", String(p_old_name), String(p_name)));
 	ERR_FAIL_COND_MSG(!font_map[p_theme_type].has(p_old_name), "Cannot rename the font '" + String(p_old_name) + "' because it does not exist.");
 
 	font_map[p_theme_type][p_name] = font_map[p_theme_type][p_old_name];
@@ -532,7 +532,7 @@ void Theme::rename_font(const StringName &p_old_name, const StringName &p_name, 
 }
 
 void Theme::clear_font(const StringName &p_name, const StringName &p_theme_type) {
-	ERR_FAIL_COND_MSG(!font_map.has(p_theme_type), "Cannot clear the font '" + String(p_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
+	ERR_FAIL_COND_MSG(!font_map.has(p_theme_type), vformat("Cannot clear the font '%s' because the node type '%s' does not exist.", String(p_name), String(p_theme_type)));
 	ERR_FAIL_COND_MSG(!font_map[p_theme_type].has(p_name), "Cannot clear the font '" + String(p_name) + "' because it does not exist.");
 
 	if (font_map[p_theme_type][p_name].is_valid()) {
@@ -624,8 +624,8 @@ bool Theme::has_font_size_nocheck(const StringName &p_name, const StringName &p_
 void Theme::rename_font_size(const StringName &p_old_name, const StringName &p_name, const StringName &p_theme_type) {
 	ERR_FAIL_COND_MSG(!is_valid_item_name(p_name), vformat("Invalid item name: '%s'", p_name));
 	ERR_FAIL_COND_MSG(!is_valid_type_name(p_theme_type), vformat("Invalid type name: '%s'", p_theme_type));
-	ERR_FAIL_COND_MSG(!font_size_map.has(p_theme_type), "Cannot rename the font size '" + String(p_old_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
-	ERR_FAIL_COND_MSG(font_size_map[p_theme_type].has(p_name), "Cannot rename the font size '" + String(p_old_name) + "' because the new name '" + String(p_name) + "' already exists.");
+	ERR_FAIL_COND_MSG(!font_size_map.has(p_theme_type), vformat("Cannot rename the font size '%s' because the node type '%s' does not exist.", String(p_old_name), String(p_theme_type)));
+	ERR_FAIL_COND_MSG(font_size_map[p_theme_type].has(p_name), vformat("Cannot rename the font size '%s' because the new name '%s' already exists.", String(p_old_name), String(p_name)));
 	ERR_FAIL_COND_MSG(!font_size_map[p_theme_type].has(p_old_name), "Cannot rename the font size '" + String(p_old_name) + "' because it does not exist.");
 
 	font_size_map[p_theme_type][p_name] = font_size_map[p_theme_type][p_old_name];
@@ -635,7 +635,7 @@ void Theme::rename_font_size(const StringName &p_old_name, const StringName &p_n
 }
 
 void Theme::clear_font_size(const StringName &p_name, const StringName &p_theme_type) {
-	ERR_FAIL_COND_MSG(!font_size_map.has(p_theme_type), "Cannot clear the font size '" + String(p_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
+	ERR_FAIL_COND_MSG(!font_size_map.has(p_theme_type), vformat("Cannot clear the font size '%s' because the node type '%s' does not exist.", String(p_name), String(p_theme_type)));
 	ERR_FAIL_COND_MSG(!font_size_map[p_theme_type].has(p_name), "Cannot clear the font size '" + String(p_name) + "' because it does not exist.");
 
 	font_size_map[p_theme_type].erase(p_name);
@@ -710,8 +710,8 @@ bool Theme::has_color_nocheck(const StringName &p_name, const StringName &p_them
 void Theme::rename_color(const StringName &p_old_name, const StringName &p_name, const StringName &p_theme_type) {
 	ERR_FAIL_COND_MSG(!is_valid_item_name(p_name), vformat("Invalid item name: '%s'", p_name));
 	ERR_FAIL_COND_MSG(!is_valid_type_name(p_theme_type), vformat("Invalid type name: '%s'", p_theme_type));
-	ERR_FAIL_COND_MSG(!color_map.has(p_theme_type), "Cannot rename the color '" + String(p_old_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
-	ERR_FAIL_COND_MSG(color_map[p_theme_type].has(p_name), "Cannot rename the color '" + String(p_old_name) + "' because the new name '" + String(p_name) + "' already exists.");
+	ERR_FAIL_COND_MSG(!color_map.has(p_theme_type), vformat("Cannot rename the color '%s' because the node type '%s' does not exist.", String(p_old_name), String(p_theme_type)));
+	ERR_FAIL_COND_MSG(color_map[p_theme_type].has(p_name), vformat("Cannot rename the color '%s' because the new name '%s' already exists.", String(p_old_name), String(p_name)));
 	ERR_FAIL_COND_MSG(!color_map[p_theme_type].has(p_old_name), "Cannot rename the color '" + String(p_old_name) + "' because it does not exist.");
 
 	color_map[p_theme_type][p_name] = color_map[p_theme_type][p_old_name];
@@ -721,7 +721,7 @@ void Theme::rename_color(const StringName &p_old_name, const StringName &p_name,
 }
 
 void Theme::clear_color(const StringName &p_name, const StringName &p_theme_type) {
-	ERR_FAIL_COND_MSG(!color_map.has(p_theme_type), "Cannot clear the color '" + String(p_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
+	ERR_FAIL_COND_MSG(!color_map.has(p_theme_type), vformat("Cannot clear the color '%s' because the node type '%s' does not exist.", String(p_name), String(p_theme_type)));
 	ERR_FAIL_COND_MSG(!color_map[p_theme_type].has(p_name), "Cannot clear the color '" + String(p_name) + "' because it does not exist.");
 
 	color_map[p_theme_type].erase(p_name);
@@ -796,8 +796,8 @@ bool Theme::has_constant_nocheck(const StringName &p_name, const StringName &p_t
 void Theme::rename_constant(const StringName &p_old_name, const StringName &p_name, const StringName &p_theme_type) {
 	ERR_FAIL_COND_MSG(!is_valid_item_name(p_name), vformat("Invalid item name: '%s'", p_name));
 	ERR_FAIL_COND_MSG(!is_valid_type_name(p_theme_type), vformat("Invalid type name: '%s'", p_theme_type));
-	ERR_FAIL_COND_MSG(!constant_map.has(p_theme_type), "Cannot rename the constant '" + String(p_old_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
-	ERR_FAIL_COND_MSG(constant_map[p_theme_type].has(p_name), "Cannot rename the constant '" + String(p_old_name) + "' because the new name '" + String(p_name) + "' already exists.");
+	ERR_FAIL_COND_MSG(!constant_map.has(p_theme_type), vformat("Cannot rename the constant '%s' because the node type '%s' does not exist.", String(p_old_name), String(p_theme_type)));
+	ERR_FAIL_COND_MSG(constant_map[p_theme_type].has(p_name), vformat("Cannot rename the constant '%s' because the new name '%s' already exists.", String(p_old_name), String(p_name)));
 	ERR_FAIL_COND_MSG(!constant_map[p_theme_type].has(p_old_name), "Cannot rename the constant '" + String(p_old_name) + "' because it does not exist.");
 
 	constant_map[p_theme_type][p_name] = constant_map[p_theme_type][p_old_name];
@@ -807,7 +807,7 @@ void Theme::rename_constant(const StringName &p_old_name, const StringName &p_na
 }
 
 void Theme::clear_constant(const StringName &p_name, const StringName &p_theme_type) {
-	ERR_FAIL_COND_MSG(!constant_map.has(p_theme_type), "Cannot clear the constant '" + String(p_name) + "' because the node type '" + String(p_theme_type) + "' does not exist.");
+	ERR_FAIL_COND_MSG(!constant_map.has(p_theme_type), vformat("Cannot clear the constant '%s' because the node type '%s' does not exist.", String(p_name), String(p_theme_type)));
 	ERR_FAIL_COND_MSG(!constant_map[p_theme_type].has(p_name), "Cannot clear the constant '" + String(p_name) + "' because it does not exist.");
 
 	constant_map[p_theme_type].erase(p_name);

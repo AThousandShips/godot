@@ -253,7 +253,7 @@ void Skeleton3D::_update_process_order() {
 	for (int i = 0; i < len; i++) {
 		if (bonesptr[i].parent >= len) {
 			// Validate this just in case.
-			ERR_PRINT("Bone " + itos(i) + " has invalid parent: " + itos(bonesptr[i].parent));
+			ERR_PRINT(vformat("Bone %d has invalid parent: %d.", i, bonesptr[i].parent));
 			bonesptr[i].parent = -1;
 		}
 
@@ -383,13 +383,13 @@ void Skeleton3D::_notification(int p_what) {
 							}
 
 							if (!found) {
-								ERR_PRINT("Skin bind #" + itos(i) + " contains named bind '" + String(bind_name) + "' but Skeleton3D has no bone by that name.");
+								ERR_PRINT(vformat("Skin bind #%d contains named bind '%s' but Skeleton3D has no bone by that name.", i, String(bind_name)));
 								E->skin_bone_indices_ptrs[i] = 0;
 							}
 						} else if (skin->get_bind_bone(i) >= 0) {
 							int bind_index = skin->get_bind_bone(i);
 							if (bind_index >= len) {
-								ERR_PRINT("Skin bind #" + itos(i) + " contains bone index bind: " + itos(bind_index) + " , which is greater than the skeleton bone count: " + itos(len) + ".");
+								ERR_PRINT(vformat("Skin bind #%d contains bone index bind: %d, which is greater than the skeleton bone count: %d.", i, bind_index, len));
 								E->skin_bone_indices_ptrs[i] = 0;
 							} else {
 								E->skin_bone_indices_ptrs[i] = bind_index;
@@ -529,7 +529,7 @@ void Skeleton3D::set_bone_name(int p_bone, const String &p_name) {
 
 	const int *bone_index_ptr = name_to_bone_index.getptr(p_name);
 	if (bone_index_ptr != nullptr) {
-		ERR_FAIL_COND_MSG(*bone_index_ptr != p_bone, "Skeleton3D: '" + get_name() + "', bone name:  '" + p_name + "' already exists.");
+		ERR_FAIL_COND_MSG(*bone_index_ptr != p_bone, vformat("Skeleton3D: '%s', bone name:  '%s' already exists.", get_name(), p_name));
 		return; // No need to rename, the bone already has the given name.
 	}
 

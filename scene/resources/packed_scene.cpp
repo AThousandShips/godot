@@ -176,7 +176,7 @@ Node *SceneState::instantiate(GenEditState p_edit_state) const {
 			NODE_FROM_ID(nparent, n.parent);
 #ifdef DEBUG_ENABLED
 			if (!nparent && (n.parent & FLAG_ID_IS_PATH)) {
-				WARN_PRINT(String("Parent path '" + String(node_paths[n.parent & FLAG_MASK]) + "' for node '" + String(snames[n.name]) + "' has vanished when instantiating: '" + get_path() + "'.").ascii().get_data());
+				WARN_PRINT(vformat("Parent path '%s' for node '%s' has vanished when instantiating: '%s'.", String(node_paths[n.parent & FLAG_MASK]), String(snames[n.name]), get_path()));
 				old_parent_path = String(node_paths[n.parent & FLAG_MASK]).trim_prefix("./").replace("/", "@");
 				nparent = ret_nodes[0];
 			}
