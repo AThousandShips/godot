@@ -401,7 +401,7 @@ void GI::sdfgi_reset() {
 
 static RID create_clear_texture(const RD::TextureFormat &p_format, const String &p_name) {
 	RID texture = RD::get_singleton()->texture_create(p_format, RD::TextureView());
-	ERR_FAIL_COND_V_MSG(texture.is_null(), RID(), String("Cannot create texture: ") + p_name);
+	ERR_FAIL_COND_V_MSG(texture.is_null(), RID(), vformat("Cannot create texture: %s.", p_name));
 
 	RD::get_singleton()->set_resource_name(texture, p_name);
 	RD::get_singleton()->texture_clear(texture, Color(0, 0, 0, 0), 0, p_format.mipmaps, 0, p_format.array_layers);

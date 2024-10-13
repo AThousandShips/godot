@@ -552,7 +552,7 @@ TextureStorage::~TextureStorage() {
 	free_decal_data();
 
 	if (decal_atlas.textures.size()) {
-		ERR_PRINT("Decal Atlas: " + itos(decal_atlas.textures.size()) + " textures were not removed from the atlas.");
+		ERR_PRINT(vformat("Decal Atlas: %d textures were not removed from the atlas.", decal_atlas.textures.size()));
 	}
 
 	if (decal_atlas.texture.is_valid()) {

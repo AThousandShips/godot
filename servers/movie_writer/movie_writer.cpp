@@ -118,7 +118,7 @@ void MovieWriter::begin(const Size2i &p_movie_size, uint32_t p_fps, const String
 	AudioDriverDummy::get_dummy_singleton()->set_speaker_mode(AudioDriver::SpeakerMode(get_audio_speaker_mode()));
 	fps = p_fps;
 	if ((mix_rate % fps) != 0) {
-		WARN_PRINT("MovieWriter's audio mix rate (" + itos(mix_rate) + ") can not be divided by the recording FPS (" + itos(fps) + "). Audio may go out of sync over time.");
+		WARN_PRINT(vformat("MovieWriter's audio mix rate (%d) can not be divided by the recording FPS (%d). Audio may go out of sync over time.", mix_rate, fps));
 	}
 
 	audio_channels = AudioDriverDummy::get_dummy_singleton()->get_channels();

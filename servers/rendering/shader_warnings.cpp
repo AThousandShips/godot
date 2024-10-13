@@ -109,7 +109,7 @@ ShaderWarning::Code ShaderWarning::get_code_from_name(const String &p_name) {
 		}
 	}
 
-	ERR_FAIL_V_MSG(WARNING_MAX, "Invalid shader warning name: " + p_name);
+	ERR_FAIL_V_MSG(WARNING_MAX, vformat("Invalid shader warning name: %s.", p_name));
 }
 
 static HashMap<int, uint32_t> *code_to_flags_map = nullptr;

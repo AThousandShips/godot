@@ -2135,7 +2135,7 @@ void RenderingServer::set_warn_on_surface_upgrade(bool p_warn) {
 #ifndef DISABLE_DEPRECATED
 void RenderingServer::fix_surface_compatibility(SurfaceData &p_surface, const String &p_path) {
 	uint64_t surface_version = p_surface.format & (ARRAY_FLAG_FORMAT_VERSION_MASK << ARRAY_FLAG_FORMAT_VERSION_SHIFT);
-	ERR_FAIL_COND_MSG(surface_version > ARRAY_FLAG_FORMAT_CURRENT_VERSION, "Cannot convert surface with version provided (" + itos((surface_version >> RS::ARRAY_FLAG_FORMAT_VERSION_SHIFT) & RS::ARRAY_FLAG_FORMAT_VERSION_MASK) + ") to current version (" + itos((RS::ARRAY_FLAG_FORMAT_CURRENT_VERSION >> RS::ARRAY_FLAG_FORMAT_VERSION_SHIFT) & RS::ARRAY_FLAG_FORMAT_VERSION_MASK) + ")");
+	ERR_FAIL_COND_MSG(surface_version > ARRAY_FLAG_FORMAT_CURRENT_VERSION, vformat("Cannot convert surface with version provided (%d) to current version (%d).", (surface_version >> RS::ARRAY_FLAG_FORMAT_VERSION_SHIFT) & RS::ARRAY_FLAG_FORMAT_VERSION_MASK, (RS::ARRAY_FLAG_FORMAT_CURRENT_VERSION >> RS::ARRAY_FLAG_FORMAT_VERSION_SHIFT) & RS::ARRAY_FLAG_FORMAT_VERSION_MASK));
 
 #ifdef TOOLS_ENABLED
 	// Editor callback to ask user about re-saving all meshes.
@@ -2147,7 +2147,7 @@ void RenderingServer::fix_surface_compatibility(SurfaceData &p_surface, const St
 		WARN_PRINT_ONCE_ED("At least one surface uses an old surface format and needs to be upgraded. The upgrade happens automatically at load time every time until the mesh is saved again or re-imported. Once saved (or re-imported), this mesh will be incompatible with earlier versions of Godot.");
 
 		if (!p_path.is_empty()) {
-			WARN_PRINT("A surface of " + p_path + " uses an old surface format and needs to be upgraded.");
+			WARN_PRINT(vformat("A surface of '%s' uses an old surface format and needs to be upgraded.", p_path));
 		}
 	}
 #endif

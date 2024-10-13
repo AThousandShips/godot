@@ -112,7 +112,7 @@ void AudioDriver::input_buffer_write(int32_t sample) {
 			input_size++;
 		}
 	} else {
-		WARN_PRINT("input_buffer_write: Invalid input_position=" + itos(input_position) + " input_buffer.size()=" + itos(input_buffer.size()));
+		WARN_PRINT(vformat("input_buffer_write: Invalid input_position=%d input_buffer.size()=%d.", input_position, input_buffer.size()));
 	}
 }
 

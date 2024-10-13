@@ -4033,10 +4033,10 @@ void RendererSceneCull::_update_instance_shader_uniforms_from_material(HashMap<S
 		StringName name = E.info.name;
 		if (isparams.has(name)) {
 			if (isparams[name].info.type != E.info.type) {
-				WARN_PRINT("More than one material in instance export the same instance shader uniform '" + E.info.name + "', but they do it with different data types. Only the first one (in order) will display correctly.");
+				WARN_PRINT(vformat("More than one material in instance export the same instance shader uniform '%s', but they do it with different data types. Only the first one (in order) will display correctly.", E.info.name));
 			}
 			if (isparams[name].index != E.index) {
-				WARN_PRINT("More than one material in instance export the same instance shader uniform '" + E.info.name + "', but they do it with different indices. Only the first one (in order) will display correctly.");
+				WARN_PRINT(vformat("More than one material in instance export the same instance shader uniform '%s', but they do it with different indices. Only the first one (in order) will display correctly.", E.info.name));
 			}
 			continue; //first one found always has priority
 		}

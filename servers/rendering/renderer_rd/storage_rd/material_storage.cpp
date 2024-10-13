@@ -749,7 +749,7 @@ void MaterialStorage::MaterialData::update_uniform_buffer(const HashMap<StringNa
 			if (gv) {
 				index = gv->buffer_index;
 			} else {
-				WARN_PRINT("Shader uses global parameter '" + E.key + "', but it was removed at some point. Material will not display correctly.");
+				WARN_PRINT(vformat("Shader uses global parameter '%s', but it was removed at some point. Material will not display correctly.", E.key));
 			}
 
 			uint32_t offset = p_uniform_offsets[E.value.order];
@@ -867,7 +867,7 @@ void MaterialStorage::MaterialData::update_textures(const HashMap<StringName, Va
 			GlobalShaderUniforms::Variable *v = material_storage->global_shader_uniforms.variables.getptr(uniform_name);
 			if (v) {
 				if (v->buffer_index >= 0) {
-					WARN_PRINT("Shader uses global parameter texture '" + String(uniform_name) + "', but it changed type and is no longer a texture!.");
+					WARN_PRINT(vformat("Shader uses global parameter texture '%s', but it changed type and is no longer a texture!.", String(uniform_name)));
 
 				} else {
 					HashMap<StringName, uint64_t>::Iterator E = used_global_textures.find(uniform_name);
@@ -882,7 +882,7 @@ void MaterialStorage::MaterialData::update_textures(const HashMap<StringName, Va
 				}
 
 			} else {
-				WARN_PRINT("Shader uses global parameter texture '" + String(uniform_name) + "', but it was removed at some point. Material will not display correctly.");
+				WARN_PRINT(vformat("Shader uses global parameter texture '%s', but it was removed at some point. Material will not display correctly.", String(uniform_name)));
 			}
 		} else {
 			HashMap<StringName, Variant>::ConstIterator V = p_parameters.find(uniform_name);
@@ -1801,7 +1801,7 @@ void MaterialStorage::global_shader_parameters_instance_update(RID p_instance, i
 	ERR_FAIL_INDEX(p_index, ShaderLanguage::MAX_INSTANCE_UNIFORM_INDICES);
 
 	Variant::Type value_type = p_value.get_type();
-	ERR_FAIL_COND_MSG(p_value.get_type() > Variant::COLOR, "Unsupported variant type for instance parameter: " + Variant::get_type_name(value_type)); //anything greater not supported
+	ERR_FAIL_COND_MSG(p_value.get_type() > Variant::COLOR, vformat("Unsupported variant type for instance parameter: %s.", Variant::get_type_name(value_type))); // Anything greater not supported.
 
 	const ShaderLanguage::DataType datatype_from_value[Variant::COLOR + 1] = {
 		ShaderLanguage::TYPE_MAX, //nil
@@ -1843,7 +1843,7 @@ void MaterialStorage::global_shader_parameters_instance_update(RID p_instance, i
 	} else {
 		datatype = datatype_from_value[value_type];
 	}
-	ERR_FAIL_COND_MSG(datatype == ShaderLanguage::TYPE_MAX, "Unsupported variant type for instance parameter: " + Variant::get_type_name(value_type)); //anything greater not supported
+	ERR_FAIL_COND_MSG(datatype == ShaderLanguage::TYPE_MAX, vformat("Unsupported variant type for instance parameter: %s.", Variant::get_type_name(value_type))); // Anything greater not supported.
 
 	pos += p_index;
 

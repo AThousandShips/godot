@@ -81,7 +81,7 @@ void MaterialStorage::shader_set_code(RID p_shader, const String &p_code) {
 		new_mode = RS::SHADER_FOG;
 	} else {
 		new_mode = RS::SHADER_MAX;
-		ERR_FAIL_MSG("Shader type " + mode_string + " not supported in Dummy renderer.");
+		ERR_FAIL_MSG(vformat("Shader type %s not supported in Dummy renderer.", mode_string));
 	}
 	ShaderCompiler::IdentifierActions actions;
 	actions.uniforms = &shader->uniforms;

@@ -480,7 +480,7 @@ Error RenderingDevice::buffer_update(RID p_buffer, uint32_t p_offset, uint32_t p
 
 	Buffer *buffer = _get_buffer_from_owner(p_buffer);
 	ERR_FAIL_NULL_V_MSG(buffer, ERR_INVALID_PARAMETER, "Buffer argument is not a valid buffer of any type.");
-	ERR_FAIL_COND_V_MSG(p_offset + p_size > buffer->size, ERR_INVALID_PARAMETER, "Attempted to write buffer (" + itos((p_offset + p_size) - buffer->size) + " bytes) past the end.");
+	ERR_FAIL_COND_V_MSG(p_offset + p_size > buffer->size, ERR_INVALID_PARAMETER, vformat("Attempted to write buffer (%d bytes) past the end.", (p_offset + p_size) - buffer->size));
 
 	_check_transfer_worker_buffer(buffer);
 
@@ -584,7 +584,7 @@ Error RenderingDevice::buffer_clear(RID p_buffer, uint32_t p_offset, uint32_t p_
 	}
 
 	ERR_FAIL_COND_V_MSG(p_offset + p_size > buffer->size, ERR_INVALID_PARAMETER,
-			"Attempted to write buffer (" + itos((p_offset + p_size) - buffer->size) + " bytes) past the end.");
+			vformat("Attempted to write buffer (%d bytes) past the end.", (p_offset + p_size) - buffer->size));
 
 	_check_transfer_worker_buffer(buffer);
 
@@ -764,17 +764,17 @@ RID RenderingDevice::texture_create(const TextureFormat &p_format, const Texture
 	uint32_t required_mipmaps = get_image_required_mipmaps(format.width, format.height, format.depth);
 
 	ERR_FAIL_COND_V_MSG(required_mipmaps < format.mipmaps, RID(),
-			"Too many mipmaps requested for texture format and dimensions (" + itos(format.mipmaps) + "), maximum allowed: (" + itos(required_mipmaps) + ").");
+			vformat("Too many mipmaps requested for texture format and dimensions (%d), maximum allowed: (%d).", format.mipmaps, required_mipmaps));
 
 	uint32_t forced_usage_bits = 0;
 	if (p_data.size()) {
 		ERR_FAIL_COND_V_MSG(p_data.size() != (int)format.array_layers, RID(),
-				"Default supplied data for image format is of invalid length (" + itos(p_data.size()) + "), should be (" + itos(format.array_layers) + ").");
+				vformat("Default supplied data for image format is of invalid length (%d), should be (%d).", p_data.size(), format.array_layers));
 
 		for (uint32_t i = 0; i < format.array_layers; i++) {
 			uint32_t required_size = get_image_format_required_size(format.format, format.width, format.height, format.depth, format.mipmaps);
 			ERR_FAIL_COND_V_MSG((uint32_t)p_data[i].size() != required_size, RID(),
-					"Data for slice index " + itos(i) + " (mapped to layer " + itos(i) + ") differs in size (supplied: " + itos(p_data[i].size()) + ") than what is required by the format (" + itos(required_size) + ").");
+					vformat("Data for slice index %d (mapped to layer %d) differs in size (supplied: %d) than what is required by the format (%d).", i, i, p_data[i].size(), required_size));
 		}
 
 		ERR_FAIL_COND_V_MSG(format.usage_bits & TEXTURE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, RID(),
@@ -793,22 +793,22 @@ RID RenderingDevice::texture_create(const TextureFormat &p_format, const Texture
 		String format_text = "'" + String(FORMAT_NAMES[format.format]) + "'";
 
 		if ((format.usage_bits & TEXTURE_USAGE_SAMPLING_BIT) && !supported_usage.has_flag(TEXTURE_USAGE_SAMPLING_BIT)) {
-			ERR_FAIL_V_MSG(RID(), "Format " + format_text + " does not support usage as sampling texture.");
+			ERR_FAIL_V_MSG(RID(), vformat("Format %s does not support usage as sampling texture.", format_text));
 		}
 		if ((format.usage_bits & TEXTURE_USAGE_COLOR_ATTACHMENT_BIT) && !supported_usage.has_flag(TEXTURE_USAGE_COLOR_ATTACHMENT_BIT)) {
-			ERR_FAIL_V_MSG(RID(), "Format " + format_text + " does not support usage as color attachment.");
+			ERR_FAIL_V_MSG(RID(), vformat("Format %s does not support usage as color attachment.", format_text));
 		}
 		if ((format.usage_bits & TEXTURE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT) && !supported_usage.has_flag(TEXTURE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT)) {
-			ERR_FAIL_V_MSG(RID(), "Format " + format_text + " does not support usage as depth-stencil attachment.");
+			ERR_FAIL_V_MSG(RID(), vformat("Format %s does not support usage as depth-stencil attachment.", format_text));
 		}
 		if ((format.usage_bits & TEXTURE_USAGE_STORAGE_BIT) && !supported_usage.has_flag(TEXTURE_USAGE_STORAGE_BIT)) {
-			ERR_FAIL_V_MSG(RID(), "Format " + format_text + " does not support usage as storage image.");
+			ERR_FAIL_V_MSG(RID(), vformat("Format %s does not support usage as storage image.", format_text));
 		}
 		if ((format.usage_bits & TEXTURE_USAGE_STORAGE_ATOMIC_BIT) && !supported_usage.has_flag(TEXTURE_USAGE_STORAGE_ATOMIC_BIT)) {
-			ERR_FAIL_V_MSG(RID(), "Format " + format_text + " does not support usage as atomic storage image.");
+			ERR_FAIL_V_MSG(RID(), vformat("Format %s does not support usage as atomic storage image.", format_text));
 		}
 		if ((format.usage_bits & TEXTURE_USAGE_VRS_ATTACHMENT_BIT) && !supported_usage.has_flag(TEXTURE_USAGE_VRS_ATTACHMENT_BIT)) {
-			ERR_FAIL_V_MSG(RID(), "Format " + format_text + " does not support usage as VRS attachment.");
+			ERR_FAIL_V_MSG(RID(), vformat("Format %s does not support usage as VRS attachment.", format_text));
 		}
 	}
 
@@ -1228,7 +1228,7 @@ Error RenderingDevice::_texture_initialize(RID p_texture, uint32_t p_layer, cons
 	uint32_t required_align = _texture_alignment(texture);
 
 	ERR_FAIL_COND_V_MSG(required_size != (uint32_t)p_data.size(), ERR_INVALID_PARAMETER,
-			"Required size for texture update (" + itos(required_size) + ") does not match data supplied size (" + itos(p_data.size()) + ").");
+			vformat("Required size for texture update (%d) does not match data supplied size (%d).", required_size, p_data.size()));
 
 	uint32_t block_w, block_h;
 	get_compressed_image_format_block_dimensions(texture->format, block_w, block_h);
@@ -1376,7 +1376,7 @@ Error RenderingDevice::texture_update(RID p_texture, uint32_t p_layer, const Vec
 	uint32_t required_align = _texture_alignment(texture);
 
 	ERR_FAIL_COND_V_MSG(required_size != (uint32_t)p_data.size(), ERR_INVALID_PARAMETER,
-			"Required size for texture update (" + itos(required_size) + ") does not match data supplied size (" + itos(p_data.size()) + ").");
+			vformat("Required size for texture update (%d) does not match data supplied size (%d).", required_size, p_data.size()));
 
 	_check_transfer_worker_texture(texture);
 
@@ -2089,7 +2089,7 @@ static RDD::AttachmentLoadOp initial_action_to_load_op(RenderingDevice::InitialA
 		case RenderingDevice::INITIAL_ACTION_DISCARD:
 			return RDD::ATTACHMENT_LOAD_OP_DONT_CARE;
 		default:
-			ERR_FAIL_V_MSG(RDD::ATTACHMENT_LOAD_OP_DONT_CARE, "Invalid initial action value (" + itos(p_action) + ")");
+			ERR_FAIL_V_MSG(RDD::ATTACHMENT_LOAD_OP_DONT_CARE, vformat("Invalid initial action value (%d).", p_action));
 	}
 }
 
@@ -2100,7 +2100,7 @@ static RDD::AttachmentStoreOp final_action_to_store_op(RenderingDevice::FinalAct
 		case RenderingDevice::FINAL_ACTION_DISCARD:
 			return RDD::ATTACHMENT_STORE_OP_DONT_CARE;
 		default:
-			ERR_FAIL_V_MSG(RDD::ATTACHMENT_STORE_OP_DONT_CARE, "Invalid final action value (" + itos(p_action) + ")");
+			ERR_FAIL_V_MSG(RDD::ATTACHMENT_STORE_OP_DONT_CARE, vformat("Invalid final action value (%d).", p_action));
 	}
 }
 
@@ -2135,7 +2135,7 @@ RDD::RenderPassID RenderingDevice::_render_pass_create(const Vector<AttachmentFo
 		ERR_FAIL_INDEX_V(p_attachments[i].format, DATA_FORMAT_MAX, RDD::RenderPassID());
 		ERR_FAIL_INDEX_V(p_attachments[i].samples, TEXTURE_SAMPLES_MAX, RDD::RenderPassID());
 		ERR_FAIL_COND_V_MSG(!(p_attachments[i].usage_flags & (TEXTURE_USAGE_COLOR_ATTACHMENT_BIT | TEXTURE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | TEXTURE_USAGE_INPUT_ATTACHMENT_BIT | TEXTURE_USAGE_VRS_ATTACHMENT_BIT)),
-				RDD::RenderPassID(), "Texture format for index (" + itos(i) + ") requires an attachment (color, depth-stencil, input or VRS) bit set.");
+				RDD::RenderPassID(), vformat("Texture format for index (%d) requires an attachment (color, depth-stencil, input or VRS) bit set.", i));
 
 		RDD::Attachment description;
 		description.format = p_attachments[i].format;
@@ -2201,15 +2201,15 @@ RDD::RenderPassID RenderingDevice::_render_pass_create(const Vector<AttachmentFo
 				reference.attachment = RDD::AttachmentReference::UNUSED;
 				reference.layout = RDD::TEXTURE_LAYOUT_UNDEFINED;
 			} else {
-				ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), color attachment (" + itos(j) + ").");
-				ERR_FAIL_COND_V_MSG(!(p_attachments[attachment].usage_flags & TEXTURE_USAGE_COLOR_ATTACHMENT_BIT), RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), it's marked as depth, but it's not usable as color attachment.");
-				ERR_FAIL_COND_V_MSG(attachment_last_pass[attachment] == i, RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), it already was used for something else before in this pass.");
+				ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), color attachment (%d).", attachment, i, j));
+				ERR_FAIL_COND_V_MSG(!(p_attachments[attachment].usage_flags & TEXTURE_USAGE_COLOR_ATTACHMENT_BIT), RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), it's marked as depth, but it's not usable as color attachment.", attachment, i));
+				ERR_FAIL_COND_V_MSG(attachment_last_pass[attachment] == i, RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), it already was used for something else before in this pass.", attachment, i));
 
 				if (is_multisample_first) {
 					texture_samples = p_attachments[attachment].samples;
 					is_multisample_first = false;
 				} else {
-					ERR_FAIL_COND_V_MSG(texture_samples != p_attachments[attachment].samples, RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), if an attachment is marked as multisample, all of them should be multisample and use the same number of samples.");
+					ERR_FAIL_COND_V_MSG(texture_samples != p_attachments[attachment].samples, RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), if an attachment is marked as multisample, all of them should be multisample and use the same number of samples.", attachment, i));
 				}
 				reference.attachment = attachment_remap[attachment];
 				reference.layout = RDD::TEXTURE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
@@ -2226,9 +2226,9 @@ RDD::RenderPassID RenderingDevice::_render_pass_create(const Vector<AttachmentFo
 				reference.attachment = RDD::AttachmentReference::UNUSED;
 				reference.layout = RDD::TEXTURE_LAYOUT_UNDEFINED;
 			} else {
-				ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), input attachment (" + itos(j) + ").");
-				ERR_FAIL_COND_V_MSG(!(p_attachments[attachment].usage_flags & TEXTURE_USAGE_INPUT_ATTACHMENT_BIT), RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), it isn't marked as an input texture.");
-				ERR_FAIL_COND_V_MSG(attachment_last_pass[attachment] == i, RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), it already was used for something else before in this pass.");
+				ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), vformat("Invalid framebuffer format attachment(%d), in pass (%d), input attachment (%d).", attachment, i, j));
+				ERR_FAIL_COND_V_MSG(!(p_attachments[attachment].usage_flags & TEXTURE_USAGE_INPUT_ATTACHMENT_BIT), RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), it isn't marked as an input texture.", attachment, i));
+				ERR_FAIL_COND_V_MSG(attachment_last_pass[attachment] == i, RDD::RenderPassID(), vformat("Invalid framebuffer format attachment(%d), in pass (%d), it already was used for something else before in this pass.", attachment, i));
 				reference.attachment = attachment_remap[attachment];
 				reference.layout = RDD::TEXTURE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				attachment_last_pass[attachment] = i;
@@ -2238,7 +2238,7 @@ RDD::RenderPassID RenderingDevice::_render_pass_create(const Vector<AttachmentFo
 		}
 
 		if (pass->resolve_attachments.size() > 0) {
-			ERR_FAIL_COND_V_MSG(pass->resolve_attachments.size() != pass->color_attachments.size(), RDD::RenderPassID(), "The amount of resolve attachments (" + itos(pass->resolve_attachments.size()) + ") must match the number of color attachments (" + itos(pass->color_attachments.size()) + ").");
+			ERR_FAIL_COND_V_MSG(pass->resolve_attachments.size() != pass->color_attachments.size(), RDD::RenderPassID(), vformat("The number of resolve attachments (%d) must match the number of color attachments (%d).", pass->resolve_attachments.size(), pass->color_attachments.size()));
 			ERR_FAIL_COND_V_MSG(texture_samples == TEXTURE_SAMPLES_1, RDD::RenderPassID(), "Resolve attachments specified, but color attachments are not multisample.");
 		}
 		for (int j = 0; j < pass->resolve_attachments.size(); j++) {
@@ -2250,12 +2250,12 @@ RDD::RenderPassID RenderingDevice::_render_pass_create(const Vector<AttachmentFo
 				reference.attachment = RDD::AttachmentReference::UNUSED;
 				reference.layout = RDD::TEXTURE_LAYOUT_UNDEFINED;
 			} else {
-				ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), resolve attachment (" + itos(j) + ").");
-				ERR_FAIL_COND_V_MSG(pass->color_attachments[j] == ATTACHMENT_UNUSED, RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), resolve attachment (" + itos(j) + "), the respective color attachment is marked as unused.");
-				ERR_FAIL_COND_V_MSG(!(p_attachments[attachment].usage_flags & TEXTURE_USAGE_COLOR_ATTACHMENT_BIT), RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), resolve attachment, it isn't marked as a color texture.");
-				ERR_FAIL_COND_V_MSG(attachment_last_pass[attachment] == i, RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), it already was used for something else before in this pass.");
+				ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), resolve attachment (%d).", attachment, i, j));
+				ERR_FAIL_COND_V_MSG(pass->color_attachments[j] == ATTACHMENT_UNUSED, RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), resolve attachment (%d), the respective color attachment is marked as unused.", attachment, i, j));
+				ERR_FAIL_COND_V_MSG(!(p_attachments[attachment].usage_flags & TEXTURE_USAGE_COLOR_ATTACHMENT_BIT), RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), resolve attachment, it isn't marked as a color texture.", attachment, i));
+				ERR_FAIL_COND_V_MSG(attachment_last_pass[attachment] == i, RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), it already was used for something else before in this pass.", attachment, i));
 				bool multisample = p_attachments[attachment].samples > TEXTURE_SAMPLES_1;
-				ERR_FAIL_COND_V_MSG(multisample, RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), resolve attachments can't be multisample.");
+				ERR_FAIL_COND_V_MSG(multisample, RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), resolve attachments can't be multisample.", attachment, i));
 				reference.attachment = attachment_remap[attachment];
 				reference.layout = RDD::TEXTURE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; // RDD::TEXTURE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
 				attachment_last_pass[attachment] = i;
@@ -2266,9 +2266,9 @@ RDD::RenderPassID RenderingDevice::_render_pass_create(const Vector<AttachmentFo
 
 		if (pass->depth_attachment != ATTACHMENT_UNUSED) {
 			int32_t attachment = pass->depth_attachment;
-			ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), "Invalid framebuffer depth format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), depth attachment.");
-			ERR_FAIL_COND_V_MSG(!(p_attachments[attachment].usage_flags & TEXTURE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT), RDD::RenderPassID(), "Invalid framebuffer depth format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), it's marked as depth, but it's not a depth attachment.");
-			ERR_FAIL_COND_V_MSG(attachment_last_pass[attachment] == i, RDD::RenderPassID(), "Invalid framebuffer depth format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), it already was used for something else before in this pass.");
+			ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), vformat("Invalid framebuffer depth format attachment (%d), in pass (%d), depth attachment.", attachment, i));
+			ERR_FAIL_COND_V_MSG(!(p_attachments[attachment].usage_flags & TEXTURE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT), RDD::RenderPassID(), vformat("Invalid framebuffer depth format attachment (%d), in pass (%d), it's marked as depth, but it's not a depth attachment.", attachment, i));
+			ERR_FAIL_COND_V_MSG(attachment_last_pass[attachment] == i, RDD::RenderPassID(), vformat("Invalid framebuffer depth format attachment (%d), in pass (%d), it already was used for something else before in this pass.", attachment, i));
 			subpass.depth_stencil_reference.attachment = attachment_remap[attachment];
 			subpass.depth_stencil_reference.layout = RDD::TEXTURE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 			attachment_last_pass[attachment] = i;
@@ -2277,7 +2277,7 @@ RDD::RenderPassID RenderingDevice::_render_pass_create(const Vector<AttachmentFo
 				texture_samples = p_attachments[attachment].samples;
 				is_multisample_first = false;
 			} else {
-				ERR_FAIL_COND_V_MSG(texture_samples != p_attachments[attachment].samples, RDD::RenderPassID(), "Invalid framebuffer depth format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), if an attachment is marked as multisample, all of them should be multisample and use the same number of samples including the depth.");
+				ERR_FAIL_COND_V_MSG(texture_samples != p_attachments[attachment].samples, RDD::RenderPassID(), vformat("Invalid framebuffer depth format attachment (%d), in pass (%d), if an attachment is marked as multisample, all of them should be multisample and use the same number of samples including the depth.", attachment, i));
 			}
 
 		} else {
@@ -2287,9 +2287,9 @@ RDD::RenderPassID RenderingDevice::_render_pass_create(const Vector<AttachmentFo
 
 		if (pass->vrs_attachment != ATTACHMENT_UNUSED) {
 			int32_t attachment = pass->vrs_attachment;
-			ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), "Invalid framebuffer VRS format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), VRS attachment.");
-			ERR_FAIL_COND_V_MSG(!(p_attachments[attachment].usage_flags & TEXTURE_USAGE_VRS_ATTACHMENT_BIT), RDD::RenderPassID(), "Invalid framebuffer VRS format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), it's marked as VRS, but it's not a VRS attachment.");
-			ERR_FAIL_COND_V_MSG(attachment_last_pass[attachment] == i, RDD::RenderPassID(), "Invalid framebuffer VRS attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), it already was used for something else before in this pass.");
+			ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), vformat("Invalid framebuffer VRS format attachment (%d), in pass (%d), VRS attachment.", attachment, i));
+			ERR_FAIL_COND_V_MSG(!(p_attachments[attachment].usage_flags & TEXTURE_USAGE_VRS_ATTACHMENT_BIT), RDD::RenderPassID(), vformat("Invalid framebuffer VRS format attachment (%d), in pass (%d), it's marked as VRS, but it's not a VRS attachment.", attachment, i));
+			ERR_FAIL_COND_V_MSG(attachment_last_pass[attachment] == i, RDD::RenderPassID(), vformat("Invalid framebuffer VRS attachment (%d), in pass (%d), it already was used for something else before in this pass.", attachment, i));
 
 			subpass.vrs_reference.attachment = attachment_remap[attachment];
 			subpass.vrs_reference.layout = RDD::TEXTURE_LAYOUT_VRS_ATTACHMENT_OPTIMAL;
@@ -2300,9 +2300,9 @@ RDD::RenderPassID RenderingDevice::_render_pass_create(const Vector<AttachmentFo
 		for (int j = 0; j < pass->preserve_attachments.size(); j++) {
 			int32_t attachment = pass->preserve_attachments[j];
 
-			ERR_FAIL_COND_V_MSG(attachment == ATTACHMENT_UNUSED, RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), preserve attachment (" + itos(j) + "). Preserve attachments can't be unused.");
+			ERR_FAIL_COND_V_MSG(attachment == ATTACHMENT_UNUSED, RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), preserve attachment (%d). Preserve attachments can't be unused.", attachment, i, j));
 
-			ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), "Invalid framebuffer format attachment(" + itos(attachment) + "), in pass (" + itos(i) + "), preserve attachment (" + itos(j) + ").");
+			ERR_FAIL_INDEX_V_MSG(attachment, p_attachments.size(), RDD::RenderPassID(), vformat("Invalid framebuffer format attachment (%d), in pass (%d), preserve attachment (%d).", attachment, i, j));
 
 			if (attachment_last_pass[attachment] != i) {
 				// Preserve can still be used to keep depth or color from being discarded after use.
@@ -2659,7 +2659,7 @@ RenderingDevice::VertexFormatID RenderingDevice::vertex_format_create(const Vect
 		ERR_FAIL_COND_V(used_locations.has(p_vertex_descriptions[i].location), INVALID_ID);
 
 		ERR_FAIL_COND_V_MSG(get_format_vertex_size(p_vertex_descriptions[i].format) == 0, INVALID_ID,
-				"Data format for attachment (" + itos(i) + "), '" + FORMAT_NAMES[p_vertex_descriptions[i].format] + "', is not valid for a vertex array.");
+				vformat("Data format for attachment (%d), '%s', is not valid for a vertex array.", i, FORMAT_NAMES[p_vertex_descriptions[i].format]));
 
 		used_locations.insert(p_vertex_descriptions[i].location);
 	}
@@ -2712,13 +2712,13 @@ RID RenderingDevice::vertex_array_create(uint32_t p_vertex_count, VertexFormatID
 				// Validate size for regular drawing.
 				uint64_t total_size = uint64_t(atf.stride) * (p_vertex_count - 1) + atf.offset + element_size;
 				ERR_FAIL_COND_V_MSG(total_size > buffer->size, RID(),
-						"Attachment (" + itos(i) + ") will read past the end of the buffer.");
+						vformat("Attachment (%d) will read past the end of the buffer.", i));
 
 			} else {
 				// Validate size for instances drawing.
 				uint64_t available = buffer->size - atf.offset;
 				ERR_FAIL_COND_V_MSG(available < element_size, RID(),
-						"Attachment (" + itos(i) + ") uses instancing, but it's just too small.");
+						vformat("Attachment (%d) uses instancing, but it's just too small.", i));
 
 				uint32_t instances_allowed = available / atf.stride;
 				vertex_array.max_instances_allowed = MIN(instances_allowed, vertex_array.max_instances_allowed);
@@ -2759,7 +2759,7 @@ RID RenderingDevice::index_buffer_create(uint32_t p_index_count, IndexBufferForm
 	if (p_data.size()) {
 		index_buffer.max_index = 0;
 		ERR_FAIL_COND_V_MSG((uint32_t)p_data.size() != size_bytes, RID(),
-				"Default index buffer initializer array size (" + itos(p_data.size()) + ") does not match format required size (" + itos(size_bytes) + ").");
+				vformat("Default index buffer initializer array size (%d) does not match format required size (%d).", p_data.size(), size_bytes));
 		const uint8_t *r = p_data.ptr();
 		if (p_format == INDEX_BUFFER_FORMAT_UINT16) {
 			const uint16_t *index16 = (const uint16_t *)r;
@@ -3013,7 +3013,7 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 	ERR_FAIL_NULL_V(shader, RID());
 
 	ERR_FAIL_COND_V_MSG(p_shader_set >= (uint32_t)shader->uniform_sets.size() || shader->uniform_sets[p_shader_set].is_empty(), RID(),
-			"Desired set (" + itos(p_shader_set) + ") not used by shader.");
+			vformat("Desired set (%d) not used by shader.", p_shader_set));
 	// See that all sets in shader are satisfied.
 
 	const Vector<ShaderUniform> &set = shader->uniform_sets[p_shader_set];
@@ -3044,12 +3044,12 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 			}
 		}
 		ERR_FAIL_COND_V_MSG(uniform_idx == -1, RID(),
-				"All the shader bindings for the given set must be covered by the uniforms provided. Binding (" + itos(set_uniform.binding) + "), set (" + itos(p_shader_set) + ") was not provided.");
+				vformat("All the shader bindings for the given set must be covered by the uniforms provided. Binding (%d), set (%d) was not provided.", set_uniform.binding, p_shader_set));
 
 		const Uniform &uniform = uniforms[uniform_idx];
 
 		ERR_FAIL_COND_V_MSG(uniform.uniform_type != set_uniform.type, RID(),
-				"Mismatch uniform type for binding (" + itos(set_uniform.binding) + "), set (" + itos(p_shader_set) + "). Expected '" + SHADER_UNIFORM_NAMES[set_uniform.type] + "', supplied: '" + SHADER_UNIFORM_NAMES[uniform.uniform_type] + "'.");
+				vformat("Mismatch uniform type for binding (%d), set (%d). Expected '%s', supplied: '%s'.", set_uniform.binding, p_shader_set, SHADER_UNIFORM_NAMES[set_uniform.type], SHADER_UNIFORM_NAMES[uniform.uniform_type]));
 
 		RDD::BoundUniform &driver_uniform = driver_uniforms[i];
 		driver_uniform.type = uniform.uniform_type;
@@ -3059,15 +3059,15 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 			case UNIFORM_TYPE_SAMPLER: {
 				if (uniform.get_id_count() != (uint32_t)set_uniform.length) {
 					if (set_uniform.length > 1) {
-						ERR_FAIL_V_MSG(RID(), "Sampler (binding: " + itos(uniform.binding) + ") is an array of (" + itos(set_uniform.length) + ") sampler elements, so it should be provided equal number of sampler IDs to satisfy it (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("Sampler (binding: %d) is an array of (%d) sampler elements, so it should be provided equal number of sampler IDs to satisfy it (IDs provided: %d).", uniform.binding, set_uniform.length, uniform.get_id_count()));
 					} else {
-						ERR_FAIL_V_MSG(RID(), "Sampler (binding: " + itos(uniform.binding) + ") should provide one ID referencing a sampler (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("Sampler (binding: %d) should provide one ID referencing a sampler (IDs provided: %d).", uniform.binding, uniform.get_id_count()));
 					}
 				}
 
 				for (uint32_t j = 0; j < uniform.get_id_count(); j++) {
 					RDD::SamplerID *sampler_driver_id = sampler_owner.get_or_null(uniform.get_id(j));
-					ERR_FAIL_NULL_V_MSG(sampler_driver_id, RID(), "Sampler (binding: " + itos(uniform.binding) + ", index " + itos(j) + ") is not a valid sampler.");
+					ERR_FAIL_NULL_V_MSG(sampler_driver_id, RID(), vformat("Sampler (binding: %d, index %d) is not a valid sampler.", uniform.binding, j));
 
 					driver_uniform.ids.push_back(*sampler_driver_id);
 				}
@@ -3075,22 +3075,22 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 			case UNIFORM_TYPE_SAMPLER_WITH_TEXTURE: {
 				if (uniform.get_id_count() != (uint32_t)set_uniform.length * 2) {
 					if (set_uniform.length > 1) {
-						ERR_FAIL_V_MSG(RID(), "SamplerTexture (binding: " + itos(uniform.binding) + ") is an array of (" + itos(set_uniform.length) + ") sampler&texture elements, so it should provided twice the amount of IDs (sampler,texture pairs) to satisfy it (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("SamplerTexture (binding: %d) is an array of (%d) sampler&texture elements, so it should provided twice the amount of IDs (sampler,texture pairs) to satisfy it (IDs provided: %d).", uniform.binding, set_uniform.length, uniform.get_id_count()));
 					} else {
-						ERR_FAIL_V_MSG(RID(), "SamplerTexture (binding: " + itos(uniform.binding) + ") should provide two IDs referencing a sampler and then a texture (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("SamplerTexture (binding: %d) should provide two IDs referencing a sampler and then a texture (IDs provided: %d).", uniform.binding, uniform.get_id_count()));
 					}
 				}
 
 				for (uint32_t j = 0; j < uniform.get_id_count(); j += 2) {
 					RDD::SamplerID *sampler_driver_id = sampler_owner.get_or_null(uniform.get_id(j + 0));
-					ERR_FAIL_NULL_V_MSG(sampler_driver_id, RID(), "SamplerBuffer (binding: " + itos(uniform.binding) + ", index " + itos(j + 1) + ") is not a valid sampler.");
+					ERR_FAIL_NULL_V_MSG(sampler_driver_id, RID(), vformat("SamplerBuffer (binding: %d, index %d) is not a valid sampler.", uniform.binding, j + 1));
 
 					RID texture_id = uniform.get_id(j + 1);
 					Texture *texture = texture_owner.get_or_null(texture_id);
-					ERR_FAIL_NULL_V_MSG(texture, RID(), "Texture (binding: " + itos(uniform.binding) + ", index " + itos(j) + ") is not a valid texture.");
+					ERR_FAIL_NULL_V_MSG(texture, RID(), vformat("Texture (binding: %d, index %d) is not a valid texture.", uniform.binding, j));
 
 					ERR_FAIL_COND_V_MSG(!(texture->usage_flags & TEXTURE_USAGE_SAMPLING_BIT), RID(),
-							"Texture (binding: " + itos(uniform.binding) + ", index " + itos(j) + ") needs the TEXTURE_USAGE_SAMPLING_BIT usage flag set in order to be used as uniform.");
+							vformat("Texture (binding: %d, index %d) needs the TEXTURE_USAGE_SAMPLING_BIT usage flag set in order to be used as uniform.", uniform.binding, j));
 
 					if ((texture->usage_flags & (TEXTURE_USAGE_COLOR_ATTACHMENT_BIT | TEXTURE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | TEXTURE_USAGE_INPUT_ATTACHMENT_BIT))) {
 						UniformSet::AttachableTexture attachable_texture;
@@ -3124,19 +3124,19 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 			case UNIFORM_TYPE_TEXTURE: {
 				if (uniform.get_id_count() != (uint32_t)set_uniform.length) {
 					if (set_uniform.length > 1) {
-						ERR_FAIL_V_MSG(RID(), "Texture (binding: " + itos(uniform.binding) + ") is an array of (" + itos(set_uniform.length) + ") textures, so it should be provided equal number of texture IDs to satisfy it (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("Texture (binding: %d) is an array of (%d) textures, so it should be provided equal number of texture IDs to satisfy it (IDs provided: %d).", uniform.binding, set_uniform.length, uniform.get_id_count()));
 					} else {
-						ERR_FAIL_V_MSG(RID(), "Texture (binding: " + itos(uniform.binding) + ") should provide one ID referencing a texture (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("Texture (binding: %d) should provide one ID referencing a texture (IDs provided: %d).", uniform.binding, uniform.get_id_count()));
 					}
 				}
 
 				for (uint32_t j = 0; j < uniform.get_id_count(); j++) {
 					RID texture_id = uniform.get_id(j);
 					Texture *texture = texture_owner.get_or_null(texture_id);
-					ERR_FAIL_NULL_V_MSG(texture, RID(), "Texture (binding: " + itos(uniform.binding) + ", index " + itos(j) + ") is not a valid texture.");
+					ERR_FAIL_NULL_V_MSG(texture, RID(), vformat("Texture (binding: %d, index %d) is not a valid texture.", uniform.binding, j));
 
 					ERR_FAIL_COND_V_MSG(!(texture->usage_flags & TEXTURE_USAGE_SAMPLING_BIT), RID(),
-							"Texture (binding: " + itos(uniform.binding) + ", index " + itos(j) + ") needs the TEXTURE_USAGE_SAMPLING_BIT usage flag set in order to be used as uniform.");
+							vformat("Texture (binding: %d, index %d) needs the TEXTURE_USAGE_SAMPLING_BIT usage flag set in order to be used as uniform.", uniform.binding, j));
 
 					if ((texture->usage_flags & (TEXTURE_USAGE_COLOR_ATTACHMENT_BIT | TEXTURE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | TEXTURE_USAGE_INPUT_ATTACHMENT_BIT))) {
 						UniformSet::AttachableTexture attachable_texture;
@@ -3169,9 +3169,9 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 			case UNIFORM_TYPE_IMAGE: {
 				if (uniform.get_id_count() != (uint32_t)set_uniform.length) {
 					if (set_uniform.length > 1) {
-						ERR_FAIL_V_MSG(RID(), "Image (binding: " + itos(uniform.binding) + ") is an array of (" + itos(set_uniform.length) + ") textures, so it should be provided equal number of texture IDs to satisfy it (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("Image (binding: %d) is an array of (%d) textures, so it should be provided equal number of texture IDs to satisfy it (IDs provided: %d).", uniform.binding, set_uniform.length, uniform.get_id_count()));
 					} else {
-						ERR_FAIL_V_MSG(RID(), "Image (binding: " + itos(uniform.binding) + ") should provide one ID referencing a texture (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("Image (binding: %d) should provide one ID referencing a texture (IDs provided: %d).", uniform.binding, uniform.get_id_count()));
 					}
 				}
 
@@ -3180,10 +3180,10 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 					Texture *texture = texture_owner.get_or_null(texture_id);
 
 					ERR_FAIL_NULL_V_MSG(texture, RID(),
-							"Image (binding: " + itos(uniform.binding) + ", index " + itos(j) + ") is not a valid texture.");
+							vformat("Image (binding: %d, index %d) is not a valid texture.", uniform.binding, j));
 
 					ERR_FAIL_COND_V_MSG(!(texture->usage_flags & TEXTURE_USAGE_STORAGE_BIT), RID(),
-							"Image (binding: " + itos(uniform.binding) + ", index " + itos(j) + ") needs the TEXTURE_USAGE_STORAGE_BIT usage flag set in order to be used as uniform.");
+							vformat("Image (binding: %d, index %d) needs the TEXTURE_USAGE_STORAGE_BIT usage flag set in order to be used as uniform.", uniform.binding, j));
 
 					if (texture->owner.is_null() && texture->shared_fallback != nullptr) {
 						shared_textures_to_update.push_back({ true, texture_id });
@@ -3213,16 +3213,16 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 			case UNIFORM_TYPE_TEXTURE_BUFFER: {
 				if (uniform.get_id_count() != (uint32_t)set_uniform.length) {
 					if (set_uniform.length > 1) {
-						ERR_FAIL_V_MSG(RID(), "Buffer (binding: " + itos(uniform.binding) + ") is an array of (" + itos(set_uniform.length) + ") texture buffer elements, so it should be provided equal number of texture buffer IDs to satisfy it (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("Buffer (binding: %d) is an array of (%d) texture buffer elements, so it should be provided equal number of texture buffer IDs to satisfy it (IDs provided: %d).", uniform.binding, set_uniform.length, uniform.get_id_count()));
 					} else {
-						ERR_FAIL_V_MSG(RID(), "Buffer (binding: " + itos(uniform.binding) + ") should provide one ID referencing a texture buffer (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("Buffer (binding: %d) should provide one ID referencing a texture buffer (IDs provided: %d).", uniform.binding, uniform.get_id_count()));
 					}
 				}
 
 				for (uint32_t j = 0; j < uniform.get_id_count(); j++) {
 					RID buffer_id = uniform.get_id(j);
 					Buffer *buffer = texture_buffer_owner.get_or_null(buffer_id);
-					ERR_FAIL_NULL_V_MSG(buffer, RID(), "Texture Buffer (binding: " + itos(uniform.binding) + ", index " + itos(j) + ") is not a valid texture buffer.");
+					ERR_FAIL_NULL_V_MSG(buffer, RID(), vformat("Texture Buffer (binding: %d, index %d) is not a valid texture buffer.", uniform.binding, j));
 
 					if (set_uniform.writable && _buffer_make_mutable(buffer, buffer_id)) {
 						// The buffer must be mutable if it's used for writing.
@@ -3248,19 +3248,19 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 			case UNIFORM_TYPE_SAMPLER_WITH_TEXTURE_BUFFER: {
 				if (uniform.get_id_count() != (uint32_t)set_uniform.length * 2) {
 					if (set_uniform.length > 1) {
-						ERR_FAIL_V_MSG(RID(), "SamplerBuffer (binding: " + itos(uniform.binding) + ") is an array of (" + itos(set_uniform.length) + ") sampler buffer elements, so it should provided twice the amount of IDs (sampler,buffer pairs) to satisfy it (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("SamplerBuffer (binding: %d) is an array of (%d) sampler buffer elements, so it should provided twice the amount of IDs (sampler,buffer pairs) to satisfy it (IDs provided: %d).", uniform.binding, set_uniform.length, uniform.get_id_count()));
 					} else {
-						ERR_FAIL_V_MSG(RID(), "SamplerBuffer (binding: " + itos(uniform.binding) + ") should provide two IDs referencing a sampler and then a texture buffer (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("SamplerBuffer (binding: %d) should provide two IDs referencing a sampler and then a texture buffer (IDs provided: %d).", uniform.binding, uniform.get_id_count()));
 					}
 				}
 
 				for (uint32_t j = 0; j < uniform.get_id_count(); j += 2) {
 					RDD::SamplerID *sampler_driver_id = sampler_owner.get_or_null(uniform.get_id(j + 0));
-					ERR_FAIL_NULL_V_MSG(sampler_driver_id, RID(), "SamplerBuffer (binding: " + itos(uniform.binding) + ", index " + itos(j + 1) + ") is not a valid sampler.");
+					ERR_FAIL_NULL_V_MSG(sampler_driver_id, RID(), vformat("SamplerBuffer (binding: %d, index %d) is not a valid sampler.", uniform.binding, j + 1));
 
 					RID buffer_id = uniform.get_id(j + 1);
 					Buffer *buffer = texture_buffer_owner.get_or_null(buffer_id);
-					ERR_FAIL_NULL_V_MSG(buffer, RID(), "SamplerBuffer (binding: " + itos(uniform.binding) + ", index " + itos(j + 1) + ") is not a valid texture buffer.");
+					ERR_FAIL_NULL_V_MSG(buffer, RID(), vformat("SamplerBuffer (binding: %d, index %d) is not a valid texture buffer.", uniform.binding, j + 1));
 
 					if (buffer->draw_tracker != nullptr) {
 						draw_trackers.push_back(buffer->draw_tracker);
@@ -3279,14 +3279,14 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 			} break;
 			case UNIFORM_TYPE_UNIFORM_BUFFER: {
 				ERR_FAIL_COND_V_MSG(uniform.get_id_count() != 1, RID(),
-						"Uniform buffer supplied (binding: " + itos(uniform.binding) + ") must provide one ID (" + itos(uniform.get_id_count()) + " provided).");
+						vformat("Uniform buffer supplied (binding: %d) must provide one ID (%d provided).", uniform.binding, uniform.get_id_count()));
 
 				RID buffer_id = uniform.get_id(0);
 				Buffer *buffer = uniform_buffer_owner.get_or_null(buffer_id);
-				ERR_FAIL_NULL_V_MSG(buffer, RID(), "Uniform buffer supplied (binding: " + itos(uniform.binding) + ") is invalid.");
+				ERR_FAIL_NULL_V_MSG(buffer, RID(), vformat("Uniform buffer supplied (binding: %d) is invalid.", uniform.binding));
 
 				ERR_FAIL_COND_V_MSG(buffer->size < (uint32_t)set_uniform.length, RID(),
-						"Uniform buffer supplied (binding: " + itos(uniform.binding) + ") size (" + itos(buffer->size) + ") is smaller than size of shader uniform: (" + itos(set_uniform.length) + ").");
+						vformat("Uniform buffer supplied (binding: %d) size (%d) is smaller than size of shader uniform: (%d).", uniform.binding, buffer->size, set_uniform.length));
 
 				if (buffer->draw_tracker != nullptr) {
 					draw_trackers.push_back(buffer->draw_tracker);
@@ -3300,7 +3300,7 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 			} break;
 			case UNIFORM_TYPE_STORAGE_BUFFER: {
 				ERR_FAIL_COND_V_MSG(uniform.get_id_count() != 1, RID(),
-						"Storage buffer supplied (binding: " + itos(uniform.binding) + ") must provide one ID (" + itos(uniform.get_id_count()) + " provided).");
+						vformat("Storage buffer supplied (binding: %d) must provide one ID (%d provided).", uniform.binding, uniform.get_id_count()));
 
 				Buffer *buffer = nullptr;
 
@@ -3310,13 +3310,13 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 				} else if (vertex_buffer_owner.owns(buffer_id)) {
 					buffer = vertex_buffer_owner.get_or_null(buffer_id);
 
-					ERR_FAIL_COND_V_MSG(!(buffer->usage.has_flag(RDD::BUFFER_USAGE_STORAGE_BIT)), RID(), "Vertex buffer supplied (binding: " + itos(uniform.binding) + ") was not created with storage flag.");
+					ERR_FAIL_COND_V_MSG(!(buffer->usage.has_flag(RDD::BUFFER_USAGE_STORAGE_BIT)), RID(), vformat("Vertex buffer supplied (binding: %d) was not created with storage flag.", uniform.binding));
 				}
-				ERR_FAIL_NULL_V_MSG(buffer, RID(), "Storage buffer supplied (binding: " + itos(uniform.binding) + ") is invalid.");
+				ERR_FAIL_NULL_V_MSG(buffer, RID(), vformat("Storage buffer supplied (binding: %d) is invalid.", uniform.binding));
 
 				// If 0, then it's sized on link time.
 				ERR_FAIL_COND_V_MSG(set_uniform.length > 0 && buffer->size != (uint32_t)set_uniform.length, RID(),
-						"Storage buffer supplied (binding: " + itos(uniform.binding) + ") size (" + itos(buffer->size) + ") does not match size of shader uniform: (" + itos(set_uniform.length) + ").");
+						vformat("Storage buffer supplied (binding: %d) size (%d) does not match size of shader uniform: (%d).", uniform.binding, buffer->size, set_uniform.length));
 
 				if (set_uniform.writable && _buffer_make_mutable(buffer, buffer_id)) {
 					// The buffer must be mutable if it's used for writing.
@@ -3339,13 +3339,13 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 				_check_transfer_worker_buffer(buffer);
 			} break;
 			case UNIFORM_TYPE_INPUT_ATTACHMENT: {
-				ERR_FAIL_COND_V_MSG(shader->is_compute, RID(), "InputAttachment (binding: " + itos(uniform.binding) + ") supplied for compute shader (this is not allowed).");
+				ERR_FAIL_COND_V_MSG(shader->is_compute, RID(), vformat("InputAttachment (binding: %d) supplied for compute shader (this is not allowed).", uniform.binding));
 
 				if (uniform.get_id_count() != (uint32_t)set_uniform.length) {
 					if (set_uniform.length > 1) {
-						ERR_FAIL_V_MSG(RID(), "InputAttachment (binding: " + itos(uniform.binding) + ") is an array of (" + itos(set_uniform.length) + ") textures, so it should be provided equal number of texture IDs to satisfy it (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("InputAttachment (binding: %d) is an array of (%d) textures, so it should be provided equal number of texture IDs to satisfy it (IDs provided: %d).", uniform.binding, set_uniform.length, uniform.get_id_count()));
 					} else {
-						ERR_FAIL_V_MSG(RID(), "InputAttachment (binding: " + itos(uniform.binding) + ") should provide one ID referencing a texture (IDs provided: " + itos(uniform.get_id_count()) + ").");
+						ERR_FAIL_V_MSG(RID(), vformat("InputAttachment (binding: %d) should provide one ID referencing a texture (IDs provided: %d).", uniform.binding, uniform.get_id_count()));
 					}
 				}
 
@@ -3354,10 +3354,10 @@ RID RenderingDevice::uniform_set_create(const Vector<Uniform> &p_uniforms, RID p
 					Texture *texture = texture_owner.get_or_null(texture_id);
 
 					ERR_FAIL_NULL_V_MSG(texture, RID(),
-							"InputAttachment (binding: " + itos(uniform.binding) + ", index " + itos(j) + ") is not a valid texture.");
+							vformat("InputAttachment (binding: %d, index %d) is not a valid texture.", uniform.binding, j));
 
 					ERR_FAIL_COND_V_MSG(!(texture->usage_flags & TEXTURE_USAGE_SAMPLING_BIT), RID(),
-							"InputAttachment (binding: " + itos(uniform.binding) + ", index " + itos(j) + ") needs the TEXTURE_USAGE_SAMPLING_BIT usage flag set in order to be used as uniform.");
+							vformat("InputAttachment (binding: %d, index %d) needs the TEXTURE_USAGE_SAMPLING_BIT usage flag set in order to be used as uniform.", uniform.binding, j));
 
 					DEV_ASSERT(!texture->owner.is_valid() || texture_owner.get_or_null(texture->owner));
 
@@ -3440,7 +3440,7 @@ RID RenderingDevice::render_pipeline_create(RID p_shader, FramebufferFormatID p_
 
 	// Validate shader vs. framebuffer.
 	{
-		ERR_FAIL_COND_V_MSG(p_for_render_pass >= uint32_t(fb_format.E->key().passes.size()), RID(), "Render pass requested for pipeline creation (" + itos(p_for_render_pass) + ") is out of bounds");
+		ERR_FAIL_COND_V_MSG(p_for_render_pass >= uint32_t(fb_format.E->key().passes.size()), RID(), vformat("Render pass requested for pipeline creation (%d) is out of bounds.", p_for_render_pass));
 		const FramebufferPass &pass = fb_format.E->key().passes[p_for_render_pass];
 		uint32_t output_mask = 0;
 		for (int i = 0; i < pass.color_attachments.size(); i++) {
@@ -3449,7 +3449,7 @@ RID RenderingDevice::render_pipeline_create(RID p_shader, FramebufferFormatID p_
 			}
 		}
 		ERR_FAIL_COND_V_MSG(shader->fragment_output_mask != output_mask, RID(),
-				"Mismatch fragment shader output mask (" + itos(shader->fragment_output_mask) + ") and framebuffer color output mask (" + itos(output_mask) + ") when binding both in render pipeline.");
+				vformat("Mismatch fragment shader output mask (%d) and framebuffer color output mask (%d) when binding both in render pipeline.", shader->fragment_output_mask, output_mask));
 	}
 
 	RDD::VertexFormatID driver_vertex_format;
@@ -3473,7 +3473,7 @@ RID RenderingDevice::render_pipeline_create(RID p_shader, FramebufferFormatID p_
 			}
 
 			ERR_FAIL_COND_V_MSG(!found, RID(),
-					"Shader vertex input location (" + itos(i) + ") not provided in vertex input description for pipeline creation.");
+					vformat("Shader vertex input location (%d) not provided in vertex input description for pipeline creation.", i));
 		}
 
 	} else {
@@ -3523,7 +3523,7 @@ RID RenderingDevice::render_pipeline_create(RID p_shader, FramebufferFormatID p_
 		for (int j = 0; j < p_specialization_constants.size(); j++) {
 			const PipelineSpecializationConstant &psc = p_specialization_constants[j];
 			if (psc.constant_id == sc.constant_id) {
-				ERR_FAIL_COND_V_MSG(psc.type != sc.type, RID(), "Specialization constant provided for id (" + itos(sc.constant_id) + ") is of the wrong type.");
+				ERR_FAIL_COND_V_MSG(psc.type != sc.type, RID(), vformat("Specialization constant provided for id (%d) is of the wrong type.", sc.constant_id));
 				break;
 			}
 		}
@@ -3623,7 +3623,7 @@ RID RenderingDevice::compute_pipeline_create(RID p_shader, const Vector<Pipeline
 		for (int j = 0; j < p_specialization_constants.size(); j++) {
 			const PipelineSpecializationConstant &psc = p_specialization_constants[j];
 			if (psc.constant_id == sc.constant_id) {
-				ERR_FAIL_COND_V_MSG(psc.type != sc.type, RID(), "Specialization constant provided for id (" + itos(sc.constant_id) + ") is of the wrong type.");
+				ERR_FAIL_COND_V_MSG(psc.type != sc.type, RID(), vformat("Specialization constant provided for id (%d) is of the wrong type.", sc.constant_id));
 				break;
 			}
 		}
@@ -4019,7 +4019,7 @@ RenderingDevice::DrawListID RenderingDevice::draw_list_begin(RID p_framebuffer, 
 				}
 			}
 		}
-		ERR_FAIL_COND_V_MSG(p_clear_color_values.size() != color_count, INVALID_ID, "Clear color values supplied (" + itos(p_clear_color_values.size()) + ") differ from the amount required for framebuffer color attachments (" + itos(color_count) + ").");
+		ERR_FAIL_COND_V_MSG(p_clear_color_values.size() != color_count, INVALID_ID, vformat("Clear color values supplied (%d) differ from the number required for framebuffer color attachments (%d).", p_clear_color_values.size(), color_count));
 	}
 
 	RDD::FramebufferID fb_driver_id;
@@ -4178,7 +4178,7 @@ void RenderingDevice::draw_list_bind_uniform_set(DrawListID p_list, RID p_unifor
 
 #ifdef DEBUG_ENABLED
 	ERR_FAIL_COND_MSG(p_index >= driver->limit_get(LIMIT_MAX_BOUND_UNIFORM_SETS) || p_index >= MAX_UNIFORM_SETS,
-			"Attempting to bind a descriptor set (" + itos(p_index) + ") greater than what the hardware supports (" + itos(driver->limit_get(LIMIT_MAX_BOUND_UNIFORM_SETS)) + ").");
+			vformat("Attempting to bind a descriptor set (%d) greater than what the hardware supports (%d).", p_index, driver->limit_get(LIMIT_MAX_BOUND_UNIFORM_SETS)));
 #endif
 	DrawList *dl = _get_draw_list_ptr(p_list);
 	ERR_FAIL_NULL(dl);
@@ -4208,7 +4208,7 @@ void RenderingDevice::draw_list_bind_uniform_set(DrawListID p_list, RID p_unifor
 		for (uint32_t i = 0; i < attachable_count; i++) {
 			for (uint32_t j = 0; j < bound_count; j++) {
 				ERR_FAIL_COND_MSG(attachable_ptr[i].texture == bound_ptr[j],
-						"Attempted to use the same texture in framebuffer attachment and a uniform (set: " + itos(p_index) + ", binding: " + itos(attachable_ptr[i].bind) + "), this is not allowed.");
+						vformat("Attempted to use the same texture in framebuffer attachment and a uniform (set: %d, binding: %d), this is not allowed.", p_index, attachable_ptr[i].bind));
 			}
 		}
 	}
@@ -4304,7 +4304,7 @@ void RenderingDevice::draw_list_set_push_constant(DrawListID p_list, const void 
 
 #ifdef DEBUG_ENABLED
 	ERR_FAIL_COND_MSG(p_data_size != dl->validation.pipeline_push_constant_size,
-			"This render pipeline requires (" + itos(dl->validation.pipeline_push_constant_size) + ") bytes of push constant data, supplied: (" + itos(p_data_size) + ")");
+			vformat("This render pipeline requires (%d) bytes of push constant data, supplied: (%d).", dl->validation.pipeline_push_constant_size, p_data_size));
 #endif
 
 	draw_graph.add_draw_list_set_push_constant(dl->state.pipeline_shader_driver_id, p_data, p_data_size);
@@ -4335,7 +4335,7 @@ void RenderingDevice::draw_list_draw(DrawListID p_list, bool p_use_indices, uint
 				"The vertex format used to create the pipeline does not match the vertex format bound.");
 		// Make sure number of instances is valid.
 		ERR_FAIL_COND_MSG(p_instances > dl->validation.vertex_max_instances_allowed,
-				"Number of instances requested (" + itos(p_instances) + " is larger than the maximum number supported by the bound vertex array (" + itos(dl->validation.vertex_max_instances_allowed) + ").");
+				vformat("Number of instances requested (%d) is larger than the maximum number supported by the bound vertex array (%d).", p_instances, dl->validation.vertex_max_instances_allowed));
 	}
 
 	if (dl->validation.pipeline_push_constant_size > 0) {
@@ -4355,12 +4355,12 @@ void RenderingDevice::draw_list_draw(DrawListID p_list, bool p_use_indices, uint
 
 		if (dl->state.sets[i].pipeline_expected_format != dl->state.sets[i].uniform_set_format) {
 			if (dl->state.sets[i].uniform_set_format == 0) {
-				ERR_FAIL_MSG("Uniforms were never supplied for set (" + itos(i) + ") at the time of drawing, which are required by the pipeline.");
+				ERR_FAIL_MSG(vformat("Uniforms were never supplied for set (%d) at the time of drawing, which are required by the pipeline.", i));
 			} else if (uniform_set_owner.owns(dl->state.sets[i].uniform_set)) {
 				UniformSet *us = uniform_set_owner.get_or_null(dl->state.sets[i].uniform_set);
-				ERR_FAIL_MSG("Uniforms supplied for set (" + itos(i) + "):\n" + _shader_uniform_debug(us->shader_id, us->shader_set) + "\nare not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n" + _shader_uniform_debug(dl->state.pipeline_shader));
+				ERR_FAIL_MSG(vformat("Uniforms supplied for set (%d):\n%s\nare not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n%s", _shader_uniform_debug(us->shader_id, us->shader_set), _shader_uniform_debug(dl->state.pipeline_shader), i));
 			} else {
-				ERR_FAIL_MSG("Uniforms supplied for set (" + itos(i) + ", which was just freed) are not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n" + _shader_uniform_debug(dl->state.pipeline_shader));
+				ERR_FAIL_MSG(vformat("Uniforms supplied for set (%d, which was just freed) are not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n" + _shader_uniform_debug(dl->state.pipeline_shader), i));
 			}
 		}
 	}
@@ -4411,10 +4411,10 @@ void RenderingDevice::draw_list_draw(DrawListID p_list, bool p_use_indices, uint
 
 #ifdef DEBUG_ENABLED
 		ERR_FAIL_COND_MSG(to_draw < dl->validation.pipeline_primitive_minimum,
-				"Too few indices (" + itos(to_draw) + ") for the render primitive set in the render pipeline (" + itos(dl->validation.pipeline_primitive_minimum) + ").");
+				vformat("Too few indices (%d) for the render primitive set in the render pipeline (%d).", to_draw, dl->validation.pipeline_primitive_minimum));
 
 		ERR_FAIL_COND_MSG((to_draw % dl->validation.pipeline_primitive_divisor) != 0,
-				"Index amount (" + itos(to_draw) + ") must be a multiple of the amount of indices required by the render primitive (" + itos(dl->validation.pipeline_primitive_divisor) + ").");
+				vformat("Index count (%d) must be a multiple of the number of indices required by the render primitive (%d).", to_draw, dl->validation.pipeline_primitive_divisor));
 #endif
 
 		draw_graph.add_draw_list_draw_indexed(to_draw, p_instances, 0);
@@ -4437,10 +4437,10 @@ void RenderingDevice::draw_list_draw(DrawListID p_list, bool p_use_indices, uint
 
 #ifdef DEBUG_ENABLED
 		ERR_FAIL_COND_MSG(to_draw < dl->validation.pipeline_primitive_minimum,
-				"Too few vertices (" + itos(to_draw) + ") for the render primitive set in the render pipeline (" + itos(dl->validation.pipeline_primitive_minimum) + ").");
+				vformat("Too few vertices (%d) for the render primitive set in the render pipeline (%d).", to_draw, dl->validation.pipeline_primitive_minimum));
 
 		ERR_FAIL_COND_MSG((to_draw % dl->validation.pipeline_primitive_divisor) != 0,
-				"Vertex amount (" + itos(to_draw) + ") must be a multiple of the amount of vertices required by the render primitive (" + itos(dl->validation.pipeline_primitive_divisor) + ").");
+				vformat("Vertex count (%d) must be a multiple of the number of vertices required by the render primitive (%d).", to_draw, dl->validation.pipeline_primitive_divisor));
 #endif
 
 		draw_graph.add_draw_list_draw(to_draw, p_instances);
@@ -4767,7 +4767,7 @@ void RenderingDevice::compute_list_bind_uniform_set(ComputeListID p_list, RID p_
 
 #ifdef DEBUG_ENABLED
 	ERR_FAIL_COND_MSG(p_index >= driver->limit_get(LIMIT_MAX_BOUND_UNIFORM_SETS) || p_index >= MAX_UNIFORM_SETS,
-			"Attempting to bind a descriptor set (" + itos(p_index) + ") greater than what the hardware supports (" + itos(driver->limit_get(LIMIT_MAX_BOUND_UNIFORM_SETS)) + ").");
+			vformat("Attempting to bind a descriptor set (%d) greater than what the hardware supports (%d).", p_index, driver->limit_get(LIMIT_MAX_BOUND_UNIFORM_SETS)));
 #endif
 
 #ifdef DEBUG_ENABLED
@@ -4817,7 +4817,7 @@ void RenderingDevice::compute_list_set_push_constant(ComputeListID p_list, const
 
 #ifdef DEBUG_ENABLED
 	ERR_FAIL_COND_MSG(p_data_size != cl->validation.pipeline_push_constant_size,
-			"This compute pipeline requires (" + itos(cl->validation.pipeline_push_constant_size) + ") bytes of push constant data, supplied: (" + itos(p_data_size) + ")");
+			vformat("This compute pipeline requires (%d) bytes of push constant data, supplied: (%d).", cl->validation.pipeline_push_constant_size, p_data_size));
 #endif
 
 	draw_graph.add_compute_list_set_push_constant(cl->state.pipeline_shader_driver_id, p_data, p_data_size);
@@ -4840,15 +4840,15 @@ void RenderingDevice::compute_list_dispatch(ComputeListID p_list, uint32_t p_x_g
 	ComputeList *cl = compute_list;
 
 #ifdef DEBUG_ENABLED
-	ERR_FAIL_COND_MSG(p_x_groups == 0, "Dispatch amount of X compute groups (" + itos(p_x_groups) + ") is zero.");
-	ERR_FAIL_COND_MSG(p_z_groups == 0, "Dispatch amount of Z compute groups (" + itos(p_z_groups) + ") is zero.");
-	ERR_FAIL_COND_MSG(p_y_groups == 0, "Dispatch amount of Y compute groups (" + itos(p_y_groups) + ") is zero.");
+	ERR_FAIL_COND_MSG(p_x_groups == 0, vformat("Dispatch number of X compute groups (%d) is zero.", p_x_groups));
+	ERR_FAIL_COND_MSG(p_z_groups == 0, vformat("Dispatch number of Z compute groups (%d) is zero.", p_z_groups));
+	ERR_FAIL_COND_MSG(p_y_groups == 0, vformat("Dispatch number of Y compute groups (%d) is zero.", p_y_groups));
 	ERR_FAIL_COND_MSG(p_x_groups > driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_X),
-			"Dispatch amount of X compute groups (" + itos(p_x_groups) + ") is larger than device limit (" + itos(driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_X)) + ")");
+			vformat("Dispatch number of X compute groups (%d) is larger than device limit (%d).", p_x_groups, driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_X)));
 	ERR_FAIL_COND_MSG(p_y_groups > driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Y),
-			"Dispatch amount of Y compute groups (" + itos(p_y_groups) + ") is larger than device limit (" + itos(driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Y)) + ")");
+			vformat("Dispatch number of Y compute groups (%d) is larger than device limit (%d).", p_y_groups, driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Y)));
 	ERR_FAIL_COND_MSG(p_z_groups > driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Z),
-			"Dispatch amount of Z compute groups (" + itos(p_z_groups) + ") is larger than device limit (" + itos(driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Z)) + ")");
+			vformat("Dispatch number of Z compute groups (%d) is larger than device limit (%d).", p_z_groups, driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Z)));
 
 	ERR_FAIL_COND_MSG(!cl->validation.active, "Submitted Compute Lists can no longer be modified.");
 #endif
@@ -4874,12 +4874,12 @@ void RenderingDevice::compute_list_dispatch(ComputeListID p_list, uint32_t p_x_g
 
 		if (cl->state.sets[i].pipeline_expected_format != cl->state.sets[i].uniform_set_format) {
 			if (cl->state.sets[i].uniform_set_format == 0) {
-				ERR_FAIL_MSG("Uniforms were never supplied for set (" + itos(i) + ") at the time of drawing, which are required by the pipeline.");
+				ERR_FAIL_MSG(vformat("Uniforms were never supplied for set (%d) at the time of drawing, which are required by the pipeline.", i));
 			} else if (uniform_set_owner.owns(cl->state.sets[i].uniform_set)) {
 				UniformSet *us = uniform_set_owner.get_or_null(cl->state.sets[i].uniform_set);
-				ERR_FAIL_MSG("Uniforms supplied for set (" + itos(i) + "):\n" + _shader_uniform_debug(us->shader_id, us->shader_set) + "\nare not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n" + _shader_uniform_debug(cl->state.pipeline_shader));
+				ERR_FAIL_MSG(vformat("Uniforms supplied for set (%d):\n%s\nare not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n%s", i, _shader_uniform_debug(us->shader_id, us->shader_set), _shader_uniform_debug(cl->state.pipeline_shader)));
 			} else {
-				ERR_FAIL_MSG("Uniforms supplied for set (" + itos(i) + ", which was just freed) are not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n" + _shader_uniform_debug(cl->state.pipeline_shader));
+				ERR_FAIL_MSG(vformat("Uniforms supplied for set (%d, which was just freed) are not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n%s", i, _shader_uniform_debug(cl->state.pipeline_shader)));
 			}
 		}
 	}
@@ -4926,9 +4926,9 @@ void RenderingDevice::compute_list_dispatch_threads(ComputeListID p_list, uint32
 	ERR_FAIL_NULL(compute_list);
 
 #ifdef DEBUG_ENABLED
-	ERR_FAIL_COND_MSG(p_x_threads == 0, "Dispatch amount of X compute threads (" + itos(p_x_threads) + ") is zero.");
-	ERR_FAIL_COND_MSG(p_y_threads == 0, "Dispatch amount of Y compute threads (" + itos(p_y_threads) + ") is zero.");
-	ERR_FAIL_COND_MSG(p_z_threads == 0, "Dispatch amount of Z compute threads (" + itos(p_z_threads) + ") is zero.");
+	ERR_FAIL_COND_MSG(p_x_threads == 0, vformat("Dispatch number of X compute threads (%d) is zero.", p_x_threads));
+	ERR_FAIL_COND_MSG(p_y_threads == 0, vformat("Dispatch number of Y compute threads (%d) is zero.", p_y_threads));
+	ERR_FAIL_COND_MSG(p_z_threads == 0, vformat("Dispatch number of Z compute threads (%d) is zero.", p_z_threads));
 #endif
 
 	ComputeList *cl = compute_list;
@@ -4987,12 +4987,12 @@ void RenderingDevice::compute_list_dispatch_indirect(ComputeListID p_list, RID p
 
 		if (cl->state.sets[i].pipeline_expected_format != cl->state.sets[i].uniform_set_format) {
 			if (cl->state.sets[i].uniform_set_format == 0) {
-				ERR_FAIL_MSG("Uniforms were never supplied for set (" + itos(i) + ") at the time of drawing, which are required by the pipeline.");
+				ERR_FAIL_MSG(vformat("Uniforms were never supplied for set (%d) at the time of drawing, which are required by the pipeline.", i));
 			} else if (uniform_set_owner.owns(cl->state.sets[i].uniform_set)) {
 				UniformSet *us = uniform_set_owner.get_or_null(cl->state.sets[i].uniform_set);
-				ERR_FAIL_MSG("Uniforms supplied for set (" + itos(i) + "):\n" + _shader_uniform_debug(us->shader_id, us->shader_set) + "\nare not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n" + _shader_uniform_debug(cl->state.pipeline_shader));
+				ERR_FAIL_MSG(vformat("Uniforms supplied for set (%d):\n%s\nare not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n%s", i, _shader_uniform_debug(us->shader_id, us->shader_set), _shader_uniform_debug(cl->state.pipeline_shader)));
 			} else {
-				ERR_FAIL_MSG("Uniforms supplied for set (" + itos(i) + ", which was just freed) are not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n" + _shader_uniform_debug(cl->state.pipeline_shader));
+				ERR_FAIL_MSG(vformat("Uniforms supplied for set (%d, which was just freed) are not the same format as required by the pipeline shader. Pipeline shader requires the following bindings:\n%s", i, _shader_uniform_debug(cl->state.pipeline_shader)));
 			}
 		}
 	}
@@ -5661,9 +5661,9 @@ void RenderingDevice::_free_internal(RID p_id) {
 		compute_pipeline_owner.free(p_id);
 	} else {
 #ifdef DEV_ENABLED
-		ERR_PRINT("Attempted to free invalid ID: " + itos(p_id.get_id()) + " " + resource_name);
+		ERR_PRINT(vformat("Attempted to free invalid ID: %d %s.", p_id.get_id(), resource_name));
 #else
-		ERR_PRINT("Attempted to free invalid ID: " + itos(p_id.get_id()));
+		ERR_PRINT(vformat("Attempted to free invalid ID: %d.", p_id.get_id()));
 #endif
 	}
 }
@@ -5710,7 +5710,7 @@ void RenderingDevice::set_resource_name(RID p_id, const String &p_name) {
 		ComputePipeline *pipeline = compute_pipeline_owner.get_or_null(p_id);
 		driver->set_object_name(RDD::OBJECT_TYPE_PIPELINE, pipeline->driver_id, p_name);
 	} else {
-		ERR_PRINT("Attempted to name invalid ID: " + itos(p_id.get_id()));
+		ERR_PRINT(vformat("Attempted to name invalid ID: %d.", p_id.get_id()));
 		return;
 	}
 #ifdef DEV_ENABLED
@@ -6363,8 +6363,8 @@ void RenderingDevice::_free_rids(T &p_owner, const char *p_type) {
 void RenderingDevice::capture_timestamp(const String &p_name) {
 	ERR_RENDER_THREAD_GUARD();
 
-	ERR_FAIL_COND_MSG(draw_list != nullptr && draw_list->state.draw_count > 0, "Capturing timestamps during draw list creation is not allowed. Offending timestamp was: " + p_name);
-	ERR_FAIL_COND_MSG(compute_list != nullptr && compute_list->state.dispatch_count > 0, "Capturing timestamps during compute list creation is not allowed. Offending timestamp was: " + p_name);
+	ERR_FAIL_COND_MSG(draw_list != nullptr && draw_list->state.draw_count > 0, vformat("Capturing timestamps during draw list creation is not allowed. Offending timestamp was: '%s'.", p_name));
+	ERR_FAIL_COND_MSG(compute_list != nullptr && compute_list->state.dispatch_count > 0, vformat("Capturing timestamps during compute list creation is not allowed. Offending timestamp was: '%s'.", p_name));
 	ERR_FAIL_COND_MSG(frames[frame].timestamp_count >= max_timestamp_query_elements, vformat("Tried capturing more timestamps than the configured maximum (%d). You can increase this limit in the project settings under 'Debug/Settings' called 'Max Timestamp Query Elements'.", max_timestamp_query_elements));
 
 	draw_graph.add_capture_timestamp(frames[frame].timestamp_pool, frames[frame].timestamp_count);

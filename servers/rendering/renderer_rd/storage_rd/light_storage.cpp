@@ -1863,7 +1863,7 @@ void LightStorage::lightmap_set_textures(RID p_lightmap, RID p_light, bool p_use
 				}
 			}
 		}
-		ERR_FAIL_COND_MSG(lm->array_index < 0, "Maximum amount of lightmaps in use (" + itos(lightmap_textures.size()) + ") has been exceeded, lightmap will nod display properly.");
+		ERR_FAIL_COND_MSG(lm->array_index < 0, vformat("Maximum amount of lightmaps in use (%d) has been exceeded, lightmap will nod display properly.", lightmap_textures.size()));
 
 		lightmap_textures.write[lm->array_index] = t->rd_texture;
 	}

@@ -302,7 +302,7 @@ void ShaderRD::_compile_variant(uint32_t p_variant, CompileData p_data) {
 
 	if (!build_ok) {
 		MutexLock lock(variant_set_mutex); //properly print the errors
-		ERR_PRINT("Error compiling " + String(current_stage == RD::SHADER_STAGE_COMPUTE ? "Compute " : (current_stage == RD::SHADER_STAGE_VERTEX ? "Vertex" : "Fragment")) + " shader, variant #" + itos(variant) + " (" + variant_defines[variant].text.get_data() + ").");
+		ERR_PRINT(vformat("Error compiling %s shader, variant #%d (%s).", String(current_stage == RD::SHADER_STAGE_COMPUTE ? "Compute " : (current_stage == RD::SHADER_STAGE_VERTEX ? "Vertex" : "Fragment")), variant, variant_defines[variant].text.get_data()));
 		ERR_PRINT(error);
 
 #ifdef DEBUG_ENABLED
@@ -867,7 +867,7 @@ ShaderRD::~ShaderRD() {
 	List<RID> remaining;
 	version_owner.get_owned_list(&remaining);
 	if (remaining.size()) {
-		ERR_PRINT(itos(remaining.size()) + " shaders of type " + name + " were never freed");
+		ERR_PRINT(vformat("%d shaders of type %s were never freed.", remaining.size(), name));
 		while (remaining.size()) {
 			version_free(remaining.front()->get());
 			remaining.pop_front();

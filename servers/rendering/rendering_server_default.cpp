@@ -190,7 +190,7 @@ void RenderingServerDefault::_run_post_draw_steps() {
 		c.callp(nullptr, 0, result, ce);
 		if (ce.error != Callable::CallError::CALL_OK) {
 			String err = Variant::get_callable_error_text(c, nullptr, 0, ce);
-			ERR_PRINT("Error calling frame drawn function: " + err);
+			ERR_PRINT(vformat("Error calling frame drawn function: %s.", err));
 		}
 
 		frame_drawn_callbacks.pop_front();
