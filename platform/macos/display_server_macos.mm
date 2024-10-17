@@ -3734,8 +3734,7 @@ DisplayServerMacOS::~DisplayServerMacOS() {
 
 	// Destroy all windows.
 	for (HashMap<WindowID, WindowData>::Iterator E = windows.begin(); E;) {
-		HashMap<WindowID, WindowData>::Iterator F = E;
-		++E;
+		HashMap<WindowID, WindowData>::Iterator F = E++;
 		[F->value.window_object setContentView:nil];
 		[F->value.window_object close];
 	}
