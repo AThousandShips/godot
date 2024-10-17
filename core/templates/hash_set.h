@@ -334,6 +334,11 @@ public:
 			}
 			return *this;
 		}
+		_FORCE_INLINE_ Iterator operator++(int) {
+			Iterator ret = *this;
+			operator++();
+			return ret;
+		}
 		_FORCE_INLINE_ Iterator &operator--() {
 			index--;
 			if (index < 0) {
@@ -342,6 +347,11 @@ public:
 				num_keys = 0;
 			}
 			return *this;
+		}
+		_FORCE_INLINE_ Iterator operator--(int) {
+			Iterator ret = *this;
+			operator--();
+			return ret;
 		}
 
 		_FORCE_INLINE_ bool operator==(const Iterator &b) const { return keys == b.keys && index == b.index; }

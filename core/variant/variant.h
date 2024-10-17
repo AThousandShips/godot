@@ -924,9 +924,21 @@ Array::Iterator &Array::Iterator::operator++() {
 	return *this;
 }
 
+Array::Iterator Array::Iterator::operator++(int) {
+	Iterator ret = *this;
+	operator++();
+	return ret;
+}
+
 Array::Iterator &Array::Iterator::operator--() {
 	element_ptr--;
 	return *this;
+}
+
+Array::Iterator Array::Iterator::operator--(int) {
+	Iterator ret = *this;
+	operator--();
+	return ret;
 }
 
 const Variant &Array::ConstIterator::operator*() const {
@@ -950,9 +962,21 @@ Array::ConstIterator &Array::ConstIterator::operator++() {
 	return *this;
 }
 
+Array::ConstIterator Array::ConstIterator::operator++(int) {
+	ConstIterator ret = *this;
+	operator++();
+	return ret;
+}
+
 Array::ConstIterator &Array::ConstIterator::operator--() {
 	element_ptr--;
 	return *this;
+}
+
+Array::ConstIterator Array::ConstIterator::operator--(int) {
+	ConstIterator ret = *this;
+	operator--();
+	return ret;
 }
 
 #endif // VARIANT_H

@@ -464,11 +464,21 @@ public:
 			}
 			return *this;
 		}
+		_FORCE_INLINE_ ConstIterator operator++(int) {
+			ConstIterator ret = *this;
+			operator++();
+			return ret;
+		}
 		_FORCE_INLINE_ ConstIterator &operator--() {
 			if (E) {
 				E = E->prev;
 			}
 			return *this;
+		}
+		_FORCE_INLINE_ ConstIterator operator--(int) {
+			ConstIterator ret = *this;
+			operator--();
+			return ret;
 		}
 
 		_FORCE_INLINE_ bool operator==(const ConstIterator &b) const { return E == b.E; }
@@ -500,11 +510,21 @@ public:
 			}
 			return *this;
 		}
+		_FORCE_INLINE_ Iterator operator++(int) {
+			Iterator ret = *this;
+			operator++();
+			return ret;
+		}
 		_FORCE_INLINE_ Iterator &operator--() {
 			if (E) {
 				E = E->prev;
 			}
 			return *this;
+		}
+		_FORCE_INLINE_ Iterator operator--(int) {
+			Iterator ret = *this;
+			operator--();
+			return ret;
 		}
 
 		_FORCE_INLINE_ bool operator==(const Iterator &b) const { return E == b.E; }
