@@ -51,8 +51,7 @@ static TypedArray<T> to_array(const HashSet<T> &p_inp) {
 	TypedArray<T> ret;
 	typename HashSet<T>::Iterator elem = p_inp.begin();
 	while (elem) {
-		ret.push_back(*elem);
-		++elem;
+		ret.push_back(*elem++);
 	}
 	return ret;
 }
