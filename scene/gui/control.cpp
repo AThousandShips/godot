@@ -2111,7 +2111,7 @@ Control *Control::find_next_valid_focus() const {
 			if (!next_child) { // Nothing else. Go up and find either window or subwindow.
 				next_child = const_cast<Control *>(this);
 				while (next_child && !next_child->is_set_as_top_level()) {
-					next_child = cast_to<Control>(next_child->get_parent());
+					next_child = Object::cast_to<Control>(next_child->get_parent());
 				}
 
 				if (!next_child) {
@@ -2546,7 +2546,7 @@ void Control::set_theme(const Ref<Theme> &p_theme) {
 		return;
 	}
 
-	Window *parent_w = cast_to<Window>(get_parent());
+	Window *parent_w = Object::cast_to<Window>(get_parent());
 	if (parent_w && parent_w->has_theme_owner_node()) {
 		data.theme_owner->propagate_theme_changed(this, parent_w->get_theme_owner_node(), is_inside_tree(), true);
 		return;

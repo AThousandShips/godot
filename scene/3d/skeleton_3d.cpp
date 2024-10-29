@@ -1135,7 +1135,7 @@ void Skeleton3D::_process_modifiers() {
 		if (!t_obj) {
 			continue;
 		}
-		SkeletonModifier3D *mod = cast_to<SkeletonModifier3D>(t_obj);
+		SkeletonModifier3D *mod = Object::cast_to<SkeletonModifier3D>(t_obj);
 		if (!mod) {
 			continue;
 		}
@@ -1321,7 +1321,7 @@ Node *Skeleton3D::get_simulator() {
 
 void Skeleton3D::set_animate_physical_bones(bool p_enabled) {
 	animate_physical_bones = p_enabled;
-	PhysicalBoneSimulator3D *sim = cast_to<PhysicalBoneSimulator3D>(simulator);
+	PhysicalBoneSimulator3D *sim = Object::cast_to<PhysicalBoneSimulator3D>(simulator);
 	if (!sim) {
 		return;
 	}
@@ -1333,7 +1333,7 @@ bool Skeleton3D::get_animate_physical_bones() const {
 }
 
 void Skeleton3D::physical_bones_stop_simulation() {
-	PhysicalBoneSimulator3D *sim = cast_to<PhysicalBoneSimulator3D>(simulator);
+	PhysicalBoneSimulator3D *sim = Object::cast_to<PhysicalBoneSimulator3D>(simulator);
 	if (!sim) {
 		return;
 	}
@@ -1342,7 +1342,7 @@ void Skeleton3D::physical_bones_stop_simulation() {
 }
 
 void Skeleton3D::physical_bones_start_simulation_on(const TypedArray<StringName> &p_bones) {
-	PhysicalBoneSimulator3D *sim = cast_to<PhysicalBoneSimulator3D>(simulator);
+	PhysicalBoneSimulator3D *sim = Object::cast_to<PhysicalBoneSimulator3D>(simulator);
 	if (!sim) {
 		return;
 	}
@@ -1351,7 +1351,7 @@ void Skeleton3D::physical_bones_start_simulation_on(const TypedArray<StringName>
 }
 
 void Skeleton3D::physical_bones_add_collision_exception(RID p_exception) {
-	PhysicalBoneSimulator3D *sim = cast_to<PhysicalBoneSimulator3D>(simulator);
+	PhysicalBoneSimulator3D *sim = Object::cast_to<PhysicalBoneSimulator3D>(simulator);
 	if (!sim) {
 		return;
 	}
@@ -1359,7 +1359,7 @@ void Skeleton3D::physical_bones_add_collision_exception(RID p_exception) {
 }
 
 void Skeleton3D::physical_bones_remove_collision_exception(RID p_exception) {
-	PhysicalBoneSimulator3D *sim = cast_to<PhysicalBoneSimulator3D>(simulator);
+	PhysicalBoneSimulator3D *sim = Object::cast_to<PhysicalBoneSimulator3D>(simulator);
 	if (!sim) {
 		return;
 	}

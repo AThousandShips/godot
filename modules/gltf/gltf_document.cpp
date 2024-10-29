@@ -5254,44 +5254,44 @@ void GLTFDocument::_convert_scene_node(Ref<GLTFState> p_state, Node *p_current, 
 	gltf_node->set_original_name(p_current->get_name());
 	gltf_node->set_name(_gen_unique_name(p_state, p_current->get_name()));
 	gltf_node->merge_meta_from(p_current);
-	if (cast_to<Node3D>(p_current)) {
-		Node3D *spatial = cast_to<Node3D>(p_current);
+	if (Object::cast_to<Node3D>(p_current)) {
+		Node3D *spatial = Object::cast_to<Node3D>(p_current);
 		_convert_spatial(p_state, spatial, gltf_node);
 	}
-	if (cast_to<MeshInstance3D>(p_current)) {
-		MeshInstance3D *mi = cast_to<MeshInstance3D>(p_current);
+	if (Object::cast_to<MeshInstance3D>(p_current)) {
+		MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(p_current);
 		_convert_mesh_instance_to_gltf(mi, p_state, gltf_node);
-	} else if (cast_to<BoneAttachment3D>(p_current)) {
-		BoneAttachment3D *bone = cast_to<BoneAttachment3D>(p_current);
+	} else if (Object::cast_to<BoneAttachment3D>(p_current)) {
+		BoneAttachment3D *bone = Object::cast_to<BoneAttachment3D>(p_current);
 		_convert_bone_attachment_to_gltf(bone, p_state, p_gltf_parent, p_gltf_root, gltf_node);
 		return;
-	} else if (cast_to<Skeleton3D>(p_current)) {
-		Skeleton3D *skel = cast_to<Skeleton3D>(p_current);
+	} else if (Object::cast_to<Skeleton3D>(p_current)) {
+		Skeleton3D *skel = Object::cast_to<Skeleton3D>(p_current);
 		_convert_skeleton_to_gltf(skel, p_state, p_gltf_parent, p_gltf_root, gltf_node);
 		// We ignore the Godot Engine node that is the skeleton.
 		return;
-	} else if (cast_to<MultiMeshInstance3D>(p_current)) {
-		MultiMeshInstance3D *multi = cast_to<MultiMeshInstance3D>(p_current);
+	} else if (Object::cast_to<MultiMeshInstance3D>(p_current)) {
+		MultiMeshInstance3D *multi = Object::cast_to<MultiMeshInstance3D>(p_current);
 		_convert_multi_mesh_instance_to_gltf(multi, p_gltf_parent, p_gltf_root, gltf_node, p_state);
 #ifdef MODULE_CSG_ENABLED
-	} else if (cast_to<CSGShape3D>(p_current)) {
-		CSGShape3D *shape = cast_to<CSGShape3D>(p_current);
+	} else if (Object::cast_to<CSGShape3D>(p_current)) {
+		CSGShape3D *shape = Object::cast_to<CSGShape3D>(p_current);
 		if (shape->get_parent() && shape->is_root_shape()) {
 			_convert_csg_shape_to_gltf(shape, p_gltf_parent, gltf_node, p_state);
 		}
 #endif // MODULE_CSG_ENABLED
 #ifdef MODULE_GRIDMAP_ENABLED
-	} else if (cast_to<GridMap>(p_current)) {
+	} else if (Object::cast_to<GridMap>(p_current)) {
 		GridMap *gridmap = Object::cast_to<GridMap>(p_current);
 		_convert_grid_map_to_gltf(gridmap, p_gltf_parent, p_gltf_root, gltf_node, p_state);
 #endif // MODULE_GRIDMAP_ENABLED
-	} else if (cast_to<Camera3D>(p_current)) {
+	} else if (Object::cast_to<Camera3D>(p_current)) {
 		Camera3D *camera = Object::cast_to<Camera3D>(p_current);
 		_convert_camera_to_gltf(camera, p_state, gltf_node);
-	} else if (cast_to<Light3D>(p_current)) {
+	} else if (Object::cast_to<Light3D>(p_current)) {
 		Light3D *light = Object::cast_to<Light3D>(p_current);
 		_convert_light_to_gltf(light, p_state, gltf_node);
-	} else if (cast_to<AnimationPlayer>(p_current)) {
+	} else if (Object::cast_to<AnimationPlayer>(p_current)) {
 		AnimationPlayer *animation_player = Object::cast_to<AnimationPlayer>(p_current);
 		_convert_animation_player_to_gltf(animation_player, p_state, p_gltf_parent, p_gltf_root, gltf_node, p_current);
 	}
@@ -5569,9 +5569,9 @@ void GLTFDocument::_convert_bone_attachment_to_gltf(BoneAttachment3D *p_bone_att
 	Skeleton3D *skeleton;
 	// Note that relative transforms to external skeletons and pose overrides are not supported.
 	if (p_bone_attachment->get_use_external_skeleton()) {
-		skeleton = cast_to<Skeleton3D>(p_bone_attachment->get_node_or_null(p_bone_attachment->get_external_skeleton()));
+		skeleton = Object::cast_to<Skeleton3D>(p_bone_attachment->get_node_or_null(p_bone_attachment->get_external_skeleton()));
 	} else {
-		skeleton = cast_to<Skeleton3D>(p_bone_attachment->get_parent());
+		skeleton = Object::cast_to<Skeleton3D>(p_bone_attachment->get_parent());
 	}
 	GLTFSkeletonIndex skel_gltf_i = -1;
 	if (skeleton != nullptr && p_state->skeleton3d_to_gltf_skeleton.has(skeleton->get_instance_id())) {
@@ -6767,7 +6767,7 @@ void GLTFDocument::_convert_animation(Ref<GLTFState> p_state, AnimationPlayer *p
 			const String suffix = node_suffix[1];
 			Node *node = animation_base_node->get_node_or_null(path);
 			ERR_CONTINUE_MSG(!node, "Cannot get the node from a blend shape path.");
-			MeshInstance3D *mi = cast_to<MeshInstance3D>(node);
+			MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(node);
 			if (!mi) {
 				continue;
 			}
@@ -6831,13 +6831,13 @@ void GLTFDocument::_convert_animation(Ref<GLTFState> p_state, AnimationPlayer *p
 			if (!godot_node) {
 				continue;
 			}
-			Skeleton3D *skeleton = cast_to<Skeleton3D>(animation_base_node->get_node_or_null(node));
+			Skeleton3D *skeleton = Object::cast_to<Skeleton3D>(animation_base_node->get_node_or_null(node));
 			if (!skeleton) {
 				continue;
 			}
 			GLTFSkeletonIndex skeleton_gltf_i = -1;
 			for (GLTFSkeletonIndex skeleton_i = 0; skeleton_i < p_state->skeletons.size(); skeleton_i++) {
-				if (p_state->skeletons[skeleton_i]->godot_skeleton == cast_to<Skeleton3D>(godot_node)) {
+				if (p_state->skeletons[skeleton_i]->godot_skeleton == Object::cast_to<Skeleton3D>(godot_node)) {
 					skeleton = p_state->skeletons[skeleton_i]->godot_skeleton;
 					skeleton_gltf_i = skeleton_i;
 					ERR_CONTINUE(!skeleton);
