@@ -501,7 +501,7 @@ Transform3D SkeletonIK3D::_get_target_transform() {
 		target_node_override_ref = Object::cast_to<Node3D>(get_node(target_node_path_override));
 	}
 
-	Node3D *target_node_override = cast_to<Node3D>(target_node_override_ref.get_validated_object());
+	Node3D *target_node_override = Object::cast_to<Node3D>(target_node_override_ref.get_validated_object());
 	if (target_node_override && target_node_override->is_inside_tree()) {
 		// Make sure to use the interpolated transform as target.
 		// When physics interpolation is off this will pass through to get_global_transform().

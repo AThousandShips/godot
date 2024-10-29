@@ -182,25 +182,25 @@ Ref<GLTFPhysicsBody> GLTFPhysicsBody::from_node(const CollisionObject3D *p_body_
 	Ref<GLTFPhysicsBody> physics_body;
 	physics_body.instantiate();
 	ERR_FAIL_NULL_V_MSG(p_body_node, physics_body, "Tried to create a GLTFPhysicsBody from a CollisionObject3D node, but the given node was null.");
-	if (cast_to<CharacterBody3D>(p_body_node)) {
+	if (Object::cast_to<CharacterBody3D>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::CHARACTER;
-	} else if (cast_to<AnimatableBody3D>(p_body_node)) {
+	} else if (Object::cast_to<AnimatableBody3D>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::ANIMATABLE;
-	} else if (cast_to<RigidBody3D>(p_body_node)) {
-		const RigidBody3D *body = cast_to<const RigidBody3D>(p_body_node);
+	} else if (Object::cast_to<RigidBody3D>(p_body_node)) {
+		const RigidBody3D *body = Object::cast_to<const RigidBody3D>(p_body_node);
 		physics_body->mass = body->get_mass();
 		physics_body->linear_velocity = body->get_linear_velocity();
 		physics_body->angular_velocity = body->get_angular_velocity();
 		physics_body->center_of_mass = body->get_center_of_mass();
 		physics_body->inertia_diagonal = body->get_inertia();
-		if (cast_to<VehicleBody3D>(p_body_node)) {
+		if (Object::cast_to<VehicleBody3D>(p_body_node)) {
 			physics_body->body_type = PhysicsBodyType::VEHICLE;
 		} else {
 			physics_body->body_type = PhysicsBodyType::RIGID;
 		}
-	} else if (cast_to<StaticBody3D>(p_body_node)) {
+	} else if (Object::cast_to<StaticBody3D>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::STATIC;
-	} else if (cast_to<Area3D>(p_body_node)) {
+	} else if (Object::cast_to<Area3D>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::TRIGGER;
 	}
 	return physics_body;

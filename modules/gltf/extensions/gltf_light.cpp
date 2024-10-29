@@ -131,19 +131,19 @@ Ref<GLTFLight> GLTFLight::from_node(const Light3D *p_light) {
 	l.instantiate();
 	ERR_FAIL_NULL_V_MSG(p_light, l, "Tried to create a GLTFLight from a Light3D node, but the given node was null.");
 	l->color = p_light->get_color();
-	if (cast_to<DirectionalLight3D>(p_light)) {
+	if (Object::cast_to<DirectionalLight3D>(p_light)) {
 		l->light_type = "directional";
-		const DirectionalLight3D *light = cast_to<const DirectionalLight3D>(p_light);
+		const DirectionalLight3D *light = Object::cast_to<const DirectionalLight3D>(p_light);
 		l->intensity = light->get_param(DirectionalLight3D::PARAM_ENERGY);
 		l->range = FLT_MAX; // Range for directional lights is infinite in Godot.
-	} else if (cast_to<const OmniLight3D>(p_light)) {
+	} else if (Object::cast_to<const OmniLight3D>(p_light)) {
 		l->light_type = "point";
-		const OmniLight3D *light = cast_to<const OmniLight3D>(p_light);
+		const OmniLight3D *light = Object::cast_to<const OmniLight3D>(p_light);
 		l->range = light->get_param(OmniLight3D::PARAM_RANGE);
 		l->intensity = light->get_param(OmniLight3D::PARAM_ENERGY);
-	} else if (cast_to<const SpotLight3D>(p_light)) {
+	} else if (Object::cast_to<const SpotLight3D>(p_light)) {
 		l->light_type = "spot";
-		const SpotLight3D *light = cast_to<const SpotLight3D>(p_light);
+		const SpotLight3D *light = Object::cast_to<const SpotLight3D>(p_light);
 		l->range = light->get_param(SpotLight3D::PARAM_RANGE);
 		l->intensity = light->get_param(SpotLight3D::PARAM_ENERGY);
 		l->outer_cone_angle = Math::deg_to_rad(light->get_param(SpotLight3D::PARAM_SPOT_ANGLE));

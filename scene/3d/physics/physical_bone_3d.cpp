@@ -1035,15 +1035,15 @@ void PhysicalBone3D::_on_bone_parent_changed() {
 
 void PhysicalBone3D::_update_simulator_path() {
 	simulator_id = ObjectID();
-	PhysicalBoneSimulator3D *sim = cast_to<PhysicalBoneSimulator3D>(get_parent());
+	PhysicalBoneSimulator3D *sim = Object::cast_to<PhysicalBoneSimulator3D>(get_parent());
 	if (sim) {
 		simulator_id = sim->get_instance_id();
 		return;
 	}
 #ifndef DISABLE_DEPRECATED
-	Skeleton3D *sk = cast_to<Skeleton3D>(get_parent());
+	Skeleton3D *sk = Object::cast_to<Skeleton3D>(get_parent());
 	if (sk) {
-		PhysicalBoneSimulator3D *ssim = cast_to<PhysicalBoneSimulator3D>(sk->get_simulator());
+		PhysicalBoneSimulator3D *ssim = Object::cast_to<PhysicalBoneSimulator3D>(sk->get_simulator());
 		if (ssim) {
 			simulator_id = ssim->get_instance_id();
 		}

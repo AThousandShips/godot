@@ -173,7 +173,7 @@ void ScriptTextEditor::enable_editor(Control *p_shortcut_context) {
 
 	if (p_shortcut_context) {
 		for (int i = 0; i < edit_hb->get_child_count(); ++i) {
-			Control *c = cast_to<Control>(edit_hb->get_child(i));
+			Control *c = Object::cast_to<Control>(edit_hb->get_child(i));
 			if (c) {
 				c->set_shortcut_context(p_shortcut_context);
 			}

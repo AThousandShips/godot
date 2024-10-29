@@ -108,7 +108,7 @@ Variant WeakRef::get_ref() const {
 	if (!obj) {
 		return Variant();
 	}
-	RefCounted *r = cast_to<RefCounted>(obj);
+	RefCounted *r = Object::cast_to<RefCounted>(obj);
 	if (r) {
 		return Ref<RefCounted>(r);
 	}

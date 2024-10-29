@@ -352,14 +352,14 @@ void ResourceImporterScene::_pre_fix_global(Node *p_scene, const HashMap<StringN
 		}
 		Ref<Animation> reset_anim;
 		for (int i = 0; i < anim_players.size(); i++) {
-			AnimationPlayer *player = cast_to<AnimationPlayer>(anim_players[i]);
+			AnimationPlayer *player = Object::cast_to<AnimationPlayer>(anim_players[i]);
 			if (player->has_animation(SceneStringName(RESET))) {
 				reset_anim = player->get_animation(SceneStringName(RESET));
 				break;
 			}
 		}
 		if (reset_anim.is_null()) {
-			AnimationPlayer *anim_player = cast_to<AnimationPlayer>(anim_players[0]);
+			AnimationPlayer *anim_player = Object::cast_to<AnimationPlayer>(anim_players[0]);
 			reset_anim.instantiate();
 			Ref<AnimationLibrary> anim_library;
 			if (anim_player->has_animation_library(StringName())) {
@@ -372,7 +372,7 @@ void ResourceImporterScene::_pre_fix_global(Node *p_scene, const HashMap<StringN
 		}
 		TypedArray<Node> skeletons = p_scene->find_children("*", "Skeleton3D");
 		for (int i = 0; i < skeletons.size(); i++) {
-			Skeleton3D *skeleton = cast_to<Skeleton3D>(skeletons[i]);
+			Skeleton3D *skeleton = Object::cast_to<Skeleton3D>(skeletons[i]);
 			NodePath skeleton_path = p_scene->get_path_to(skeleton);
 
 			HashSet<NodePath> existing_pos_tracks;
@@ -1433,7 +1433,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 			if (int(node_settings["rest_pose/load_pose"]) == 1) {
 				TypedArray<Node> children = p_root->find_children("*", "AnimationPlayer", true, false);
 				for (int node_i = 0; node_i < children.size(); node_i++) {
-					AnimationPlayer *anim_player = cast_to<AnimationPlayer>(children[node_i]);
+					AnimationPlayer *anim_player = Object::cast_to<AnimationPlayer>(children[node_i]);
 					ERR_CONTINUE(anim_player == nullptr);
 					List<StringName> anim_list;
 					anim_player->get_animation_list(&anim_list);
@@ -3282,7 +3282,7 @@ Node *EditorSceneFormatImporterESCN::import_scene(const String &p_path, uint32_t
 	Node *scene = ps->instantiate();
 	TypedArray<Node> nodes = scene->find_children("*", "MeshInstance3D");
 	for (int32_t node_i = 0; node_i < nodes.size(); node_i++) {
-		MeshInstance3D *mesh_3d = cast_to<MeshInstance3D>(nodes[node_i]);
+		MeshInstance3D *mesh_3d = Object::cast_to<MeshInstance3D>(nodes[node_i]);
 		Ref<ImporterMesh> mesh;
 		mesh.instantiate();
 		// Ignore the aabb, it will be recomputed.

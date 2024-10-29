@@ -2119,7 +2119,7 @@ void Window::set_theme(const Ref<Theme> &p_theme) {
 		return;
 	}
 
-	Window *parent_w = cast_to<Window>(get_parent());
+	Window *parent_w = Object::cast_to<Window>(get_parent());
 	if (parent_w && parent_w->has_theme_owner_node()) {
 		theme_owner->propagate_theme_changed(this, parent_w->get_theme_owner_node(), is_inside_tree(), true);
 		return;
