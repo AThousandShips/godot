@@ -137,7 +137,7 @@ Variant PropertyUtils::get_property_default_value(const Object *p_object, const 
 			}
 			// Save script for later
 			bool has_script = false;
-			Variant script = ia.state->get_property_value(ia.node, SNAME("script"), has_script, node_deferred);
+			Variant script = ia.state->get_property_value(ia.node, CoreStringName(script), has_script, node_deferred);
 			if (has_script) {
 				Ref<Script> scr = script;
 				if (scr.is_valid()) {

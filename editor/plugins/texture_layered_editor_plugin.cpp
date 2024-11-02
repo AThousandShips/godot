@@ -204,9 +204,9 @@ void TextureLayeredEditor::_update_material(bool p_texture_changed) {
 	b.rotate(Vector3(1, 0, 0), x_rot);
 	b.rotate(Vector3(0, 1, 0), y_rot);
 
-	materials[1]->set_shader_parameter("normal", v);
+	materials[1]->set_shader_parameter(CoreStringName(normal), v);
 	materials[1]->set_shader_parameter("rot", b);
-	materials[2]->set_shader_parameter("normal", v);
+	materials[2]->set_shader_parameter(CoreStringName(normal), v);
 	materials[2]->set_shader_parameter("rot", b);
 
 	if (p_texture_changed) {

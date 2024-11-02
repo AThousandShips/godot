@@ -350,7 +350,7 @@ void EditorPropertyArray::update_property() {
 
 	object->set_array(array);
 
-	int size = array.call("size");
+	int size = array.call(CoreStringName(size));
 	int max_page = MAX(0, size - 1) / page_length;
 	if (page_index > max_page) {
 		_page_changed(max_page);
@@ -731,7 +731,7 @@ void EditorPropertyArray::_length_changed(double p_page) {
 }
 
 void EditorPropertyArray::_add_element() {
-	_length_changed(double(object->get_array().call("size")) + 1.0);
+	_length_changed(double(object->get_array().call(CoreStringName(size))) + 1.0);
 }
 
 void EditorPropertyArray::setup(Variant::Type p_array_type, const String &p_hint_string) {
@@ -763,7 +763,7 @@ void EditorPropertyArray::_reorder_button_gui_input(const Ref<InputEvent> &p_eve
 	Ref<InputEventMouseMotion> mm = p_event;
 	if (mm.is_valid()) {
 		Variant array = object->get_array();
-		int size = array.call("size");
+		int size = array.call(CoreStringName(size));
 
 		// Cumulate the mouse delta, many small changes (dragging slowly) should result in reordering at some point.
 		reorder_mouse_y_delta += mm->get_relative().y;

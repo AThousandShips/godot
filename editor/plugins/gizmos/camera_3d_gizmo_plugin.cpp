@@ -124,7 +124,7 @@ void Camera3DGizmoPlugin::set_handle(const EditorNode3DGizmo *p_gizmo, int p_id,
 
 		d = CLAMP(d, 0.1, 16384);
 
-		camera->set("size", d);
+		camera->set(CoreStringName(size), d);
 	}
 }
 
@@ -144,7 +144,7 @@ void Camera3DGizmoPlugin::commit_handle(const EditorNode3DGizmo *p_gizmo, int p_
 
 	} else {
 		if (p_cancel) {
-			camera->set("size", p_restore);
+			camera->set(CoreStringName(size), p_restore);
 		} else {
 			EditorUndoRedoManager *ur = EditorUndoRedoManager::get_singleton();
 			ur->create_action(TTR("Change Camera Size"));

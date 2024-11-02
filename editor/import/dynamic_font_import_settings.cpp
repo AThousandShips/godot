@@ -974,7 +974,7 @@ void DynamicFontImportSettingsDialog::_re_import() {
 
 		Size2i conf_size = Vector2i(16, 0);
 		for (const KeyValue<StringName, Variant> &E : import_variation_data->settings) {
-			if (E.key == "size") {
+			if (E.key == CoreStringName(size)) {
 				conf_size.x = E.value;
 			}
 			if (E.key == "outline_size") {
@@ -1192,7 +1192,7 @@ void DynamicFontImportSettingsDialog::open_settings(const String &p_path) {
 					import_variation_data_custom->options = options_variations;
 					vars_item->set_metadata(0, import_variation_data_custom);
 
-					import_variation_data_custom->set("size", font_size.x);
+					import_variation_data_custom->set(CoreStringName(size), font_size.x);
 					import_variation_data_custom->set("outline_size", font_size.y);
 					import_variation_data_custom->set("variation_opentype", variation);
 					import_variation_data_custom->set("variation_embolden", embolden);

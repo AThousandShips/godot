@@ -2208,7 +2208,7 @@ void Object::get_argument_options(const StringName &p_function, int p_idx, List<
 			for (const MethodInfo &E : signals) {
 				r_options->push_back(E.name.quote());
 			}
-		} else if (pf == "call" || pf == "call_deferred" || pf == "callv" || pf == "has_method") {
+		} else if (p_function == CoreStringName(call) || p_function == CoreStringName(call_deferred) || pf == "callv" || pf == "has_method") {
 			List<MethodInfo> methods;
 			get_method_list(&methods);
 			for (const MethodInfo &E : methods) {

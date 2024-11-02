@@ -1014,7 +1014,7 @@ void EditorPropertyFontNamesArray::_add_font(int p_option) {
 	}
 
 	Variant array = object->get_array();
-	int previous_size = array.call("size");
+	int previous_size = array.call(CoreStringName(size));
 
 	array.call("resize", previous_size + 1);
 	array.set(previous_size, menu->get_item_text(p_option));
