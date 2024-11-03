@@ -266,8 +266,8 @@ bool RenderingLightCuller::add_light_camera_planes_directional(LightCullPlanes &
 	// each edge forms a plane
 	int n_edges = entry.size() - 1;
 #else
-	uint8_t *entry = &data.LUT_entries[lookup][0];
-	int n_edges = data.LUT_entry_sizes[lookup] - 1;
+	uint8_t *entry = &RenderingLightCuller::Data::LUT_entries[lookup][0];
+	int n_edges = RenderingLightCuller::Data::LUT_entry_sizes[lookup] - 1;
 #endif
 
 	for (int e = 0; e < n_edges; e++) {
@@ -428,8 +428,8 @@ bool RenderingLightCuller::_add_light_camera_planes(LightCullPlanes &r_cull_plan
 	}
 
 	// Each edge forms a plane.
-	uint8_t *entry = &data.LUT_entries[lookup][0];
-	int n_edges = data.LUT_entry_sizes[lookup] - 1;
+	uint8_t *entry = &RenderingLightCuller::Data::LUT_entries[lookup][0];
+	int n_edges = RenderingLightCuller::Data::LUT_entry_sizes[lookup] - 1;
 
 	const Vector3 &pt2 = p_light_source.pos;
 

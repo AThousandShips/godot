@@ -89,8 +89,7 @@ private:
 				rgb.g = linear_color.g;
 				rgb.b = linear_color.b;
 
-				ok_color ok_color;
-				ok_color::Lab lab_color = ok_color.linear_srgb_to_oklab(rgb);
+				ok_color::Lab lab_color = ok_color::linear_srgb_to_oklab(rgb);
 
 				// Constructs an RGB color using the Lab values directly. This allows reusing the interpolation code.
 				return { lab_color.L, lab_color.a, lab_color.b, linear_color.a };
@@ -112,8 +111,7 @@ private:
 				lab.a = p_color.g;
 				lab.b = p_color.b;
 
-				ok_color new_ok_color;
-				ok_color::RGB ok_rgb = new_ok_color.oklab_to_linear_srgb(lab);
+				ok_color::RGB ok_rgb = ok_color::oklab_to_linear_srgb(lab);
 				Color linear{ ok_rgb.r, ok_rgb.g, ok_rgb.b, p_color.a };
 				return linear.linear_to_srgb();
 		}

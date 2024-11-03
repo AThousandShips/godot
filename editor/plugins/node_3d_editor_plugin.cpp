@@ -3289,7 +3289,7 @@ void Node3DEditorViewport::_draw() {
 				handle_color = get_theme_color(SNAME("accent_color"), EditorStringName(Editor));
 				break;
 		}
-		handle_color = handle_color.from_hsv(handle_color.get_h(), 0.25, 1.0, 1);
+		handle_color = Color::from_hsv(handle_color.get_h(), 0.25, 1.0, 1);
 
 		RenderingServer::get_singleton()->canvas_item_add_line(
 				ci,
@@ -7066,7 +7066,7 @@ void fragment() {
 			gizmo_color[i] = mat;
 
 			Ref<StandardMaterial3D> mat_hl = mat->duplicate();
-			const Color albedo = col.from_hsv(col.get_h(), 0.25, 1.0, 1);
+			const Color albedo = Color::from_hsv(col.get_h(), 0.25, 1.0, 1);
 			mat_hl->set_albedo(albedo);
 			gizmo_color_hl[i] = mat_hl;
 
@@ -7377,7 +7377,7 @@ void fragment() {
 				surftool->commit(scale_plane_gizmo[i]);
 
 				Ref<StandardMaterial3D> plane_mat_hl = plane_mat->duplicate();
-				plane_mat_hl->set_albedo(col.from_hsv(col.get_h(), 0.25, 1.0, 1));
+				plane_mat_hl->set_albedo(Color::from_hsv(col.get_h(), 0.25, 1.0, 1));
 				plane_gizmo_color_hl[i] = plane_mat_hl; // needed, so we can draw planes from both sides
 			}
 

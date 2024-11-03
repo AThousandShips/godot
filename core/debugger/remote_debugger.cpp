@@ -126,7 +126,7 @@ void RemoteDebugger::_err_handler(void *p_this, const char *p_func, const char *
 	}
 
 	// send_error will lock internally.
-	rd->script_debugger->send_error(String::utf8(p_func), String::utf8(p_file), p_line, String::utf8(p_err), String::utf8(p_descr), p_editor_notify, p_type, si);
+	RemoteDebugger::script_debugger->send_error(String::utf8(p_func), String::utf8(p_file), p_line, String::utf8(p_err), String::utf8(p_descr), p_editor_notify, p_type, si);
 }
 
 void RemoteDebugger::_print_handler(void *p_this, const String &p_string, bool p_error, bool p_rich) {

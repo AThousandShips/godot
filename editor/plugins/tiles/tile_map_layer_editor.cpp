@@ -4272,8 +4272,7 @@ void TileMapLayerEditor::forward_canvas_draw_over_viewport(Control *p_overlay) {
 				to_hash.push_back(tile_alternative_tile);
 				uint32_t hash = RandomPCG(to_hash.hash()).rand();
 
-				Color color;
-				color = color.from_hsv(
+				Color color = Color::from_hsv(
 						(float)((hash >> 24) & 0xFF) / 256.0,
 						Math::lerp(0.5, 1.0, (float)((hash >> 16) & 0xFF) / 256.0),
 						Math::lerp(0.5, 1.0, (float)((hash >> 8) & 0xFF) / 256.0),

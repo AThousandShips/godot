@@ -112,7 +112,7 @@ void SplitContainerDragger::_notification(int p_what) {
 		case NOTIFICATION_DRAW: {
 			SplitContainer *sc = Object::cast_to<SplitContainer>(get_parent());
 			draw_style_box(sc->theme_cache.split_bar_background, split_bar_rect);
-			if (sc->dragger_visibility == sc->DRAGGER_VISIBLE && (dragging || mouse_inside || !sc->theme_cache.autohide)) {
+			if (sc->dragger_visibility == SplitContainer::DRAGGER_VISIBLE && (dragging || mouse_inside || !sc->theme_cache.autohide)) {
 				Ref<Texture2D> tex = sc->_get_grabber_icon();
 				float available_size = sc->vertical ? (sc->get_size().x - tex->get_size().x) : (sc->get_size().y - tex->get_size().y);
 				if (available_size - sc->drag_area_margin_begin - sc->drag_area_margin_end > 0) { // Draw the grabber only if it fits.

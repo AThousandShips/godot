@@ -158,7 +158,7 @@ void EngineDebugger::initialize(const String &p_uri, bool p_skip_breakpoints, co
 	}
 
 	// There is a debugger, parse breakpoints.
-	ScriptDebugger *singleton_script_debugger = singleton->get_script_debugger();
+	ScriptDebugger *singleton_script_debugger = EngineDebugger::get_script_debugger();
 	singleton_script_debugger->set_skip_breakpoints(p_skip_breakpoints);
 
 	for (int i = 0; i < p_breakpoints.size(); i++) {

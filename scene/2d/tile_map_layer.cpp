@@ -680,8 +680,7 @@ void TileMapLayer::_rendering_draw_cell_debug(const RID &p_canvas_item, const Ve
 					to_hash.push_back(c.alternative_tile);
 					uint32_t hash = RandomPCG(to_hash.hash()).rand();
 
-					Color color;
-					color = color.from_hsv(
+					Color color = Color::from_hsv(
 							(float)((hash >> 24) & 0xFF) / 256.0,
 							Math::lerp(0.5, 1.0, (float)((hash >> 16) & 0xFF) / 256.0),
 							Math::lerp(0.5, 1.0, (float)((hash >> 8) & 0xFF) / 256.0),
@@ -1337,8 +1336,7 @@ void TileMapLayer::_scenes_draw_cell_debug(const RID &p_canvas_item, const Vecto
 				to_hash.push_back(c.alternative_tile);
 				uint32_t hash = RandomPCG(to_hash.hash()).rand();
 
-				Color color;
-				color = color.from_hsv(
+				Color color = Color::from_hsv(
 						(float)((hash >> 24) & 0xFF) / 256.0,
 						Math::lerp(0.5, 1.0, (float)((hash >> 16) & 0xFF) / 256.0),
 						Math::lerp(0.5, 1.0, (float)((hash >> 8) & 0xFF) / 256.0),

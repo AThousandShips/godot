@@ -2645,7 +2645,7 @@ void EditorNode::_android_export_preset_selected(int p_index) {
 	} else {
 		android_export_preset.unref();
 	}
-	install_android_build_template_message->set_text(vformat(TTR(INSTALL_ANDROID_BUILD_TEMPLATE_MESSAGE), export_template_manager->get_android_build_directory(android_export_preset)));
+	install_android_build_template_message->set_text(vformat(TTR(INSTALL_ANDROID_BUILD_TEMPLATE_MESSAGE), ExportTemplateManager::get_android_build_directory(android_export_preset)));
 }
 
 void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
@@ -2936,7 +2936,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
 		case FILE_INSTALL_ANDROID_SOURCE: {
 			if (p_confirmed) {
 				if (export_template_manager->is_android_template_installed(android_export_preset)) {
-					remove_android_build_template->set_text(vformat(TTR(REMOVE_ANDROID_BUILD_TEMPLATE_MESSAGE), export_template_manager->get_android_build_directory(android_export_preset)));
+					remove_android_build_template->set_text(vformat(TTR(REMOVE_ANDROID_BUILD_TEMPLATE_MESSAGE), ExportTemplateManager::get_android_build_directory(android_export_preset)));
 					remove_android_build_template->popup_centered();
 				} else if (!export_template_manager->can_install_android_template(android_export_preset)) {
 					gradle_build_manage_templates->popup_centered();
@@ -2967,7 +2967,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
 					choose_android_export_profile->hide();
 
 					if (export_template_manager->is_android_template_installed(android_export_preset)) {
-						remove_android_build_template->set_text(vformat(TTR(REMOVE_ANDROID_BUILD_TEMPLATE_MESSAGE), export_template_manager->get_android_build_directory(android_export_preset)));
+						remove_android_build_template->set_text(vformat(TTR(REMOVE_ANDROID_BUILD_TEMPLATE_MESSAGE), ExportTemplateManager::get_android_build_directory(android_export_preset)));
 						remove_android_build_template->popup_centered();
 					} else if (export_template_manager->can_install_android_template(android_export_preset)) {
 						install_android_build_template->popup_centered();
@@ -2983,7 +2983,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
 			OS::get_singleton()->shell_show_in_file_manager(OS::get_singleton()->get_user_data_dir(), true);
 		} break;
 		case FILE_EXPLORE_ANDROID_BUILD_TEMPLATES: {
-			OS::get_singleton()->shell_show_in_file_manager(ProjectSettings::get_singleton()->globalize_path(export_template_manager->get_android_build_directory(android_export_preset).get_base_dir()), true);
+			OS::get_singleton()->shell_show_in_file_manager(ProjectSettings::get_singleton()->globalize_path(ExportTemplateManager::get_android_build_directory(android_export_preset).get_base_dir()), true);
 		} break;
 		case FILE_QUIT:
 		case RUN_PROJECT_MANAGER:

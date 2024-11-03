@@ -458,21 +458,21 @@ struct HashMapComparatorDefault<Vector4> {
 template <>
 struct HashMapComparatorDefault<Rect2> {
 	static bool compare(const Rect2 &p_lhs, const Rect2 &p_rhs) {
-		return HashMapComparatorDefault<Vector2>().compare(p_lhs.position, p_rhs.position) && HashMapComparatorDefault<Vector2>().compare(p_lhs.size, p_rhs.size);
+		return HashMapComparatorDefault<Vector2>::compare(p_lhs.position, p_rhs.position) && HashMapComparatorDefault<Vector2>::compare(p_lhs.size, p_rhs.size);
 	}
 };
 
 template <>
 struct HashMapComparatorDefault<AABB> {
 	static bool compare(const AABB &p_lhs, const AABB &p_rhs) {
-		return HashMapComparatorDefault<Vector3>().compare(p_lhs.position, p_rhs.position) && HashMapComparatorDefault<Vector3>().compare(p_lhs.size, p_rhs.size);
+		return HashMapComparatorDefault<Vector3>::compare(p_lhs.position, p_rhs.position) && HashMapComparatorDefault<Vector3>::compare(p_lhs.size, p_rhs.size);
 	}
 };
 
 template <>
 struct HashMapComparatorDefault<Plane> {
 	static bool compare(const Plane &p_lhs, const Plane &p_rhs) {
-		return HashMapComparatorDefault<Vector3>().compare(p_lhs.normal, p_rhs.normal) && ((p_lhs.d == p_rhs.d) || (Math::is_nan(p_lhs.d) && Math::is_nan(p_rhs.d)));
+		return HashMapComparatorDefault<Vector3>::compare(p_lhs.normal, p_rhs.normal) && ((p_lhs.d == p_rhs.d) || (Math::is_nan(p_lhs.d) && Math::is_nan(p_rhs.d)));
 	}
 };
 
@@ -480,7 +480,7 @@ template <>
 struct HashMapComparatorDefault<Transform2D> {
 	static bool compare(const Transform2D &p_lhs, const Transform2D &p_rhs) {
 		for (int i = 0; i < 3; ++i) {
-			if (!HashMapComparatorDefault<Vector2>().compare(p_lhs.columns[i], p_rhs.columns[i])) {
+			if (!HashMapComparatorDefault<Vector2>::compare(p_lhs.columns[i], p_rhs.columns[i])) {
 				return false;
 			}
 		}
@@ -493,7 +493,7 @@ template <>
 struct HashMapComparatorDefault<Basis> {
 	static bool compare(const Basis &p_lhs, const Basis &p_rhs) {
 		for (int i = 0; i < 3; ++i) {
-			if (!HashMapComparatorDefault<Vector3>().compare(p_lhs.rows[i], p_rhs.rows[i])) {
+			if (!HashMapComparatorDefault<Vector3>::compare(p_lhs.rows[i], p_rhs.rows[i])) {
 				return false;
 			}
 		}
@@ -505,7 +505,7 @@ struct HashMapComparatorDefault<Basis> {
 template <>
 struct HashMapComparatorDefault<Transform3D> {
 	static bool compare(const Transform3D &p_lhs, const Transform3D &p_rhs) {
-		return HashMapComparatorDefault<Basis>().compare(p_lhs.basis, p_rhs.basis) && HashMapComparatorDefault<Vector3>().compare(p_lhs.origin, p_rhs.origin);
+		return HashMapComparatorDefault<Basis>::compare(p_lhs.basis, p_rhs.basis) && HashMapComparatorDefault<Vector3>::compare(p_lhs.origin, p_rhs.origin);
 	}
 };
 
@@ -513,7 +513,7 @@ template <>
 struct HashMapComparatorDefault<Projection> {
 	static bool compare(const Projection &p_lhs, const Projection &p_rhs) {
 		for (int i = 0; i < 4; ++i) {
-			if (!HashMapComparatorDefault<Vector4>().compare(p_lhs.columns[i], p_rhs.columns[i])) {
+			if (!HashMapComparatorDefault<Vector4>::compare(p_lhs.columns[i], p_rhs.columns[i])) {
 				return false;
 			}
 		}
