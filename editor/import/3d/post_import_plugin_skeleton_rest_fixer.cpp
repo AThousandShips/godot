@@ -365,10 +365,8 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 							up_vec = Vector3(0, 0, 1);
 						} break;
 					}
-					Basis src_b;
-					src_b = Basis::looking_at(src_dir, up_vec);
-					Basis prof_b;
-					prof_b = Basis::looking_at(prof_dir, up_vec);
+					Basis src_b = Basis::looking_at(src_dir, up_vec);
+					Basis prof_b = Basis::looking_at(prof_dir, up_vec);
 					if (prof_b.is_equal_approx(Basis())) {
 						continue; // May not need to rotate.
 					}
