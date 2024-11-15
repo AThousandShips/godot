@@ -1043,6 +1043,8 @@ GLSL_BUILDERS = {
 }
 env.Append(BUILDERS=GLSL_BUILDERS)
 
+methods.prepare_cache(env)
+
 if env["compiledb"]:
     env.Tool("compilation_db")
     env.Alias("compiledb", env.CompilationDatabase())
@@ -1095,7 +1097,6 @@ if "check_c_headers" in env:
 
 
 methods.show_progress(env)
-methods.prepare_cache(env)
 # TODO: replace this with `env.Dump(format="json")`
 # once we start requiring SCons 4.0 as min version.
 methods.dump(env)
