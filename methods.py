@@ -868,8 +868,8 @@ def clean_cache(cache_path: str, cache_limit: int, verbose: bool):
             stats.append((file, *os.stat(file)[6:8]))
         except OSError:
             print_error(f'Failed to access cache file "{file}"; skipping.')
-        else:
-            purge.append(file)
+        # else:
+        #     purge.append(file)
 
     if cache_limit:
         # Sort by most recent access (most sensible to keep) first. Search for the first entry where
