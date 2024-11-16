@@ -477,6 +477,7 @@ public:
 	String get_with_code_lines() const;
 	int get_slice_count(const String &p_splitter) const;
 	int get_slice_count(const char *p_splitter) const;
+	int get_slice_countc(char32_t p_splitter) const;
 	String get_slice(const String &p_splitter, int p_slice) const;
 	String get_slice(const char *p_splitter, int p_slice) const;
 	String get_slicec(char32_t p_splitter, int p_slice) const;

@@ -903,6 +903,25 @@ int String::get_slice_count(const char *p_splitter) const {
 	return slices;
 }
 
+int String::get_slice_countc(char32_t p_splitter) const {
+	ERR_FAIL_COND_V_MSG(p_splitter == 0, 0, "Splitter must not be null.");
+	if (is_empty()) {
+		return 0;
+	}
+
+	int len = length();
+	int slices = 1;
+	const char32_t *this_ptr = ptr();
+
+	for (int i = 0; i < len; ++i) {
+		if (this_ptr[i] == p_splitter) {
+			slices++;
+		}
+	}
+
+	return slices;
+}
+
 String String::get_slice(const String &p_splitter, int p_slice) const {
 	if (is_empty() || p_splitter.is_empty()) {
 		return "";
