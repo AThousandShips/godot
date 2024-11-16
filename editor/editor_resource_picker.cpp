@@ -155,7 +155,7 @@ void EditorResourcePicker::_file_selected(const String &p_path) {
 		}
 
 		for (int i = 0; i < base_type.get_slice_count(","); i++) {
-			String base = base_type.get_slice(",", i);
+			String base = base_type.get_slicec(',', i);
 
 			any_type_matches = is_global_class ? EditorNode::get_editor_data().script_class_is_parent(res_type, base) : loaded_resource->is_class(base);
 
@@ -274,7 +274,7 @@ void EditorResourcePicker::_update_menu_items() {
 			String res_type = _get_resource_type(cb);
 
 			for (int i = 0; i < base_type.get_slice_count(","); i++) {
-				String base = base_type.get_slice(",", i);
+				String base = base_type.get_slicec(',', i);
 
 				paste_valid = ClassDB::is_parent_class(res_type, base) || EditorNode::get_editor_data().script_class_is_parent(res_type, base);
 
