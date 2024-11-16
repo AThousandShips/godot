@@ -511,7 +511,7 @@ bool EditorPropertyArray::_is_drop_valid(const Dictionary &p_drag_data) const {
 			const String &file = files[i];
 			String ftype = EditorFileSystem::get_singleton()->get_file_type(file);
 
-			for (int j = 0; j < allowed_type.get_slice_count(","); j++) {
+			for (int j = 0; j < allowed_type.get_slice_countc(','); j++) {
 				String at = allowed_type.get_slice(",", j).strip_edges();
 				// Fail if one of the files is not of allowed type.
 				if (!ClassDB::is_parent_class(ftype, at)) {
@@ -532,7 +532,7 @@ bool EditorPropertyArray::_is_drop_valid(const Dictionary &p_drag_data) const {
 			if (subtype_hint_string == "NodePath") {
 				return true;
 			} else {
-				for (int j = 0; j < subtype_hint_string.get_slice_count(","); j++) {
+				for (int j = 0; j < subtype_hint_string.get_slice_countc(','); j++) {
 					String ast = subtype_hint_string.get_slice(",", j).strip_edges();
 					allowed_subtype_array.append(ast);
 				}

@@ -274,7 +274,7 @@ Error String::parse_url(String &r_scheme, String &r_host, int &r_port, String &r
 		base = base.substr(pos + 1, base.length() - pos - 1);
 	} else {
 		// Anything else
-		if (base.get_slice_count(":") > 2) {
+		if (base.get_slice_countc(':') > 2) {
 			return ERR_INVALID_PARAMETER;
 		}
 		pos = base.rfind(":");
@@ -1141,7 +1141,7 @@ String String::_camelcase_to_underscore() const {
 String String::capitalize() const {
 	String aux = _camelcase_to_underscore().replace("_", " ").strip_edges();
 	String cap;
-	for (int i = 0; i < aux.get_slice_count(" "); i++) {
+	for (int i = 0; i < aux.get_slice_countc(' '); i++) {
 		String slice = aux.get_slicec(' ', i);
 		if (slice.length() > 0) {
 			slice[0] = _find_upper(slice[0]);

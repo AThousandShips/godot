@@ -3102,7 +3102,7 @@ int Tree::propagate_mouse_event(const Point2i &p_pos, int x_ofs, int y_ofs, int 
 				if (!c.text.is_empty()) {
 					//if (x >= (get_column_width(col)-item_h/2)) {
 					popup_menu->clear();
-					for (int i = 0; i < c.text.get_slice_count(","); i++) {
+					for (int i = 0; i < c.text.get_slice_countc(','); i++) {
 						String s = c.text.get_slicec(',', i);
 						popup_menu->add_item(s.get_slicec(':', 0), s.get_slicec(':', 1).is_empty() ? i : s.get_slicec(':', 1).to_int());
 					}
@@ -4216,7 +4216,7 @@ bool Tree::edit_selected(bool p_force_edit) {
 		return true;
 	} else if (c.mode == TreeItem::CELL_MODE_RANGE && !c.text.is_empty()) {
 		popup_menu->clear();
-		for (int i = 0; i < c.text.get_slice_count(","); i++) {
+		for (int i = 0; i < c.text.get_slice_countc(','); i++) {
 			String s2 = c.text.get_slicec(',', i);
 			popup_menu->add_item(s2.get_slicec(':', 0), s2.get_slicec(':', 1).is_empty() ? i : s2.get_slicec(':', 1).to_int());
 		}

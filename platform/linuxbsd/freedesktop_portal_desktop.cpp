@@ -219,7 +219,7 @@ void FreeDesktopPortalDesktop::append_dbus_dict_filters(DBusMessageIter *p_iter,
 				flt += flt_orig[j];
 			}
 		}
-		int filter_slice_count = flt.get_slice_count(",");
+		int filter_slice_count = flt.get_slice_countc(',');
 		for (int j = 0; j < filter_slice_count; j++) {
 			dbus_message_iter_open_container(&array_iter, DBUS_TYPE_STRUCT, nullptr, &array_struct_iter);
 			String str = (flt.get_slice(",", j).strip_edges());
