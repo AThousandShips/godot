@@ -1465,6 +1465,51 @@ Vector<String> String::split(const char *p_splitter, bool p_allow_empty, int p_m
 	return ret;
 }
 
+Vector<String> String::splitc(char32_t p_splitter, bool p_allow_empty, int p_maxsplit) const {
+	ERR_FAIL_COND_V_MSG(p_splitter == 0, Vector<String>(), "Splitter must not be null.");
+	Vector<String> ret;
+
+	if (is_empty()) {
+		if (p_allow_empty) {
+			ret.push_back("");
+		}
+		return ret;
+	}
+
+	int from = 0;
+	int len = length();
+
+	while (true) {
+		int end;
+		end = find_char(p_splitter, from);
+		if (end < 0) {
+			end = len;
+		}
+		if (p_allow_empty || (end > from)) {
+			if (p_maxsplit <= 0) {
+				ret.push_back(substr(from, end - from));
+			} else {
+				// Put rest of the string and leave cycle.
+				if (p_maxsplit == ret.size()) {
+					ret.push_back(substr(from, len));
+					break;
+				}
+
+				// Otherwise, push items until positive limit is reached.
+				ret.push_back(substr(from, end - from));
+			}
+		}
+
+		if (end == len) {
+			break;
+		}
+
+		from = end + 1;
+	}
+
+	return ret;
+}
+
 Vector<String> String::rsplit(const String &p_splitter, bool p_allow_empty, int p_maxsplit) const {
 	Vector<String> ret;
 	const int len = length();
@@ -1539,6 +1584,42 @@ Vector<String> String::rsplit(const char *p_splitter, bool p_allow_empty, int p_
 		}
 
 		int substr_start = left_edge + splitter_length;
+		if (p_allow_empty || substr_start < remaining_len) {
+			ret.push_back(substr(substr_start, remaining_len - substr_start));
+		}
+
+		remaining_len = left_edge;
+	}
+
+	ret.reverse();
+	return ret;
+}
+
+Vector<String> String::rsplitc(char32_t p_splitter, bool p_allow_empty, int p_maxsplit) const {
+	ERR_FAIL_COND_V_MSG(p_splitter == 0, Vector<String>(), "Splitter must not be null.");
+	Vector<String> ret;
+	const int len = length();
+	int remaining_len = len;
+
+	while (true) {
+		if (remaining_len < 1 || (p_maxsplit > 0 && p_maxsplit == ret.size())) {
+			// No room for another splitter or hit max splits, push what's left and we're done.
+			if (p_allow_empty || remaining_len > 0) {
+				ret.push_back(substr(0, remaining_len));
+			}
+			break;
+		}
+
+		int left_edge;
+		left_edge = rfind_char(p_splitter, remaining_len - 1);
+
+		if (left_edge < 0) {
+			// No more splitters, we're done.
+			ret.push_back(substr(0, remaining_len));
+			break;
+		}
+
+		int substr_start = left_edge + 1;
 		if (p_allow_empty || substr_start < remaining_len) {
 			ret.push_back(substr(substr_start, remaining_len - substr_start));
 		}
