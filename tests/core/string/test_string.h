@@ -719,6 +719,9 @@ TEST_CASE("[String] Slicing") {
 	String s = "Mars,Jupiter,Saturn,Uranus";
 	const char *slices[4] = { "Mars", "Jupiter", "Saturn", "Uranus" };
 	MULTICHECK_GET_SLICE(s, ",", slices);
+
+	CHECK(s.get_slice_count(",") == 4);
+	CHECK(s.get_slice_countc(',') == 4);
 }
 
 TEST_CASE("[String] Begins with") {
