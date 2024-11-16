@@ -1476,35 +1476,30 @@ Vector<String> String::splitc(char32_t p_splitter, bool p_allow_empty, int p_max
 		return ret;
 	}
 
-	int from = 0;
+	int i = 0;
+	int prev = 0;
 	int len = length();
+	const char32_t *this_ptr = ptr();
 
 	while (true) {
-		int end;
-		end = find_char(p_splitter, from);
-		if (end < 0) {
-			end = len;
-		}
-		if (p_allow_empty || (end > from)) {
-			if (p_maxsplit <= 0) {
-				ret.push_back(substr(from, end - from));
-			} else {
-				// Put rest of the string and leave cycle.
-				if (p_maxsplit == ret.size()) {
-					ret.push_back(substr(from, len));
+		if (this_ptr[i] == 0 || this_ptr[i] == p_splitter) {
+			if (p_allow_empty || (prev < i)) {
+				if (p_maxsplit > 0 && ret.size() == p_maxsplit) {
+					ret.push_back(substr(prev, len - prev));
 					break;
 				}
 
-				// Otherwise, push items until positive limit is reached.
-				ret.push_back(substr(from, end - from));
+				ret.push_back(substr(prev, i - prev));
 			}
+
+			prev = i + 1;
 		}
 
-		if (end == len) {
+		if (i == len) {
 			break;
 		}
 
-		from = end + 1;
+		++i;
 	}
 
 	return ret;
