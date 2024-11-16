@@ -60,7 +60,7 @@ bool EditorInspector::_property_path_matches(const String &p_property_path, cons
 		return true;
 	}
 
-	const Vector<String> prop_sections = p_property_path.split("/");
+	const Vector<String> prop_sections = p_property_path.splitc('/');
 	for (int i = 0; i < prop_sections.size(); i++) {
 		if (p_filter.is_subsequence_ofn(EditorPropertyNameProcessor::get_singleton()->process_name(prop_sections[i], p_style, p_property_path))) {
 			return true;
@@ -2923,7 +2923,7 @@ void EditorInspector::update_tree() {
 			// Setup a property sub-group.
 			subgroup = p.name;
 
-			Vector<String> hint_parts = p.hint_string.split(",");
+			Vector<String> hint_parts = p.hint_string.splitc(',');
 			subgroup_base = hint_parts[0];
 			if (hint_parts.size() > 1) {
 				section_depth = hint_parts[1].to_int();
@@ -2937,7 +2937,7 @@ void EditorInspector::update_tree() {
 			// Setup a property group.
 			group = p.name;
 
-			Vector<String> hint_parts = p.hint_string.split(",");
+			Vector<String> hint_parts = p.hint_string.splitc(',');
 			group_base = hint_parts[0];
 			if (hint_parts.size() > 1) {
 				section_depth = hint_parts[1].to_int();
@@ -3226,7 +3226,7 @@ void EditorInspector::update_tree() {
 		String acc_path = "";
 		int level = 1;
 
-		Vector<String> components = path.split("/");
+		Vector<String> components = path.splitc('/');
 		for (int i = 0; i < components.size(); i++) {
 			const String &component = components[i];
 			acc_path += (i > 0) ? "/" + component : component;
@@ -3291,7 +3291,7 @@ void EditorInspector::update_tree() {
 			Color c = sscolor;
 			c.a /= level;
 
-			Vector<String> class_name_components = String(p.class_name).split(",");
+			Vector<String> class_name_components = String(p.class_name).splitc(',');
 
 			int page_size = 5;
 			bool movable = true;
@@ -3413,7 +3413,7 @@ void EditorInspector::update_tree() {
 
 				HashMap<String, DocData::ClassDoc>::ConstIterator F = dd->class_list.find(classname);
 				while (F) {
-					Vector<String> slices = propname.operator String().split("/");
+					Vector<String> slices = propname.operator String().splitc('/');
 					// Check if it's a theme item first.
 					if (slices.size() == 2 && slices[0].begins_with("theme_override_")) {
 						for (int i = 0; i < F->value.theme_properties.size(); i++) {

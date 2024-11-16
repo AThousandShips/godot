@@ -802,7 +802,7 @@ const HashMap<String, List<Ref<InputEvent>>> &InputMap::get_builtins_with_featur
 	for (const KeyValue<String, List<Ref<InputEvent>>> &E : builtins) {
 		String fullname = E.key;
 
-		Vector<String> split = fullname.split(".");
+		Vector<String> split = fullname.splitc('.');
 		const String &name = split[0];
 		String override_for = split.size() > 1 ? split[1] : String();
 
@@ -814,7 +814,7 @@ const HashMap<String, List<Ref<InputEvent>>> &InputMap::get_builtins_with_featur
 	for (const KeyValue<String, List<Ref<InputEvent>>> &E : builtins) {
 		String fullname = E.key;
 
-		Vector<String> split = fullname.split(".");
+		Vector<String> split = fullname.splitc('.');
 		const String &name = split[0];
 		String override_for = split.size() > 1 ? split[1] : String();
 

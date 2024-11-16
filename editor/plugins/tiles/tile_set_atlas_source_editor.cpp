@@ -163,7 +163,7 @@ bool TileSetAtlasSourceEditor::AtlasTileProxyObject::_set(const StringName &p_na
 		const int &alternative = tiles.front()->get().alternative;
 
 		if (alternative == 0) {
-			Vector<String> components = String(p_name).split("/", true, 2);
+			Vector<String> components = String(p_name).splitc('/', true, 2);
 			if (p_name == "atlas_coords") {
 				Vector2i as_vector2i = Vector2i(p_value);
 				bool has_room_for_tile = tile_set_atlas_source->has_room_for_tile(as_vector2i, tile_set_atlas_source->get_tile_size_in_atlas(coords), tile_set_atlas_source->get_tile_animation_columns(coords), tile_set_atlas_source->get_tile_animation_separation(coords), tile_set_atlas_source->get_tile_animation_frames_count(coords), coords);
@@ -221,7 +221,7 @@ bool TileSetAtlasSourceEditor::AtlasTileProxyObject::_set(const StringName &p_na
 	}
 
 	if (all_alternatve_id_zero) {
-		Vector<String> components = String(p_name).split("/", true, 2);
+		Vector<String> components = String(p_name).splitc('/', true, 2);
 		if (p_name == "animation_columns") {
 			for (TileSelection tile : tiles) {
 				bool has_room_for_tile = tile_set_atlas_source->has_room_for_tile(tile.tile, tile_set_atlas_source->get_tile_size_in_atlas(tile.tile), p_value, tile_set_atlas_source->get_tile_animation_separation(tile.tile), tile_set_atlas_source->get_tile_animation_frames_count(tile.tile), tile.tile);
@@ -320,7 +320,7 @@ bool TileSetAtlasSourceEditor::AtlasTileProxyObject::_get(const StringName &p_na
 		const int &alternative = tiles.front()->get().alternative;
 
 		if (alternative == 0) {
-			Vector<String> components = String(p_name).split("/", true, 2);
+			Vector<String> components = String(p_name).splitc('/', true, 2);
 			if (p_name == "atlas_coords") {
 				r_ret = coords;
 				return true;
@@ -349,7 +349,7 @@ bool TileSetAtlasSourceEditor::AtlasTileProxyObject::_get(const StringName &p_na
 	if (all_alternatve_id_zero) {
 		const Vector2i &coords = tiles.front()->get().tile;
 
-		Vector<String> components = String(p_name).split("/", true, 2);
+		Vector<String> components = String(p_name).splitc('/', true, 2);
 		if (p_name == "animation_columns") {
 			r_ret = tile_set_atlas_source->get_tile_animation_columns(coords);
 			return true;
@@ -872,7 +872,7 @@ void TileSetAtlasSourceEditor::_update_current_tile_data_editor() {
 	// Find the property to use.
 	String property;
 	if (tools_button_group->get_pressed_button() == tool_select_button && tile_inspector->is_visible() && !tile_inspector->get_selected_path().is_empty()) {
-		Vector<String> components = tile_inspector->get_selected_path().split("/");
+		Vector<String> components = tile_inspector->get_selected_path().splitc('/');
 		if (components.size() >= 1) {
 			property = components[0];
 
@@ -1586,9 +1586,9 @@ HashMap<Vector2i, List<const PropertyInfo *>> TileSetAtlasSourceEditor::_group_p
 	// Group properties per tile.
 	HashMap<Vector2i, List<const PropertyInfo *>> per_tile;
 	for (const List<PropertyInfo>::Element *E_property = r_list.front(); E_property; E_property = E_property->next()) {
-		Vector<String> components = String(E_property->get().name).split("/", true, 1);
+		Vector<String> components = String(E_property->get().name).splitc('/', true, 1);
 		if (components.size() >= 1) {
-			Vector<String> coord_arr = components[0].split(":");
+			Vector<String> coord_arr = components[0].splitc(':');
 			if (coord_arr.size() == 2 && coord_arr[0].is_valid_int() && coord_arr[1].is_valid_int()) {
 				Vector2i coords = Vector2i(coord_arr[0].to_int(), coord_arr[1].to_int());
 				per_tile[coords].push_back(&(E_property->get()));
@@ -1638,7 +1638,7 @@ void TileSetAtlasSourceEditor::_menu_option(int p_option) {
 					undo_redo->add_undo_method(tile_set_atlas_source, "create_alternative_tile", selected.tile, selected.alternative);
 					if (per_tile.has(selected.tile)) {
 						for (List<const PropertyInfo *>::Element *E_property = per_tile[selected.tile].front(); E_property; E_property = E_property->next()) {
-							Vector<String> components = E_property->get()->name.split("/", true, 2);
+							Vector<String> components = E_property->get()->name.splitc('/', true, 2);
 							if (components.size() >= 2 && components[1].is_valid_int() && components[1].to_int() == selected.alternative) {
 								String property = E_property->get()->name;
 								Variant value = tile_set_atlas_source->get(property);
@@ -2133,7 +2133,7 @@ void TileSetAtlasSourceEditor::_undo_redo_inspector_callback(Object *p_undo_redo
 		UndoRedo *internal_undo_redo = undo_redo_man->get_history_for_object(tile_data_proxy).undo_redo;
 		internal_undo_redo->start_force_keep_in_merge_ends();
 
-		Vector<String> components = String(p_property).split("/", true, 2);
+		Vector<String> components = String(p_property).splitc('/', true, 2);
 		if (components.size() == 2 && components[1] == "polygons_count") {
 			int layer_index = components[0].trim_prefix("physics_layer_").to_int();
 			int new_polygons_count = p_new_value;
@@ -2897,7 +2897,7 @@ bool EditorInspectorPluginTileData::can_handle(Object *p_object) {
 }
 
 bool EditorInspectorPluginTileData::parse_property(Object *p_object, const Variant::Type p_type, const String &p_path, const PropertyHint p_hint, const String &p_hint_text, const BitField<PropertyUsageFlags> p_usage, const bool p_wide) {
-	Vector<String> components = String(p_path).split("/", true, 2);
+	Vector<String> components = String(p_path).splitc('/', true, 2);
 	if (components.size() >= 2 && components[0].begins_with("occlusion_layer_") && components[0].trim_prefix("occlusion_layer_").is_valid_int()) {
 		// Occlusion layers.
 		int layer_index = components[0].trim_prefix("occlusion_layer_").to_int();

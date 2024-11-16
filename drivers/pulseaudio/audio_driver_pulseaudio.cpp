@@ -292,7 +292,7 @@ Error AudioDriverPulseAudio::init() {
 #endif
 	bool ver_ok = false;
 	String version = String::utf8(pa_get_library_version());
-	Vector<String> ver_parts = version.split(".");
+	Vector<String> ver_parts = version.splitc('.');
 	if (ver_parts.size() >= 2) {
 		ver_ok = (ver_parts[0].to_int() >= 8); // 8.0.0
 	}

@@ -71,9 +71,9 @@ void GDScriptWorkspace::apply_new_signal(Object *obj, String function, PackedStr
 	int first_class = source.find("\nclass ");
 	int start_line = 0;
 	if (first_class != -1) {
-		start_line = source.substr(0, first_class).split("\n").size();
+		start_line = source.substr(0, first_class).splitc('\n').size();
 	} else {
-		start_line = source.split("\n").size();
+		start_line = source.splitc('\n').size();
 	}
 
 	String function_body = "\n\n" + function_signature + "(";
@@ -676,7 +676,7 @@ const lsp::DocumentSymbol *GDScriptWorkspace::resolve_symbol(const lsp::TextDocu
 	String path = get_file_path(p_doc_pos.textDocument.uri);
 	if (const ExtendGDScriptParser *parser = get_parse_result(path)) {
 		String symbol_identifier = p_symbol_name;
-		Vector<String> identifier_parts = symbol_identifier.split("(");
+		Vector<String> identifier_parts = symbol_identifier.splitc('(');
 		if (identifier_parts.size()) {
 			symbol_identifier = identifier_parts[0];
 		}

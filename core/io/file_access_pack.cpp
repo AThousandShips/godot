@@ -72,7 +72,7 @@ void PackedData::add_path(const String &p_pkg_path, const String &p_path, uint64
 		PackedDir *cd = root;
 
 		if (simplified_path.contains("/")) { // In a subdirectory.
-			Vector<String> ds = simplified_path.get_base_dir().split("/");
+			Vector<String> ds = simplified_path.get_base_dir().splitc('/');
 
 			for (int j = 0; j < ds.size(); j++) {
 				if (!cd->subdirs.has(ds[j])) {
@@ -105,7 +105,7 @@ void PackedData::remove_path(const String &p_path) {
 	PackedDir *cd = root;
 
 	if (simplified_path.contains("/")) { // In a subdirectory.
-		Vector<String> ds = simplified_path.get_base_dir().split("/");
+		Vector<String> ds = simplified_path.get_base_dir().splitc('/');
 
 		for (int j = 0; j < ds.size(); j++) {
 			if (!cd->subdirs.has(ds[j])) {
@@ -538,7 +538,7 @@ PackedData::PackedDir *DirAccessPack::_find_dir(const String &p_dir) {
 		absolute = true;
 	}
 
-	Vector<String> paths = nd.split("/");
+	Vector<String> paths = nd.splitc('/');
 
 	PackedData::PackedDir *pd;
 

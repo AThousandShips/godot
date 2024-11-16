@@ -70,7 +70,7 @@ void OS_LinuxBSD::alert(const String &p_alert, const String &p_title) {
 	const char *message_programs[] = { "zenity", "kdialog", "Xdialog", "xmessage" };
 
 	String path = get_environment("PATH");
-	Vector<String> path_elems = path.split(":", false);
+	Vector<String> path_elems = path.splitc(':', false);
 	String program;
 
 	for (int i = 0; i < path_elems.size(); i++) {
@@ -185,7 +185,7 @@ String OS_LinuxBSD::get_processor_name() const {
 	while (!f->eof_reached()) {
 		const String line = f->get_line();
 		if (line.contains("model name")) {
-			return line.split(":")[1].strip_edges();
+			return line.splitc(':')[1].strip_edges();
 		}
 	}
 #endif
@@ -270,7 +270,7 @@ String OS_LinuxBSD::get_systemd_os_release_info_value(const String &key) const {
 		while (!f->eof_reached()) {
 			const String line = f->get_line();
 			if (line.contains(key)) {
-				String value = line.split("=")[1].strip_edges();
+				String value = line.splitc('=')[1].strip_edges();
 				value = value.trim_prefix("\"");
 				return value.trim_suffix("\"");
 			}
@@ -338,9 +338,9 @@ Vector<String> OS_LinuxBSD::get_video_adapter_driver_info() const {
 	regex_id_format.compile("^[a-f0-9]{4}:[a-f0-9]{4}$"); // e.g. `10de:13c2`; IDs are always in hexadecimal
 #endif
 
-	Vector<String> value_lines = vendor_device_id_mappings.split("\n", false); // example: `02:00.0 0300: 10de:13c2 (rev a1)`
+	Vector<String> value_lines = vendor_device_id_mappings.splitc('\n', false); // example: `02:00.0 0300: 10de:13c2 (rev a1)`
 	for (const String &line : value_lines) {
-		Vector<String> columns = line.split(" ", false);
+		Vector<String> columns = line.splitc(' ', false);
 		if (columns.size() < 3) {
 			continue;
 		}
@@ -407,9 +407,9 @@ Vector<String> OS_LinuxBSD::get_video_adapter_driver_info() const {
 		info.push_back(""); // So that this method always either returns an empty array, or an array of length 2.
 		return info;
 	}
-	Vector<String> lines = modinfo.split("\n", false);
+	Vector<String> lines = modinfo.splitc('\n', false);
 	for (const String &line : lines) {
-		Vector<String> columns = line.split(":", false, 1);
+		Vector<String> columns = line.splitc(':', false, 1);
 		if (columns.size() < 2) {
 			continue;
 		}
@@ -441,9 +441,9 @@ Vector<String> OS_LinuxBSD::lspci_device_filter(Vector<String> vendor_device_id_
 			continue;
 		}
 
-		Vector<String> device_lines = device.split("\n", false);
+		Vector<String> device_lines = device.splitc('\n', false);
 		for (const String &line : device_lines) {
-			Vector<String> columns = line.split(":", false, 1);
+			Vector<String> columns = line.splitc(':', false, 1);
 			if (columns.size() < 2) {
 				continue;
 			}
@@ -480,9 +480,9 @@ Vector<String> OS_LinuxBSD::lspci_get_device_value(Vector<String> vendor_device_
 			continue;
 		}
 
-		Vector<String> device_lines = device.split("\n", false);
+		Vector<String> device_lines = device.splitc('\n', false);
 		for (const String &line : device_lines) {
-			Vector<String> columns = line.split(":", false, 1);
+			Vector<String> columns = line.splitc(':', false, 1);
 			if (columns.size() < 2) {
 				continue;
 			}

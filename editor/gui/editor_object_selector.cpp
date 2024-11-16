@@ -71,7 +71,7 @@ void EditorObjectSelector::_add_children_to_popup(Object *p_obj, int p_depth) {
 		Ref<Texture2D> obj_icon = EditorNode::get_singleton()->get_object_icon(obj);
 
 		String proper_name = "";
-		Vector<String> name_parts = E.name.split("/");
+		Vector<String> name_parts = E.name.splitc('/');
 
 		for (int i = 0; i < name_parts.size(); i++) {
 			if (i > 0) {

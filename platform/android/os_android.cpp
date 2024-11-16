@@ -448,9 +448,9 @@ void OS_Android::_load_system_font_config() {
 				} else if (parser->get_node_name() == "family") {
 					fn = parser->has_attribute("name") ? parser->get_named_attribute_value("name").strip_edges() : String();
 					String lang_code = parser->has_attribute("lang") ? parser->get_named_attribute_value("lang").strip_edges() : String();
-					Vector<String> lang_codes = lang_code.split(",");
+					Vector<String> lang_codes = lang_code.splitc(',');
 					for (int i = 0; i < lang_codes.size(); i++) {
-						Vector<String> lang_code_elements = lang_codes[i].split("-");
+						Vector<String> lang_code_elements = lang_codes[i].splitc('-');
 						if (lang_code_elements.size() >= 1 && lang_code_elements[0] != "und") {
 							// Add missing script codes.
 							if (lang_code_elements[0] == "ko") {
@@ -559,7 +559,7 @@ Vector<String> OS_Android::get_system_font_path_for_text(const String &p_font_na
 		font_name = font_aliases[font_name];
 	}
 	String root = String(getenv("ANDROID_ROOT")).path_join("fonts");
-	String lang_prefix = p_locale.split("_")[0];
+	String lang_prefix = p_locale.splitc('_')[0];
 	Vector<String> ret;
 	int best_score = 0;
 	for (const List<FontInfo>::Element *E = fonts.front(); E; E = E->next()) {

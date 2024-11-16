@@ -99,7 +99,7 @@ PackedStringArray OpenXRIPBinding::get_paths() const { // Deprecated, but needed
 	// Fallback logic, return an array.
 	// If we just loaded an old action map from disc, this will be a comma separated list of actions.
 	// Once parsed there should be only one path in our array.
-	PackedStringArray paths = binding_path.split(",", false);
+	PackedStringArray paths = binding_path.splitc(',', false);
 
 	return paths;
 }
@@ -247,7 +247,7 @@ void OpenXRInteractionProfile::remove_binding(Ref<OpenXRIPBinding> p_binding) {
 void OpenXRInteractionProfile::add_new_binding(const Ref<OpenXRAction> p_action, const String &p_paths) {
 	// This is a helper function to help build our default action sets
 
-	PackedStringArray paths = p_paths.split(",", false);
+	PackedStringArray paths = p_paths.splitc(',', false);
 
 	for (const String &path : paths) {
 		Ref<OpenXRIPBinding> binding = OpenXRIPBinding::new_binding(p_action, path);

@@ -509,9 +509,9 @@ void VisualShaderNodeCustom::update_ports() {
 	}
 
 	{
-		Vector<String> vprops = properties.split(";", false);
+		Vector<String> vprops = properties.splitc(';', false);
 		for (int i = 0; i < vprops.size(); i++) {
-			Vector<String> arr = vprops[i].split(",", false);
+			Vector<String> arr = vprops[i].splitc(',', false);
 			ERR_FAIL_COND(arr.size() != 2);
 			ERR_FAIL_COND(!arr[0].is_valid_int());
 			ERR_FAIL_COND(!arr[1].is_valid_int());
@@ -4518,12 +4518,12 @@ void VisualShaderNodeGroupBase::set_inputs(const String &p_inputs) {
 
 	inputs = p_inputs;
 
-	Vector<String> input_strings = inputs.split(";", false);
+	Vector<String> input_strings = inputs.splitc(';', false);
 
 	int input_port_count = input_strings.size();
 
 	for (int i = 0; i < input_port_count; i++) {
-		Vector<String> arr = input_strings[i].split(",");
+		Vector<String> arr = input_strings[i].splitc(',');
 		ERR_FAIL_COND(arr.size() != 3);
 
 		int port_idx = arr[0].to_int();
@@ -4550,12 +4550,12 @@ void VisualShaderNodeGroupBase::set_outputs(const String &p_outputs) {
 
 	outputs = p_outputs;
 
-	Vector<String> output_strings = outputs.split(";", false);
+	Vector<String> output_strings = outputs.splitc(';', false);
 
 	int output_port_count = output_strings.size();
 
 	for (int i = 0; i < output_port_count; i++) {
-		Vector<String> arr = output_strings[i].split(",");
+		Vector<String> arr = output_strings[i].splitc(',');
 		ERR_FAIL_COND(arr.size() != 3);
 
 		int port_idx = arr[0].to_int();
@@ -4595,7 +4595,7 @@ void VisualShaderNodeGroupBase::add_input_port(int p_id, int p_type, const Strin
 	ERR_FAIL_COND(!is_valid_port_name(p_name));
 
 	String str = itos(p_id) + "," + itos(p_type) + "," + p_name + ";";
-	Vector<String> inputs_strings = inputs.split(";", false);
+	Vector<String> inputs_strings = inputs.splitc(';', false);
 	int index = 0;
 	if (p_id < inputs_strings.size()) {
 		for (int i = 0; i < inputs_strings.size(); i++) {
@@ -4609,7 +4609,7 @@ void VisualShaderNodeGroupBase::add_input_port(int p_id, int p_type, const Strin
 		inputs += str;
 	}
 
-	inputs_strings = inputs.split(";", false);
+	inputs_strings = inputs.splitc(';', false);
 	index = 0;
 
 	for (int i = 0; i < inputs_strings.size(); i++) {
@@ -4633,11 +4633,11 @@ void VisualShaderNodeGroupBase::add_input_port(int p_id, int p_type, const Strin
 void VisualShaderNodeGroupBase::remove_input_port(int p_id) {
 	ERR_FAIL_COND(!has_input_port(p_id));
 
-	Vector<String> inputs_strings = inputs.split(";", false);
+	Vector<String> inputs_strings = inputs.splitc(';', false);
 	int count = 0;
 	int index = 0;
 	for (int i = 0; i < inputs_strings.size(); i++) {
-		Vector<String> arr = inputs_strings[i].split(",");
+		Vector<String> arr = inputs_strings[i].splitc(',');
 		if (arr[0].to_int() == p_id) {
 			count = inputs_strings[i].size();
 			break;
@@ -4646,11 +4646,11 @@ void VisualShaderNodeGroupBase::remove_input_port(int p_id) {
 	}
 	inputs = inputs.left(index) + inputs.substr(index + count);
 
-	inputs_strings = inputs.split(";", false);
+	inputs_strings = inputs.splitc(';', false);
 	inputs = inputs.substr(0, index);
 
 	for (int i = p_id; i < inputs_strings.size(); i++) {
-		inputs += inputs_strings[i].replace_first(inputs_strings[i].split(",")[0], itos(i)) + ";";
+		inputs += inputs_strings[i].replace_first(inputs_strings[i].splitc(',')[0], itos(i)) + ";";
 	}
 
 	_apply_port_changes();
@@ -4670,7 +4670,7 @@ void VisualShaderNodeGroupBase::add_output_port(int p_id, int p_type, const Stri
 	ERR_FAIL_COND(!is_valid_port_name(p_name));
 
 	String str = itos(p_id) + "," + itos(p_type) + "," + p_name + ";";
-	Vector<String> outputs_strings = outputs.split(";", false);
+	Vector<String> outputs_strings = outputs.splitc(';', false);
 	int index = 0;
 	if (p_id < outputs_strings.size()) {
 		for (int i = 0; i < outputs_strings.size(); i++) {
@@ -4684,7 +4684,7 @@ void VisualShaderNodeGroupBase::add_output_port(int p_id, int p_type, const Stri
 		outputs += str;
 	}
 
-	outputs_strings = outputs.split(";", false);
+	outputs_strings = outputs.splitc(';', false);
 	index = 0;
 
 	for (int i = 0; i < outputs_strings.size(); i++) {
@@ -4708,11 +4708,11 @@ void VisualShaderNodeGroupBase::add_output_port(int p_id, int p_type, const Stri
 void VisualShaderNodeGroupBase::remove_output_port(int p_id) {
 	ERR_FAIL_COND(!has_output_port(p_id));
 
-	Vector<String> outputs_strings = outputs.split(";", false);
+	Vector<String> outputs_strings = outputs.splitc(';', false);
 	int count = 0;
 	int index = 0;
 	for (int i = 0; i < outputs_strings.size(); i++) {
-		Vector<String> arr = outputs_strings[i].split(",");
+		Vector<String> arr = outputs_strings[i].splitc(',');
 		if (arr[0].to_int() == p_id) {
 			count = outputs_strings[i].size();
 			break;
@@ -4721,11 +4721,11 @@ void VisualShaderNodeGroupBase::remove_output_port(int p_id) {
 	}
 	outputs = outputs.left(index) + outputs.substr(index + count);
 
-	outputs_strings = outputs.split(";", false);
+	outputs_strings = outputs.splitc(';', false);
 	outputs = outputs.substr(0, index);
 
 	for (int i = p_id; i < outputs_strings.size(); i++) {
-		outputs += outputs_strings[i].replace_first(outputs_strings[i].split(",")[0], itos(i)) + ";";
+		outputs += outputs_strings[i].replace_first(outputs_strings[i].splitc(',')[0], itos(i)) + ";";
 	}
 
 	_apply_port_changes();
@@ -4756,11 +4756,11 @@ void VisualShaderNodeGroupBase::set_input_port_type(int p_id, int p_type) {
 		return;
 	}
 
-	Vector<String> inputs_strings = inputs.split(";", false);
+	Vector<String> inputs_strings = inputs.splitc(';', false);
 	int count = 0;
 	int index = 0;
 	for (int i = 0; i < inputs_strings.size(); i++) {
-		Vector<String> arr = inputs_strings[i].split(",");
+		Vector<String> arr = inputs_strings[i].splitc(',');
 		ERR_FAIL_COND(arr.size() != 3);
 
 		if (arr[0].to_int() == p_id) {
@@ -4791,11 +4791,11 @@ void VisualShaderNodeGroupBase::set_input_port_name(int p_id, const String &p_na
 		return;
 	}
 
-	Vector<String> inputs_strings = inputs.split(";", false);
+	Vector<String> inputs_strings = inputs.splitc(';', false);
 	int count = 0;
 	int index = 0;
 	for (int i = 0; i < inputs_strings.size(); i++) {
-		Vector<String> arr = inputs_strings[i].split(",");
+		Vector<String> arr = inputs_strings[i].splitc(',');
 		ERR_FAIL_COND(arr.size() != 3);
 
 		if (arr[0].to_int() == p_id) {
@@ -4826,11 +4826,11 @@ void VisualShaderNodeGroupBase::set_output_port_type(int p_id, int p_type) {
 		return;
 	}
 
-	Vector<String> output_strings = outputs.split(";", false);
+	Vector<String> output_strings = outputs.splitc(';', false);
 	int count = 0;
 	int index = 0;
 	for (int i = 0; i < output_strings.size(); i++) {
-		Vector<String> arr = output_strings[i].split(",");
+		Vector<String> arr = output_strings[i].splitc(',');
 		ERR_FAIL_COND(arr.size() != 3);
 
 		if (arr[0].to_int() == p_id) {
@@ -4862,11 +4862,11 @@ void VisualShaderNodeGroupBase::set_output_port_name(int p_id, const String &p_n
 		return;
 	}
 
-	Vector<String> output_strings = outputs.split(";", false);
+	Vector<String> output_strings = outputs.splitc(';', false);
 	int count = 0;
 	int index = 0;
 	for (int i = 0; i < output_strings.size(); i++) {
-		Vector<String> arr = output_strings[i].split(",");
+		Vector<String> arr = output_strings[i].splitc(',');
 		ERR_FAIL_COND(arr.size() != 3);
 
 		if (arr[0].to_int() == p_id) {
@@ -4908,14 +4908,14 @@ Control *VisualShaderNodeGroupBase::is_ctrl_pressed(int p_index) {
 }
 
 void VisualShaderNodeGroupBase::_apply_port_changes() {
-	Vector<String> inputs_strings = inputs.split(";", false);
-	Vector<String> outputs_strings = outputs.split(";", false);
+	Vector<String> inputs_strings = inputs.splitc(';', false);
+	Vector<String> outputs_strings = outputs.splitc(';', false);
 
 	clear_input_ports();
 	clear_output_ports();
 
 	for (int i = 0; i < inputs_strings.size(); i++) {
-		Vector<String> arr = inputs_strings[i].split(",");
+		Vector<String> arr = inputs_strings[i].splitc(',');
 		ERR_FAIL_COND(arr.size() != 3);
 
 		Port port;
@@ -4924,7 +4924,7 @@ void VisualShaderNodeGroupBase::_apply_port_changes() {
 		input_ports[i] = port;
 	}
 	for (int i = 0; i < outputs_strings.size(); i++) {
-		Vector<String> arr = outputs_strings[i].split(",");
+		Vector<String> arr = outputs_strings[i].splitc(',');
 		ERR_FAIL_COND(arr.size() != 3);
 
 		Port port;

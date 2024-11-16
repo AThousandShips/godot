@@ -243,7 +243,7 @@ String BindingsGenerator::bbcode_to_text(const String &p_bbcode, const TypeInter
 			const String link_tag = tag.substr(0, tag_end);
 			const String link_target = tag.substr(tag_end + 1, tag.length()).lstrip(" ");
 
-			const Vector<String> link_target_parts = link_target.split(".");
+			const Vector<String> link_target_parts = link_target.splitc('.');
 
 			if (link_target_parts.size() <= 0 || link_target_parts.size() > 2) {
 				ERR_PRINT("Invalid reference format: '" + tag + "'.");
@@ -467,7 +467,7 @@ String BindingsGenerator::bbcode_to_xml(const String &p_bbcode, const TypeInterf
 				if (code_tag || tag_stack.size() > 0) {
 					xml_output.append(text.xml_escape());
 				} else {
-					Vector<String> lines = text.split("\n");
+					Vector<String> lines = text.splitc('\n');
 					for (int i = 0; i < lines.size(); i++) {
 						if (i != 0) {
 							xml_output.append("<para>");
@@ -496,7 +496,7 @@ String BindingsGenerator::bbcode_to_xml(const String &p_bbcode, const TypeInterf
 				if (code_tag || tag_stack.size() > 0) {
 					xml_output.append(text.xml_escape());
 				} else {
-					Vector<String> lines = text.split("\n");
+					Vector<String> lines = text.splitc('\n');
 					for (int i = 0; i < lines.size(); i++) {
 						if (i != 0) {
 							xml_output.append("<para>");
@@ -555,7 +555,7 @@ String BindingsGenerator::bbcode_to_xml(const String &p_bbcode, const TypeInterf
 			const String link_tag = tag.substr(0, tag_end);
 			const String link_target = tag.substr(tag_end + 1, tag.length()).lstrip(" ");
 
-			const Vector<String> link_target_parts = link_target.split(".");
+			const Vector<String> link_target_parts = link_target.splitc('.');
 
 			if (link_target_parts.size() <= 0 || link_target_parts.size() > 2) {
 				ERR_PRINT("Invalid reference format: '" + tag + "'.");
@@ -1383,7 +1383,7 @@ int BindingsGenerator::_determine_enum_prefix(const EnumInterface &p_ienum) {
 	CRASH_COND(p_ienum.constants.is_empty());
 
 	const ConstantInterface &front_iconstant = p_ienum.constants.front()->get();
-	Vector<String> front_parts = front_iconstant.name.split("_", /* p_allow_empty: */ true);
+	Vector<String> front_parts = front_iconstant.name.splitc('_', /* p_allow_empty: */ true);
 	int candidate_len = front_parts.size() - 1;
 
 	if (candidate_len == 0) {
@@ -1391,7 +1391,7 @@ int BindingsGenerator::_determine_enum_prefix(const EnumInterface &p_ienum) {
 	}
 
 	for (const ConstantInterface &iconstant : p_ienum.constants) {
-		Vector<String> parts = iconstant.name.split("_", /* p_allow_empty: */ true);
+		Vector<String> parts = iconstant.name.splitc('_', /* p_allow_empty: */ true);
 
 		int i;
 		for (i = 0; i < candidate_len && i < parts.size(); i++) {
@@ -1420,7 +1420,7 @@ void BindingsGenerator::_apply_prefix_to_enum_constants(BindingsGenerator::EnumI
 
 			String constant_name = iconstant.name;
 
-			Vector<String> parts = constant_name.split("_", /* p_allow_empty: */ true);
+			Vector<String> parts = constant_name.splitc('_', /* p_allow_empty: */ true);
 
 			if (parts.size() <= curr_prefix_length) {
 				continue;
@@ -1582,7 +1582,7 @@ void BindingsGenerator::_generate_global_constants(StringBuilder &p_output) {
 	for (const ConstantInterface &iconstant : global_constants) {
 		if (iconstant.const_doc && iconstant.const_doc->description.size()) {
 			String xml_summary = bbcode_to_xml(fix_doc_description(iconstant.const_doc->description), nullptr);
-			Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
+			Vector<String> summary_lines = xml_summary.length() ? xml_summary.splitc('\n') : Vector<String>();
 
 			if (summary_lines.size()) {
 				p_output.append(MEMBER_BEGIN "/// <summary>\n");
@@ -1646,7 +1646,7 @@ void BindingsGenerator::_generate_global_constants(StringBuilder &p_output) {
 		for (const ConstantInterface &iconstant : ienum.constants) {
 			if (iconstant.const_doc && iconstant.const_doc->description.size()) {
 				String xml_summary = bbcode_to_xml(fix_doc_description(iconstant.const_doc->description), nullptr);
-				Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
+				Vector<String> summary_lines = xml_summary.length() ? xml_summary.splitc('\n') : Vector<String>();
 
 				if (summary_lines.size()) {
 					p_output << maybe_indent << INDENT1 "/// <summary>\n";
@@ -2108,7 +2108,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 
 	if (class_doc && class_doc->description.size()) {
 		String xml_summary = bbcode_to_xml(fix_doc_description(class_doc->description), &itype);
-		Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
+		Vector<String> summary_lines = xml_summary.length() ? xml_summary.splitc('\n') : Vector<String>();
 
 		if (summary_lines.size()) {
 			output.append("/// <summary>\n");
@@ -2170,7 +2170,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 	for (const ConstantInterface &iconstant : itype.constants) {
 		if (iconstant.const_doc && iconstant.const_doc->description.size()) {
 			String xml_summary = bbcode_to_xml(fix_doc_description(iconstant.const_doc->description), &itype);
-			Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
+			Vector<String> summary_lines = xml_summary.length() ? xml_summary.splitc('\n') : Vector<String>();
 
 			if (summary_lines.size()) {
 				output.append(MEMBER_BEGIN "/// <summary>\n");
@@ -2220,7 +2220,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 		for (const ConstantInterface &iconstant : ienum.constants) {
 			if (iconstant.const_doc && iconstant.const_doc->description.size()) {
 				String xml_summary = bbcode_to_xml(fix_doc_description(iconstant.const_doc->description), &itype);
-				Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
+				Vector<String> summary_lines = xml_summary.length() ? xml_summary.splitc('\n') : Vector<String>();
 
 				if (summary_lines.size()) {
 					output.append(INDENT2 "/// <summary>\n");
@@ -2700,7 +2700,7 @@ Error BindingsGenerator::_generate_cs_property(const BindingsGenerator::TypeInte
 
 	if (p_iprop.prop_doc && p_iprop.prop_doc->description.size()) {
 		String xml_summary = bbcode_to_xml(fix_doc_description(p_iprop.prop_doc->description), &p_itype);
-		Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
+		Vector<String> summary_lines = xml_summary.length() ? xml_summary.splitc('\n') : Vector<String>();
 
 		if (summary_lines.size()) {
 			p_output.append(MEMBER_BEGIN "/// <summary>\n");
@@ -2998,7 +2998,7 @@ Error BindingsGenerator::_generate_cs_method(const BindingsGenerator::TypeInterf
 
 		if (p_imethod.method_doc && p_imethod.method_doc->description.size()) {
 			String xml_summary = bbcode_to_xml(fix_doc_description(p_imethod.method_doc->description), &p_itype);
-			Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
+			Vector<String> summary_lines = xml_summary.length() ? xml_summary.splitc('\n') : Vector<String>();
 
 			if (summary_lines.size()) {
 				p_output.append(MEMBER_BEGIN "/// <summary>\n");
@@ -3202,7 +3202,7 @@ Error BindingsGenerator::_generate_cs_signal(const BindingsGenerator::TypeInterf
 
 		if (p_isignal.method_doc && p_isignal.method_doc->description.size()) {
 			String xml_summary = bbcode_to_xml(fix_doc_description(p_isignal.method_doc->description), &p_itype, true);
-			Vector<String> summary_lines = xml_summary.length() ? xml_summary.split("\n") : Vector<String>();
+			Vector<String> summary_lines = xml_summary.length() ? xml_summary.splitc('\n') : Vector<String>();
 
 			if (summary_lines.size()) {
 				p_output.append(MEMBER_BEGIN "/// <summary>\n");
@@ -4027,7 +4027,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 				imethod.return_type.generic_type_parameters.push_back(TypeReference(return_info.hint_string));
 			} else if (return_info.type == Variant::DICTIONARY && return_info.hint == PROPERTY_HINT_DICTIONARY_TYPE) {
 				imethod.return_type.cname = Variant::get_type_name(return_info.type) + "_@generic";
-				Vector<String> split = return_info.hint_string.split(";");
+				Vector<String> split = return_info.hint_string.splitc(';');
 				imethod.return_type.generic_type_parameters.push_back(TypeReference(split.get(0)));
 				imethod.return_type.generic_type_parameters.push_back(TypeReference(split.get(1)));
 			} else if (return_info.hint == PROPERTY_HINT_RESOURCE_TYPE) {
@@ -4059,7 +4059,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 					iarg.type.generic_type_parameters.push_back(TypeReference(arginfo.hint_string));
 				} else if (arginfo.type == Variant::DICTIONARY && arginfo.hint == PROPERTY_HINT_DICTIONARY_TYPE) {
 					iarg.type.cname = Variant::get_type_name(arginfo.type) + "_@generic";
-					Vector<String> split = arginfo.hint_string.split(";");
+					Vector<String> split = arginfo.hint_string.splitc(';');
 					iarg.type.generic_type_parameters.push_back(TypeReference(split.get(0)));
 					iarg.type.generic_type_parameters.push_back(TypeReference(split.get(1)));
 				} else if (arginfo.hint == PROPERTY_HINT_RESOURCE_TYPE) {
@@ -4191,7 +4191,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 					iarg.type.generic_type_parameters.push_back(TypeReference(arginfo.hint_string));
 				} else if (arginfo.type == Variant::DICTIONARY && arginfo.hint == PROPERTY_HINT_DICTIONARY_TYPE) {
 					iarg.type.cname = Variant::get_type_name(arginfo.type) + "_@generic";
-					Vector<String> split = arginfo.hint_string.split(";");
+					Vector<String> split = arginfo.hint_string.splitc(';');
 					iarg.type.generic_type_parameters.push_back(TypeReference(split.get(0)));
 					iarg.type.generic_type_parameters.push_back(TypeReference(split.get(1)));
 				} else if (arginfo.hint == PROPERTY_HINT_RESOURCE_TYPE) {

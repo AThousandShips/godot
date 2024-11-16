@@ -409,7 +409,7 @@ void GDScriptEditorTranslationParserPlugin::_assess_call(const GDScriptParser::C
 void GDScriptEditorTranslationParserPlugin::_extract_fd_filter_string(const GDScriptParser::ExpressionNode *p_expression, int p_line) {
 	// Extract the name in "extension ; name".
 	if (_is_constant_string(p_expression)) {
-		PackedStringArray arr = p_expression->reduced_value.operator String().split(";", true);
+		PackedStringArray arr = p_expression->reduced_value.operator String().splitc(';', true);
 		ERR_FAIL_COND_MSG(arr.size() != 2, "Argument for setting FileDialog has bad format.");
 		_add_id(arr[1].strip_edges(), p_line);
 	}

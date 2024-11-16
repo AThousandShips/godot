@@ -456,7 +456,7 @@ bool EditorInspectorParticleProcessMaterialPlugin::parse_property(Object *p_obje
 	Ref<ParticleProcessMaterial> mat = Ref<ParticleProcessMaterial>(p_object);
 	ERR_FAIL_COND_V(mat.is_null(), false);
 
-	PackedStringArray range_hint = p_hint_text.split(",");
+	PackedStringArray range_hint = p_hint_text.splitc(',');
 	float min = range_hint[0].to_float();
 	float max = range_hint[1].to_float();
 	float step = range_hint[2].to_float();

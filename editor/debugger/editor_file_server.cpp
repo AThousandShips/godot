@@ -177,7 +177,7 @@ void EditorFileServer::poll() {
 		// Decompress the text with all the files
 		Compression::decompress(file_buffer_decompressed.ptr(), file_buffer_decompressed.size(), file_buffer.ptr(), file_buffer.size(), Compression::MODE_ZSTD);
 		String files_text = String::utf8((const char *)file_buffer_decompressed.ptr(), file_buffer_decompressed.size());
-		Vector<String> files = files_text.split("\n");
+		Vector<String> files = files_text.splitc('\n');
 
 		print_verbose("EFS: Total cached files received: " + itos(files.size()));
 		for (int i = 0; i < files.size(); i++) {

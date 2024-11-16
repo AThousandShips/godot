@@ -505,7 +505,7 @@ void EditorExportPlatform::_edit_filter_list(HashSet<String> &r_list, const Stri
 	if (p_filter.is_empty()) {
 		return;
 	}
-	Vector<String> split = p_filter.split(",");
+	Vector<String> split = p_filter.splitc(',');
 	Vector<String> filters;
 	for (int i = 0; i < split.size(); i++) {
 		String f = split[i].strip_edges();
@@ -547,7 +547,7 @@ HashSet<String> EditorExportPlatform::get_features(const Ref<EditorExportPreset>
 #endif // REAL_T_IS_DOUBLE
 
 	if (!p_preset->get_custom_features().is_empty()) {
-		Vector<String> tmp_custom_list = p_preset->get_custom_features().split(",");
+		Vector<String> tmp_custom_list = p_preset->get_custom_features().splitc(',');
 
 		for (int i = 0; i < tmp_custom_list.size(); i++) {
 			String f = tmp_custom_list[i].strip_edges();
@@ -1064,7 +1064,7 @@ Error EditorExportPlatform::export_project_files(const Ref<EditorExportPreset> &
 
 	if (enc_pck) {
 		seed = p_preset->get_seed();
-		Vector<String> enc_in_split = p_preset->get_enc_in_filter().split(",");
+		Vector<String> enc_in_split = p_preset->get_enc_in_filter().splitc(',');
 		for (int i = 0; i < enc_in_split.size(); i++) {
 			String f = enc_in_split[i].strip_edges();
 			if (f.is_empty()) {
@@ -1073,7 +1073,7 @@ Error EditorExportPlatform::export_project_files(const Ref<EditorExportPreset> &
 			enc_in_filters.push_back(f);
 		}
 
-		Vector<String> enc_ex_split = p_preset->get_enc_ex_filter().split(",");
+		Vector<String> enc_ex_split = p_preset->get_enc_ex_filter().splitc(',');
 		for (int i = 0; i < enc_ex_split.size(); i++) {
 			String f = enc_ex_split[i].strip_edges();
 			if (f.is_empty()) {
@@ -1455,7 +1455,7 @@ Error EditorExportPlatform::export_project_files(const Ref<EditorExportPreset> &
 	Vector<String> custom_list;
 
 	if (!p_preset->get_custom_features().is_empty()) {
-		Vector<String> tmp_custom_list = p_preset->get_custom_features().split(",");
+		Vector<String> tmp_custom_list = p_preset->get_custom_features().splitc(',');
 
 		for (int i = 0; i < tmp_custom_list.size(); i++) {
 			String f = tmp_custom_list[i].strip_edges();

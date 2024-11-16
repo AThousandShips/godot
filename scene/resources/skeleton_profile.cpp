@@ -140,7 +140,7 @@ void SkeletonProfile::_validate_property(PropertyInfo &p_property) const {
 		p_property.hint_string = hint;
 	}
 
-	PackedStringArray split = p_property.name.split("/");
+	PackedStringArray split = p_property.name.splitc('/');
 	if (split.size() == 3 && split[0] == "bones") {
 		if (split[2] == "bone_tail" && get_tail_direction(split[1].to_int()) != TAIL_DIRECTION_SPECIFIC_CHILD) {
 			p_property.usage = PROPERTY_USAGE_NONE;

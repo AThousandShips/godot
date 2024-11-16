@@ -116,6 +116,6 @@ void OpenXRAction::rem_toplevel_path(const String p_toplevel_path) {
 }
 
 void OpenXRAction::parse_toplevel_paths(const String p_toplevel_paths) {
-	toplevel_paths = p_toplevel_paths.split(",", false);
+	toplevel_paths = p_toplevel_paths.splitc(',', false);
 	emit_changed();
 }

@@ -144,7 +144,7 @@ Array TTS_Android::get_voices() {
 		for (int i = 0; i < len; i++) {
 			jstring jStr = (jstring)env->GetObjectArrayElement(*arr, i);
 			String str = jstring_to_string(jStr, env);
-			Vector<String> tokens = str.split(";", true, 2);
+			Vector<String> tokens = str.splitc(';', true, 2);
 			if (tokens.size() == 2) {
 				Dictionary voice_d;
 				voice_d["name"] = tokens[1];

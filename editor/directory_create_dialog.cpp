@@ -55,7 +55,7 @@ String DirectoryCreateDialog::_validate_path(const String &p_path) const {
 		return TTR("File name can't end with /.");
 	}
 
-	const PackedStringArray splits = p_path.split("/");
+	const PackedStringArray splits = p_path.splitc('/');
 	for (int i = 0; i < splits.size(); i++) {
 		const String &part = splits[i];
 		bool is_file = mode == MODE_FILE && i == splits.size() - 1;

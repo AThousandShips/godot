@@ -470,7 +470,7 @@ void TileSetEditor::_move_tile_set_array_element(Object *p_undo_redo, Object *p_
 		return;
 	}
 
-	Vector<String> components = String(p_array_prefix).split("/", true, 2);
+	Vector<String> components = String(p_array_prefix).splitc('/', true, 2);
 
 	// Compute the array indices to save.
 	int begin = 0;
@@ -678,7 +678,7 @@ void TileSetEditor::_undo_redo_inspector_callback(Object *p_undo_redo, Object *p
 #define ADD_UNDO(obj, property) undo_redo_man->add_undo_property(obj, property, obj->get(property));
 	TileSet *ed_tile_set = Object::cast_to<TileSet>(p_edited);
 	if (ed_tile_set) {
-		Vector<String> components = p_property.split("/", true, 3);
+		Vector<String> components = p_property.splitc('/', true, 3);
 		for (int i = 0; i < ed_tile_set->get_source_count(); i++) {
 			int source_id = ed_tile_set->get_source_id(i);
 

@@ -7322,7 +7322,7 @@ void TextEdit::_paste_internal(int p_caret) {
 	}
 
 	// Paste text at each caret or one line per caret.
-	Vector<String> clipboad_lines = clipboard.split("\n");
+	Vector<String> clipboad_lines = clipboard.splitc('\n');
 	bool insert_line_per_caret = p_caret == -1 && get_caret_count() > 1 && clipboad_lines.size() == get_caret_count();
 
 	begin_complex_operation();
@@ -8452,7 +8452,7 @@ void TextEdit::_base_insert_text(int p_line, int p_char, const String &p_text, i
 
 	/* STEP 1: Remove \r from source text and separate in substrings. */
 	const String text_to_insert = p_text.replace("\r", "");
-	Vector<String> substrings = text_to_insert.split("\n");
+	Vector<String> substrings = text_to_insert.splitc('\n');
 
 	// Is this just a new empty line?
 	bool shift_first_line = p_char == 0 && substrings.size() == 2 && text_to_insert == "\n";

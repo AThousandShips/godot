@@ -412,7 +412,7 @@ void EditorExportPlatformIOS::_fix_config_file(const Ref<EditorExportPreset> &p_
 	String str;
 	String strnew;
 	str.parse_utf8((const char *)pfile.ptr(), pfile.size());
-	Vector<String> lines = str.split("\n");
+	Vector<String> lines = str.splitc('\n');
 	for (int i = 0; i < lines.size(); i++) {
 		if (lines[i].contains("$binary")) {
 			strnew += lines[i].replace("$binary", p_config.binary_name) + "\n";
@@ -2842,7 +2842,7 @@ bool EditorExportPlatformIOS::_check_xcode_install() {
 		String output;
 		Error err = OS::get_singleton()->execute("mdfind", mdfind_args, &output);
 		if (err == OK) {
-			mdfind_paths = output.split("\n");
+			mdfind_paths = output.splitc('\n');
 		}
 		for (const String &found_path : mdfind_paths) {
 			xcode_found = !found_path.is_empty() && DirAccess::dir_exists_absolute(found_path.strip_edges());

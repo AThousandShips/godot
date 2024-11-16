@@ -5570,7 +5570,7 @@ void GLTFDocument::_parse_animation_pointer(Ref<GLTFState> p_state, const String
 	// since vanilla glTF animations can already animate TRS properties directly.
 	// But having this code exist is required to be spec-compliant and handle all test files.
 	// Note that TRS still needs to be handled in the general case as well, for KHR_interactivity.
-	const PackedStringArray split = p_animation_json_pointer.split("/", false, 3);
+	const PackedStringArray split = p_animation_json_pointer.splitc('/', false, 3);
 	if (unlikely(split.size() == 3 && split[0] == "nodes" && (split[2] == "translation" || split[2] == "rotation" || split[2] == "scale" || split[2] == "matrix" || split[2] == "weights"))) {
 		const GLTFNodeIndex node_index = split[1].to_int();
 		HashMap<int, GLTFAnimation::NodeTrack> &node_tracks = p_gltf_animation->get_node_tracks();
@@ -6512,7 +6512,7 @@ Ref<GLTFObjectModelProperty> GLTFDocument::import_object_model_property(Ref<GLTF
 	}
 	Ref<GLTFObjectModelProperty> ret;
 	// Split the JSON pointer into its components.
-	const PackedStringArray split = p_json_pointer.split("/", false);
+	const PackedStringArray split = p_json_pointer.splitc('/', false);
 	ERR_FAIL_COND_V_MSG(split.size() < 3, ret, "glTF: Cannot use JSON pointer '" + p_json_pointer + "' because it does not contain enough elements. The only animatable properties are at least 3 levels deep (ex: '/nodes/0/translation' or '/materials/0/emissiveFactor').");
 	ret.instantiate();
 	ret->set_json_pointers({ split });

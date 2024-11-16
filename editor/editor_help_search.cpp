@@ -992,7 +992,7 @@ bool EditorHelpSearch::Runner::_match_string(const String &p_term, const String 
 }
 
 String EditorHelpSearch::Runner::_match_keywords(const String &p_term, const String &p_keywords) const {
-	for (const String &k : p_keywords.split(",")) {
+	for (const String &k : p_keywords.splitc(',')) {
 		const String keyword = k.strip_edges();
 		if (_match_string(p_term, keyword)) {
 			return keyword;
@@ -1054,7 +1054,7 @@ String EditorHelpSearch::Runner::_build_keywords_tooltip(const String &p_keyword
 
 	tooltip = "\n\n" + TTR("Keywords") + ": ";
 
-	for (const String &keyword : p_keywords.split(",")) {
+	for (const String &keyword : p_keywords.splitc(',')) {
 		tooltip += keyword.strip_edges().quote() + ", ";
 	}
 
@@ -1172,7 +1172,7 @@ TreeItem *EditorHelpSearch::Runner::_create_class_item(TreeItem *p_parent, const
 	if (!term.is_empty()) {
 		_match_item(item, p_doc->name);
 	}
-	for (const String &keyword : p_doc->keywords.split(",")) {
+	for (const String &keyword : p_doc->keywords.splitc(',')) {
 		_match_item(item, keyword.strip_edges(), true);
 	}
 
@@ -1280,7 +1280,7 @@ TreeItem *EditorHelpSearch::Runner::_create_member_item(TreeItem *p_parent, cons
 	if (term.length() > 1 || term == "@") {
 		_match_item(item, p_name);
 	}
-	for (const String &keyword : p_keywords.split(",")) {
+	for (const String &keyword : p_keywords.splitc(',')) {
 		_match_item(item, keyword.strip_edges(), true);
 	}
 

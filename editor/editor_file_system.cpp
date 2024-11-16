@@ -1779,7 +1779,7 @@ bool EditorFileSystem::_find_file(const String &p_file, EditorFileSystemDirector
 	f = f.substr(6, f.length());
 	f = f.replace("\\", "/");
 
-	Vector<String> path = f.split("/");
+	Vector<String> path = f.splitc('/');
 
 	if (path.size() == 0) {
 		return false;
@@ -1902,7 +1902,7 @@ EditorFileSystemDirectory *EditorFileSystem::get_filesystem_path(const String &p
 		f = f.substr(0, f.length() - 1);
 	}
 
-	Vector<String> path = f.split("/");
+	Vector<String> path = f.splitc('/');
 
 	if (path.size() == 0) {
 		return nullptr;
@@ -3351,7 +3351,7 @@ Error EditorFileSystem::make_dir_recursive(const String &p_path, const String &p
 	ERR_FAIL_NULL_V(parent, ERR_FILE_NOT_FOUND);
 	folders_to_sort.insert(parent->get_instance_id());
 
-	const PackedStringArray folders = p_path.trim_prefix(path).trim_suffix("/").split("/");
+	const PackedStringArray folders = p_path.trim_prefix(path).trim_suffix("/").splitc('/');
 	for (const String &folder : folders) {
 		const int current = parent->find_dir_index(folder);
 		if (current > -1) {
@@ -3498,7 +3498,7 @@ void EditorFileSystem::_update_extensions() {
 		valid_extensions.insert(E);
 	}
 
-	const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).split(",", false);
+	const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).splitc(',', false);
 	for (const String &E : textfile_ext) {
 		if (valid_extensions.has(E)) {
 			continue;
@@ -3506,7 +3506,7 @@ void EditorFileSystem::_update_extensions() {
 		valid_extensions.insert(E);
 		textfile_extensions.insert(E);
 	}
-	const Vector<String> other_file_ext = ((String)(EDITOR_GET("docks/filesystem/other_file_extensions"))).split(",", false);
+	const Vector<String> other_file_ext = ((String)(EDITOR_GET("docks/filesystem/other_file_extensions"))).splitc(',', false);
 	for (const String &E : other_file_ext) {
 		if (valid_extensions.has(E)) {
 			continue;

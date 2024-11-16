@@ -1015,7 +1015,7 @@ Dictionary ExtendGDScriptParser::generate_api() const {
 
 Error ExtendGDScriptParser::parse(const String &p_code, const String &p_path) {
 	path = p_path;
-	lines = p_code.split("\n");
+	lines = p_code.splitc('\n');
 
 	Error err = GDScriptParser::parse(p_code, p_path, false);
 	GDScriptAnalyzer analyzer(this);

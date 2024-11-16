@@ -1416,7 +1416,7 @@ DisplayServerWayland::DisplayServerWayland(const String &p_rendering_driver, Win
 			// runtime and includes system `/lib` and `/lib64`... so ignore Steam.
 			if (prime_idx == -1 && getenv("LD_LIBRARY_PATH") && !getenv("STEAM_RUNTIME_LIBRARY_PATH")) {
 				String ld_library_path(getenv("LD_LIBRARY_PATH"));
-				Vector<String> libraries = ld_library_path.split(":");
+				Vector<String> libraries = ld_library_path.splitc(':');
 
 				for (int i = 0; i < libraries.size(); ++i) {
 					if (FileAccess::exists(libraries[i] + "/libGL.so.1") ||

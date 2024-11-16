@@ -4282,7 +4282,7 @@ void AnimationTrackEditor::insert_node_value_key(Node *p_node, const String &p_p
 
 	// Get the value from the subpath.
 	Variant value = p_node;
-	Vector<String> property_path = p_property.split(":");
+	Vector<String> property_path = p_property.splitc(':');
 	for (const String &E : property_path) {
 		if (value.get_type() == Variant::OBJECT) {
 			Object *obj = value;
@@ -5435,7 +5435,7 @@ void AnimationTrackEditor::_new_track_property_selected(const String &p_name) {
 	} else {
 		bool is_blend_shape = adding_track_type == Animation::TYPE_BLEND_SHAPE;
 		if (is_blend_shape) {
-			PackedStringArray split = p_name.split("/");
+			PackedStringArray split = p_name.splitc('/');
 			if (!split.is_empty()) {
 				full_path = String(adding_track_path) + ":" + split[split.size() - 1];
 			}

@@ -358,7 +358,7 @@ void EditorLocaleDialog::set_locale(const String &p_locale) {
 	} else {
 		locale_set = true;
 
-		Vector<String> locale_elements = p_locale.split("_");
+		Vector<String> locale_elements = p_locale.splitc('_');
 		lang_code->set_text(locale_elements[0]);
 		if (locale_elements.size() >= 2) {
 			if (locale_elements[1].length() == 4 && is_ascii_upper_case(locale_elements[1][0]) && is_ascii_lower_case(locale_elements[1][1]) && is_ascii_lower_case(locale_elements[1][2]) && is_ascii_lower_case(locale_elements[1][3])) {

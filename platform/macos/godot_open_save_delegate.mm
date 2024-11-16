@@ -116,7 +116,7 @@
 		if (p_filters.size() > 1) {
 			NSPopUpButton *popup = [[NSPopUpButton alloc] initWithFrame:NSZeroRect pullsDown:NO];
 			for (int i = 0; i < p_filters.size(); i++) {
-				Vector<String> tokens = p_filters[i].split(";");
+				Vector<String> tokens = p_filters[i].splitc(';');
 				if (tokens.size() >= 1) {
 					String flt = tokens[0].strip_edges();
 					int filter_slice_count = flt.get_slice_count(",");
@@ -144,7 +144,7 @@
 				[view addRowWithViews:[NSArray arrayWithObjects:label, popup, nil]];
 			}
 		} else if (p_filters.size() == 1) {
-			Vector<String> tokens = p_filters[0].split(";");
+			Vector<String> tokens = p_filters[0].splitc(';');
 			if (tokens.size() >= 1) {
 				String flt = tokens[0].strip_edges();
 				int filter_slice_count = flt.get_slice_count(",");

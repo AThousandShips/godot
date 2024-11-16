@@ -728,7 +728,7 @@ void EditorExportPlatformMacOS::_fix_privacy_manifest(const Ref<EditorExportPres
 	String str;
 	String strnew;
 	str.parse_utf8((const char *)plist.ptr(), plist.size());
-	Vector<String> lines = str.split("\n");
+	Vector<String> lines = str.splitc('\n');
 	for (int i = 0; i < lines.size(); i++) {
 		if (lines[i].find("$priv_collection") != -1) {
 			bool section_opened = false;
@@ -807,7 +807,7 @@ void EditorExportPlatformMacOS::_fix_plist(const Ref<EditorExportPreset> &p_pres
 	String str;
 	String strnew;
 	str.parse_utf8((const char *)plist.ptr(), plist.size());
-	Vector<String> lines = str.split("\n");
+	Vector<String> lines = str.splitc('\n');
 	for (int i = 0; i < lines.size(); i++) {
 		if (lines[i].contains("$binary")) {
 			strnew += lines[i].replace("$binary", p_binary) + "\n";
@@ -2577,8 +2577,8 @@ Error EditorExportPlatformMacOS::run(const Ref<EditorExportPreset> &p_preset, in
 	if (port.is_empty()) {
 		port = "22";
 	}
-	Vector<String> extra_args_ssh = p_preset->get("ssh_remote_deploy/extra_args_ssh").operator String().split(" ", false);
-	Vector<String> extra_args_scp = p_preset->get("ssh_remote_deploy/extra_args_scp").operator String().split(" ", false);
+	Vector<String> extra_args_ssh = p_preset->get("ssh_remote_deploy/extra_args_ssh").operator String().splitc(' ', false);
+	Vector<String> extra_args_scp = p_preset->get("ssh_remote_deploy/extra_args_scp").operator String().splitc(' ', false);
 
 	const String basepath = dest.path_join("tmp_macos_export");
 

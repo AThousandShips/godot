@@ -95,7 +95,7 @@ void EngineUpdateLabel::_http_request_completed(int p_result, int p_response_cod
 		const Dictionary version_info = data_bit;
 
 		const String base_version_string = version_info.get("name", "");
-		const PackedStringArray version_bits = base_version_string.split(".");
+		const PackedStringArray version_bits = base_version_string.splitc('.');
 
 		if (version_bits.size() < 2) {
 			continue;

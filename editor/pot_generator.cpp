@@ -196,7 +196,7 @@ void POTGenerator::_write_msgid(Ref<FileAccess> r_file, const String &p_id, bool
 		return;
 	}
 
-	const Vector<String> lines = p_id.split("\n");
+	const Vector<String> lines = p_id.splitc('\n');
 	const String &last_line = lines[lines.size() - 1]; // `lines` cannot be empty.
 	int pot_line_count = lines.size();
 	if (last_line.is_empty()) {

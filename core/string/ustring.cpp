@@ -1172,7 +1172,7 @@ String String::to_snake_case() const {
 }
 
 String String::get_with_code_lines() const {
-	const Vector<String> lines = split("\n");
+	const Vector<String> lines = splitc('\n');
 	String ret;
 	for (int i = 0; i < lines.size(); i++) {
 		if (i > 0) {
@@ -4677,7 +4677,7 @@ String String::simplify_path() const {
 			s = compare;
 		}
 	}
-	Vector<String> dirs = s.split("/", false);
+	Vector<String> dirs = s.splitc('/', false);
 
 	for (int i = 0; i < dirs.size(); i++) {
 		String d = dirs[i];
@@ -5327,8 +5327,8 @@ String String::path_to(const String &p_path) const {
 	}
 
 	//remove leading and trailing slash and split
-	Vector<String> src_dirs = src.substr(1, src.length() - 2).split("/");
-	Vector<String> dst_dirs = dst.substr(1, dst.length() - 2).split("/");
+	Vector<String> src_dirs = src.substr(1, src.length() - 2).splitc('/');
+	Vector<String> dst_dirs = dst.substr(1, dst.length() - 2).splitc('/');
 
 	//find common parent
 	int common_parent = 0;
@@ -5378,7 +5378,7 @@ bool String::is_valid_filename() const {
 		return false;
 	}
 
-	Vector<String> chars = String(invalid_filename_characters).split(" ");
+	Vector<String> chars = String(invalid_filename_characters).splitc(' ');
 	for (const String &ch : chars) {
 		if (contains(ch)) {
 			return false;
@@ -5388,7 +5388,7 @@ bool String::is_valid_filename() const {
 }
 
 String String::validate_filename() const {
-	Vector<String> chars = String(invalid_filename_characters).split(" ");
+	Vector<String> chars = String(invalid_filename_characters).splitc(' ');
 	String name = strip_edges();
 	for (int i = 0; i < chars.size(); i++) {
 		name = name.replace(chars[i], "_");
@@ -5398,7 +5398,7 @@ String String::validate_filename() const {
 
 bool String::is_valid_ip_address() const {
 	if (find(":") >= 0) {
-		Vector<String> ip = split(":");
+		Vector<String> ip = splitc(':');
 		for (int i = 0; i < ip.size(); i++) {
 			const String &n = ip[i];
 			if (n.is_empty()) {
@@ -5417,7 +5417,7 @@ bool String::is_valid_ip_address() const {
 		}
 
 	} else {
-		Vector<String> ip = split(".");
+		Vector<String> ip = splitc('.');
 		if (ip.size() != 4) {
 			return false;
 		}

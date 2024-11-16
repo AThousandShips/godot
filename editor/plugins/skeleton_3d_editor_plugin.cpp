@@ -254,7 +254,7 @@ void BonePropertiesEditor::_property_keyed(const String &p_path, bool p_advance)
 		return;
 	}
 	te->_clear_selection();
-	PackedStringArray split = p_path.split("/");
+	PackedStringArray split = p_path.splitc('/');
 	if (split.size() == 3 && split[0] == "bones") {
 		int bone_idx = split[1].to_int();
 		if (split[2] == "position") {
@@ -278,7 +278,7 @@ void BonePropertiesEditor::_update_properties() {
 	HashSet<StringName> meta_seen;
 	skeleton->get_property_list(&props);
 	for (const PropertyInfo &E : props) {
-		PackedStringArray split = E.name.split("/");
+		PackedStringArray split = E.name.splitc('/');
 		if (split.size() >= 3 && split[0] == "bones") {
 			if (split[1].to_int() == selected) {
 				if (split[2] == "enabled") {

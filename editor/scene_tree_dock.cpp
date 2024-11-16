@@ -3503,7 +3503,7 @@ void SceneTreeDock::_files_dropped(const Vector<String> &p_files, NodePath p_to,
 			if (!(p.usage & PROPERTY_USAGE_EDITOR) || !(p.usage & PROPERTY_USAGE_STORAGE) || p.hint != PROPERTY_HINT_RESOURCE_TYPE) {
 				continue;
 			}
-			Vector<String> valid_types = p.hint_string.split(",");
+			Vector<String> valid_types = p.hint_string.splitc(',');
 
 			for (const String &prop_type : valid_types) {
 				if (res_type == prop_type || ClassDB::is_parent_class(res_type, prop_type) || EditorNode::get_editor_data().script_class_is_parent(res_type, prop_type)) {

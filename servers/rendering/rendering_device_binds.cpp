@@ -36,7 +36,7 @@ Error RDShaderFile::parse_versions_from_text(const String &p_text, const String 
 			ERR_UNAVAILABLE,
 			"Cannot import custom .glsl shaders when running without a RenderingDevice. This can happen if you are using the headless more or the Compatibility backend.");
 
-	Vector<String> lines = p_text.split("\n");
+	Vector<String> lines = p_text.splitc('\n');
 
 	bool reading_versions = false;
 	bool stage_found[RD::SHADER_STAGE_MAX] = { false, false, false, false, false };
@@ -113,7 +113,7 @@ Error RDShaderFile::parse_versions_from_text(const String &p_text, const String 
 					base_error = "Missing `;` in '" + l + "'. Version syntax is `version = \"<defines with C escaping>\";`.";
 					break;
 				}
-				Vector<String> slices = l.get_slice(";", 0).split("=");
+				Vector<String> slices = l.get_slice(";", 0).splitc('=');
 				String version = slices[0].strip_edges();
 				if (!version.is_valid_ascii_identifier()) {
 					base_error = "Version names must be valid identifiers, found '" + version + "' instead.";
@@ -188,7 +188,7 @@ Error RDShaderFile::parse_versions_from_text(const String &p_text, const String 
 				bytecode->set_stage_bytecode(RD::ShaderStage(i), spirv);
 				if (!error.is_empty()) {
 					error += String() + "\n\nStage '" + stage_str[i] + "' source code: \n\n";
-					Vector<String> sclines = code.split("\n");
+					Vector<String> sclines = code.splitc('\n');
 					for (int j = 0; j < sclines.size(); j++) {
 						error += itos(j + 1) + "\t\t" + sclines[j] + "\n";
 					}

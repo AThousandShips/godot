@@ -349,7 +349,7 @@ Error GDScriptParser::parse(const String &p_source_code, const String &p_script_
 
 	if (p_for_completion) {
 		// Remove cursor sentinel char.
-		const Vector<String> lines = p_source_code.split("\n");
+		const Vector<String> lines = p_source_code.splitc('\n');
 		cursor_line = 1;
 		cursor_column = 1;
 		for (int i = 0; i < lines.size(); i++) {
@@ -4332,7 +4332,7 @@ bool GDScriptParser::export_annotations(AnnotationNode *p_annotation, Node *p_ta
 		// WARNING: Do not merge with the previous `if` because there `!=`, not `==`!
 		if (p_annotation->name == SNAME("@export_flags")) {
 			const int64_t max_flags = 32;
-			Vector<String> t = arg_string.split(":", true, 1);
+			Vector<String> t = arg_string.splitc(':', true, 1);
 			if (t[0].is_empty()) {
 				push_error(vformat(R"(Invalid argument %d of annotation "@export_flags": Expected flag name.)", i + 1), p_annotation->arguments[i]);
 				return false;

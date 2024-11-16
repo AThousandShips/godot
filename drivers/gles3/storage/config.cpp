@@ -56,7 +56,7 @@ Config::Config() {
 	// is what Emscripten 3.1.50 and earlier do.
 	{
 		char *extension_array_string = emscripten_webgl_get_supported_extensions();
-		PackedStringArray extension_array = String((const char *)extension_array_string).split(" ");
+		PackedStringArray extension_array = String((const char *)extension_array_string).splitc(' ');
 		extensions.reserve(extension_array.size() * 2);
 		for (const String &s : extension_array) {
 			extensions.insert(s);
@@ -184,7 +184,7 @@ Config::Config() {
 	use_depth_prepass = bool(GLOBAL_GET("rendering/driver/depth_prepass/enable"));
 	if (use_depth_prepass) {
 		String vendors = GLOBAL_GET("rendering/driver/depth_prepass/disable_for_vendors");
-		Vector<String> vendor_match = vendors.split(",");
+		Vector<String> vendor_match = vendors.splitc(',');
 		const String &renderer = String::utf8((const char *)glGetString(GL_RENDERER));
 		for (int i = 0; i < vendor_match.size(); i++) {
 			String v = vendor_match[i].strip_edges();

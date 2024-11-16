@@ -3707,7 +3707,7 @@ Array TileSet::compatibility_tilemap_map(int p_tile_id, Vector2i p_coords, bool 
 #endif // DISABLE_DEPRECATED
 
 bool TileSet::_set(const StringName &p_name, const Variant &p_value) {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 
 #ifndef DISABLE_DEPRECATED
 	// TODO: This should be moved to a dedicated conversion system (see #50691)
@@ -4042,7 +4042,7 @@ bool TileSet::_set(const StringName &p_name, const Variant &p_value) {
 }
 
 bool TileSet::_get(const StringName &p_name, Variant &r_ret) const {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 
 	if (components.size() == 2 && components[0].begins_with("occlusion_layer_") && components[0].trim_prefix("occlusion_layer_").is_valid_int()) {
 		// Occlusion layers.
@@ -4760,10 +4760,10 @@ Vector2i TileSetAtlasSource::get_atlas_grid_size() const {
 }
 
 bool TileSetAtlasSource::_set(const StringName &p_name, const Variant &p_value) {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 
 	// Compute the vector2i if we have coordinates.
-	Vector<String> coords_split = components[0].split(":");
+	Vector<String> coords_split = components[0].splitc(':');
 	Vector2i coords = TileSetSource::INVALID_ATLAS_COORDS;
 	if (coords_split.size() == 2 && coords_split[0].is_valid_int() && coords_split[1].is_valid_int()) {
 		coords = Vector2i(coords_split[0].to_int(), coords_split[1].to_int());
@@ -4838,10 +4838,10 @@ bool TileSetAtlasSource::_set(const StringName &p_name, const Variant &p_value) 
 }
 
 bool TileSetAtlasSource::_get(const StringName &p_name, Variant &r_ret) const {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 
 	// Properties.
-	Vector<String> coords_split = components[0].split(":");
+	Vector<String> coords_split = components[0].splitc(':');
 	if (coords_split.size() == 2 && coords_split[0].is_valid_int() && coords_split[1].is_valid_int()) {
 		Vector2i coords = Vector2i(coords_split[0].to_int(), coords_split[1].to_int());
 		if (tiles.has(coords)) {
@@ -5880,7 +5880,7 @@ int TileSetScenesCollectionSource::get_next_scene_tile_id() const {
 }
 
 bool TileSetScenesCollectionSource::_set(const StringName &p_name, const Variant &p_value) {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 
 	if (components.size() >= 2 && components[0] == "scenes" && components[1].is_valid_int()) {
 		int scene_id = components[1].to_int();
@@ -5904,7 +5904,7 @@ bool TileSetScenesCollectionSource::_set(const StringName &p_name, const Variant
 }
 
 bool TileSetScenesCollectionSource::_get(const StringName &p_name, Variant &r_ret) const {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 
 	if (components.size() >= 2 && components[0] == "scenes" && components[1].is_valid_int() && scenes.has(components[1].to_int())) {
 		if (components.size() >= 3 && components[2] == "scene") {
@@ -6682,7 +6682,7 @@ bool TileData::_set(const StringName &p_name, const Variant &p_value) {
 	}
 #endif
 
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 	if (components.size() >= 2 && components[0].begins_with("occlusion_layer_") && components[0].trim_prefix("occlusion_layer_").is_valid_int()) {
 		// Occlusion layers.
 		int layer_index = components[0].trim_prefix("occlusion_layer_").to_int();
@@ -6843,7 +6843,7 @@ bool TileData::_get(const StringName &p_name, Variant &r_ret) const {
 	}
 #endif
 
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 
 	if (tile_set) {
 		if (components.size() >= 2 && components[0].begins_with("occlusion_layer") && components[0].trim_prefix("occlusion_layer_").is_valid_int()) {

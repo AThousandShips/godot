@@ -65,7 +65,7 @@ void TranslationServer::init_locale_info() {
 		info.name = locale_scripts[idx][0];
 		info.script = locale_scripts[idx][1];
 		info.default_country = locale_scripts[idx][2];
-		Vector<String> supported_countries = String(locale_scripts[idx][3]).split(",", false);
+		Vector<String> supported_countries = String(locale_scripts[idx][3]).splitc(',', false);
 		for (int i = 0; i < supported_countries.size(); i++) {
 			info.supported_countries.insert(supported_countries[i]);
 		}
@@ -137,7 +137,7 @@ TranslationServer::Locale::Locale(const TranslationServer &p_server, const Strin
 	String univ_locale = p_locale.replace("-", "_");
 
 	// Extract locale elements.
-	Vector<String> locale_elements = univ_locale.get_slice("@", 0).split("_");
+	Vector<String> locale_elements = univ_locale.get_slice("@", 0).splitc('_');
 	language = locale_elements[0];
 	if (locale_elements.size() >= 2) {
 		if (locale_elements[1].length() == 4 && is_ascii_upper_case(locale_elements[1][0]) && is_ascii_lower_case(locale_elements[1][1]) && is_ascii_lower_case(locale_elements[1][2]) && is_ascii_lower_case(locale_elements[1][3])) {
@@ -161,7 +161,7 @@ TranslationServer::Locale::Locale(const TranslationServer &p_server, const Strin
 	}
 
 	// Try extract script and variant from the extra part.
-	Vector<String> script_extra = univ_locale.get_slice("@", 1).split(";");
+	Vector<String> script_extra = univ_locale.get_slice("@", 1).splitc(';');
 	for (int i = 0; i < script_extra.size(); i++) {
 		if (script_extra[i].to_lower() == "cyrillic") {
 			script = "Cyrl";
@@ -282,7 +282,7 @@ int TranslationServer::compare_locales(const String &p_locale_a, const String &p
 
 String TranslationServer::get_locale_name(const String &p_locale) const {
 	String lang_name, script_name, country_name;
-	Vector<String> locale_elements = standardize_locale(p_locale).split("_");
+	Vector<String> locale_elements = standardize_locale(p_locale).splitc('_');
 	lang_name = locale_elements[0];
 	if (locale_elements.size() >= 2) {
 		if (locale_elements[1].length() == 4 && is_ascii_upper_case(locale_elements[1][0]) && is_ascii_lower_case(locale_elements[1][1]) && is_ascii_lower_case(locale_elements[1][2]) && is_ascii_lower_case(locale_elements[1][3])) {

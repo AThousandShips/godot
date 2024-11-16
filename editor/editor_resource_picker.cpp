@@ -341,7 +341,7 @@ void EditorResourcePicker::_edit_menu_cbk(int p_which) {
 		} break;
 
 		case OBJ_MENU_QUICKLOAD: {
-			const Vector<String> &base_types_string = base_type.split(",");
+			const Vector<String> &base_types_string = base_type.splitc(',');
 
 			Vector<StringName> base_types;
 			for (const String &type : base_types_string) {
@@ -613,7 +613,7 @@ void EditorResourcePicker::_ensure_allowed_types() const {
 		return;
 	}
 
-	Vector<String> allowed_types = base_type.split(",");
+	Vector<String> allowed_types = base_type.splitc(',');
 	int size = allowed_types.size();
 
 	for (int i = 0; i < size; i++) {

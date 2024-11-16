@@ -67,7 +67,7 @@ static Error _parse_material_library(const String &p_path, HashMap<String, Ref<S
 		} else if (l.begins_with("Kd ")) {
 			//normal
 			ERR_FAIL_COND_V(current.is_null(), ERR_FILE_CORRUPT);
-			Vector<String> v = l.split(" ", false);
+			Vector<String> v = l.splitc(' ', false);
 			ERR_FAIL_COND_V(v.size() < 4, ERR_INVALID_DATA);
 			Color c = current->get_albedo();
 			c.r = v[1].to_float();
@@ -77,7 +77,7 @@ static Error _parse_material_library(const String &p_path, HashMap<String, Ref<S
 		} else if (l.begins_with("Ks ")) {
 			//normal
 			ERR_FAIL_COND_V(current.is_null(), ERR_FILE_CORRUPT);
-			Vector<String> v = l.split(" ", false);
+			Vector<String> v = l.splitc(' ', false);
 			ERR_FAIL_COND_V(v.size() < 4, ERR_INVALID_DATA);
 			float r = v[1].to_float();
 			float g = v[2].to_float();
@@ -87,14 +87,14 @@ static Error _parse_material_library(const String &p_path, HashMap<String, Ref<S
 		} else if (l.begins_with("Ns ")) {
 			//normal
 			ERR_FAIL_COND_V(current.is_null(), ERR_FILE_CORRUPT);
-			Vector<String> v = l.split(" ", false);
+			Vector<String> v = l.splitc(' ', false);
 			ERR_FAIL_COND_V(v.size() != 2, ERR_INVALID_DATA);
 			float s = v[1].to_float();
 			current->set_metallic((1000.0 - s) / 1000.0);
 		} else if (l.begins_with("d ")) {
 			//normal
 			ERR_FAIL_COND_V(current.is_null(), ERR_FILE_CORRUPT);
-			Vector<String> v = l.split(" ", false);
+			Vector<String> v = l.splitc(' ', false);
 			ERR_FAIL_COND_V(v.size() != 2, ERR_INVALID_DATA);
 			float d = v[1].to_float();
 			Color c = current->get_albedo();
@@ -106,7 +106,7 @@ static Error _parse_material_library(const String &p_path, HashMap<String, Ref<S
 		} else if (l.begins_with("Tr ")) {
 			//normal
 			ERR_FAIL_COND_V(current.is_null(), ERR_FILE_CORRUPT);
-			Vector<String> v = l.split(" ", false);
+			Vector<String> v = l.splitc(' ', false);
 			ERR_FAIL_COND_V(v.size() != 2, ERR_INVALID_DATA);
 			float d = v[1].to_float();
 			Color c = current->get_albedo();
@@ -260,7 +260,7 @@ static Error _parse_obj(const String &p_path, List<Ref<ImporterMesh>> &r_meshes,
 
 		if (l.begins_with("v ")) {
 			//vertex
-			Vector<String> v = l.split(" ", false);
+			Vector<String> v = l.splitc(' ', false);
 			ERR_FAIL_COND_V(v.size() < 4, ERR_FILE_CORRUPT);
 			Vector3 vtx;
 			vtx.x = v[1].to_float() * scale_mesh.x + offset_mesh.x;
@@ -282,7 +282,7 @@ static Error _parse_obj(const String &p_path, List<Ref<ImporterMesh>> &r_meshes,
 			}
 		} else if (l.begins_with("vt ")) {
 			//uv
-			Vector<String> v = l.split(" ", false);
+			Vector<String> v = l.splitc(' ', false);
 			ERR_FAIL_COND_V(v.size() < 3, ERR_FILE_CORRUPT);
 			Vector2 uv;
 			uv.x = v[1].to_float();
@@ -290,7 +290,7 @@ static Error _parse_obj(const String &p_path, List<Ref<ImporterMesh>> &r_meshes,
 			uvs.push_back(uv);
 		} else if (l.begins_with("vn ")) {
 			//normal
-			Vector<String> v = l.split(" ", false);
+			Vector<String> v = l.splitc(' ', false);
 			ERR_FAIL_COND_V(v.size() < 4, ERR_FILE_CORRUPT);
 			Vector3 nrm;
 			nrm.x = v[1].to_float();
@@ -300,19 +300,19 @@ static Error _parse_obj(const String &p_path, List<Ref<ImporterMesh>> &r_meshes,
 		} else if (l.begins_with("f ")) {
 			//vertex
 
-			Vector<String> v = l.split(" ", false);
+			Vector<String> v = l.splitc(' ', false);
 			ERR_FAIL_COND_V(v.size() < 4, ERR_FILE_CORRUPT);
 
 			//not very fast, could be sped up
 
 			Vector<String> face[3];
-			face[0] = v[1].split("/");
-			face[1] = v[2].split("/");
+			face[0] = v[1].splitc('/');
+			face[1] = v[2].splitc('/');
 			ERR_FAIL_COND_V(face[0].is_empty(), ERR_FILE_CORRUPT);
 
 			ERR_FAIL_COND_V(face[0].size() != face[1].size(), ERR_FILE_CORRUPT);
 			for (int i = 2; i < v.size() - 1; i++) {
-				face[2] = v[i + 1].split("/");
+				face[2] = v[i + 1].splitc('/');
 
 				ERR_FAIL_COND_V(face[0].size() != face[2].size(), ERR_FILE_CORRUPT);
 				for (int j = 0; j < 3; j++) {

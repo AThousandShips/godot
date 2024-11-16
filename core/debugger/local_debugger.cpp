@@ -211,7 +211,7 @@ void LocalDebugger::debug(bool p_can_continue, bool p_is_error_breakpoint) {
 			if (line.find_char(' ') < 0) {
 				print_line("Usage: print <expression>");
 			} else {
-				String expr = line.split(" ", true, 1)[1];
+				String expr = line.splitc(' ', true, 1)[1];
 				String res = script_lang->debug_parse_stack_level_expression(current_frame, expr);
 				print_line(res);
 			}
@@ -330,7 +330,7 @@ void LocalDebugger::print_variables(const List<String> &names, const List<Varian
 			print_line(E + ": " + String(V->get()));
 		} else {
 			print_line(E + ":");
-			value_lines = value.split("\n");
+			value_lines = value.splitc('\n');
 			for (int i = 0; i < value_lines.size(); ++i) {
 				print_line(variable_prefix + value_lines[i]);
 			}

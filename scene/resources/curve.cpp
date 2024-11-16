@@ -527,7 +527,7 @@ void Curve::ensure_default_setup(real_t p_min, real_t p_max) {
 }
 
 bool Curve::_set(const StringName &p_name, const Variant &p_value) {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 	if (components.size() >= 2 && components[0].begins_with("point_") && components[0].trim_prefix("point_").is_valid_int()) {
 		int point_index = components[0].trim_prefix("point_").to_int();
 		const String &property = components[1];
@@ -556,7 +556,7 @@ bool Curve::_set(const StringName &p_name, const Variant &p_value) {
 }
 
 bool Curve::_get(const StringName &p_name, Variant &r_ret) const {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 	if (components.size() >= 2 && components[0].begins_with("point_") && components[0].trim_prefix("point_").is_valid_int()) {
 		int point_index = components[0].trim_prefix("point_").to_int();
 		const String &property = components[1];
@@ -1265,7 +1265,7 @@ PackedVector2Array Curve2D::tessellate_even_length(int p_max_stages, real_t p_le
 }
 
 bool Curve2D::_set(const StringName &p_name, const Variant &p_value) {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 	if (components.size() >= 2 && components[0].begins_with("point_") && components[0].trim_prefix("point_").is_valid_int()) {
 		int point_index = components[0].trim_prefix("point_").to_int();
 		const String &property = components[1];
@@ -1284,7 +1284,7 @@ bool Curve2D::_set(const StringName &p_name, const Variant &p_value) {
 }
 
 bool Curve2D::_get(const StringName &p_name, Variant &r_ret) const {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 	if (components.size() >= 2 && components[0].begins_with("point_") && components[0].trim_prefix("point_").is_valid_int()) {
 		int point_index = components[0].trim_prefix("point_").to_int();
 		const String &property = components[1];
@@ -2246,7 +2246,7 @@ PackedVector3Array Curve3D::tessellate_even_length(int p_max_stages, real_t p_le
 }
 
 bool Curve3D::_set(const StringName &p_name, const Variant &p_value) {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 	if (components.size() >= 2 && components[0].begins_with("point_") && components[0].trim_prefix("point_").is_valid_int()) {
 		int point_index = components[0].trim_prefix("point_").to_int();
 		const String &property = components[1];
@@ -2268,7 +2268,7 @@ bool Curve3D::_set(const StringName &p_name, const Variant &p_value) {
 }
 
 bool Curve3D::_get(const StringName &p_name, Variant &r_ret) const {
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 	if (components.size() >= 2 && components[0].begins_with("point_") && components[0].trim_prefix("point_").is_valid_int()) {
 		int point_index = components[0].trim_prefix("point_").to_int();
 		const String &property = components[1];

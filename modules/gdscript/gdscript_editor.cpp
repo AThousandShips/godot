@@ -698,7 +698,7 @@ static String _trim_parent_class(const String &p_class, const String &p_base_cla
 	if (p_base_class.is_empty()) {
 		return p_class;
 	}
-	Vector<String> names = p_class.split(".", false, 1);
+	Vector<String> names = p_class.splitc('.', false, 1);
 	if (names.size() == 2) {
 		const String &first = names[0];
 		if (ClassDB::class_exists(p_base_class) && ClassDB::class_exists(first) && ClassDB::is_parent_class(p_base_class, first)) {
@@ -3519,7 +3519,7 @@ static void _find_call_arguments(GDScriptParser::CompletionContext &p_context, c
 					// The path needs quotes if at least one of its components (excluding `%` prefix and `/` separations)
 					// is not a valid identifier.
 					bool path_needs_quote = false;
-					for (const String &part : opt.trim_prefix("%").split("/")) {
+					for (const String &part : opt.trim_prefix("%").splitc('/')) {
 						if (!part.is_valid_ascii_identifier()) {
 							path_needs_quote = true;
 							break;
@@ -3587,7 +3587,7 @@ String GDScriptLanguage::_get_indentation() const {
 void GDScriptLanguage::auto_indent_code(String &p_code, int p_from_line, int p_to_line) const {
 	String indent = _get_indentation();
 
-	Vector<String> lines = p_code.split("\n");
+	Vector<String> lines = p_code.splitc('\n');
 	List<int> indent_stack;
 
 	for (int i = 0; i < lines.size(); i++) {

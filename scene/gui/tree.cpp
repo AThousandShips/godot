@@ -346,7 +346,7 @@ void TreeItem::set_text(int p_column, String p_text) {
 	cells.write[p_column].dirty = true;
 
 	if (cells[p_column].mode == TreeItem::CELL_MODE_RANGE) {
-		Vector<String> strings = p_text.split(",");
+		Vector<String> strings = p_text.splitc(',');
 		cells.write[p_column].min = INT_MAX;
 		cells.write[p_column].max = INT_MIN;
 		for (int i = 0; i < strings.size(); i++) {
@@ -2015,7 +2015,7 @@ void Tree::update_item_cell(TreeItem *p_item, int p_col) {
 			int option = (int)p_item->cells[p_col].val;
 
 			valtext = p_item->atr(p_col, ETR("(Other)"));
-			Vector<String> strings = p_item->cells[p_col].text.split(",");
+			Vector<String> strings = p_item->cells[p_col].text.splitc(',');
 			for (int j = 0; j < strings.size(); j++) {
 				int value = j;
 				if (!strings[j].get_slicec(':', 1).is_empty()) {

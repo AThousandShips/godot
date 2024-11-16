@@ -172,7 +172,7 @@ Error AudioDriverALSA::init() {
 #endif
 	bool ver_ok = false;
 	String version = String::utf8(snd_asoundlib_version());
-	Vector<String> ver_parts = version.split(".");
+	Vector<String> ver_parts = version.splitc('.');
 	if (ver_parts.size() >= 2) {
 		ver_ok = ((ver_parts[0].to_int() == 1 && ver_parts[1].to_int() >= 1)) || (ver_parts[0].to_int() > 1); // 1.1.0
 	}

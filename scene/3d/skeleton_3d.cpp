@@ -204,7 +204,7 @@ void Skeleton3D::_get_property_list(List<PropertyInfo> *p_list) const {
 }
 
 void Skeleton3D::_validate_property(PropertyInfo &p_property) const {
-	PackedStringArray split = p_property.name.split("/");
+	PackedStringArray split = p_property.name.splitc('/');
 	if (split.size() == 3 && split[0] == "bones") {
 		if (split[2] == "rest") {
 			p_property.usage |= PROPERTY_USAGE_READ_ONLY;

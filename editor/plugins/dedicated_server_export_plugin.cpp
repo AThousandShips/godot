@@ -44,7 +44,7 @@ EditorExportPreset::FileExportMode DedicatedServerExportPlugin::_get_export_mode
 		path = path.substr(6);
 	}
 
-	Vector<String> parts = path.split("/");
+	Vector<String> parts = path.splitc('/');
 
 	while (parts.size() > 0) {
 		parts.resize(parts.size() - 1);

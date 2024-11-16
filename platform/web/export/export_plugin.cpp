@@ -115,7 +115,7 @@ Error EditorExportPlatformWeb::_write_or_error(const uint8_t *p_content, int p_s
 void EditorExportPlatformWeb::_replace_strings(const HashMap<String, String> &p_replaces, Vector<uint8_t> &r_template) {
 	String str_template = String::utf8(reinterpret_cast<const char *>(r_template.ptr()), r_template.size());
 	String out;
-	Vector<String> lines = str_template.split("\n");
+	Vector<String> lines = str_template.splitc('\n');
 	for (int i = 0; i < lines.size(); i++) {
 		String current_line = lines[i];
 		for (const KeyValue<String, String> &E : p_replaces) {

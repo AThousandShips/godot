@@ -451,7 +451,7 @@ bool EditorFileSystemImportFormatSupportQueryBlend::_autodetect_path() {
 		String output;
 		Error err = OS::get_singleton()->execute("mdfind", mdfind_args, &output);
 		if (err == OK) {
-			for (const String &find_path : output.split("\n")) {
+			for (const String &find_path : output.splitc('\n')) {
 				find_paths.push_back(find_path.path_join("Contents/MacOS/Blender"));
 			}
 		}

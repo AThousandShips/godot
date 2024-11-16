@@ -77,8 +77,8 @@ int godotsharp::SemVer::cmp(const godotsharp::SemVer &p_a, const godotsharp::Sem
 	if (p_a.prerelease != p_b.prerelease) {
 		// This could be optimized, but I'm too lazy
 
-		Vector<String> a_field_set = p_a.prerelease.split(".");
-		Vector<String> b_field_set = p_b.prerelease.split(".");
+		Vector<String> a_field_set = p_a.prerelease.splitc('.');
+		Vector<String> b_field_set = p_b.prerelease.splitc('.');
 
 		int a_field_count = a_field_set.size();
 		int b_field_count = b_field_set.size();

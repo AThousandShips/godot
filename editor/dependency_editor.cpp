@@ -95,11 +95,11 @@ void DependencyEditor::_fix_and_find(EditorFileSystemDirectory *efsd, HashMap<St
 			String current = path.replace_first("res://", "");
 			String lost = E.key.replace_first("res://", "");
 
-			Vector<String> existingv = existing.split("/");
+			Vector<String> existingv = existing.splitc('/');
 			existingv.reverse();
-			Vector<String> currentv = current.split("/");
+			Vector<String> currentv = current.splitc('/');
 			currentv.reverse();
-			Vector<String> lostv = lost.split("/");
+			Vector<String> lostv = lost.splitc('/');
 			lostv.reverse();
 
 			int existing_score = 0;

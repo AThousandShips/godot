@@ -2558,7 +2558,7 @@ static void _add_text_to_rt(const String &p_bbcode, RichTextLabel *p_rt, const C
 
 				const String setting_name = link_target.trim_prefix("ProjectSettings.").trim_prefix("EditorSettings.");
 				PackedStringArray setting_sections;
-				for (const String &section : setting_name.split("/", false)) {
+				for (const String &section : setting_name.splitc('/', false)) {
 					setting_sections.append(EditorPropertyNameProcessor::get_singleton()->process_name(section, EditorPropertyNameProcessor::get_settings_style()));
 				}
 
@@ -2660,7 +2660,7 @@ static void _add_text_to_rt(const String &p_bbcode, RichTextLabel *p_rt, const C
 			if (using_tab_indent) {
 				// Replace the code block's space indentation with tabs.
 				StringBuilder builder;
-				PackedStringArray text_lines = codeblock_copy_text.split("\n");
+				PackedStringArray text_lines = codeblock_copy_text.splitc('\n');
 				for (const String &line : text_lines) {
 					const String stripped_line = line.dedent();
 					const int space_count = line.length() - stripped_line.length();
@@ -2678,7 +2678,7 @@ static void _add_text_to_rt(const String &p_bbcode, RichTextLabel *p_rt, const C
 			}
 
 			String lang;
-			const PackedStringArray args = tag.trim_prefix("codeblock").split(" ", false);
+			const PackedStringArray args = tag.trim_prefix("codeblock").splitc(' ', false);
 			for (int i = args.size() - 1; i >= 0; i--) {
 				if (args[i].begins_with("lang=")) {
 					lang = args[i].trim_prefix("lang=");
@@ -2808,7 +2808,7 @@ static void _add_text_to_rt(const String &p_bbcode, RichTextLabel *p_rt, const C
 			int height = 0;
 			bool size_in_percent = false;
 			if (tag.length() > 4) {
-				Vector<String> subtags = tag.substr(4).split(" ");
+				Vector<String> subtags = tag.substr(4).splitc(' ');
 				HashMap<String, String> bbcode_options;
 				for (int i = 0; i < subtags.size(); i++) {
 					const String &expr = subtags[i];
@@ -3686,7 +3686,7 @@ void EditorHelpBit::_notification(int p_what) {
 }
 
 void EditorHelpBit::parse_symbol(const String &p_symbol) {
-	const PackedStringArray slices = p_symbol.split("|", true, 2);
+	const PackedStringArray slices = p_symbol.splitc('|', true, 2);
 	ERR_FAIL_COND_MSG(slices.size() < 3, "Invalid doc id. The expected format is 'item_type|class_name|item_name'.");
 
 	const String &item_type = slices[0];

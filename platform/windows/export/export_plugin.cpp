@@ -346,7 +346,7 @@ String EditorExportPlatformWindows::get_export_option_warning(const EditorExport
 		} else if (p_name == "application/file_version") {
 			String file_version = p_preset->get("application/file_version");
 			if (!file_version.is_empty()) {
-				PackedStringArray version_array = file_version.split(".", false);
+				PackedStringArray version_array = file_version.splitc('.', false);
 				if (version_array.size() != 4 || !version_array[0].is_valid_int() ||
 						!version_array[1].is_valid_int() || !version_array[2].is_valid_int() ||
 						!version_array[3].is_valid_int() || file_version.contains("-")) {
@@ -356,7 +356,7 @@ String EditorExportPlatformWindows::get_export_option_warning(const EditorExport
 		} else if (p_name == "application/product_version") {
 			String product_version = p_preset->get("application/product_version");
 			if (!product_version.is_empty()) {
-				PackedStringArray version_array = product_version.split(".", false);
+				PackedStringArray version_array = product_version.splitc('.', false);
 				if (version_array.size() != 4 || !version_array[0].is_valid_int() ||
 						!version_array[1].is_valid_int() || !version_array[2].is_valid_int() ||
 						!version_array[3].is_valid_int() || product_version.contains("-")) {
@@ -1019,8 +1019,8 @@ Error EditorExportPlatformWindows::run(const Ref<EditorExportPreset> &p_preset, 
 	if (port.is_empty()) {
 		port = "22";
 	}
-	Vector<String> extra_args_ssh = p_preset->get("ssh_remote_deploy/extra_args_ssh").operator String().split(" ", false);
-	Vector<String> extra_args_scp = p_preset->get("ssh_remote_deploy/extra_args_scp").operator String().split(" ", false);
+	Vector<String> extra_args_ssh = p_preset->get("ssh_remote_deploy/extra_args_ssh").operator String().splitc(' ', false);
+	Vector<String> extra_args_scp = p_preset->get("ssh_remote_deploy/extra_args_scp").operator String().splitc(' ', false);
 
 	const String basepath = dest.path_join("tmp_windows_export");
 

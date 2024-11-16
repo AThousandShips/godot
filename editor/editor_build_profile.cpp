@@ -485,7 +485,7 @@ void EditorBuildProfileManager::_detect_classes() {
 				DetectedFile df;
 				df.timestamp = fields[1].to_int();
 				df.md5 = fields[2];
-				df.classes = fields[3].split(",");
+				df.classes = fields[3].splitc(',');
 				previous_file_cache.insert(path, df);
 			}
 		}
@@ -518,7 +518,7 @@ void EditorBuildProfileManager::_detect_classes() {
 
 	// Add forced ones.
 
-	Vector<String> force_detect = edited->get_force_detect_classes().split(",");
+	Vector<String> force_detect = edited->get_force_detect_classes().splitc(',');
 	for (int i = 0; i < force_detect.size(); i++) {
 		String c = force_detect[i].strip_edges();
 		if (c.is_empty()) {

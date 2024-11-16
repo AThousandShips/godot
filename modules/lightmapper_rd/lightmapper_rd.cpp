@@ -850,7 +850,7 @@ Ref<Image> LightmapperRD::_read_pfm(const String &p_name) {
 	ERR_FAIL_COND_V_MSG(err, Ref<Image>(), vformat("Can't load PFM at path: '%s'.", p_name));
 	ERR_FAIL_COND_V(file->get_line() != "PF", Ref<Image>());
 
-	Vector<String> new_size = file->get_line().split(" ");
+	Vector<String> new_size = file->get_line().splitc(' ');
 	ERR_FAIL_COND_V(new_size.size() != 2, Ref<Image>());
 	int new_width = new_size[0].to_int();
 	int new_height = new_size[1].to_int();

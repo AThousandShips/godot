@@ -62,7 +62,7 @@ bool EditorPropertyNameProcessor::is_localization_available() {
 	if (!EditorSettings::get_singleton()) {
 		return false;
 	}
-	const Vector<String> forbidden = String("en").split(",");
+	const Vector<String> forbidden = String("en").splitc(',');
 	return !forbidden.has(EDITOR_GET("interface/editor/editor_language"));
 }
 
@@ -72,7 +72,7 @@ String EditorPropertyNameProcessor::_capitalize_name(const String &p_name) const
 		return cached->value;
 	}
 
-	Vector<String> parts = p_name.split("_", false);
+	Vector<String> parts = p_name.splitc('_', false);
 	for (int i = 0; i < parts.size(); i++) {
 		// Articles/conjunctions/prepositions which should only be capitalized when not at beginning and end.
 		if (i > 0 && i + 1 < parts.size() && stop_words.has(parts[i])) {

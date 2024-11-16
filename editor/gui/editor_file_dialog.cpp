@@ -886,7 +886,7 @@ void EditorFileDialog::update_file_name() {
 		String filter_str = filters[idx];
 		String file_str = file->get_text();
 		String base_name = file_str.get_basename();
-		Vector<String> filter_substr = filter_str.split(";");
+		Vector<String> filter_substr = filter_str.splitc(';');
 		if (filter_substr.size() >= 2) {
 			file_str = base_name + "." + filter_substr[0].strip_edges().get_extension().to_lower();
 		} else {

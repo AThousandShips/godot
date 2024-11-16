@@ -1322,7 +1322,7 @@ void AnimationPlayerEditor::_animation_duplicate() {
 
 	int count = 2;
 	String new_name = current;
-	PackedStringArray split = new_name.split("_");
+	PackedStringArray split = new_name.splitc('_');
 	int last_index = split.size() - 1;
 	if (last_index > 0 && split[last_index].is_valid_int() && split[last_index].to_int() >= 0) {
 		count = split[last_index].to_int();

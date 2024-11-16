@@ -88,7 +88,7 @@ void CodeEdit::_notification(int p_what) {
 				if (draw_code_hint) {
 					const int font_height = theme_cache.font->get_height(theme_cache.font_size);
 
-					Vector<String> code_hint_lines = code_hint.split("\n");
+					Vector<String> code_hint_lines = code_hint.splitc('\n');
 					int line_count = code_hint_lines.size();
 
 					int max_width = 0;

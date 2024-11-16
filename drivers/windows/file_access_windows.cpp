@@ -155,7 +155,7 @@ Error FileAccessWindows::open_internal(const String &p_path, int p_mode_flags) {
 		working_path = fix_path(working_path);
 
 		WIN32_FIND_DATAW d;
-		Vector<String> parts = base_path.simplify_path().split("/");
+		Vector<String> parts = base_path.simplify_path().splitc('/');
 
 		bool mismatch = false;
 

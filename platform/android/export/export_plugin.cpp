@@ -318,7 +318,7 @@ void EditorExportPlatformAndroid::_check_for_changes_poll_thread(void *ud) {
 			int ec;
 			OS::get_singleton()->execute(adb, args, &devices, &ec);
 
-			Vector<String> ds = devices.split("\n");
+			Vector<String> ds = devices.splitc('\n');
 			Vector<String> ldevices;
 			for (int i = 1; i < ds.size(); i++) {
 				String d = ds[i];
@@ -371,7 +371,7 @@ void EditorExportPlatformAndroid::_check_for_changes_poll_thread(void *ud) {
 
 						OS::get_singleton()->execute(adb, args, &dp, &ec2);
 
-						Vector<String> props = dp.split("\n");
+						Vector<String> props = dp.splitc('\n');
 						String vendor;
 						String device;
 						d.description = "Device ID: " + d.id + "\n";
@@ -2284,7 +2284,7 @@ String EditorExportPlatformAndroid::get_apksigner_path(int p_target_sdk, bool p_
 	int min_version = p_target_sdk <= 27 ? p_target_sdk : 28;
 	for (String sub_dir : dir_list) {
 		if (!sub_dir.begins_with(".")) {
-			Vector<String> ver_numbers = sub_dir.split(".");
+			Vector<String> ver_numbers = sub_dir.splitc('.');
 			// Dir not a version number, will use as last resort
 			if (!ver_numbers.size() || !ver_numbers[0].is_valid_int()) {
 				other_versions.push_back(sub_dir);
@@ -2702,7 +2702,7 @@ Error EditorExportPlatformAndroid::save_apk_expansion_file(const Ref<EditorExpor
 
 void EditorExportPlatformAndroid::get_command_line_flags(const Ref<EditorExportPreset> &p_preset, const String &p_path, BitField<EditorExportPlatform::DebugFlags> p_flags, Vector<uint8_t> &r_command_line_flags) {
 	String cmdline = p_preset->get("command_line/extra_args");
-	Vector<String> command_line_strings = cmdline.strip_edges().split(" ");
+	Vector<String> command_line_strings = cmdline.strip_edges().splitc(' ');
 	for (int i = 0; i < command_line_strings.size(); i++) {
 		if (command_line_strings[i].strip_edges().length() == 0) {
 			command_line_strings.remove_at(i);

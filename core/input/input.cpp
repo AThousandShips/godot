@@ -1578,7 +1578,7 @@ void Input::parse_mapping(const String &p_mapping) {
 	_THREAD_SAFE_METHOD_;
 	JoyDeviceMapping mapping;
 
-	Vector<String> entry = p_mapping.split(",");
+	Vector<String> entry = p_mapping.splitc(',');
 	if (entry.size() < 2) {
 		return;
 	}
@@ -1681,7 +1681,7 @@ void Input::parse_mapping(const String &p_mapping) {
 void Input::add_joy_mapping(const String &p_mapping, bool p_update_existing) {
 	parse_mapping(p_mapping);
 	if (p_update_existing) {
-		Vector<String> entry = p_mapping.split(",");
+		Vector<String> entry = p_mapping.splitc(',');
 		const String &uid = entry[0];
 		for (KeyValue<int, Joypad> &E : joy_names) {
 			Joypad &joy = E.value;
@@ -1784,7 +1784,7 @@ Input::Input() {
 	// If defined, parse SDL_GAMECONTROLLERCONFIG for possible new mappings/overrides.
 	String env_mapping = OS::get_singleton()->get_environment("SDL_GAMECONTROLLERCONFIG");
 	if (!env_mapping.is_empty()) {
-		Vector<String> entries = env_mapping.split("\n");
+		Vector<String> entries = env_mapping.splitc('\n');
 		for (int i = 0; i < entries.size(); i++) {
 			if (entries[i].is_empty()) {
 				continue;
@@ -1795,9 +1795,9 @@ Input::Input() {
 
 	String env_ignore_devices = OS::get_singleton()->get_environment("SDL_GAMECONTROLLER_IGNORE_DEVICES");
 	if (!env_ignore_devices.is_empty()) {
-		Vector<String> entries = env_ignore_devices.split(",");
+		Vector<String> entries = env_ignore_devices.splitc(',');
 		for (int i = 0; i < entries.size(); i++) {
-			Vector<String> vid_pid = entries[i].split("/");
+			Vector<String> vid_pid = entries[i].splitc('/');
 
 			if (vid_pid.size() < 2) {
 				continue;

@@ -286,7 +286,7 @@ Error ResourceImporterImageFont::import(ResourceUID::ID p_source_id, const Strin
 		}
 	}
 	for (const String &kp : kern) {
-		const Vector<String> &kp_tokens = kp.split(" ");
+		const Vector<String> &kp_tokens = kp.splitc(' ');
 		if (kp_tokens.size() != 3) {
 			WARN_PRINT(vformat("Invalid kerning pairs string: \"%s\"", kp));
 			continue;

@@ -535,7 +535,7 @@ void OpenXRActionMap::create_editor_action_sets() {
 }
 
 Ref<OpenXRAction> OpenXRActionMap::get_action(const String p_path) const {
-	PackedStringArray paths = p_path.split("/", false);
+	PackedStringArray paths = p_path.splitc('/', false);
 	ERR_FAIL_COND_V(paths.size() != 2, Ref<OpenXRAction>());
 
 	Ref<OpenXRActionSet> action_set = find_action_set(paths[0]);

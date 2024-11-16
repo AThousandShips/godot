@@ -195,7 +195,7 @@ String pascal_to_pascal_case(const String &p_identifier) {
 
 String snake_to_pascal_case(const String &p_identifier, bool p_input_is_upper) {
 	String ret;
-	Vector<String> parts = p_identifier.split("_", true);
+	Vector<String> parts = p_identifier.splitc('_', true);
 
 	for (int i = 0; i < parts.size(); i++) {
 		String part = parts[i];
@@ -241,7 +241,7 @@ String snake_to_pascal_case(const String &p_identifier, bool p_input_is_upper) {
 
 String snake_to_camel_case(const String &p_identifier, bool p_input_is_upper) {
 	String ret;
-	Vector<String> parts = p_identifier.split("_", true);
+	Vector<String> parts = p_identifier.splitc('_', true);
 
 	for (int i = 0; i < parts.size(); i++) {
 		String part = parts[i];

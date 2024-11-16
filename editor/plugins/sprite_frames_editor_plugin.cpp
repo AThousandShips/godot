@@ -1191,7 +1191,7 @@ void SpriteFramesEditor::_animation_duplicate() {
 
 	int counter = 1;
 	String new_name = edited_anim;
-	PackedStringArray name_component = new_name.rsplit("_", true, 1);
+	PackedStringArray name_component = new_name.rsplitc('_', true, 1);
 	String base_name = name_component[0];
 	if (name_component.size() > 1 && name_component[1].is_valid_int() && name_component[1].to_int() >= 0) {
 		counter = name_component[1].to_int();

@@ -238,7 +238,7 @@ void InspectorDock::_load_resource(const String &p_type) {
 		load_resource_dialog->add_filter("*." + extension, extension.to_upper());
 	}
 
-	const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).split(",", false);
+	const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).splitc(',', false);
 	for (int i = 0; i < textfile_ext.size(); i++) {
 		load_resource_dialog->add_filter("*." + textfile_ext[i], textfile_ext[i].to_upper());
 	}
@@ -251,7 +251,7 @@ void InspectorDock::_resource_file_selected(const String &p_file) {
 	if (ResourceLoader::exists(p_file, "")) {
 		res = ResourceLoader::load(p_file);
 	} else {
-		const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).split(",", false);
+		const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).splitc(',', false);
 		if (textfile_ext.has(p_file.get_extension())) {
 			res = ScriptEditor::get_singleton()->open_file(p_file);
 		}

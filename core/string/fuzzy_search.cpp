@@ -266,7 +266,7 @@ void FuzzySearch::sort_and_filter(Vector<FuzzySearchResult> &p_results) const {
 
 void FuzzySearch::set_query(const String &p_query) {
 	tokens.clear();
-	for (const String &string : p_query.split(" ", false)) {
+	for (const String &string : p_query.splitc(' ', false)) {
 		tokens.append({ static_cast<int>(tokens.size()), string });
 	}
 

@@ -4908,7 +4908,7 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 		} else if (tag.begins_with("opentype_features=") || tag.begins_with("otf=")) {
 			int value_pos = tag.find_char('=');
 			String fnt_ftr = tag.substr(value_pos + 1);
-			Vector<String> subtag = fnt_ftr.split(",");
+			Vector<String> subtag = fnt_ftr.splitc(',');
 			_normalize_subtags(subtag);
 
 			if (subtag.size() > 0) {
@@ -4924,7 +4924,7 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 				}
 				Dictionary features;
 				for (int i = 0; i < subtag.size(); i++) {
-					Vector<String> subtag_a = subtag[i].split("=");
+					Vector<String> subtag_a = subtag[i].splitc('=');
 					_normalize_subtags(subtag_a);
 
 					if (subtag_a.size() == 2) {
@@ -5058,9 +5058,9 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 			if (opentype_variation_option) {
 				Dictionary variations;
 				if (!opentype_variation_option->value.is_empty()) {
-					Vector<String> variation_tags = opentype_variation_option->value.split(",");
+					Vector<String> variation_tags = opentype_variation_option->value.splitc(',');
 					for (int j = 0; j < variation_tags.size(); j++) {
-						Vector<String> subtag_b = variation_tags[j].split("=");
+						Vector<String> subtag_b = variation_tags[j].splitc('=');
 						_normalize_subtags(subtag_b);
 
 						if (subtag_b.size() == 2) {
@@ -5077,9 +5077,9 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 			if (opentype_features_option) {
 				Dictionary features;
 				if (!opentype_features_option->value.is_empty()) {
-					Vector<String> feature_tags = opentype_features_option->value.split(",");
+					Vector<String> feature_tags = opentype_features_option->value.splitc(',');
 					for (int j = 0; j < feature_tags.size(); j++) {
-						Vector<String> subtag_b = feature_tags[j].split("=");
+						Vector<String> subtag_b = feature_tags[j].splitc('=');
 						_normalize_subtags(subtag_b);
 
 						if (subtag_b.size() == 2) {
@@ -6609,13 +6609,13 @@ Dictionary RichTextLabel::parse_expressions_for_values(Vector<String> p_expressi
 	Dictionary d;
 	for (int i = 0; i < p_expressions.size(); i++) {
 		Array a;
-		Vector<String> parts = p_expressions[i].split("=", true);
+		Vector<String> parts = p_expressions[i].splitc('=', true);
 		const String &key = parts[0];
 		if (parts.size() != 2) {
 			return d;
 		}
 
-		Vector<String> values = parts[1].split(",", false);
+		Vector<String> values = parts[1].splitc(',', false);
 
 #ifdef MODULE_REGEX_ENABLED
 		RegEx color = RegEx();

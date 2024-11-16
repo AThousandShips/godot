@@ -43,7 +43,7 @@
 //    /*.binary_type =*/"local",
 //    /*.binary =*/"res://android/build/libs/plugins/GodotPayment.release.aar",
 //    /*.local_dependencies =*/{},
-//     /*.remote_dependencies =*/String("com.android.billingclient:billing:2.2.1").split("|"),
+//     /*.remote_dependencies =*/String("com.android.billingclient:billing:2.2.1").splitc('|'),
 //     /*.custom_maven_repos =*/{}
 // };
 

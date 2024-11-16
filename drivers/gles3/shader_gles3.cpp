@@ -45,7 +45,7 @@ static String _mkid(const String &p_id) {
 }
 
 void ShaderGLES3::_add_stage(const char *p_code, StageType p_stage_type) {
-	Vector<String> lines = String(p_code).split("\n");
+	Vector<String> lines = String(p_code).splitc('\n');
 
 	String text;
 
@@ -256,7 +256,7 @@ void ShaderGLES3::_build_variant_code(StringBuilder &builder, uint32_t p_variant
 
 static void _display_error_with_code(const String &p_error, const String &p_code) {
 	int line = 1;
-	Vector<String> lines = p_code.split("\n");
+	Vector<String> lines = p_code.splitc('\n');
 
 	for (int j = 0; j < lines.size(); j++) {
 		print_line(itos(line) + ": " + lines[j]);

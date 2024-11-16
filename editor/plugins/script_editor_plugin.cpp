@@ -2993,7 +2993,7 @@ void ScriptEditor::_editor_settings_changed() {
 
 void ScriptEditor::_apply_editor_settings() {
 	textfile_extensions.clear();
-	const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).split(",", false);
+	const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).splitc(',', false);
 	for (const String &E : textfile_ext) {
 		textfile_extensions.insert(E);
 	}

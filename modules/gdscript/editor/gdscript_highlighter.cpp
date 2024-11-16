@@ -920,15 +920,15 @@ void GDScriptSyntaxHighlighter::_update_cache() {
 	comment_marker_colors[COMMENT_MARKER_NOTICE] = EDITOR_GET("text_editor/theme/highlighting/comment_markers/notice_color");
 
 	comment_markers.clear();
-	Vector<String> critical_list = EDITOR_GET("text_editor/theme/highlighting/comment_markers/critical_list").operator String().split(",", false);
+	Vector<String> critical_list = EDITOR_GET("text_editor/theme/highlighting/comment_markers/critical_list").operator String().splitc(',', false);
 	for (int i = 0; i < critical_list.size(); i++) {
 		comment_markers[critical_list[i]] = COMMENT_MARKER_CRITICAL;
 	}
-	Vector<String> warning_list = EDITOR_GET("text_editor/theme/highlighting/comment_markers/warning_list").operator String().split(",", false);
+	Vector<String> warning_list = EDITOR_GET("text_editor/theme/highlighting/comment_markers/warning_list").operator String().splitc(',', false);
 	for (int i = 0; i < warning_list.size(); i++) {
 		comment_markers[warning_list[i]] = COMMENT_MARKER_WARNING;
 	}
-	Vector<String> notice_list = EDITOR_GET("text_editor/theme/highlighting/comment_markers/notice_list").operator String().split(",", false);
+	Vector<String> notice_list = EDITOR_GET("text_editor/theme/highlighting/comment_markers/notice_list").operator String().splitc(',', false);
 	for (int i = 0; i < notice_list.size(); i++) {
 		comment_markers[notice_list[i]] = COMMENT_MARKER_NOTICE;
 	}

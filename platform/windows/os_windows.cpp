@@ -739,7 +739,7 @@ bool OS_Windows::get_user_prefers_integrated_gpu() const {
 	RegCloseKey(hkey);
 	const String flags = String::utf16((const char16_t *)buffer.ptr(), size / sizeof(WCHAR));
 
-	for (const String &flag : flags.split(";", false)) {
+	for (const String &flag : flags.splitc(';', false)) {
 		if (flag == "GpuPreference=1") {
 			return true;
 		}

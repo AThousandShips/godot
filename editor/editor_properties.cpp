@@ -705,7 +705,7 @@ void EditorPropertyEnum::setup(const Vector<String> &p_options) {
 	HashMap<int64_t, Vector<String>> items;
 	int64_t current_val = 0;
 	for (const String &option : p_options) {
-		Vector<String> text_split = option.split(":");
+		Vector<String> text_split = option.splitc(':');
 		if (text_split.size() != 1) {
 			current_val = text_split[1].to_int();
 		}
@@ -774,7 +774,7 @@ void EditorPropertyFlags::setup(const Vector<String> &p_options) {
 		const int flag_index = flags.size(); // Index of the next element (added by the code below).
 
 		// Value for a flag can be explicitly overridden.
-		Vector<String> text_split = option.split(":");
+		Vector<String> text_split = option.splitc(':');
 		if (text_split.size() != 1) {
 			current_val = text_split[1].to_int();
 		} else {
@@ -3422,7 +3422,7 @@ static EditorPropertyRangeHint _parse_range_hint(PropertyHint p_hint, const Stri
 	if (is_int) {
 		hint.hide_slider = false; // Always show slider for ints, unless specified in hint range.
 	}
-	Vector<String> slices = p_hint_text.split(",");
+	Vector<String> slices = p_hint_text.splitc(',');
 	if (p_hint == PROPERTY_HINT_RANGE) {
 		ERR_FAIL_COND_V_MSG(slices.size() < 2, hint,
 				vformat("Invalid PROPERTY_HINT_RANGE with hint \"%s\": Missing required min and/or max values.", p_hint_text));
@@ -3493,13 +3493,13 @@ EditorProperty *EditorInspectorDefaultPlugin::get_editor_for_property(Object *p_
 		case Variant::INT: {
 			if (p_hint == PROPERTY_HINT_ENUM) {
 				EditorPropertyEnum *editor = memnew(EditorPropertyEnum);
-				Vector<String> options = p_hint_text.split(",");
+				Vector<String> options = p_hint_text.splitc(',');
 				editor->setup(options);
 				return editor;
 
 			} else if (p_hint == PROPERTY_HINT_FLAGS) {
 				EditorPropertyFlags *editor = memnew(EditorPropertyFlags);
-				Vector<String> options = p_hint_text.split(",");
+				Vector<String> options = p_hint_text.splitc(',');
 				editor->setup(options);
 				return editor;
 
@@ -3558,7 +3558,7 @@ EditorProperty *EditorInspectorDefaultPlugin::get_editor_for_property(Object *p_
 				EditorPropertyEasing *editor = memnew(EditorPropertyEasing);
 				bool positive_only = false;
 				bool flip = false;
-				const Vector<String> hints = p_hint_text.split(",");
+				const Vector<String> hints = p_hint_text.splitc(',');
 				for (int i = 0; i < hints.size(); i++) {
 					const String hint = hints[i].strip_edges();
 					if (hint == "attenuation") {
@@ -3584,7 +3584,7 @@ EditorProperty *EditorInspectorDefaultPlugin::get_editor_for_property(Object *p_
 		case Variant::STRING: {
 			if (p_hint == PROPERTY_HINT_ENUM || p_hint == PROPERTY_HINT_ENUM_SUGGESTION) {
 				EditorPropertyTextEnum *editor = memnew(EditorPropertyTextEnum);
-				Vector<String> options = p_hint_text.split(",", false);
+				Vector<String> options = p_hint_text.splitc(',', false);
 				editor->setup(options, false, (p_hint == PROPERTY_HINT_ENUM_SUGGESTION));
 				return editor;
 			} else if (p_hint == PROPERTY_HINT_MULTILINE_TEXT) {
@@ -3602,7 +3602,7 @@ EditorProperty *EditorInspectorDefaultPlugin::get_editor_for_property(Object *p_
 				editor->setup(p_hint_text);
 				return editor;
 			} else if (p_hint == PROPERTY_HINT_DIR || p_hint == PROPERTY_HINT_FILE || p_hint == PROPERTY_HINT_SAVE_FILE || p_hint == PROPERTY_HINT_GLOBAL_SAVE_FILE || p_hint == PROPERTY_HINT_GLOBAL_DIR || p_hint == PROPERTY_HINT_GLOBAL_FILE) {
-				Vector<String> extensions = p_hint_text.split(",");
+				Vector<String> extensions = p_hint_text.splitc(',');
 				bool global = p_hint == PROPERTY_HINT_GLOBAL_DIR || p_hint == PROPERTY_HINT_GLOBAL_FILE || p_hint == PROPERTY_HINT_GLOBAL_SAVE_FILE;
 				bool folder = p_hint == PROPERTY_HINT_DIR || p_hint == PROPERTY_HINT_GLOBAL_DIR;
 				bool save = p_hint == PROPERTY_HINT_SAVE_FILE || p_hint == PROPERTY_HINT_GLOBAL_SAVE_FILE;
@@ -3736,7 +3736,7 @@ EditorProperty *EditorInspectorDefaultPlugin::get_editor_for_property(Object *p_
 		case Variant::STRING_NAME: {
 			if (p_hint == PROPERTY_HINT_ENUM || p_hint == PROPERTY_HINT_ENUM_SUGGESTION) {
 				EditorPropertyTextEnum *editor = memnew(EditorPropertyTextEnum);
-				Vector<String> options = p_hint_text.split(",", false);
+				Vector<String> options = p_hint_text.splitc(',', false);
 				editor->setup(options, true, (p_hint == PROPERTY_HINT_ENUM_SUGGESTION));
 				return editor;
 			} else {
@@ -3754,7 +3754,7 @@ EditorProperty *EditorInspectorDefaultPlugin::get_editor_for_property(Object *p_
 		case Variant::NODE_PATH: {
 			EditorPropertyNodePath *editor = memnew(EditorPropertyNodePath);
 			if (p_hint == PROPERTY_HINT_NODE_PATH_VALID_TYPES && !p_hint_text.is_empty()) {
-				Vector<String> types = p_hint_text.split(",", false);
+				Vector<String> types = p_hint_text.splitc(',', false);
 				Vector<StringName> sn = Variant(types); //convert via variant
 				editor->setup(sn, (p_usage & PROPERTY_USAGE_NODE_PATH_FROM_SCENE_ROOT));
 			}
@@ -3768,7 +3768,7 @@ EditorProperty *EditorInspectorDefaultPlugin::get_editor_for_property(Object *p_
 		case Variant::OBJECT: {
 			if (p_hint == PROPERTY_HINT_NODE_TYPE) {
 				EditorPropertyNodePath *editor = memnew(EditorPropertyNodePath);
-				Vector<String> types = p_hint_text.split(",", false);
+				Vector<String> types = p_hint_text.splitc(',', false);
 				Vector<StringName> sn = Variant(types); //convert via variant
 				editor->setup(sn, false, true);
 				return editor;

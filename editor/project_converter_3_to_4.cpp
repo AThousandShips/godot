@@ -734,7 +734,7 @@ Vector<String> ProjectConverter3To4::check_for_files() {
 }
 
 Vector<SourceLine> ProjectConverter3To4::split_lines(const String &text) {
-	Vector<String> lines = text.split("\n");
+	Vector<String> lines = text.splitc('\n');
 	Vector<SourceLine> source_lines;
 	for (String &line : lines) {
 		SourceLine source_line;

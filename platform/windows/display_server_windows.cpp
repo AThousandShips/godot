@@ -481,7 +481,7 @@ void DisplayServerWindows::_thread_fd_monitor(void *p_ud) {
 	Vector<Char16String> filter_names;
 	Vector<Char16String> filter_exts;
 	for (const String &E : fd->filters) {
-		Vector<String> tokens = E.split(";");
+		Vector<String> tokens = E.splitc(';');
 		if (tokens.size() >= 1) {
 			String flt = tokens[0].strip_edges();
 			int filter_slice_count = flt.get_slice_count(",");

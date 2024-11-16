@@ -42,7 +42,7 @@ static bool _property_path_matches(const String &p_property_path, const String &
 		return true;
 	}
 
-	const Vector<String> sections = p_property_path.split("/");
+	const Vector<String> sections = p_property_path.splitc('/');
 	for (int i = 0; i < sections.size(); i++) {
 		if (p_filter.is_subsequence_ofn(EditorPropertyNameProcessor::get_singleton()->process_name(sections[i], p_style, p_property_path))) {
 			return true;
@@ -260,7 +260,7 @@ void SectionedInspector::update_category_list() {
 			pi.name = "global/" + pi.name;
 		}
 
-		Vector<String> sectionarr = pi.name.split("/");
+		Vector<String> sectionarr = pi.name.splitc('/');
 		String metasection;
 
 		int sc = MIN(2, sectionarr.size() - 1);

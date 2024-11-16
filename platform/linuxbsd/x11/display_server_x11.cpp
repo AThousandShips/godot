@@ -3261,7 +3261,7 @@ String DisplayServerX11::keyboard_get_layout_language(int p_index) const {
 
 		Atom names = kbd->names->symbols;
 		if (names != None) {
-			Vector<String> info = get_atom_name(x11_display, names).split("+");
+			Vector<String> info = get_atom_name(x11_display, names).splitc('+');
 			if (p_index >= 0 && p_index < _group_count) {
 				if (p_index + 1 < info.size()) {
 					ret = info[p_index + 1]; // Skip "pc" at the start and "inet"/"group" at the end of symbols.
@@ -6219,7 +6219,7 @@ DisplayServerX11::DisplayServerX11(const String &p_rendering_driver, WindowMode 
 			// runtime and includes system `/lib` and `/lib64`... so ignore Steam.
 			if (use_prime == -1 && getenv("LD_LIBRARY_PATH") && !getenv("STEAM_RUNTIME_LIBRARY_PATH")) {
 				String ld_library_path(getenv("LD_LIBRARY_PATH"));
-				Vector<String> libraries = ld_library_path.split(":");
+				Vector<String> libraries = ld_library_path.splitc(':');
 
 				for (int i = 0; i < libraries.size(); ++i) {
 					if (FileAccess::exists(libraries[i] + "/libGL.so.1") ||

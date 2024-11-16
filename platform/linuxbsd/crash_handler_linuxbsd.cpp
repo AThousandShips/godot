@@ -108,7 +108,7 @@ static void handle_crash(int sig) {
 		Error err = OS::get_singleton()->execute(String("addr2line"), args, &output, &ret);
 		Vector<String> addr2line_results;
 		if (err == OK) {
-			addr2line_results = output.substr(0, output.length() - 1).split("\n", false);
+			addr2line_results = output.substr(0, output.length() - 1).splitc('\n', false);
 		}
 
 		for (size_t i = 1; i < size; i++) {

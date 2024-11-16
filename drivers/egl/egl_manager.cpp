@@ -130,7 +130,7 @@ int EGLManager::_get_gldisplay_id(void *p_display) {
 #ifdef WINDOWS_ENABLED
 	String client_extensions_string = eglQueryString(new_gldisplay.egl_display, EGL_EXTENSIONS);
 	if (eglGetError() == EGL_SUCCESS) {
-		Vector<String> egl_extensions = client_extensions_string.split(" ");
+		Vector<String> egl_extensions = client_extensions_string.splitc(' ');
 
 		if (egl_extensions.has("EGL_ANGLE_surface_orientation")) {
 			new_gldisplay.has_EGL_ANGLE_surface_orientation = true;
@@ -516,7 +516,7 @@ Error EGLManager::initialize(void *p_native_display) {
 	// If the above method fails, we don't support client extensions, so there's nothing to check.
 	if (eglGetError() == EGL_SUCCESS) {
 		const char *platform = _get_platform_extension_name();
-		if (!client_extensions_string.split(" ").has(platform)) {
+		if (!client_extensions_string.splitc(' ').has(platform)) {
 			ERR_FAIL_V_MSG(ERR_UNAVAILABLE, vformat("EGL platform extension \"%s\" not found.", platform));
 		}
 	}

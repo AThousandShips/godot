@@ -145,7 +145,7 @@ void ProjectListItemControl::set_unsupported_features(PackedStringArray p_featur
 		String tooltip_text = "";
 		for (int i = 0; i < p_features.size(); i++) {
 			if (ProjectList::project_feature_looks_like_version(p_features[i])) {
-				PackedStringArray project_version_split = p_features[i].split(".");
+				PackedStringArray project_version_split = p_features[i].splitc('.');
 				int project_version_major = 0, project_version_minor = 0;
 				if (project_version_split.size() >= 2) {
 					project_version_major = project_version_split[0].to_int();
@@ -559,7 +559,7 @@ void ProjectList::sort_projects() {
 	PackedStringArray tags;
 
 	if (!_search_term.is_empty()) {
-		PackedStringArray search_parts = _search_term.split(" ");
+		PackedStringArray search_parts = _search_term.splitc(' ');
 		if (search_parts.size() > 1 || search_parts[0].begins_with("tag:")) {
 			PackedStringArray remaining;
 			for (const String &part : search_parts) {

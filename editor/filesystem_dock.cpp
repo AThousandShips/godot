@@ -1633,7 +1633,7 @@ String FileSystemDock::_get_unique_name(const FileOrFolder &p_entry, const Strin
 		new_path = p_at_path.path_join(p_entry.path.get_file());
 		new_path_base = new_path.get_basename() + " (%d)." + new_path.get_extension();
 	} else {
-		PackedStringArray path_split = p_entry.path.split("/");
+		PackedStringArray path_split = p_entry.path.splitc('/');
 		new_path = p_at_path.path_join(path_split[path_split.size() - 2]);
 		new_path_base = new_path + " (%d)";
 	}
@@ -2264,7 +2264,7 @@ void FileSystemDock::_file_option(int p_option, const Vector<String> &p_selected
 			}
 #endif
 
-			Vector<String> arguments_array = arguments.split(" ");
+			Vector<String> arguments_array = arguments.splitc(' ');
 			for (const String &argument : arguments_array) {
 				if (!append_default_args && argument == "{directory}") {
 					// Prevent appending a `{directory}` placeholder twice when using powershell or cmd.
@@ -2628,7 +2628,7 @@ void FileSystemDock::_search_changed(const String &p_text, const Control *p_from
 	}
 
 	const String searched_string = p_text.to_lower();
-	searched_tokens = searched_string.split(" ", false);
+	searched_tokens = searched_string.splitc(' ', false);
 
 	if (p_from == tree_search_box) {
 		file_list_search_box->set_text(searched_string);

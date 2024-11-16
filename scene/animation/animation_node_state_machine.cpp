@@ -375,7 +375,7 @@ void AnimationNodeStateMachinePlayback::_start_children(AnimationTree *p_tree, A
 	if (p_state_machine->get_state_machine_type() == AnimationNodeStateMachine::STATE_MACHINE_TYPE_GROUPED) {
 		return; // This function must be fired only by the top state machine, do nothing in child state machine.
 	}
-	Vector<String> temp_path = p_path.split("/");
+	Vector<String> temp_path = p_path.splitc('/');
 	if (temp_path.size() > 1) {
 		for (int i = 1; i < temp_path.size(); i++) {
 			String concatenated;
@@ -402,7 +402,7 @@ bool AnimationNodeStateMachinePlayback::_travel_children(AnimationTree *p_tree, 
 	if (p_state_machine->get_state_machine_type() == AnimationNodeStateMachine::STATE_MACHINE_TYPE_GROUPED) {
 		return false; // This function must be fired only by the top state machine, do nothing in child state machine.
 	}
-	Vector<String> temp_path = p_path.split("/");
+	Vector<String> temp_path = p_path.splitc('/');
 	Vector<ChildStateMachineInfo> children;
 
 	bool found_route = true;
@@ -740,7 +740,7 @@ AnimationNode::NodeTimeInfo AnimationNodeStateMachinePlayback::_process(const St
 	if (start_request != StringName()) {
 		path.clear();
 		String start_target = _validate_path(p_state_machine, start_request);
-		Vector<String> start_path = String(start_target).split("/");
+		Vector<String> start_path = String(start_target).splitc('/');
 		start_request = start_path[0];
 		if (start_path.size()) {
 			_start_children(tree, p_state_machine, start_target, p_test_only);
@@ -757,7 +757,7 @@ AnimationNode::NodeTimeInfo AnimationNodeStateMachinePlayback::_process(const St
 	if (travel_request != StringName()) {
 		// Fix path.
 		String travel_target = _validate_path(p_state_machine, travel_request);
-		Vector<String> travel_path = travel_target.split("/");
+		Vector<String> travel_path = travel_target.splitc('/');
 		travel_request = travel_path[0];
 		StringName temp_travel_request = travel_request; // For the case that can't travel.
 		// Process children.
@@ -1146,7 +1146,7 @@ Ref<AnimationNodeStateMachinePlayback> AnimationNodeStateMachinePlayback::_get_p
 	if (base_path.is_empty()) {
 		return Ref<AnimationNodeStateMachinePlayback>();
 	}
-	Vector<String> split = base_path.split("/");
+	Vector<String> split = base_path.splitc('/');
 	ERR_FAIL_COND_V_MSG(split.size() < 2, Ref<AnimationNodeStateMachinePlayback>(), "Path is too short.");
 	StringName self_path = split[split.size() - 2];
 	split.remove_at(split.size() - 2);
@@ -1166,7 +1166,7 @@ Ref<AnimationNodeStateMachine> AnimationNodeStateMachinePlayback::_get_parent_st
 	if (base_path.is_empty()) {
 		return Ref<AnimationNodeStateMachine>();
 	}
-	Vector<String> split = base_path.split("/");
+	Vector<String> split = base_path.splitc('/');
 	ERR_FAIL_COND_V_MSG(split.size() < 3, Ref<AnimationNodeStateMachine>(), "Path is too short.");
 	split = split.slice(1, split.size() - 2);
 	Ref<AnimationNode> root = p_tree->get_root_animation_node();
@@ -1504,7 +1504,7 @@ bool AnimationNodeStateMachine::_can_connect(const StringName &p_name) {
 	}
 
 	String node_name = p_name;
-	Vector<String> path = node_name.split("/");
+	Vector<String> path = node_name.splitc('/');
 
 	if (path.size() < 2) {
 		return false;
@@ -1586,8 +1586,8 @@ void AnimationNodeStateMachine::remove_transition_by_index(const int p_transitio
 	transitions.write[p_transition].transition->disconnect("advance_condition_changed", callable_mp(this, &AnimationNodeStateMachine::_tree_changed));
 	transitions.remove_at(p_transition);
 
-	Vector<String> path_from = String(tr.from).split("/");
-	Vector<String> path_to = String(tr.to).split("/");
+	Vector<String> path_from = String(tr.from).splitc('/');
+	Vector<String> path_to = String(tr.to).splitc('/');
 
 	List<Vector<String>> paths;
 	paths.push_back(path_from);

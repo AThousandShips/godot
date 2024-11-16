@@ -1619,7 +1619,7 @@ void VisualShaderEditor::add_custom_type(const String &p_name, const String &p_t
 	ao.is_native = !p_type.is_empty();
 
 	bool begin = false;
-	String root = p_category.split("/")[0];
+	String root = p_category.splitc('/')[0];
 
 	for (int i = 0; i < add_options.size(); i++) {
 		if (add_options[i].is_custom) {
@@ -2340,7 +2340,7 @@ void VisualShaderEditor::_update_options_menu() {
 
 	for (int i = 0; i < options.size(); i++) {
 		String path = options[i].category;
-		Vector<String> subfolders = path.split("/");
+		Vector<String> subfolders = path.splitc('/');
 		TreeItem *category = nullptr;
 
 		if (!folders.has(path)) {
@@ -8090,7 +8090,7 @@ bool EditorInspectorVisualShaderModePlugin::can_handle(Object *p_object) {
 bool EditorInspectorVisualShaderModePlugin::parse_property(Object *p_object, const Variant::Type p_type, const String &p_path, const PropertyHint p_hint, const String &p_hint_text, const BitField<PropertyUsageFlags> p_usage, const bool p_wide) {
 	if (p_path == "mode" && p_object->is_class("VisualShader") && p_type == Variant::INT) {
 		EditorPropertyVisualShaderMode *mode_editor = memnew(EditorPropertyVisualShaderMode);
-		Vector<String> options = p_hint_text.split(",");
+		Vector<String> options = p_hint_text.splitc(',');
 		mode_editor->setup(options);
 		add_property_editor(p_path, mode_editor);
 

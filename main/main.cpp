@@ -1616,7 +1616,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 
 			if (N) {
 				String bplist = N->get();
-				breakpoints = bplist.split(",");
+				breakpoints = bplist.splitc(',');
 				N = N->next();
 			} else {
 				OS::get_singleton()->print("Missing list of breakpoints, aborting.\n");
@@ -2241,7 +2241,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 			OS::get_singleton()->print("Unknown rendering method '%s', aborting.\nValid options are ",
 					rendering_method.utf8().get_data());
 
-			const Vector<String> rendering_method_hints = renderer_hints.split(",");
+			const Vector<String> rendering_method_hints = renderer_hints.splitc(',');
 			for (int i = 0; i < rendering_method_hints.size(); i++) {
 				if (i == rendering_method_hints.size() - 1) {
 					OS::get_singleton()->print(" and ");
@@ -3635,7 +3635,7 @@ int Main::start() {
 				export_pack_only = true;
 				export_patch = true;
 			} else if (E->get() == "--patches") {
-				patches = E->next()->get().split(",", false);
+				patches = E->next()->get().splitc(',', false);
 #endif
 			} else {
 				// The parameter does not match anything known, don't skip the next argument

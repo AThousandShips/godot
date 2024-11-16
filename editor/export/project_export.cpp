@@ -316,7 +316,7 @@ void ProjectExportDialog::_edit_preset(int p_index) {
 	String error;
 	if (!current->get_platform()->can_export(current, error, needs_templates)) {
 		if (!error.is_empty()) {
-			Vector<String> items = error.split("\n", false);
+			Vector<String> items = error.splitc('\n', false);
 			error = "";
 			for (int i = 0; i < items.size(); i++) {
 				if (i > 0) {
@@ -340,7 +340,7 @@ void ProjectExportDialog::_edit_preset(int p_index) {
 		export_button->set_disabled(true);
 	} else {
 		if (error != String()) {
-			Vector<String> items = error.split("\n", false);
+			Vector<String> items = error.splitc('\n', false);
 			error = "";
 			for (int i = 0; i < items.size(); i++) {
 				if (i > 0) {
@@ -430,7 +430,7 @@ void ProjectExportDialog::_update_feature_list() {
 	current->get_platform()->get_preset_features(current, &features_list);
 
 	String custom = current->get_custom_features();
-	Vector<String> custom_list = custom.split(",");
+	Vector<String> custom_list = custom.splitc(',');
 	for (int i = 0; i < custom_list.size(); i++) {
 		String f = custom_list[i].strip_edges();
 		if (!f.is_empty()) {

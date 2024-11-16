@@ -1493,7 +1493,7 @@ Error ShaderCompiler::compile(RS::ShaderMode p_mode, const String &p_code, Ident
 		HashMap<String, Vector<String>> includes;
 		includes[""] = Vector<String>();
 		Vector<String> include_stack;
-		Vector<String> shader_lines = p_code.split("\n");
+		Vector<String> shader_lines = p_code.splitc('\n');
 
 		// Reconstruct the files.
 		for (int i = 0; i < shader_lines.size(); i++) {

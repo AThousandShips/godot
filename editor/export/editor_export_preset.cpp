@@ -523,7 +523,7 @@ String EditorExportPreset::get_version(const StringName &p_preset_string, bool p
 		result = GLOBAL_GET("application/config/version");
 
 		// Split and validate version number components.
-		const PackedStringArray result_split = result.split(".", false);
+		const PackedStringArray result_split = result.splitc('.', false);
 		bool valid_version = !result_split.is_empty();
 		for (const String &E : result_split) {
 			if (!_check_digits(E)) {

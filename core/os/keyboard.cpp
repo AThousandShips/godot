@@ -405,7 +405,7 @@ String keycode_get_string(Key p_code) {
 
 Key find_keycode(const String &p_codestr) {
 	Key keycode = Key::NONE;
-	Vector<String> code_parts = p_codestr.split("+");
+	Vector<String> code_parts = p_codestr.splitc('+');
 	if (code_parts.size() < 1) {
 		return keycode;
 	}

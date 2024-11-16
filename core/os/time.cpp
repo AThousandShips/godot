@@ -138,13 +138,13 @@ static const uint8_t MONTH_DAYS_TABLE[2][12] = {
 		String date, time;                                                                    \
 		if (p_datetime.find_char('T') > 0) {                                                  \
 			has_date = has_time = true;                                                       \
-			PackedStringArray array = p_datetime.split("T");                                  \
+			PackedStringArray array = p_datetime.splitc('T');                                  \
 			ERR_FAIL_COND_V_MSG(array.size() < 2, ret, "Invalid ISO 8601 date/time string."); \
 			date = array[0];                                                                  \
 			time = array[1];                                                                  \
 		} else if (p_datetime.find_char(' ') > 0) {                                           \
 			has_date = has_time = true;                                                       \
-			PackedStringArray array = p_datetime.split(" ");                                  \
+			PackedStringArray array = p_datetime.splitc(' ');                                  \
 			ERR_FAIL_COND_V_MSG(array.size() < 2, ret, "Invalid ISO 8601 date/time string."); \
 			date = array[0];                                                                  \
 			time = array[1];                                                                  \

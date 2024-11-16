@@ -61,7 +61,7 @@ bool EditorInspectorToolButtonPlugin::parse_property(Object *p_object, const Var
 		return false;
 	}
 
-	const PackedStringArray splits = p_hint_text.rsplit(",", true, 1);
+	const PackedStringArray splits = p_hint_text.rsplitc(',', true, 1);
 	const String &hint_text = splits[0]; // Safe since `splits` cannot be empty.
 	const String &hint_icon = splits.size() > 1 ? splits[1] : "Callable";
 

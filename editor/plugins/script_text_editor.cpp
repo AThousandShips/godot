@@ -1304,7 +1304,7 @@ void ScriptTextEditor::_gutter_clicked(int p_line, int p_gutter) {
 		connection_info_dialog->popup_connections(method, nodes);
 	} else if (type == "inherits") {
 		String base_class_raw = meta["base_class"];
-		PackedStringArray base_class_split = base_class_raw.split(":", true, 1);
+		PackedStringArray base_class_split = base_class_raw.splitc(':', true, 1);
 
 		if (base_class_split[0] == "script") {
 			// Go to function declaration.
@@ -1426,7 +1426,7 @@ void ScriptTextEditor::_edit_option(int p_op) {
 			}
 
 			// Apply auto indented code.
-			Vector<String> lines = text.split("\n");
+			Vector<String> lines = text.splitc('\n');
 			for (int i = begin; i <= end; ++i) {
 				tx->set_line(i, lines[i]);
 			}
@@ -1464,7 +1464,7 @@ void ScriptTextEditor::_edit_option(int p_op) {
 			Expression expression;
 			tx->begin_complex_operation();
 			for (int caret_idx = 0; caret_idx < tx->get_caret_count(); caret_idx++) {
-				Vector<String> lines = tx->get_selected_text(caret_idx).split("\n");
+				Vector<String> lines = tx->get_selected_text(caret_idx).splitc('\n');
 				PackedStringArray results;
 
 				for (int i = 0; i < lines.size(); i++) {
@@ -1926,7 +1926,7 @@ void ScriptTextEditor::drop_data_fw(const Point2 &p_point, const Variant &p_data
 				} else {
 					path = sn->get_path_to(node);
 				}
-				for (const String &segment : path.split("/")) {
+				for (const String &segment : path.splitc('/')) {
 					if (!segment.is_valid_unicode_identifier()) {
 						path = _quote_drop_data(path);
 						break;
@@ -1969,7 +1969,7 @@ void ScriptTextEditor::drop_data_fw(const Point2 &p_point, const Variant &p_data
 					path = sn->get_path_to(node);
 				}
 
-				for (const String &segment : path.split("/")) {
+				for (const String &segment : path.splitc('/')) {
 					if (!segment.is_valid_ascii_identifier()) {
 						path = _quote_drop_data(path);
 						break;

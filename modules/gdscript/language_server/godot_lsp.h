@@ -1904,7 +1904,7 @@ struct GodotCapabilities {
 static String marked_documentation(const String &p_bbcode) {
 	String markdown = p_bbcode.strip_edges();
 
-	Vector<String> lines = markdown.split("\n");
+	Vector<String> lines = markdown.splitc('\n');
 	bool in_code_block = false;
 	int code_block_indent = -1;
 

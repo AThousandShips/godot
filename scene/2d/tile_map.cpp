@@ -674,7 +674,7 @@ bool TileMap::_set(const StringName &p_name, const Variant &p_value) {
 	int index;
 	const String sname = p_name;
 
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 	if (sname == "format") {
 		if (p_value.get_type() == Variant::INT) {
 			format = (TileMapDataFormat)(p_value.operator int64_t()); // Set format used for loading.
@@ -717,7 +717,7 @@ bool TileMap::_set(const StringName &p_name, const Variant &p_value) {
 bool TileMap::_get(const StringName &p_name, Variant &r_ret) const {
 	const String sname = p_name;
 
-	Vector<String> components = String(p_name).split("/", true, 2);
+	Vector<String> components = String(p_name).splitc('/', true, 2);
 	if (p_name == "format") {
 		r_ret = TileMapDataFormat::TILE_MAP_DATA_FORMAT_MAX - 1; // When saving, always save highest format.
 		return true;

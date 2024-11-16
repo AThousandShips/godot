@@ -226,7 +226,7 @@ uint64_t OS::get_embedded_pck_offset() const {
 // Helper function to ensure that a dir name/path will be valid on the OS
 String OS::get_safe_dir_name(const String &p_dir_name, bool p_allow_paths) const {
 	String safe_dir_name = p_dir_name;
-	Vector<String> invalid_chars = String(": * ? \" < > |").split(" ");
+	Vector<String> invalid_chars = String(": * ? \" < > |").splitc(' ');
 	if (p_allow_paths) {
 		// Dir separators are allowed, but disallow ".." to avoid going up the filesystem
 		invalid_chars.push_back("..");

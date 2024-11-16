@@ -186,7 +186,7 @@ void EditorPropertyAnchorsPreset::setup(const Vector<String> &p_options) {
 	split_after.append("PresetCenter");
 
 	for (int i = 0, j = 0; i < p_options.size(); i++, j++) {
-		Vector<String> text_split = p_options[i].split(":");
+		Vector<String> text_split = p_options[i].splitc(':');
 		int64_t current_val = text_split[1].to_int();
 
 		const String &option_name = text_split[0];
@@ -339,7 +339,7 @@ void EditorPropertySizeFlags::setup(const Vector<String> &p_options, bool p_vert
 
 	HashMap<int, String> flags;
 	for (int i = 0, j = 0; i < p_options.size(); i++, j++) {
-		Vector<String> text_split = p_options[i].split(":");
+		Vector<String> text_split = p_options[i].splitc(':');
 		int64_t current_val = text_split[1].to_int();
 		flags[current_val] = text_split[0];
 
@@ -440,7 +440,7 @@ bool EditorInspectorPluginControl::parse_property(Object *p_object, const Varian
 
 	if (p_path == "anchors_preset") {
 		EditorPropertyAnchorsPreset *prop_editor = memnew(EditorPropertyAnchorsPreset);
-		Vector<String> options = p_hint_text.split(",");
+		Vector<String> options = p_hint_text.splitc(',');
 		prop_editor->setup(options);
 		add_property_editor(p_path, prop_editor);
 
@@ -451,7 +451,7 @@ bool EditorInspectorPluginControl::parse_property(Object *p_object, const Varian
 		EditorPropertySizeFlags *prop_editor = memnew(EditorPropertySizeFlags);
 		Vector<String> options;
 		if (!p_hint_text.is_empty()) {
-			options = p_hint_text.split(",");
+			options = p_hint_text.splitc(',');
 		}
 		prop_editor->setup(options, p_path == "size_flags_vertical");
 		add_property_editor(p_path, prop_editor);

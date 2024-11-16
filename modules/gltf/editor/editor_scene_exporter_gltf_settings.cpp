@@ -90,7 +90,7 @@ void EditorSceneExporterGLTFSettings::_on_extension_property_list_changed() {
 }
 
 bool EditorSceneExporterGLTFSettings::_set_extension_setting(const String &p_name_str, const Variant &p_value) {
-	PackedStringArray split = String(p_name_str).split("/", true, 1);
+	PackedStringArray split = String(p_name_str).splitc('/', true, 1);
 	if (!_config_name_to_extension_map.has(split[0])) {
 		return false;
 	}
@@ -101,7 +101,7 @@ bool EditorSceneExporterGLTFSettings::_set_extension_setting(const String &p_nam
 }
 
 bool EditorSceneExporterGLTFSettings::_get_extension_setting(const String &p_name_str, Variant &r_ret) const {
-	PackedStringArray split = String(p_name_str).split("/", true, 1);
+	PackedStringArray split = String(p_name_str).splitc('/', true, 1);
 	if (!_config_name_to_extension_map.has(split[0])) {
 		return false;
 	}

@@ -98,7 +98,7 @@ public:
 				name(p_name), mode(p_mode), type(p_type) {}
 
 		bool from_string(const String &p_str) {
-			Vector<String> arr = p_str.split(",");
+			Vector<String> arr = p_str.splitc(',');
 			if (arr.size() != 2) {
 				return false;
 			}

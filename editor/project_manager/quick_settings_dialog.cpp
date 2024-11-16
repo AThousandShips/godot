@@ -58,16 +58,16 @@ void QuickSettingsDialog::_fetch_setting_values() {
 		for (const PropertyInfo &pi : editor_settings_properties) {
 			if (pi.name == "interface/editor/editor_language") {
 #ifndef ANDROID_ENABLED
-				editor_languages = pi.hint_string.split(",");
+				editor_languages = pi.hint_string.splitc(',');
 #endif
 			} else if (pi.name == "interface/theme/preset") {
-				editor_themes = pi.hint_string.split(",");
+				editor_themes = pi.hint_string.splitc(',');
 			} else if (pi.name == "interface/editor/display_scale") {
-				editor_scales = pi.hint_string.split(",");
+				editor_scales = pi.hint_string.splitc(',');
 			} else if (pi.name == "network/connection/network_mode") {
-				editor_network_modes = pi.hint_string.split(",");
+				editor_network_modes = pi.hint_string.splitc(',');
 			} else if (pi.name == "project_manager/directory_naming_convention") {
-				editor_directory_naming_conventions = pi.hint_string.split(",");
+				editor_directory_naming_conventions = pi.hint_string.splitc(',');
 			}
 		}
 	}

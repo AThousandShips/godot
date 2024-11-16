@@ -75,7 +75,7 @@ void EditorHTTPServer::_send_response() {
 	int len = psa.size();
 	ERR_FAIL_COND_MSG(len < 4, "Not enough response headers, got: " + itos(len) + ", expected >= 4.");
 
-	Vector<String> req = psa[0].split(" ", false);
+	Vector<String> req = psa[0].splitc(' ', false);
 	ERR_FAIL_COND_MSG(req.size() < 2, "Invalid protocol or status code.");
 
 	// Wrong protocol

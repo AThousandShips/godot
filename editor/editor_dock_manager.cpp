@@ -534,7 +534,7 @@ void EditorDockManager::load_docks_from_config(Ref<ConfigFile> p_layout, const S
 			continue;
 		}
 
-		Vector<String> names = String(p_layout->get_value(p_section, "dock_" + itos(i + 1))).split(",");
+		Vector<String> names = String(p_layout->get_value(p_section, "dock_" + itos(i + 1))).splitc(',');
 
 		for (int j = names.size() - 1; j >= 0; j--) {
 			String name = names[j];

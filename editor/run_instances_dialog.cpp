@@ -241,7 +241,7 @@ void RunInstancesDialog::apply_custom_features(int p_instance_idx) {
 		raw_text = main_features_edit->get_text();
 	}
 
-	const Vector<String> raw_list = raw_text.split(",");
+	const Vector<String> raw_list = raw_text.splitc(',');
 	Vector<String> stripped_features;
 
 	for (int i = 0; i < raw_list.size(); i++) {

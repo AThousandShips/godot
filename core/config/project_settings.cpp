@@ -279,7 +279,7 @@ bool ProjectSettings::_set(const StringName &p_name, const Variant &p_value) {
 	if (p_value.get_type() == Variant::NIL) {
 		props.erase(p_name);
 		if (p_name.operator String().begins_with("autoload/")) {
-			String node_name = p_name.operator String().split("/")[1];
+			String node_name = p_name.operator String().splitc('/')[1];
 			if (autoloads.has(node_name)) {
 				remove_autoload(node_name);
 			}
@@ -291,7 +291,7 @@ bool ProjectSettings::_set(const StringName &p_name, const Variant &p_value) {
 		}
 	} else {
 		if (p_name == CoreStringName(_custom_features)) {
-			Vector<String> custom_feature_array = String(p_value).split(",");
+			Vector<String> custom_feature_array = String(p_value).splitc(',');
 			for (int i = 0; i < custom_feature_array.size(); i++) {
 				custom_features.insert(custom_feature_array[i]);
 			}
@@ -302,7 +302,7 @@ bool ProjectSettings::_set(const StringName &p_name, const Variant &p_value) {
 		{ // Feature overrides.
 			int dot = p_name.operator String().find(".");
 			if (dot != -1) {
-				Vector<String> s = p_name.operator String().split(".");
+				Vector<String> s = p_name.operator String().splitc('.');
 
 				for (int i = 1; i < s.size(); i++) {
 					String feature = s[i].strip_edges();
@@ -323,7 +323,7 @@ bool ProjectSettings::_set(const StringName &p_name, const Variant &p_value) {
 			props[p_name] = VariantContainer(p_value, last_order++);
 		}
 		if (p_name.operator String().begins_with("autoload/")) {
-			String node_name = p_name.operator String().split("/")[1];
+			String node_name = p_name.operator String().splitc('/')[1];
 			AutoloadInfo autoload;
 			autoload.name = node_name;
 			String path = p_value;
@@ -1430,7 +1430,7 @@ ProjectSettings::ProjectSettings() {
 	if (!Engine::get_singleton()->is_editor_hint()) {
 		String editor_features = OS::get_singleton()->get_environment("GODOT_EDITOR_CUSTOM_FEATURES");
 		if (!editor_features.is_empty()) {
-			PackedStringArray feature_list = editor_features.split(",");
+			PackedStringArray feature_list = editor_features.splitc(',');
 			for (const String &s : feature_list) {
 				custom_features.insert(s);
 			}

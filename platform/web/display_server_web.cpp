@@ -412,7 +412,7 @@ void DisplayServerWeb::update_voices_callback(int p_size, const char **p_voice) 
 void DisplayServerWeb::_update_voices_callback(const Vector<String> &p_voices) {
 	get_singleton()->voices.clear();
 	for (int i = 0; i < p_voices.size(); i++) {
-		Vector<String> tokens = p_voices[i].split(";", true, 2);
+		Vector<String> tokens = p_voices[i].splitc(';', true, 2);
 		if (tokens.size() == 2) {
 			Dictionary voice_d;
 			voice_d["name"] = tokens[1];

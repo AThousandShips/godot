@@ -155,7 +155,7 @@ bool WSLPeer::_parse_client_request() {
 	int len = psa.size();
 	ERR_FAIL_COND_V_MSG(len < 4, false, "Not enough response headers, got: " + itos(len) + ", expected >= 4.");
 
-	Vector<String> req = psa[0].split(" ", false);
+	Vector<String> req = psa[0].splitc(' ', false);
 	ERR_FAIL_COND_V_MSG(req.size() < 2, false, "Invalid protocol or status code.");
 
 	// Wrong protocol
@@ -163,7 +163,7 @@ bool WSLPeer::_parse_client_request() {
 
 	HashMap<String, String> headers;
 	for (int i = 1; i < len; i++) {
-		Vector<String> header = psa[i].split(":", false, 1);
+		Vector<String> header = psa[i].splitc(':', false, 1);
 		ERR_FAIL_COND_V_MSG(header.size() != 2, false, "Invalid header -> " + psa[i]);
 		String name = header[0].to_lower();
 		String value = header[1].strip_edges();
@@ -188,7 +188,7 @@ bool WSLPeer::_parse_client_request() {
 #undef WSL_CHECK
 	session_key = headers["sec-websocket-key"];
 	if (headers.has("sec-websocket-protocol")) {
-		Vector<String> protos = headers["sec-websocket-protocol"].split(",");
+		Vector<String> protos = headers["sec-websocket-protocol"].splitc(',');
 		for (int i = 0; i < protos.size(); i++) {
 			String proto = protos[i].strip_edges();
 			// Check if we have the given protocol
@@ -420,7 +420,7 @@ bool WSLPeer::_verify_server_response() {
 	int len = psa.size();
 	ERR_FAIL_COND_V_MSG(len < 4, false, "Not enough response headers. Got: " + itos(len) + ", expected >= 4.");
 
-	Vector<String> req = psa[0].split(" ", false);
+	Vector<String> req = psa[0].splitc(' ', false);
 	ERR_FAIL_COND_V_MSG(req.size() < 2, false, "Invalid protocol or status code. Got '" + psa[0] + "', expected 'HTTP/1.1 101'.");
 
 	// Wrong protocol
@@ -429,7 +429,7 @@ bool WSLPeer::_verify_server_response() {
 
 	HashMap<String, String> headers;
 	for (int i = 1; i < len; i++) {
-		Vector<String> header = psa[i].split(":", false, 1);
+		Vector<String> header = psa[i].splitc(':', false, 1);
 		ERR_FAIL_COND_V_MSG(header.size() != 2, false, "Invalid header -> " + psa[i] + ".");
 		String name = header[0].to_lower();
 		String value = header[1].strip_edges();

@@ -374,7 +374,7 @@ void JoypadLinux::open_joypad(const char *p_path) {
 			name = namebuf;
 		}
 
-		for (const String &word : name.to_lower().split(" ")) {
+		for (const String &word : name.to_lower().splitc(' ')) {
 			if (banned_words.has(word)) {
 				return;
 			}

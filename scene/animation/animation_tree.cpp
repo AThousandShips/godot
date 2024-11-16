@@ -460,7 +460,7 @@ Ref<AnimationNode> AnimationNode::get_child_by_name(const StringName &p_name) co
 }
 
 Ref<AnimationNode> AnimationNode::find_node_by_path(const String &p_name) const {
-	Vector<String> split = p_name.split("/");
+	Vector<String> split = p_name.splitc('/');
 	Ref<AnimationNode> ret = const_cast<AnimationNode *>(this);
 	for (int i = 0; i < split.size(); i++) {
 		ret = ret->get_child_by_name(split[i]);

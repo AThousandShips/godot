@@ -42,7 +42,7 @@
 #define ENABLE_SHADER_CACHE 1
 
 void ShaderRD::_add_stage(const char *p_code, StageType p_stage_type) {
-	Vector<String> lines = String(p_code).split("\n");
+	Vector<String> lines = String(p_code).splitc('\n');
 
 	String text;
 

@@ -800,14 +800,14 @@ void EditorNode::_notification(int p_what) {
 				HashSet<String> updated_textfile_extensions;
 				HashSet<String> updated_other_file_extensions;
 				bool extensions_match = true;
-				const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).split(",", false);
+				const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).splitc(',', false);
 				for (const String &E : textfile_ext) {
 					updated_textfile_extensions.insert(E);
 					if (extensions_match && !textfile_extensions.has(E)) {
 						extensions_match = false;
 					}
 				}
-				const Vector<String> other_file_ext = ((String)(EDITOR_GET("docks/filesystem/other_file_extensions"))).split(",", false);
+				const Vector<String> other_file_ext = ((String)(EDITOR_GET("docks/filesystem/other_file_extensions"))).splitc(',', false);
 				for (const String &E : other_file_ext) {
 					updated_other_file_extensions.insert(E);
 					if (extensions_match && !other_file_extensions.has(E)) {
@@ -6986,11 +6986,11 @@ EditorNode::EditorNode() {
 
 	ED_SHORTCUT("canvas_item_editor/pan_view", TTR("Pan View"), Key::SPACE);
 
-	const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).split(",", false);
+	const Vector<String> textfile_ext = ((String)(EDITOR_GET("docks/filesystem/textfile_extensions"))).splitc(',', false);
 	for (const String &E : textfile_ext) {
 		textfile_extensions.insert(E);
 	}
-	const Vector<String> other_file_ext = ((String)(EDITOR_GET("docks/filesystem/other_file_extensions"))).split(",", false);
+	const Vector<String> other_file_ext = ((String)(EDITOR_GET("docks/filesystem/other_file_extensions"))).splitc(',', false);
 	for (const String &E : other_file_ext) {
 		other_file_extensions.insert(E);
 	}
@@ -7482,7 +7482,7 @@ EditorNode::EditorNode() {
 		renderer->connect(SceneStringName(item_selected), callable_mp(this, &EditorNode::_renderer_selected));
 		// As we are doing string comparisons, keep in standard case to prevent problems with capitals
 		// "vulkan" in particular uses lowercase "v" in the code, and uppercase in the UI.
-		PackedStringArray renderers = ProjectSettings::get_singleton()->get_custom_property_info().get(StringName("rendering/renderer/rendering_method")).hint_string.split(",", false);
+		PackedStringArray renderers = ProjectSettings::get_singleton()->get_custom_property_info().get(StringName("rendering/renderer/rendering_method")).hint_string.splitc(',', false);
 		for (int i = 0; i < renderers.size(); i++) {
 			String rendering_method = renderers[i];
 			_add_renderer_entry(rendering_method, false);

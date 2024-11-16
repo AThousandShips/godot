@@ -213,7 +213,7 @@ PluginConfigIOS PluginConfigIOS::load_plugin_config(Ref<ConfigFile> config_file,
 		config_file->get_section_keys(PluginConfigIOS::PLIST_SECTION, &keys);
 
 		for (const String &key : keys) {
-			Vector<String> key_components = key.split(":");
+			Vector<String> key_components = key.splitc(':');
 
 			String key_value = "";
 			PluginConfigIOS::PlistItemType key_type = PluginConfigIOS::PlistItemType::UNKNOWN;
