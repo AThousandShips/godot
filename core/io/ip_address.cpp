@@ -151,7 +151,7 @@ void IPAddress::_parse_ipv4(const String &p_string, int p_start, uint8_t *p_ret)
 		ip = p_string;
 	}
 
-	int slices = ip.get_slice_count(".");
+	int slices = ip.get_slice_countc('.');
 	ERR_FAIL_COND_MSG(slices != 4, "Invalid IP address string: " + ip + ".");
 	for (int i = 0; i < 4; i++) {
 		p_ret[i] = ip.get_slicec('.', i).to_int();
@@ -204,7 +204,7 @@ IPAddress::IPAddress(const String &p_string) {
 		_parse_ipv6(p_string);
 		valid = true;
 
-	} else if (p_string.get_slice_count(".") == 4) {
+	} else if (p_string.get_slice_countc('.') == 4) {
 		// IPv4 (mapped to IPv6 internally)
 		field16[5] = 0xffff;
 		_parse_ipv4(p_string, 0, &field8[12]);

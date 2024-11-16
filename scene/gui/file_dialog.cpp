@@ -172,7 +172,7 @@ void FileDialog::_native_dialog_cb_with_options(bool p_ok, const Vector<String> 
 				// Match all filters.
 				for (int i = 0; i < filters.size(); i++) {
 					String flt = filters[i].get_slicec(';', 0);
-					for (int j = 0; j < flt.get_slice_count(","); j++) {
+					for (int j = 0; j < flt.get_slice_countc(','); j++) {
 						String str = flt.get_slicec(',', j).strip_edges();
 						if (f.matchn(str)) {
 							valid = true;
@@ -190,7 +190,7 @@ void FileDialog::_native_dialog_cb_with_options(bool p_ok, const Vector<String> 
 				}
 				if (idx >= 0 && idx < filters.size()) {
 					String flt = filters[idx].get_slicec(';', 0);
-					int filter_slice_count = flt.get_slice_count(",");
+					int filter_slice_count = flt.get_slice_countc(',');
 					for (int j = 0; j < filter_slice_count; j++) {
 						String str = flt.get_slicec(',', j).strip_edges();
 						if (f.matchn(str)) {
@@ -493,7 +493,7 @@ void FileDialog::_action_pressed() {
 			// Match all filters.
 			for (int i = 0; i < filters.size(); i++) {
 				String flt = filters[i].get_slicec(';', 0);
-				for (int j = 0; j < flt.get_slice_count(","); j++) {
+				for (int j = 0; j < flt.get_slice_countc(','); j++) {
 					String str = flt.get_slicec(',', j).strip_edges();
 					if (f.matchn(str)) {
 						valid = true;
@@ -511,7 +511,7 @@ void FileDialog::_action_pressed() {
 			}
 			if (idx >= 0 && idx < filters.size()) {
 				String flt = filters[idx].get_slicec(';', 0);
-				int filter_slice_count = flt.get_slice_count(",");
+				int filter_slice_count = flt.get_slice_countc(',');
 				for (int j = 0; j < filter_slice_count; j++) {
 					String str = (flt.get_slicec(',', j).strip_edges());
 					if (f.matchn(str)) {
@@ -820,7 +820,7 @@ void FileDialog::update_file_list() {
 		// Match all filters.
 		for (int i = 0; i < filters.size(); i++) {
 			String f = filters[i].get_slicec(';', 0);
-			for (int j = 0; j < f.get_slice_count(","); j++) {
+			for (int j = 0; j < f.get_slice_countc(','); j++) {
 				patterns.push_back(f.get_slicec(',', j).strip_edges());
 			}
 		}
@@ -832,7 +832,7 @@ void FileDialog::update_file_list() {
 
 		if (idx >= 0 && idx < filters.size()) {
 			String f = filters[idx].get_slicec(';', 0);
-			for (int j = 0; j < f.get_slice_count(","); j++) {
+			for (int j = 0; j < f.get_slice_countc(','); j++) {
 				patterns.push_back(f.get_slicec(',', j).strip_edges());
 			}
 		}

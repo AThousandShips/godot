@@ -286,7 +286,7 @@ void FreeDesktopPortalDesktop::append_dbus_dict_filters(DBusMessageIter *p_iter,
 				flt += flt_orig[j];
 			}
 		}
-		int filter_slice_count = flt.get_slice_count(",");
+		int filter_slice_count = flt.get_slice_countc(',');
 		for (int j = 0; j < filter_slice_count; j++) {
 			dbus_message_iter_open_container(&array_iter, DBUS_TYPE_STRUCT, nullptr, &array_struct_iter);
 			String str = (flt.get_slicec(',', j).strip_edges());
@@ -298,7 +298,7 @@ void FreeDesktopPortalDesktop::append_dbus_dict_filters(DBusMessageIter *p_iter,
 			dbus_message_iter_close_container(&array_iter, &array_struct_iter);
 		}
 		const String &mime = p_filter_mimes[i];
-		filter_slice_count = mime.get_slice_count(",");
+		filter_slice_count = mime.get_slice_countc(',');
 		for (int j = 0; j < filter_slice_count; j++) {
 			dbus_message_iter_open_container(&array_iter, DBUS_TYPE_STRUCT, nullptr, &array_struct_iter);
 			String str = mime.get_slicec(',', j).strip_edges();

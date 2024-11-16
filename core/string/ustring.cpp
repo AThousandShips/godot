@@ -139,7 +139,7 @@ Error String::parse_url(String &r_scheme, String &r_host, int &r_port, String &r
 		base = base.substr(pos + 1);
 	} else {
 		// Anything else
-		if (base.get_slice_count(":") > 2) {
+		if (base.get_slice_countc(':') > 2) {
 			return ERR_INVALID_PARAMETER;
 		}
 		pos = base.rfind_char(':');
@@ -801,7 +801,7 @@ String String::_separate_compound_words() const {
 String String::capitalize() const {
 	String words = _separate_compound_words().strip_edges();
 	String ret;
-	for (int i = 0; i < words.get_slice_count(" "); i++) {
+	for (int i = 0; i < words.get_slice_countc(' '); i++) {
 		String slice = words.get_slicec(' ', i);
 		if (slice.length() > 0) {
 			slice[0] = _find_upper(slice[0]);
@@ -817,7 +817,7 @@ String String::capitalize() const {
 String String::to_camel_case() const {
 	String words = _separate_compound_words().strip_edges();
 	String ret;
-	for (int i = 0; i < words.get_slice_count(" "); i++) {
+	for (int i = 0; i < words.get_slice_countc(' '); i++) {
 		String slice = words.get_slicec(' ', i);
 		if (slice.length() > 0) {
 			if (i == 0) {
@@ -834,7 +834,7 @@ String String::to_camel_case() const {
 String String::to_pascal_case() const {
 	String words = _separate_compound_words().strip_edges();
 	String ret;
-	for (int i = 0; i < words.get_slice_count(" "); i++) {
+	for (int i = 0; i < words.get_slice_countc(' '); i++) {
 		String slice = words.get_slicec(' ', i);
 		if (slice.length() > 0) {
 			slice[0] = _find_upper(slice[0]);

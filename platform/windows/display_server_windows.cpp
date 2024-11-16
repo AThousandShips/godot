@@ -537,7 +537,7 @@ void DisplayServerWindows::_thread_fd_monitor(void *p_ud) {
 		Vector<String> tokens = E.split(";");
 		if (tokens.size() >= 1) {
 			String flt = tokens[0].strip_edges();
-			int filter_slice_count = flt.get_slice_count(",");
+			int filter_slice_count = flt.get_slice_countc(',');
 			Vector<String> exts;
 			for (int j = 0; j < filter_slice_count; j++) {
 				String str = (flt.get_slicec(',', j).strip_edges());

@@ -229,7 +229,7 @@ void ProjectSettingsEditor::_feature_selected(int p_index) {
 
 void ProjectSettingsEditor::_update_property_box() {
 	const String setting = _get_setting_name();
-	int slices = setting.get_slice_count(".");
+	int slices = setting.get_slice_countc('.');
 	const String name = setting.get_slicec('.', 0);
 	const String feature = setting.get_slicec('.', 1);
 	bool feature_invalid = slices > 2 || (slices == 2 && feature.is_empty());

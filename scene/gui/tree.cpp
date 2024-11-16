@@ -3460,7 +3460,7 @@ void Tree::_update_popup_menu(const TreeItem::Cell &p_cell) {
 		popup_menu->connect(SceneStringName(id_pressed), callable_mp(this, &Tree::popup_select));
 	}
 	popup_menu->clear();
-	for (int i = 0; i < p_cell.text.get_slice_count(","); i++) {
+	for (int i = 0; i < p_cell.text.get_slice_countc(','); i++) {
 		String s = p_cell.text.get_slicec(',', i);
 		popup_menu->add_item(s.get_slicec(':', 0), s.get_slicec(':', 1).is_empty() ? i : s.get_slicec(':', 1).to_int());
 	}

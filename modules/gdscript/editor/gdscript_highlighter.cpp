@@ -783,7 +783,7 @@ void GDScriptSyntaxHighlighter::_update_cache() {
 	const Color comment_color = EDITOR_GET("text_editor/theme/highlighting/comment_color");
 	for (const String &comment : gdscript->get_comment_delimiters()) {
 		String beg = comment.get_slicec(' ', 0);
-		String end = comment.get_slice_count(" ") > 1 ? comment.get_slicec(' ', 1) : String();
+		String end = comment.get_slice_countc(' ') > 1 ? comment.get_slicec(' ', 1) : String();
 		add_color_region(ColorRegion::TYPE_COMMENT, beg, end, comment_color, end.is_empty());
 	}
 
@@ -791,7 +791,7 @@ void GDScriptSyntaxHighlighter::_update_cache() {
 	const Color doc_comment_color = EDITOR_GET("text_editor/theme/highlighting/doc_comment_color");
 	for (const String &doc_comment : gdscript->get_doc_comment_delimiters()) {
 		String beg = doc_comment.get_slicec(' ', 0);
-		String end = doc_comment.get_slice_count(" ") > 1 ? doc_comment.get_slicec(' ', 1) : String();
+		String end = doc_comment.get_slice_countc(' ') > 1 ? doc_comment.get_slicec(' ', 1) : String();
 		add_color_region(ColorRegion::TYPE_COMMENT, beg, end, doc_comment_color, end.is_empty());
 	}
 

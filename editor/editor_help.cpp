@@ -1714,7 +1714,7 @@ void EditorHelp::_update_doc() {
 
 			for (KeyValue<String, Vector<DocData::ConstantDoc>> &E : enums) {
 				String key = E.key;
-				if ((key.get_slice_count(".") > 1) && (key.get_slicec('.', 0) == edited_class)) {
+				if ((key.get_slice_countc('.') > 1) && (key.get_slicec('.', 0) == edited_class)) {
 					key = key.get_slicec('.', 1);
 				}
 				if (cd.enums.has(key)) {
@@ -2367,7 +2367,7 @@ void EditorHelp::_help_callback(const String &p_topic) {
 	String what = p_topic.get_slicec(':', 0);
 	String clss = p_topic.get_slicec(':', 1);
 	String name;
-	if (p_topic.get_slice_count(":") == 3) {
+	if (p_topic.get_slice_countc(':') == 3) {
 		name = p_topic.get_slicec(':', 2);
 	}
 

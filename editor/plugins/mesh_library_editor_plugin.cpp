@@ -238,7 +238,7 @@ void MeshLibraryEditor::_menu_cbk(int p_option) {
 		} break;
 		case MENU_OPTION_REMOVE_ITEM: {
 			String p = InspectorDock::get_inspector_singleton()->get_selected_path();
-			if (p.begins_with("item") && p.get_slice_count("/") >= 2) {
+			if (p.begins_with("item") && p.get_slice_countc('/') >= 2) {
 				to_erase = p.get_slicec('/', 1).to_int();
 				cd_remove->set_text(vformat(TTR("Remove item %d?"), to_erase));
 				cd_remove->popup_centered(Size2(300, 60));

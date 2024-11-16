@@ -478,7 +478,7 @@ void EditorPropertyOTVariation::update_property() {
 			String name_cap;
 			{
 				String aux = name.replace_char('_', ' ').strip_edges();
-				for (int j = 0; j < aux.get_slice_count(" "); j++) {
+				for (int j = 0; j < aux.get_slice_countc(' '); j++) {
 					String slice = aux.get_slicec(' ', j);
 					if (slice.length() > 0) {
 						slice[0] = String::char_uppercase(slice[0]);

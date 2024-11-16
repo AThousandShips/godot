@@ -159,7 +159,7 @@ Label *EditorAbout::_create_section(Control *p_parent, const String &p_name, con
 		while (*names_ptr) {
 			const String name = String::utf8(*names_ptr++);
 			const String identifier = name.get_slicec('<', 0);
-			const String website = name.get_slice_count("<") == 1 ? "" : name.get_slicec('<', 1).trim_suffix(">");
+			const String website = name.get_slice_countc('<') == 1 ? "" : name.get_slicec('<', 1).trim_suffix(">");
 
 			il->add_item(identifier, nullptr, !website.is_empty());
 

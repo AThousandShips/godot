@@ -3982,7 +3982,7 @@ EditorProperty *EditorInspectorDefaultPlugin::get_editor_for_property(Object *p_
 					const PackedStringArray open_in_new_inspector = EDITOR_GET("interface/inspector/resources_to_open_in_new_inspector");
 
 					for (const String &type : open_in_new_inspector) {
-						for (int j = 0; j < p_hint_text.get_slice_count(","); j++) {
+						for (int j = 0; j < p_hint_text.get_slice_countc(','); j++) {
 							const String inherits = p_hint_text.get_slicec(',', j);
 							if (ClassDB::is_parent_class(inherits, type)) {
 								editor->set_use_sub_inspector(false);

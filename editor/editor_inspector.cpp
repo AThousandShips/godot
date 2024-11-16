@@ -4031,9 +4031,9 @@ void EditorInspector::update_tree() {
 			String add_button_text = TTR("Add Element");
 			String swap_method;
 			for (int i = (p.type == Variant::NIL ? 1 : 2); i < class_name_components.size(); i++) {
-				if (class_name_components[i].begins_with("page_size") && class_name_components[i].get_slice_count("=") == 2) {
+				if (class_name_components[i].begins_with("page_size") && class_name_components[i].get_slice_countc('=') == 2) {
 					page_size = class_name_components[i].get_slicec('=', 1).to_int();
-				} else if (class_name_components[i].begins_with("add_button_text") && class_name_components[i].get_slice_count("=") == 2) {
+				} else if (class_name_components[i].begins_with("add_button_text") && class_name_components[i].get_slice_countc('=') == 2) {
 					add_button_text = class_name_components[i].get_slicec('=', 1).strip_edges();
 				} else if (class_name_components[i] == "static") {
 					movable = false;
@@ -4043,7 +4043,7 @@ void EditorInspector::update_tree() {
 					numbered = true;
 				} else if (class_name_components[i] == "unfoldable") {
 					foldable = false;
-				} else if (class_name_components[i].begins_with("swap_method") && class_name_components[i].get_slice_count("=") == 2) {
+				} else if (class_name_components[i].begins_with("swap_method") && class_name_components[i].get_slice_countc('=') == 2) {
 					swap_method = class_name_components[i].get_slicec('=', 1).strip_edges();
 				}
 			}

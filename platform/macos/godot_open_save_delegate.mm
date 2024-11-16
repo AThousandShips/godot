@@ -120,7 +120,7 @@
 				if (tokens.size() >= 1) {
 					String flt = tokens[0].strip_edges();
 					String mime = (tokens.size() >= 3) ? tokens[2].strip_edges() : String();
-					int filter_slice_count = flt.get_slice_count(",");
+					int filter_slice_count = flt.get_slice_countc(',');
 
 					NSMutableArray *type_filters = [[NSMutableArray alloc] init];
 					for (int j = 0; j < filter_slice_count; j++) {
@@ -143,7 +143,7 @@
 					}
 
 					if (@available(macOS 11, *)) {
-						filter_slice_count = mime.get_slice_count(",");
+						filter_slice_count = mime.get_slice_countc(',');
 						for (int j = 0; j < filter_slice_count; j++) {
 							String str = mime.get_slicec(',', j).strip_edges();
 							if (!str.is_empty()) {
@@ -174,7 +174,7 @@
 			if (tokens.size() >= 1) {
 				String flt = tokens[0].strip_edges();
 				String mime = (tokens.size() >= 3) ? tokens[2] : String();
-				int filter_slice_count = flt.get_slice_count(",");
+				int filter_slice_count = flt.get_slice_countc(',');
 
 				NSMutableArray *type_filters = [[NSMutableArray alloc] init];
 				for (int j = 0; j < filter_slice_count; j++) {
@@ -196,7 +196,7 @@
 					}
 				}
 				if (@available(macOS 11, *)) {
-					filter_slice_count = mime.get_slice_count(",");
+					filter_slice_count = mime.get_slice_countc(',');
 					for (int j = 0; j < filter_slice_count; j++) {
 						String str = mime.get_slicec(',', j).strip_edges();
 						if (!str.is_empty()) {

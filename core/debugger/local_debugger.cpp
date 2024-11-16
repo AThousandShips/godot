@@ -151,7 +151,7 @@ void LocalDebugger::debug(bool p_can_continue, bool p_is_error_breakpoint) {
 			}
 
 		} else if (line.begins_with("fr") || line.begins_with("frame")) {
-			if (line.get_slice_count(" ") == 1) {
+			if (line.get_slice_countc(' ') == 1) {
 				print_line("*Frame " + itos(current_frame) + " - " + script_lang->debug_get_stack_level_source(current_frame) + ":" + itos(script_lang->debug_get_stack_level_line(current_frame)) + " in function '" + script_lang->debug_get_stack_level_function(current_frame) + "'");
 			} else {
 				int frame = line.get_slicec(' ', 1).to_int();
@@ -164,7 +164,7 @@ void LocalDebugger::debug(bool p_can_continue, bool p_is_error_breakpoint) {
 			}
 
 		} else if (line.begins_with("set")) {
-			if (line.get_slice_count(" ") == 1) {
+			if (line.get_slice_countc(' ') == 1) {
 				for (const KeyValue<String, String> &E : options) {
 					print_line("\t" + E.key + "=" + E.value);
 				}
@@ -240,7 +240,7 @@ void LocalDebugger::debug(bool p_can_continue, bool p_is_error_breakpoint) {
 			target_function = "";
 
 		} else if (line.begins_with("br") || line.begins_with("break")) {
-			if (line.get_slice_count(" ") <= 1) {
+			if (line.get_slice_countc(' ') <= 1) {
 				const HashMap<int, HashSet<StringName>> &breakpoints = script_debugger->get_breakpoints();
 				if (breakpoints.is_empty()) {
 					print_line("No Breakpoints.");
@@ -280,7 +280,7 @@ void LocalDebugger::debug(bool p_can_continue, bool p_is_error_breakpoint) {
 			}
 			break;
 		} else if (line.begins_with("delete")) {
-			if (line.get_slice_count(" ") <= 1) {
+			if (line.get_slice_countc(' ') <= 1) {
 				script_debugger->clear_breakpoints();
 			} else {
 				Pair<String, int> breakpoint = to_breakpoint(line);

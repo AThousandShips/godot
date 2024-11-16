@@ -343,7 +343,7 @@ void EditorPerformanceProfiler::update_monitors(const Vector<StringName> &p_name
 	for (const KeyValue<StringName, int> &E : names) {
 		String name = String(E.key).replace_first("custom:", "");
 		String base = "Custom";
-		if (name.get_slice_count("/") == 2) {
+		if (name.get_slice_countc('/') == 2) {
 			base = name.get_slicec('/', 0);
 			name = name.get_slicec('/', 1);
 		}
