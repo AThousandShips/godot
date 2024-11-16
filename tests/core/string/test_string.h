@@ -688,6 +688,62 @@ TEST_CASE("[String] Splitting") {
 
 		const char *slices_r[3] = { "Mars,Jupiter", "Saturn", "Uranus" };
 		MULTICHECK_SPLIT(s, rsplit, ",", true, 2, slices_r, 3);
+
+		Vector<String> splits;
+
+		splits = s.splitc(',', true, 2);
+		CHECK(splits.size() == 3);
+		for (int i = 0; i < splits.size(); ++i) {
+			CHECK(splits[i] == slices_l[i]);
+		}
+
+		splits = s.rsplitc(',', true, 2);
+		CHECK(splits.size() == 3);
+		for (int i = 0; i < splits.size(); ++i) {
+			CHECK(splits[i] == slices_r[i]);
+		}
+	}
+
+	{
+		const String s = "Mars,,Jupiter,Saturn,,Uranus";
+
+		const char *slices_l[3] = { "Mars", "", "Jupiter,Saturn,,Uranus" };
+		MULTICHECK_SPLIT(s, split, ",", true, 2, slices_l, 3);
+
+		const char *slices_r[3] = { "Mars,,Jupiter,Saturn", "", "Uranus" };
+		MULTICHECK_SPLIT(s, rsplit, ",", true, 2, slices_r, 3);
+
+		const char *slices_l_ne[3] = { "Mars", "Jupiter", "Saturn,,Uranus" };
+		MULTICHECK_SPLIT(s, split, ",", false, 2, slices_l_ne, 3);
+
+		const char *slices_r_ne[3] = { "Mars,,Jupiter", "Saturn", "Uranus" };
+		MULTICHECK_SPLIT(s, rsplit, ",", false, 2, slices_r_ne, 3);
+
+		Vector<String> splits;
+
+		splits = s.splitc(',', true, 2);
+		CHECK(splits.size() == 3);
+		for (int i = 0; i < splits.size(); ++i) {
+			CHECK(splits[i] == slices_l[i]);
+		}
+
+		splits = s.rsplitc(',', true, 2);
+		CHECK(splits.size() == 3);
+		for (int i = 0; i < splits.size(); ++i) {
+			CHECK(splits[i] == slices_r[i]);
+		}
+
+		splits = s.splitc(',', false, 2);
+		CHECK(splits.size() == 3);
+		for (int i = 0; i < splits.size(); ++i) {
+			CHECK(splits[i] == slices_l_ne[i]);
+		}
+
+		splits = s.rsplitc(',', false, 2);
+		CHECK(splits.size() == 3);
+		for (int i = 0; i < splits.size(); ++i) {
+			CHECK(splits[i] == slices_r_ne[i]);
+		}
 	}
 
 	{
@@ -701,6 +757,22 @@ TEST_CASE("[String] Splitting") {
 		const char *slices[1] = { "" };
 		MULTICHECK_SPLIT(s, split, "", true, 0, slices, 1);
 		MULTICHECK_SPLIT(s, split, "", false, 0, slices, 0);
+
+		Vector<String> splits;
+
+		splits = s.splitc(' ', true, 0);
+		CHECK(splits.size() == 1);
+		CHECK(splits[0] == "");
+
+		splits = s.splitc(' ', false, 0);
+		CHECK(splits.size() == 0);
+
+		splits = s.rsplitc(' ', true, 0);
+		CHECK(splits.size() == 1);
+		CHECK(splits[0] == "");
+
+		splits = s.rsplitc(' ', false, 0);
+		CHECK(splits.size() == 0);
 	}
 
 	{
