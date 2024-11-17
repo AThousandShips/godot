@@ -1715,10 +1715,12 @@ static void _register_variant_builtin_methods_string() {
 	bind_string_method(get_slicec, sarray("delimiter", "slice"), varray());
 	bind_string_methodv(get_slice_count, static_cast<int (String::*)(const String &) const>(&String::get_slice_count), sarray("delimiter"), varray());
 	bind_string_methodv(find, static_cast<int (String::*)(const String &, int) const>(&String::find), sarray("what", "from"), varray(0));
+	bind_string_method(find_char, sarray("char", "from"), varray(0));
 	bind_string_methodv(findn, static_cast<int (String::*)(const String &, int) const>(&String::findn), sarray("what", "from"), varray(0));
 	bind_string_methodv(count, static_cast<int (String::*)(const String &, int, int) const>(&String::count), sarray("what", "from", "to"), varray(0, 0));
 	bind_string_methodv(countn, static_cast<int (String::*)(const String &, int, int) const>(&String::countn), sarray("what", "from", "to"), varray(0, 0));
 	bind_string_methodv(rfind, static_cast<int (String::*)(const String &, int) const>(&String::rfind), sarray("what", "from"), varray(-1));
+	bind_string_method(rfind_char, sarray("char", "from"), varray(-1));
 	bind_string_methodv(rfindn, static_cast<int (String::*)(const String &, int) const>(&String::rfindn), sarray("what", "from"), varray(-1));
 	bind_string_method(match, sarray("expr"), varray());
 	bind_string_method(matchn, sarray("expr"), varray());

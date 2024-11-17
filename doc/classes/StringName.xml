@@ -217,6 +217,14 @@
 				[b]Note:[/b] If you just want to know whether the string contains [param what], use [method contains]. In GDScript, you may also use the [code]in[/code] operator.
 			</description>
 		</method>
+		<method name="find_char" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="char" type="int" />
+			<param index="1" name="from" type="int" default="0" />
+			<description>
+				Returns the index of the [b]first[/b] occurrence of the Unicode character [param char] in this string, or [code]-1[/code] if there are none. The search's start can be specified with [param from], continuing to the end of the string.
+			</description>
+		</method>
 		<method name="findn" qualifiers="const">
 			<return type="int" />
 			<param index="0" name="what" type="String" />
@@ -736,6 +744,14 @@
 			<param index="1" name="from" type="int" default="-1" />
 			<description>
 				Returns the index of the [b]last[/b] occurrence of [param what] in this string, or [code]-1[/code] if there are none. The search's start can be specified with [param from], continuing to the beginning of the string. This method is the reverse of [method find].
+			</description>
+		</method>
+		<method name="rfind_char" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="char" type="int" />
+			<param index="1" name="from" type="int" default="-1" />
+			<description>
+				Returns the index of the [b]last[/b] occurrence of the Unicode character [param char] in this string, or [code]-1[/code] if there are none. The search's start can be specified with [param from], continuing to the beginning of the string. This method is the reverse of [method find_char].
 			</description>
 		</method>
 		<method name="rfindn" qualifiers="const">
