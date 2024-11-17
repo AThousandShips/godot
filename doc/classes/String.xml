@@ -833,7 +833,7 @@
 			<param index="1" name="allow_empty" type="bool" default="true" />
 			<param index="2" name="maxsplit" type="int" default="0" />
 			<description>
-				Splits the string using a [param delimiter] and returns an array of the substrings, starting from the end of the string. The splits in the returned array appear in the same order as the original string. If [param delimiter] is an empty string, each substring will be a single character.
+				Splits the string using a [param delimiter] and returns an array of the substrings, starting from the end of the string. The splits in the returned array appear in the same order as the original string. If [param delimiter] is an empty string, each substring will be a single character. To split a string using a single character delimiter, use [method rsplitc].
 				If [param allow_empty] is [code]false[/code], empty strings between adjacent delimiters are excluded from the array.
 				If [param maxsplit] is greater than [code]0[/code], the number of splits may not exceed [param maxsplit]. By default, the entire string is split, which is mostly identical to [method split].
 				[codeblocks]
@@ -849,6 +849,15 @@
 				// In C#, there is no String.RSplit() method.
 				[/csharp]
 				[/codeblocks]
+			</description>
+		</method>
+		<method name="rsplitc" qualifiers="const">
+			<return type="PackedStringArray" />
+			<param index="0" name="delimiter" type="int" />
+			<param index="1" name="allow_empty" type="bool" default="true" />
+			<param index="2" name="maxsplit" type="int" default="0" />
+			<description>
+				Splits the string using a Unicode character [param delimiter] and returns an array of the substrings, starting from the end of the string. The delimiter must not be zero. The splits in the returned array appear in the same order as the original string. See also [method rsplit] and [method splitc].
 			</description>
 		</method>
 		<method name="rstrip" qualifiers="const">
@@ -912,7 +921,7 @@
 			<param index="1" name="allow_empty" type="bool" default="true" />
 			<param index="2" name="maxsplit" type="int" default="0" />
 			<description>
-				Splits the string using a [param delimiter] and returns an array of the substrings. If [param delimiter] is an empty string, each substring will be a single character. This method is the opposite of [method join].
+				Splits the string using a [param delimiter] and returns an array of the substrings. If [param delimiter] is an empty string, each substring will be a single character. This method is the opposite of [method join]. To split a string using a single character delimiter, use [method splitc].
 				If [param allow_empty] is [code]false[/code], empty strings between adjacent delimiters are excluded from the array.
 				If [param maxsplit] is greater than [code]0[/code], the number of splits may not exceed [param maxsplit]. By default, the entire string is split.
 				[codeblocks]
@@ -948,6 +957,15 @@
 				var c = "1| ||4.5".split_floats("|")        # c is [1.0, 0.0, 0.0, 4.5]
 				var b = "1| ||4.5".split_floats("|", false) # b is [1.0, 4.5]
 				[/codeblock]
+			</description>
+		</method>
+		<method name="splitc" qualifiers="const">
+			<return type="PackedStringArray" />
+			<param index="0" name="delimiter" type="int" />
+			<param index="1" name="allow_empty" type="bool" default="true" />
+			<param index="2" name="maxsplit" type="int" default="0" />
+			<description>
+				Splits the string using a Unicode character [param delimiter] and returns an array of the substrings. The delimiter must not be zero. See also [method split] and [method rsplitc].
 			</description>
 		</method>
 		<method name="strip_edges" qualifiers="const">
