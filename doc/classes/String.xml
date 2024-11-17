@@ -343,6 +343,13 @@
 				Returns the total number of slices when the string is split with the given [param delimiter] (see [method split]).
 			</description>
 		</method>
+		<method name="get_slice_countc" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="delimiter" type="int" />
+			<description>
+				Returns the total number of slices when the string is split with the given Unicode character [param delimiter]. See also [method split] and [method get_slice_count].
+			</description>
+		</method>
 		<method name="get_slicec" qualifiers="const">
 			<return type="String" />
 			<param index="0" name="delimiter" type="int" />
