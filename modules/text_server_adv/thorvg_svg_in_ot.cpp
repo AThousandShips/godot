@@ -108,7 +108,7 @@ FT_Error tvg_svg_in_ot_preset_slot(FT_GlyphSlot p_slot, FT_Bool p_cache, FT_Poin
 			}
 			if (parser->get_node_type() == XMLParser::NODE_ELEMENT && parser->get_node_name() == "svg") {
 				if (parser->has_attribute("viewBox")) {
-					PackedStringArray vb = parser->get_named_attribute_value("viewBox").split(" ");
+					PackedStringArray vb = parser->get_named_attribute_value("viewBox").splitc(' ');
 
 					if (vb.size() == 4) {
 						aspect = vb[2].to_float() / vb[3].to_float();
