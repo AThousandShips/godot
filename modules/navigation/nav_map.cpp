@@ -281,16 +281,13 @@ void NavMap::set_agent_as_controlled(NavAgent *agent) {
 		return;
 	}
 
-#ifndef _3D_DISABLED
 	if (agent->get_use_3d_avoidance()) {
 		int64_t agent_3d_index = active_3d_avoidance_agents.find(agent);
 		if (agent_3d_index < 0) {
 			active_3d_avoidance_agents.push_back(agent);
 			agents_dirty = true;
 		}
-	} else
-#endif
-	{
+	} else {
 		int64_t agent_2d_index = active_2d_avoidance_agents.find(agent);
 		if (agent_2d_index < 0) {
 			active_2d_avoidance_agents.push_back(agent);
@@ -300,13 +297,11 @@ void NavMap::set_agent_as_controlled(NavAgent *agent) {
 }
 
 void NavMap::remove_agent_as_controlled(NavAgent *agent) {
-#ifndef _3D_DISABLED
 	int64_t agent_3d_index = active_3d_avoidance_agents.find(agent);
 	if (agent_3d_index >= 0) {
 		active_3d_avoidance_agents.remove_at_unordered(agent_3d_index);
 		agents_dirty = true;
 	}
-#endif
 	int64_t agent_2d_index = active_2d_avoidance_agents.find(agent);
 	if (agent_2d_index >= 0) {
 		active_2d_avoidance_agents.remove_at_unordered(agent_2d_index);
@@ -782,7 +777,6 @@ void NavMap::_update_rvo_agents_tree_2d() {
 	rvo_simulation_2d.kdTree_->buildAgentTree(raw_agents);
 }
 
-#ifndef _3D_DISABLED
 void NavMap::_update_rvo_agents_tree_3d() {
 	// Cannot use LocalVector here as RVO library expects std::vector to build KdTree.
 	std::vector<RVO3D::Agent3D *> raw_agents;
@@ -792,7 +786,6 @@ void NavMap::_update_rvo_agents_tree_3d() {
 	}
 	rvo_simulation_3d.kdTree_->buildAgentTree(raw_agents);
 }
-#endif
 
 void NavMap::_update_rvo_simulation() {
 	if (obstacles_dirty) {
@@ -811,22 +804,18 @@ void NavMap::compute_single_avoidance_step_2d(uint32_t index, NavAgent **agent) 
 	(*(agent + index))->update();
 }
 
-#ifndef _3D_DISABLED
 void NavMap::compute_single_avoidance_step_3d(uint32_t index, NavAgent **agent) {
 	(*(agent + index))->get_rvo_agent_3d()->computeNeighbors(&rvo_simulation_3d);
 	(*(agent + index))->get_rvo_agent_3d()->computeNewVelocity(&rvo_simulation_3d);
 	(*(agent + index))->get_rvo_agent_3d()->update(&rvo_simulation_3d);
 	(*(agent + index))->update();
 }
-#endif
 
 void NavMap::step(real_t p_deltatime) {
 	deltatime = p_deltatime;
 
 	rvo_simulation_2d.setTimeStep(float(deltatime));
-#ifndef _3D_DISABLED
 	rvo_simulation_3d.setTimeStep(float(deltatime));
-#endif
 
 	if (active_2d_avoidance_agents.size() > 0) {
 		if (use_threads && avoidance_use_multiple_threads) {
@@ -842,7 +831,6 @@ void NavMap::step(real_t p_deltatime) {
 		}
 	}
 
-#ifndef _3D_DISABLED
 	if (active_3d_avoidance_agents.size() > 0) {
 		if (use_threads && avoidance_use_multiple_threads) {
 			WorkerThreadPool::GroupID group_task = WorkerThreadPool::get_singleton()->add_template_group_task(this, &NavMap::compute_single_avoidance_step_3d, active_3d_avoidance_agents.ptr(), active_3d_avoidance_agents.size(), -1, true, SNAME("RVOAvoidanceAgents3D"));
@@ -856,7 +844,6 @@ void NavMap::step(real_t p_deltatime) {
 			}
 		}
 	}
-#endif
 }
 
 void NavMap::dispatch_callbacks() {
@@ -864,11 +851,9 @@ void NavMap::dispatch_callbacks() {
 		agent->dispatch_avoidance_callback();
 	}
 
-#ifndef _3D_DISABLED
 	for (NavAgent *agent : active_3d_avoidance_agents) {
 		agent->dispatch_avoidance_callback();
 	}
-#endif
 }
 
 void NavMap::_update_merge_rasterizer_cell_dimensions() {

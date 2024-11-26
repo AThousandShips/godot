@@ -187,7 +187,9 @@
 
 #include "scene/theme/theme_db.h"
 #include "servers/navigation_server_2d.h"
+#ifndef _3D_DISABLED
 #include "servers/navigation_server_3d.h"
+#endif // _3D_DISABLED
 #include "servers/physics_server_2d.h"
 #include "servers/physics_server_2d_dummy.h"
 #ifndef _3D_DISABLED
@@ -271,8 +273,8 @@ struct GodotTestCaseListener : public doctest::IReporter {
 	PhysicsServer2D *physics_server_2d = nullptr;
 #ifndef _3D_DISABLED
 	PhysicsServer3D *physics_server_3d = nullptr;
-#endif // _3D_DISABLED
 	NavigationServer3D *navigation_server_3d = nullptr;
+#endif // _3D_DISABLED
 	NavigationServer2D *navigation_server_2d = nullptr;
 
 	void test_case_start(const doctest::TestCaseData &p_in) override {
@@ -320,7 +322,9 @@ struct GodotTestCaseListener : public doctest::IReporter {
 			physics_server_2d->init();
 
 			ERR_PRINT_OFF;
+#ifndef _3D_DISABLED
 			navigation_server_3d = NavigationServer3DManager::new_default_server();
+#endif // _3D_DISABLED
 			navigation_server_2d = NavigationServer2DManager::new_default_server();
 			ERR_PRINT_ON;
 
@@ -353,9 +357,15 @@ struct GodotTestCaseListener : public doctest::IReporter {
 			return;
 		}
 
-		if (suite_name.contains("[Navigation]") && navigation_server_2d == nullptr && navigation_server_3d == nullptr) {
+		if (suite_name.contains("[Navigation]") && navigation_server_2d == nullptr
+#ifndef _3D_DISABLED
+				&& navigation_server_3d == nullptr
+#endif // _3D_DISABLED
+		) {
 			ERR_PRINT_OFF;
+#ifndef _3D_DISABLED
 			navigation_server_3d = NavigationServer3DManager::new_default_server();
+#endif // _3D_DISABLED
 			navigation_server_2d = NavigationServer2DManager::new_default_server();
 			ERR_PRINT_ON;
 			return;
@@ -386,10 +396,12 @@ struct GodotTestCaseListener : public doctest::IReporter {
 			memdelete(SceneTree::get_singleton());
 		}
 
+#ifndef _3D_DISABLED
 		if (navigation_server_3d) {
 			memdelete(navigation_server_3d);
 			navigation_server_3d = nullptr;
 		}
+#endif // _3D_DISABLED
 
 		if (navigation_server_2d) {
 			memdelete(navigation_server_2d);

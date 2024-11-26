@@ -38,9 +38,7 @@
 #include "core/templates/self_list.h"
 
 #include <Agent2d.h>
-#ifndef _3D_DISABLED
 #include <Agent3d.h>
-#endif
 
 class NavMap;
 
@@ -62,10 +60,8 @@ class NavAgent : public NavRid {
 	NavMap *map = nullptr;
 
 	RVO2D::Agent2D rvo_agent_2d;
-#ifndef _3D_DISABLED
 	RVO3D::Agent3D rvo_agent_3d;
 	bool use_3d_avoidance = false;
-#endif
 	bool avoidance_enabled = false;
 
 	uint32_t avoidance_layers = 1;
@@ -88,13 +84,8 @@ public:
 	void set_avoidance_enabled(bool p_enabled);
 	bool is_avoidance_enabled() { return avoidance_enabled; }
 
-#ifdef _3D_DISABLED
-	void set_use_3d_avoidance(bool p_enabled) {}
-	bool get_use_3d_avoidance() { return false; }
-#else
 	void set_use_3d_avoidance(bool p_enabled);
 	bool get_use_3d_avoidance() { return use_3d_avoidance; }
-#endif
 
 	void set_map(NavMap *p_map);
 	NavMap *get_map() { return map; }
@@ -102,9 +93,7 @@ public:
 	bool is_map_changed();
 
 	RVO2D::Agent2D *get_rvo_agent_2d() { return &rvo_agent_2d; }
-#ifndef _3D_DISABLED
 	RVO3D::Agent3D *get_rvo_agent_3d() { return &rvo_agent_3d; }
-#endif
 
 	void set_avoidance_callback(Callable p_callback);
 	bool has_avoidance_callback() const;

@@ -316,7 +316,6 @@ def generate_scu_files(max_includes_per_scu):
     process_folder(["modules/gltf/extensions"])
     process_folder(["modules/gltf/extensions/physics"])
     process_folder(["modules/navigation"])
-    process_folder(["modules/navigation/2d"])
     process_folder(["modules/navigation/3d"])
     process_folder(["modules/navigation_2d"])
     process_folder(["modules/navigation_2d/2d"])

@@ -28,8 +28,6 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef _3D_DISABLED
-
 #include "nav_mesh_generator_3d.h"
 
 #include "core/config/project_settings.h"
@@ -1006,5 +1004,3 @@ void NavMeshGenerator3D::free(RID p_object) {
 		ERR_PRINT("Attempted to free a NavMeshGenerator3D RID that did not exist (or was already freed).");
 	}
 }
-
-#endif // _3D_DISABLED
