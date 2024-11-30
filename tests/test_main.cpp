@@ -357,19 +357,21 @@ struct GodotTestCaseListener : public doctest::IReporter {
 			return;
 		}
 
-		if (suite_name.contains("[Navigation]") && navigation_server_2d == nullptr
-#ifndef _3D_DISABLED
-				&& navigation_server_3d == nullptr
-#endif // _3D_DISABLED
-		) {
+		if (suite_name.contains("[Navigation2D]") && navigation_server_2d == nullptr) {
 			ERR_PRINT_OFF;
-#ifndef _3D_DISABLED
-			navigation_server_3d = NavigationServer3DManager::new_default_server();
-#endif // _3D_DISABLED
 			navigation_server_2d = NavigationServer2DManager::new_default_server();
 			ERR_PRINT_ON;
 			return;
 		}
+
+#ifndef _3D_DISABLED
+		if (suite_name.contains("[Navigation3D]") && navigation_server_3d == nullptr) {
+			ERR_PRINT_OFF;
+			navigation_server_3d = NavigationServer3DManager::new_default_server();
+			ERR_PRINT_ON;
+			return;
+		}
+#endif // _3D_DISABLED
 	}
 
 	void test_case_end(const doctest::CurrentTestCaseStats &) override {

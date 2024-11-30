@@ -91,7 +91,7 @@ struct RegisterHeapIndexes {
 	}
 };
 
-TEST_SUITE("[Navigation]") {
+TEST_SUITE("[Navigation2D]") {
 	TEST_CASE("[NavigationServer2D] Server should be empty when initialized") {
 		NavigationServer2D *navigation_server = NavigationServer2D::get_singleton();
 		CHECK_EQ(navigation_server->get_maps().size(), 0);
