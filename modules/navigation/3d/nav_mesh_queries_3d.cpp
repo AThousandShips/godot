@@ -354,7 +354,7 @@ void NavMeshQueries3D::_query_task_build_path_corridor(NavMeshPathQueryTask3D &p
 	begin_navigation_poly.back_navigation_edge_pathway_end = begin_point;
 
 	// Heap of polygons to travel next.
-	gd::Heap<gd::NavigationPoly *, gd::NavPolyTravelCostGreaterThan, gd::NavPolyHeapIndexer>
+	Heap<gd::NavigationPoly *, gd::NavPolyTravelCostGreaterThan, gd::NavPolyHeapIndexer>
 			&traversable_polys = p_query_task.path_query_slot->traversable_polys;
 	traversable_polys.clear();
 	traversable_polys.reserve(p_polygons.size() * 0.25);

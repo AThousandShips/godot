@@ -45,7 +45,7 @@ class NavMeshQueries3D {
 public:
 	struct PathQuerySlot {
 		LocalVector<gd::NavigationPoly> path_corridor;
-		gd::Heap<gd::NavigationPoly *, gd::NavPolyTravelCostGreaterThan, gd::NavPolyHeapIndexer> traversable_polys;
+		Heap<gd::NavigationPoly *, gd::NavPolyTravelCostGreaterThan, gd::NavPolyHeapIndexer> traversable_polys;
 		bool in_use = false;
 		uint32_t slot_index = 0;
 	};
