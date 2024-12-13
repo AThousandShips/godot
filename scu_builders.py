@@ -318,6 +318,8 @@ def generate_scu_files(max_includes_per_scu):
     process_folder(["modules/navigation"])
     process_folder(["modules/navigation/2d"])
     process_folder(["modules/navigation/3d"])
+    process_folder(["modules/navigation_2d"])
+    process_folder(["modules/navigation_2d/2d"])
     process_folder(["modules/webrtc"])
     process_folder(["modules/websocket"])
     process_folder(["modules/gridmap"])

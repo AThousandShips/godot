@@ -3922,13 +3922,17 @@ int Main::start() {
 		if (debug_navigation) {
 			sml->set_debug_navigation_hint(true);
 			NavigationServer3D::get_singleton()->set_debug_navigation_enabled(true);
+			NavigationServer2D::get_singleton()->set_debug_navigation_enabled(true);
 		}
 		if (debug_avoidance) {
 			NavigationServer3D::get_singleton()->set_debug_avoidance_enabled(true);
+			NavigationServer2D::get_singleton()->set_debug_avoidance_enabled(true);
 		}
 		if (debug_navigation || debug_avoidance) {
 			NavigationServer3D::get_singleton()->set_active(true);
 			NavigationServer3D::get_singleton()->set_debug_enabled(true);
+			NavigationServer2D::get_singleton()->set_active(true);
+			NavigationServer2D::get_singleton()->set_debug_enabled(true);
 		}
 		if (debug_canvas_item_redraw) {
 			RenderingServer::get_singleton()->canvas_item_set_debug_redraw(true);
@@ -4408,6 +4412,7 @@ bool Main::iteration() {
 		uint64_t navigation_begin = OS::get_singleton()->get_ticks_usec();
 
 		NavigationServer3D::get_singleton()->process(physics_step * time_scale);
+		NavigationServer2D::get_singleton()->process(physics_step * time_scale);
 
 		navigation_process_ticks = MAX(navigation_process_ticks, OS::get_singleton()->get_ticks_usec() - navigation_begin); // keep the largest one for reference
 		navigation_process_max = MAX(OS::get_singleton()->get_ticks_usec() - navigation_begin, navigation_process_max);

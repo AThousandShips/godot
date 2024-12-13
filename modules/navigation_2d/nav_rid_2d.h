@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_obstacle.h                                                        */
+/*  nav_rid_2d.h                                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,92 +28,17 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAV_OBSTACLE_H
-#define NAV_OBSTACLE_H
+#ifndef NAV_RID_2D_H
+#define NAV_RID_2D_H
 
-#include "nav_rid.h"
+#include "core/templates/rid.h"
 
-#include "core/object/class_db.h"
-#include "core/templates/local_vector.h"
-#include "core/templates/self_list.h"
-
-class NavAgent;
-class NavMap;
-
-class NavObstacle : public NavRid {
-	NavAgent *agent = nullptr;
-	NavMap *map = nullptr;
-	Vector3 velocity;
-	Vector3 position;
-	Vector<Vector3> vertices;
-
-	real_t radius = 0.0;
-	real_t height = 0.0;
-
-	bool avoidance_enabled = false;
-#ifndef _3D_DISABLED
-	bool use_3d_avoidance = false;
-#endif
-	uint32_t avoidance_layers = 1;
-
-	bool obstacle_dirty = true;
-
-	uint32_t last_map_iteration_id = 0;
-	bool paused = false;
-
-	SelfList<NavObstacle> sync_dirty_request_list_element;
+class NavRid2D {
+	RID self;
 
 public:
-	NavObstacle();
-	~NavObstacle();
-
-	void set_avoidance_enabled(bool p_enabled);
-	bool is_avoidance_enabled() { return avoidance_enabled; }
-
-#ifdef _3D_DISABLED
-	void set_use_3d_avoidance(bool p_enabled) {}
-	bool get_use_3d_avoidance() { return false; }
-#else
-	void set_use_3d_avoidance(bool p_enabled);
-	bool get_use_3d_avoidance() { return use_3d_avoidance; }
-#endif
-
-	void set_map(NavMap *p_map);
-	NavMap *get_map() { return map; }
-
-	void set_agent(NavAgent *p_agent);
-	NavAgent *get_agent() { return agent; }
-
-	void set_position(const Vector3 p_position);
-	const Vector3 &get_position() const { return position; }
-
-	void set_radius(real_t p_radius);
-	real_t get_radius() const { return radius; }
-
-	void set_height(const real_t p_height);
-	real_t get_height() const { return height; }
-
-	void set_velocity(const Vector3 p_velocity);
-	const Vector3 &get_velocity() const { return velocity; }
-
-	void set_vertices(const Vector<Vector3> &p_vertices);
-	const Vector<Vector3> &get_vertices() const { return vertices; }
-
-	bool is_map_changed();
-
-	void set_avoidance_layers(uint32_t p_layers);
-	uint32_t get_avoidance_layers() const { return avoidance_layers; }
-
-	void set_paused(bool p_paused);
-	bool get_paused() const;
-
-	bool is_dirty() const;
-	void sync();
-	void request_sync();
-	void cancel_sync_request();
-
-private:
-	void internal_update_agent();
+	_FORCE_INLINE_ void set_self(const RID &p_self) { self = p_self; }
+	_FORCE_INLINE_ RID get_self() const { return self; }
 };
 
-#endif // NAV_OBSTACLE_H
+#endif // NAV_RID_2D_H

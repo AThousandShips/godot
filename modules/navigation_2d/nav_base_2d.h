@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_link.h                                                            */
+/*  nav_base_2d.h                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,56 +28,43 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAV_LINK_H
-#define NAV_LINK_H
+#ifndef NAV_BASE_2D_H
+#define NAV_BASE_2D_H
 
-#include "nav_base.h"
-#include "nav_utils.h"
+#include "nav_rid_2d.h"
+#include "nav_utils_2d.h"
 
-#include "core/templates/self_list.h"
+#include "servers/navigation/navigation_utilities.h"
 
-class NavLink : public NavBase {
-	NavMap *map = nullptr;
-	bool bidirectional = true;
-	Vector3 start_position;
-	Vector3 end_position;
-	bool enabled = true;
+class NavMap2D;
 
-	bool link_dirty = true;
-
-	SelfList<NavLink> sync_dirty_request_list_element;
+class NavBase2D : public NavRid2D {
+protected:
+	uint32_t navigation_layers = 1;
+	real_t enter_cost = 0.0;
+	real_t travel_cost = 1.0;
+	ObjectID owner_id;
+	NavigationUtilities::PathSegmentType type;
 
 public:
-	NavLink();
-	~NavLink();
+	NavigationUtilities::PathSegmentType get_type() const { return type; }
 
-	void set_map(NavMap *p_map);
-	NavMap *get_map() const {
-		return map;
-	}
+	virtual void set_use_edge_connections(bool p_enabled) {}
+	virtual bool get_use_edge_connections() const { return false; }
 
-	void set_enabled(bool p_enabled);
-	bool get_enabled() const { return enabled; }
+	void set_navigation_layers(uint32_t p_navigation_layers) { navigation_layers = p_navigation_layers; }
+	uint32_t get_navigation_layers() const { return navigation_layers; }
 
-	void set_bidirectional(bool p_bidirectional);
-	bool is_bidirectional() const {
-		return bidirectional;
-	}
+	void set_enter_cost(real_t p_enter_cost) { enter_cost = MAX(p_enter_cost, 0.0); }
+	real_t get_enter_cost() const { return enter_cost; }
 
-	void set_start_position(Vector3 p_position);
-	Vector3 get_start_position() const {
-		return start_position;
-	}
+	void set_travel_cost(real_t p_travel_cost) { travel_cost = MAX(p_travel_cost, 0.0); }
+	real_t get_travel_cost() const { return travel_cost; }
 
-	void set_end_position(Vector3 p_position);
-	Vector3 get_end_position() const {
-		return end_position;
-	}
+	void set_owner_id(ObjectID p_owner_id) { owner_id = p_owner_id; }
+	ObjectID get_owner_id() const { return owner_id; }
 
-	bool is_dirty() const;
-	void sync();
-	void request_sync();
-	void cancel_sync_request();
+	virtual ~NavBase2D() {}
 };
 
-#endif // NAV_LINK_H
+#endif // NAV_BASE_2D_H

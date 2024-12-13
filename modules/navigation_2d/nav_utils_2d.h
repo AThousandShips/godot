@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_utils.h                                                           */
+/*  nav_utils_2d.h                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,24 +28,23 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAV_UTILS_H
-#define NAV_UTILS_H
+#ifndef NAV_UTILS_2D_H
+#define NAV_UTILS_2D_H
 
-#include "core/math/vector3.h"
+#include "core/math/vector2.h"
 #include "core/templates/hash_map.h"
 #include "core/templates/hashfuncs.h"
 #include "core/templates/local_vector.h"
 
-class NavBase;
+class NavBase2D;
 
-namespace gd {
+namespace nav_2d {
 struct Polygon;
 
 union PointKey {
 	struct {
 		int64_t x : 21;
 		int64_t y : 22;
-		int64_t z : 21;
 	};
 
 	uint64_t key = 0;
@@ -73,7 +72,7 @@ struct EdgeKey {
 };
 
 struct Point {
-	Vector3 pos;
+	Vector2 pos;
 	PointKey key;
 };
 
@@ -87,10 +86,10 @@ struct Edge {
 		int edge = -1;
 
 		/// Point on the edge where the gateway leading to the poly starts.
-		Vector3 pathway_start;
+		Vector2 pathway_start;
 
 		/// Point on the edge where the gateway leading to the poly ends.
-		Vector3 pathway_end;
+		Vector2 pathway_end;
 	};
 
 	/// Connections from this edge to other polygons.
@@ -102,7 +101,7 @@ struct Polygon {
 	uint32_t id = UINT32_MAX;
 
 	/// Navigation region or link that contains this polygon.
-	const NavBase *owner = nullptr;
+	const NavBase2D *owner = nullptr;
 
 	/// The points of this `Polygon`
 	LocalVector<Point> points;
@@ -123,11 +122,11 @@ struct NavigationPoly {
 	/// Those 4 variables are used to travel the path backwards.
 	int back_navigation_poly_id = -1;
 	int back_navigation_edge = -1;
-	Vector3 back_navigation_edge_pathway_start;
-	Vector3 back_navigation_edge_pathway_end;
+	Vector2 back_navigation_edge_pathway_start;
+	Vector2 back_navigation_edge_pathway_end;
 
 	/// The entry position of this poly.
-	Vector3 entry;
+	Vector2 entry;
 	/// The distance traveled until now (g cost).
 	real_t traveled_distance = 0.0;
 	/// The distance to the destination (h cost).
@@ -179,8 +178,7 @@ struct NavPolyHeapIndexer {
 };
 
 struct ClosestPointQueryResult {
-	Vector3 point;
-	Vector3 normal;
+	Vector2 point;
 	RID owner;
 };
 
@@ -320,6 +318,6 @@ struct PerformanceData {
 	int pm_obstacle_count = 0;
 };
 
-} // namespace gd
+} // namespace nav_2d
 
-#endif // NAV_UTILS_H
+#endif // NAV_UTILS_2D_H

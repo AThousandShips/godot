@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  navigation_mesh_editor_plugin.h                                       */
+/*  nav_link_2d.h                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,62 +28,56 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAVIGATION_MESH_EDITOR_PLUGIN_H
-#define NAVIGATION_MESH_EDITOR_PLUGIN_H
+#ifndef NAV_LINK_2D_H
+#define NAV_LINK_2D_H
 
-#ifdef TOOLS_ENABLED
+#include "nav_base_2d.h"
+#include "nav_utils_2d.h"
 
-#include "editor/plugins/editor_plugin.h"
+#include "core/templates/self_list.h"
 
-class AcceptDialog;
-class Button;
-class HBoxContainer;
-class Label;
-class NavigationRegion3D;
+class NavLink2D : public NavBase2D {
+	NavMap2D *map = nullptr;
+	bool bidirectional = true;
+	Vector2 start_position;
+	Vector2 end_position;
+	bool enabled = true;
 
-class NavigationMeshEditor : public Control {
-	friend class NavigationMeshEditorPlugin;
+	bool link_dirty = true;
 
-	GDCLASS(NavigationMeshEditor, Control);
-
-	AcceptDialog *err_dialog = nullptr;
-
-	HBoxContainer *bake_hbox = nullptr;
-	Button *button_bake = nullptr;
-	Button *button_reset = nullptr;
-	Label *bake_info = nullptr;
-
-	NavigationRegion3D *node = nullptr;
-
-	void _bake_pressed();
-	void _clear_pressed();
-
-protected:
-	void _node_removed(Node *p_node);
-	void _notification(int p_what);
+	SelfList<NavLink2D> sync_dirty_request_list_element;
 
 public:
-	void edit(NavigationRegion3D *p_nav_region);
-	NavigationMeshEditor();
-	~NavigationMeshEditor();
+	NavLink2D();
+	~NavLink2D();
+
+	void set_map(NavMap2D *p_map);
+	NavMap2D *get_map() const {
+		return map;
+	}
+
+	void set_enabled(bool p_enabled);
+	bool get_enabled() const { return enabled; }
+
+	void set_bidirectional(bool p_bidirectional);
+	bool is_bidirectional() const {
+		return bidirectional;
+	}
+
+	void set_start_position(const Vector2 &p_position);
+	Vector2 get_start_position() const {
+		return start_position;
+	}
+
+	void set_end_position(const Vector2 &p_position);
+	Vector2 get_end_position() const {
+		return end_position;
+	}
+
+	bool is_dirty() const;
+	void sync();
+	void request_sync();
+	void cancel_sync_request();
 };
 
-class NavigationMeshEditorPlugin : public EditorPlugin {
-	GDCLASS(NavigationMeshEditorPlugin, EditorPlugin);
-
-	NavigationMeshEditor *navigation_mesh_editor = nullptr;
-
-public:
-	virtual String get_name() const override { return "NavigationMesh"; }
-	bool has_main_screen() const override { return false; }
-	virtual void edit(Object *p_object) override;
-	virtual bool handles(Object *p_object) const override;
-	virtual void make_visible(bool p_visible) override;
-
-	NavigationMeshEditorPlugin();
-	~NavigationMeshEditorPlugin();
-};
-
-#endif // TOOLS_ENABLED
-
-#endif // NAVIGATION_MESH_EDITOR_PLUGIN_H
+#endif // NAV_LINK_2D_H

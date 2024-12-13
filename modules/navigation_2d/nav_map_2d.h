@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_map.h                                                             */
+/*  nav_map_2d.h                                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,12 +28,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAV_MAP_H
-#define NAV_MAP_H
+#ifndef NAV_MAP_2D_H
+#define NAV_MAP_2D_H
 
-#include "3d/nav_mesh_queries_3d.h"
-#include "nav_rid.h"
-#include "nav_utils.h"
+#include "2d/nav_mesh_queries_2d.h"
+#include "nav_rid_2d.h"
+#include "nav_utils_2d.h"
 
 #include "core/math/math_defs.h"
 #include "core/object/worker_thread_pool.h"
@@ -41,73 +41,58 @@
 
 #include <KdTree2d.h>
 #include <RVOSimulator2d.h>
-#ifndef _3D_DISABLED
-#include <KdTree3d.h>
-#include <RVOSimulator3d.h>
-#endif
 
-class NavLink;
-class NavRegion;
-class NavAgent;
-class NavObstacle;
+class NavLink2D;
+class NavRegion2D;
+class NavAgent2D;
+class NavObstacle2D;
 
-class NavMap : public NavRid {
+class NavMap2D : public NavRid2D {
 	RWLock map_rwlock;
-
-	/// Map Up
-	Vector3 up = Vector3(0, 1, 0);
 
 	/// To find the polygons edges the vertices are displaced in a grid where
 	/// each cell has the following cell_size and cell_height.
-	real_t cell_size = NavigationDefaults3D::navmesh_cell_size;
-	real_t cell_height = NavigationDefaults3D::navmesh_cell_height;
+	real_t cell_size = NavigationDefaults2D::navmesh_cell_size;
 
 	// For the inter-region merging to work, internal rasterization is performed.
-	float merge_rasterizer_cell_size = NavigationDefaults3D::navmesh_cell_size;
-	float merge_rasterizer_cell_height = NavigationDefaults3D::navmesh_cell_height;
+	float merge_rasterizer_cell_size = NavigationDefaults2D::navmesh_cell_size;
 	// This value is used to control sensitivity of internal rasterizer.
 	float merge_rasterizer_cell_scale = 1.0;
 
 	bool use_edge_connections = true;
 	/// This value is used to detect the near edges to connect.
-	real_t edge_connection_margin = NavigationDefaults3D::edge_connection_margin;
+	real_t edge_connection_margin = NavigationDefaults2D::edge_connection_margin;
 
 	/// This value is used to limit how far links search to find polygons to connect to.
-	real_t link_connection_radius = NavigationDefaults3D::link_connection_radius;
+	real_t link_connection_radius = NavigationDefaults2D::link_connection_radius;
 
 	bool map_settings_dirty = true;
 	bool iteration_dirty = true;
 
 	/// Map regions
-	LocalVector<NavRegion *> regions;
+	LocalVector<NavRegion2D *> regions;
 
 	/// Map links
-	LocalVector<NavLink *> links;
-	LocalVector<gd::Polygon> link_polygons;
+	LocalVector<NavLink2D *> links;
+	LocalVector<nav_2d::Polygon> link_polygons;
 
 	/// Map polygons
-	LocalVector<gd::Polygon> polygons;
+	LocalVector<nav_2d::Polygon> polygons;
 
-	/// RVO avoidance worlds
-	RVO2D::RVOSimulator2D rvo_simulation_2d;
-#ifndef _3D_DISABLED
-	RVO3D::RVOSimulator3D rvo_simulation_3d;
-#endif
+	/// RVO avoidance world
+	RVO2D::RVOSimulator2D rvo_simulation;
 
-	/// avoidance controlled agents
-	LocalVector<NavAgent *> active_2d_avoidance_agents;
-#ifndef _3D_DISABLED
-	LocalVector<NavAgent *> active_3d_avoidance_agents;
-#endif
+	/// Avoidance controlled agents
+	LocalVector<NavAgent2D *> active_avoidance_agents;
 
 	/// dirty flag when one of the agent's arrays are modified
 	bool agents_dirty = true;
 
 	/// All the Agents (even the controlled one)
-	LocalVector<NavAgent *> agents;
+	LocalVector<NavAgent2D *> agents;
 
 	/// All the avoidance obstacles (both static and dynamic)
-	LocalVector<NavObstacle *> obstacles;
+	LocalVector<NavObstacle2D *> obstacles;
 
 	/// Are rvo obstacles modified?
 	bool obstacles_dirty = true;
@@ -122,49 +107,41 @@ class NavMap : public NavRid {
 	bool avoidance_use_multiple_threads = true;
 	bool avoidance_use_high_priority_threads = true;
 
-	// Performance Monitor
-	gd::PerformanceData performance_data;
+	// Performance Monitor.
+	nav_2d::PerformanceData performance_data;
 
-	HashMap<NavRegion *, LocalVector<gd::Edge::Connection>> region_external_connections;
+	HashMap<NavRegion2D *, LocalVector<nav_2d::Edge::Connection>> region_external_connections;
 
 	struct ConnectionPair {
-		gd::Edge::Connection connections[2];
+		nav_2d::Edge::Connection connections[2];
 		int size = 0;
 	};
 
-	HashMap<gd::EdgeKey, ConnectionPair, gd::EdgeKey> connection_pairs_map;
-	LocalVector<gd::Edge::Connection> free_edges;
+	HashMap<nav_2d::EdgeKey, ConnectionPair, nav_2d::EdgeKey> connection_pairs_map;
+	LocalVector<nav_2d::Edge::Connection> free_edges;
 
 	struct {
-		SelfList<NavRegion>::List regions;
-		SelfList<NavLink>::List links;
-		SelfList<NavAgent>::List agents;
-		SelfList<NavObstacle>::List obstacles;
+		SelfList<NavRegion2D>::List regions;
+		SelfList<NavLink2D>::List links;
+		SelfList<NavAgent2D>::List agents;
+		SelfList<NavObstacle2D>::List obstacles;
 	} sync_dirty_requests;
 
-	LocalVector<NavMeshQueries3D::PathQuerySlot> path_query_slots;
+	LocalVector<NavMeshQueries2D::PathQuerySlot> path_query_slots;
 	int path_query_slots_max = 4;
 	Mutex path_query_slots_mutex;
 	Semaphore path_query_slots_semaphore;
 
 public:
-	NavMap();
-	~NavMap();
+	NavMap2D();
+	~NavMap2D();
 
 	uint32_t get_iteration_id() const { return iteration_id; }
-
-	void set_up(Vector3 p_up);
-	Vector3 get_up() const {
-		return up;
-	}
 
 	void set_cell_size(real_t p_cell_size);
 	real_t get_cell_size() const {
 		return cell_size;
 	}
-
-	void set_cell_height(real_t p_cell_height);
-	real_t get_cell_height() const { return cell_height; }
 
 	void set_merge_rasterizer_cell_scale(float p_value);
 	float get_merge_rasterizer_cell_scale() const {
@@ -186,46 +163,43 @@ public:
 		return link_connection_radius;
 	}
 
-	gd::PointKey get_point_key(const Vector3 &p_pos) const;
+	nav_2d::PointKey get_point_key(const Vector2 &p_pos) const;
 
-	void query_path(NavMeshQueries3D::NavMeshPathQueryTask3D &p_query_task);
+	void query_path(NavMeshQueries2D::NavMeshPathQueryTask2D &p_query_task);
 
-	Vector3 get_closest_point_to_segment(const Vector3 &p_from, const Vector3 &p_to, const bool p_use_collision) const;
-	Vector3 get_closest_point(const Vector3 &p_point) const;
-	Vector3 get_closest_point_normal(const Vector3 &p_point) const;
-	gd::ClosestPointQueryResult get_closest_point_info(const Vector3 &p_point) const;
-	RID get_closest_point_owner(const Vector3 &p_point) const;
+	Vector2 get_closest_point(const Vector2 &p_point) const;
+	RID get_closest_point_owner(const Vector2 &p_point) const;
 
-	void add_region(NavRegion *p_region);
-	void remove_region(NavRegion *p_region);
-	const LocalVector<NavRegion *> &get_regions() const {
+	void add_region(NavRegion2D *p_region);
+	void remove_region(NavRegion2D *p_region);
+	const LocalVector<NavRegion2D *> &get_regions() const {
 		return regions;
 	}
 
-	void add_link(NavLink *p_link);
-	void remove_link(NavLink *p_link);
-	const LocalVector<NavLink *> &get_links() const {
+	void add_link(NavLink2D *p_link);
+	void remove_link(NavLink2D *p_link);
+	const LocalVector<NavLink2D *> &get_links() const {
 		return links;
 	}
 
-	bool has_agent(NavAgent *agent) const;
-	void add_agent(NavAgent *agent);
-	void remove_agent(NavAgent *agent);
-	const LocalVector<NavAgent *> &get_agents() const {
+	bool has_agent(NavAgent2D *p_agent) const;
+	void add_agent(NavAgent2D *p_agent);
+	void remove_agent(NavAgent2D *p_agent);
+	const LocalVector<NavAgent2D *> &get_agents() const {
 		return agents;
 	}
 
-	void set_agent_as_controlled(NavAgent *agent);
-	void remove_agent_as_controlled(NavAgent *agent);
+	void set_agent_as_controlled(NavAgent2D *p_agent);
+	void remove_agent_as_controlled(NavAgent2D *p_agent);
 
-	bool has_obstacle(NavObstacle *obstacle) const;
-	void add_obstacle(NavObstacle *obstacle);
-	void remove_obstacle(NavObstacle *obstacle);
-	const LocalVector<NavObstacle *> &get_obstacles() const {
+	bool has_obstacle(NavObstacle2D *p_obstacle) const;
+	void add_obstacle(NavObstacle2D *p_obstacle);
+	void remove_obstacle(NavObstacle2D *op_bstacle);
+	const LocalVector<NavObstacle2D *> &get_obstacles() const {
 		return obstacles;
 	}
 
-	Vector3 get_random_point(uint32_t p_navigation_layers, bool p_uniformly) const;
+	Vector2 get_random_point(uint32_t p_navigation_layers, bool p_uniformly) const;
 
 	void sync();
 	void step(real_t p_deltatime);
@@ -242,44 +216,34 @@ public:
 	int get_pm_edge_free_count() const { return performance_data.pm_edge_free_count; }
 	int get_pm_obstacle_count() const { return performance_data.pm_obstacle_count; }
 
-	int get_region_connections_count(NavRegion *p_region) const;
-	Vector3 get_region_connection_pathway_start(NavRegion *p_region, int p_connection_id) const;
-	Vector3 get_region_connection_pathway_end(NavRegion *p_region, int p_connection_id) const;
+	int get_region_connections_count(NavRegion2D *p_region) const;
+	Vector2 get_region_connection_pathway_start(NavRegion2D *p_region, int p_connection_id) const;
+	Vector2 get_region_connection_pathway_end(NavRegion2D *p_region, int p_connection_id) const;
 
-	void add_region_sync_dirty_request(SelfList<NavRegion> *p_sync_request);
-	void add_link_sync_dirty_request(SelfList<NavLink> *p_sync_request);
-	void add_agent_sync_dirty_request(SelfList<NavAgent> *p_sync_request);
-	void add_obstacle_sync_dirty_request(SelfList<NavObstacle> *p_sync_request);
+	void add_region_sync_dirty_request(SelfList<NavRegion2D> *p_sync_request);
+	void add_link_sync_dirty_request(SelfList<NavLink2D> *p_sync_request);
+	void add_agent_sync_dirty_request(SelfList<NavAgent2D> *p_sync_request);
+	void add_obstacle_sync_dirty_request(SelfList<NavObstacle2D> *p_sync_request);
 
-	void remove_region_sync_dirty_request(SelfList<NavRegion> *p_sync_request);
-	void remove_link_sync_dirty_request(SelfList<NavLink> *p_sync_request);
-	void remove_agent_sync_dirty_request(SelfList<NavAgent> *p_sync_request);
-	void remove_obstacle_sync_dirty_request(SelfList<NavObstacle> *p_sync_request);
+	void remove_region_sync_dirty_request(SelfList<NavRegion2D> *p_sync_request);
+	void remove_link_sync_dirty_request(SelfList<NavLink2D> *p_sync_request);
+	void remove_agent_sync_dirty_request(SelfList<NavAgent2D> *p_sync_request);
+	void remove_obstacle_sync_dirty_request(SelfList<NavObstacle2D> *p_sync_request);
 
 private:
 	void _sync_dirty_map_update_requests();
 	void _sync_dirty_avoidance_update_requests();
 
-	void compute_single_step(uint32_t index, NavAgent **agent);
+	void compute_single_step(uint32_t p_index, NavAgent2D **p_agent);
 
-	void compute_single_avoidance_step_2d(uint32_t index, NavAgent **agent);
-#ifdef _3D_DISABLED
-	void compute_single_avoidance_step_3d(uint32_t index, NavAgent **agent) {}
-#else
-	void compute_single_avoidance_step_3d(uint32_t index, NavAgent **agent);
-#endif
+	void compute_single_avoidance_step(uint32_t p_index, NavAgent2D **p_agent);
 
 	void _sync_avoidance();
 	void _update_rvo_simulation();
-	void _update_rvo_obstacles_tree_2d();
-	void _update_rvo_agents_tree_2d();
-#ifdef _3D_DISABLED
-	void _update_rvo_agents_tree_3d() {}
-#else
-	void _update_rvo_agents_tree_3d();
-#endif
+	void _update_rvo_obstacles_tree();
+	void _update_rvo_agents_tree();
 
 	void _update_merge_rasterizer_cell_dimensions();
 };
 
-#endif // NAV_MAP_H
+#endif // NAV_MAP_2D_H

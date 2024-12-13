@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_rid.h                                                             */
+/*  triangle2.h                                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,17 +28,28 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAV_RID_H
-#define NAV_RID_H
+#ifndef TRIANGLE2_H
+#define TRIANGLE2_H
 
-#include "core/templates/rid.h"
+#include "core/math/vector2.h"
 
-class NavRid {
-	RID self;
+struct Triangle2 {
+	Vector2 vertex[3];
 
-public:
-	_FORCE_INLINE_ void set_self(const RID &p_self) { self = p_self; }
-	_FORCE_INLINE_ RID get_self() const { return self; }
+	real_t get_area() const {
+		return Math::sqrt((vertex[0] - vertex[1]).cross(vertex[0] - vertex[2])) * 0.5f;
+	}
+
+	Vector2 get_random_point_inside() const;
+
+	Vector2 get_closest_point_to(const Vector2 &p_point) const;
+
+	Triangle2() {}
+	Triangle2(const Vector2 &p_v1, const Vector2 &p_v2, const Vector2 &p_v3) {
+		vertex[0] = p_v1;
+		vertex[1] = p_v2;
+		vertex[2] = p_v3;
+	}
 };
 
-#endif // NAV_RID_H
+#endif // TRIANGLE2_H

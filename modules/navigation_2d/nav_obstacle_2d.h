@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  navigation_mesh_generator.h                                           */
+/*  nav_obstacle_2d.h                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,37 +28,77 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAVIGATION_MESH_GENERATOR_H
-#define NAVIGATION_MESH_GENERATOR_H
+#ifndef NAV_OBSTACLE_2D_H
+#define NAV_OBSTACLE_2D_H
 
-#ifndef _3D_DISABLED
+#include "nav_rid_2d.h"
 
-#include "scene/3d/navigation_region_3d.h"
-#include "scene/resources/navigation_mesh.h"
+#include "core/object/class_db.h"
+#include "core/templates/local_vector.h"
+#include "core/templates/self_list.h"
 
-class NavigationMeshSourceGeometryData3D;
+class NavAgent2D;
+class NavMap2D;
 
-class NavigationMeshGenerator : public Object {
-	GDCLASS(NavigationMeshGenerator, Object);
+class NavObstacle2D : public NavRid2D {
+	NavAgent2D *agent = nullptr;
+	NavMap2D *map = nullptr;
+	Vector2 velocity;
+	Vector2 position;
+	Vector<Vector2> vertices;
 
-	static NavigationMeshGenerator *singleton;
+	real_t radius = 0.0;
 
-protected:
-	static void _bind_methods();
+	bool avoidance_enabled = false;
+	uint32_t avoidance_layers = 1;
+
+	bool obstacle_dirty = true;
+
+	uint32_t last_map_iteration_id = 0;
+	bool paused = false;
+
+	SelfList<NavObstacle2D> sync_dirty_request_list_element;
 
 public:
-	static NavigationMeshGenerator *get_singleton();
+	NavObstacle2D();
+	~NavObstacle2D();
 
-	NavigationMeshGenerator();
-	~NavigationMeshGenerator();
+	void set_avoidance_enabled(bool p_enabled);
+	bool is_avoidance_enabled() { return avoidance_enabled; }
 
-	void bake(const Ref<NavigationMesh> &p_navigation_mesh, Node *p_root_node);
-	void clear(Ref<NavigationMesh> p_navigation_mesh);
+	void set_map(NavMap2D *p_map);
+	NavMap2D *get_map() { return map; }
 
-	void parse_source_geometry_data(const Ref<NavigationMesh> &p_navigation_mesh, Ref<NavigationMeshSourceGeometryData3D> p_source_geometry_data, Node *p_root_node, const Callable &p_callback = Callable());
-	void bake_from_source_geometry_data(Ref<NavigationMesh> p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData3D> &p_source_geometry_data, const Callable &p_callback = Callable());
+	void set_agent(NavAgent2D *p_agent);
+	NavAgent2D *get_agent() { return agent; }
+
+	void set_position(const Vector2 &p_position);
+	const Vector2 &get_position() const { return position; }
+
+	void set_radius(real_t p_radius);
+	real_t get_radius() const { return radius; }
+
+	void set_velocity(const Vector2 &p_velocity);
+	const Vector2 &get_velocity() const { return velocity; }
+
+	void set_vertices(const Vector<Vector2> &p_vertices);
+	const Vector<Vector2> &get_vertices() const { return vertices; }
+
+	bool is_map_changed();
+
+	void set_avoidance_layers(uint32_t p_layers);
+	uint32_t get_avoidance_layers() const { return avoidance_layers; }
+
+	void set_paused(bool p_paused);
+	bool get_paused() const;
+
+	bool is_dirty() const;
+	void sync();
+	void request_sync();
+	void cancel_sync_request();
+
+private:
+	void internal_update_agent();
 };
 
-#endif
-
-#endif // NAVIGATION_MESH_GENERATOR_H
+#endif // NAV_OBSTACLE_2D_H

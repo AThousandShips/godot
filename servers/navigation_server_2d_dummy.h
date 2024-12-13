@@ -160,6 +160,8 @@ public:
 
 	void query_path(const Ref<NavigationPathQueryParameters2D> &p_query_parameters, Ref<NavigationPathQueryResult2D> p_query_result, const Callable &p_callback = Callable()) override {}
 
+	void set_active(bool p_active) override {}
+	void process(real_t p_delta_time) override {}
 	void init() override {}
 	void sync() override {}
 	void finish() override {}
@@ -173,6 +175,8 @@ public:
 
 	RID source_geometry_parser_create() override { return RID(); }
 	void source_geometry_parser_set_callback(RID p_parser, const Callable &p_callback) override {}
+
+	int get_process_info(ProcessInfo p_info) const override { return 0; }
 
 	Vector<Vector2> simplify_path(const Vector<Vector2> &p_path, real_t p_epsilon) override { return Vector<Vector2>(); }
 
