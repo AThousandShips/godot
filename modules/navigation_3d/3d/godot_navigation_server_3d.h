@@ -31,11 +31,11 @@
 #ifndef GODOT_NAVIGATION_SERVER_3D_H
 #define GODOT_NAVIGATION_SERVER_3D_H
 
-#include "../nav_agent.h"
-#include "../nav_link.h"
-#include "../nav_map.h"
-#include "../nav_obstacle.h"
-#include "../nav_region.h"
+#include "../nav_agent_3d.h"
+#include "../nav_link_3d.h"
+#include "../nav_map_3d.h"
+#include "../nav_obstacle_3d.h"
+#include "../nav_region_3d.h"
 
 #include "core/templates/local_vector.h"
 #include "core/templates/rid.h"
@@ -60,8 +60,8 @@
 class GodotNavigationServer3D;
 class NavMeshGenerator3D;
 
-struct SetCommand {
-	virtual ~SetCommand() {}
+struct SetCommand3D {
+	virtual ~SetCommand3D() {}
 	virtual void exec(GodotNavigationServer3D *server) = 0;
 };
 
@@ -70,16 +70,16 @@ class GodotNavigationServer3D : public NavigationServer3D {
 	/// Mutex used to make any operation threadsafe.
 	Mutex operations_mutex;
 
-	LocalVector<SetCommand *> commands;
+	LocalVector<SetCommand3D *> commands;
 
-	mutable RID_Owner<NavLink> link_owner;
-	mutable RID_Owner<NavMap> map_owner;
-	mutable RID_Owner<NavRegion> region_owner;
-	mutable RID_Owner<NavAgent> agent_owner;
-	mutable RID_Owner<NavObstacle> obstacle_owner;
+	mutable RID_Owner<NavLink3D> link_owner;
+	mutable RID_Owner<NavMap3D> map_owner;
+	mutable RID_Owner<NavRegion3D> region_owner;
+	mutable RID_Owner<NavAgent3D> agent_owner;
+	mutable RID_Owner<NavObstacle3D> obstacle_owner;
 
 	bool active = true;
-	LocalVector<NavMap *> active_maps;
+	LocalVector<NavMap3D *> active_maps;
 	LocalVector<uint32_t> active_maps_iteration_id;
 
 	NavMeshGenerator3D *navmesh_generator_3d = nullptr;
@@ -99,7 +99,7 @@ public:
 	GodotNavigationServer3D();
 	virtual ~GodotNavigationServer3D();
 
-	void add_command(SetCommand *command);
+	void add_command(SetCommand3D *command);
 
 	virtual TypedArray<RID> get_maps() const override;
 

@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_obstacle.h                                                        */
+/*  nav_link_3d.cpp                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,85 +28,97 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAV_OBSTACLE_H
-#define NAV_OBSTACLE_H
+#include "nav_link_3d.h"
 
-#include "nav_rid.h"
+#include "nav_map_3d.h"
 
-#include "core/object/class_db.h"
-#include "core/templates/local_vector.h"
-#include "core/templates/self_list.h"
+void NavLink3D::set_map(NavMap3D *p_map) {
+	if (map == p_map) {
+		return;
+	}
 
-class NavAgent;
-class NavMap;
+	cancel_sync_request();
 
-class NavObstacle : public NavRid {
-	NavAgent *agent = nullptr;
-	NavMap *map = nullptr;
-	Vector3 velocity;
-	Vector3 position;
-	Vector<Vector3> vertices;
+	if (map) {
+		map->remove_link(this);
+	}
 
-	real_t radius = 0.0;
-	real_t height = 0.0;
+	map = p_map;
+	link_dirty = true;
 
-	bool avoidance_enabled = false;
-	bool use_3d_avoidance = false;
-	uint32_t avoidance_layers = 1;
+	if (map) {
+		map->add_link(this);
+		request_sync();
+	}
+}
 
-	bool obstacle_dirty = true;
+void NavLink3D::set_enabled(bool p_enabled) {
+	if (enabled == p_enabled) {
+		return;
+	}
+	enabled = p_enabled;
 
-	uint32_t last_map_iteration_id = 0;
-	bool paused = false;
+	// TODO: This should not require a full rebuild as the link has not really changed.
+	link_dirty = true;
 
-	SelfList<NavObstacle> sync_dirty_request_list_element;
+	request_sync();
+}
 
-public:
-	NavObstacle();
-	~NavObstacle();
+void NavLink3D::set_bidirectional(bool p_bidirectional) {
+	if (bidirectional == p_bidirectional) {
+		return;
+	}
+	bidirectional = p_bidirectional;
+	link_dirty = true;
 
-	void set_avoidance_enabled(bool p_enabled);
-	bool is_avoidance_enabled() { return avoidance_enabled; }
+	request_sync();
+}
 
-	void set_use_3d_avoidance(bool p_enabled);
-	bool get_use_3d_avoidance() { return use_3d_avoidance; }
+void NavLink3D::set_start_position(const Vector3 &p_position) {
+	if (start_position == p_position) {
+		return;
+	}
+	start_position = p_position;
+	link_dirty = true;
 
-	void set_map(NavMap *p_map);
-	NavMap *get_map() { return map; }
+	request_sync();
+}
 
-	void set_agent(NavAgent *p_agent);
-	NavAgent *get_agent() { return agent; }
+void NavLink3D::set_end_position(const Vector3 &p_position) {
+	if (end_position == p_position) {
+		return;
+	}
+	end_position = p_position;
+	link_dirty = true;
 
-	void set_position(const Vector3 p_position);
-	const Vector3 &get_position() const { return position; }
+	request_sync();
+}
 
-	void set_radius(real_t p_radius);
-	real_t get_radius() const { return radius; }
+bool NavLink3D::is_dirty() const {
+	return link_dirty;
+}
 
-	void set_height(const real_t p_height);
-	real_t get_height() const { return height; }
+void NavLink3D::sync() {
+	link_dirty = false;
+}
 
-	void set_velocity(const Vector3 p_velocity);
-	const Vector3 &get_velocity() const { return velocity; }
+void NavLink3D::request_sync() {
+	if (map && !sync_dirty_request_list_element.in_list()) {
+		map->add_link_sync_dirty_request(&sync_dirty_request_list_element);
+	}
+}
 
-	void set_vertices(const Vector<Vector3> &p_vertices);
-	const Vector<Vector3> &get_vertices() const { return vertices; }
+void NavLink3D::cancel_sync_request() {
+	if (map && sync_dirty_request_list_element.in_list()) {
+		map->remove_link_sync_dirty_request(&sync_dirty_request_list_element);
+	}
+}
 
-	bool is_map_changed();
+NavLink3D::NavLink3D() :
+		sync_dirty_request_list_element(this) {
+	type = NavigationUtilities::PathSegmentType::PATH_SEGMENT_TYPE_LINK;
+}
 
-	void set_avoidance_layers(uint32_t p_layers);
-	uint32_t get_avoidance_layers() const { return avoidance_layers; }
-
-	void set_paused(bool p_paused);
-	bool get_paused() const;
-
-	bool is_dirty() const;
-	void sync();
-	void request_sync();
-	void cancel_sync_request();
-
-private:
-	void internal_update_agent();
-};
-
-#endif // NAV_OBSTACLE_H
+NavLink3D::~NavLink3D() {
+	cancel_sync_request();
+}

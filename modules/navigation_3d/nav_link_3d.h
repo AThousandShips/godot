@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_link.cpp                                                          */
+/*  nav_link_3d.h                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,97 +28,56 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "nav_link.h"
+#ifndef NAV_LINK_3D_H
+#define NAV_LINK_3D_H
 
-#include "nav_map.h"
+#include "nav_base_3d.h"
+#include "nav_utils_3d.h"
 
-void NavLink::set_map(NavMap *p_map) {
-	if (map == p_map) {
-		return;
+#include "core/templates/self_list.h"
+
+class NavLink3D : public NavBase3D {
+	NavMap3D *map = nullptr;
+	bool bidirectional = true;
+	Vector3 start_position;
+	Vector3 end_position;
+	bool enabled = true;
+
+	bool link_dirty = true;
+
+	SelfList<NavLink3D> sync_dirty_request_list_element;
+
+public:
+	NavLink3D();
+	~NavLink3D();
+
+	void set_map(NavMap3D *p_map);
+	NavMap3D *get_map() const {
+		return map;
 	}
 
-	cancel_sync_request();
+	void set_enabled(bool p_enabled);
+	bool get_enabled() const { return enabled; }
 
-	if (map) {
-		map->remove_link(this);
+	void set_bidirectional(bool p_bidirectional);
+	bool is_bidirectional() const {
+		return bidirectional;
 	}
 
-	map = p_map;
-	link_dirty = true;
-
-	if (map) {
-		map->add_link(this);
-		request_sync();
+	void set_start_position(const Vector3 &p_position);
+	Vector3 get_start_position() const {
+		return start_position;
 	}
-}
 
-void NavLink::set_enabled(bool p_enabled) {
-	if (enabled == p_enabled) {
-		return;
+	void set_end_position(const Vector3 &p_position);
+	Vector3 get_end_position() const {
+		return end_position;
 	}
-	enabled = p_enabled;
 
-	// TODO: This should not require a full rebuild as the link has not really changed.
-	link_dirty = true;
+	bool is_dirty() const;
+	void sync();
+	void request_sync();
+	void cancel_sync_request();
+};
 
-	request_sync();
-}
-
-void NavLink::set_bidirectional(bool p_bidirectional) {
-	if (bidirectional == p_bidirectional) {
-		return;
-	}
-	bidirectional = p_bidirectional;
-	link_dirty = true;
-
-	request_sync();
-}
-
-void NavLink::set_start_position(const Vector3 p_position) {
-	if (start_position == p_position) {
-		return;
-	}
-	start_position = p_position;
-	link_dirty = true;
-
-	request_sync();
-}
-
-void NavLink::set_end_position(const Vector3 p_position) {
-	if (end_position == p_position) {
-		return;
-	}
-	end_position = p_position;
-	link_dirty = true;
-
-	request_sync();
-}
-
-bool NavLink::is_dirty() const {
-	return link_dirty;
-}
-
-void NavLink::sync() {
-	link_dirty = false;
-}
-
-void NavLink::request_sync() {
-	if (map && !sync_dirty_request_list_element.in_list()) {
-		map->add_link_sync_dirty_request(&sync_dirty_request_list_element);
-	}
-}
-
-void NavLink::cancel_sync_request() {
-	if (map && sync_dirty_request_list_element.in_list()) {
-		map->remove_link_sync_dirty_request(&sync_dirty_request_list_element);
-	}
-}
-
-NavLink::NavLink() :
-		sync_dirty_request_list_element(this) {
-	type = NavigationUtilities::PathSegmentType::PATH_SEGMENT_TYPE_LINK;
-}
-
-NavLink::~NavLink() {
-	cancel_sync_request();
-}
+#endif // NAV_LINK_3D_H

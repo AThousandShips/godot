@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_base.h                                                            */
+/*  register_types.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,43 +28,55 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAV_BASE_H
-#define NAV_BASE_H
+#include "register_types.h"
 
-#include "nav_rid.h"
-#include "nav_utils.h"
+#include "3d/godot_navigation_server_3d.h"
 
-#include "servers/navigation/navigation_utilities.h"
+#ifndef DISABLE_DEPRECATED
+#include "3d/navigation_mesh_generator.h"
+#endif // DISABLE_DEPRECATED
 
-class NavMap;
+#ifdef TOOLS_ENABLED
+#include "editor/navigation_mesh_editor_plugin.h"
+#endif
 
-class NavBase : public NavRid {
-protected:
-	uint32_t navigation_layers = 1;
-	real_t enter_cost = 0.0;
-	real_t travel_cost = 1.0;
-	ObjectID owner_id;
-	NavigationUtilities::PathSegmentType type;
+#include "core/config/engine.h"
+#include "servers/navigation_server_3d.h"
 
-public:
-	NavigationUtilities::PathSegmentType get_type() const { return type; }
+#ifndef DISABLE_DEPRECATED
+NavigationMeshGenerator *_nav_mesh_generator = nullptr;
+#endif // DISABLE_DEPRECATED
 
-	virtual void set_use_edge_connections(bool p_enabled) {}
-	virtual bool get_use_edge_connections() const { return false; }
+NavigationServer3D *new_navigation_server_3d() {
+	return memnew(GodotNavigationServer3D);
+}
 
-	void set_navigation_layers(uint32_t p_navigation_layers) { navigation_layers = p_navigation_layers; }
-	uint32_t get_navigation_layers() const { return navigation_layers; }
+void initialize_navigation_3d_module(ModuleInitializationLevel p_level) {
+	if (p_level == MODULE_INITIALIZATION_LEVEL_SERVERS) {
+		NavigationServer3DManager::set_default_server(new_navigation_server_3d);
 
-	void set_enter_cost(real_t p_enter_cost) { enter_cost = MAX(p_enter_cost, 0.0); }
-	real_t get_enter_cost() const { return enter_cost; }
+#ifndef DISABLE_DEPRECATED
+		_nav_mesh_generator = memnew(NavigationMeshGenerator);
+		GDREGISTER_CLASS(NavigationMeshGenerator);
+		Engine::get_singleton()->add_singleton(Engine::Singleton("NavigationMeshGenerator", NavigationMeshGenerator::get_singleton()));
+#endif // DISABLE_DEPRECATED
+	}
 
-	void set_travel_cost(real_t p_travel_cost) { travel_cost = MAX(p_travel_cost, 0.0); }
-	real_t get_travel_cost() const { return travel_cost; }
+#ifdef TOOLS_ENABLED
+	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR) {
+		EditorPlugins::add_by_type<NavigationMeshEditorPlugin>();
+	}
+#endif
+}
 
-	void set_owner_id(ObjectID p_owner_id) { owner_id = p_owner_id; }
-	ObjectID get_owner_id() const { return owner_id; }
+void uninitialize_navigation_3d_module(ModuleInitializationLevel p_level) {
+	if (p_level != MODULE_INITIALIZATION_LEVEL_SERVERS) {
+		return;
+	}
 
-	virtual ~NavBase() {}
-};
-
-#endif // NAV_BASE_H
+#ifndef DISABLE_DEPRECATED
+	if (_nav_mesh_generator) {
+		memdelete(_nav_mesh_generator);
+	}
+#endif // DISABLE_DEPRECATED
+}

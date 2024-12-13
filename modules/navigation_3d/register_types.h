@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_rid.h                                                             */
+/*  register_types.h                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,17 +28,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAV_RID_H
-#define NAV_RID_H
+#ifndef NAVIGATION_3D_REGISTER_TYPES_H
+#define NAVIGATION_3D_REGISTER_TYPES_H
 
-#include "core/templates/rid.h"
+#include "modules/register_module_types.h"
 
-class NavRid {
-	RID self;
+void initialize_navigation_3d_module(ModuleInitializationLevel p_level);
+void uninitialize_navigation_3d_module(ModuleInitializationLevel p_level);
 
-public:
-	_FORCE_INLINE_ void set_self(const RID &p_self) { self = p_self; }
-	_FORCE_INLINE_ RID get_self() const { return self; }
-};
-
-#endif // NAV_RID_H
+#endif // NAVIGATION_3D_REGISTER_TYPES_H

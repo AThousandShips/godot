@@ -9,7 +9,7 @@ env_navigation_2d = env_modules.Clone()
 # Thirdparty source files.
 
 thirdparty_obj = []
-navigation_enabled = "navigation" in env.module_list
+navigation_3d_enabled = "navigation_3d" in env.module_list
 
 # RVO 2D Thirdparty source files.
 if env["builtin_rvo2_2d"]:
@@ -25,7 +25,7 @@ if env["builtin_rvo2_2d"]:
     env_navigation_2d.Prepend(CPPPATH=[thirdparty_dir])
 
     # Don't build rvo_2d if 3D navigation is enabled.
-    if not navigation_enabled:
+    if not navigation_3d_enabled:
         env_thirdparty = env_navigation_2d.Clone()
         env_thirdparty.disable_warnings()
         env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)

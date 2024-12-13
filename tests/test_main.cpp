@@ -163,12 +163,12 @@
 #include "tests/servers/test_navigation_server_2d.h"
 #endif // MODULE_NAVIGATION_2D_ENABLED
 
-#ifdef MODULE_NAVIGATION_ENABLED
+#ifdef MODULE_NAVIGATION_3D_ENABLED
 #include "tests/scene/test_navigation_agent_3d.h"
 #include "tests/scene/test_navigation_obstacle_3d.h"
 #include "tests/scene/test_navigation_region_3d.h"
 #include "tests/servers/test_navigation_server_3d.h"
-#endif // MODULE_NAVIGATION_ENABLED
+#endif // MODULE_NAVIGATION_3D_ENABLED
 
 #ifndef _3D_DISABLED
 #include "tests/scene/test_arraymesh.h"
@@ -191,9 +191,9 @@
 #ifdef MODULE_NAVIGATION_2D_ENABLED
 #include "servers/navigation_server_2d.h"
 #endif // MODULE_NAVIGATION_2D_ENABLED
-#ifdef MODULE_NAVIGATION_ENABLED
+#ifdef MODULE_NAVIGATION_3D_ENABLED
 #include "servers/navigation_server_3d.h"
-#endif // MODULE_NAVIGATION_ENABLED
+#endif // MODULE_NAVIGATION_3D_ENABLED
 
 #include "servers/physics_server_2d.h"
 #include "servers/physics_server_2d_dummy.h"
@@ -282,9 +282,9 @@ struct GodotTestCaseListener : public doctest::IReporter {
 #ifdef MODULE_NAVIGATION_2D_ENABLED
 	NavigationServer2D *navigation_server_2d = nullptr;
 #endif // MODULE_NAVIGATION_2D_ENABLED
-#ifdef MODULE_NAVIGATION_ENABLED
+#ifdef MODULE_NAVIGATION_3D_ENABLED
 	NavigationServer3D *navigation_server_3d = nullptr;
-#endif // MODULE_NAVIGATION_ENABLED
+#endif // MODULE_NAVIGATION_3D_ENABLED
 
 	void test_case_start(const doctest::TestCaseData &p_in) override {
 		reinitialize();
@@ -334,9 +334,9 @@ struct GodotTestCaseListener : public doctest::IReporter {
 #ifdef MODULE_NAVIGATION_2D_ENABLED
 			navigation_server_2d = NavigationServer2DManager::new_default_server();
 #endif // MODULE_NAVIGATION_2D_ENABLED
-#ifdef MODULE_NAVIGATION_ENABLED
+#ifdef MODULE_NAVIGATION_3D_ENABLED
 			navigation_server_3d = NavigationServer3DManager::new_default_server();
-#endif // MODULE_NAVIGATION_ENABLED
+#endif // MODULE_NAVIGATION_3D_ENABLED
 			ERR_PRINT_ON;
 
 			memnew(InputMap);
@@ -377,14 +377,14 @@ struct GodotTestCaseListener : public doctest::IReporter {
 		}
 #endif // MODULE_NAVIGATION_2D_ENABLED
 
-#ifdef MODULE_NAVIGATION_ENABLED
+#ifdef MODULE_NAVIGATION_3D_ENABLED
 		if (suite_name.contains("[Navigation3D]") && navigation_server_3d == nullptr) {
 			ERR_PRINT_OFF;
 			navigation_server_3d = NavigationServer3DManager::new_default_server();
 			ERR_PRINT_ON;
 			return;
 		}
-#endif // MODULE_NAVIGATION_ENABLED
+#endif // MODULE_NAVIGATION_3D_ENABLED
 	}
 
 	void test_case_end(const doctest::CurrentTestCaseStats &) override {
@@ -411,12 +411,12 @@ struct GodotTestCaseListener : public doctest::IReporter {
 			memdelete(SceneTree::get_singleton());
 		}
 
-#ifdef MODULE_NAVIGATION_ENABLED
+#ifdef MODULE_NAVIGATION_3D_ENABLED
 		if (navigation_server_3d) {
 			memdelete(navigation_server_3d);
 			navigation_server_3d = nullptr;
 		}
-#endif // MODULE_NAVIGATION_ENABLED
+#endif // MODULE_NAVIGATION_3D_ENABLED
 
 #ifdef MODULE_NAVIGATION_2D_ENABLED
 		if (navigation_server_2d) {
