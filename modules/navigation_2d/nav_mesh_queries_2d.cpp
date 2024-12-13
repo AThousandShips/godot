@@ -30,9 +30,9 @@
 
 #include "nav_mesh_queries_2d.h"
 
-#include "../nav_base_2d.h"
-#include "../nav_map_2d.h"
-#include "../triangle2.h"
+#include "nav_base_2d.h"
+#include "nav_map_2d.h"
+#include "triangle2.h"
 
 #include "core/math/geometry_2d.h"
 

@@ -31,7 +31,7 @@
 #ifndef NAV_MESH_QUERIES_3D_H
 #define NAV_MESH_QUERIES_3D_H
 
-#include "../nav_utils_3d.h"
+#include "nav_utils_3d.h"
 
 #include "servers/navigation/navigation_path_query_parameters_3d.h"
 #include "servers/navigation/navigation_path_query_result_3d.h"

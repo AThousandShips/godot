@@ -31,9 +31,8 @@
 #include "nav_region_2d.h"
 
 #include "nav_map_2d.h"
+#include "nav_mesh_queries_2d.h"
 #include "triangle2.h"
-
-#include "2d/nav_mesh_queries_2d.h"
 
 using namespace nav_2d;
 

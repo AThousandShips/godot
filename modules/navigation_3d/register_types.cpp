@@ -30,10 +30,10 @@
 
 #include "register_types.h"
 
-#include "3d/godot_navigation_server_3d.h"
+#include "godot_navigation_server_3d.h"
 
 #ifndef DISABLE_DEPRECATED
-#include "3d/navigation_mesh_generator.h"
+#include "navigation_mesh_generator.h"
 #endif // DISABLE_DEPRECATED
 
 #ifdef TOOLS_ENABLED

@@ -30,8 +30,8 @@
 
 #include "nav_mesh_queries_3d.h"
 
-#include "../nav_base_3d.h"
-#include "../nav_map_3d.h"
+#include "nav_base_3d.h"
+#include "nav_map_3d.h"
 
 #include "core/math/geometry_3d.h"
 #include "servers/navigation/navigation_utilities.h"

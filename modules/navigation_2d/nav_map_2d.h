@@ -31,7 +31,7 @@
 #ifndef NAV_MAP_2D_H
 #define NAV_MAP_2D_H
 
-#include "2d/nav_mesh_queries_2d.h"
+#include "nav_mesh_queries_2d.h"
 #include "nav_rid_2d.h"
 #include "nav_utils_2d.h"
 

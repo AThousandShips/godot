@@ -31,7 +31,7 @@
 #ifndef NAV_MAP_3D_H
 #define NAV_MAP_3D_H
 
-#include "3d/nav_mesh_queries_3d.h"
+#include "nav_mesh_queries_3d.h"
 #include "nav_rid_3d.h"
 #include "nav_utils_3d.h"
 

@@ -31,8 +31,7 @@
 #include "nav_region_3d.h"
 
 #include "nav_map_3d.h"
-
-#include "3d/nav_mesh_queries_3d.h"
+#include "nav_mesh_queries_3d.h"
 
 using namespace nav_3d;
 

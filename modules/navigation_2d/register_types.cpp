@@ -30,7 +30,7 @@
 
 #include "register_types.h"
 
-#include "2d/godot_navigation_server_2d.h"
+#include "godot_navigation_server_2d.h"
 
 #include "servers/navigation_server_2d.h"
 
