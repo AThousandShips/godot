@@ -66,6 +66,9 @@ void initialize_navigation_module(ModuleInitializationLevel p_level) {
 		NavigationServer3DManager::set_default_server(new_navigation_server_3d);
 		NavigationServer2DManager::set_default_server(new_navigation_server_2d);
 
+		NavigationServer3DManager::initialize_server(); // 3D server first because 2D depends on it.
+		NavigationServer2DManager::initialize_server();
+
 #ifndef DISABLE_DEPRECATED
 #ifndef _3D_DISABLED
 		_nav_mesh_generator = memnew(NavigationMeshGenerator);
