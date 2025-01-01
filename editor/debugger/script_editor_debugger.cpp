@@ -1286,11 +1286,24 @@ void ScriptEditorDebugger::_property_changed(Object *p_base, const StringName &p
 				_put_msg("scene:live_node_prop_res", msg);
 			}
 		} else {
-			Array msg;
-			msg.push_back(pathid);
-			msg.push_back(p_property);
-			msg.push_back(p_value);
-			_put_msg("scene:live_node_prop", msg);
+			Node *val_node = Object::cast_to<Node>(p_value);
+
+			if (val_node) {
+				NodePath val_path = EditorNode::get_singleton()->get_edited_scene()->get_path_to(val_node);
+				int val_pathid = _get_node_path_cache(val_path);
+
+				Array msg;
+				msg.push_back(pathid);
+				msg.push_back(p_property);
+				msg.push_back(val_pathid);
+				_put_msg("scene:live_node_prop_node", msg);
+			} else {
+				Array msg;
+				msg.push_back(pathid);
+				msg.push_back(p_property);
+				msg.push_back(p_value);
+				_put_msg("scene:live_node_prop", msg);
+			}
 		}
 
 		return;

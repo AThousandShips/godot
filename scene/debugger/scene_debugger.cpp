@@ -204,6 +204,10 @@ Error SceneDebugger::parse_message(void *p_user, const String &p_msg, const Arra
 			ERR_FAIL_COND_V(p_args.size() < 3, ERR_INVALID_DATA);
 			live_editor->_node_set_res_func(p_args[0], p_args[1], p_args[2]);
 
+		} else if (p_msg == "live_node_prop_node") {
+			ERR_FAIL_COND_V(p_args.size() < 3, ERR_INVALID_DATA);
+			live_editor->_node_set_node_func(p_args[0], p_args[1], p_args[2]);
+
 		} else if (p_msg == "live_node_prop") {
 			ERR_FAIL_COND_V(p_args.size() < 3, ERR_INVALID_DATA);
 			live_editor->_node_set_func(p_args[0], p_args[1], p_args[2]);
@@ -797,6 +801,53 @@ void LiveEditor::_node_set_res_func(int p_id, const StringName &p_prop, const St
 		return;
 	}
 	_node_set_func(p_id, p_prop, r);
+}
+
+void LiveEditor::_node_set_node_func(int p_id, const StringName &p_prop, int p_value_id) {
+	SceneTree *scene_tree = SceneTree::get_singleton();
+	if (!scene_tree) {
+		return;
+	}
+
+	if (!live_edit_node_path_cache.has(p_id)) {
+		return;
+	}
+
+	if (!live_edit_node_path_cache.has(p_value_id)) {
+		return;
+	}
+
+	NodePath np = live_edit_node_path_cache[p_id];
+	NodePath val_np = live_edit_node_path_cache[p_value_id];
+
+	Node *base = nullptr;
+	if (scene_tree->root->has_node(live_edit_root)) {
+		base = scene_tree->root->get_node(live_edit_root);
+	}
+
+	HashMap<String, HashSet<Node *>>::Iterator E = live_scene_edit_cache.find(live_edit_scene);
+	if (!E) {
+		return; // Scene not editable.
+	}
+
+	for (Node *F : E->value) {
+		Node *n = F;
+
+		if (base && !base->is_ancestor_of(n)) {
+			continue;
+		}
+
+		if (!n->has_node(np)) {
+			continue;
+		}
+		if (!n->has_node(val_np)) {
+			continue;
+		}
+		Node *n2 = n->get_node(np);
+		Node *n_val = n->get_node(val_np);
+
+		n2->set(p_prop, n_val);
+	}
 }
 
 void LiveEditor::_node_call_func(int p_id, const StringName &p_method, const Variant **p_args, int p_argcount) {

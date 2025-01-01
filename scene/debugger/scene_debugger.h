@@ -147,6 +147,7 @@ private:
 
 	void _node_set_func(int p_id, const StringName &p_prop, const Variant &p_value);
 	void _node_set_res_func(int p_id, const StringName &p_prop, const String &p_value);
+	void _node_set_node_func(int p_id, const StringName &p_prop, int p_value_id);
 	void _node_call_func(int p_id, const StringName &p_method, const Variant **p_args, int p_argcount);
 	void _res_set_func(int p_id, const StringName &p_prop, const Variant &p_value);
 	void _res_set_res_func(int p_id, const StringName &p_prop, const String &p_value);
