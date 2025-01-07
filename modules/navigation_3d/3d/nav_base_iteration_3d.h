@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_obstacle.h                                                        */
+/*  nav_base_iteration_3d.h                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,84 +28,30 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAV_OBSTACLE_H
-#define NAV_OBSTACLE_H
+#ifndef NAV_BASE_ITERATION_3D_H
+#define NAV_BASE_ITERATION_3D_H
 
-#include "nav_rid.h"
+#include "servers/navigation/navigation_utilities.h"
 
-#include "core/object/class_db.h"
-#include "core/templates/self_list.h"
+struct NavBaseIteration3D {
+	uint32_t id = UINT32_MAX;
+	bool enabled = true;
+	uint32_t navigation_layers = 1;
+	real_t enter_cost = 0.0;
+	real_t travel_cost = 1.0;
+	NavigationUtilities::PathSegmentType owner_type;
+	ObjectID owner_object_id;
+	RID owner_rid;
+	bool owner_use_edge_connections = false;
 
-class NavAgent;
-class NavMap;
-
-class NavObstacle : public NavRid {
-	NavAgent *agent = nullptr;
-	NavMap *map = nullptr;
-	Vector3 velocity;
-	Vector3 position;
-	Vector<Vector3> vertices;
-
-	real_t radius = 0.0;
-	real_t height = 0.0;
-
-	bool avoidance_enabled = false;
-	bool use_3d_avoidance = false;
-	uint32_t avoidance_layers = 1;
-
-	bool obstacle_dirty = true;
-
-	uint32_t last_map_iteration_id = 0;
-	bool paused = false;
-
-	SelfList<NavObstacle> sync_dirty_request_list_element;
-
-public:
-	NavObstacle();
-	~NavObstacle();
-
-	void set_avoidance_enabled(bool p_enabled);
-	bool is_avoidance_enabled() { return avoidance_enabled; }
-
-	void set_use_3d_avoidance(bool p_enabled);
-	bool get_use_3d_avoidance() { return use_3d_avoidance; }
-
-	void set_map(NavMap *p_map);
-	NavMap *get_map() { return map; }
-
-	void set_agent(NavAgent *p_agent);
-	NavAgent *get_agent() { return agent; }
-
-	void set_position(const Vector3 p_position);
-	const Vector3 &get_position() const { return position; }
-
-	void set_radius(real_t p_radius);
-	real_t get_radius() const { return radius; }
-
-	void set_height(const real_t p_height);
-	real_t get_height() const { return height; }
-
-	void set_velocity(const Vector3 p_velocity);
-	const Vector3 &get_velocity() const { return velocity; }
-
-	void set_vertices(const Vector<Vector3> &p_vertices);
-	const Vector<Vector3> &get_vertices() const { return vertices; }
-
-	bool is_map_changed();
-
-	void set_avoidance_layers(uint32_t p_layers);
-	uint32_t get_avoidance_layers() const { return avoidance_layers; }
-
-	void set_paused(bool p_paused);
-	bool get_paused() const;
-
-	bool is_dirty() const;
-	void sync();
-	void request_sync();
-	void cancel_sync_request();
-
-private:
-	void internal_update_agent();
+	bool get_enabled() const { return enabled; }
+	NavigationUtilities::PathSegmentType get_type() const { return owner_type; }
+	RID get_self() const { return owner_rid; }
+	ObjectID get_owner_id() const { return owner_object_id; }
+	uint32_t get_navigation_layers() const { return navigation_layers; }
+	real_t get_enter_cost() const { return enter_cost; }
+	real_t get_travel_cost() const { return travel_cost; }
+	bool get_use_edge_connections() const { return owner_use_edge_connections; }
 };
 
-#endif // NAV_OBSTACLE_H
+#endif // NAV_BASE_ITERATION_3D_H

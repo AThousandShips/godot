@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  register_types.cpp                                                    */
+/*  nav_link_3d.h                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,55 +28,70 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "register_types.h"
+#ifndef NAV_LINK_3D_H
+#define NAV_LINK_3D_H
 
-#include "3d/godot_navigation_server_3d.h"
+#include "3d/nav_base_iteration_3d.h"
+#include "nav_base_3d.h"
+#include "nav_utils_3d.h"
 
-#ifndef DISABLE_DEPRECATED
-#include "3d/navigation_mesh_generator.h"
-#endif // DISABLE_DEPRECATED
+struct NavLinkIteration3D : NavBaseIteration3D {
+	bool bidirectional = true;
+	Vector3 start_position;
+	Vector3 end_position;
+	LocalVector<nav_3d::Polygon> navmesh_polygons;
 
-#ifdef TOOLS_ENABLED
-#include "editor/navigation_mesh_editor_plugin.h"
-#endif
+	Vector3 get_start_position() const { return start_position; }
+	Vector3 get_end_position() const { return end_position; }
+	bool is_bidirectional() const { return bidirectional; }
+};
 
-#include "core/config/engine.h"
-#include "servers/navigation_server_3d.h"
+#include "core/templates/self_list.h"
 
-#ifndef DISABLE_DEPRECATED
-NavigationMeshGenerator *_nav_mesh_generator = nullptr;
-#endif // DISABLE_DEPRECATED
+class NavLink3D : public NavBase3D {
+	NavMap3D *map = nullptr;
+	bool bidirectional = true;
+	Vector3 start_position;
+	Vector3 end_position;
+	bool enabled = true;
 
-NavigationServer3D *new_navigation_server_3d() {
-	return memnew(GodotNavigationServer3D);
-}
+	bool link_dirty = true;
 
-void initialize_navigation_module(ModuleInitializationLevel p_level) {
-	if (p_level == MODULE_INITIALIZATION_LEVEL_SERVERS) {
-		NavigationServer3DManager::set_default_server(new_navigation_server_3d);
+	SelfList<NavLink3D> sync_dirty_request_list_element;
 
-#ifndef DISABLE_DEPRECATED
-		_nav_mesh_generator = memnew(NavigationMeshGenerator);
-		GDREGISTER_CLASS(NavigationMeshGenerator);
-		Engine::get_singleton()->add_singleton(Engine::Singleton("NavigationMeshGenerator", NavigationMeshGenerator::get_singleton()));
-#endif // DISABLE_DEPRECATED
+public:
+	NavLink3D();
+	~NavLink3D();
+
+	void set_map(NavMap3D *p_map);
+	NavMap3D *get_map() const {
+		return map;
 	}
 
-#ifdef TOOLS_ENABLED
-	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR) {
-		EditorPlugins::add_by_type<NavigationMeshEditorPlugin>();
-	}
-#endif
-}
+	void set_enabled(bool p_enabled);
+	bool get_enabled() const { return enabled; }
 
-void uninitialize_navigation_module(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SERVERS) {
-		return;
+	void set_bidirectional(bool p_bidirectional);
+	bool is_bidirectional() const {
+		return bidirectional;
 	}
 
-#ifndef DISABLE_DEPRECATED
-	if (_nav_mesh_generator) {
-		memdelete(_nav_mesh_generator);
+	void set_start_position(Vector3 p_position);
+	Vector3 get_start_position() const {
+		return start_position;
 	}
-#endif // DISABLE_DEPRECATED
-}
+
+	void set_end_position(Vector3 p_position);
+	Vector3 get_end_position() const {
+		return end_position;
+	}
+
+	bool is_dirty() const;
+	void sync();
+	void request_sync();
+	void cancel_sync_request();
+
+	void get_iteration_update(NavLinkIteration3D &r_iteration);
+};
+
+#endif // NAV_LINK_3D_H

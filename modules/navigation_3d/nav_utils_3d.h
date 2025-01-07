@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  nav_utils.h                                                           */
+/*  nav_utils_3d.h                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef NAV_UTILS_H
-#define NAV_UTILS_H
+#ifndef NAV_UTILS_3D_H
+#define NAV_UTILS_3D_H
 
 #include "core/math/vector3.h"
 #include "core/templates/hash_map.h"
@@ -37,9 +37,9 @@
 #include "core/templates/heap.h"
 #include "servers/navigation/navigation_utilities.h"
 
-struct NavBaseIteration;
+struct NavBaseIteration3D;
 
-namespace gd {
+namespace nav_3d {
 struct Polygon;
 
 union PointKey {
@@ -103,7 +103,7 @@ struct Polygon {
 	uint32_t id = UINT32_MAX;
 
 	/// Navigation region or link that contains this polygon.
-	const NavBaseIteration *owner = nullptr;
+	const NavBaseIteration3D *owner = nullptr;
 
 	/// The points of this `Polygon`
 	LocalVector<Point> points;
@@ -186,7 +186,7 @@ struct ClosestPointQueryResult {
 };
 
 struct EdgeConnectionPair {
-	gd::Edge::Connection connections[2];
+	Edge::Connection connections[2];
 	int size = 0;
 };
 
@@ -214,6 +214,6 @@ struct PerformanceData {
 	}
 };
 
-} // namespace gd
+} // namespace nav_3d
 
-#endif // NAV_UTILS_H
+#endif // NAV_UTILS_3D_H
