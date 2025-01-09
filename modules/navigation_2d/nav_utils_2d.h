@@ -39,7 +39,7 @@
 
 struct NavBaseIteration;
 
-namespace gd {
+namespace nav_2d {
 struct Polygon;
 
 union PointKey {
@@ -311,7 +311,7 @@ private:
 };
 
 struct EdgeConnectionPair {
-	gd::Edge::Connection connections[2];
+	Edge::Connection connections[2];
 	int size = 0;
 };
 
@@ -339,6 +339,6 @@ struct PerformanceData {
 	}
 };
 
-} // namespace gd
+} // namespace nav_2d
 
 #endif // NAV_UTILS_2D_H
