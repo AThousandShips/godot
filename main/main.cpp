@@ -730,6 +730,9 @@ Error Main::test_setup() {
 	// Default theme will be initialized later, after modules and ScriptServer are ready.
 	initialize_theme_db();
 
+	NavigationServer3DManager::initialize_server(); // 3D server first because 2D depends on it.
+	NavigationServer2DManager::initialize_server();
+
 	register_scene_types();
 	register_driver_types();
 
@@ -3348,6 +3351,11 @@ Error Main::setup2(bool p_show_boot_logo) {
 	// Default theme will be initialized later, after modules and ScriptServer are ready.
 	initialize_theme_db();
 
+	MAIN_PRINT("Main: Load Navigation");
+
+	NavigationServer3DManager::initialize_server(); // 3D server first because 2D depends on it.
+	NavigationServer2DManager::initialize_server();
+
 	register_scene_types();
 	register_driver_types();
 
@@ -3417,8 +3425,6 @@ Error Main::setup2(bool p_show_boot_logo) {
 	MAIN_PRINT("Main: Load Physics");
 
 	initialize_physics();
-
-	MAIN_PRINT("Main: Load Navigation");
 
 	register_server_singletons();
 

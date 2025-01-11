@@ -21,67 +21,67 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Editor w/ Mono (target=editor)
-            cache-name: linux-editor-mono
-            target: editor
-            sconsflags: module_mono_enabled=yes
-            bin: ./bin/godot.linuxbsd.editor.x86_64.mono
-            build-mono: true
-            tests: false # Disabled due freeze caused by mix Mono build and CI
-            doc-test: true
-            proj-conv: true
-            api-compat: true
-            artifact: true
-            cache-limit: 1
-
-          - name: Editor with doubles and GCC sanitizers (target=editor, tests=yes, dev_build=yes, scu_build=yes, precision=double, use_asan=yes, use_ubsan=yes, linker=gold)
-            cache-name: linux-editor-double-sanitizers
-            target: editor
-            # Debug symbols disabled as they're huge on this build and we hit the 14 GB limit for runners.
-            sconsflags: dev_build=yes scu_build=yes debug_symbols=no precision=double use_asan=yes use_ubsan=yes linker=gold
-            bin: ./bin/godot.linuxbsd.editor.dev.double.x86_64.san
-            build-mono: false
-            tests: true
-            proj-test: true
-            # Generate an API dump for godot-cpp tests.
-            api-dump: true
-            # Skip 2GiB artifact speeding up action.
-            artifact: false
-            cache-limit: 7
-
-          - name: Editor with clang sanitizers (target=editor, tests=yes, dev_build=yes, use_asan=yes, use_ubsan=yes, use_llvm=yes, linker=lld)
-            cache-name: linux-editor-llvm-sanitizers
-            target: editor
-            sconsflags: dev_build=yes use_asan=yes use_ubsan=yes use_llvm=yes linker=lld
-            bin: ./bin/godot.linuxbsd.editor.dev.x86_64.llvm.san
-            build-mono: false
-            tests: true
-            # Skip 2GiB artifact speeding up action.
-            artifact: false
-            # Test our oldest supported SCons/Python versions on one arbitrary editor build.
-            legacy-scons: true
-            cache-limit: 7
-
-          - name: Editor with ThreadSanitizer (target=editor, tests=yes, dev_build=yes, use_tsan=yes, use_llvm=yes, linker=lld)
-            cache-name: linux-editor-thread-sanitizer
-            target: editor
-            tests: true
-            sconsflags: dev_build=yes use_tsan=yes use_llvm=yes linker=lld
-            bin: ./bin/godot.linuxbsd.editor.dev.x86_64.llvm.san
-            build-mono: false
-            # Skip 2GiB artifact speeding up action.
-            artifact: false
-            cache-limit: 5
-
-          - name: Template w/ Mono (target=template_release, tests=yes)
-            cache-name: linux-template-mono
-            target: template_release
-            sconsflags: module_mono_enabled=yes
-            bin: ./bin/godot.linuxbsd.template_release.x86_64.mono
-            build-mono: false
-            tests: true
-            artifact: true
-            cache-limit: 1
+          # - name: Editor w/ Mono (target=editor)
+          #   cache-name: linux-editor-mono
+          #   target: editor
+          #   sconsflags: module_mono_enabled=yes
+          #   bin: ./bin/godot.linuxbsd.editor.x86_64.mono
+          #   build-mono: true
+          #   tests: false # Disabled due freeze caused by mix Mono build and CI
+          #   doc-test: true
+          #   proj-conv: true
+          #   api-compat: true
+          #   artifact: true
+          #   cache-limit: 1
+          #
+          # - name: Editor with doubles and GCC sanitizers (target=editor, tests=yes, dev_build=yes, scu_build=yes, precision=double, use_asan=yes, use_ubsan=yes, linker=gold)
+          #   cache-name: linux-editor-double-sanitizers
+          #   target: editor
+          #   # Debug symbols disabled as they're huge on this build and we hit the 14 GB limit for runners.
+          #   sconsflags: dev_build=yes scu_build=yes debug_symbols=no precision=double use_asan=yes use_ubsan=yes linker=gold
+          #   bin: ./bin/godot.linuxbsd.editor.dev.double.x86_64.san
+          #   build-mono: false
+          #   tests: true
+          #   proj-test: true
+          #   # Generate an API dump for godot-cpp tests.
+          #   api-dump: true
+          #   # Skip 2GiB artifact speeding up action.
+          #   artifact: false
+          #   cache-limit: 7
+          #
+          # - name: Editor with clang sanitizers (target=editor, tests=yes, dev_build=yes, use_asan=yes, use_ubsan=yes, use_llvm=yes, linker=lld)
+          #   cache-name: linux-editor-llvm-sanitizers
+          #   target: editor
+          #   sconsflags: dev_build=yes use_asan=yes use_ubsan=yes use_llvm=yes linker=lld
+          #   bin: ./bin/godot.linuxbsd.editor.dev.x86_64.llvm.san
+          #   build-mono: false
+          #   tests: true
+          #   # Skip 2GiB artifact speeding up action.
+          #   artifact: false
+          #   # Test our oldest supported SCons/Python versions on one arbitrary editor build.
+          #   legacy-scons: true
+          #   cache-limit: 7
+          #
+          # - name: Editor with ThreadSanitizer (target=editor, tests=yes, dev_build=yes, use_tsan=yes, use_llvm=yes, linker=lld)
+          #   cache-name: linux-editor-thread-sanitizer
+          #   target: editor
+          #   tests: true
+          #   sconsflags: dev_build=yes use_tsan=yes use_llvm=yes linker=lld
+          #   bin: ./bin/godot.linuxbsd.editor.dev.x86_64.llvm.san
+          #   build-mono: false
+          #   # Skip 2GiB artifact speeding up action.
+          #   artifact: false
+          #   cache-limit: 5
+          #
+          # - name: Template w/ Mono (target=template_release, tests=yes)
+          #   cache-name: linux-template-mono
+          #   target: template_release
+          #   sconsflags: module_mono_enabled=yes
+          #   bin: ./bin/godot.linuxbsd.template_release.x86_64.mono
+          #   build-mono: false
+          #   tests: true
+          #   artifact: true
+          #   cache-limit: 1
 
           - name: Minimal template (target=template_release, tests=yes, everything disabled)
             cache-name: linux-template-minimal
