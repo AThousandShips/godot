@@ -72,7 +72,7 @@ void AnimationNodeStateMachineTransition::set_advance_expression(const String &p
 	advance_expression = p_expression;
 
 	String advance_expression_stripped = advance_expression.strip_edges();
-	if (advance_expression_stripped == String()) {
+	if (advance_expression_stripped.is_empty()) {
 		expression.unref();
 		return;
 	}
@@ -194,7 +194,7 @@ AnimationNodeStateMachineTransition::AnimationNodeStateMachineTransition() {
 
 void AnimationNodeStateMachinePlayback::_set_current(AnimationNodeStateMachine *p_state_machine, const StringName &p_state) {
 	current = p_state;
-	if (current == StringName()) {
+	if (current.is_empty()) {
 		group_start_transition = Ref<AnimationNodeStateMachineTransition>();
 		group_end_transition = Ref<AnimationNodeStateMachineTransition>();
 		return;
@@ -303,7 +303,7 @@ bool AnimationNodeStateMachinePlayback::is_playing() const {
 }
 
 bool AnimationNodeStateMachinePlayback::is_end() const {
-	return current == SceneStringName(End) && fading_from == StringName();
+	return current == SceneStringName(End) && fading_from.is_empty();
 }
 
 StringName AnimationNodeStateMachinePlayback::get_current_node() const {
@@ -981,7 +981,7 @@ bool AnimationNodeStateMachinePlayback::_transition_to_next_recursive(AnimationT
 }
 
 bool AnimationNodeStateMachinePlayback::_can_transition_to_next(AnimationTree *p_tree, AnimationNodeStateMachine *p_state_machine, NextInfo p_next, bool p_test_only) {
-	if (p_next.node == StringName()) {
+	if (p_next.node.is_empty()) {
 		return false;
 	}
 

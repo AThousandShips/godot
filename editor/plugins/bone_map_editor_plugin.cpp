@@ -609,7 +609,7 @@ int BoneMapper::search_bone_by_name(Skeleton3D *p_skeleton, const Vector<String>
 		}
 	}
 
-	if (shortest == "") {
+	if (shortest.is_empty()) {
 		return -1;
 	}
 

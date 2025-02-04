@@ -248,7 +248,7 @@ Error RemoteFilesystemClient::_synchronize_with_server(const String &p_host, int
 	HashSet<String> files_processed;
 	for (uint32_t i = 0; i < file_count; i++) {
 		String file = tcp_client->get_utf8_string();
-		ERR_FAIL_COND_V_MSG(file == String(), ERR_CONNECTION_ERROR, "Invalid file name received from remote filesystem.");
+		ERR_FAIL_COND_V_MSG(file.is_empty(), ERR_CONNECTION_ERROR, "Invalid file name received from remote filesystem.");
 		uint64_t server_modified_time = tcp_client->get_u64();
 		ERR_FAIL_COND_V_MSG(tcp_client->get_status() != StreamPeerTCP::STATUS_CONNECTED, ERR_CONNECTION_ERROR, "Remote filesystem server disconnected while waiting for file info.");
 

@@ -291,7 +291,7 @@ void Skeleton3D::_update_bone_names() const {
 }
 
 StringName Skeleton3D::get_concatenated_bone_names() const {
-	if (concatenated_bone_names == StringName()) {
+	if (concatenated_bone_names.is_empty()) {
 		_update_bone_names();
 	}
 	return concatenated_bone_names;

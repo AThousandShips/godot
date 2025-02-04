@@ -390,7 +390,7 @@ void QuickOpenResultContainer::_find_filepaths_in_folder(EditorFileSystemDirecto
 		const StringName engine_type = p_directory->get_file_type(i);
 		const StringName script_type = p_directory->get_file_resource_script_class(i);
 
-		const bool is_engine_type = script_type == StringName();
+		const bool is_engine_type = script_type.is_empty();
 		const StringName &actual_type = is_engine_type ? engine_type : script_type;
 
 		for (const StringName &parent_type : base_types) {

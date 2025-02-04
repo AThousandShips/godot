@@ -2411,7 +2411,7 @@ Variant CSharpScript::_new(const Variant **p_args, int p_argcount, Callable::Cal
 	StringName native_name;
 	GDMonoCache::managed_callbacks.ScriptManagerBridge_GetScriptNativeName(this, &native_name);
 
-	ERR_FAIL_COND_V(native_name == StringName(), Variant());
+	ERR_FAIL_COND_V(native_name.is_empty(), Variant());
 
 	Object *owner = ClassDB::instantiate(native_name);
 
@@ -2444,7 +2444,7 @@ ScriptInstance *CSharpScript::instance_create(Object *p_this) {
 	StringName native_name;
 	GDMonoCache::managed_callbacks.ScriptManagerBridge_GetScriptNativeName(this, &native_name);
 
-	ERR_FAIL_COND_V(native_name == StringName(), nullptr);
+	ERR_FAIL_COND_V(native_name.is_empty(), nullptr);
 
 	if (!ClassDB::is_parent_class(p_this->get_class_name(), native_name)) {
 		if (EngineDebugger::is_active()) {

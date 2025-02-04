@@ -6776,7 +6776,7 @@ ShaderLanguage::Node *ShaderLanguage::_parse_expression(BlockNode *p_block, cons
 					}
 				}
 
-				if (identifier == StringName()) {
+				if (identifier.is_empty()) {
 					_set_error(RTR("Expected an identifier as a member."));
 					return nullptr;
 				}
@@ -9081,7 +9081,7 @@ Error ShaderLanguage::_parse_shader(const HashMap<StringName, FunctionInfo> &p_f
 #endif // DEBUG_ENABLED
 
 		_get_completable_identifier(nullptr, COMPLETION_SHADER_TYPE, shader_type_identifier);
-		if (shader_type_identifier == StringName()) {
+		if (shader_type_identifier.is_empty()) {
 			_set_error(vformat(RTR("Expected an identifier after '%s', indicating the type of shader. Valid types are: %s."), "shader_type", _get_shader_type_list(p_shader_types)));
 			return ERR_PARSE_ERROR;
 		}
@@ -9145,7 +9145,7 @@ Error ShaderLanguage::_parse_shader(const HashMap<StringName, FunctionInfo> &p_f
 					StringName mode;
 					_get_completable_identifier(nullptr, COMPLETION_RENDER_MODE, mode);
 
-					if (mode == StringName()) {
+					if (mode.is_empty()) {
 						_set_error(RTR("Expected an identifier for render mode."));
 						return ERR_PARSE_ERROR;
 					}
@@ -10271,7 +10271,7 @@ Error ShaderLanguage::_parse_shader(const HashMap<StringName, FunctionInfo> &p_f
 
 				_get_completable_identifier(nullptr, COMPLETION_MAIN_FUNCTION, name);
 
-				if (name == StringName()) {
+				if (name.is_empty()) {
 					if (is_constant) {
 						_set_error(RTR("Expected an identifier or '[' after type."));
 					} else {

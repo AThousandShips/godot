@@ -199,7 +199,7 @@ Ref<StyleBox> ThemeDB::get_fallback_stylebox() {
 }
 
 void ThemeDB::get_native_type_dependencies(const StringName &p_base_type, Vector<StringName> &r_result) {
-	if (p_base_type == StringName()) {
+	if (p_base_type.is_empty()) {
 		return;
 	}
 

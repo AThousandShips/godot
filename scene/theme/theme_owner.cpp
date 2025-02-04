@@ -213,7 +213,7 @@ void ThemeOwner::get_theme_type_dependencies(const Node *p_for_node, const Strin
 	}
 
 	// If we are looking for dependencies of the current class (or a variation of it), check relevant themes.
-	if (p_theme_type == StringName() || p_theme_type == type_name || p_theme_type == type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == type_name || p_theme_type == type_variation) {
 		// We need one theme that can give us a valid dependency chain. It must be complete
 		// (i.e. variations can depend on other variations, but only within the same theme,
 		// and eventually the chain must lead to native types).

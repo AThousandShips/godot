@@ -2209,7 +2209,7 @@ Ref<Texture2D> Window::get_theme_icon(const StringName &p_name, const StringName
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		const Ref<Texture2D> *tex = theme_icon_override.getptr(p_name);
 		if (tex) {
 			return *tex;
@@ -2233,7 +2233,7 @@ Ref<StyleBox> Window::get_theme_stylebox(const StringName &p_name, const StringN
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		const Ref<StyleBox> *style = theme_style_override.getptr(p_name);
 		if (style) {
 			return *style;
@@ -2257,7 +2257,7 @@ Ref<Font> Window::get_theme_font(const StringName &p_name, const StringName &p_t
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		const Ref<Font> *font = theme_font_override.getptr(p_name);
 		if (font) {
 			return *font;
@@ -2281,7 +2281,7 @@ int Window::get_theme_font_size(const StringName &p_name, const StringName &p_th
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		const int *font_size = theme_font_size_override.getptr(p_name);
 		if (font_size && (*font_size) > 0) {
 			return *font_size;
@@ -2305,7 +2305,7 @@ Color Window::get_theme_color(const StringName &p_name, const StringName &p_them
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		const Color *color = theme_color_override.getptr(p_name);
 		if (color) {
 			return *color;
@@ -2329,7 +2329,7 @@ int Window::get_theme_constant(const StringName &p_name, const StringName &p_the
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		const int *constant = theme_constant_override.getptr(p_name);
 		if (constant) {
 			return *constant;
@@ -2380,7 +2380,7 @@ bool Window::has_theme_icon(const StringName &p_name, const StringName &p_theme_
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		if (has_theme_icon_override(p_name)) {
 			return true;
 		}
@@ -2397,7 +2397,7 @@ bool Window::has_theme_stylebox(const StringName &p_name, const StringName &p_th
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		if (has_theme_stylebox_override(p_name)) {
 			return true;
 		}
@@ -2414,7 +2414,7 @@ bool Window::has_theme_font(const StringName &p_name, const StringName &p_theme_
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		if (has_theme_font_override(p_name)) {
 			return true;
 		}
@@ -2431,7 +2431,7 @@ bool Window::has_theme_font_size(const StringName &p_name, const StringName &p_t
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		if (has_theme_font_size_override(p_name)) {
 			return true;
 		}
@@ -2448,7 +2448,7 @@ bool Window::has_theme_color(const StringName &p_name, const StringName &p_theme
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		if (has_theme_color_override(p_name)) {
 			return true;
 		}
@@ -2465,7 +2465,7 @@ bool Window::has_theme_constant(const StringName &p_name, const StringName &p_th
 		WARN_PRINT_ONCE(vformat("Attempting to access theme items too early in %s; prefer NOTIFICATION_POSTINITIALIZE and NOTIFICATION_THEME_CHANGED", get_description()));
 	}
 
-	if (p_theme_type == StringName() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
+	if (p_theme_type.is_empty() || p_theme_type == get_class_name() || p_theme_type == theme_type_variation) {
 		if (has_theme_constant_override(p_name)) {
 			return true;
 		}

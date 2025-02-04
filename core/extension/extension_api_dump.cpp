@@ -1226,11 +1226,11 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 					d2["type"] = get_property_info_type_name(F);
 					d2["name"] = String(property_name);
 					StringName setter = ClassDB::get_property_setter(class_name, F.name);
-					if (!(setter == "")) {
+					if (!setter.is_empty()) {
 						d2["setter"] = setter;
 					}
 					StringName getter = ClassDB::get_property_getter(class_name, F.name);
-					if (!(getter == "")) {
+					if (!getter.is_empty()) {
 						d2["getter"] = getter;
 					}
 					int index = ClassDB::get_property_index(class_name, F.name);

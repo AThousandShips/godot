@@ -250,7 +250,7 @@ StringName MultiNodeEdit::get_edited_class_name() const {
 		break;
 	}
 
-	if (class_name == StringName()) {
+	if (class_name.is_empty()) {
 		return SNAME("Node");
 	}
 
@@ -258,7 +258,7 @@ StringName MultiNodeEdit::get_edited_class_name() const {
 	while (check_again) {
 		check_again = false;
 
-		if (class_name == SNAME("Node") || class_name == StringName()) {
+		if (class_name == SNAME("Node") || class_name.is_empty()) {
 			// All nodes inherit from Node, so no need to continue checking.
 			return SNAME("Node");
 		}

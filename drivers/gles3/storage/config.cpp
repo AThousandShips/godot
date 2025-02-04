@@ -189,7 +189,7 @@ Config::Config() {
 		const String &renderer = String::utf8((const char *)glGetString(GL_RENDERER));
 		for (int i = 0; i < vendor_match.size(); i++) {
 			String v = vendor_match[i].strip_edges();
-			if (v == String()) {
+			if (v.is_empty()) {
 				continue;
 			}
 

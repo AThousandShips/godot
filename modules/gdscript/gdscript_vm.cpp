@@ -962,7 +962,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 						String v = index->operator String();
 						bool read_only_property = false;
 						if (obj) {
-							read_only_property = ClassDB::has_property(obj->get_class_name(), v) && (ClassDB::get_property_setter(obj->get_class_name(), v) == StringName());
+							read_only_property = ClassDB::has_property(obj->get_class_name(), v) && ClassDB::get_property_setter(obj->get_class_name(), v).is_empty();
 						}
 						if (read_only_property) {
 							err_text = vformat(R"(Cannot set value into property "%s" (on base "%s") because it is read-only.)", v, _get_var_type(dst));
@@ -1181,7 +1181,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 						Object *obj = dst->get_validated_object();
 						bool read_only_property = false;
 						if (obj) {
-							read_only_property = ClassDB::has_property(obj->get_class_name(), *index) && (ClassDB::get_property_setter(obj->get_class_name(), *index) == StringName());
+							read_only_property = ClassDB::has_property(obj->get_class_name(), *index) && ClassDB::get_property_setter(obj->get_class_name(), *index).is_empty();
 						}
 						if (read_only_property) {
 							err_text = vformat(R"(Cannot set value into property "%s" (on base "%s") because it is read-only.)", String(*index), _get_var_type(dst));

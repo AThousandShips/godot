@@ -47,7 +47,7 @@ WebRTCPeerConnection *WebRTCPeerConnection::create(bool p_notify_postinitialize)
 #ifdef WEB_ENABLED
 	return static_cast<WebRTCPeerConnection *>(ClassDB::creator<WebRTCPeerConnectionJS>(p_notify_postinitialize));
 #else
-	if (default_extension == StringName()) {
+	if (default_extension.is_empty()) {
 		WARN_PRINT_ONCE("No default WebRTC extension configured.");
 		return static_cast<WebRTCPeerConnection *>(ClassDB::creator<WebRTCPeerConnectionExtension>(p_notify_postinitialize));
 	}

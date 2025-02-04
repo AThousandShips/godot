@@ -407,7 +407,7 @@ void AnimationPlayer::_play(const StringName &p_name, double p_custom_blend, flo
 void AnimationPlayer::play_section_with_markers(const StringName &p_name, const StringName &p_start_marker, const StringName &p_end_marker, double p_custom_blend, float p_custom_scale, bool p_from_end) {
 	StringName name = p_name;
 
-	if (name == StringName()) {
+	if (name.is_empty()) {
 		name = playback.assigned;
 	}
 
@@ -437,7 +437,7 @@ void AnimationPlayer::play_section_with_markers(const StringName &p_name, const 
 void AnimationPlayer::play_section(const StringName &p_name, double p_start_time, double p_end_time, double p_custom_blend, float p_custom_scale, bool p_from_end) {
 	StringName name = p_name;
 
-	if (name == StringName()) {
+	if (name.is_empty()) {
 		name = playback.assigned;
 	}
 
@@ -538,7 +538,7 @@ void AnimationPlayer::play_section(const StringName &p_name, double p_start_time
 
 void AnimationPlayer::_capture(const StringName &p_name, bool p_from_end, double p_duration, Tween::TransitionType p_trans_type, Tween::EaseType p_ease_type) {
 	StringName name = p_name;
-	if (name == StringName()) {
+	if (name.is_empty()) {
 		name = playback.assigned;
 	}
 
@@ -887,7 +887,7 @@ void AnimationPlayer::get_argument_options(const StringName &p_function, int p_i
 void AnimationPlayer::_animation_removed(const StringName &p_name, const StringName &p_library) {
 	AnimationMixer::_animation_removed(p_name, p_library);
 
-	StringName name = p_library == StringName() ? p_name : StringName(String(p_library) + "/" + String(p_name));
+	StringName name = p_library.is_empty() ? p_name : StringName(String(p_library) + "/" + String(p_name));
 
 	if (!animation_set.has(name)) {
 		return; // No need to update because not the one from the library being used.

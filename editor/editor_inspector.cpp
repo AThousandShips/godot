@@ -675,7 +675,7 @@ void EditorProperty::_update_property_bg() {
 }
 
 void EditorProperty::update_editor_property_status() {
-	if (property == StringName()) {
+	if (property.is_empty()) {
 		return; //no property, so nothing to do
 	}
 
@@ -860,7 +860,7 @@ bool EditorProperty::is_selected() const {
 void EditorProperty::gui_input(const Ref<InputEvent> &p_event) {
 	ERR_FAIL_COND(p_event.is_null());
 
-	if (property == StringName()) {
+	if (property.is_empty()) {
 		return;
 	}
 
@@ -1031,7 +1031,7 @@ void EditorProperty::update_cache() {
 	}
 }
 Variant EditorProperty::get_drag_data(const Point2 &p_point) {
-	if (property == StringName()) {
+	if (property.is_empty()) {
 		return Variant();
 	}
 
@@ -3556,7 +3556,7 @@ void EditorInspector::update_tree() {
 				classname = object_class;
 			} else if (Object::cast_to<MultiNodeEdit>(object)) {
 				classname = Object::cast_to<MultiNodeEdit>(object)->get_edited_class_name();
-			} else if (classname == "") {
+			} else if (classname.is_empty()) {
 				classname = object->get_class_name();
 				Resource *res = Object::cast_to<Resource>(object);
 				if (res && !res->get_script().is_null()) {

@@ -9010,7 +9010,7 @@ void AnimationMarkerEdit::_marker_rename_confirmed() {
 	StringName new_name = marker_rename_new_name->get_text();
 	StringName prev_name = marker_rename_prev_name;
 
-	if (new_name == StringName()) {
+	if (new_name.is_empty()) {
 		marker_rename_error_dialog->set_text(TTR("Empty marker names are not allowed."));
 		marker_rename_error_dialog->popup_centered();
 		return;

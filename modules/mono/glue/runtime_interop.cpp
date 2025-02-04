@@ -268,7 +268,7 @@ GCHandleIntPtr godotsharp_internal_unmanaged_instance_binding_create_managed(Obj
 	// Create a new one
 
 #ifdef DEBUG_ENABLED
-	CRASH_COND(script_binding.type_name == StringName());
+	CRASH_COND(script_binding.type_name.is_empty());
 #endif
 
 	bool parent_is_object_class = ClassDB::is_parent_class(p_unmanaged->get_class_name(), script_binding.type_name);

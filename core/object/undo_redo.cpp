@@ -160,7 +160,7 @@ void UndoRedo::add_do_method(const Callable &p_callable) {
 	}
 	do_op.type = Operation::TYPE_METHOD;
 	do_op.name = p_callable.get_method();
-	if (do_op.name == StringName()) {
+	if (do_op.name.is_empty()) {
 		// There's no `get_method()` for custom callables, so use `operator String()` instead.
 		do_op.name = static_cast<String>(p_callable);
 	}
@@ -191,7 +191,7 @@ void UndoRedo::add_undo_method(const Callable &p_callable) {
 	undo_op.type = Operation::TYPE_METHOD;
 	undo_op.force_keep_in_merge_ends = force_keep_in_merge_ends;
 	undo_op.name = p_callable.get_method();
-	if (undo_op.name == StringName()) {
+	if (undo_op.name.is_empty()) {
 		// There's no `get_method()` for custom callables, so use `operator String()` instead.
 		undo_op.name = static_cast<String>(p_callable);
 	}

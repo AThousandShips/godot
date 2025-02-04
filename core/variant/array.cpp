@@ -852,7 +852,7 @@ void Array::set_typed(uint32_t p_type, const StringName &p_class_name, const Var
 	ERR_FAIL_COND_MSG(_p->typed.type != Variant::NIL, "Type can only be set once.");
 	ERR_FAIL_COND_MSG(p_class_name != StringName() && p_type != Variant::OBJECT, "Class names can only be set for type OBJECT");
 	Ref<Script> script = p_script;
-	ERR_FAIL_COND_MSG(script.is_valid() && p_class_name == StringName(), "Script class can only be set together with base class name");
+	ERR_FAIL_COND_MSG(script.is_valid() && p_class_name.is_empty(), "Script class can only be set together with base class name");
 
 	_p->typed.type = Variant::Type(p_type);
 	_p->typed.class_name = p_class_name;

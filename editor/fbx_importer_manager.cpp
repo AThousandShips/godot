@@ -74,7 +74,7 @@ void FBXImporterManager::_validate_path(const String &p_path) {
 	String error;
 	bool success = false;
 
-	if (p_path == "") {
+	if (p_path.is_empty()) {
 		error = TTR("Path to FBX2glTF executable is empty.");
 	} else if (!FileAccess::exists(p_path)) {
 		error = TTR("Path to FBX2glTF executable is invalid.");

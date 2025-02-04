@@ -1469,7 +1469,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 						continue; // Unique node names are commonly used with retargeted animations, which we do not want to use.
 					}
 					StringName skeleton_bone = path.get_concatenated_subnames();
-					if (skeleton_bone == StringName()) {
+					if (skeleton_bone.is_empty()) {
 						continue;
 					}
 					int bone_idx = skeleton->find_bone(skeleton_bone);

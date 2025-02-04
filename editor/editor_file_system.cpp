@@ -1237,10 +1237,10 @@ void EditorFileSystem::_process_file_system(const ScannedDirectory *p_scan_dir, 
 				//new or modified time
 				fi->type = ResourceLoader::get_resource_type(path);
 				fi->resource_script_class = ResourceLoader::get_resource_script_class(path);
-				if (fi->type == "" && textfile_extensions.has(ext)) {
+				if (fi->type.is_empty() && textfile_extensions.has(ext)) {
 					fi->type = "TextFile";
 				}
-				if (fi->type == "" && other_file_extensions.has(ext)) {
+				if (fi->type.is_empty() && other_file_extensions.has(ext)) {
 					fi->type = "OtherFile";
 				}
 				fi->uid = ResourceLoader::get_resource_uid(path);
@@ -1410,10 +1410,10 @@ void EditorFileSystem::_scan_fs_changes(EditorFileSystemDirectory *p_dir, ScanPr
 					fi->import_dest_paths = Vector<String>();
 					fi->type = ResourceLoader::get_resource_type(path);
 					fi->resource_script_class = ResourceLoader::get_resource_script_class(path);
-					if (fi->type == "" && textfile_extensions.has(ext)) {
+					if (fi->type.is_empty() && textfile_extensions.has(ext)) {
 						fi->type = "TextFile";
 					}
-					if (fi->type == "" && other_file_extensions.has(ext)) {
+					if (fi->type.is_empty() && other_file_extensions.has(ext)) {
 						fi->type = "OtherFile";
 					}
 					fi->class_info = _get_global_script_class(fi->type, path);
@@ -2610,10 +2610,10 @@ Error EditorFileSystem::_reimport_group(const String &p_group_file, const Vector
 		fs->files[cpos]->deps = _get_dependencies(file);
 		fs->files[cpos]->uid = uid;
 		fs->files[cpos]->type = importer->get_resource_type();
-		if (fs->files[cpos]->type == "" && textfile_extensions.has(file.get_extension())) {
+		if (fs->files[cpos]->type.is_empty() && textfile_extensions.has(file.get_extension())) {
 			fs->files[cpos]->type = "TextFile";
 		}
-		if (fs->files[cpos]->type == "" && other_file_extensions.has(file.get_extension())) {
+		if (fs->files[cpos]->type.is_empty() && other_file_extensions.has(file.get_extension())) {
 			fs->files[cpos]->type = "OtherFile";
 		}
 		fs->files[cpos]->import_valid = err == OK;

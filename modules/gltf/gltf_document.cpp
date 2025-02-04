@@ -7335,7 +7335,7 @@ void GLTFDocument::_convert_mesh_instances(Ref<GLTFState> p_state) {
 						bone_i = bone_name_to_idx[bind_name];
 					}
 					ERR_CONTINUE(bone_i < 0 || bone_i >= bone_cnt);
-					if (bind_name == StringName()) {
+					if (bind_name.is_empty()) {
 						bind_name = godot_skeleton->get_bone_name(bone_i);
 					}
 					GLTFNodeIndex skeleton_bone_i = gltf_skeleton->joints[bone_i];
@@ -8320,7 +8320,7 @@ Node *GLTFDocument::_generate_scene_node_tree(Ref<GLTFState> p_state) {
 	// if one is missing, or do nothing if both are already set.
 	if (unlikely(p_state->scene_name.is_empty())) {
 		p_state->scene_name = single_root->get_name();
-	} else if (single_root->get_name() == StringName()) {
+	} else if (single_root->get_name().is_empty()) {
 		if (_naming_version == 0) {
 			single_root->set_name(p_state->scene_name);
 		} else {

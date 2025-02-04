@@ -442,7 +442,7 @@ bool OpenXRAPI::is_top_level_path_supported(const String &p_toplevel_path) {
 	// If unsupported is returned we likely have a misspelled interaction profile path in our action map. Always output that as an error.
 	ERR_FAIL_COND_V_MSG(required_extension == XR_PATH_UNSUPPORTED_NAME, false, "OpenXR: Unsupported toplevel path " + p_toplevel_path);
 
-	if (required_extension == "") {
+	if (required_extension.is_empty()) {
 		// no extension needed, core top level are always "supported", they just won't be used if not really supported
 		return true;
 	}
@@ -462,7 +462,7 @@ bool OpenXRAPI::is_interaction_profile_supported(const String &p_ip_path) {
 	// If unsupported is returned we likely have a misspelled interaction profile path in our action map. Always output that as an error.
 	ERR_FAIL_COND_V_MSG(required_extension == XR_PATH_UNSUPPORTED_NAME, false, "OpenXR: Unsupported interaction profile " + p_ip_path);
 
-	if (required_extension == "") {
+	if (required_extension.is_empty()) {
 		// no extension needed, core interaction profiles are always "supported", they just won't be used if not really supported
 		return true;
 	}
@@ -486,7 +486,7 @@ bool OpenXRAPI::interaction_profile_supports_io_path(const String &p_ip_path, co
 	// If the io_path is not part of our metadata we've likely got a misspelled name or a bad action map, report
 	ERR_FAIL_NULL_V_MSG(io_path, false, "OpenXR: Unsupported io path " + String(p_ip_path) + String(p_io_path));
 
-	if (io_path->openxr_extension_name == "") {
+	if (io_path->openxr_extension_name.is_empty()) {
 		// no extension needed, core io paths are always "supported", they just won't be used if not really supported
 		return true;
 	}

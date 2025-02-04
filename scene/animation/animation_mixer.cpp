@@ -143,7 +143,7 @@ void AnimationMixer::_animation_set_cache_update() {
 	// Update changed and add otherwise.
 	for (const AnimationLibraryData &lib : animation_libraries) {
 		for (const KeyValue<StringName, Ref<Animation>> &K : lib.library->animations) {
-			StringName key = lib.name == StringName() ? K.key : StringName(String(lib.name) + "/" + String(K.key));
+			StringName key = lib.name.is_empty() ? K.key : StringName(String(lib.name) + "/" + String(K.key));
 			if (!animation_set.has(key)) {
 				AnimationData ad;
 				ad.animation = K.value;
@@ -197,7 +197,7 @@ void AnimationMixer::_animation_added(const StringName &p_name, const StringName
 }
 
 void AnimationMixer::_animation_removed(const StringName &p_name, const StringName &p_library) {
-	StringName name = p_library == StringName() ? p_name : StringName(String(p_library) + "/" + String(p_name));
+	StringName name = p_library.is_empty() ? p_name : StringName(String(p_library) + "/" + String(p_name));
 
 	if (!animation_set.has(name)) {
 		return; // No need to update because not the one from the library being used.
@@ -209,8 +209,8 @@ void AnimationMixer::_animation_removed(const StringName &p_name, const StringNa
 }
 
 void AnimationMixer::_animation_renamed(const StringName &p_name, const StringName &p_to_name, const StringName &p_library) {
-	StringName from_name = p_library == StringName() ? p_name : StringName(String(p_library) + "/" + String(p_name));
-	StringName to_name = p_library == StringName() ? p_to_name : StringName(String(p_library) + "/" + String(p_to_name));
+	StringName from_name = p_library.is_empty() ? p_name : StringName(String(p_library) + "/" + String(p_name));
+	StringName to_name = p_library.is_empty() ? p_to_name : StringName(String(p_library) + "/" + String(p_to_name));
 
 	if (!animation_set.has(from_name)) {
 		return; // No need to update because not the one from the library being used.
@@ -372,8 +372,8 @@ void AnimationMixer::rename_animation_library(const StringName &p_name, const St
 			lib.library->connect(SNAME("animation_renamed"), callable_mp(this, &AnimationMixer::_animation_renamed).bind(p_new_name));
 
 			for (const KeyValue<StringName, Ref<Animation>> &K : lib.library->animations) {
-				StringName old_name = p_name == StringName() ? K.key : StringName(String(p_name) + "/" + String(K.key));
-				StringName new_name = p_new_name == StringName() ? K.key : StringName(String(p_new_name) + "/" + String(K.key));
+				StringName old_name = p_name.is_empty() ? K.key : StringName(String(p_name) + "/" + String(K.key));
+				StringName new_name = p_new_name.is_empty() ? K.key : StringName(String(p_new_name) + "/" + String(K.key));
 				_rename_animation(old_name, new_name);
 			}
 		}

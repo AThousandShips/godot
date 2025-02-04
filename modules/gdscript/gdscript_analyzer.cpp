@@ -1177,7 +1177,7 @@ void GDScriptAnalyzer::resolve_class_member(GDScriptParser::ClassNode *p_class, 
 
 #ifdef DEBUG_ENABLED
 					// Named enum identifiers do not shadow anything since you can only access them with `NamedEnum.ENUM_VALUE`.
-					if (member.m_enum->identifier->name == StringName()) {
+					if (member.m_enum->identifier->name.is_empty()) {
 						is_shadowing(element.identifier, "enum member", false);
 					}
 #endif
@@ -1722,7 +1722,7 @@ void GDScriptAnalyzer::resolve_function_signature(GDScriptParser::FunctionNode *
 
 #ifdef DEBUG_ENABLED
 	String function_visible_name = function_name;
-	if (function_name == StringName()) {
+	if (function_name.is_empty()) {
 		function_visible_name = p_is_lambda ? "<anonymous lambda>" : "<unknown function>";
 	}
 #endif
@@ -5535,7 +5535,7 @@ GDScriptParser::DataType GDScriptAnalyzer::type_from_property(const PropertyInfo
 			}
 		} else {
 			result.kind = GDScriptParser::DataType::NATIVE;
-			result.native_type = p_property.class_name == StringName() ? "Object" : p_property.class_name;
+			result.native_type = p_property.class_name.is_empty() ? "Object" : p_property.class_name;
 		}
 	} else {
 		result.kind = GDScriptParser::DataType::BUILTIN;

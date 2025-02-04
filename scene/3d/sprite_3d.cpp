@@ -1321,7 +1321,7 @@ String AnimatedSprite3D::get_autoplay() const {
 void AnimatedSprite3D::play(const StringName &p_name, float p_custom_scale, bool p_from_end) {
 	StringName name = p_name;
 
-	if (name == StringName()) {
+	if (name.is_empty()) {
 		name = animation;
 	}
 
@@ -1410,7 +1410,7 @@ void AnimatedSprite3D::set_animation(const StringName &p_name) {
 	}
 
 	int frame_count = frames->get_frame_count(animation);
-	if (animation == StringName() || frame_count == 0) {
+	if (animation.is_empty() || frame_count == 0) {
 		stop();
 		return;
 	} else if (!frames->get_animation_names().has(animation)) {

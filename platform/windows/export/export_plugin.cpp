@@ -468,7 +468,7 @@ Error EditorExportPlatformWindows::_rcedit_add_data(const Ref<EditorExportPreset
 		return ERR_FILE_NOT_FOUND;
 	}
 
-	if (rcedit_path == String()) {
+	if (rcedit_path.is_empty()) {
 		rcedit_path = "rcedit"; // try to run rcedit from PATH
 	}
 

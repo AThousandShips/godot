@@ -1226,7 +1226,7 @@ void EditorNode::_scan_external_changes() {
 
 	for (int i = 0; i < editor_data.get_edited_scene_count(); i++) {
 		Ref<DirAccess> da = DirAccess::create(DirAccess::ACCESS_RESOURCES);
-		if (editor_data.get_scene_path(i) == "" || !da->file_exists(editor_data.get_scene_path(i))) {
+		if (editor_data.get_scene_path(i).is_empty() || !da->file_exists(editor_data.get_scene_path(i))) {
 			continue;
 		}
 
@@ -1262,7 +1262,7 @@ void EditorNode::_reload_modified_scenes() {
 	int current_idx = editor_data.get_edited_scene();
 
 	for (int i = 0; i < editor_data.get_edited_scene_count(); i++) {
-		if (editor_data.get_scene_path(i) == "") {
+		if (editor_data.get_scene_path(i).is_empty()) {
 			continue;
 		}
 
@@ -3349,7 +3349,7 @@ void EditorNode::_tool_menu_option(int p_idx) {
 			uid_upgrade_dialog->popup_on_demand();
 		} break;
 		case TOOLS_CUSTOM: {
-			if (tool_menu->get_item_submenu(p_idx) == "") {
+			if (tool_menu->get_item_submenu(p_idx).is_empty()) {
 				Callable callback = tool_menu->get_item_metadata(p_idx);
 				Callable::CallError ce;
 				Variant result;
@@ -3718,7 +3718,7 @@ void EditorNode::set_addon_plugin_enabled(const String &p_addon, bool p_enabled,
 		}
 
 		// Errors in the script cause the base_type to be an empty StringName.
-		if (scr->get_instance_base_type() == StringName()) {
+		if (scr->get_instance_base_type().is_empty()) {
 			if (_initializing_plugins) {
 				// However, if it happens during initialization, waiting for file scan might help.
 				pending_addons.push_back(p_addon);

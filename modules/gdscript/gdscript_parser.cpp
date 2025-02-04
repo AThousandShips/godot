@@ -5332,9 +5332,9 @@ bool GDScriptParser::DataType::can_reference(const GDScriptParser::DataType &p_o
 		return true;
 	}
 
-	if (native_type == StringName()) {
+	if (native_type.is_empty()) {
 		return true;
-	} else if (p_other.native_type == StringName()) {
+	} else if (p_other.native_type.is_empty()) {
 		return false;
 	} else if (native_type != p_other.native_type && !ClassDB::is_parent_class(p_other.native_type, native_type)) {
 		return false;

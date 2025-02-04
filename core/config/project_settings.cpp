@@ -1315,7 +1315,7 @@ const HashMap<StringName, ProjectSettings::AutoloadInfo> &ProjectSettings::get_a
 }
 
 void ProjectSettings::add_autoload(const AutoloadInfo &p_autoload) {
-	ERR_FAIL_COND_MSG(p_autoload.name == StringName(), "Trying to add autoload with no name.");
+	ERR_FAIL_COND_MSG(p_autoload.name.is_empty(), "Trying to add autoload with no name.");
 	autoloads[p_autoload.name] = p_autoload;
 }
 
@@ -1338,7 +1338,7 @@ const HashMap<StringName, String> &ProjectSettings::get_global_groups_list() con
 }
 
 void ProjectSettings::add_global_group(const StringName &p_name, const String &p_description) {
-	ERR_FAIL_COND_MSG(p_name == StringName(), "Trying to add global group with no name.");
+	ERR_FAIL_COND_MSG(p_name.is_empty(), "Trying to add global group with no name.");
 	global_groups[p_name] = p_description;
 }
 

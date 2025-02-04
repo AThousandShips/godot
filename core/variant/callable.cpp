@@ -376,7 +376,7 @@ Callable::operator String() const {
 }
 
 Callable Callable::create(const Variant &p_variant, const StringName &p_method) {
-	ERR_FAIL_COND_V_MSG(p_method == StringName(), Callable(), "Method argument to Callable::create method must be a non-empty string.");
+	ERR_FAIL_COND_V_MSG(p_method.is_empty(), Callable(), "Method argument to Callable::create method must be a non-empty string.");
 
 	switch (p_variant.get_type()) {
 		case Variant::NIL:
@@ -389,7 +389,7 @@ Callable Callable::create(const Variant &p_variant, const StringName &p_method) 
 }
 
 Callable::Callable(const Object *p_object, const StringName &p_method) {
-	if (unlikely(p_method == StringName())) {
+	if (unlikely(p_method.is_empty())) {
 		object = 0;
 		ERR_FAIL_MSG("Method argument to Callable constructor must be a non-empty string.");
 	}
@@ -403,7 +403,7 @@ Callable::Callable(const Object *p_object, const StringName &p_method) {
 }
 
 Callable::Callable(ObjectID p_object, const StringName &p_method) {
-	if (unlikely(p_method == StringName())) {
+	if (unlikely(p_method.is_empty())) {
 		object = 0;
 		ERR_FAIL_MSG("Method argument to Callable constructor must be a non-empty string.");
 	}

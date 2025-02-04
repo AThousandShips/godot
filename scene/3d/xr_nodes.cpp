@@ -471,11 +471,11 @@ PackedStringArray XRNode3D::get_configuration_warnings() const {
 			warnings.push_back(RTR("XRNode3D may not function as expected without an XROrigin3D node as its parent."));
 		};
 
-		if (tracker_name == "") {
+		if (tracker_name.is_empty()) {
 			warnings.push_back(RTR("No tracker name is set."));
 		}
 
-		if (pose_name == "") {
+		if (pose_name.is_empty()) {
 			warnings.push_back(RTR("No pose is set."));
 		}
 	}

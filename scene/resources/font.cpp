@@ -1808,7 +1808,7 @@ Error FontFile::_load_bitmap_font(const String &p_path, List<String> *r_image_fi
 				if (!unicode) {
 					if (keys.has("charset")) {
 						String encoding_name = keys["charset"].to_upper();
-						if (encoding_name == "" || encoding_name == "ASCII" || encoding_name == "ANSI") {
+						if (encoding_name.is_empty() || encoding_name == "ASCII" || encoding_name == "ANSI") {
 							encoding = 2;
 						} else if (encoding_name == "ARABIC") {
 							encoding = 6;

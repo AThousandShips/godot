@@ -266,7 +266,7 @@ void CreateDialog::_add_type(const StringName &p_type, TypeCategory p_type_categ
 			if (base.is_null()) {
 				// Must be a native base type.
 				StringName extends = scr->get_instance_base_type();
-				if (extends == StringName()) {
+				if (extends.is_empty()) {
 					// Not a valid script (has compile errors), we therefore ignore it as it can not be instantiated anyway (when selected).
 					return;
 				}
@@ -276,7 +276,7 @@ void CreateDialog::_add_type(const StringName &p_type, TypeCategory p_type_categ
 			} else {
 				inherits = base->get_global_name();
 
-				if (inherits == StringName()) {
+				if (inherits.is_empty()) {
 					inherits = base->get_path();
 					inherited_type = TypeCategory::PATH_TYPE;
 				}
@@ -294,7 +294,7 @@ void CreateDialog::_add_type(const StringName &p_type, TypeCategory p_type_categ
 	}
 
 	// Should never happen, but just in case...
-	ERR_FAIL_COND(inherits == StringName());
+	ERR_FAIL_COND(inherits.is_empty());
 
 	_add_type(inherits, inherited_type);
 

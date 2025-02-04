@@ -818,7 +818,7 @@ Error ResourceLoaderBinary::load() {
 		for (int j = 0; j < pc; j++) {
 			StringName name = _get_string();
 
-			if (name == StringName()) {
+			if (name.is_empty()) {
 				error = ERR_FILE_CORRUPT;
 				ERR_FAIL_V(ERR_FILE_CORRUPT);
 			}

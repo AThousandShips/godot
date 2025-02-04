@@ -1610,7 +1610,7 @@ static GDScriptCompletionIdentifier _type_from_property(const PropertyInfo &p_pr
 			}
 		} else {
 			ci.type.kind = GDScriptParser::DataType::NATIVE;
-			ci.type.native_type = p_property.class_name == StringName() ? "Object" : p_property.class_name;
+			ci.type.native_type = p_property.class_name.is_empty() ? "Object" : p_property.class_name;
 		}
 	} else {
 		ci.type.kind = GDScriptParser::DataType::BUILTIN;

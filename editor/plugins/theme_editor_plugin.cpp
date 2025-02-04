@@ -91,7 +91,7 @@ void ThemeItemImportTree::_update_items_tree() {
 		String type_name = (String)E;
 
 		Ref<Texture2D> type_icon;
-		if (E == "") {
+		if (E.is_empty()) {
 			type_icon = get_editor_theme_icon(SNAME("NodeDisabled"));
 		} else {
 			type_icon = EditorNode::get_singleton()->get_class_icon(E, "NodeDisabled");
@@ -1245,7 +1245,7 @@ void ThemeItemEditorDialog::_update_edit_types() {
 
 	for (const StringName &E : theme_types) {
 		Ref<Texture2D> item_icon;
-		if (E == "") {
+		if (E.is_empty()) {
 			item_icon = get_editor_theme_icon(SNAME("NodeDisabled"));
 		} else {
 			item_icon = EditorNode::get_singleton()->get_class_icon(E, "NodeDisabled");
@@ -2165,7 +2165,7 @@ void ThemeTypeDialog::_update_add_type_options(const String &p_filter) {
 		unique_names.append(E);
 
 		Ref<Texture2D> item_icon;
-		if (E == "") {
+		if (E.is_empty()) {
 			item_icon = get_editor_theme_icon(SNAME("NodeDisabled"));
 		} else {
 			item_icon = EditorNode::get_singleton()->get_class_icon(E, "NodeDisabled");
@@ -2361,7 +2361,7 @@ void ThemeTypeEditor::_update_type_list() {
 		int e_idx = 0;
 		for (const StringName &E : theme_types) {
 			Ref<Texture2D> item_icon;
-			if (E == "") {
+			if (E.is_empty()) {
 				item_icon = get_editor_theme_icon(SNAME("NodeDisabled"));
 			} else {
 				item_icon = EditorNode::get_singleton()->get_class_icon(E, "NodeDisabled");
@@ -3345,7 +3345,7 @@ void ThemeTypeEditor::_type_variation_changed(const String p_value) {
 		ur->add_do_method(*edited_theme, "set_type_variation", edited_type, StringName(p_value));
 	}
 
-	if (edited_theme->get_type_variation_base(edited_type) == "") {
+	if (edited_theme->get_type_variation_base(edited_type).is_empty()) {
 		ur->add_undo_method(*edited_theme, "clear_type_variation", edited_type);
 	} else {
 		ur->add_undo_method(*edited_theme, "set_type_variation", edited_type, edited_theme->get_type_variation_base(edited_type));

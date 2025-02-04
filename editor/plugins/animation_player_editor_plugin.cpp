@@ -469,7 +469,7 @@ void AnimationPlayerEditor::_animation_new() {
 			current_library_name = player->find_animation_library(current_animation);
 		}
 	}
-	String attempt_prefix = (current_library_name == "") ? "" : current_library_name + "/";
+	String attempt_prefix = current_library_name.is_empty() ? "" : current_library_name + "/";
 	while (true) {
 		String attempt = base;
 		if (count > 1) {
@@ -1010,7 +1010,7 @@ void AnimationPlayerEditor::_update_player() {
 		if (!is_animation_library_read_only) {
 			all_animation_libraries_are_readonly = false;
 		} else {
-			if (K == "") {
+			if (K.is_empty()) {
 				global_animation_library_is_readonly = true;
 			}
 		}
@@ -1135,7 +1135,7 @@ void AnimationPlayerEditor::_update_name_dialog_library_dropdown() {
 	int current_lib_id = index_offset; // Don't default to [Global] if it doesn't exist yet.
 	for (const StringName &library_name : libraries) {
 		if (!EditorNode::get_singleton()->is_resource_read_only(player->get_animation_library(library_name))) {
-			library->add_item((library_name == StringName()) ? String(TTR("[Global]")) : String(library_name));
+			library->add_item(library_name.is_empty() ? String(TTR("[Global]")) : String(library_name));
 			library->set_item_metadata(valid_library_count, String(library_name));
 			// Default to duplicating into same library.
 			if (library_name == current_library_name) {
@@ -1149,7 +1149,7 @@ void AnimationPlayerEditor::_update_name_dialog_library_dropdown() {
 	// If our library name is empty, but we have valid libraries, we can check here to auto assign the first
 	// one which isn't a read-only library.
 	bool auto_assigning_non_global_library = false;
-	if (current_library_name == StringName() && valid_library_count > 0) {
+	if (current_library_name.is_empty() && valid_library_count > 0) {
 		for (const StringName &library_name : libraries) {
 			if (!EditorNode::get_singleton()->is_resource_read_only(player->get_animation_library(library_name))) {
 				current_library_name = library_name;

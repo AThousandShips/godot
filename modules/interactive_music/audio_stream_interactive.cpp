@@ -120,7 +120,7 @@ void AudioStreamInteractive::set_clip_stream(int p_clip, const Ref<AudioStream> 
 	AudioServer::get_singleton()->unlock();
 #ifdef TOOLS_ENABLED
 	if (Engine::get_singleton()->is_editor_hint()) {
-		if (clips[p_clip].name == StringName() && p_stream.is_valid()) {
+		if (clips[p_clip].name.is_empty() && p_stream.is_valid()) {
 			String n;
 			if (!clips[p_clip].stream->get_name().is_empty()) {
 				n = clips[p_clip].stream->get_name().replace(",", " ");
@@ -399,7 +399,7 @@ String AudioStreamInteractive::_get_streams_hint() const {
 		}
 		String n = String(clips[i].name).replace(",", " ");
 
-		if (n == "" && clips[i].stream.is_valid()) {
+		if (n.is_empty() && clips[i].stream.is_valid()) {
 			if (!clips[i].stream->get_name().is_empty()) {
 				n = clips[i].stream->get_name().replace(",", " ");
 			} else if (clips[i].stream->get_path().is_resource_file()) {
@@ -407,7 +407,7 @@ String AudioStreamInteractive::_get_streams_hint() const {
 			}
 		}
 
-		if (n == "") {
+		if (n.is_empty()) {
 			n = "Clip " + itos(i);
 		}
 
@@ -975,7 +975,7 @@ void AudioStreamPlaybackInteractive::tag_used_streams() {
 }
 
 void AudioStreamPlaybackInteractive::switch_to_clip_by_name(const StringName &p_name) {
-	if (p_name == StringName()) {
+	if (p_name.is_empty()) {
 		switch_request = -1;
 		return;
 	}

@@ -601,7 +601,7 @@ Control::CursorShape AnimationNodeStateMachineEditor::get_cursor_shape(const Poi
 }
 
 String AnimationNodeStateMachineEditor::get_tooltip(const Point2 &p_pos) const {
-	if (hovered_node_name == StringName()) {
+	if (hovered_node_name.is_empty()) {
 		return AnimationTreeNodeEditorPlugin::get_tooltip(p_pos);
 	}
 
@@ -1730,7 +1730,7 @@ void AnimationNodeStateMachineEditor::_erase_selected(const bool p_nested_action
 void AnimationNodeStateMachineEditor::_update_mode() {
 	if (tool_select->is_pressed()) {
 		selection_tools_hb->show();
-		bool nothing_selected = selected_nodes.is_empty() && selected_transition_from == StringName() && selected_transition_to == StringName();
+		bool nothing_selected = selected_nodes.is_empty() && selected_transition_from.is_empty() && selected_transition_to.is_empty();
 		bool start_end_selected = selected_nodes.size() == 1 && (*selected_nodes.begin() == SceneStringName(Start) || *selected_nodes.begin() == SceneStringName(End));
 		tool_erase->set_disabled(nothing_selected || start_end_selected || read_only);
 	} else {

@@ -92,7 +92,7 @@ String EditorPropertyNameProcessor::_capitalize_name(const String &p_name) const
 }
 
 StringName EditorPropertyNameProcessor::_get_context(const String &p_name, const String &p_property, const StringName &p_class) const {
-	if (p_property.is_empty() && p_class == StringName()) {
+	if (p_property.is_empty() && p_class.is_empty()) {
 		return StringName();
 	}
 	const HashMap<String, StringName> *context_map = translation_contexts.getptr(p_name);

@@ -326,7 +326,7 @@ void GDScriptDocGen::_generate_docs(GDScript *p_script, const GDP::ClassNode *p_
 
 	doc.is_script_doc = true;
 
-	if (p_script->local_name == StringName()) {
+	if (p_script->local_name.is_empty()) {
 		// This is an outer unnamed class.
 		doc.name = _get_script_name(p_script->get_script_path());
 	} else {

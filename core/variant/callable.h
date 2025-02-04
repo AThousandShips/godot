@@ -87,10 +87,10 @@ public:
 	Error rpcp(int p_id, const Variant **p_arguments, int p_argcount, CallError &r_call_error) const;
 
 	_FORCE_INLINE_ bool is_null() const {
-		return method == StringName() && object == 0;
+		return method.is_empty() && object == 0;
 	}
 	_FORCE_INLINE_ bool is_custom() const {
-		return method == StringName() && custom != nullptr;
+		return method.is_empty() && custom != nullptr;
 	}
 	_FORCE_INLINE_ bool is_standard() const {
 		return method != StringName();
@@ -177,7 +177,7 @@ class Signal {
 
 public:
 	_FORCE_INLINE_ bool is_null() const {
-		return object.is_null() && name == StringName();
+		return object.is_null() && name.is_empty();
 	}
 	Object *get_object() const;
 	ObjectID get_object_id() const;

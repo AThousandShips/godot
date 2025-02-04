@@ -435,14 +435,14 @@ bool TranslationServer::_load_translations(const String &p_from) {
 }
 
 bool TranslationServer::has_domain(const StringName &p_domain) const {
-	if (p_domain == StringName()) {
+	if (p_domain.is_empty()) {
 		return true;
 	}
 	return custom_domains.has(p_domain);
 }
 
 Ref<TranslationDomain> TranslationServer::get_or_add_domain(const StringName &p_domain) {
-	if (p_domain == StringName()) {
+	if (p_domain.is_empty()) {
 		return main_domain;
 	}
 	const Ref<TranslationDomain> *domain = custom_domains.getptr(p_domain);
@@ -458,7 +458,7 @@ Ref<TranslationDomain> TranslationServer::get_or_add_domain(const StringName &p_
 }
 
 void TranslationServer::remove_domain(const StringName &p_domain) {
-	ERR_FAIL_COND_MSG(p_domain == StringName(), "Cannot remove main translation domain.");
+	ERR_FAIL_COND_MSG(p_domain.is_empty(), "Cannot remove main translation domain.");
 	custom_domains.erase(p_domain);
 }
 

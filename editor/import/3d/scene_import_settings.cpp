@@ -815,7 +815,7 @@ SceneImportSettingsDialog *SceneImportSettingsDialog::get_singleton() {
 }
 
 Node *SceneImportSettingsDialog::get_selected_node() {
-	if (selected_id == "") {
+	if (selected_id.is_empty()) {
 		return nullptr;
 	}
 	return node_map[selected_id].node;

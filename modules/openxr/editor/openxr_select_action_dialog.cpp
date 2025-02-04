@@ -109,7 +109,7 @@ void OpenXRSelectActionDialog::open() {
 }
 
 void OpenXRSelectActionDialog::ok_pressed() {
-	if (selected_action == "") {
+	if (selected_action.is_empty()) {
 		return;
 	}
 

@@ -1518,7 +1518,7 @@ Error ShaderCompiler::compile(RS::ShaderMode p_mode, const String &p_code, Ident
 		// Print the files.
 		for (const KeyValue<String, Vector<String>> &E : includes) {
 			if (E.key.is_empty()) {
-				if (p_path == "") {
+				if (p_path.is_empty()) {
 					print_line("--Main Shader--");
 				} else {
 					print_line("--" + p_path + "--");

@@ -221,7 +221,7 @@ static bool _is_exact_type(const PropertyInfo &p_par_type, const GDScriptDataTyp
 		if (p_arg_type.kind == GDScriptDataType::NATIVE) {
 			class_name = p_arg_type.native_type;
 		} else {
-			class_name = p_arg_type.native_type == StringName() ? p_arg_type.script_type->get_instance_base_type() : p_arg_type.native_type;
+			class_name = p_arg_type.native_type.is_empty() ? p_arg_type.script_type->get_instance_base_type() : p_arg_type.native_type;
 		}
 		return p_par_type.class_name == class_name || ClassDB::is_parent_class(class_name, p_par_type.class_name);
 	} else {
@@ -698,7 +698,7 @@ GDScriptCodeGenerator::Address GDScriptCompiler::_parse_expression(CodeGen &code
 									if (base.type.kind == GDScriptDataType::NATIVE) {
 										class_name = base.type.native_type;
 									} else {
-										class_name = base.type.native_type == StringName() ? base.type.script_type->get_instance_base_type() : base.type.native_type;
+										class_name = base.type.native_type.is_empty() ? base.type.script_type->get_instance_base_type() : base.type.native_type;
 									}
 									if (ClassDB::class_exists(class_name) && ClassDB::has_method(class_name, call->function_name)) {
 										MethodBind *method = ClassDB::get_method(class_name, call->function_name);
@@ -807,7 +807,7 @@ GDScriptCodeGenerator::Address GDScriptCompiler::_parse_expression(CodeGen &code
 					}
 #endif
 
-					if (MI && MI->value.getter == "") {
+					if (MI && MI->value.getter.is_empty()) {
 						// Remove result temp as we don't need it.
 						gen->pop_temporary();
 						// Faster than indexing self (as if no self. had been used).
@@ -2719,7 +2719,7 @@ Error GDScriptCompiler::_prepare_compilation(GDScript *p_script, const GDScriptP
 
 	GDScriptDataType base_type = _gdtype_from_datatype(p_class->base_type, p_script, false);
 
-	if (base_type.native_type == StringName()) {
+	if (base_type.native_type.is_empty()) {
 		_set_error(vformat(R"(Parser bug (please report): Empty native type in base class "%s")", p_script->path), p_class);
 		return ERR_BUG;
 	}

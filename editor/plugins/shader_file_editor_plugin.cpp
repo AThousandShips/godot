@@ -57,7 +57,7 @@ void ShaderFileEditor::_version_selected(int p_option) {
 	ERR_FAIL_COND(bytecode.is_null());
 
 	for (int i = 0; i < RD::SHADER_STAGE_MAX; i++) {
-		if (bytecode->get_stage_bytecode(RD::ShaderStage(i)).is_empty() && bytecode->get_stage_compile_error(RD::ShaderStage(i)) == String()) {
+		if (bytecode->get_stage_bytecode(RD::ShaderStage(i)).is_empty() && bytecode->get_stage_compile_error(RD::ShaderStage(i)).is_empty()) {
 			stages[i]->set_button_icon(Ref<Texture2D>());
 			continue;
 		}

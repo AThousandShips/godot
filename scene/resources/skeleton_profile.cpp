@@ -258,7 +258,7 @@ void SkeletonProfile::set_bone_size(int p_size) {
 }
 
 int SkeletonProfile::find_bone(const StringName &p_bone_name) const {
-	if (p_bone_name == StringName()) {
+	if (p_bone_name.is_empty()) {
 		return -1;
 	}
 	for (int i = 0; i < bones.size(); i++) {

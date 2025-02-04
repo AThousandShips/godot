@@ -216,7 +216,7 @@ bool ScriptCreateDialog::_validate_parent(const String &p_string) {
 
 	if (can_inherit_from_file && p_string.is_quoted()) {
 		String p = p_string.substr(1, p_string.length() - 2);
-		if (_validate_path(p, true) == "") {
+		if (_validate_path(p, true).is_empty()) {
 			return true;
 		}
 	}
@@ -807,7 +807,7 @@ ScriptLanguage::ScriptTemplate ScriptCreateDialog::_parse_template(const ScriptL
 	script_template.content = script_template.content.lstrip("\n");
 
 	// Get name from file name if no name in meta information
-	if (script_template.name == String()) {
+	if (script_template.name.is_empty()) {
 		script_template.name = p_filename.get_basename().capitalize();
 	}
 

@@ -53,9 +53,9 @@ struct ContainerTypeValidate {
 			return true;
 		}
 
-		if (class_name == StringName()) {
+		if (class_name.is_empty()) {
 			return true;
-		} else if (p_type.class_name == StringName()) {
+		} else if (p_type.class_name.is_empty()) {
 			return false;
 		} else if (class_name != p_type.class_name && !ClassDB::is_parent_class(p_type.class_name, class_name)) {
 			return false;
@@ -126,7 +126,7 @@ struct ContainerTypeValidate {
 			return true; //fine
 		}
 #endif
-		if (class_name == StringName()) {
+		if (class_name.is_empty()) {
 			return true; // All good, no class type requested.
 		}
 
