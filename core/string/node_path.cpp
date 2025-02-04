@@ -314,7 +314,7 @@ NodePath NodePath::rel_path_to(const NodePath &p_np) const {
 }
 
 NodePath NodePath::get_as_property_path() const {
-	if (!data || !data->path.size()) {
+	if (!data || data->path.is_empty()) {
 		return *this;
 	} else {
 		Vector<StringName> new_path = data->subpath;
@@ -350,7 +350,7 @@ void NodePath::simplify() {
 			data->path.remove_at(i - 1);
 			data->path.remove_at(i - 1);
 			i -= 2;
-			if (data->path.size() == 0) {
+			if (data->path.is_empty()) {
 				data->path.push_back(".");
 				break;
 			}
@@ -366,7 +366,7 @@ NodePath NodePath::simplified() const {
 }
 
 NodePath::NodePath(const Vector<StringName> &p_path, bool p_absolute) {
-	if (p_path.size() == 0 && !p_absolute) {
+	if (p_path.is_empty() && !p_absolute) {
 		return;
 	}
 
@@ -378,7 +378,7 @@ NodePath::NodePath(const Vector<StringName> &p_path, bool p_absolute) {
 }
 
 NodePath::NodePath(const Vector<StringName> &p_path, const Vector<StringName> &p_subpath, bool p_absolute) {
-	if (p_path.size() == 0 && p_subpath.size() == 0 && !p_absolute) {
+	if (p_path.is_empty() && p_subpath.is_empty() && !p_absolute) {
 		return;
 	}
 
@@ -397,7 +397,7 @@ NodePath::NodePath(const NodePath &p_path) {
 }
 
 NodePath::NodePath(const String &p_path) {
-	if (p_path.length() == 0) {
+	if (p_path.is_empty()) {
 		return;
 	}
 
@@ -443,7 +443,7 @@ NodePath::NodePath(const String &p_path) {
 		}
 	}
 
-	if (slices == 0 && !absolute && !subpath.size()) {
+	if (slices == 0 && !absolute && subpath.is_empty()) {
 		return;
 	}
 

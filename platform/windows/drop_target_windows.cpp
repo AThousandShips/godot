@@ -350,7 +350,7 @@ HRESULT STDMETHODCALLTYPE DropTargetWindows::Drop(IDataObject *pDataObj, DWORD g
 		return E_UNEXPECTED;
 	}
 
-	if (!files.size()) {
+	if (files.is_empty()) {
 		return S_OK;
 	}
 

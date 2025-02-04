@@ -448,7 +448,7 @@ void FileDialog::_post_popup() {
 void FileDialog::_push_history() {
 	local_history.resize(local_history_pos + 1);
 	String new_path = dir_access->get_current_dir();
-	if (local_history.size() == 0 || new_path != local_history[local_history_pos]) {
+	if (local_history.is_empty() || new_path != local_history[local_history_pos]) {
 		local_history.push_back(new_path);
 		local_history_pos++;
 		dir_prev->set_disabled(local_history_pos == 0);
@@ -1142,7 +1142,7 @@ void FileDialog::set_current_file(const String &p_file) {
 }
 
 void FileDialog::set_current_path(const String &p_path) {
-	if (!p_path.size()) {
+	if (p_path.is_empty()) {
 		return;
 	}
 	int pos = MAX(p_path.rfind_char('/'), p_path.rfind_char('\\'));

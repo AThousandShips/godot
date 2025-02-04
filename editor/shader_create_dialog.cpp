@@ -293,7 +293,7 @@ void ShaderCreateDialog::_type_changed(int p_language) {
 		if (path.contains_char('.')) {
 			extension = path.get_extension();
 		}
-		if (extension.length() == 0) {
+		if (extension.is_empty()) {
 			path += selected_ext;
 		} else {
 			path = path.get_basename() + selected_ext;

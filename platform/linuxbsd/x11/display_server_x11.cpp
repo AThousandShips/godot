@@ -306,7 +306,7 @@ bool DisplayServerX11::_refresh_device_info() {
 
 	XIFreeDeviceInfo(info);
 #ifdef TOUCH_ENABLED
-	if (!xi.touch_devices.size()) {
+	if (xi.touch_devices.is_empty()) {
 		print_verbose("XInput: No touch devices found.");
 	}
 #endif
@@ -2061,7 +2061,7 @@ void DisplayServerX11::_update_window_mouse_passthrough(WindowID p_window) {
 			Region region = XCreateRegion();
 			XShapeCombineRegion(x11_display, windows[p_window].x11_window, ShapeInput, 0, 0, region, ShapeSet);
 			XDestroyRegion(region);
-		} else if (region_path.size() == 0) {
+		} else if (region_path.is_empty()) {
 			XShapeCombineMask(x11_display, windows[p_window].x11_window, ShapeInput, 0, 0, None, ShapeSet);
 		} else {
 			XPoint *points = (XPoint *)memalloc(sizeof(XPoint) * region_path.size());
@@ -5398,7 +5398,7 @@ void DisplayServerX11::_update_context(WindowData &wd) {
 		CharString class_str;
 		if (context == CONTEXT_ENGINE) {
 			String config_name = GLOBAL_GET("application/config/name");
-			if (config_name.length() == 0) {
+			if (config_name.is_empty()) {
 				class_str = "Godot_Engine";
 			} else {
 				class_str = config_name.utf8();

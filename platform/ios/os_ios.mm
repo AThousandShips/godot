@@ -214,7 +214,7 @@ _FORCE_INLINE_ String OS_IOS::get_framework_executable(const String &p_path) {
 }
 
 Error OS_IOS::open_dynamic_library(const String &p_path, void *&p_library_handle, GDExtensionData *p_data) {
-	if (p_path.length() == 0) {
+	if (p_path.is_empty()) {
 		// Static xcframework.
 		p_library_handle = RTLD_SELF;
 

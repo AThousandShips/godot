@@ -6599,7 +6599,7 @@ void AnimationTrackEditor::_edit_menu_pressed(int p_option) {
 			}
 		} break;
 		case EDIT_PASTE_TRACKS: {
-			if (track_clipboard.size() == 0) {
+			if (track_clipboard.is_empty()) {
 				EditorNode::get_singleton()->show_warning(TTR("Clipboard is empty!"));
 				break;
 			}

@@ -51,7 +51,7 @@ Dictionary SyntaxHighlighter::get_line_syntax_highlighting(int p_line) {
 }
 
 void SyntaxHighlighter::_lines_edited_from(int p_from_line, int p_to_line) {
-	if (highlighting_cache.size() < 1) {
+	if (highlighting_cache.is_empty()) {
 		return;
 	}
 
@@ -148,7 +148,7 @@ Dictionary CodeHighlighter::_get_line_syntax_highlighting_impl(int p_line) {
 	const int line_length = str.length();
 	Color prev_color;
 
-	if (in_region != -1 && str.length() == 0) {
+	if (in_region != -1 && str.is_empty()) {
 		color_region_cache[p_line] = in_region;
 	}
 	for (int j = 0; j < line_length; j++) {

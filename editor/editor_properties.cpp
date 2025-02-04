@@ -570,7 +570,7 @@ void EditorPropertyPath::_drop_data_fw(const Point2 &p_point, const Variant &p_d
 		return;
 	}
 	const Vector<String> filesPaths = drag_data["files"];
-	if (filesPaths.size() == 0) {
+	if (filesPaths.is_empty()) {
 		return;
 	}
 
@@ -586,7 +586,7 @@ bool EditorPropertyPath::_can_drop_data_fw(const Point2 &p_point, const Variant 
 		return false;
 	}
 	const Vector<String> filesPaths = drag_data["files"];
-	if (filesPaths.size() == 0) {
+	if (filesPaths.is_empty()) {
 		return false;
 	}
 
@@ -832,7 +832,7 @@ void EditorPropertyLayersGrid::_rename_pressed(int p_menu) {
 
 void EditorPropertyLayersGrid::_rename_operation_confirm() {
 	String new_name = rename_dialog_text->get_text().strip_edges();
-	if (new_name.length() == 0) {
+	if (new_name.is_empty()) {
 		EditorNode::get_singleton()->show_warning(TTR("No name provided."));
 		return;
 	} else if (new_name.contains_char('/') || new_name.contains_char('\\') || new_name.contains_char(':')) {

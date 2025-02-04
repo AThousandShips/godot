@@ -833,7 +833,7 @@ struct VariantIndexedSetGet_String {
 		}
 		OOB_TEST(index, v.length());
 		const String &m = *reinterpret_cast<const String *>(member);
-		if (unlikely(m.length() == 0)) {
+		if (unlikely(m.is_empty())) {
 			v.remove_at(index);
 		} else {
 			v.set(index, m.unicode_at(0));

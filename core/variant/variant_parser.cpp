@@ -1875,7 +1875,7 @@ Error VariantParser::parse_tag_assign_eof(Stream *p_stream, int &line, String &r
 			continue;
 		}
 
-		if (c == '[' && what.length() == 0) {
+		if (c == '[' && what.is_empty()) {
 			//it's a tag!
 			p_stream->saved = '['; //go back one
 

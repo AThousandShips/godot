@@ -959,7 +959,7 @@ void CodeEdit::indent_lines() {
 	for (Point2i line_range : line_ranges) {
 		for (int i = line_range.x; i <= line_range.y; i++) {
 			const String line_text = get_line(i);
-			if (line_text.size() == 0) {
+			if (line_text.is_empty()) {
 				// Ignore empty lines.
 				continue;
 			}
@@ -1024,7 +1024,7 @@ void CodeEdit::convert_indent(int p_from_line, int p_to_line) {
 	for (int i = p_from_line; i <= p_to_line; i++) {
 		String line = get_line(i);
 
-		if (line.length() <= 0) {
+		if (line.is_empty()) {
 			continue;
 		}
 
@@ -1595,7 +1595,7 @@ bool CodeEdit::can_fold_line(int p_line) const {
 		return false;
 	}
 
-	if (p_line + 1 >= get_line_count() || get_line(p_line).strip_edges().size() == 0) {
+	if (p_line + 1 >= get_line_count() || get_line(p_line).strip_edges().is_empty()) {
 		return false;
 	}
 
@@ -1654,7 +1654,7 @@ bool CodeEdit::can_fold_line(int p_line) const {
 	/* Otherwise check indent levels. */
 	int start_indent = get_indent_level(p_line);
 	for (int i = p_line + 1; i < get_line_count(); i++) {
-		if (is_in_string(i) != -1 || is_in_comment(i) != -1 || get_line(i).strip_edges().size() == 0) {
+		if (is_in_string(i) != -1 || is_in_comment(i) != -1 || get_line(i).strip_edges().is_empty()) {
 			continue;
 		}
 		return (get_indent_level(i) > start_indent);
@@ -1707,7 +1707,7 @@ void CodeEdit::fold_line(int p_line) {
 		} else {
 			int start_indent = get_indent_level(p_line);
 			for (int i = p_line + 1; i <= line_count; i++) {
-				if (get_line(i).strip_edges().size() == 0) {
+				if (get_line(i).strip_edges().is_empty()) {
 					continue;
 				}
 				if (get_indent_level(i) > start_indent) {
@@ -1952,7 +1952,7 @@ String CodeEdit::get_delimiter_end_key(int p_delimiter_idx) const {
 }
 
 Point2 CodeEdit::get_delimiter_start_position(int p_line, int p_column) const {
-	if (delimiters.size() == 0) {
+	if (delimiters.is_empty()) {
 		return Point2(-1, -1);
 	}
 	ERR_FAIL_INDEX_V(p_line, get_line_count(), Point2(-1, -1));
@@ -1962,7 +1962,7 @@ Point2 CodeEdit::get_delimiter_start_position(int p_line, int p_column) const {
 	start_position.y = -1;
 	start_position.x = -1;
 
-	bool in_region = ((p_line <= 0 || delimiter_cache[p_line - 1].size() < 1) ? -1 : delimiter_cache[p_line - 1].back()->get()) != -1;
+	bool in_region = ((p_line <= 0 || delimiter_cache[p_line - 1].is_empty()) ? -1 : delimiter_cache[p_line - 1].back()->get()) != -1;
 
 	/* Check the keys for this line. */
 	for (const KeyValue<int, int> &E : delimiter_cache[p_line]) {
@@ -1987,7 +1987,7 @@ Point2 CodeEdit::get_delimiter_start_position(int p_line, int p_column) const {
 
 	/* Region starts on a previous line */
 	for (int i = p_line - 1; i >= 0; i--) {
-		if (delimiter_cache[i].size() < 1) {
+		if (delimiter_cache[i].is_empty()) {
 			continue;
 		}
 		start_position.y = i;
@@ -2003,7 +2003,7 @@ Point2 CodeEdit::get_delimiter_start_position(int p_line, int p_column) const {
 }
 
 Point2 CodeEdit::get_delimiter_end_position(int p_line, int p_column) const {
-	if (delimiters.size() == 0) {
+	if (delimiters.is_empty()) {
 		return Point2(-1, -1);
 	}
 	ERR_FAIL_INDEX_V(p_line, get_line_count(), Point2(-1, -1));
@@ -2013,7 +2013,7 @@ Point2 CodeEdit::get_delimiter_end_position(int p_line, int p_column) const {
 	end_position.y = -1;
 	end_position.x = -1;
 
-	int region = (p_line <= 0 || delimiter_cache[p_line - 1].size() < 1) ? -1 : delimiter_cache[p_line - 1].back()->value();
+	int region = (p_line <= 0 || delimiter_cache[p_line - 1].is_empty()) ? -1 : delimiter_cache[p_line - 1].back()->value();
 
 	/* Check the keys for this line. */
 	for (const KeyValue<int, int> &E : delimiter_cache[p_line]) {
@@ -2038,7 +2038,7 @@ Point2 CodeEdit::get_delimiter_end_position(int p_line, int p_column) const {
 
 	/* Region ends on a later line */
 	for (int i = p_line + 1; i < get_line_count(); i++) {
-		if (delimiter_cache[i].size() < 1 || delimiter_cache[i].front()->value() != -1) {
+		if (delimiter_cache[i].is_empty() || delimiter_cache[i].front()->value() != -1) {
 			continue;
 		}
 		end_position.x = delimiter_cache[i].front()->key();
@@ -3054,7 +3054,7 @@ void CodeEdit::_update_code_region_tags() {
 
 /* Delimiters */
 void CodeEdit::_update_delimiter_cache(int p_from_line, int p_to_line) {
-	if (delimiters.size() == 0) {
+	if (delimiters.is_empty()) {
 		return;
 	}
 
@@ -3081,14 +3081,14 @@ void CodeEdit::_update_delimiter_cache(int p_from_line, int p_to_line) {
 
 	int in_region = -1;
 	for (int i = start_line; i < MIN(end_line + 1, line_count); i++) {
-		int current_end_region = (i < 0 || delimiter_cache[i].size() < 1) ? -1 : delimiter_cache[i].back()->value();
-		in_region = (i <= 0 || delimiter_cache[i - 1].size() < 1) ? -1 : delimiter_cache[i - 1].back()->value();
+		int current_end_region = (i < 0 || delimiter_cache[i].is_empty()) ? -1 : delimiter_cache[i].back()->value();
+		in_region = (i <= 0 || delimiter_cache[i - 1].is_empty()) ? -1 : delimiter_cache[i - 1].back()->value();
 
 		const String &str = get_line(i);
 		const int line_length = str.length();
 		delimiter_cache.write[i].clear();
 
-		if (str.length() == 0) {
+		if (str.is_empty()) {
 			if (in_region != -1) {
 				delimiter_cache.write[i][0] = in_region;
 			}
@@ -3204,12 +3204,12 @@ void CodeEdit::_update_delimiter_cache(int p_from_line, int p_to_line) {
 }
 
 int CodeEdit::_is_in_delimiter(int p_line, int p_column, DelimiterType p_type) const {
-	if (delimiters.size() == 0 || p_line >= delimiter_cache.size()) {
+	if (delimiters.is_empty() || p_line >= delimiter_cache.size()) {
 		return -1;
 	}
 	ERR_FAIL_INDEX_V(p_line, get_line_count(), 0);
 
-	int region = (p_line <= 0 || delimiter_cache[p_line - 1].size() < 1) ? -1 : delimiter_cache[p_line - 1].back()->value();
+	int region = (p_line <= 0 || delimiter_cache[p_line - 1].is_empty()) ? -1 : delimiter_cache[p_line - 1].back()->value();
 	bool in_region = region != -1 && delimiters[region].type == p_type;
 	for (RBMap<int, int>::Element *E = delimiter_cache[p_line].front(); E; E = E->next()) {
 		/* If column is specified, loop until the key is larger then the column. */
@@ -3418,7 +3418,7 @@ void CodeEdit::_filter_code_completion_candidates_impl() {
 		GDVIRTUAL_CALL(_filter_code_completion_candidates, completion_options_sources, completion_options);
 
 		/* No options to complete, cancel. */
-		if (completion_options.size() == 0) {
+		if (completion_options.is_empty()) {
 			cancel_code_completion();
 			return;
 		}
@@ -3560,11 +3560,11 @@ void CodeEdit::_filter_code_completion_candidates_impl() {
 			option.insert_text = literal + (option.insert_text.unquote().quote(quote));
 		}
 
-		if (option.display.length() == 0) {
+		if (option.display.is_empty()) {
 			continue;
 		}
 
-		if (string_to_complete.length() == 0) {
+		if (string_to_complete.is_empty()) {
 			option.get_option_characteristics(string_to_complete);
 			code_completion_options_new.push_back(option);
 
@@ -3650,7 +3650,7 @@ void CodeEdit::_filter_code_completion_candidates_impl() {
 	}
 
 	/* No options to complete, cancel. */
-	if (code_completion_options_new.size() == 0) {
+	if (code_completion_options_new.is_empty()) {
 		cancel_code_completion();
 		return;
 	}

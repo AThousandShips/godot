@@ -649,7 +649,7 @@ void Particles3DEditorPlugin::_node_selected(const NodePath &p_path) {
 	}
 
 	geometry = mi->get_mesh()->get_faces();
-	if (geometry.size() == 0) {
+	if (geometry.is_empty()) {
 		EditorNode::get_singleton()->show_warning(vformat(TTR("\"%s\" doesn't contain face geometry."), sel->get_name()));
 		return;
 	}
@@ -710,7 +710,7 @@ bool Particles3DEditorPlugin::_generate(Vector<Vector3> &r_points, Vector<Vector
 			area_accum += area;
 		}
 
-		if (!triangle_area_map.size() || area_accum == 0) {
+		if (triangle_area_map.is_empty() || area_accum == 0) {
 			EditorNode::get_singleton()->show_warning(TTR("The geometry's faces don't contain any area."));
 			return false;
 		}

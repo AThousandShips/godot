@@ -202,7 +202,7 @@ int Dictionary::size() const {
 }
 
 bool Dictionary::is_empty() const {
-	return !_p->variant_map.size();
+	return _p->variant_map.is_empty();
 }
 
 bool Dictionary::has(const Variant &p_key) const {

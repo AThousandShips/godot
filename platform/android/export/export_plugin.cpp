@@ -532,7 +532,7 @@ String EditorExportPlatformAndroid::get_assets_directory(const Ref<EditorExportP
 bool EditorExportPlatformAndroid::is_package_name_valid(const String &p_package, String *r_error) const {
 	String pname = get_package_name(p_package);
 
-	if (pname.length() == 0) {
+	if (pname.is_empty()) {
 		if (r_error) {
 			*r_error = TTR("Package name is missing.");
 		}
@@ -2400,7 +2400,7 @@ String EditorExportPlatformAndroid::get_apksigner_path(int p_target_sdk, bool p_
 		if (!sub_dir.begins_with(".")) {
 			Vector<String> ver_numbers = sub_dir.split(".");
 			// Dir not a version number, will use as last resort
-			if (!ver_numbers.size() || !ver_numbers[0].is_valid_int()) {
+			if (ver_numbers.is_empty() || !ver_numbers[0].is_valid_int()) {
 				other_versions.push_back(sub_dir);
 				continue;
 			}
@@ -2422,7 +2422,7 @@ String EditorExportPlatformAndroid::get_apksigner_path(int p_target_sdk, bool p_
 	versions.append_array(ideal_versions);
 	versions.append_array(other_versions);
 
-	if (!versions.size()) {
+	if (versions.is_empty()) {
 		print_error("Unable to find the 'apksigner' tool.");
 		return apksigner_path;
 	}
@@ -2818,7 +2818,7 @@ void EditorExportPlatformAndroid::get_command_line_flags(const Ref<EditorExportP
 	String cmdline = p_preset->get("command_line/extra_args");
 	Vector<String> command_line_strings = cmdline.strip_edges().split(" ");
 	for (int i = 0; i < command_line_strings.size(); i++) {
-		if (command_line_strings[i].strip_edges().length() == 0) {
+		if (command_line_strings[i].strip_edges().is_empty()) {
 			command_line_strings.remove_at(i);
 			i--;
 		}

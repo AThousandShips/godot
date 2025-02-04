@@ -283,7 +283,7 @@ void ShaderRD::_compile_variant(uint32_t p_variant, CompileData p_data) {
 		current_source = builder.as_string();
 		RD::ShaderStageSPIRVData stage;
 		stage.spirv = RD::get_singleton()->shader_compile_spirv_from_source(RD::SHADER_STAGE_VERTEX, current_source, RD::SHADER_LANGUAGE_GLSL, &error);
-		if (stage.spirv.size() == 0) {
+		if (stage.spirv.is_empty()) {
 			build_ok = false;
 		} else {
 			stage.shader_stage = RD::SHADER_STAGE_VERTEX;
@@ -301,7 +301,7 @@ void ShaderRD::_compile_variant(uint32_t p_variant, CompileData p_data) {
 		current_source = builder.as_string();
 		RD::ShaderStageSPIRVData stage;
 		stage.spirv = RD::get_singleton()->shader_compile_spirv_from_source(RD::SHADER_STAGE_FRAGMENT, current_source, RD::SHADER_LANGUAGE_GLSL, &error);
-		if (stage.spirv.size() == 0) {
+		if (stage.spirv.is_empty()) {
 			build_ok = false;
 		} else {
 			stage.shader_stage = RD::SHADER_STAGE_FRAGMENT;
@@ -320,7 +320,7 @@ void ShaderRD::_compile_variant(uint32_t p_variant, CompileData p_data) {
 
 		RD::ShaderStageSPIRVData stage;
 		stage.spirv = RD::get_singleton()->shader_compile_spirv_from_source(RD::SHADER_STAGE_COMPUTE, current_source, RD::SHADER_LANGUAGE_GLSL, &error);
-		if (stage.spirv.size() == 0) {
+		if (stage.spirv.is_empty()) {
 			build_ok = false;
 		} else {
 			stage.shader_stage = RD::SHADER_STAGE_COMPUTE;

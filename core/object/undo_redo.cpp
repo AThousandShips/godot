@@ -290,7 +290,7 @@ void UndoRedo::end_force_keep_in_merge_ends() {
 void UndoRedo::_pop_history_tail() {
 	discard_redo();
 
-	if (!actions.size()) {
+	if (actions.is_empty()) {
 		return;
 	}
 

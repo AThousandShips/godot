@@ -430,7 +430,7 @@ void ProjectManager::_scan_projects() {
 void ProjectManager::_run_project() {
 	const HashSet<String> &selected_list = project_list->get_selected_project_keys();
 
-	if (selected_list.size() < 1) {
+	if (selected_list.is_empty()) {
 		return;
 	}
 
@@ -525,7 +525,7 @@ void ProjectManager::_open_selected_projects() {
 
 void ProjectManager::_open_selected_projects_check_warnings() {
 	const HashSet<String> &selected_list = project_list->get_selected_project_keys();
-	if (selected_list.size() < 1) {
+	if (selected_list.is_empty()) {
 		return;
 	}
 
@@ -664,7 +664,7 @@ void ProjectManager::_new_project() {
 void ProjectManager::_rename_project() {
 	const Vector<ProjectList::Item> &selected_list = project_list->get_selected_projects();
 
-	if (selected_list.size() == 0) {
+	if (selected_list.is_empty()) {
 		return;
 	}
 
@@ -679,7 +679,7 @@ void ProjectManager::_rename_project() {
 void ProjectManager::_erase_project() {
 	const HashSet<String> &selected_list = project_list->get_selected_project_keys();
 
-	if (selected_list.size() == 0) {
+	if (selected_list.is_empty()) {
 		return;
 	}
 

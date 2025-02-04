@@ -322,7 +322,7 @@ Color Color::inverted() const {
 
 Color Color::html(const String &p_rgba) {
 	String color = p_rgba;
-	if (color.length() == 0) {
+	if (color.is_empty()) {
 		return Color();
 	}
 	if (color[0] == '#') {
@@ -373,7 +373,7 @@ Color Color::html(const String &p_rgba) {
 bool Color::html_is_valid(const String &p_color) {
 	String color = p_color;
 
-	if (color.length() == 0) {
+	if (color.is_empty()) {
 		return false;
 	}
 	if (color[0] == '#') {

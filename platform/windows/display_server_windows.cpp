@@ -379,7 +379,7 @@ public:
 		int gid = ctl_id++;
 		int cid = ctl_id++;
 
-		if (p_options.size() == 0) {
+		if (p_options.is_empty()) {
 			// Add check box.
 			p_pfdc->StartVisualGroup(gid, L"");
 			p_pfdc->AddCheckButton(cid, (LPCWSTR)p_name.utf16().get_data(), p_default);
@@ -1933,7 +1933,7 @@ void DisplayServerWindows::window_set_mouse_passthrough(const Vector<Vector2> &p
 
 void DisplayServerWindows::_update_window_mouse_passthrough(WindowID p_window) {
 	ERR_FAIL_COND(!windows.has(p_window));
-	if (windows[p_window].mpass || windows[p_window].mpath.size() == 0) {
+	if (windows[p_window].mpass || windows[p_window].mpath.is_empty()) {
 		SetWindowRgn(windows[p_window].hWnd, nullptr, FALSE);
 	} else {
 		POINT *points = (POINT *)memalloc(sizeof(POINT) * windows[p_window].mpath.size());

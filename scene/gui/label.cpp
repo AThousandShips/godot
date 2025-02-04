@@ -204,7 +204,7 @@ void Label::_shape() const {
 	dirty = false;
 	font_dirty = false;
 
-	if (xl_text.length() == 0) {
+	if (xl_text.is_empty()) {
 		minsize = Size2(1, get_line_height());
 		return;
 	}

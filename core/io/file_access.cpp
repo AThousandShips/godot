@@ -703,7 +703,7 @@ Error FileAccess::set_read_only_attribute(const String &p_file, bool p_ro) {
 }
 
 bool FileAccess::store_string(const String &p_string) {
-	if (p_string.length() == 0) {
+	if (p_string.is_empty()) {
 		return true;
 	}
 

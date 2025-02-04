@@ -1971,7 +1971,7 @@ void LightStorage::lightmap_tap_sh_light(RID p_lightmap, const Vector3 &p_point,
 		r_sh[i] = Color(0, 0, 0, 0);
 	}
 
-	if (!lm->points.size() || !lm->bsp_tree.size() || !lm->tetrahedra.size()) {
+	if (lm->points.is_empty() || lm->bsp_tree.is_empty() || lm->tetrahedra.is_empty()) {
 		return;
 	}
 

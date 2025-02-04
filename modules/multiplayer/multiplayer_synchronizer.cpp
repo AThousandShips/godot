@@ -84,7 +84,7 @@ void MultiplayerSynchronizer::_update_process() {
 	}
 	set_process_internal(false);
 	set_physics_process_internal(false);
-	if (!visibility_filters.size()) {
+	if (visibility_filters.is_empty()) {
 		return;
 	}
 	switch (visibility_update_mode) {
@@ -376,7 +376,7 @@ Error MultiplayerSynchronizer::_watch_changes(uint64_t p_usec) {
 	if (props.size() != watchers.size()) {
 		watchers.resize(props.size());
 	}
-	if (props.size() == 0) {
+	if (props.is_empty()) {
 		return OK;
 	}
 	Node *node = get_root_node();

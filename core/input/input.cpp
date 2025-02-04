@@ -1596,7 +1596,7 @@ void Input::parse_mapping(const String &p_mapping) {
 
 		String output = entry[idx].get_slice(":", 0).replace(" ", "");
 		String input = entry[idx].get_slice(":", 1).replace(" ", "");
-		if (output.length() < 1 || input.length() < 2) {
+		if (output.is_empty() || input.length() < 2) {
 			continue;
 		}
 

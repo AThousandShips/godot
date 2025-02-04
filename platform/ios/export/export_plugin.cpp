@@ -872,7 +872,7 @@ String EditorExportPlatformIOS::_get_linker_flags() {
 	String result;
 	for (int i = 0; i < export_plugins.size(); ++i) {
 		String flags = export_plugins[i]->get_ios_linker_flags();
-		if (flags.length() == 0) {
+		if (flags.is_empty()) {
 			continue;
 		}
 		if (result.length() > 0) {
@@ -1941,7 +1941,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(const Ref<EditorExportPreset>
 		for (const String &E : plugin_linker_flags) {
 			const String &flag = E;
 
-			if (flag.length() == 0) {
+			if (flag.is_empty()) {
 				continue;
 			}
 
@@ -1982,7 +1982,7 @@ Error EditorExportPlatformIOS::_export_project_helper(const Ref<EditorExportPres
 	EditorProgress ep("export", export_project_only ? TTR("Exporting for iOS (Project Files Only)") : TTR("Exporting for iOS"), export_project_only ? 2 : 5, true);
 
 	String team_id = p_preset->get("application/app_store_team_id");
-	ERR_FAIL_COND_V_MSG(team_id.length() == 0, ERR_CANT_OPEN, "App Store Team ID not specified - cannot configure the project.");
+	ERR_FAIL_COND_V_MSG(team_id.is_empty(), ERR_CANT_OPEN, "App Store Team ID not specified - cannot configure the project.");
 
 	String src_pkg_name;
 	if (p_debug) {
@@ -2605,7 +2605,7 @@ String EditorExportPlatformIOS::get_option_tooltip(int p_index) const {
 bool EditorExportPlatformIOS::is_package_name_valid(const String &p_package, String *r_error) const {
 	String pname = p_package;
 
-	if (pname.length() == 0) {
+	if (pname.is_empty()) {
 		if (r_error) {
 			*r_error = TTR("Identifier is missing.");
 		}

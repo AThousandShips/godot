@@ -108,7 +108,7 @@ class EditorExportPlatformMacOS : public EditorExportPlatform {
 	bool is_package_name_valid(const String &p_package, String *r_error = nullptr) const {
 		String pname = p_package;
 
-		if (pname.length() == 0) {
+		if (pname.is_empty()) {
 			if (r_error) {
 				*r_error = TTR("Identifier is missing.");
 			}

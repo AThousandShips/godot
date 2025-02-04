@@ -3125,7 +3125,7 @@ String TextEdit::get_tooltip(const Point2 &p_pos) const {
 	int col = pos.x;
 
 	String s = text[row];
-	if (s.length() == 0) {
+	if (s.is_empty()) {
 		return Control::get_tooltip(p_pos);
 	}
 	int beg, end;
@@ -4251,7 +4251,7 @@ void TextEdit::set_search_flags(uint32_t p_flags) {
 }
 
 Point2i TextEdit::search(const String &p_key, uint32_t p_search_flags, int p_from_line, int p_from_column) const {
-	if (p_key.length() == 0) {
+	if (p_key.is_empty()) {
 		return Point2(-1, -1);
 	}
 	ERR_FAIL_INDEX_V(p_from_line, text.size(), Point2i(-1, -1));
@@ -4375,7 +4375,7 @@ String TextEdit::get_word_at_pos(const Vector2 &p_pos) const {
 	int col = pos.x;
 
 	String s = text[row];
-	if (s.length() == 0) {
+	if (s.is_empty()) {
 		return "";
 	}
 	int beg, end;
@@ -4473,12 +4473,12 @@ Rect2i TextEdit::get_rect_at_line_column(int p_line, int p_column) const {
 	ERR_FAIL_COND_V(p_column < 0, Rect2i(-1, -1, 0, 0));
 	ERR_FAIL_COND_V(p_column > text[p_line].length(), Rect2i(-1, -1, 0, 0));
 
-	if (text.size() == 1 && text[0].length() == 0) {
+	if (text.size() == 1 && text[0].is_empty()) {
 		// The TextEdit is empty.
 		return Rect2i();
 	}
 
-	if (line_drawing_cache.size() == 0 || !line_drawing_cache.has(p_line)) {
+	if (line_drawing_cache.is_empty() || !line_drawing_cache.has(p_line)) {
 		// Line is not in the cache, which means it's outside of the viewing area.
 		return Rect2i(-1, -1, 0, 0);
 	}
@@ -5266,7 +5266,7 @@ void TextEdit::select_all() {
 		return;
 	}
 
-	if (text.size() == 1 && text[0].length() == 0) {
+	if (text.size() == 1 && text[0].is_empty()) {
 		return;
 	}
 
@@ -5283,7 +5283,7 @@ void TextEdit::select_word_under_caret(int p_caret) {
 		return;
 	}
 
-	if (text.size() == 1 && text[0].length() == 0) {
+	if (text.size() == 1 && text[0].is_empty()) {
 		return;
 	}
 
@@ -5328,7 +5328,7 @@ void TextEdit::add_selection_for_next_occurrence() {
 		return;
 	}
 
-	if (text.size() == 1 && text[0].length() == 0) {
+	if (text.size() == 1 && text[0].is_empty()) {
 		return;
 	}
 
@@ -5371,7 +5371,7 @@ void TextEdit::skip_selection_for_next_occurrence() {
 		return;
 	}
 
-	if (text.size() == 1 && text[0].length() == 0) {
+	if (text.size() == 1 && text[0].is_empty()) {
 		return;
 	}
 

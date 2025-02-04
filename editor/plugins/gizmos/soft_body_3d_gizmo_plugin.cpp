@@ -69,7 +69,7 @@ void SoftBody3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 
 	soft_body->get_mesh()->generate_debug_mesh_lines(lines);
 
-	if (!lines.size()) {
+	if (lines.is_empty()) {
 		return;
 	}
 

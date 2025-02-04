@@ -3202,7 +3202,7 @@ int String::findmk(const Vector<String> &p_keys, int p_from, int *r_key) const {
 	if (p_from < 0) {
 		return -1;
 	}
-	if (p_keys.size() == 0) {
+	if (p_keys.is_empty()) {
 		return -1;
 	}
 
@@ -3817,7 +3817,7 @@ static bool _wildcard_match(const char32_t *p_pattern, const char32_t *p_string,
 }
 
 bool String::match(const String &p_wildcard) const {
-	if (!p_wildcard.length() || !length()) {
+	if (p_wildcard.is_empty() || is_empty()) {
 		return false;
 	}
 
@@ -3825,7 +3825,7 @@ bool String::match(const String &p_wildcard) const {
 }
 
 bool String::matchn(const String &p_wildcard) const {
-	if (!p_wildcard.length() || !length()) {
+	if (p_wildcard.is_empty() || is_empty()) {
 		return false;
 	}
 	return _wildcard_match(p_wildcard.get_data(), get_data(), false);
@@ -5058,7 +5058,7 @@ String String::path_to(const String &p_path) const {
 		dir += dst_dirs[i] + "/";
 	}
 
-	if (dir.length() == 0) {
+	if (dir.is_empty()) {
 		dir = "./";
 	}
 	return dir;

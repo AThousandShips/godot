@@ -143,7 +143,7 @@ Vector<String> _split_pascal_case(const String &p_identifier) {
 }
 
 String pascal_to_pascal_case(const String &p_identifier) {
-	if (p_identifier.length() == 0) {
+	if (p_identifier.is_empty()) {
 		return p_identifier;
 	}
 

@@ -58,7 +58,7 @@ void TTS_Linux::speech_init_thread_func(void *p_userdata) {
 #endif
 			CharString class_str;
 			String config_name = GLOBAL_GET("application/config/name");
-			if (config_name.length() == 0) {
+			if (config_name.is_empty()) {
 				class_str = "Godot_Engine";
 			} else {
 				class_str = config_name.utf8();

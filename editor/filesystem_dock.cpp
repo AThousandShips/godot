@@ -1778,7 +1778,7 @@ void FileSystemDock::_rename_operation_confirm() {
 	String old_name = to_rename.is_file ? to_rename.path.get_file() : to_rename.path.left(-1).get_file();
 
 	bool rename_error = false;
-	if (new_name.length() == 0) {
+	if (new_name.is_empty()) {
 		EditorNode::get_singleton()->show_warning(TTR("No name provided."));
 		rename_error = true;
 	} else if (new_name.contains_char('/') || new_name.contains_char('\\') || new_name.contains_char(':')) {
@@ -3840,7 +3840,7 @@ void FileSystemDock::_update_import_dock() {
 		imports.push_back(fpath);
 	}
 
-	if (imports.size() == 0) {
+	if (imports.is_empty()) {
 		ImportDock::get_singleton()->clear();
 	} else if (imports.size() == 1) {
 		ImportDock::get_singleton()->set_edit_path(imports[0]);

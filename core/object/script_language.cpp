@@ -591,7 +591,7 @@ TypedArray<int> ScriptLanguage::CodeCompletionOption::get_option_characteristics
 	}
 	charac.clear();
 	// Ensure base is not empty and at the same time that matches is not empty too.
-	if (p_base.length() == 0) {
+	if (p_base.is_empty()) {
 		last_matches = matches;
 		charac.push_back(location);
 		return charac;

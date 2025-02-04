@@ -132,7 +132,7 @@ Error DirAccess::erase_contents_recursive() {
 }
 
 Error DirAccess::make_dir_recursive(const String &p_dir) {
-	if (p_dir.length() < 1) {
+	if (p_dir.is_empty()) {
 		return OK;
 	}
 

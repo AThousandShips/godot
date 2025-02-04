@@ -724,7 +724,7 @@ void SceneReplicationInterface::_send_delta(int p_peer, const HashSet<ObjectID> 
 		uint64_t indexes;
 		List<Variant> delta = sync->get_delta_state(p_usec, last_usec, indexes);
 
-		if (!delta.size()) {
+		if (delta.is_empty()) {
 			continue; // Nothing to update.
 		}
 

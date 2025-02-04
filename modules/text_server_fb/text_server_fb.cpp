@@ -4343,7 +4343,7 @@ bool TextServerFallback::_shaped_text_shape(const RID &p_shaped) {
 	sd->width = 0.0;
 	sd->glyphs.clear();
 
-	if (sd->text.length() == 0) {
+	if (sd->text.is_empty()) {
 		sd->valid.set();
 		return true;
 	}

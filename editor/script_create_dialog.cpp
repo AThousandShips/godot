@@ -210,7 +210,7 @@ void ScriptCreateDialog::set_inheritance_base_type(const String &p_base) {
 }
 
 bool ScriptCreateDialog::_validate_parent(const String &p_string) {
-	if (p_string.length() == 0) {
+	if (p_string.is_empty()) {
 		return false;
 	}
 

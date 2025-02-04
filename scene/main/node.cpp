@@ -1587,7 +1587,7 @@ void Node::_generate_serial_child_name(const Node *p_child, StringName &name) co
 			name = attempt;
 			return;
 		} else {
-			if (nums.length() == 0) {
+			if (nums.is_empty()) {
 				// Name was undecorated so skip to 2 for a more natural result
 				nums = "2";
 				name_string += nnsep; // Add separator because nums.length() > 0 was false
@@ -2371,7 +2371,7 @@ bool Node::is_in_group(const StringName &p_identifier) const {
 
 void Node::add_to_group(const StringName &p_identifier, bool p_persistent) {
 	ERR_THREAD_GUARD
-	ERR_FAIL_COND(!p_identifier.operator String().length());
+	ERR_FAIL_COND(p_identifier.operator String().is_empty());
 
 	if (data.grouped.has(p_identifier)) {
 		return;
