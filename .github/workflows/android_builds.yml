@@ -21,22 +21,15 @@ jobs:
             cache-name: android-editor
             target: editor
             tests: false
-            sconsflags: arch=arm64 production=yes swappy=yes
+            sconsflags: production=yes swappy=yes
             cache-limit: 1
 
-          - name: Template arm32 (target=template_release, arch=arm32)
-            cache-name: android-template-arm32
+          - name: Template (target=template_release)
+            cache-name: android-template
             target: template_release
             tests: false
-            sconsflags: arch=arm32 swappy=yes
-            cache-limit: 1
-
-          - name: Template arm64 (target=template_release, arch=arm64)
-            cache-name: android-template-arm64
-            target: template_release
-            tests: false
-            sconsflags: arch=arm64 swappy=yes
-            cache-limit: 1
+            sconsflags: swappy=yes
+            cache-limit: 2
 
     steps:
       - name: Checkout
@@ -70,10 +63,20 @@ jobs:
       - name: Extract pre-built Android Swappy Frame Pacing Library
         run: 7za x -y swappy/godot-swappy.7z -o${{github.workspace}}/thirdparty/swappy-frame-pacing
 
-      - name: Compilation
+      - name: Compilation (arm32)
+        if: matrix.target == 'template_release'
         uses: ./.github/actions/godot-build
         with:
-          sconsflags: ${{ env.SCONSFLAGS }} ${{ matrix.sconsflags }}
+          sconsflags: ${{ env.SCONSFLAGS }} ${{ matrix.sconsflags }} arch=arm32
+          platform: android
+          target: ${{ matrix.target }}
+          tests: ${{ matrix.tests }}
+          scons-cache-limit: 0 # Only cap on second run to avoid purging unnecessarily
+
+      - name: Compilation (arm64)
+        uses: ./.github/actions/godot-build
+        with:
+          sconsflags: ${{ env.SCONSFLAGS }} ${{ matrix.sconsflags }} arch=arm64
           platform: android
           target: ${{ matrix.target }}
           tests: ${{ matrix.tests }}
