@@ -46,7 +46,8 @@ TEST_CASE("[Animation] Empty animation getters") {
 TEST_CASE("[Animation] Create value track") {
 	// This creates an animation that makes the node "Enemy" move to the right by
 	// 100 pixels in 0.5 seconds.
-	Ref<Animation> animation = memnew(Animation);
+	Ref<Animation> animation;
+	animation.instantiate();
 	const int track_index = animation->add_track(Animation::TYPE_VALUE);
 	CHECK(track_index == 0);
 	animation->track_set_path(track_index, NodePath("Enemy:position:x"));
@@ -90,7 +91,8 @@ TEST_CASE("[Animation] Create value track") {
 }
 
 TEST_CASE("[Animation] Create 3D position track") {
-	Ref<Animation> animation = memnew(Animation);
+	Ref<Animation> animation;
+	animation.instantiate();
 	const int track_index = animation->add_track(Animation::TYPE_POSITION_3D);
 	animation->track_set_path(track_index, NodePath("Enemy:position"));
 	animation->position_track_insert_key(track_index, 0.0, Vector3(0, 1, 2));
@@ -136,7 +138,8 @@ TEST_CASE("[Animation] Create 3D position track") {
 }
 
 TEST_CASE("[Animation] Create 3D rotation track") {
-	Ref<Animation> animation = memnew(Animation);
+	Ref<Animation> animation;
+	animation.instantiate();
 	const int track_index = animation->add_track(Animation::TYPE_ROTATION_3D);
 	animation->track_set_path(track_index, NodePath("Enemy:rotation"));
 	animation->rotation_track_insert_key(track_index, 0.0, Quaternion::from_euler(Vector3(0, 1, 2)));
@@ -182,7 +185,8 @@ TEST_CASE("[Animation] Create 3D rotation track") {
 }
 
 TEST_CASE("[Animation] Create 3D scale track") {
-	Ref<Animation> animation = memnew(Animation);
+	Ref<Animation> animation;
+	animation.instantiate();
 	const int track_index = animation->add_track(Animation::TYPE_SCALE_3D);
 	animation->track_set_path(track_index, NodePath("Enemy:scale"));
 	animation->scale_track_insert_key(track_index, 0.0, Vector3(0, 1, 2));
@@ -228,7 +232,8 @@ TEST_CASE("[Animation] Create 3D scale track") {
 }
 
 TEST_CASE("[Animation] Create blend shape track") {
-	Ref<Animation> animation = memnew(Animation);
+	Ref<Animation> animation;
+	animation.instantiate();
 	const int track_index = animation->add_track(Animation::TYPE_BLEND_SHAPE);
 	animation->track_set_path(track_index, NodePath("Enemy:scale"));
 	// Negative values for blend shapes should work as expected.
@@ -279,7 +284,8 @@ TEST_CASE("[Animation] Create blend shape track") {
 }
 
 TEST_CASE("[Animation] Create Bezier track") {
-	Ref<Animation> animation = memnew(Animation);
+	Ref<Animation> animation;
+	animation.instantiate();
 	const int track_index = animation->add_track(Animation::TYPE_BEZIER);
 	animation->track_set_path(track_index, NodePath("Enemy:scale"));
 	animation->bezier_track_insert_key(track_index, 0.0, -1.0, Vector2(-1, -1), Vector2(1, 1));

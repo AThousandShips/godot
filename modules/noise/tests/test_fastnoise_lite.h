@@ -606,7 +606,8 @@ TEST_CASE("[FastNoiseLite] Generating seamless 2D images (11x11px) and compare t
 	SUBCASE("Blend skirt 0.0") {
 		Ref<Image> img = noise.get_seamless_image(11, 11, false, false, 0.0);
 
-		Ref<Image> ref_img_1 = memnew(Image);
+		Ref<Image> ref_img_1;
+		ref_img_1.instantiate();
 		ref_img_1->set_data(11, 11, false, Image::FORMAT_L8, ref_img_1_data);
 
 		compare_image_with_reference(img, ref_img_1);
@@ -615,7 +616,8 @@ TEST_CASE("[FastNoiseLite] Generating seamless 2D images (11x11px) and compare t
 	SUBCASE("Blend skirt 0.1") {
 		Ref<Image> img = noise.get_seamless_image(11, 11, false, false, 0.1);
 
-		Ref<Image> ref_img_2 = memnew(Image);
+		Ref<Image> ref_img_2;
+		ref_img_2.instantiate();
 		ref_img_2->set_data(11, 11, false, Image::FORMAT_L8, ref_img_2_data);
 
 		compare_image_with_reference(img, ref_img_2);
@@ -624,7 +626,8 @@ TEST_CASE("[FastNoiseLite] Generating seamless 2D images (11x11px) and compare t
 	SUBCASE("Blend skirt 1.0") {
 		Ref<Image> img = noise.get_seamless_image(11, 11, false, false, 0.1);
 
-		Ref<Image> ref_img_3 = memnew(Image);
+		Ref<Image> ref_img_3;
+		ref_img_3.instantiate();
 		ref_img_3->set_data(11, 11, false, Image::FORMAT_L8, ref_img_3_data);
 
 		compare_image_with_reference(img, ref_img_3);

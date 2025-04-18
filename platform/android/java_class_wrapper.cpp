@@ -1479,7 +1479,8 @@ Ref<JavaClass> JavaClassWrapper::_wrap(const String &p_class, bool p_allow_priva
 	jobjectArray methods = (jobjectArray)env->CallObjectMethod(bclass, Class_getDeclaredMethods);
 	ERR_FAIL_NULL_V(methods, Ref<JavaClass>());
 
-	Ref<JavaClass> java_class = memnew(JavaClass);
+	Ref<JavaClass> java_class;
+	java_class.instantiate();
 	java_class->java_class_name = class_name_dots;
 	Vector<String> class_name_parts = class_name_dots.split(".");
 	java_class->java_constructor_name = class_name_parts[class_name_parts.size() - 1];

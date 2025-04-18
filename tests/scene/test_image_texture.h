@@ -41,7 +41,8 @@ namespace TestImageTexture {
 // [SceneTree] in a test case name enables initializing a mock render server,
 // which ImageTexture is dependent on.
 TEST_CASE("[SceneTree][ImageTexture] constructor") {
-	Ref<ImageTexture> image_texture = memnew(ImageTexture);
+	Ref<ImageTexture> image_texture;
+	image_texture.instantiate();
 	CHECK(image_texture->get_width() == 0);
 	CHECK(image_texture->get_height() == 0);
 	CHECK(image_texture->get_format() == 0);
@@ -50,7 +51,8 @@ TEST_CASE("[SceneTree][ImageTexture] constructor") {
 }
 
 TEST_CASE("[SceneTree][ImageTexture] create_from_image") {
-	Ref<Image> image = memnew(Image(16, 8, true, Image::FORMAT_RGBA8));
+	Ref<Image> image;
+	image.instantiate(16, 8, true, Image::FORMAT_RGBA8);
 	Ref<ImageTexture> image_texture = ImageTexture::create_from_image(image);
 	CHECK(image_texture->get_width() == 16);
 	CHECK(image_texture->get_height() == 8);
@@ -60,8 +62,10 @@ TEST_CASE("[SceneTree][ImageTexture] create_from_image") {
 }
 
 TEST_CASE("[SceneTree][ImageTexture] set_image") {
-	Ref<ImageTexture> image_texture = memnew(ImageTexture);
-	Ref<Image> image = memnew(Image(8, 4, false, Image::FORMAT_RGB8));
+	Ref<ImageTexture> image_texture;
+	image_texture.instantiate();
+	Ref<Image> image;
+	image.instantiate(8, 4, false, Image::FORMAT_RGB8);
 	image_texture->set_image(image);
 	CHECK(image_texture->get_width() == 8);
 	CHECK(image_texture->get_height() == 4);
@@ -73,7 +77,8 @@ TEST_CASE("[SceneTree][ImageTexture] set_image") {
 }
 
 TEST_CASE("[SceneTree][ImageTexture] set_size_override") {
-	Ref<Image> image = memnew(Image(16, 8, false, Image::FORMAT_RGB8));
+	Ref<Image> image;
+	image.instantiate(16, 8, false, Image::FORMAT_RGB8);
 	Ref<ImageTexture> image_texture = ImageTexture::create_from_image(image);
 	CHECK(image_texture->get_width() == 16);
 	CHECK(image_texture->get_height() == 8);
@@ -83,7 +88,8 @@ TEST_CASE("[SceneTree][ImageTexture] set_size_override") {
 }
 
 TEST_CASE("[SceneTree][ImageTexture] is_pixel_opaque") {
-	Ref<Image> image = memnew(Image(8, 8, false, Image::FORMAT_RGBA8));
+	Ref<Image> image;
+	image.instantiate(8, 8, false, Image::FORMAT_RGBA8);
 	image->set_pixel(0, 0, Color(0.0, 0.0, 0.0, 0.0)); // not opaque
 	image->set_pixel(0, 1, Color(0.0, 0.0, 0.0, 0.1)); // not opaque
 	image->set_pixel(0, 2, Color(0.0, 0.0, 0.0, 0.5)); // opaque
@@ -99,7 +105,8 @@ TEST_CASE("[SceneTree][ImageTexture] is_pixel_opaque") {
 }
 
 TEST_CASE("[SceneTree][ImageTexture] set_path") {
-	Ref<ImageTexture> image_texture = memnew(ImageTexture);
+	Ref<ImageTexture> image_texture;
+	image_texture.instantiate();
 	String path = TestUtils::get_data_path("images/icon.png");
 	image_texture->set_path(path, true);
 	CHECK(image_texture->get_path() == path);

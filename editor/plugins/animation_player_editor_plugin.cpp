@@ -1362,7 +1362,8 @@ void AnimationPlayerEditor::_animation_duplicate() {
 }
 
 Ref<Animation> AnimationPlayerEditor::_animation_clone(Ref<Animation> p_anim) {
-	Ref<Animation> new_anim = memnew(Animation);
+	Ref<Animation> new_anim;
+	new_anim.instantiate();
 	List<PropertyInfo> plist;
 	p_anim->get_property_list(&plist);
 

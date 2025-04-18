@@ -246,7 +246,8 @@ TEST_CASE("[PackedScene] Replace State") {
 	packed_scene.pack(scene);
 
 	// Create another scene state to replace with.
-	Ref<SceneState> new_state = memnew(SceneState);
+	Ref<SceneState> new_state;
+	new_state.instantiate();
 	new_state->set_path("NewPath");
 
 	// Replace the state.

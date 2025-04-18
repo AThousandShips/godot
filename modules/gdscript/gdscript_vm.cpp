@@ -2528,7 +2528,8 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 				}
 
 				if (is_signal) {
-					Ref<GDScriptFunctionState> gdfs = memnew(GDScriptFunctionState);
+					Ref<GDScriptFunctionState> gdfs;
+					gdfs.instantiate();
 					gdfs->function = this;
 
 					gdfs->state.stack.resize(alloca_size);

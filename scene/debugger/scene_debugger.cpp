@@ -355,7 +355,8 @@ void SceneDebugger::_save_node(ObjectID id, const String &p_path) {
 	// Root node cannot ever be unique name in its own Scene!
 	copy->set_unique_name_in_owner(false);
 
-	Ref<PackedScene> ps = memnew(PackedScene);
+	Ref<PackedScene> ps;
+	ps.instantiate();
 	ps->pack(copy);
 	ResourceSaver::save(ps, p_path);
 
@@ -1347,8 +1348,10 @@ void RuntimeNodeSelect::_setup(const Dictionary &p_settings) {
 	// Create a x-ray (visible through solid surfaces) and standard version of the selection box.
 	// Both will be drawn at the same position, but with different opacity.
 	// This lets the user see where the selection is while still having a sense of depth.
-	Ref<SurfaceTool> st = memnew(SurfaceTool);
-	Ref<SurfaceTool> st_xray = memnew(SurfaceTool);
+	Ref<SurfaceTool> st;
+	st.instantiate();
+	Ref<SurfaceTool> st_xray;
+	st_xray.instantiate();
 
 	st->begin(Mesh::PRIMITIVE_LINES);
 	st_xray->begin(Mesh::PRIMITIVE_LINES);
@@ -1362,7 +1365,8 @@ void RuntimeNodeSelect::_setup(const Dictionary &p_settings) {
 		st_xray->add_vertex(b);
 	}
 
-	Ref<StandardMaterial3D> mat = memnew(StandardMaterial3D);
+	Ref<StandardMaterial3D> mat;
+	mat.instantiate();
 	mat->set_shading_mode(StandardMaterial3D::SHADING_MODE_UNSHADED);
 	mat->set_flag(StandardMaterial3D::FLAG_DISABLE_FOG, true);
 	mat->set_albedo(sbox_3d_color);
@@ -1370,7 +1374,8 @@ void RuntimeNodeSelect::_setup(const Dictionary &p_settings) {
 	st->set_material(mat);
 	sbox_3d_mesh = st->commit();
 
-	Ref<StandardMaterial3D> mat_xray = memnew(StandardMaterial3D);
+	Ref<StandardMaterial3D> mat_xray;
+	mat_xray.instantiate();
 	mat_xray->set_shading_mode(StandardMaterial3D::SHADING_MODE_UNSHADED);
 	mat_xray->set_flag(StandardMaterial3D::FLAG_DISABLE_FOG, true);
 	mat_xray->set_flag(StandardMaterial3D::FLAG_DISABLE_DEPTH_TEST, true);

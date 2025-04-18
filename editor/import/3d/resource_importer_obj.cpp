@@ -231,7 +231,8 @@ static Error _parse_obj(const String &p_path, List<Ref<ImporterMesh>> &r_meshes,
 
 	HashMap<String, HashMap<String, Ref<StandardMaterial3D>>> material_map;
 
-	Ref<SurfaceTool> surf_tool = memnew(SurfaceTool);
+	Ref<SurfaceTool> surf_tool;
+	surf_tool.instantiate();
 	surf_tool->begin(Mesh::PRIMITIVE_TRIANGLES);
 
 	String current_material_library;

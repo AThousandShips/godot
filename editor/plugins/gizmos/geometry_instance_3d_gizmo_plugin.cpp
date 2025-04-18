@@ -63,7 +63,8 @@ void GeometryInstance3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 			lines.push_back(b);
 		}
 
-		Ref<StandardMaterial3D> mat = memnew(StandardMaterial3D);
+		Ref<StandardMaterial3D> mat;
+		mat.instantiate();
 		mat->set_shading_mode(StandardMaterial3D::SHADING_MODE_UNSHADED);
 		mat->set_flag(StandardMaterial3D::FLAG_DISABLE_FOG, true);
 		const Color selection_box_color = EDITOR_GET("editors/3d_gizmos/gizmo_colors/aabb");

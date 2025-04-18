@@ -48,7 +48,8 @@ void editor_configure_icons(bool p_dark_theme) {
 
 // See also `generate_icon()` in `scene/theme/default_theme.cpp`.
 Ref<ImageTexture> editor_generate_icon(int p_index, float p_scale, float p_saturation, const HashMap<Color, Color> &p_convert_colors = HashMap<Color, Color>()) {
-	Ref<Image> img = memnew(Image);
+	Ref<Image> img;
+	img.instantiate();
 
 	// Upsample icon generation only if the editor scale isn't an integer multiplier.
 	// Generating upsampled icons is slower, and the benefit is hardly visible

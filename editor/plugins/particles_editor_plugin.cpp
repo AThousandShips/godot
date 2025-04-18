@@ -923,7 +923,8 @@ void GPUParticles3DEditorPlugin::_generate_emission_points() {
 		}
 	}
 
-	Ref<Image> image = memnew(Image(w, h, false, Image::FORMAT_RGBF, point_img));
+	Ref<Image> image;
+	image.instantiate(w, h, false, Image::FORMAT_RGBF, point_img);
 	Ref<ImageTexture> tex = ImageTexture::create_from_image(image);
 
 	Ref<ParticleProcessMaterial> mat = particles->get_process_material();
@@ -952,7 +953,8 @@ void GPUParticles3DEditorPlugin::_generate_emission_points() {
 			}
 		}
 
-		Ref<Image> image2 = memnew(Image(w, h, false, Image::FORMAT_RGBF, point_img2));
+		Ref<Image> image2;
+		image2.instantiate(w, h, false, Image::FORMAT_RGBF, point_img2);
 		undo_redo->add_do_property(matptr, "emission_normal_texture", image2);
 		undo_redo->add_undo_property(matptr, "emission_normal_texture", matptr->get_emission_normal_texture());
 	} else {

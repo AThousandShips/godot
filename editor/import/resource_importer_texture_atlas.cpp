@@ -96,7 +96,8 @@ Error ResourceImporterTextureAtlas::import(ResourceUID::ID p_source_id, const St
 
 	//use an xpm because it's size independent, the editor images are vector and size dependent
 	//it's a simple hack
-	Ref<Image> broken = memnew(Image((const char **)atlas_import_failed_xpm));
+	Ref<Image> broken;
+	broken.instantiate((const char **)atlas_import_failed_xpm);
 	ResourceSaver::save(ImageTexture::create_from_image(broken), p_save_path + ".tex");
 
 	return OK;

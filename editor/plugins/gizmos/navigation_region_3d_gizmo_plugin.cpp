@@ -134,7 +134,8 @@ void NavigationRegion3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 		}
 	}
 
-	Ref<TriangleMesh> tmesh = memnew(TriangleMesh);
+	Ref<TriangleMesh> tmesh;
+	tmesh.instantiate();
 	tmesh->create(tmeshfaces);
 
 	p_gizmo->add_collision_triangles(tmesh);

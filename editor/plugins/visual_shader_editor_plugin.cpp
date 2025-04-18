@@ -6731,7 +6731,8 @@ VisualShaderEditor::VisualShaderEditor() {
 	// Initialize material editor.
 	{
 		env.instantiate();
-		Ref<Sky> sky = memnew(Sky());
+		Ref<Sky> sky;
+		sky.instantiate();
 		env->set_sky(sky);
 		env->set_background(Environment::BG_COLOR);
 		env->set_ambient_source(Environment::AMBIENT_SOURCE_SKY);

@@ -60,7 +60,8 @@ void PluginConfigDialog::_on_confirmed() {
 		}
 	}
 	// Create the plugin.cfg file.
-	Ref<ConfigFile> cf = memnew(ConfigFile);
+	Ref<ConfigFile> cf;
+	cf.instantiate();
 	cf->load(path.path_join("plugin.cfg"));
 	cf->set_value("plugin", "name", name_edit->get_text());
 	cf->set_value("plugin", "description", desc_edit->get_text());
@@ -168,7 +169,8 @@ void PluginConfigDialog::_notification(int p_what) {
 
 void PluginConfigDialog::config(const String &p_config_path) {
 	if (!p_config_path.is_empty()) {
-		Ref<ConfigFile> cf = memnew(ConfigFile);
+		Ref<ConfigFile> cf;
+		cf.instantiate();
 		Error err = cf->load(p_config_path);
 		ERR_FAIL_COND_MSG(err != OK, "Cannot load config file from path '" + p_config_path + "'.");
 

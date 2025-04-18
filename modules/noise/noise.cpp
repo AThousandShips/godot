@@ -133,7 +133,8 @@ Vector<Ref<Image>> Noise::_get_image(int p_width, int p_height, int p_depth, boo
 					idx++;
 				}
 			}
-			Ref<Image> img = memnew(Image(p_width, p_height, false, Image::FORMAT_L8, data));
+			Ref<Image> img;
+			img.instantiate(p_width, p_height, false, Image::FORMAT_L8, data);
 			images.write[d] = img;
 		}
 	} else {
@@ -156,7 +157,8 @@ Vector<Ref<Image>> Noise::_get_image(int p_width, int p_height, int p_depth, boo
 				}
 			}
 
-			Ref<Image> img = memnew(Image(p_width, p_height, false, Image::FORMAT_L8, data));
+			Ref<Image> img;
+			img.instantiate(p_width, p_height, false, Image::FORMAT_L8, data);
 			images.write[d] = img;
 		}
 	}

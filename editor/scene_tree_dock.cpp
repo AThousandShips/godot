@@ -1063,7 +1063,8 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			if (!root) {
 				break;
 			}
-			Ref<MultiNodeEdit> mne = memnew(MultiNodeEdit);
+			Ref<MultiNodeEdit> mne;
+			mne.instantiate();
 			for (const KeyValue<Node *, Object *> &E : editor_selection->get_selection()) {
 				mne->add_node(root->get_path_to(E.key));
 			}
@@ -1184,7 +1185,8 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			new_scene_from_dialog->set_file_mode(EditorFileDialog::FILE_MODE_SAVE_FILE);
 
 			List<String> extensions;
-			Ref<PackedScene> sd = memnew(PackedScene);
+			Ref<PackedScene> sd;
+			sd.instantiate();
 			ResourceSaver::get_recognized_extensions(sd, &extensions);
 			new_scene_from_dialog->clear_filters();
 			for (const String &extension : extensions) {
@@ -3413,7 +3415,8 @@ void SceneTreeDock::_new_scene_from(const String &p_file) {
 			}
 		}
 
-		Ref<PackedScene> sdata = memnew(PackedScene);
+		Ref<PackedScene> sdata;
+		sdata.instantiate();
 		Error err = sdata->pack(copy);
 		memdelete(copy);
 

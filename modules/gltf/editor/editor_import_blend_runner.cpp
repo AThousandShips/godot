@@ -315,7 +315,8 @@ Error EditorImportBlendRunner::do_import_rpc(const Dictionary &p_options) {
 
 bool EditorImportBlendRunner::_extract_error_message_xml(const Vector<uint8_t> &p_response_data, String &r_error_message) {
 	// Based on RPC Xml spec from: https://xmlrpc.com/spec.md
-	Ref<XMLParser> parser = memnew(XMLParser);
+	Ref<XMLParser> parser;
+	parser.instantiate();
 	Error err = parser->open_buffer(p_response_data);
 	if (err) {
 		return false;

@@ -64,7 +64,8 @@ void CollisionShape3D::make_convex_from_siblings() {
 		}
 	}
 
-	Ref<ConvexPolygonShape3D> shape_new = memnew(ConvexPolygonShape3D);
+	Ref<ConvexPolygonShape3D> shape_new;
+	shape_new.instantiate();
 	shape_new->set_points(vertices);
 	set_shape(shape_new);
 }

@@ -334,7 +334,8 @@ Error ColladaImport::_create_material(const String &p_target) {
 	ERR_FAIL_COND_V(!collada.state.effect_map.has(src_mat.instance_effect), ERR_INVALID_PARAMETER);
 	Collada::Effect &effect = collada.state.effect_map[src_mat.instance_effect];
 
-	Ref<StandardMaterial3D> material = memnew(StandardMaterial3D);
+	Ref<StandardMaterial3D> material;
+	material.instantiate();
 
 	String base_name;
 	if (!src_mat.name.is_empty()) {
@@ -1078,7 +1079,8 @@ Error ColladaImport::_create_resources(Collada::Node *p_node, bool p_use_compres
 			if (curve_cache.has(ng->source)) {
 				path->set_curve(curve_cache[ng->source]);
 			} else {
-				Ref<Curve3D> c = memnew(Curve3D);
+				Ref<Curve3D> c;
+				c.instantiate();
 
 				const Collada::CurveData &cd = collada.state.curve_data_map[ng->source];
 

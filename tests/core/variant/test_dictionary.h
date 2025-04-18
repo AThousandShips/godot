@@ -619,8 +619,10 @@ TEST_CASE("[Dictionary] Object value init") {
 }
 
 TEST_CASE("[Dictionary] RefCounted value init") {
-	Ref<RefCounted> a = memnew(RefCounted);
-	Ref<RefCounted> b = memnew(RefCounted);
+	Ref<RefCounted> a;
+	a.instantiate();
+	Ref<RefCounted> b;
+	b.instantiate();
 	TypedDictionary<double, Ref<RefCounted>> tdict = {
 		{ 0.0, a },
 		{ 5.0, b },

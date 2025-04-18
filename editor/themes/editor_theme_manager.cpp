@@ -164,7 +164,8 @@ Ref<StyleBoxLine> make_line_stylebox(Color p_color, int p_thickness = 1, float p
 Ref<EditorTheme> EditorThemeManager::_create_base_theme(const Ref<EditorTheme> &p_old_theme) {
 	OS::get_singleton()->benchmark_begin_measure(get_benchmark_key(), "Create Base Theme");
 
-	Ref<EditorTheme> theme = memnew(EditorTheme);
+	Ref<EditorTheme> theme;
+	theme.instantiate();
 	ThemeConfiguration config = _create_theme_config(theme);
 	theme->set_generated_hash(config.hash());
 	theme->set_generated_fonts_hash(config.hash_fonts());
@@ -1905,7 +1906,8 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 		// Use a custom stylebox to make contextual menu items stand out from the rest.
 		// This helps with editor usability as contextual menu items change when selecting nodes,
 		// even though it may not be immediately obvious at first.
-		Ref<StyleBoxFlat> toolbar_stylebox = memnew(StyleBoxFlat);
+		Ref<StyleBoxFlat> toolbar_stylebox;
+		toolbar_stylebox.instantiate();
 		toolbar_stylebox->set_bg_color(p_config.accent_color * Color(1, 1, 1, 0.1));
 		toolbar_stylebox->set_anti_aliased(false);
 		// Add an underline to the StyleBox, but prevent its minimum vertical size from changing.

@@ -4976,7 +4976,8 @@ bool Node3DEditorViewport::can_drop_data_fw(const Point2 &p_point, const Variant
 						// Let the mesh pass.
 						is_other_valid = true;
 					} else if (!is_other_valid && tex.is_valid()) {
-						Ref<StandardMaterial3D> new_mat = memnew(StandardMaterial3D);
+						Ref<StandardMaterial3D> new_mat;
+						new_mat.instantiate();
 						new_mat->set_texture(BaseMaterial3D::TEXTURE_ALBEDO, tex);
 
 						spatial_editor->set_preview_material(new_mat);
@@ -6426,10 +6427,14 @@ void Node3DEditor::_generate_selection_boxes() {
 	// Create a x-ray (visible through solid surfaces) and standard version of the selection box.
 	// Both will be drawn at the same position, but with different opacity.
 	// This lets the user see where the selection is while still having a sense of depth.
-	Ref<SurfaceTool> st = memnew(SurfaceTool);
-	Ref<SurfaceTool> st_xray = memnew(SurfaceTool);
-	Ref<SurfaceTool> active_st = memnew(SurfaceTool);
-	Ref<SurfaceTool> active_st_xray = memnew(SurfaceTool);
+	Ref<SurfaceTool> st;
+	st.instantiate();
+	Ref<SurfaceTool> st_xray;
+	st_xray.instantiate();
+	Ref<SurfaceTool> active_st;
+	active_st.instantiate();
+	Ref<SurfaceTool> active_st_xray;
+	active_st_xray.instantiate();
 
 	st->begin(Mesh::PRIMITIVE_LINES);
 	st_xray->begin(Mesh::PRIMITIVE_LINES);
@@ -7084,7 +7089,8 @@ void Node3DEditor::_init_indicators() {
 		origin_enabled = true;
 		grid_enabled = true;
 
-		Ref<Shader> origin_shader = memnew(Shader);
+		Ref<Shader> origin_shader;
+		origin_shader.instantiate();
 		origin_shader->set_code(R"(
 // 3D editor origin line shader.
 
@@ -7209,7 +7215,8 @@ void fragment() {
 
 		RenderingServer::get_singleton()->instance_geometry_set_cast_shadows_setting(origin_instance, RS::SHADOW_CASTING_SETTING_OFF);
 
-		Ref<Shader> grid_shader = memnew(Shader);
+		Ref<Shader> grid_shader;
+		grid_shader.instantiate();
 		grid_shader->set_code(R"(
 // 3D editor grid shader.
 
@@ -7294,7 +7301,8 @@ void fragment() {
 			scale_plane_gizmo[i].instantiate();
 			axis_gizmo[i].instantiate();
 
-			Ref<StandardMaterial3D> mat = memnew(StandardMaterial3D);
+			Ref<StandardMaterial3D> mat;
+			mat.instantiate();
 			mat->set_shading_mode(StandardMaterial3D::SHADING_MODE_UNSHADED);
 			mat->set_flag(StandardMaterial3D::FLAG_DISABLE_FOG, true);
 			mat->set_on_top_of_alpha();
@@ -7309,7 +7317,8 @@ void fragment() {
 
 			//translate
 			{
-				Ref<SurfaceTool> surftool = memnew(SurfaceTool);
+				Ref<SurfaceTool> surftool;
+				surftool.instantiate();
 				surftool->begin(Mesh::PRIMITIVE_TRIANGLES);
 
 				// Arrow profile
@@ -7352,7 +7361,8 @@ void fragment() {
 
 			// Plane Translation
 			{
-				Ref<SurfaceTool> surftool = memnew(SurfaceTool);
+				Ref<SurfaceTool> surftool;
+				surftool.instantiate();
 				surftool->begin(Mesh::PRIMITIVE_TRIANGLES);
 
 				Vector3 vec = ivec2 - ivec3;
@@ -7379,7 +7389,8 @@ void fragment() {
 				surftool->add_vertex(points[2]);
 				surftool->add_vertex(points[3]);
 
-				Ref<StandardMaterial3D> plane_mat = memnew(StandardMaterial3D);
+				Ref<StandardMaterial3D> plane_mat;
+				plane_mat.instantiate();
 				plane_mat->set_shading_mode(StandardMaterial3D::SHADING_MODE_UNSHADED);
 				plane_mat->set_flag(StandardMaterial3D::FLAG_DISABLE_FOG, true);
 				plane_mat->set_on_top_of_alpha();
@@ -7397,7 +7408,8 @@ void fragment() {
 
 			// Rotate
 			{
-				Ref<SurfaceTool> surftool = memnew(SurfaceTool);
+				Ref<SurfaceTool> surftool;
+				surftool.instantiate();
 				surftool->begin(Mesh::PRIMITIVE_TRIANGLES);
 
 				int n = 128; // number of circle segments
@@ -7435,7 +7447,8 @@ void fragment() {
 					}
 				}
 
-				Ref<Shader> rotate_shader = memnew(Shader);
+				Ref<Shader> rotate_shader;
+				rotate_shader.instantiate();
 
 				rotate_shader->set_code(R"(
 // 3D editor rotation manipulator gizmo shader.
@@ -7469,7 +7482,8 @@ void fragment() {
 }
 )");
 
-				Ref<ShaderMaterial> rotate_mat = memnew(ShaderMaterial);
+				Ref<ShaderMaterial> rotate_mat;
+				rotate_mat.instantiate();
 				rotate_mat->set_render_priority(Material::RENDER_PRIORITY_MAX);
 				rotate_mat->set_shader(rotate_shader);
 				rotate_mat->set_shader_parameter("albedo", col);
@@ -7486,7 +7500,8 @@ void fragment() {
 				if (i == 2) { // Rotation white outline
 					Ref<ShaderMaterial> border_mat = rotate_mat->duplicate();
 
-					Ref<Shader> border_shader = memnew(Shader);
+					Ref<Shader> border_shader;
+					border_shader.instantiate();
 					border_shader->set_code(R"(
 // 3D editor rotation manipulator gizmo shader (white outline).
 
@@ -7531,7 +7546,8 @@ void fragment() {
 
 			// Scale
 			{
-				Ref<SurfaceTool> surftool = memnew(SurfaceTool);
+				Ref<SurfaceTool> surftool;
+				surftool.instantiate();
 				surftool->begin(Mesh::PRIMITIVE_TRIANGLES);
 
 				// Cube arrow profile
@@ -7575,7 +7591,8 @@ void fragment() {
 
 			// Plane Scale
 			{
-				Ref<SurfaceTool> surftool = memnew(SurfaceTool);
+				Ref<SurfaceTool> surftool;
+				surftool.instantiate();
 				surftool->begin(Mesh::PRIMITIVE_TRIANGLES);
 
 				Vector3 vec = ivec2 - ivec3;
@@ -7602,7 +7619,8 @@ void fragment() {
 				surftool->add_vertex(points[2]);
 				surftool->add_vertex(points[3]);
 
-				Ref<StandardMaterial3D> plane_mat = memnew(StandardMaterial3D);
+				Ref<StandardMaterial3D> plane_mat;
+				plane_mat.instantiate();
 				plane_mat->set_shading_mode(StandardMaterial3D::SHADING_MODE_UNSHADED);
 				plane_mat->set_flag(StandardMaterial3D::FLAG_DISABLE_FOG, true);
 				plane_mat->set_on_top_of_alpha();
@@ -7620,7 +7638,8 @@ void fragment() {
 
 			// Lines to visualize transforms locked to an axis/plane
 			{
-				Ref<SurfaceTool> surftool = memnew(SurfaceTool);
+				Ref<SurfaceTool> surftool;
+				surftool.instantiate();
 				surftool->begin(Mesh::PRIMITIVE_LINE_STRIP);
 
 				Vector3 vec;

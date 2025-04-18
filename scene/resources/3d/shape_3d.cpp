@@ -149,7 +149,8 @@ Ref<Material> Shape3D::get_debug_collision_material() {
 		return collision_material;
 	}
 
-	Ref<StandardMaterial3D> material = memnew(StandardMaterial3D);
+	Ref<StandardMaterial3D> material;
+	material.instantiate();
 	material->set_albedo(Color(1.0, 1.0, 1.0));
 	material->set_shading_mode(StandardMaterial3D::SHADING_MODE_UNSHADED);
 	material->set_transparency(StandardMaterial3D::TRANSPARENCY_ALPHA);

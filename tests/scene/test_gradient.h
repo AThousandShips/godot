@@ -38,7 +38,8 @@ namespace TestGradient {
 
 TEST_CASE("[Gradient] Default gradient") {
 	// Black-white gradient.
-	Ref<Gradient> gradient = memnew(Gradient);
+	Ref<Gradient> gradient;
+	gradient.instantiate();
 
 	CHECK_MESSAGE(
 			gradient->get_point_count() == 2,
@@ -68,7 +69,8 @@ TEST_CASE("[Gradient] Default gradient") {
 
 TEST_CASE("[Gradient] Custom gradient (points specified in order)") {
 	// Red-yellow-green gradient (with overbright green).
-	Ref<Gradient> gradient = memnew(Gradient);
+	Ref<Gradient> gradient;
+	gradient.instantiate();
 	Vector<float> offsets = { 0.0, 0.5, 1.0 };
 	Vector<Color> colors = { Color(1, 0, 0), Color(1, 1, 0), Color(0, 2, 0) };
 
@@ -107,7 +109,8 @@ TEST_CASE("[Gradient] Custom gradient (points specified in order)") {
 TEST_CASE("[Gradient] Custom gradient (points specified out-of-order)") {
 	// HSL rainbow with points specified out of order.
 	// These should be sorted automatically when adding points.
-	Ref<Gradient> gradient = memnew(Gradient);
+	Ref<Gradient> gradient;
+	gradient.instantiate();
 	LocalVector<Gradient::Point> points;
 	Vector<float> offsets = { 0.2, 0.0, 0.8, 0.4, 1.0, 0.6 };
 	Vector<Color> colors = { Color(1, 0, 0), Color(1, 1, 0), Color(0, 1, 0), Color(0, 1, 1), Color(0, 0, 1), Color(1, 0, 1) };

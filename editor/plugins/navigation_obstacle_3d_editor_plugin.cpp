@@ -873,7 +873,8 @@ NavigationObstacle3DEditorPlugin::NavigationObstacle3DEditorPlugin() {
 
 	Node3DEditor::get_singleton()->add_control_to_menu_panel(obstacle_editor);
 
-	Ref<NavigationObstacle3DGizmoPlugin> gizmo_plugin = memnew(NavigationObstacle3DGizmoPlugin());
+	Ref<NavigationObstacle3DGizmoPlugin> gizmo_plugin;
+	gizmo_plugin.instantiate();
 	obstacle_3d_gizmo_plugin = gizmo_plugin;
 	Node3DEditor::get_singleton()->add_gizmo_plugin(gizmo_plugin);
 }

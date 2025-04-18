@@ -147,21 +147,24 @@ Ref<PListNode> PListNode::new_node(const Variant &p_value) {
 }
 
 Ref<PListNode> PListNode::new_array() {
-	Ref<PListNode> node = memnew(PListNode());
+	Ref<PListNode> node;
+	node.instantiate();
 	ERR_FAIL_COND_V(node.is_null(), Ref<PListNode>());
 	node->data_type = PList::PLNodeType::PL_NODE_TYPE_ARRAY;
 	return node;
 }
 
 Ref<PListNode> PListNode::new_dict() {
-	Ref<PListNode> node = memnew(PListNode());
+	Ref<PListNode> node;
+	node.instantiate();
 	ERR_FAIL_COND_V(node.is_null(), Ref<PListNode>());
 	node->data_type = PList::PLNodeType::PL_NODE_TYPE_DICT;
 	return node;
 }
 
 Ref<PListNode> PListNode::new_string(const String &p_string) {
-	Ref<PListNode> node = memnew(PListNode());
+	Ref<PListNode> node;
+	node.instantiate();
 	ERR_FAIL_COND_V(node.is_null(), Ref<PListNode>());
 	node->data_type = PList::PLNodeType::PL_NODE_TYPE_STRING;
 	node->data_string = p_string.utf8();
@@ -169,7 +172,8 @@ Ref<PListNode> PListNode::new_string(const String &p_string) {
 }
 
 Ref<PListNode> PListNode::new_data(const String &p_string) {
-	Ref<PListNode> node = memnew(PListNode());
+	Ref<PListNode> node;
+	node.instantiate();
 	ERR_FAIL_COND_V(node.is_null(), Ref<PListNode>());
 	node->data_type = PList::PLNodeType::PL_NODE_TYPE_DATA;
 	node->data_string = p_string.utf8();
@@ -177,7 +181,8 @@ Ref<PListNode> PListNode::new_data(const String &p_string) {
 }
 
 Ref<PListNode> PListNode::new_date(const String &p_string) {
-	Ref<PListNode> node = memnew(PListNode());
+	Ref<PListNode> node;
+	node.instantiate();
 	ERR_FAIL_COND_V(node.is_null(), Ref<PListNode>());
 	node->data_type = PList::PLNodeType::PL_NODE_TYPE_DATE;
 	node->data_string = p_string.utf8();
@@ -186,7 +191,8 @@ Ref<PListNode> PListNode::new_date(const String &p_string) {
 }
 
 Ref<PListNode> PListNode::new_bool(bool p_bool) {
-	Ref<PListNode> node = memnew(PListNode());
+	Ref<PListNode> node;
+	node.instantiate();
 	ERR_FAIL_COND_V(node.is_null(), Ref<PListNode>());
 	node->data_type = PList::PLNodeType::PL_NODE_TYPE_BOOLEAN;
 	node->data_bool = p_bool;
@@ -194,7 +200,8 @@ Ref<PListNode> PListNode::new_bool(bool p_bool) {
 }
 
 Ref<PListNode> PListNode::new_int(int64_t p_int) {
-	Ref<PListNode> node = memnew(PListNode());
+	Ref<PListNode> node;
+	node.instantiate();
 	ERR_FAIL_COND_V(node.is_null(), Ref<PListNode>());
 	node->data_type = PList::PLNodeType::PL_NODE_TYPE_INTEGER;
 	node->data_int = p_int;
@@ -202,7 +209,8 @@ Ref<PListNode> PListNode::new_int(int64_t p_int) {
 }
 
 Ref<PListNode> PListNode::new_real(double p_real) {
-	Ref<PListNode> node = memnew(PListNode());
+	Ref<PListNode> node;
+	node.instantiate();
 	ERR_FAIL_COND_V(node.is_null(), Ref<PListNode>());
 	node->data_type = PList::PLNodeType::PL_NODE_TYPE_REAL;
 	node->data_real = p_real;

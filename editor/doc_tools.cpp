@@ -458,7 +458,8 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 			if (name == "EditorSettings") {
 				// We don't create the full blown EditorSettings (+ config file) with `create()`,
 				// instead we just make a local instance to get default values.
-				Ref<EditorSettings> edset = memnew(EditorSettings);
+				Ref<EditorSettings> edset;
+				edset.instantiate();
 				edset->get_property_list(&properties);
 				own_properties = properties;
 			} else if (name == "ProjectSettings") {
@@ -1238,7 +1239,8 @@ Error DocTools::load_classes(const String &p_dir) {
 	path = da->get_next();
 	while (!path.is_empty()) {
 		if (!da->current_is_dir() && path.ends_with("xml")) {
-			Ref<XMLParser> parser = memnew(XMLParser);
+			Ref<XMLParser> parser;
+			parser.instantiate();
 			Error err2 = parser->open(p_dir.path_join(path));
 			if (err2) {
 				return err2;
@@ -1814,7 +1816,8 @@ Error DocTools::load_compressed(const uint8_t *p_data, int p_compressed_size, in
 	ERR_FAIL_COND_V_MSG(ret == -1, ERR_FILE_CORRUPT, "Compressed file is corrupt.");
 	class_list.clear();
 
-	Ref<XMLParser> parser = memnew(XMLParser);
+	Ref<XMLParser> parser;
+	parser.instantiate();
 	Error err = parser->open_buffer(data);
 	if (err) {
 		return err;
@@ -1826,7 +1829,8 @@ Error DocTools::load_compressed(const uint8_t *p_data, int p_compressed_size, in
 }
 
 Error DocTools::load_xml(const uint8_t *p_data, int p_size) {
-	Ref<XMLParser> parser = memnew(XMLParser);
+	Ref<XMLParser> parser;
+	parser.instantiate();
 	Error err = parser->_open_buffer(p_data, p_size);
 	if (err) {
 		return err;

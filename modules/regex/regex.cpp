@@ -208,7 +208,8 @@ Ref<RegExMatch> RegEx::search(const String &p_subject, int p_offset, int p_end) 
 	ERR_FAIL_COND_V(!is_valid(), nullptr);
 	ERR_FAIL_COND_V_MSG(p_offset < 0, nullptr, "RegEx search offset must be >= 0");
 
-	Ref<RegExMatch> result = memnew(RegExMatch);
+	Ref<RegExMatch> result;
+	result.instantiate();
 
 	int length = p_subject.length();
 	if (p_end >= 0 && p_end < length) {

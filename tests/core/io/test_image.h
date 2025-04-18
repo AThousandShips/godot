@@ -42,7 +42,8 @@
 namespace TestImage {
 
 TEST_CASE("[Image] Instantiation") {
-	Ref<Image> image = memnew(Image(8, 4, false, Image::FORMAT_RGBA8));
+	Ref<Image> image;
+	image.instantiate(8, 4, false, Image::FORMAT_RGBA8);
 	CHECK_MESSAGE(
 			!image->is_empty(),
 			"An image created with specified size and format should not be empty at first.");
@@ -61,7 +62,8 @@ TEST_CASE("[Image] Instantiation") {
 				"An image created without data specified should have its data zeroed out.");
 	}
 
-	Ref<Image> image_copy = memnew(Image());
+	Ref<Image> image_copy;
+	image_copy.instantiate();
 	CHECK_MESSAGE(
 			image_copy->is_empty(),
 			"An image created without any specified size and format be empty at first.");
@@ -72,14 +74,16 @@ TEST_CASE("[Image] Instantiation") {
 			"Duplicated images should have the same data.");
 
 	image_data = image->get_data();
-	Ref<Image> image_from_data = memnew(Image(8, 4, false, Image::FORMAT_RGBA8, image_data));
+	Ref<Image> image_from_data;
+	image_from_data.instantiate(8, 4, false, Image::FORMAT_RGBA8, image_data);
 	CHECK_MESSAGE(
 			image->get_data() == image_from_data->get_data(),
 			"An image created from data of another image should have the same data of the original image.");
 }
 
 TEST_CASE("[Image] Saving and loading") {
-	Ref<Image> image = memnew(Image(4, 4, false, Image::FORMAT_RGBA8));
+	Ref<Image> image;
+	image.instantiate(4, 4, false, Image::FORMAT_RGBA8);
 	const String save_path_png = TestUtils::get_temp_path("image.png");
 	const String save_path_exr = TestUtils::get_temp_path("image.exr");
 
@@ -100,7 +104,8 @@ TEST_CASE("[Image] Saving and loading") {
 #endif // TOOLS_ENABLED
 
 	// Load using load()
-	Ref<Image> image_load = memnew(Image());
+	Ref<Image> image_load;
+	image_load.instantiate();
 	err = image_load->load(save_path_png);
 	CHECK_MESSAGE(
 			err == OK,
@@ -111,7 +116,8 @@ TEST_CASE("[Image] Saving and loading") {
 
 #ifdef MODULE_BMP_ENABLED
 	// Load BMP
-	Ref<Image> image_bmp = memnew(Image());
+	Ref<Image> image_bmp;
+	image_bmp.instantiate();
 	Ref<FileAccess> f_bmp = FileAccess::open(TestUtils::get_data_path("images/icon.bmp"), FileAccess::READ, &err);
 	REQUIRE(f_bmp.is_valid());
 	PackedByteArray data_bmp;
@@ -124,7 +130,8 @@ TEST_CASE("[Image] Saving and loading") {
 
 #ifdef MODULE_JPG_ENABLED
 	// Load JPG
-	Ref<Image> image_jpg = memnew(Image());
+	Ref<Image> image_jpg;
+	image_jpg.instantiate();
 	Ref<FileAccess> f_jpg = FileAccess::open(TestUtils::get_data_path("images/icon.jpg"), FileAccess::READ, &err);
 	REQUIRE(f_jpg.is_valid());
 	PackedByteArray data_jpg;
@@ -137,7 +144,8 @@ TEST_CASE("[Image] Saving and loading") {
 
 #ifdef MODULE_WEBP_ENABLED
 	// Load WebP
-	Ref<Image> image_webp = memnew(Image());
+	Ref<Image> image_webp;
+	image_webp.instantiate();
 	Ref<FileAccess> f_webp = FileAccess::open(TestUtils::get_data_path("images/icon.webp"), FileAccess::READ, &err);
 	REQUIRE(f_webp.is_valid());
 	PackedByteArray data_webp;
@@ -149,7 +157,8 @@ TEST_CASE("[Image] Saving and loading") {
 #endif // MODULE_WEBP_ENABLED
 
 	// Load PNG
-	Ref<Image> image_png = memnew(Image());
+	Ref<Image> image_png;
+	image_png.instantiate();
 	Ref<FileAccess> f_png = FileAccess::open(TestUtils::get_data_path("images/icon.png"), FileAccess::READ, &err);
 	REQUIRE(f_png.is_valid());
 	PackedByteArray data_png;
@@ -161,7 +170,8 @@ TEST_CASE("[Image] Saving and loading") {
 
 #ifdef MODULE_TGA_ENABLED
 	// Load TGA
-	Ref<Image> image_tga = memnew(Image());
+	Ref<Image> image_tga;
+	image_tga.instantiate();
 	Ref<FileAccess> f_tga = FileAccess::open(TestUtils::get_data_path("images/icon.tga"), FileAccess::READ, &err);
 	REQUIRE(f_tga.is_valid());
 	PackedByteArray data_tga;
@@ -174,7 +184,8 @@ TEST_CASE("[Image] Saving and loading") {
 }
 
 TEST_CASE("[Image] Basic getters") {
-	Ref<Image> image = memnew(Image(8, 4, false, Image::FORMAT_LA8));
+	Ref<Image> image;
+	image.instantiate(8, 4, false, Image::FORMAT_LA8);
 	CHECK(image->get_width() == 8);
 	CHECK(image->get_height() == 4);
 	CHECK(image->get_size() == Vector2(8, 4));
@@ -185,7 +196,8 @@ TEST_CASE("[Image] Basic getters") {
 }
 
 TEST_CASE("[Image] Resizing") {
-	Ref<Image> image = memnew(Image(8, 8, false, Image::FORMAT_RGBA8));
+	Ref<Image> image;
+	image.instantiate(8, 8, false, Image::FORMAT_RGBA8);
 	// Crop
 	image->crop(4, 4);
 	CHECK_MESSAGE(
@@ -195,7 +207,8 @@ TEST_CASE("[Image] Resizing") {
 
 	// Resize
 	for (int i = 0; i < 5; i++) {
-		Ref<Image> image_resized = memnew(Image());
+		Ref<Image> image_resized;
+		image_resized.instantiate();
 		image_resized->copy_internals_from(image);
 		Image::Interpolation interpolation = static_cast<Image::Interpolation>(i);
 		image_resized->resize(8, 8, interpolation);
@@ -214,7 +227,8 @@ TEST_CASE("[Image] Resizing") {
 			"get_size() should return the correct size after shrink_x2().");
 
 	// resize_to_po2()
-	Ref<Image> image_po_2 = memnew(Image(14, 28, false, Image::FORMAT_RGBA8));
+	Ref<Image> image_po_2;
+	image_po_2.instantiate(14, 28, false, Image::FORMAT_RGBA8);
 	image_po_2->resize_to_po2();
 	CHECK_MESSAGE(
 			image_po_2->get_size() == Vector2(16, 32),
@@ -222,7 +236,8 @@ TEST_CASE("[Image] Resizing") {
 }
 
 TEST_CASE("[Image] Modifying pixels of an image") {
-	Ref<Image> image = memnew(Image(3, 3, false, Image::FORMAT_RGBA8));
+	Ref<Image> image;
+	image.instantiate(3, 3, false, Image::FORMAT_RGBA8);
 	image->set_pixel(0, 0, Color(1, 1, 1, 1));
 	CHECK_MESSAGE(
 			!image->is_invisible(),
@@ -235,7 +250,8 @@ TEST_CASE("[Image] Modifying pixels of an image") {
 			"Image's get_used_rect should return the expected value, larger than Rect2i(0, 0, 0, 0) if it's visible.");
 
 	image->set_pixelv(Vector2(0, 0), Color(0.5, 0.5, 0.5, 0.5));
-	Ref<Image> image2 = memnew(Image(3, 3, false, Image::FORMAT_RGBA8));
+	Ref<Image> image2;
+	image2.instantiate(3, 3, false, Image::FORMAT_RGBA8);
 
 	// Fill image with color
 	image2->fill(Color(0.5, 0.5, 0.5, 0.5));
@@ -264,7 +280,8 @@ TEST_CASE("[Image] Modifying pixels of an image") {
 		rects.push_back(Rect2i(-1, -1, img_width + 1, img_height + 1));
 
 		for (const Rect2i &rect : rects) {
-			Ref<Image> img = memnew(Image(img_width, img_height, false, Image::FORMAT_RGBA8));
+			Ref<Image> img;
+			img.instantiate(img_width, img_height, false, Image::FORMAT_RGBA8);
 			img->fill_rect(rect, Color(1, 1, 1, 1));
 			for (int y = 0; y < img->get_height(); y++) {
 				for (int x = 0; x < img->get_width(); x++) {
@@ -291,7 +308,8 @@ TEST_CASE("[Image] Modifying pixels of an image") {
 			image->get_used_rect().size == image->get_size(),
 			"get_used_rect() should return the expected value, its Rect size should be the same as get_size() if there are no transparent pixels.");
 
-	Ref<Image> image3 = memnew(Image(2, 2, false, Image::FORMAT_RGBA8));
+	Ref<Image> image3;
+	image3.instantiate(2, 2, false, Image::FORMAT_RGBA8);
 	image3->set_pixel(0, 0, Color(0, 1, 0, 1));
 
 	//blit_rect() two images together
@@ -317,7 +335,8 @@ TEST_CASE("[Image] Modifying pixels of an image") {
 
 	// Pre-multiply Alpha then Convert from RGBA to L8, checking alpha
 	{
-		Ref<Image> gray_image = memnew(Image(3, 3, false, Image::FORMAT_RGBA8));
+		Ref<Image> gray_image;
+		gray_image.instantiate(3, 3, false, Image::FORMAT_RGBA8);
 		gray_image->fill_rect(Rect2i(0, 0, 3, 3), Color(1, 1, 1, 0));
 		gray_image->set_pixel(1, 1, Color(1, 1, 1, 1));
 		gray_image->set_pixel(1, 2, Color(0.5, 0.5, 0.5, 0.5));
@@ -338,7 +357,8 @@ TEST_CASE("[Image] Modifying pixels of an image") {
 }
 
 TEST_CASE("[Image] Custom mipmaps") {
-	Ref<Image> image = memnew(Image(100, 100, false, Image::FORMAT_RGBA8));
+	Ref<Image> image;
+	image.instantiate(100, 100, false, Image::FORMAT_RGBA8);
 
 	REQUIRE(!image->has_mipmaps());
 	image->generate_mipmaps();
@@ -369,7 +389,8 @@ TEST_CASE("[Image] Custom mipmaps") {
 	// Byte format conversion.
 
 	for (int format = Image::FORMAT_L8; format <= Image::FORMAT_RGBA8; format++) {
-		Ref<Image> image_bytes = memnew(Image());
+		Ref<Image> image_bytes;
+		image_bytes.instantiate();
 		image_bytes->copy_internals_from(image);
 		image_bytes->convert((Image::Format)format);
 		REQUIRE(image_bytes->has_mipmaps());
@@ -393,7 +414,8 @@ TEST_CASE("[Image] Custom mipmaps") {
 	// Floating point format conversion.
 
 	for (int format = Image::FORMAT_RF; format <= Image::FORMAT_RGBAF; format++) {
-		Ref<Image> image_rgbaf = memnew(Image());
+		Ref<Image> image_rgbaf;
+		image_rgbaf.instantiate();
 		image_rgbaf->copy_internals_from(image);
 		image_rgbaf->convert((Image::Format)format);
 		REQUIRE(image_rgbaf->has_mipmaps());
@@ -419,7 +441,8 @@ TEST_CASE("[Image] Custom mipmaps") {
 TEST_CASE("[Image] Convert image") {
 	for (int format = Image::FORMAT_RF; format < Image::FORMAT_RGBE9995; format++) {
 		for (int new_format = Image::FORMAT_RF; new_format < Image::FORMAT_RGBE9995; new_format++) {
-			Ref<Image> image = memnew(Image(4, 4, false, (Image::Format)format));
+			Ref<Image> image;
+			image.instantiate(4, 4, false, (Image::Format)format);
 			image->convert((Image::Format)new_format);
 			String format_string = Image::format_names[(Image::Format)format];
 			String new_format_string = Image::format_names[(Image::Format)new_format];
@@ -428,13 +451,15 @@ TEST_CASE("[Image] Convert image") {
 		}
 	}
 
-	Ref<Image> image = memnew(Image(4, 4, false, Image::FORMAT_RGBA8));
+	Ref<Image> image;
+	image.instantiate(4, 4, false, Image::FORMAT_RGBA8);
 	PackedByteArray image_data = image->get_data();
 	ERR_PRINT_OFF;
 	image->convert((Image::Format)-1);
 	ERR_PRINT_ON;
 	CHECK_MESSAGE(image->get_data() == image_data, "Image conversion to invalid type (-1) should not alter image.");
-	Ref<Image> image2 = memnew(Image(4, 4, false, Image::FORMAT_RGBA8));
+	Ref<Image> image2;
+	image2.instantiate(4, 4, false, Image::FORMAT_RGBA8);
 	image_data = image2->get_data();
 	ERR_PRINT_OFF;
 	image2->convert((Image::Format)(Image::FORMAT_MAX + 1));

@@ -118,7 +118,8 @@ void run_test(String file_name, AudioStreamWAV::Format data_format, bool stereo,
 		test_data = gen_pcm16_test(wav_rate, wav_count, stereo);
 	}
 
-	Ref<AudioStreamWAV> stream = memnew(AudioStreamWAV);
+	Ref<AudioStreamWAV> stream;
+	stream.instantiate();
 	stream->set_mix_rate(wav_rate);
 	CHECK(stream->get_mix_rate() == wav_rate);
 
@@ -180,7 +181,8 @@ TEST_CASE("[Audio][AudioStreamWAV] Alternate mix rate") {
 TEST_CASE("[Audio][AudioStreamWAV] save_to_wav() adds '.wav' file extension automatically") {
 	String save_path = TestUtils::get_temp_path("test_wav_extension");
 	Vector<uint8_t> test_data = gen_pcm8_test(WAV_RATE, WAV_COUNT, false);
-	Ref<AudioStreamWAV> stream = memnew(AudioStreamWAV);
+	Ref<AudioStreamWAV> stream;
+	stream.instantiate();
 	stream->set_data(test_data);
 
 	REQUIRE(stream->save_to_wav(save_path) == OK);
@@ -190,7 +192,8 @@ TEST_CASE("[Audio][AudioStreamWAV] save_to_wav() adds '.wav' file extension auto
 }
 
 TEST_CASE("[Audio][AudioStreamWAV] Default values") {
-	Ref<AudioStreamWAV> stream = memnew(AudioStreamWAV);
+	Ref<AudioStreamWAV> stream;
+	stream.instantiate();
 	CHECK(stream->get_format() == AudioStreamWAV::FORMAT_8_BITS);
 	CHECK(stream->get_loop_mode() == AudioStreamWAV::LOOP_DISABLED);
 	CHECK(stream->get_loop_begin() == 0);
@@ -209,7 +212,8 @@ TEST_CASE("[Audio][AudioStreamWAV] Save empty file") {
 
 TEST_CASE("[Audio][AudioStreamWAV] Saving IMA ADPCM is not supported") {
 	String save_path = TestUtils::get_temp_path("test_adpcm.wav");
-	Ref<AudioStreamWAV> stream = memnew(AudioStreamWAV);
+	Ref<AudioStreamWAV> stream;
+	stream.instantiate();
 	stream->set_format(AudioStreamWAV::FORMAT_IMA_ADPCM);
 	ERR_PRINT_OFF;
 	CHECK(stream->save_to_wav(save_path) == ERR_UNAVAILABLE);

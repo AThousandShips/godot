@@ -490,7 +490,8 @@ void MeshInstance3DEditor::_create_navigation_mesh() {
 		return;
 	}
 
-	Ref<NavigationMesh> nmesh = memnew(NavigationMesh);
+	Ref<NavigationMesh> nmesh;
+	nmesh.instantiate();
 
 	if (nmesh.is_null()) {
 		return;

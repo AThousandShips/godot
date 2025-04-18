@@ -67,7 +67,8 @@ Ref<ArrayMesh> ConcavePolygonShape3D::get_debug_arraymesh_faces(const Color &p_m
 		colors.push_back(p_modulate);
 	}
 
-	Ref<ArrayMesh> mesh = memnew(ArrayMesh);
+	Ref<ArrayMesh> mesh;
+	mesh.instantiate();
 	Array a;
 	a.resize(Mesh::ARRAY_MAX);
 	a[RS::ARRAY_VERTEX] = faces;

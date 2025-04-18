@@ -186,7 +186,8 @@ const Color &Path3D::get_debug_custom_color() const {
 void Path3D::_update_debug_path_material() {
 	SceneTree *st = SceneTree::get_singleton();
 	if (!debug_material.is_valid()) {
-		Ref<StandardMaterial3D> material = memnew(StandardMaterial3D);
+		Ref<StandardMaterial3D> material;
+		material.instantiate();
 		debug_material = material;
 
 		material->set_shading_mode(StandardMaterial3D::SHADING_MODE_UNSHADED);

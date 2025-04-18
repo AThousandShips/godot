@@ -36,7 +36,8 @@
 namespace TestRandomNumberGenerator {
 
 TEST_CASE("[RandomNumberGenerator] Float") {
-	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
+	Ref<RandomNumberGenerator> rng;
+	rng.instantiate();
 	rng->set_seed(0);
 
 	INFO("Should give float between 0.0 and 1.0.");
@@ -48,7 +49,8 @@ TEST_CASE("[RandomNumberGenerator] Float") {
 }
 
 TEST_CASE("[RandomNumberGenerator] Integer range via modulo") {
-	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
+	Ref<RandomNumberGenerator> rng;
+	rng.instantiate();
 	rng->set_seed(0);
 
 	INFO("Should give integer between 0 and 100.");
@@ -60,7 +62,8 @@ TEST_CASE("[RandomNumberGenerator] Integer range via modulo") {
 }
 
 TEST_CASE_MAY_FAIL("[RandomNumberGenerator] Integer 32 bit") {
-	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
+	Ref<RandomNumberGenerator> rng;
+	rng.instantiate();
 	rng->set_seed(0); // Change the seed if this fails.
 
 	bool higher = false;
@@ -78,7 +81,8 @@ TEST_CASE_MAY_FAIL("[RandomNumberGenerator] Integer 32 bit") {
 }
 
 TEST_CASE("[RandomNumberGenerator] Float and integer range") {
-	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
+	Ref<RandomNumberGenerator> rng;
+	rng.instantiate();
 	rng->set_seed(0);
 	uint64_t initial_state = rng->get_state();
 	uint32_t initial_seed = rng->get_seed();
@@ -141,7 +145,8 @@ TEST_CASE("[RandomNumberGenerator] Float and integer range") {
 }
 
 TEST_CASE_MAY_FAIL("[RandomNumberGenerator] Normal distribution") {
-	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
+	Ref<RandomNumberGenerator> rng;
+	rng.instantiate();
 	rng->set_seed(1); // Change the seed if this fails.
 	INFO("Should give a number between -5 to 5 (5 std deviations away; above 99.7% chance it will be in this range).");
 	INFO("Standard randfn function call.");
@@ -180,7 +185,8 @@ TEST_CASE_MAY_FAIL("[RandomNumberGenerator] Normal distribution") {
 }
 
 TEST_CASE("[RandomNumberGenerator] Zero for first number immediately after seeding") {
-	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
+	Ref<RandomNumberGenerator> rng;
+	rng.instantiate();
 	rng->set_seed(0);
 	uint32_t n1 = rng->randi();
 	uint32_t n2 = rng->randi();
@@ -195,7 +201,8 @@ TEST_CASE("[RandomNumberGenerator] Zero for first number immediately after seedi
 }
 
 TEST_CASE("[RandomNumberGenerator] Restore state") {
-	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
+	Ref<RandomNumberGenerator> rng;
+	rng.instantiate();
 	rng->randomize();
 	uint64_t last_seed = rng->get_seed();
 	INFO("Current seed: ", last_seed);
@@ -226,7 +233,8 @@ TEST_CASE("[RandomNumberGenerator] Restore state") {
 }
 
 TEST_CASE("[RandomNumberGenerator] Restore from seed") {
-	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
+	Ref<RandomNumberGenerator> rng;
+	rng.instantiate();
 	rng->set_seed(0);
 	INFO("Current seed: ", rng->get_seed());
 	uint32_t s0_1_before = rng->randi();
@@ -253,7 +261,8 @@ TEST_CASE("[RandomNumberGenerator] Restore from seed") {
 TEST_CASE_MAY_FAIL("[RandomNumberGenerator] randi_range bias check") {
 	int zeros = 0;
 	int ones = 0;
-	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
+	Ref<RandomNumberGenerator> rng;
+	rng.instantiate();
 	for (int i = 0; i < 10000; i++) {
 		int val = rng->randi_range(0, 1);
 		val == 0 ? zeros++ : ones++;

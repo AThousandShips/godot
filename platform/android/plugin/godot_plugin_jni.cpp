@@ -61,7 +61,8 @@ JNIEXPORT jboolean JNICALL Java_org_godotengine_godot_plugin_GodotPlugin_nativeR
 	Ref<JavaClass> java_class_wrapped = JavaClassWrapper::get_singleton()->wrap_jclass(java_class, true);
 	env->DeleteLocalRef(java_class);
 
-	Ref<JavaObject> plugin_object = memnew(JavaObject(java_class_wrapped, obj));
+	Ref<JavaObject> plugin_object;
+	plugin_object.instantiate(java_class_wrapped, obj);
 	JNISingleton *plugin_singleton = memnew(JNISingleton(plugin_object));
 	jni_singletons[singname] = plugin_singleton;
 

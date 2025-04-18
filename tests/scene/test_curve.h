@@ -55,7 +55,8 @@ TEST_CASE("[Curve] Default curve") {
 }
 
 TEST_CASE("[Curve] Custom unit curve with free tangents") {
-	Ref<Curve> curve = memnew(Curve);
+	Ref<Curve> curve;
+	curve.instantiate();
 	// "Sawtooth" curve with an open ending towards the 1.0 offset.
 	curve->add_point(Vector2(0, 0));
 	curve->add_point(Vector2(0.25, 1));
@@ -136,7 +137,8 @@ TEST_CASE("[Curve] Custom unit curve with free tangents") {
 }
 
 TEST_CASE("[Curve] Custom non-unit curve with free tangents") {
-	Ref<Curve> curve = memnew(Curve);
+	Ref<Curve> curve;
+	curve.instantiate();
 	curve->set_min_domain(-100.0);
 	curve->set_max_domain(100.0);
 	// "Sawtooth" curve with an open ending towards the 100 offset.
@@ -219,7 +221,8 @@ TEST_CASE("[Curve] Custom non-unit curve with free tangents") {
 }
 
 TEST_CASE("[Curve] Custom unit curve with linear tangents") {
-	Ref<Curve> curve = memnew(Curve);
+	Ref<Curve> curve;
+	curve.instantiate();
 	// "Sawtooth" curve with an open ending towards the 1.0 offset.
 	curve->add_point(Vector2(0, 0), 0, 0, Curve::TangentMode::TANGENT_LINEAR, Curve::TangentMode::TANGENT_LINEAR);
 	curve->add_point(Vector2(0.25, 1), 0, 0, Curve::TangentMode::TANGENT_LINEAR, Curve::TangentMode::TANGENT_LINEAR);
@@ -302,7 +305,8 @@ TEST_CASE("[Curve] Custom unit curve with linear tangents") {
 }
 
 TEST_CASE("[Curve] Custom non-unit curve with linear tangents") {
-	Ref<Curve> curve = memnew(Curve);
+	Ref<Curve> curve;
+	curve.instantiate();
 	curve->set_min_domain(-100.0);
 	curve->set_max_domain(100.0);
 	// "Sawtooth" curve with an open ending towards the 100 offset.
@@ -387,7 +391,8 @@ TEST_CASE("[Curve] Custom non-unit curve with linear tangents") {
 }
 
 TEST_CASE("[Curve] Straight line offset test") {
-	Ref<Curve> curve = memnew(Curve);
+	Ref<Curve> curve;
+	curve.instantiate();
 	curve->add_point(Vector2(0, 0));
 	curve->add_point(Vector2(1, 1));
 
@@ -397,7 +402,8 @@ TEST_CASE("[Curve] Straight line offset test") {
 }
 
 TEST_CASE("[Curve2D] Linear sampling should return exact value") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 	real_t len = 2048.0;
 
 	curve->add_point(Vector2(0, 0));
@@ -413,7 +419,8 @@ TEST_CASE("[Curve2D] Linear sampling should return exact value") {
 }
 
 TEST_CASE("[Curve3D] Linear sampling should return exact value") {
-	Ref<Curve3D> curve = memnew(Curve3D);
+	Ref<Curve3D> curve;
+	curve.instantiate();
 	real_t len = 2048.0;
 
 	curve->add_point(Vector3(0, 0, 0));

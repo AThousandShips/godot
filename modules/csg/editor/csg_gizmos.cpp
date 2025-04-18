@@ -429,8 +429,9 @@ void CSGShape3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 	}
 
 	if (p_gizmo->is_selected()) {
-		// Draw a translucent representation of the CSG node
-		Ref<ArrayMesh> mesh = memnew(ArrayMesh);
+		// Draw a translucent representation of the CSG node.
+		Ref<ArrayMesh> mesh;
+		mesh.instantiate();
 		Array array;
 		array.resize(Mesh::ARRAY_MAX);
 		array[Mesh::ARRAY_VERTEX] = faces;

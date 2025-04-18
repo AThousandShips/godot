@@ -199,7 +199,8 @@ EditorZoomWidget::EditorZoomWidget() {
 	zoom_reset->set_flat(true);
 	zoom_reset->set_accessibility_name(TTRC("Reset Zoom"));
 
-	Ref<StyleBoxEmpty> empty_stylebox = memnew(StyleBoxEmpty);
+	Ref<StyleBoxEmpty> empty_stylebox;
+	empty_stylebox.instantiate();
 	zoom_reset->add_theme_style_override(CoreStringName(normal), empty_stylebox);
 	zoom_reset->add_theme_style_override(SceneStringName(hover), empty_stylebox);
 	zoom_reset->add_theme_style_override("focus", empty_stylebox);

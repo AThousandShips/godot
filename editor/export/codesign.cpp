@@ -1389,8 +1389,10 @@ Error CodeSign::_codesign_file(bool p_use_hardened_runtime, bool p_force, const 
 		print_verbose(vformat("CodeSign: Signing executable for cputype: %d ...", mh.get_cputype()));
 
 		print_verbose("CodeSign: Generating CodeDirectory...");
-		Ref<CodeSignCodeDirectory> cd1 = memnew(CodeSignCodeDirectory(0x14, 0x01, true, uuid_str, team_id.utf8(), 12, mh.get_exe_limit(), mh.get_code_limit()));
-		Ref<CodeSignCodeDirectory> cd2 = memnew(CodeSignCodeDirectory(0x20, 0x02, true, uuid_str, team_id.utf8(), 12, mh.get_exe_limit(), mh.get_code_limit()));
+		Ref<CodeSignCodeDirectory> cd1;
+		cd1.instantiate(0x14, 0x01, true, uuid_str, team_id.utf8(), 12, mh.get_exe_limit(), mh.get_code_limit());
+		Ref<CodeSignCodeDirectory> cd2;
+		cd2.instantiate(0x20, 0x02, true, uuid_str, team_id.utf8(), 12, mh.get_exe_limit(), mh.get_code_limit());
 		print_verbose("CodeSign: Calculating special slot hashes...");
 		if (info_hash2.size() == 0x20) {
 			cd2->set_hash_in_slot(info_hash2, CodeSignCodeDirectory::SLOT_INFO_PLIST);

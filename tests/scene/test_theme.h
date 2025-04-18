@@ -68,7 +68,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Good theme type names") {
 
 	SUBCASE("add_type") {
 		for (const StringName &name : names) {
-			Ref<Theme> theme = memnew(Theme);
+			Ref<Theme> theme;
+			theme.instantiate();
 
 			ErrorDetector ed;
 			theme->add_type(name);
@@ -79,7 +80,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Good theme type names") {
 	SUBCASE("set_theme_item") {
 		for (const StringName &name : names) {
 			for (const DataEntry &entry : valid_data) {
-				Ref<Theme> theme = memnew(Theme);
+				Ref<Theme> theme;
+				theme.instantiate();
 
 				ErrorDetector ed;
 				theme->set_theme_item(entry.type, valid_item_name, name, entry.value);
@@ -91,7 +93,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Good theme type names") {
 	SUBCASE("add_theme_item_type") {
 		for (const StringName &name : names) {
 			for (const DataEntry &entry : valid_data) {
-				Ref<Theme> theme = memnew(Theme);
+				Ref<Theme> theme;
+				theme.instantiate();
 
 				ErrorDetector ed;
 				theme->add_theme_item_type(entry.type, name);
@@ -105,7 +108,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Good theme type names") {
 			if (name == StringName()) { // Skip empty here, not allowed.
 				continue;
 			}
-			Ref<Theme> theme = memnew(Theme);
+			Ref<Theme> theme;
+			theme.instantiate();
 
 			ErrorDetector ed;
 			theme->set_type_variation(valid_type_name, name);
@@ -115,7 +119,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Good theme type names") {
 			if (name == StringName()) { // Skip empty here, not allowed.
 				continue;
 			}
-			Ref<Theme> theme = memnew(Theme);
+			Ref<Theme> theme;
+			theme.instantiate();
 
 			ErrorDetector ed;
 			theme->set_type_variation(name, valid_type_name);
@@ -136,7 +141,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Bad theme type names") {
 
 	SUBCASE("add_type") {
 		for (const StringName &name : names) {
-			Ref<Theme> theme = memnew(Theme);
+			Ref<Theme> theme;
+			theme.instantiate();
 
 			ErrorDetector ed;
 			theme->add_type(name);
@@ -147,7 +153,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Bad theme type names") {
 	SUBCASE("set_theme_item") {
 		for (const StringName &name : names) {
 			for (const DataEntry &entry : valid_data) {
-				Ref<Theme> theme = memnew(Theme);
+				Ref<Theme> theme;
+				theme.instantiate();
 
 				ErrorDetector ed;
 				theme->set_theme_item(entry.type, valid_item_name, name, entry.value);
@@ -159,7 +166,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Bad theme type names") {
 	SUBCASE("add_theme_item_type") {
 		for (const StringName &name : names) {
 			for (const DataEntry &entry : valid_data) {
-				Ref<Theme> theme = memnew(Theme);
+				Ref<Theme> theme;
+				theme.instantiate();
 
 				ErrorDetector ed;
 				theme->add_theme_item_type(entry.type, name);
@@ -170,14 +178,16 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Bad theme type names") {
 
 	SUBCASE("set_type_variation") {
 		for (const StringName &name : names) {
-			Ref<Theme> theme = memnew(Theme);
+			Ref<Theme> theme;
+			theme.instantiate();
 
 			ErrorDetector ed;
 			theme->set_type_variation(valid_type_name, name);
 			CHECK(ed.has_error);
 		}
 		for (const StringName &name : names) {
-			Ref<Theme> theme = memnew(Theme);
+			Ref<Theme> theme;
+			theme.instantiate();
 
 			ErrorDetector ed;
 			theme->set_type_variation(name, valid_type_name);
@@ -199,7 +209,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Good theme item names") {
 	SUBCASE("set_theme_item") {
 		for (const StringName &name : names) {
 			for (const DataEntry &entry : valid_data) {
-				Ref<Theme> theme = memnew(Theme);
+				Ref<Theme> theme;
+				theme.instantiate();
 
 				ErrorDetector ed;
 				theme->set_theme_item(entry.type, name, valid_type_name, entry.value);
@@ -212,7 +223,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Good theme item names") {
 	SUBCASE("rename_theme_item") {
 		for (const StringName &name : names) {
 			for (const DataEntry &entry : valid_data) {
-				Ref<Theme> theme = memnew(Theme);
+				Ref<Theme> theme;
+				theme.instantiate();
 				theme->set_theme_item(entry.type, valid_item_name, valid_type_name, entry.value);
 
 				ErrorDetector ed;
@@ -239,7 +251,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Bad theme item names") {
 	SUBCASE("set_theme_item") {
 		for (const StringName &name : names) {
 			for (const DataEntry &entry : valid_data) {
-				Ref<Theme> theme = memnew(Theme);
+				Ref<Theme> theme;
+				theme.instantiate();
 
 				ErrorDetector ed;
 				theme->set_theme_item(entry.type, name, valid_type_name, entry.value);
@@ -252,7 +265,8 @@ TEST_CASE_FIXTURE(Fixture, "[Theme] Bad theme item names") {
 	SUBCASE("rename_theme_item") {
 		for (const StringName &name : names) {
 			for (const DataEntry &entry : valid_data) {
-				Ref<Theme> theme = memnew(Theme);
+				Ref<Theme> theme;
+				theme.instantiate();
 				theme->set_theme_item(entry.type, valid_item_name, valid_type_name, entry.value);
 
 				ErrorDetector ed;

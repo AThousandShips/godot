@@ -50,7 +50,8 @@ void CollisionPolygon2D::_build_polygon() {
 		//decompose concave into multiple convex polygons and add them
 		Vector<Vector<Vector2>> decomp = _decompose_in_convex();
 		for (int i = 0; i < decomp.size(); i++) {
-			Ref<ConvexPolygonShape2D> convex = memnew(ConvexPolygonShape2D);
+			Ref<ConvexPolygonShape2D> convex;
+			convex.instantiate();
 			convex->set_points(decomp[i]);
 			collision_object->shape_owner_add_shape(owner_id, convex);
 		}
@@ -60,7 +61,8 @@ void CollisionPolygon2D::_build_polygon() {
 			return;
 		}
 
-		Ref<ConcavePolygonShape2D> concave = memnew(ConcavePolygonShape2D);
+		Ref<ConcavePolygonShape2D> concave;
+		concave.instantiate();
 
 		Vector<Vector2> segments;
 		segments.resize(polygon.size() * 2);

@@ -122,7 +122,8 @@ ENetConnection::EventType ENetConnection::_parse_event(const ENetEvent &p_event,
 	switch (p_event.type) {
 		case ENET_EVENT_TYPE_CONNECT: {
 			if (p_event.peer->data == nullptr) {
-				Ref<ENetPacketPeer> pp = memnew(ENetPacketPeer(p_event.peer));
+				Ref<ENetPacketPeer> pp;
+				pp.instantiate(p_event.peer);
 				peers.push_back(pp);
 			}
 			r_event.peer = Ref<ENetPacketPeer>((ENetPacketPeer *)p_event.peer->data);

@@ -209,7 +209,8 @@ void AnimationLibraryEditor::_file_popup_selected(int p_id) {
 			StringName lib_name = file_dialog_library;
 			List<StringName> animation_list;
 
-			Ref<AnimationLibrary> ald = memnew(AnimationLibrary);
+			Ref<AnimationLibrary> ald;
+			ald.instantiate();
 			al->get_animation_list(&animation_list);
 			for (const StringName &animation_name : animation_list) {
 				Ref<Animation> animation = al->get_animation(animation_name);

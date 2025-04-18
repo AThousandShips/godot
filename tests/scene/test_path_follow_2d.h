@@ -44,7 +44,8 @@ bool is_equal_approx(const Vector2 &p_a, const Vector2 &p_b) {
 }
 
 TEST_CASE("[SceneTree][PathFollow2D] Sampling with progress ratio") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 	curve->set_bake_interval(1);
 	curve->add_point(Vector2(0, 0));
 	curve->add_point(Vector2(100, 0));
@@ -89,7 +90,8 @@ TEST_CASE("[SceneTree][PathFollow2D] Sampling with progress ratio") {
 }
 
 TEST_CASE("[SceneTree][PathFollow2D] Sampling with progress") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 	curve->set_bake_interval(1);
 	curve->add_point(Vector2(0, 0));
 	curve->add_point(Vector2(100, 0));
@@ -134,7 +136,8 @@ TEST_CASE("[SceneTree][PathFollow2D] Sampling with progress") {
 }
 
 TEST_CASE("[SceneTree][PathFollow2D] Removal of a point in curve") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 	curve->add_point(Vector2(0, 0));
 	curve->add_point(Vector2(100, 0));
 	curve->add_point(Vector2(100, 100));
@@ -158,7 +161,8 @@ TEST_CASE("[SceneTree][PathFollow2D] Removal of a point in curve") {
 }
 
 TEST_CASE("[SceneTree][PathFollow2D] Setting h_offset and v_offset") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 	curve->add_point(Vector2(0, 0));
 	curve->add_point(Vector2(100, 0));
 	Path2D *path = memnew(Path2D);
@@ -180,7 +184,8 @@ TEST_CASE("[SceneTree][PathFollow2D] Setting h_offset and v_offset") {
 }
 
 TEST_CASE("[SceneTree][PathFollow2D] Progress ratio out of range") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 	curve->add_point(Vector2(0, 0));
 	curve->add_point(Vector2(100, 0));
 	Path2D *path = memnew(Path2D);
@@ -217,7 +222,8 @@ TEST_CASE("[SceneTree][PathFollow2D] Progress ratio out of range") {
 }
 
 TEST_CASE("[SceneTree][PathFollow2D] Progress out of range") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 	curve->add_point(Vector2(0, 0));
 	curve->add_point(Vector2(100, 0));
 	Path2D *path = memnew(Path2D);

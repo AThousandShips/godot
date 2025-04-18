@@ -578,7 +578,8 @@ ProjectList::Item ProjectList::load_project_data(const String &p_path, bool p_fa
 	bool missing = false;
 	bool recovery_mode = false;
 
-	Ref<ConfigFile> cf = memnew(ConfigFile);
+	Ref<ConfigFile> cf;
+	cf.instantiate();
 	Error cf_err = cf->load(conf);
 
 	int config_version = 0;

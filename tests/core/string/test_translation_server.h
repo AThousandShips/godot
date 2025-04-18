@@ -36,11 +36,13 @@
 
 namespace TestTranslationServer {
 TEST_CASE("[TranslationServer] Translation operations") {
-	Ref<Translation> t1 = memnew(Translation);
+	Ref<Translation> t1;
+	t1.instantiate();
 	t1->set_locale("uk");
 	t1->add_message("Good Morning", String(U"Добрий ранок"));
 
-	Ref<Translation> t2 = memnew(Translation);
+	Ref<Translation> t2;
+	t2.instantiate();
 	t2->set_locale("uk");
 	t2->add_message("Hello Godot", String(U"你好戈多"));
 

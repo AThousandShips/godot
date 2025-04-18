@@ -81,7 +81,8 @@ Ref<ArrayMesh> ConvexPolygonShape3D::get_debug_arraymesh_faces(const Color &p_mo
 		}
 	}
 
-	Ref<ArrayMesh> mesh = memnew(ArrayMesh);
+	Ref<ArrayMesh> mesh;
+	mesh.instantiate();
 	Array a;
 	a.resize(Mesh::ARRAY_MAX);
 	a[RS::ARRAY_VERTEX] = verts;

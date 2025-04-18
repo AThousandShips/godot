@@ -52,10 +52,12 @@ TEST_CASE("[SceneTree][Camera3D] Getters and setters") {
 	}
 
 	SUBCASE("Attributes") {
-		Ref<CameraAttributes> attributes = memnew(CameraAttributes);
+		Ref<CameraAttributes> attributes;
+		attributes.instantiate();
 		test_camera->set_attributes(attributes);
 		CHECK(test_camera->get_attributes() == attributes);
-		Ref<CameraAttributesPhysical> physical_attributes = memnew(CameraAttributesPhysical);
+		Ref<CameraAttributesPhysical> physical_attributes;
+		physical_attributes.instantiate();
 		test_camera->set_attributes(physical_attributes);
 		CHECK(test_camera->get_attributes() == physical_attributes);
 	}

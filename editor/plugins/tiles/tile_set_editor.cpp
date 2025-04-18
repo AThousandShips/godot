@@ -114,7 +114,8 @@ void TileSetEditor::_load_texture_files(const Vector<String> &p_paths) {
 		source_id = tile_set->get_next_source_id();
 
 		// Actually create the new source.
-		Ref<TileSetAtlasSource> atlas_source = memnew(TileSetAtlasSource);
+		Ref<TileSetAtlasSource> atlas_source;
+		atlas_source.instantiate();
 		atlas_source->set_texture(texture);
 		atlas_source->set_texture_region_size(tile_set->get_tile_size());
 
@@ -311,7 +312,8 @@ void TileSetEditor::_source_add_id_pressed(int p_id_pressed) {
 		case 1: {
 			int source_id = tile_set->get_next_source_id();
 
-			Ref<TileSetScenesCollectionSource> scene_collection_source = memnew(TileSetScenesCollectionSource);
+			Ref<TileSetScenesCollectionSource> scene_collection_source;
+			scene_collection_source.instantiate();
 
 			// Add a new source.
 			EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();

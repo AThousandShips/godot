@@ -1677,7 +1677,8 @@ void GraphEdit::_update_connections() {
 		}
 
 		// Update Line2D node.
-		Ref<Gradient> line_gradient = memnew(Gradient);
+		Ref<Gradient> line_gradient;
+		line_gradient.instantiate();
 
 		float line_width = _get_shader_line_width();
 		if (conn == hovered_connection) {
@@ -1778,7 +1779,8 @@ void GraphEdit::_update_top_connection_layer() {
 	line_material->set_shader_parameter("to_type", to_type);
 	line_material->set_shader_parameter("rim_color", theme_cache.connection_rim_color);
 
-	Ref<Gradient> line_gradient = memnew(Gradient);
+	Ref<Gradient> line_gradient;
+	line_gradient.instantiate();
 	dragged_connection_line->set_width(line_width);
 	line_gradient->set_color(0, from_color);
 	line_gradient->set_color(1, to_color);

@@ -460,7 +460,8 @@ void EditorDebuggerTree::_item_menu_id_pressed(int p_option) {
 			file_dialog->set_file_mode(EditorFileDialog::FILE_MODE_SAVE_FILE);
 
 			List<String> extensions;
-			Ref<PackedScene> sd = memnew(PackedScene);
+			Ref<PackedScene> sd;
+			sd.instantiate();
 			ResourceSaver::get_recognized_extensions(sd, &extensions);
 			file_dialog->clear_filters();
 			for (const String &extension : extensions) {

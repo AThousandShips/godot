@@ -3778,7 +3778,8 @@ void TileMapLayerEditor::_select_all_layers_pressed() {
 		en->get_editor_selection()->add_node(tile_map_layers_in_scene_cache[0]);
 	} else {
 		_update_tile_map_layers_in_scene_list_cache();
-		Ref<MultiNodeEdit> multi_node_edit = memnew(MultiNodeEdit);
+		Ref<MultiNodeEdit> multi_node_edit;
+		multi_node_edit.instantiate();
 		for (TileMapLayer *layer : tile_map_layers_in_scene_cache) {
 			multi_node_edit->add_node(edited_scene_root->get_path_to(layer));
 			en->get_editor_selection()->add_node(layer);

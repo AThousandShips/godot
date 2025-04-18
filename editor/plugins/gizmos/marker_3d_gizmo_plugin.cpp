@@ -80,7 +80,8 @@ Marker3DGizmoPlugin::Marker3DGizmoPlugin() {
 	cursor_colors.push_back(color_z.lerp(Color(0, 0, 0), 0.75));
 	cursor_colors.push_back(color_z.lerp(Color(0, 0, 0), 0.75));
 
-	Ref<StandardMaterial3D> mat = memnew(StandardMaterial3D);
+	Ref<StandardMaterial3D> mat;
+	mat.instantiate();
 	mat->set_shading_mode(StandardMaterial3D::SHADING_MODE_UNSHADED);
 	mat->set_flag(StandardMaterial3D::FLAG_ALBEDO_FROM_VERTEX_COLOR, true);
 	mat->set_flag(StandardMaterial3D::FLAG_SRGB_VERTEX_COLOR, true);

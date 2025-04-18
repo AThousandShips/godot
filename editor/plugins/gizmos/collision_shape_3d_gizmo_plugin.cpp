@@ -66,7 +66,8 @@ void CollisionShape3DGizmoPlugin::create_collision_material(const String &p_name
 	for (int i = 0; i < 4; i++) {
 		bool instantiated = i < 2;
 
-		Ref<StandardMaterial3D> material = memnew(StandardMaterial3D);
+		Ref<StandardMaterial3D> material;
+		material.instantiate();
 
 		Color color = collision_color;
 		color.a *= instantiated ? 0.25 : 1.0;

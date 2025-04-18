@@ -98,7 +98,8 @@ Ref<ArrayMesh> WorldBoundaryShape3D::get_debug_arraymesh_faces(const Color &p_mo
 		3,
 	};
 
-	Ref<ArrayMesh> mesh = memnew(ArrayMesh);
+	Ref<ArrayMesh> mesh;
+	mesh.instantiate();
 	Array a;
 	a.resize(Mesh::ARRAY_MAX);
 	a[RS::ARRAY_VERTEX] = points;

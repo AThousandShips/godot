@@ -464,7 +464,8 @@ Ref<TranslationDomain> TranslationServer::get_or_add_domain(const StringName &p_
 		}
 		ERR_PRINT("Bug (please report): Found invalid translation domain.");
 	}
-	Ref<TranslationDomain> new_domain = memnew(TranslationDomain);
+	Ref<TranslationDomain> new_domain;
+	new_domain.instantiate();
 	custom_domains[p_domain] = new_domain;
 	return new_domain;
 }

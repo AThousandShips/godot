@@ -80,7 +80,8 @@ Ref<ArrayMesh> CapsuleShape3D::get_debug_arraymesh_faces(const Color &p_modulate
 		colors.append(p_modulate);
 	}
 
-	Ref<ArrayMesh> capsule_mesh = memnew(ArrayMesh);
+	Ref<ArrayMesh> capsule_mesh;
+	capsule_mesh.instantiate();
 	capsule_array[RS::ARRAY_COLOR] = colors;
 	capsule_mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, capsule_array);
 	return capsule_mesh;

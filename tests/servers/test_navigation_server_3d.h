@@ -129,11 +129,13 @@ TEST_SUITE("[Navigation3D]") {
 			CHECK_EQ(navigation_server->map_get_path(map, Vector3(7, 7, 7), Vector3(8, 8, 8), true).size(), 0);
 			CHECK_EQ(navigation_server->map_get_path(map, Vector3(7, 7, 7), Vector3(8, 8, 8), false).size(), 0);
 
-			Ref<NavigationPathQueryParameters3D> query_parameters = memnew(NavigationPathQueryParameters3D);
+			Ref<NavigationPathQueryParameters3D> query_parameters;
+			query_parameters.instantiate();
 			query_parameters->set_map(map);
 			query_parameters->set_start_position(Vector3(7, 7, 7));
 			query_parameters->set_target_position(Vector3(8, 8, 8));
-			Ref<NavigationPathQueryResult3D> query_result = memnew(NavigationPathQueryResult3D);
+			Ref<NavigationPathQueryResult3D> query_result;
+			query_result.instantiate();
 			navigation_server->query_path(query_parameters, query_result);
 			CHECK_EQ(query_result->get_path().size(), 0);
 			CHECK_EQ(query_result->get_path_types().size(), 0);
@@ -233,11 +235,13 @@ TEST_SUITE("[Navigation3D]") {
 			CHECK_EQ(navigation_server->map_get_path(map, Vector3(7, 7, 7), Vector3(8, 8, 8), true).size(), 0);
 			CHECK_EQ(navigation_server->map_get_path(map, Vector3(7, 7, 7), Vector3(8, 8, 8), false).size(), 0);
 
-			Ref<NavigationPathQueryParameters3D> query_parameters = memnew(NavigationPathQueryParameters3D);
+			Ref<NavigationPathQueryParameters3D> query_parameters;
+			query_parameters.instantiate();
 			query_parameters->set_map(map);
 			query_parameters->set_start_position(Vector3(7, 7, 7));
 			query_parameters->set_target_position(Vector3(8, 8, 8));
-			Ref<NavigationPathQueryResult3D> query_result = memnew(NavigationPathQueryResult3D);
+			Ref<NavigationPathQueryResult3D> query_result;
+			query_result.instantiate();
 			navigation_server->query_path(query_parameters, query_result);
 			CHECK_EQ(query_result->get_path().size(), 0);
 			CHECK_EQ(query_result->get_path_types().size(), 0);
@@ -534,7 +538,8 @@ TEST_SUITE("[Navigation3D]") {
 		// Prepare scene tree with simple mesh to serve as an input geometry.
 		Node3D *node_3d = memnew(Node3D);
 		SceneTree::get_singleton()->get_root()->add_child(node_3d);
-		Ref<PlaneMesh> plane_mesh = memnew(PlaneMesh);
+		Ref<PlaneMesh> plane_mesh;
+		plane_mesh.instantiate();
 		plane_mesh->set_size(Size2(10.0, 10.0));
 		MeshInstance3D *mesh_instance = memnew(MeshInstance3D);
 		mesh_instance->set_mesh(plane_mesh);
@@ -543,7 +548,8 @@ TEST_SUITE("[Navigation3D]") {
 		// Prepare anything necessary to bake navigation mesh.
 		RID map = navigation_server->map_create();
 		RID region = navigation_server->region_create();
-		Ref<NavigationMesh> navigation_mesh = memnew(NavigationMesh);
+		Ref<NavigationMesh> navigation_mesh;
+		navigation_mesh.instantiate();
 		navigation_server->map_set_use_async_iterations(map, false);
 		navigation_server->map_set_active(map, true);
 		navigation_server->region_set_map(region, map);
@@ -584,14 +590,17 @@ TEST_SUITE("[Navigation3D]") {
 		// Prepare scene tree with simple mesh to serve as an input geometry.
 		Node3D *node_3d = memnew(Node3D);
 		SceneTree::get_singleton()->get_root()->add_child(node_3d);
-		Ref<PlaneMesh> plane_mesh = memnew(PlaneMesh);
+		Ref<PlaneMesh> plane_mesh;
+		plane_mesh.instantiate();
 		plane_mesh->set_size(Size2(10.0, 10.0));
 		MeshInstance3D *mesh_instance = memnew(MeshInstance3D);
 		mesh_instance->set_mesh(plane_mesh);
 		node_3d->add_child(mesh_instance);
 
-		Ref<NavigationMesh> navigation_mesh = memnew(NavigationMesh);
-		Ref<NavigationMeshSourceGeometryData3D> source_geometry = memnew(NavigationMeshSourceGeometryData3D);
+		Ref<NavigationMesh> navigation_mesh;
+		navigation_mesh.instantiate();
+		Ref<NavigationMeshSourceGeometryData3D> source_geometry;
+		source_geometry.instantiate();
 		CHECK_EQ(source_geometry->get_vertices().size(), 0);
 		CHECK_EQ(source_geometry->get_indices().size(), 0);
 
@@ -630,7 +639,8 @@ TEST_SUITE("[Navigation3D]") {
 		// Prepare scene tree with simple mesh to serve as an input geometry.
 		Node3D *node_3d = memnew(Node3D);
 		SceneTree::get_singleton()->get_root()->add_child(node_3d);
-		Ref<PlaneMesh> plane_mesh = memnew(PlaneMesh);
+		Ref<PlaneMesh> plane_mesh;
+		plane_mesh.instantiate();
 		plane_mesh->set_size(Size2(10.0, 10.0));
 		MeshInstance3D *mesh_instance = memnew(MeshInstance3D);
 		mesh_instance->set_mesh(plane_mesh);
@@ -639,7 +649,8 @@ TEST_SUITE("[Navigation3D]") {
 		// Prepare anything necessary to bake navigation mesh.
 		RID map = navigation_server->map_create();
 		RID region = navigation_server->region_create();
-		Ref<NavigationMesh> navigation_mesh = memnew(NavigationMesh);
+		Ref<NavigationMesh> navigation_mesh;
+		navigation_mesh.instantiate();
 		navigation_server->map_set_use_async_iterations(map, false);
 		navigation_server->map_set_active(map, true);
 		navigation_server->region_set_map(region, map);
@@ -649,7 +660,8 @@ TEST_SUITE("[Navigation3D]") {
 		CHECK_EQ(navigation_mesh->get_polygon_count(), 0);
 		CHECK_EQ(navigation_mesh->get_vertices().size(), 0);
 
-		Ref<NavigationMeshSourceGeometryData3D> source_geometry = memnew(NavigationMeshSourceGeometryData3D);
+		Ref<NavigationMeshSourceGeometryData3D> source_geometry;
+		source_geometry.instantiate();
 		navigation_server->parse_source_geometry_data(navigation_mesh, source_geometry, node_3d);
 		navigation_server->bake_from_source_geometry_data(navigation_mesh, source_geometry, Callable());
 		// FIXME: The above line should trigger the update (line below) under the hood.
@@ -676,8 +688,10 @@ TEST_SUITE("[Navigation3D]") {
 	// This test case does not check precise values on purpose - to not be too sensitivte.
 	TEST_CASE("[NavigationServer3D] Server should respond to queries against valid map properly") {
 		NavigationServer3D *navigation_server = NavigationServer3D::get_singleton();
-		Ref<NavigationMesh> navigation_mesh = memnew(NavigationMesh);
-		Ref<NavigationMeshSourceGeometryData3D> source_geometry = memnew(NavigationMeshSourceGeometryData3D);
+		Ref<NavigationMesh> navigation_mesh;
+		navigation_mesh.instantiate();
+		Ref<NavigationMeshSourceGeometryData3D> source_geometry;
+		source_geometry.instantiate();
 
 		Array arr;
 		arr.resize(RS::ARRAY_MAX);
@@ -710,12 +724,14 @@ TEST_SUITE("[Navigation3D]") {
 		}
 
 		SUBCASE("Elaborate query with 'CORRIDORFUNNEL' post-processing should yield non-empty result") {
-			Ref<NavigationPathQueryParameters3D> query_parameters = memnew(NavigationPathQueryParameters3D);
+			Ref<NavigationPathQueryParameters3D> query_parameters;
+			query_parameters.instantiate();
 			query_parameters->set_map(map);
 			query_parameters->set_start_position(Vector3(0, 0, 0));
 			query_parameters->set_target_position(Vector3(10, 0, 10));
 			query_parameters->set_path_postprocessing(NavigationPathQueryParameters3D::PATH_POSTPROCESSING_CORRIDORFUNNEL);
-			Ref<NavigationPathQueryResult3D> query_result = memnew(NavigationPathQueryResult3D);
+			Ref<NavigationPathQueryResult3D> query_result;
+			query_result.instantiate();
 			navigation_server->query_path(query_parameters, query_result);
 			CHECK_NE(query_result->get_path().size(), 0);
 			CHECK_NE(query_result->get_path_types().size(), 0);
@@ -724,12 +740,14 @@ TEST_SUITE("[Navigation3D]") {
 		}
 
 		SUBCASE("Elaborate query with 'EDGECENTERED' post-processing should yield non-empty result") {
-			Ref<NavigationPathQueryParameters3D> query_parameters = memnew(NavigationPathQueryParameters3D);
+			Ref<NavigationPathQueryParameters3D> query_parameters;
+			query_parameters.instantiate();
 			query_parameters->set_map(map);
 			query_parameters->set_start_position(Vector3(10, 0, 10));
 			query_parameters->set_target_position(Vector3(0, 0, 0));
 			query_parameters->set_path_postprocessing(NavigationPathQueryParameters3D::PATH_POSTPROCESSING_EDGECENTERED);
-			Ref<NavigationPathQueryResult3D> query_result = memnew(NavigationPathQueryResult3D);
+			Ref<NavigationPathQueryResult3D> query_result;
+			query_result.instantiate();
 			navigation_server->query_path(query_parameters, query_result);
 			CHECK_NE(query_result->get_path().size(), 0);
 			CHECK_NE(query_result->get_path_types().size(), 0);
@@ -738,12 +756,14 @@ TEST_SUITE("[Navigation3D]") {
 		}
 
 		SUBCASE("Elaborate query with non-matching navigation layer mask should yield empty result") {
-			Ref<NavigationPathQueryParameters3D> query_parameters = memnew(NavigationPathQueryParameters3D);
+			Ref<NavigationPathQueryParameters3D> query_parameters;
+			query_parameters.instantiate();
 			query_parameters->set_map(map);
 			query_parameters->set_start_position(Vector3(10, 0, 10));
 			query_parameters->set_target_position(Vector3(0, 0, 0));
 			query_parameters->set_navigation_layers(2);
-			Ref<NavigationPathQueryResult3D> query_result = memnew(NavigationPathQueryResult3D);
+			Ref<NavigationPathQueryResult3D> query_result;
+			query_result.instantiate();
 			navigation_server->query_path(query_parameters, query_result);
 			CHECK_EQ(query_result->get_path().size(), 0);
 			CHECK_EQ(query_result->get_path_types().size(), 0);
@@ -752,12 +772,14 @@ TEST_SUITE("[Navigation3D]") {
 		}
 
 		SUBCASE("Elaborate query without metadata flags should yield path only") {
-			Ref<NavigationPathQueryParameters3D> query_parameters = memnew(NavigationPathQueryParameters3D);
+			Ref<NavigationPathQueryParameters3D> query_parameters;
+			query_parameters.instantiate();
 			query_parameters->set_map(map);
 			query_parameters->set_start_position(Vector3(10, 0, 10));
 			query_parameters->set_target_position(Vector3(0, 0, 0));
 			query_parameters->set_metadata_flags(0);
-			Ref<NavigationPathQueryResult3D> query_result = memnew(NavigationPathQueryResult3D);
+			Ref<NavigationPathQueryResult3D> query_result;
+			query_result.instantiate();
 			navigation_server->query_path(query_parameters, query_result);
 			CHECK_NE(query_result->get_path().size(), 0);
 			CHECK_EQ(query_result->get_path_types().size(), 0);
@@ -814,8 +836,10 @@ TEST_SUITE("[Navigation3D]") {
 	/*
 	TEST_CASE("[NavigationServer3D] Server should be able to bake asynchronously") {
 		NavigationServer3D *navigation_server = NavigationServer3D::get_singleton();
-		Ref<NavigationMesh> navigation_mesh = memnew(NavigationMesh);
-		Ref<NavigationMeshSourceGeometryData3D> source_geometry = memnew(NavigationMeshSourceGeometryData3D);
+		Ref<NavigationMesh> navigation_mesh;
+		navigation_mesh.instantiate();
+		Ref<NavigationMeshSourceGeometryData3D> source_geometry;
+		source_geometry.instantiate();
 
 		Array arr;
 		arr.resize(RS::ARRAY_MAX);

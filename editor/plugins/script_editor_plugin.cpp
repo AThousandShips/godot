@@ -1560,7 +1560,8 @@ void ScriptEditor::_menu_option(int p_option) {
 					return;
 				}
 
-				Ref<EditorScript> es = memnew(EditorScript);
+				Ref<EditorScript> es;
+				es.instantiate();
 				es->set_script(scr);
 				es->run();
 			} break;

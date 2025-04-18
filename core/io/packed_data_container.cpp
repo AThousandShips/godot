@@ -103,7 +103,8 @@ Variant PackedDataContainer::_get_at_ofs(uint32_t p_ofs, const uint8_t *p_buf, b
 	uint32_t type = decode_uint32(p_buf + p_ofs);
 
 	if (type == TYPE_ARRAY || type == TYPE_DICT) {
-		Ref<PackedDataContainerRef> pdcr = memnew(PackedDataContainerRef);
+		Ref<PackedDataContainerRef> pdcr;
+		pdcr.instantiate();
 		Ref<PackedDataContainer> pdc = Ref<PackedDataContainer>(const_cast<PackedDataContainer *>(this));
 
 		pdcr->from = pdc;

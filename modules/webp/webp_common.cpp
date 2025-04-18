@@ -148,7 +148,8 @@ Ref<Image> _webp_unpack(const Vector<uint8_t> &p_buffer) {
 
 	ERR_FAIL_COND_V_MSG(errdec, Ref<Image>(), "Failed decoding WebP image.");
 
-	Ref<Image> img = memnew(Image(features.width, features.height, false, features.has_alpha ? Image::FORMAT_RGBA8 : Image::FORMAT_RGB8, dst_image));
+	Ref<Image> img;
+	img.instantiate(features.width, features.height, false, features.has_alpha ? Image::FORMAT_RGBA8 : Image::FORMAT_RGB8, dst_image);
 	return img;
 }
 

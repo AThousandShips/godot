@@ -81,7 +81,8 @@ static Ref<StyleBoxFlat> sb_expand(Ref<StyleBoxFlat> p_sbox, float p_left, float
 
 // See also `editor_generate_icon()` in `editor/themes/editor_icons.cpp`.
 static Ref<ImageTexture> generate_icon(int p_index) {
-	Ref<Image> img = memnew(Image);
+	Ref<Image> img;
+	img.instantiate();
 
 #ifdef MODULE_SVG_ENABLED
 	// Upsample icon generation only if the scale isn't an integer multiplier.
@@ -728,7 +729,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	// PopupMenu
 
-	Ref<StyleBoxLine> separator_horizontal = memnew(StyleBoxLine);
+	Ref<StyleBoxLine> separator_horizontal;
+	separator_horizontal.instantiate();
 	separator_horizontal->set_thickness(Math::round(scale));
 	separator_horizontal->set_color(style_separator_color);
 	separator_horizontal->set_content_margin_individual(default_margin, 0, default_margin, 0);

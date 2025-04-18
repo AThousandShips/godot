@@ -56,7 +56,8 @@ TEST_CASE("[Curve2D] Default curve is empty") {
 }
 
 TEST_CASE("[Curve2D] Point management") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 
 	SUBCASE("Functions for adding/removing points should behave as expected") {
 		curve->set_point_count(2);
@@ -94,7 +95,8 @@ TEST_CASE("[Curve2D] Point management") {
 }
 
 TEST_CASE("[Curve2D] Baked") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 
 	SUBCASE("Single Point") {
 		curve->add_point(Vector2());
@@ -130,7 +132,8 @@ TEST_CASE("[Curve2D] Baked") {
 
 TEST_CASE("[Curve2D] Sampling") {
 	// Sampling over a simple straight line to make assertions simpler
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 	curve->add_point(Vector2());
 	curve->add_point(Vector2(0, 50));
 
@@ -161,7 +164,8 @@ TEST_CASE("[Curve2D] Sampling") {
 	SUBCASE("sample_baked_with_rotation, cubic = false") {
 		const real_t pi = 3.14159;
 		const real_t half_pi = pi * 0.5;
-		Ref<Curve2D> rot_curve = memnew(Curve2D);
+		Ref<Curve2D> rot_curve;
+		rot_curve.instantiate();
 		Transform2D t;
 
 		rot_curve->clear_points();
@@ -196,7 +200,8 @@ TEST_CASE("[Curve2D] Sampling") {
 	SUBCASE("sample_baked_with_rotation, cubic = true") {
 		const real_t pi = 3.14159;
 		const real_t half_pi = pi * 0.5;
-		Ref<Curve2D> rot_curve = memnew(Curve2D);
+		Ref<Curve2D> rot_curve;
+		rot_curve.instantiate();
 		Transform2D t;
 
 		rot_curve->clear_points();
@@ -239,7 +244,8 @@ TEST_CASE("[Curve2D] Sampling") {
 }
 
 TEST_CASE("[Curve2D] Tessellation") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 	add_sample_curve_points(curve);
 
 	const int default_size = curve->tessellate().size();
@@ -270,7 +276,8 @@ TEST_CASE("[Curve2D] Tessellation") {
 }
 
 TEST_CASE("[Curve2D] Even length tessellation") {
-	Ref<Curve2D> curve = memnew(Curve2D);
+	Ref<Curve2D> curve;
+	curve.instantiate();
 	add_sample_curve_points(curve);
 
 	const int default_size = curve->tessellate_even_length().size();

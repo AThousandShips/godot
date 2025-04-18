@@ -838,7 +838,8 @@ void EditorAssetLibrary::_image_update(bool p_use_cache, bool p_final, const Pac
 
 	int len = image_data.size();
 	const uint8_t *r = image_data.ptr();
-	Ref<Image> image = memnew(Image);
+	Ref<Image> image;
+	image.instantiate();
 
 	uint8_t png_signature[8] = { 137, 80, 78, 71, 13, 10, 26, 10 };
 	uint8_t jpg_signature[3] = { 255, 216, 255 };

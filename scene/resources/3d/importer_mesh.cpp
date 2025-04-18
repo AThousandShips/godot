@@ -850,7 +850,8 @@ Ref<ConvexPolygonShape3D> ImporterMesh::create_convex_shape(bool p_clean, bool p
 		vertices.append_array(v);
 	}
 
-	Ref<ConvexPolygonShape3D> shape = memnew(ConvexPolygonShape3D);
+	Ref<ConvexPolygonShape3D> shape;
+	shape.instantiate();
 
 	if (p_clean) {
 		Geometry3D::MeshData md;
@@ -883,7 +884,8 @@ Ref<ConcavePolygonShape3D> ImporterMesh::create_trimesh_shape() const {
 		face_points.set(i + 2, f.vertex[2]);
 	}
 
-	Ref<ConcavePolygonShape3D> shape = memnew(ConcavePolygonShape3D);
+	Ref<ConcavePolygonShape3D> shape;
+	shape.instantiate();
 	shape->set_faces(face_points);
 	return shape;
 }

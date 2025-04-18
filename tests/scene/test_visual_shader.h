@@ -37,7 +37,8 @@
 namespace TestVisualArray {
 
 TEST_CASE("[SceneTree][VisualShader] Object creation and parameter") {
-	Ref<VisualShader> vs = memnew(VisualShader);
+	Ref<VisualShader> vs;
+	vs.instantiate();
 	CHECK(vs.is_valid());
 
 	CHECK(vs->get_mode() == Shader::MODE_SPATIAL);
@@ -50,7 +51,8 @@ TEST_CASE("[SceneTree][VisualShader] Object creation and parameter") {
 
 TEST_CASE("[SceneTree][VisualShader] Testing VisualShaderNodes") {
 	SUBCASE("Testing Node Creation") {
-		Ref<VisualShader> vs = memnew(VisualShader);
+		Ref<VisualShader> vs;
+		vs.instantiate();
 		CHECK(vs.is_valid());
 
 		for (int i = 0; i < VisualShader::TYPE_MAX; i++) {
@@ -77,7 +79,8 @@ TEST_CASE("[SceneTree][VisualShader] Testing VisualShaderNodes") {
 	}
 
 	SUBCASE("Testing VisualShaderNode position getter and setter") {
-		Ref<VisualShader> vs = memnew(VisualShader);
+		Ref<VisualShader> vs;
+		vs.instantiate();
 		CHECK(vs.is_valid());
 
 		Ref<VisualShaderNode> vsn1 = memnew(VisualShaderNodeInput);
@@ -96,7 +99,8 @@ TEST_CASE("[SceneTree][VisualShader] Testing VisualShaderNodes") {
 	}
 
 	SUBCASE("Testing VisualShaderNode ID") {
-		Ref<VisualShader> vs = memnew(VisualShader);
+		Ref<VisualShader> vs;
+		vs.instantiate();
 		CHECK(vs.is_valid());
 
 		for (int i = 0; i < VisualShader::TYPE_MAX; i++) {
@@ -108,7 +112,8 @@ TEST_CASE("[SceneTree][VisualShader] Testing VisualShaderNodes") {
 	}
 
 	SUBCASE("Testing remove and replace VisualShaderNode") {
-		Ref<VisualShader> vs = memnew(VisualShader);
+		Ref<VisualShader> vs;
+		vs.instantiate();
 		CHECK(vs.is_valid());
 
 		ERR_PRINT_OFF;
@@ -127,7 +132,8 @@ TEST_CASE("[SceneTree][VisualShader] Testing VisualShaderNodes") {
 }
 
 TEST_CASE("[SceneTree][VisualShader] Testing Varyings") {
-	Ref<VisualShader> vs = memnew(VisualShader);
+	Ref<VisualShader> vs;
+	vs.instantiate();
 
 	vs->add_varying("Test1", VisualShader::VARYING_MODE_FRAG_TO_LIGHT, VisualShader::VARYING_TYPE_TRANSFORM);
 	CHECK(vs->has_varying("Test1") == true);

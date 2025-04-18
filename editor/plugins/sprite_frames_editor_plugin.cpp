@@ -829,7 +829,8 @@ void SpriteFramesEditor::_copy_pressed() {
 		return;
 	}
 
-	Ref<ClipboardSpriteFrames> clipboard_frames = memnew(ClipboardSpriteFrames);
+	Ref<ClipboardSpriteFrames> clipboard_frames;
+	clipboard_frames.instantiate();
 
 	for (const int &frame_index : selected_items) {
 		Ref<Texture2D> texture = frames->get_frame_texture(edited_anim, frame_index);

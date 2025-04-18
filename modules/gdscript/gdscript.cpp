@@ -2267,7 +2267,8 @@ void GDScriptLanguage::init() {
 		if (globals.has(n)) {
 			continue;
 		}
-		Ref<GDScriptNativeClass> nc = memnew(GDScriptNativeClass(n));
+		Ref<GDScriptNativeClass> nc;
+		nc.instantiate(n);
 		_add_global(n, nc);
 	}
 
@@ -2299,7 +2300,8 @@ void GDScriptLanguage::_extension_loaded(const Ref<GDExtension> &p_extension) {
 		if (globals.has(n)) {
 			continue;
 		}
-		Ref<GDScriptNativeClass> nc = memnew(GDScriptNativeClass(n));
+		Ref<GDScriptNativeClass> nc;
+		nc.instantiate(n);
 		_add_global(n, nc);
 	}
 }

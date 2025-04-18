@@ -3939,7 +3939,8 @@ void RichTextLabel::add_image(const Ref<Texture2D> &p_image, int p_width, int p_
 	item->rid = items.make_rid(item);
 
 	if (p_region.has_area()) {
-		Ref<AtlasTexture> atlas_tex = memnew(AtlasTexture);
+		Ref<AtlasTexture> atlas_tex;
+		atlas_tex.instantiate();
 		atlas_tex->set_atlas(p_image);
 		atlas_tex->set_region(p_region);
 		item->image = atlas_tex;
@@ -3999,7 +4000,8 @@ void RichTextLabel::update_image(const Variant &p_key, BitField<ImageUpdateMask>
 						item->image->disconnect_changed(callable_mp(this, &RichTextLabel::_texture_changed));
 					}
 					if (item->region.has_area()) {
-						Ref<AtlasTexture> atlas_tex = memnew(AtlasTexture);
+						Ref<AtlasTexture> atlas_tex;
+						atlas_tex.instantiate();
 						atlas_tex->set_atlas(p_image);
 						atlas_tex->set_region(item->region);
 						item->image = atlas_tex;

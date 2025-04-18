@@ -42,9 +42,11 @@
 namespace TestResource {
 
 TEST_CASE("[Resource] Duplication") {
-	Ref<Resource> resource = memnew(Resource);
+	Ref<Resource> resource;
+	resource.instantiate();
 	resource->set_name("Hello world");
-	Ref<Resource> child_resource = memnew(Resource);
+	Ref<Resource> child_resource;
+	child_resource.instantiate();
 	child_resource->set_name("I'm a child resource");
 	resource->set_meta("other_resource", child_resource);
 
@@ -68,11 +70,13 @@ TEST_CASE("[Resource] Duplication") {
 }
 
 TEST_CASE("[Resource] Saving and loading") {
-	Ref<Resource> resource = memnew(Resource);
+	Ref<Resource> resource;
+	resource.instantiate();
 	resource->set_name("Hello world");
 	resource->set_meta("ExampleMetadata", Vector2i(40, 80));
 	resource->set_meta("string", "The\nstring\nwith\nunnecessary\nline\n\t\\\nbreaks");
-	Ref<Resource> child_resource = memnew(Resource);
+	Ref<Resource> child_resource;
+	child_resource.instantiate();
 	child_resource->set_name("I'm a child resource");
 	resource->set_meta("other_resource", child_resource);
 	const String save_path_binary = TestUtils::get_temp_path("resource.res");
@@ -112,11 +116,14 @@ TEST_CASE("[Resource] Saving and loading") {
 }
 
 TEST_CASE("[Resource] Breaking circular references on save") {
-	Ref<Resource> resource_a = memnew(Resource);
+	Ref<Resource> resource_a;
+	resource_a.instantiate();
 	resource_a->set_name("A");
-	Ref<Resource> resource_b = memnew(Resource);
+	Ref<Resource> resource_b;
+	resource_b.instantiate();
 	resource_b->set_name("B");
-	Ref<Resource> resource_c = memnew(Resource);
+	Ref<Resource> resource_c;
+	resource_c.instantiate();
 	resource_c->set_name("C");
 	resource_a->set_meta("next", resource_b);
 	resource_b->set_meta("next", resource_c);

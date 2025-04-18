@@ -65,7 +65,8 @@ TEST_CASE("[SceneTree][OptionButton] Single item") {
 	}
 
 	SUBCASE("There should a single item after after adding an icon") {
-		Ref<Texture2D> test_icon = memnew(Texture2D);
+		Ref<Texture2D> test_icon;
+		test_icon.instantiate();
 		test_opt->add_icon_item(test_icon, "icon", 345);
 
 		CHECK(test_opt->has_selectable_items());
@@ -87,10 +88,13 @@ TEST_CASE("[SceneTree][OptionButton] Many items") {
 
 	SUBCASE("Creating a complex structure and checking getters") {
 		// Regular item at index 0.
-		Ref<Texture2D> test_icon1 = memnew(Texture2D);
-		Ref<Texture2D> test_icon2 = memnew(Texture2D);
+		Ref<Texture2D> test_icon1;
+		test_icon1.instantiate();
+		Ref<Texture2D> test_icon2;
+		test_icon2.instantiate();
 		// Regular item at index 3.
-		Ref<Texture2D> test_icon4 = memnew(Texture2D);
+		Ref<Texture2D> test_icon4;
+		test_icon4.instantiate();
 
 		test_opt->add_item("first", 100);
 		test_opt->add_icon_item(test_icon1, "second_icon", 101);
@@ -130,7 +134,8 @@ TEST_CASE("[SceneTree][OptionButton] Many items") {
 	SUBCASE("Getters and setters not related to structure") {
 		test_opt->add_item("regular", 2019);
 
-		Ref<Texture2D> test_icon = memnew(Texture2D);
+		Ref<Texture2D> test_icon;
+		test_icon.instantiate();
 		test_opt->add_icon_item(test_icon, "icon", 3092);
 
 		// item_text.

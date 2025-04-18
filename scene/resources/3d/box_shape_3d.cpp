@@ -61,7 +61,8 @@ Ref<ArrayMesh> BoxShape3D::get_debug_arraymesh_faces(const Color &p_modulate) co
 		colors.append(p_modulate);
 	}
 
-	Ref<ArrayMesh> box_mesh = memnew(ArrayMesh);
+	Ref<ArrayMesh> box_mesh;
+	box_mesh.instantiate();
 	box_array[RS::ARRAY_COLOR] = colors;
 	box_mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, box_array);
 	return box_mesh;

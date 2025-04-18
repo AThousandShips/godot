@@ -102,7 +102,8 @@ void CameraLinux::_add_device(const String &p_device_name) {
 
 	if (file_descriptor != -1) {
 		if (_is_video_capture_device(file_descriptor)) {
-			Ref<CameraFeedLinux> feed = memnew(CameraFeedLinux(p_device_name));
+			Ref<CameraFeedLinux> feed;
+			feed.instantiate(p_device_name);
 			add_feed(feed);
 		}
 	}

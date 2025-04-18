@@ -865,7 +865,8 @@ EditorAudioBus::EditorAudioBus(EditorAudioBuses *p_buses, bool p_is_master) {
 	hbc->add_child(bypass);
 	hbc->add_spacer();
 
-	Ref<StyleBoxEmpty> sbempty = memnew(StyleBoxEmpty);
+	Ref<StyleBoxEmpty> sbempty;
+	sbempty.instantiate();
 	for (int i = 0; i < hbc->get_child_count(); i++) {
 		Control *child = Object::cast_to<Control>(hbc->get_child(i));
 		child->begin_bulk_theme_override();
@@ -875,7 +876,8 @@ EditorAudioBus::EditorAudioBus(EditorAudioBuses *p_buses, bool p_is_master) {
 		child->add_theme_style_override("focus", sbempty);
 		child->add_theme_style_override("focus_mirrored", sbempty);
 
-		Ref<StyleBoxFlat> sbflat = memnew(StyleBoxFlat);
+		Ref<StyleBoxFlat> sbflat;
+		sbflat.instantiate();
 		sbflat->set_content_margin_all(0);
 		sbflat->set_bg_color(Color(1, 1, 1, 0));
 		sbflat->set_border_width(Side::SIDE_BOTTOM, Math::round(3 * EDSCALE));

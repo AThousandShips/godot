@@ -53,14 +53,16 @@ namespace TestGltf {
 TEST_CASE("[SceneTree][Node] GLTF test mesh and material meta export and import") {
 	init("gltf_mesh_material_extras");
 	// Setup scene.
-	Ref<StandardMaterial3D> original_material = memnew(StandardMaterial3D);
+	Ref<StandardMaterial3D> original_material;
+	original_material.instantiate();
 	original_material->set_albedo(Color(1.0, .0, .0));
 	original_material->set_name("material");
 	Dictionary material_dict;
 	material_dict["node_type"] = "material";
 	original_material->set_meta("extras", material_dict);
 
-	Ref<PlaneMesh> original_meshdata = memnew(PlaneMesh);
+	Ref<PlaneMesh> original_meshdata;
+	original_meshdata.instantiate();
 	original_meshdata->set_name("planemesh");
 	Dictionary meshdata_dict;
 	meshdata_dict["node_type"] = "planemesh";
@@ -135,7 +137,8 @@ TEST_CASE("[SceneTree][Node] GLTF test skeleton and bone export and import") {
 	skeleton->set_bone_meta(1, "extras", child_bone_extras);
 
 	// We have to have a mesh to link with skeleton or it will not get imported.
-	Ref<PlaneMesh> meshdata = memnew(PlaneMesh);
+	Ref<PlaneMesh> meshdata;
+	meshdata.instantiate();
 	meshdata->set_name("planemesh");
 
 	MeshInstance3D *mesh = memnew(MeshInstance3D);

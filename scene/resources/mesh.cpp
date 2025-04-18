@@ -546,7 +546,8 @@ Ref<ConvexPolygonShape3D> Mesh::create_convex_shape(bool p_clean, bool p_simplif
 		vertices.append_array(v);
 	}
 
-	Ref<ConvexPolygonShape3D> shape = memnew(ConvexPolygonShape3D);
+	Ref<ConvexPolygonShape3D> shape;
+	shape.instantiate();
 
 	if (p_clean) {
 		Geometry3D::MeshData md;
@@ -579,7 +580,8 @@ Ref<ConcavePolygonShape3D> Mesh::create_trimesh_shape() const {
 		face_points.set(i + 2, f.vertex[2]);
 	}
 
-	Ref<ConcavePolygonShape3D> shape = memnew(ConcavePolygonShape3D);
+	Ref<ConcavePolygonShape3D> shape;
+	shape.instantiate();
 	shape->set_faces(face_points);
 	return shape;
 }
@@ -779,7 +781,8 @@ Ref<Mesh> Mesh::create_outline(float p_margin) const {
 		}
 	}
 
-	Ref<ArrayMesh> newmesh = memnew(ArrayMesh);
+	Ref<ArrayMesh> newmesh;
+	newmesh.instantiate();
 	newmesh->add_surface_from_arrays(PRIMITIVE_TRIANGLES, arrays);
 	return newmesh;
 }
@@ -2038,7 +2041,8 @@ void ArrayMesh::regen_normal_maps() {
 	Vector<Ref<SurfaceTool>> surfs;
 	Vector<uint64_t> formats;
 	for (int i = 0; i < get_surface_count(); i++) {
-		Ref<SurfaceTool> st = memnew(SurfaceTool);
+		Ref<SurfaceTool> st;
+		st.instantiate();
 		st->create_from(Ref<ArrayMesh>(this), i);
 		surfs.push_back(st);
 		formats.push_back(surface_get_format(i));

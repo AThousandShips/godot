@@ -650,7 +650,8 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 	String name = p_node->get_name();
 	NodePath original_path = p_root->get_path_to(p_node); // Used to detect renames due to import hints.
 
-	Ref<Resource> original_meta = memnew(Resource); // Create temp resource to hold original meta
+	Ref<Resource> original_meta; // Create temp resource to hold original meta
+	original_meta.instantiate();
 	original_meta->merge_meta_from(p_node);
 
 	bool isroot = p_node == p_root;
@@ -1853,7 +1854,8 @@ void ResourceImporterScene::_create_slices(AnimationPlayer *ap, Ref<Animation> a
 			continue;
 		}
 
-		Ref<Animation> new_anim = memnew(Animation);
+		Ref<Animation> new_anim;
+		new_anim.instantiate();
 
 		for (int j = 0; j < anim->get_track_count(); j++) {
 			List<float> keys;
@@ -3142,7 +3144,8 @@ Error ResourceImporterScene::import(ResourceUID::ID p_source_id, const String &p
 	}
 
 	if (!occluder_arrays.first.is_empty() && !occluder_arrays.second.is_empty()) {
-		Ref<ArrayOccluder3D> occ = memnew(ArrayOccluder3D);
+		Ref<ArrayOccluder3D> occ;
+		occ.instantiate();
 		occ->set_arrays(occluder_arrays.first, occluder_arrays.second);
 		OccluderInstance3D *occluder_instance = memnew(OccluderInstance3D);
 		occluder_instance->set_occluder(occ);
@@ -3261,7 +3264,8 @@ Error ResourceImporterScene::import(ResourceUID::ID p_source_id, const String &p
 		err = ResourceSaver::save(library, p_save_path + ".res", flags); //do not take over, let the changed files reload themselves
 		ERR_FAIL_COND_V_MSG(err != OK, err, "Cannot save animation to file '" + p_save_path + ".res'.");
 	} else if (_scene_import_type == "PackedScene") {
-		Ref<PackedScene> packer = memnew(PackedScene);
+		Ref<PackedScene> packer;
+		packer.instantiate();
 		packer->pack(scene);
 		print_verbose("Saving scene to: " + p_save_path + ".scn");
 		err = ResourceSaver::save(packer, p_save_path + ".scn", flags); //do not take over, let the changed files reload themselves

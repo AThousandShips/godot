@@ -100,7 +100,8 @@ ScrollContainer *EditorAbout::_populate_list(const String &p_name, const List<St
 	vbc->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	sc->add_child(vbc);
 
-	Ref<StyleBoxEmpty> empty_stylebox = memnew(StyleBoxEmpty);
+	Ref<StyleBoxEmpty> empty_stylebox;
+	empty_stylebox.instantiate();
 
 	int i = 0;
 	for (List<String>::ConstIterator itr = p_sections.begin(); itr != p_sections.end(); ++itr, ++i) {

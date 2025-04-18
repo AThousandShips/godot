@@ -67,7 +67,8 @@ Ref<ArrayMesh> SphereShape3D::get_debug_arraymesh_faces(const Color &p_modulate)
 		colors.append(p_modulate);
 	}
 
-	Ref<ArrayMesh> sphere_mesh = memnew(ArrayMesh);
+	Ref<ArrayMesh> sphere_mesh;
+	sphere_mesh.instantiate();
 	sphere_array[RS::ARRAY_COLOR] = colors;
 	sphere_mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, sphere_array);
 	return sphere_mesh;
