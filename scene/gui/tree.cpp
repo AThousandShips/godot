@@ -5163,7 +5163,7 @@ void Tree::item_edited(int p_column, TreeItem *p_item, MouseButton p_custom_mous
 		edited_item->cells.write[p_column].dirty = true;
 		edited_item->cells.write[p_column].cached_minimum_size_dirty = true;
 	}
-	emit_signal(SNAME("item_edited"));
+	emit_signal(SceneStringName(item_edited));
 	if (p_custom_mouse_index != MouseButton::NONE) {
 		emit_signal(SNAME("custom_item_clicked"), p_custom_mouse_index);
 	}

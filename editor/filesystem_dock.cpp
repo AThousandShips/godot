@@ -93,7 +93,7 @@ void FileSystemList::_line_editor_submit(const String &p_text) {
 	popup_edit_committed = true; // End edit popup processing.
 	popup_editor->hide();
 
-	emit_signal(SNAME("item_edited"));
+	emit_signal(SceneStringName(item_edited));
 	queue_redraw();
 }
 
@@ -4223,7 +4223,7 @@ FileSystemDock::FileSystemDock() {
 	tree->connect("nothing_selected", callable_mp(this, &FileSystemDock::_tree_empty_selected));
 	tree->connect(SceneStringName(gui_input), callable_mp(this, &FileSystemDock::_tree_gui_input));
 	tree->connect(SceneStringName(mouse_exited), callable_mp(this, &FileSystemDock::_tree_mouse_exited));
-	tree->connect("item_edited", callable_mp(this, &FileSystemDock::_rename_operation_confirm));
+	tree->connect(SceneStringName(item_edited), callable_mp(this, &FileSystemDock::_rename_operation_confirm));
 
 	file_list_vb = memnew(VBoxContainer);
 	file_list_vb->set_v_size_flags(SIZE_EXPAND_FILL);
@@ -4258,7 +4258,7 @@ FileSystemDock::FileSystemDock() {
 	files->connect(SceneStringName(gui_input), callable_mp(this, &FileSystemDock::_file_list_gui_input));
 	files->connect("multi_selected", callable_mp(this, &FileSystemDock::_file_multi_selected));
 	files->connect("empty_clicked", callable_mp(this, &FileSystemDock::_file_list_empty_clicked));
-	files->connect("item_edited", callable_mp(this, &FileSystemDock::_rename_operation_confirm));
+	files->connect(SceneStringName(item_edited), callable_mp(this, &FileSystemDock::_rename_operation_confirm));
 	files->set_custom_minimum_size(Size2(0, 15 * EDSCALE));
 	files->set_allow_rmb_select(true);
 	file_list_vb->add_child(files);

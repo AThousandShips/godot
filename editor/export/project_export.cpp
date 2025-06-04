@@ -1568,7 +1568,7 @@ ProjectExportDialog::ProjectExportDialog() {
 	include_files->set_custom_minimum_size(Size2(1, 75 * EDSCALE));
 	include_margin->add_child(include_files);
 	include_files->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
-	include_files->connect("item_edited", callable_mp(this, &ProjectExportDialog::_tree_changed));
+	include_files->connect(SceneStringName(item_edited), callable_mp(this, &ProjectExportDialog::_tree_changed));
 	include_files->connect("check_propagated_to_item", callable_mp(this, &ProjectExportDialog::_check_propagated_to_item));
 	include_files->connect("custom_popup_edited", callable_mp(this, &ProjectExportDialog::_tree_popup_edited));
 
@@ -1628,7 +1628,7 @@ ProjectExportDialog::ProjectExportDialog() {
 	patches->set_hide_root(true);
 	patches->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	patches->connect("button_clicked", callable_mp(this, &ProjectExportDialog::_patch_tree_button_clicked));
-	patches->connect("item_edited", callable_mp(this, &ProjectExportDialog::_patch_tree_item_edited));
+	patches->connect(SceneStringName(item_edited), callable_mp(this, &ProjectExportDialog::_patch_tree_item_edited));
 	SET_DRAG_FORWARDING_GCD(patches, ProjectExportDialog);
 	patches->set_edit_checkbox_cell_only_when_checkbox_is_pressed(true);
 	patch_vb->add_margin_child(TTR("Base Packs:"), patches, true);

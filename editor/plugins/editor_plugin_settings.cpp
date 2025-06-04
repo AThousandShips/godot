@@ -279,7 +279,7 @@ EditorPluginSettings::EditorPluginSettings() {
 	plugin_list->set_column_custom_minimum_width(COLUMN_EDIT, 40 * EDSCALE);
 	plugin_list->set_column_custom_minimum_width(COLUMN_PADDING_RIGHT, 10 * EDSCALE);
 	plugin_list->set_hide_root(true);
-	plugin_list->connect("item_edited", callable_mp(this, &EditorPluginSettings::_plugin_activity_changed), CONNECT_DEFERRED);
+	plugin_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorPluginSettings::_plugin_activity_changed), CONNECT_DEFERRED);
 
 	VBoxContainer *mc = memnew(VBoxContainer);
 	mc->add_child(plugin_list);

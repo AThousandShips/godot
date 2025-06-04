@@ -721,7 +721,7 @@ LocalizationEditor::LocalizationEditor() {
 		translation_remap_options->set_column_expand(1, false);
 		translation_remap_options->set_column_clip_content(1, false);
 		translation_remap_options->set_column_custom_minimum_width(1, 250);
-		translation_remap_options->connect("item_edited", callable_mp(this, &LocalizationEditor::_translation_res_option_changed));
+		translation_remap_options->connect(SceneStringName(item_edited), callable_mp(this, &LocalizationEditor::_translation_res_option_changed));
 		translation_remap_options->connect("button_clicked", callable_mp(this, &LocalizationEditor::_translation_res_option_delete));
 		translation_remap_options->connect("custom_popup_edited", callable_mp(this, &LocalizationEditor::_translation_res_option_popup));
 		tmc->add_child(translation_remap_options);

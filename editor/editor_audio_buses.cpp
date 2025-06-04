@@ -976,7 +976,7 @@ EditorAudioBus::EditorAudioBus(EditorAudioBuses *p_buses, bool p_is_master) {
 	effects->set_hide_folding(true);
 	effects->set_v_size_flags(SIZE_EXPAND_FILL);
 	vb->add_child(effects);
-	effects->connect("item_edited", callable_mp(this, &EditorAudioBus::_effect_edited));
+	effects->connect(SceneStringName(item_edited), callable_mp(this, &EditorAudioBus::_effect_edited));
 	effects->connect("cell_selected", callable_mp(this, &EditorAudioBus::_effect_selected));
 	effects->connect(SceneStringName(focus_exited), callable_mp(effects, &Tree::deselect_all));
 	effects->set_edit_checkbox_cell_only_when_checkbox_is_pressed(true);

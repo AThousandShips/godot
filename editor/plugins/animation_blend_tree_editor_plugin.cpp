@@ -1273,7 +1273,7 @@ AnimationNodeBlendTreeEditor::AnimationNodeBlendTreeEditor() {
 	filters->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	filters->set_v_size_flags(SIZE_EXPAND_FILL);
 	filters->set_hide_root(true);
-	filters->connect("item_edited", callable_mp(this, &AnimationNodeBlendTreeEditor::_filter_edited));
+	filters->connect(SceneStringName(item_edited), callable_mp(this, &AnimationNodeBlendTreeEditor::_filter_edited));
 
 	open_file = memnew(EditorFileDialog);
 	add_child(open_file);

@@ -937,7 +937,7 @@ ThemeItemImportTree::ThemeItemImportTree() {
 	import_items_tree->set_hide_root(true);
 	import_items_tree->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	import_main_hb->add_child(import_items_tree);
-	import_items_tree->connect("item_edited", callable_mp(this, &ThemeItemImportTree::_tree_item_edited));
+	import_items_tree->connect(SceneStringName(item_edited), callable_mp(this, &ThemeItemImportTree::_tree_item_edited));
 	import_items_tree->connect("check_propagated_to_item", callable_mp(this, &ThemeItemImportTree::_check_propagated_to_tree_item));
 
 	import_items_tree->set_columns(3);
@@ -1996,7 +1996,7 @@ ThemeItemEditorDialog::ThemeItemEditorDialog(ThemeTypeEditor *p_theme_type_edito
 	edit_type_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	edit_dialog_side_vb->add_child(edit_type_list);
 	edit_type_list->connect(SceneStringName(item_selected), callable_mp(this, &ThemeItemEditorDialog::_edited_type_selected));
-	edit_type_list->connect("item_edited", callable_mp(this, &ThemeItemEditorDialog::_edited_type_edited));
+	edit_type_list->connect(SceneStringName(item_edited), callable_mp(this, &ThemeItemEditorDialog::_edited_type_edited));
 	edit_type_list->connect("button_clicked", callable_mp(this, &ThemeItemEditorDialog::_edited_type_button_pressed));
 	edit_type_list->set_theme_type_variation("TreeSecondary");
 

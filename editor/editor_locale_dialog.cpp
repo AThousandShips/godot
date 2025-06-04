@@ -452,7 +452,7 @@ EditorLocaleDialog::EditorLocaleDialog() {
 				lang_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 				lang_list->connect("cell_selected", callable_mp(this, &EditorLocaleDialog::_item_selected));
 				lang_list->set_columns(1);
-				lang_list->connect("item_edited", callable_mp(this, &EditorLocaleDialog::_filter_lang_option_changed));
+				lang_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorLocaleDialog::_filter_lang_option_changed));
 				vb_lang_list->add_child(lang_list);
 			}
 			hb_lists->add_child(vb_lang_list);
@@ -471,7 +471,7 @@ EditorLocaleDialog::EditorLocaleDialog() {
 				script_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 				script_list->connect("cell_selected", callable_mp(this, &EditorLocaleDialog::_item_selected));
 				script_list->set_columns(1);
-				script_list->connect("item_edited", callable_mp(this, &EditorLocaleDialog::_filter_script_option_changed));
+				script_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorLocaleDialog::_filter_script_option_changed));
 				vb_script_list->add_child(script_list);
 			}
 			hb_lists->add_child(vb_script_list);
@@ -491,7 +491,7 @@ EditorLocaleDialog::EditorLocaleDialog() {
 				cnt_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 				cnt_list->connect("cell_selected", callable_mp(this, &EditorLocaleDialog::_item_selected));
 				cnt_list->set_columns(1);
-				cnt_list->connect("item_edited", callable_mp(this, &EditorLocaleDialog::_filter_cnt_option_changed));
+				cnt_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorLocaleDialog::_filter_cnt_option_changed));
 				vb_cnt_list->add_child(cnt_list);
 			}
 			hb_lists->add_child(vb_cnt_list);

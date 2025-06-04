@@ -991,7 +991,7 @@ EditorFeatureProfileManager::EditorFeatureProfileManager() {
 	class_list->set_hide_root(true);
 	class_list->set_edit_checkbox_cell_only_when_checkbox_is_pressed(true);
 	class_list->connect("cell_selected", callable_mp(this, &EditorFeatureProfileManager::_class_list_item_selected));
-	class_list->connect("item_edited", callable_mp(this, &EditorFeatureProfileManager::_class_list_item_edited), CONNECT_DEFERRED);
+	class_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorFeatureProfileManager::_class_list_item_edited), CONNECT_DEFERRED);
 	class_list->connect("item_collapsed", callable_mp(this, &EditorFeatureProfileManager::_class_list_item_collapsed));
 	class_list->set_theme_type_variation("TreeSecondary");
 	// It will be displayed once the user creates or chooses a profile.
@@ -1011,7 +1011,7 @@ EditorFeatureProfileManager::EditorFeatureProfileManager() {
 	property_list->set_hide_root(true);
 	property_list->set_hide_folding(true);
 	property_list->set_edit_checkbox_cell_only_when_checkbox_is_pressed(true);
-	property_list->connect("item_edited", callable_mp(this, &EditorFeatureProfileManager::_property_item_edited), CONNECT_DEFERRED);
+	property_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorFeatureProfileManager::_property_item_edited), CONNECT_DEFERRED);
 	// It will be displayed once the user creates or chooses a profile.
 	property_list_vbc->hide();
 

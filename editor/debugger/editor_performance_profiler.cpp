@@ -403,7 +403,7 @@ EditorPerformanceProfiler::EditorPerformanceProfiler() {
 	monitor_tree->set_column_custom_minimum_width(1, 100 * EDSCALE);
 	monitor_tree->set_column_expand(1, false);
 	monitor_tree->set_column_titles_visible(true);
-	monitor_tree->connect("item_edited", callable_mp(this, &EditorPerformanceProfiler::_monitor_select));
+	monitor_tree->connect(SceneStringName(item_edited), callable_mp(this, &EditorPerformanceProfiler::_monitor_select));
 	monitor_tree->create_item();
 	monitor_tree->set_hide_root(true);
 	monitor_tree->set_theme_type_variation("TreeSecondary");

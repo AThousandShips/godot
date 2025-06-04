@@ -1058,7 +1058,7 @@ AnimationLibraryEditor::AnimationLibraryEditor() {
 	tree->set_hide_folding(false);
 	tree->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 
-	tree->connect("item_edited", callable_mp(this, &AnimationLibraryEditor::_item_renamed));
+	tree->connect(SceneStringName(item_edited), callable_mp(this, &AnimationLibraryEditor::_item_renamed));
 	tree->connect("button_clicked", callable_mp(this, &AnimationLibraryEditor::_button_pressed));
 	tree->connect("item_collapsed", callable_mp(this, &AnimationLibraryEditor::_save_mixer_lib_folding));
 

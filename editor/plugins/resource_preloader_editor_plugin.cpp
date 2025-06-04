@@ -387,7 +387,7 @@ ResourcePreloaderEditor::ResourcePreloaderEditor() {
 	load->connect(SceneStringName(pressed), callable_mp(this, &ResourcePreloaderEditor::_load_pressed));
 	paste->connect(SceneStringName(pressed), callable_mp(this, &ResourcePreloaderEditor::_paste_pressed));
 	file->connect("files_selected", callable_mp(this, &ResourcePreloaderEditor::_files_load_request));
-	tree->connect("item_edited", callable_mp(this, &ResourcePreloaderEditor::_item_edited));
+	tree->connect(SceneStringName(item_edited), callable_mp(this, &ResourcePreloaderEditor::_item_edited));
 	loading_scene = false;
 }
 

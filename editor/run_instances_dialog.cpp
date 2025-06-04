@@ -393,7 +393,7 @@ RunInstancesDialog::RunInstancesDialog() {
 	main_vb->add_child(instance_tree);
 
 	_refresh_argument_count();
-	instance_tree->connect("item_edited", callable_mp(this, &RunInstancesDialog::_start_instance_timer));
+	instance_tree->connect(SceneStringName(item_edited), callable_mp(this, &RunInstancesDialog::_start_instance_timer));
 }
 
 bool RunInstancesDialog::InstanceData::overrides_run_args() const {

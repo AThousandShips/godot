@@ -1329,7 +1329,7 @@ EditorBuildProfileManager::EditorBuildProfileManager() {
 	class_list->set_hide_root(true);
 	class_list->set_edit_checkbox_cell_only_when_checkbox_is_pressed(true);
 	class_list->connect("cell_selected", callable_mp(this, &EditorBuildProfileManager::_class_list_item_selected));
-	class_list->connect("item_edited", callable_mp(this, &EditorBuildProfileManager::_class_list_item_edited), CONNECT_DEFERRED);
+	class_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorBuildProfileManager::_class_list_item_edited), CONNECT_DEFERRED);
 	class_list->connect("item_collapsed", callable_mp(this, &EditorBuildProfileManager::_class_list_item_collapsed));
 	// It will be displayed once the user creates or chooses a profile.
 	main_vbc->add_margin_child(TTR("Configure Engine Compilation Profile:"), class_list, true);

@@ -271,7 +271,7 @@ ReplicationEditor::ReplicationEditor() {
 	tree->set_column_expand(3, false);
 	tree->create_item();
 	tree->connect("button_clicked", callable_mp(this, &ReplicationEditor::_tree_button_pressed));
-	tree->connect("item_edited", callable_mp(this, &ReplicationEditor::_tree_item_edited));
+	tree->connect(SceneStringName(item_edited), callable_mp(this, &ReplicationEditor::_tree_item_edited));
 	tree->set_v_size_flags(SIZE_EXPAND_FILL);
 	vb->add_child(tree);
 

@@ -217,7 +217,7 @@ EditorPropertyRootMotion::EditorPropertyRootMotion() {
 	filters->set_v_size_flags(SIZE_EXPAND_FILL);
 	filters->set_hide_root(true);
 	filters->connect(SceneStringName(item_activated), callable_mp(this, &EditorPropertyRootMotion::_confirmed));
-	//filters->connect("item_edited", this, "_filter_edited");
+	//filters->connect(SceneStringName(item_edited), this, "_filter_edited");
 }
 
 //////////////////////////

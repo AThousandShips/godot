@@ -739,7 +739,7 @@ EditorAssetInstaller::EditorAssetInstaller() {
 	source_tree->set_accessibility_name(TTRC("Source Files"));
 	source_tree->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	source_tree->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	source_tree->connect("item_edited", callable_mp(this, &EditorAssetInstaller::_item_checked_cbk));
+	source_tree->connect(SceneStringName(item_edited), callable_mp(this, &EditorAssetInstaller::_item_checked_cbk));
 	source_tree->set_theme_type_variation("TreeSecondary");
 	source_tree_vb->add_child(source_tree);
 
@@ -756,7 +756,7 @@ EditorAssetInstaller::EditorAssetInstaller() {
 	destination_tree->set_accessibility_name(TTRC("Destination Files"));
 	destination_tree->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	destination_tree->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	destination_tree->connect("item_edited", callable_mp(this, &EditorAssetInstaller::_item_checked_cbk));
+	destination_tree->connect(SceneStringName(item_edited), callable_mp(this, &EditorAssetInstaller::_item_checked_cbk));
 	destination_tree_vb->add_child(destination_tree);
 
 	// Dialog configuration.
