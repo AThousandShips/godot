@@ -450,7 +450,7 @@ EditorLocaleDialog::EditorLocaleDialog() {
 				lang_list->set_accessibility_name(TTRC("Language"));
 				lang_list->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 				lang_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-				lang_list->connect("cell_selected", callable_mp(this, &EditorLocaleDialog::_item_selected));
+				lang_list->connect(SceneStringName(cell_selected), callable_mp(this, &EditorLocaleDialog::_item_selected));
 				lang_list->set_columns(1);
 				lang_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorLocaleDialog::_filter_lang_option_changed));
 				vb_lang_list->add_child(lang_list);
@@ -469,7 +469,7 @@ EditorLocaleDialog::EditorLocaleDialog() {
 				script_list = memnew(Tree);
 				script_list->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 				script_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-				script_list->connect("cell_selected", callable_mp(this, &EditorLocaleDialog::_item_selected));
+				script_list->connect(SceneStringName(cell_selected), callable_mp(this, &EditorLocaleDialog::_item_selected));
 				script_list->set_columns(1);
 				script_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorLocaleDialog::_filter_script_option_changed));
 				vb_script_list->add_child(script_list);
@@ -489,7 +489,7 @@ EditorLocaleDialog::EditorLocaleDialog() {
 				cnt_list->set_accessibility_name(TTRC("Country"));
 				cnt_list->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 				cnt_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-				cnt_list->connect("cell_selected", callable_mp(this, &EditorLocaleDialog::_item_selected));
+				cnt_list->connect(SceneStringName(cell_selected), callable_mp(this, &EditorLocaleDialog::_item_selected));
 				cnt_list->set_columns(1);
 				cnt_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorLocaleDialog::_filter_cnt_option_changed));
 				vb_cnt_list->add_child(cnt_list);

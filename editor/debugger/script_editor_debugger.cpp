@@ -2067,7 +2067,7 @@ ScriptEditorDebugger::ScriptEditorDebugger() {
 		stack_dump->set_hide_root(true);
 		stack_dump->set_v_size_flags(SIZE_EXPAND_FILL);
 		stack_dump->set_theme_type_variation("TreeSecondary");
-		stack_dump->connect("cell_selected", callable_mp(this, &ScriptEditorDebugger::_stack_dump_frame_selected));
+		stack_dump->connect(SceneStringName(cell_selected), callable_mp(this, &ScriptEditorDebugger::_stack_dump_frame_selected));
 		stack_vb->add_child(stack_dump);
 
 		VBoxContainer *inspector_vbox = memnew(VBoxContainer);

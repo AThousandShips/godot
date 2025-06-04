@@ -738,7 +738,7 @@ void TreeItem::set_collapsed(bool p_collapsed) {
 
 			if (tree->select_mode == Tree::SELECT_MULTI) {
 				tree->selected_item = this;
-				emit_signal(SNAME("cell_selected"));
+				emit_signal(SceneStringName(cell_selected));
 			} else {
 				select(tree->selected_col);
 			}
@@ -2945,7 +2945,7 @@ void Tree::select_single_item(TreeItem *p_selected, TreeItem *p_current, int p_c
 					selected_col = i;
 					selected_button = -1;
 
-					emit_signal(SNAME("cell_selected"));
+					emit_signal(SceneStringName(cell_selected));
 					if (select_mode == SELECT_MULTI) {
 						emit_signal(SceneStringName(multi_selected), p_current, i, true);
 					} else if (select_mode == SELECT_SINGLE) {
@@ -2956,7 +2956,7 @@ void Tree::select_single_item(TreeItem *p_selected, TreeItem *p_current, int p_c
 					selected_item = p_selected;
 					selected_col = i;
 					selected_button = -1;
-					emit_signal(SNAME("cell_selected"));
+					emit_signal(SceneStringName(cell_selected));
 				}
 			} else {
 				if (r_in_range && *r_in_range && !p_force_deselect) {
@@ -3519,7 +3519,7 @@ void Tree::_go_left() {
 		selected_button = -1;
 		if (select_mode == SELECT_MULTI) {
 			selected_col--;
-			emit_signal(SNAME("cell_selected"));
+			emit_signal(SceneStringName(cell_selected));
 		} else {
 			selected_item->select(selected_col - 1);
 		}
@@ -3546,7 +3546,7 @@ void Tree::_go_right() {
 		selected_button = -1;
 		if (select_mode == SELECT_MULTI) {
 			selected_col++;
-			emit_signal(SNAME("cell_selected"));
+			emit_signal(SceneStringName(cell_selected));
 		} else {
 			selected_item->select(selected_col + 1);
 		}
@@ -3575,7 +3575,7 @@ void Tree::_go_up() {
 		}
 
 		selected_item = prev;
-		emit_signal(SNAME("cell_selected"));
+		emit_signal(SceneStringName(cell_selected));
 		queue_redraw();
 	} else {
 		while (prev && !prev->cells[col].selectable) {
@@ -3651,7 +3651,7 @@ void Tree::_go_down() {
 		}
 
 		selected_item = next;
-		emit_signal(SNAME("cell_selected"));
+		emit_signal(SceneStringName(cell_selected));
 		queue_redraw();
 	} else {
 		while (next && !next->cells[col].selectable) {
@@ -3817,7 +3817,7 @@ void Tree::gui_input(const Ref<InputEvent> &p_event) {
 
 		if (select_mode == SELECT_MULTI) {
 			selected_item = next;
-			emit_signal(SNAME("cell_selected"));
+			emit_signal(SceneStringName(cell_selected));
 			queue_accessibility_update();
 			queue_redraw();
 		} else {
@@ -3856,7 +3856,7 @@ void Tree::gui_input(const Ref<InputEvent> &p_event) {
 
 		if (select_mode == SELECT_MULTI) {
 			selected_item = prev;
-			emit_signal(SNAME("cell_selected"));
+			emit_signal(SceneStringName(cell_selected));
 			queue_accessibility_update();
 			queue_redraw();
 		} else {

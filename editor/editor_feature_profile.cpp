@@ -990,7 +990,7 @@ EditorFeatureProfileManager::EditorFeatureProfileManager() {
 	class_list_vbc->add_margin_child(TTR("Configure Selected Profile:"), class_list, true);
 	class_list->set_hide_root(true);
 	class_list->set_edit_checkbox_cell_only_when_checkbox_is_pressed(true);
-	class_list->connect("cell_selected", callable_mp(this, &EditorFeatureProfileManager::_class_list_item_selected));
+	class_list->connect(SceneStringName(cell_selected), callable_mp(this, &EditorFeatureProfileManager::_class_list_item_selected));
 	class_list->connect(SceneStringName(item_edited), callable_mp(this, &EditorFeatureProfileManager::_class_list_item_edited), CONNECT_DEFERRED);
 	class_list->connect("item_collapsed", callable_mp(this, &EditorFeatureProfileManager::_class_list_item_collapsed));
 	class_list->set_theme_type_variation("TreeSecondary");

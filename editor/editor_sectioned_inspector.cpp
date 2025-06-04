@@ -379,7 +379,7 @@ SectionedInspector::SectionedInspector() :
 	right_vb->add_child(inspector, true);
 	inspector->set_use_doc_hints(true);
 
-	sections->connect("cell_selected", callable_mp(this, &SectionedInspector::_section_selected));
+	sections->connect(SceneStringName(cell_selected), callable_mp(this, &SectionedInspector::_section_selected));
 }
 
 SectionedInspector::~SectionedInspector() {

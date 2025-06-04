@@ -685,7 +685,7 @@ LocalizationEditor::LocalizationEditor() {
 
 		translation_remap = memnew(Tree);
 		translation_remap->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-		translation_remap->connect("cell_selected", callable_mp(this, &LocalizationEditor::_translation_res_select));
+		translation_remap->connect(SceneStringName(cell_selected), callable_mp(this, &LocalizationEditor::_translation_res_select));
 		translation_remap->connect("button_clicked", callable_mp(this, &LocalizationEditor::_translation_res_delete));
 		tmc->add_child(translation_remap);
 

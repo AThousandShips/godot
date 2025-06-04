@@ -1679,20 +1679,20 @@ SceneImportSettingsDialog::SceneImportSettingsDialog() {
 	scene_tree->set_name(TTR("Scene"));
 	scene_tree->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	data_mode->add_child(scene_tree);
-	scene_tree->connect("cell_selected", callable_mp(this, &SceneImportSettingsDialog::_scene_tree_selected));
+	scene_tree->connect(SceneStringName(cell_selected), callable_mp(this, &SceneImportSettingsDialog::_scene_tree_selected));
 
 	mesh_tree = memnew(Tree);
 	mesh_tree->set_name(TTR("Meshes"));
 	mesh_tree->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	data_mode->add_child(mesh_tree);
 	mesh_tree->set_hide_root(true);
-	mesh_tree->connect("cell_selected", callable_mp(this, &SceneImportSettingsDialog::_mesh_tree_selected));
+	mesh_tree->connect(SceneStringName(cell_selected), callable_mp(this, &SceneImportSettingsDialog::_mesh_tree_selected));
 
 	material_tree = memnew(Tree);
 	material_tree->set_name(TTR("Materials"));
 	material_tree->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	data_mode->add_child(material_tree);
-	material_tree->connect("cell_selected", callable_mp(this, &SceneImportSettingsDialog::_material_tree_selected));
+	material_tree->connect(SceneStringName(cell_selected), callable_mp(this, &SceneImportSettingsDialog::_material_tree_selected));
 
 	material_tree->set_hide_root(true);
 

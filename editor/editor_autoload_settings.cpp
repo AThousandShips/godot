@@ -971,7 +971,7 @@ EditorAutoloadSettings::EditorAutoloadSettings() {
 
 	tree->set_column_expand(3, false);
 
-	tree->connect("cell_selected", callable_mp(this, &EditorAutoloadSettings::_autoload_selected));
+	tree->connect(SceneStringName(cell_selected), callable_mp(this, &EditorAutoloadSettings::_autoload_selected));
 	tree->connect(SceneStringName(item_edited), callable_mp(this, &EditorAutoloadSettings::_autoload_edited));
 	tree->connect("button_clicked", callable_mp(this, &EditorAutoloadSettings::_autoload_button_pressed));
 	tree->connect(SceneStringName(item_activated), callable_mp(this, &EditorAutoloadSettings::_autoload_activated));
