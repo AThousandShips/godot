@@ -2772,7 +2772,7 @@ EditorPropertyColor::EditorPropertyColor() {
 	picker = memnew(ColorPickerButton);
 	add_child(picker);
 	picker->set_flat(true);
-	picker->connect("color_changed", callable_mp(this, &EditorPropertyColor::_color_changed));
+	picker->connect(SceneStringName(popup_closed), callable_mp(this, &EditorPropertyColor::_color_changed));
 	picker->connect("picker_created", callable_mp(this, &EditorPropertyColor::_picker_created), CONNECT_ONE_SHOT);
 }
 

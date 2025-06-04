@@ -33,7 +33,7 @@
 #include "scene/gui/margin_container.h"
 
 void ColorPickerShape::_emit_color_changed() {
-	color_picker->emit_signal(SNAME("color_changed"), color_picker->color);
+	color_picker->emit_signal(SceneStringName(popup_closed), color_picker->color);
 }
 
 bool ColorPickerShape::can_handle(const Ref<InputEvent> &p_event, Vector2 &r_position, bool *r_is_click) {

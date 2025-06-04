@@ -9646,7 +9646,7 @@ void fragment() {
 		sun_color = memnew(ColorPickerButton);
 		sun_color->set_edit_alpha(false);
 		sun_vb->add_margin_child(TTRC("Sun Color"), sun_color);
-		sun_color->connect("color_changed", callable_mp(this, &Node3DEditor::_sun_set_color));
+		sun_color->connect(SceneStringName(popup_closed), callable_mp(this, &Node3DEditor::_sun_set_color));
 		sun_color->get_popup()->connect(SceneStringName(about_to_popup), callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(sun_color->get_picker()));
 
 		sun_energy = memnew(EditorSpinSlider);
@@ -9694,11 +9694,11 @@ void fragment() {
 
 		environ_sky_color = memnew(ColorPickerButton);
 		environ_sky_color->set_edit_alpha(false);
-		environ_sky_color->connect("color_changed", callable_mp(this, &Node3DEditor::_environ_set_sky_color));
+		environ_sky_color->connect(SceneStringName(popup_closed), callable_mp(this, &Node3DEditor::_environ_set_sky_color));
 		environ_sky_color->get_popup()->connect(SceneStringName(about_to_popup), callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(environ_sky_color->get_picker()));
 		environ_vb->add_margin_child(TTRC("Sky Color"), environ_sky_color);
 		environ_ground_color = memnew(ColorPickerButton);
-		environ_ground_color->connect("color_changed", callable_mp(this, &Node3DEditor::_environ_set_ground_color));
+		environ_ground_color->connect(SceneStringName(popup_closed), callable_mp(this, &Node3DEditor::_environ_set_ground_color));
 		environ_ground_color->set_edit_alpha(false);
 		environ_ground_color->get_popup()->connect(SceneStringName(about_to_popup), callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(environ_ground_color->get_picker()));
 		environ_vb->add_margin_child(TTRC("Ground Color"), environ_ground_color);

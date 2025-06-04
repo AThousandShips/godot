@@ -505,14 +505,14 @@ void ColorPicker::_slider_value_changed() {
 
 	_set_pick_color(color, false, false);
 	if (!deferred_mode_enabled || !currently_dragging) {
-		emit_signal(SNAME("color_changed"), color);
+		emit_signal(SceneStringName(popup_closed), color);
 	}
 }
 
 void ColorPicker::_slider_drag_ended() {
 	currently_dragging = false;
 	if (deferred_mode_enabled) {
-		emit_signal(SNAME("color_changed"), color);
+		emit_signal(SceneStringName(popup_closed), color);
 	}
 }
 
@@ -789,7 +789,7 @@ void ColorPicker::_html_submitted(const String &p_html) {
 	}
 
 	set_pick_color(color);
-	emit_signal(SNAME("color_changed"), color);
+	emit_signal(SceneStringName(popup_closed), color);
 }
 
 void ColorPicker::_update_color(bool p_update_sliders) {
@@ -1405,13 +1405,13 @@ void ColorPicker::_sample_input(const Ref<InputEvent> &p_event) {
 			set_pick_color(old_color);
 
 			sample->set_focus_mode(FOCUS_NONE);
-			emit_signal(SNAME("color_changed"), color);
+			emit_signal(SceneStringName(popup_closed), color);
 		}
 	}
 
 	if (p_event->is_action_pressed(SNAME("ui_accept"), false, true)) {
 		set_pick_color(old_color);
-		emit_signal(SNAME("color_changed"), color);
+		emit_signal(SceneStringName(popup_closed), color);
 	}
 }
 
@@ -1532,7 +1532,7 @@ void ColorPicker::_preset_input(const Ref<InputEvent> &p_event, const Color &p_c
 		if (bev->is_pressed() && bev->get_button_index() == MouseButton::LEFT) {
 			set_pick_color(p_color);
 			add_recent_preset(color);
-			emit_signal(SNAME("color_changed"), p_color);
+			emit_signal(SceneStringName(popup_closed), p_color);
 		} else if (bev->is_pressed() && bev->get_button_index() == MouseButton::RIGHT && can_add_swatches) {
 			erase_preset(p_color);
 			emit_signal(SNAME("preset_removed"), p_color);
@@ -1542,7 +1542,7 @@ void ColorPicker::_preset_input(const Ref<InputEvent> &p_event, const Color &p_c
 	if (p_event->is_action_pressed(SNAME("ui_accept"), false, true)) {
 		set_pick_color(p_color);
 		add_recent_preset(color);
-		emit_signal(SNAME("color_changed"), p_color);
+		emit_signal(SceneStringName(popup_closed), p_color);
 	} else if (p_event->is_action_pressed(SNAME("ui_colorpicker_delete_preset"), false, true) && can_add_swatches) {
 		erase_preset(p_color);
 		emit_signal(SNAME("preset_removed"), p_color);
@@ -1566,7 +1566,7 @@ void ColorPicker::_recent_preset_pressed(const bool p_pressed, ColorPresetButton
 	}
 
 	recent_preset_hbc->move_child(p_preset, 0);
-	emit_signal(SNAME("color_changed"), p_preset->get_preset_color());
+	emit_signal(SceneStringName(popup_closed), p_preset->get_preset_color());
 }
 
 void ColorPicker::_text_changed(const String &) {
@@ -1593,7 +1593,7 @@ void ColorPicker::_native_cb(bool p_status, const Color &p_color) {
 	if (p_status) {
 		set_pick_color(p_color);
 		if (!deferred_mode_enabled) {
-			emit_signal(SNAME("color_changed"), color);
+			emit_signal(SceneStringName(popup_closed), color);
 		}
 	}
 }
@@ -1693,7 +1693,7 @@ void ColorPicker::_pick_finished() {
 	if (Input::get_singleton()->is_action_just_pressed(SNAME("ui_cancel"))) {
 		set_pick_color(pre_picking_color);
 	} else {
-		emit_signal(SNAME("color_changed"), color);
+		emit_signal(SceneStringName(popup_closed), color);
 	}
 	is_picking_color = false;
 	set_process_internal(false);
@@ -1900,7 +1900,7 @@ void ColorPicker::_picker_texture_input(const Ref<InputEvent> &p_event) {
 	Ref<InputEventMouseButton> bev = p_event;
 	if (bev.is_valid() && bev->get_button_index() == MouseButton::LEFT && !bev->is_pressed()) {
 		set_pick_color(picker_color);
-		emit_signal(SNAME("color_changed"), color);
+		emit_signal(SceneStringName(popup_closed), color);
 		picker_window->hide();
 	}
 
@@ -2396,13 +2396,13 @@ void ColorPickerButton::_color_changed(const Color &p_color) {
 	color = p_color;
 	queue_accessibility_update();
 	queue_redraw();
-	emit_signal(SNAME("color_changed"), color);
+	emit_signal(SceneStringName(popup_closed), color);
 }
 
 void ColorPickerButton::_modal_closed() {
 	if (Input::get_singleton()->is_action_just_pressed(SNAME("ui_cancel"))) {
 		set_pick_color(picker->get_old_color());
-		emit_signal(SNAME("color_changed"), color);
+		emit_signal(SceneStringName(popup_closed), color);
 	}
 	emit_signal(SNAME("popup_closed"));
 	set_pressed(false);
@@ -2537,7 +2537,7 @@ void ColorPickerButton::_update_picker() {
 		picker->set_anchors_and_offsets_preset(PRESET_FULL_RECT);
 		popup->add_child(picker);
 		add_child(popup, false, INTERNAL_MODE_FRONT);
-		picker->connect("color_changed", callable_mp(this, &ColorPickerButton::_color_changed));
+		picker->connect(SceneStringName(popup_closed), callable_mp(this, &ColorPickerButton::_color_changed));
 		popup->connect(SceneStringName(about_to_popup), callable_mp(this, &ColorPickerButton::_about_to_popup));
 		popup->connect("popup_hide", callable_mp(this, &ColorPickerButton::_modal_closed));
 		picker->connect(SceneStringName(minimum_size_changed), callable_mp((Window *)popup, &Window::reset_size));

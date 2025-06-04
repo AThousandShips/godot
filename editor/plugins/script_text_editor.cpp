@@ -2642,7 +2642,7 @@ void ScriptTextEditor::_enable_code_editor() {
 
 	color_picker = memnew(ColorPicker);
 	color_picker->set_deferred_mode(true);
-	color_picker->connect("color_changed", callable_mp(this, &ScriptTextEditor::_color_changed));
+	color_picker->connect(SceneStringName(popup_closed), callable_mp(this, &ScriptTextEditor::_color_changed));
 	color_panel->connect(SceneStringName(about_to_popup), callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(color_picker));
 
 	color_panel->add_child(color_picker);
@@ -2837,7 +2837,7 @@ ScriptTextEditor::ScriptTextEditor() {
 	inline_color_picker->set_mouse_filter(MOUSE_FILTER_STOP);
 	inline_color_picker->set_deferred_mode(true);
 	inline_color_picker->set_hex_visible(false);
-	inline_color_picker->connect("color_changed", callable_mp(this, &ScriptTextEditor::_picker_color_changed));
+	inline_color_picker->connect(SceneStringName(popup_closed), callable_mp(this, &ScriptTextEditor::_picker_color_changed));
 	inline_color_popup->add_child(inline_color_picker);
 
 	inline_color_options = memnew(OptionButton);

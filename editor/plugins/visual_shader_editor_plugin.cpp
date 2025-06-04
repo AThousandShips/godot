@@ -6976,7 +6976,7 @@ VisualShaderEditor::VisualShaderEditor() {
 	frame_tint_color_picker = memnew(ColorPicker);
 	frame_popup_item_tint_color_editor->add_child(frame_tint_color_picker);
 	frame_tint_color_picker->reset_size();
-	frame_tint_color_picker->connect("color_changed", callable_mp(this, &VisualShaderEditor::_frame_color_changed));
+	frame_tint_color_picker->connect(SceneStringName(popup_closed), callable_mp(this, &VisualShaderEditor::_frame_color_changed));
 	Button *frame_tint_color_confirm_button = memnew(Button);
 	frame_tint_color_confirm_button->set_text(TTR("OK"));
 	frame_popup_item_tint_color_editor->add_child(frame_tint_color_confirm_button);

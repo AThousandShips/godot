@@ -580,7 +580,7 @@ GradientEdit::GradientEdit() {
 	picker = memnew(ColorPicker);
 	int picker_shape = EDITOR_GET("interface/inspector/default_color_picker_shape");
 	picker->set_picker_shape((ColorPicker::PickerShapeType)picker_shape);
-	picker->connect("color_changed", callable_mp(this, &GradientEdit::_color_changed));
+	picker->connect(SceneStringName(popup_closed), callable_mp(this, &GradientEdit::_color_changed));
 
 	popup = memnew(PopupPanel);
 	popup->connect(SceneStringName(about_to_popup), callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(picker));
