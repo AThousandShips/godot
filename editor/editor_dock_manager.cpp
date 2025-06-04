@@ -830,7 +830,7 @@ void EditorDockManager::register_dock_slot(DockSlot p_dock_slot, TabContainer *p
 	p_tab_container->connect("pre_popup_pressed", callable_mp(dock_context_popup, &DockContextPopup::select_current_dock_in_dock_slot).bind(p_dock_slot));
 	p_tab_container->set_drag_to_rearrange_enabled(true);
 	p_tab_container->set_tabs_rearrange_group(1);
-	p_tab_container->connect("tab_changed", callable_mp(this, &EditorDockManager::_update_layout).unbind(1));
+	p_tab_container->connect(SceneStringName(tab_changed), callable_mp(this, &EditorDockManager::_update_layout).unbind(1));
 	p_tab_container->connect("active_tab_rearranged", callable_mp(this, &EditorDockManager::_update_layout).unbind(1));
 	p_tab_container->connect("child_order_changed", callable_mp(this, &EditorDockManager::_dock_container_update_visibility).bind(p_tab_container));
 	p_tab_container->set_use_hidden_tabs_for_min_size(true);

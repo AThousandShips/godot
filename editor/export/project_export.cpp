@@ -1740,7 +1740,7 @@ ProjectExportDialog::ProjectExportDialog() {
 
 	sections->add_child(script_vb);
 
-	sections->connect("tab_changed", callable_mp(this, &ProjectExportDialog::_tab_changed));
+	sections->connect(SceneStringName(tab_changed), callable_mp(this, &ProjectExportDialog::_tab_changed));
 
 	// Disable by default.
 	name->set_editable(false);

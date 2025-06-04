@@ -693,7 +693,7 @@ ProjectSettingsEditor::ProjectSettingsEditor(EditorData *p_data) {
 	tab_container = memnew(TabContainer);
 	tab_container->set_use_hidden_tabs_for_min_size(true);
 	tab_container->set_theme_type_variation("TabContainerOdd");
-	tab_container->connect("tab_changed", callable_mp(this, &ProjectSettingsEditor::_tabs_tab_changed));
+	tab_container->connect(SceneStringName(tab_changed), callable_mp(this, &ProjectSettingsEditor::_tabs_tab_changed));
 	add_child(tab_container);
 
 	general_editor = memnew(VBoxContainer);

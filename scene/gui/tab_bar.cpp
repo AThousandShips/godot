@@ -795,7 +795,7 @@ void TabBar::set_current_tab(int p_current) {
 	queue_accessibility_update();
 	queue_redraw();
 
-	emit_signal(SNAME("tab_changed"), p_current);
+	emit_signal(SceneStringName(tab_changed), p_current);
 }
 
 int TabBar::get_current_tab() const {
@@ -1355,7 +1355,7 @@ void TabBar::remove_tab(int p_idx) {
 	notify_property_list_changed();
 
 	if (is_tab_changing && is_inside_tree()) {
-		emit_signal(SNAME("tab_changed"), current);
+		emit_signal(SceneStringName(tab_changed), current);
 	}
 }
 

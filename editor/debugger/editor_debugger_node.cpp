@@ -71,7 +71,7 @@ EditorDebuggerNode::EditorDebuggerNode() {
 
 	tabs = memnew(TabContainer);
 	tabs->set_tabs_visible(false);
-	tabs->connect("tab_changed", callable_mp(this, &EditorDebuggerNode::_debugger_changed));
+	tabs->connect(SceneStringName(tab_changed), callable_mp(this, &EditorDebuggerNode::_debugger_changed));
 	add_child(tabs);
 
 	Ref<StyleBoxEmpty> empty;

@@ -4423,7 +4423,7 @@ TileMapLayerEditor::TileMapLayerEditor() {
 			tabs_plugins.push_back(tile_map_editor_plugins[plugin_index]);
 		}
 	}
-	tabs_bar->connect("tab_changed", callable_mp(this, &TileMapLayerEditor::_tab_changed));
+	tabs_bar->connect(SceneStringName(tab_changed), callable_mp(this, &TileMapLayerEditor::_tab_changed));
 
 	// --- TileMap toolbar ---
 	tile_map_toolbar = memnew(HFlowContainer);

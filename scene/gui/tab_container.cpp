@@ -509,7 +509,7 @@ void TabContainer::_on_tab_changed(int p_tab) {
 	callable_mp(this, &TabContainer::_repaint).call_deferred();
 	queue_redraw();
 
-	emit_signal(SNAME("tab_changed"), p_tab);
+	emit_signal(SceneStringName(tab_changed), p_tab);
 }
 
 void TabContainer::_on_tab_selected(int p_tab) {
@@ -1177,7 +1177,7 @@ TabContainer::TabContainer() {
 	add_child(tab_bar, false, INTERNAL_MODE_FRONT);
 	tab_bar->set_use_parent_material(true);
 	tab_bar->set_anchors_and_offsets_preset(Control::PRESET_TOP_WIDE);
-	tab_bar->connect("tab_changed", callable_mp(this, &TabContainer::_on_tab_changed));
+	tab_bar->connect(SceneStringName(tab_changed), callable_mp(this, &TabContainer::_on_tab_changed));
 	tab_bar->connect("tab_clicked", callable_mp(this, &TabContainer::_on_tab_clicked));
 	tab_bar->connect("tab_hovered", callable_mp(this, &TabContainer::_on_tab_hovered));
 	tab_bar->connect("tab_selected", callable_mp(this, &TabContainer::_on_tab_selected));

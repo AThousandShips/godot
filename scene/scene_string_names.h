@@ -172,6 +172,7 @@ public:
 	const StringName file_selected = "file_selected";
 
 	const StringName popup_closed = "popup_closed";
+	const StringName tab_changed = "tab_changed";
 	const StringName text_changed = "text_changed";
 	const StringName text_submitted = "text_submitted";
 	const StringName value_changed = "value_changed";

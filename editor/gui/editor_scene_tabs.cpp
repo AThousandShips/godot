@@ -78,7 +78,7 @@ void EditorSceneTabs::_notification(int p_what) {
 void EditorSceneTabs::_scene_tab_changed(int p_tab) {
 	tab_preview_panel->hide();
 
-	emit_signal("tab_changed", p_tab);
+	emit_signal(SceneStringName(tab_changed), p_tab);
 }
 
 void EditorSceneTabs::_scene_tab_script_edited(int p_tab) {
@@ -420,7 +420,7 @@ EditorSceneTabs::EditorSceneTabs() {
 	scene_tabs->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	tabbar_container->add_child(scene_tabs);
 
-	scene_tabs->connect("tab_changed", callable_mp(this, &EditorSceneTabs::_scene_tab_changed));
+	scene_tabs->connect(SceneStringName(tab_changed), callable_mp(this, &EditorSceneTabs::_scene_tab_changed));
 	scene_tabs->connect("tab_button_pressed", callable_mp(this, &EditorSceneTabs::_scene_tab_script_edited));
 	scene_tabs->connect("tab_close_pressed", callable_mp(this, &EditorSceneTabs::_scene_tab_closed));
 	scene_tabs->connect("tab_hovered", callable_mp(this, &EditorSceneTabs::_scene_tab_hovered));

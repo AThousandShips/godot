@@ -819,7 +819,7 @@ TileSetEditor::TileSetEditor() {
 	tabs_bar->set_clip_tabs(false);
 	tabs_bar->add_tab(TTR("Tile Sources"));
 	tabs_bar->add_tab(TTR("Patterns"));
-	tabs_bar->connect("tab_changed", callable_mp(this, &TileSetEditor::_tab_changed));
+	tabs_bar->connect(SceneStringName(tab_changed), callable_mp(this, &TileSetEditor::_tab_changed));
 
 	tile_set_toolbar = memnew(HBoxContainer);
 	tile_set_toolbar->set_h_size_flags(SIZE_EXPAND_FILL);

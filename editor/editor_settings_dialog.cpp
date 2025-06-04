@@ -890,7 +890,7 @@ EditorSettingsDialog::EditorSettingsDialog() {
 
 	tabs = memnew(TabContainer);
 	tabs->set_theme_type_variation("TabContainerOdd");
-	tabs->connect("tab_changed", callable_mp(this, &EditorSettingsDialog::_tabs_tab_changed));
+	tabs->connect(SceneStringName(tab_changed), callable_mp(this, &EditorSettingsDialog::_tabs_tab_changed));
 	add_child(tabs);
 
 	// General Tab

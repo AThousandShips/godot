@@ -4428,7 +4428,7 @@ ScriptEditor::ScriptEditor(WindowWrapper *p_wrapper) {
 	menu_hb->add_child(make_floating);
 	p_wrapper->connect("window_visibility_changed", callable_mp(this, &ScriptEditor::_window_changed));
 
-	tab_container->connect("tab_changed", callable_mp(this, &ScriptEditor::_tab_changed));
+	tab_container->connect(SceneStringName(tab_changed), callable_mp(this, &ScriptEditor::_tab_changed));
 
 	erase_tab_confirm = memnew(ConfirmationDialog);
 	erase_tab_confirm->set_ok_button_text(TTRC("Save"));

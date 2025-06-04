@@ -7776,7 +7776,7 @@ EditorNode::EditorNode() {
 
 	scene_tabs = memnew(EditorSceneTabs);
 	srt->add_child(scene_tabs);
-	scene_tabs->connect("tab_changed", callable_mp(this, &EditorNode::_set_current_scene));
+	scene_tabs->connect(SceneStringName(tab_changed), callable_mp(this, &EditorNode::_set_current_scene));
 	scene_tabs->connect("tab_closed", callable_mp(this, &EditorNode::_scene_tab_closed));
 
 	distraction_free = memnew(Button);
