@@ -160,6 +160,7 @@ public:
 	const StringName item_selected = "item_selected";
 	const StringName item_activated = "item_activated";
 	const StringName item_edited = "item_edited";
+	const StringName multi_selected = "multi_selected";
 	const StringName confirmed = "confirmed";
 	const StringName about_to_popup = "about_to_popup";
 

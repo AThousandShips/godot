@@ -4217,7 +4217,7 @@ FileSystemDock::FileSystemDock() {
 	split_box->add_child(tree);
 
 	tree->connect(SceneStringName(item_activated), callable_mp(this, &FileSystemDock::_tree_activate_file));
-	tree->connect("multi_selected", callable_mp(this, &FileSystemDock::_tree_multi_selected));
+	tree->connect(SceneStringName(multi_selected), callable_mp(this, &FileSystemDock::_tree_multi_selected));
 	tree->connect("item_mouse_selected", callable_mp(this, &FileSystemDock::_tree_rmb_select));
 	tree->connect("empty_clicked", callable_mp(this, &FileSystemDock::_tree_empty_click));
 	tree->connect("nothing_selected", callable_mp(this, &FileSystemDock::_tree_empty_selected));
@@ -4256,7 +4256,7 @@ FileSystemDock::FileSystemDock() {
 	SET_DRAG_FORWARDING_GCD(files, FileSystemDock);
 	files->connect("item_clicked", callable_mp(this, &FileSystemDock::_file_list_item_clicked));
 	files->connect(SceneStringName(gui_input), callable_mp(this, &FileSystemDock::_file_list_gui_input));
-	files->connect("multi_selected", callable_mp(this, &FileSystemDock::_file_multi_selected));
+	files->connect(SceneStringName(multi_selected), callable_mp(this, &FileSystemDock::_file_multi_selected));
 	files->connect("empty_clicked", callable_mp(this, &FileSystemDock::_file_list_empty_clicked));
 	files->connect(SceneStringName(item_edited), callable_mp(this, &FileSystemDock::_rename_operation_confirm));
 	files->set_custom_minimum_size(Size2(0, 15 * EDSCALE));

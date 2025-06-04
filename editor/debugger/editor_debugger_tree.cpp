@@ -66,7 +66,7 @@ void EditorDebuggerTree::_notification(int p_what) {
 		case NOTIFICATION_POSTINITIALIZE: {
 			set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 
-			connect("multi_selected", callable_mp(this, &EditorDebuggerTree::_scene_tree_selection_changed));
+			connect(SceneStringName(multi_selected), callable_mp(this, &EditorDebuggerTree::_scene_tree_selection_changed));
 			connect("nothing_selected", callable_mp(this, &EditorDebuggerTree::_scene_tree_nothing_selected));
 			connect("item_collapsed", callable_mp(this, &EditorDebuggerTree::_scene_tree_folded));
 			connect("item_mouse_selected", callable_mp(this, &EditorDebuggerTree::_scene_tree_rmb_selected));

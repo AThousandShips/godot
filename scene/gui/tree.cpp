@@ -2947,7 +2947,7 @@ void Tree::select_single_item(TreeItem *p_selected, TreeItem *p_current, int p_c
 
 					emit_signal(SNAME("cell_selected"));
 					if (select_mode == SELECT_MULTI) {
-						emit_signal(SNAME("multi_selected"), p_current, i, true);
+						emit_signal(SceneStringName(multi_selected), p_current, i, true);
 					} else if (select_mode == SELECT_SINGLE) {
 						emit_signal(SceneStringName(item_selected));
 					}
@@ -2962,12 +2962,12 @@ void Tree::select_single_item(TreeItem *p_selected, TreeItem *p_current, int p_c
 				if (r_in_range && *r_in_range && !p_force_deselect) {
 					if (!c.selected && c.selectable) {
 						c.selected = true;
-						emit_signal(SNAME("multi_selected"), p_current, i, true);
+						emit_signal(SceneStringName(multi_selected), p_current, i, true);
 					}
 
 				} else if (!r_in_range || p_force_deselect) {
 					if (select_mode == SELECT_MULTI && c.selected) {
-						emit_signal(SNAME("multi_selected"), p_current, i, false);
+						emit_signal(SceneStringName(multi_selected), p_current, i, false);
 					}
 					c.selected = false;
 				}
@@ -3137,10 +3137,10 @@ int Tree::propagate_mouse_event(const Point2i &p_pos, int x_ofs, int y_ofs, int 
 				if (select_mode == SELECT_MULTI && p_mod->is_command_or_control_pressed()) {
 					if (c.selected && p_button == MouseButton::LEFT) {
 						p_item->deselect(col);
-						emit_signal(SNAME("multi_selected"), p_item, col, false);
+						emit_signal(SceneStringName(multi_selected), p_item, col, false);
 					} else {
 						p_item->select(col);
-						emit_signal(SNAME("multi_selected"), p_item, col, true);
+						emit_signal(SceneStringName(multi_selected), p_item, col, true);
 						emit_signal(SNAME("item_mouse_selected"), get_local_mouse_position(), p_button);
 					}
 				} else {
@@ -3616,11 +3616,11 @@ void Tree::_shift_select_range(TreeItem *new_item) {
 			if (in_range || at_range_edge) {
 				if (!item->is_selected(selected_col) && item->is_selectable(selected_col)) {
 					item->select(selected_col);
-					emit_signal(SNAME("multi_selected"), item, selected_col, true);
+					emit_signal(SceneStringName(multi_selected), item, selected_col, true);
 				}
 			} else if (item->is_selected(selected_col)) {
 				item->deselect(selected_col);
-				emit_signal(SNAME("multi_selected"), item, selected_col, false);
+				emit_signal(SceneStringName(multi_selected), item, selected_col, false);
 			}
 		}
 		item = item->get_next_in_tree(false);
@@ -3879,10 +3879,10 @@ void Tree::gui_input(const Ref<InputEvent> &p_event) {
 				emit_signal("button_clicked", selected_item, selected_col, c.buttons[selected_button].id, MouseButton::LEFT);
 			} else if (selected_item->is_selected(selected_col)) {
 				selected_item->deselect(selected_col);
-				emit_signal(SNAME("multi_selected"), selected_item, selected_col, false);
+				emit_signal(SceneStringName(multi_selected), selected_item, selected_col, false);
 			} else if (selected_item->is_selectable(selected_col)) {
 				selected_item->select(selected_col);
-				emit_signal(SNAME("multi_selected"), selected_item, selected_col, true);
+				emit_signal(SceneStringName(multi_selected), selected_item, selected_col, true);
 			}
 		} else if (selected_item && selected_col != -1 && selected_button != -1) {
 			const TreeItem::Cell &c = selected_item->cells[selected_col];
@@ -5194,7 +5194,7 @@ void Tree::item_selected(int p_column, TreeItem *p_item) {
 		}
 
 		p_item->cells.write[p_column].selected = true;
-		//emit_signal(SNAME("multi_selected"),p_item,p_column,true); - NO this is for `TreeItem::select`
+		//emit_signal(SceneStringName(multi_selected),p_item,p_column,true); - NO this is for `TreeItem::select`
 
 		selected_col = p_column;
 		selected_item = p_item;

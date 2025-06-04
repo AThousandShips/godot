@@ -2675,7 +2675,7 @@ EditorFileDialog::EditorFileDialog() {
 
 	connect(SceneStringName(confirmed), callable_mp(this, &EditorFileDialog::_action_pressed));
 	item_list->connect(SceneStringName(item_selected), callable_mp(this, &EditorFileDialog::_item_selected), CONNECT_DEFERRED);
-	item_list->connect("multi_selected", callable_mp(this, &EditorFileDialog::_multi_selected), CONNECT_DEFERRED);
+	item_list->connect(SceneStringName(multi_selected), callable_mp(this, &EditorFileDialog::_multi_selected), CONNECT_DEFERRED);
 	item_list->connect(SceneStringName(item_activated), callable_mp(this, &EditorFileDialog::_item_dc_selected).bind());
 	item_list->connect("empty_clicked", callable_mp(this, &EditorFileDialog::_items_clear_selection));
 	dir->connect(SceneStringName(text_submitted), callable_mp(this, &EditorFileDialog::_dir_submitted));

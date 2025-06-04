@@ -747,7 +747,7 @@ void ItemList::gui_input(const Ref<InputEvent> &p_event) {
 	if (defer_select_single >= 0 && mb.is_valid() && mb->get_button_index() == MouseButton::LEFT && !mb->is_pressed()) {
 		select(defer_select_single, true);
 
-		emit_signal(SNAME("multi_selected"), defer_select_single, true);
+		emit_signal(SceneStringName(multi_selected), defer_select_single, true);
 		defer_select_single = -1;
 		return;
 	}
@@ -777,7 +777,7 @@ void ItemList::gui_input(const Ref<InputEvent> &p_event) {
 
 			if (select_mode == SELECT_MULTI && items[i].selected && mb->is_command_or_control_pressed()) {
 				deselect(i);
-				emit_signal(SNAME("multi_selected"), i, false);
+				emit_signal(SceneStringName(multi_selected), i, false);
 
 			} else if (select_mode == SELECT_MULTI && mb->is_shift_pressed() && current >= 0 && current < items.size() && current != i) {
 				// Range selection.
@@ -795,7 +795,7 @@ void ItemList::gui_input(const Ref<InputEvent> &p_event) {
 					bool selected = !items[j].selected;
 					select(j, false);
 					if (selected) {
-						emit_signal(SNAME("multi_selected"), j, true);
+						emit_signal(SceneStringName(multi_selected), j, true);
 					}
 				}
 				emit_signal(SNAME("item_clicked"), i, get_local_mouse_position(), mb->get_button_index());
@@ -816,11 +816,11 @@ void ItemList::gui_input(const Ref<InputEvent> &p_event) {
 						if (items[i].selected) {
 							deselect(i);
 							current = i;
-							emit_signal(SNAME("multi_selected"), i, false);
+							emit_signal(SceneStringName(multi_selected), i, false);
 						} else {
 							select(i, false);
 							current = i;
-							emit_signal(SNAME("multi_selected"), i, true);
+							emit_signal(SceneStringName(multi_selected), i, true);
 						}
 					}
 				} else if (items[i].selectable && (!items[i].selected || allow_reselect)) {
@@ -829,7 +829,7 @@ void ItemList::gui_input(const Ref<InputEvent> &p_event) {
 					if (select_mode == SELECT_SINGLE) {
 						emit_signal(SceneStringName(item_selected), i);
 					} else {
-						emit_signal(SNAME("multi_selected"), i, true);
+						emit_signal(SceneStringName(multi_selected), i, true);
 					}
 				}
 
@@ -1098,10 +1098,10 @@ void ItemList::gui_input(const Ref<InputEvent> &p_event) {
 			if (current >= 0 && current < items.size()) {
 				if (CAN_SELECT(current) && !items[current].selected) {
 					select(current, false);
-					emit_signal(SNAME("multi_selected"), current, true);
+					emit_signal(SceneStringName(multi_selected), current, true);
 				} else if (items[current].selected) {
 					deselect(current);
-					emit_signal(SNAME("multi_selected"), current, false);
+					emit_signal(SceneStringName(multi_selected), current, false);
 				}
 			}
 		} else if (p_event->is_action("ui_accept", true)) {
@@ -1906,11 +1906,11 @@ void ItemList::_shift_range_select(int p_from, int p_to) {
 		if (i >= MIN(shift_anchor, p_to) && i <= MAX(shift_anchor, p_to)) {
 			if (!is_selected(i)) {
 				select(i, false);
-				emit_signal(SNAME("multi_selected"), i, true);
+				emit_signal(SceneStringName(multi_selected), i, true);
 			}
 		} else if (is_selected(i)) {
 			deselect(i);
-			emit_signal(SNAME("multi_selected"), i, false);
+			emit_signal(SceneStringName(multi_selected), i, false);
 		}
 	}
 
