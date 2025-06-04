@@ -538,7 +538,7 @@ GroupSettingsEditor::GroupSettingsEditor() {
 
 	tree->connect(SceneStringName(item_edited), callable_mp(this, &GroupSettingsEditor::_item_edited));
 	tree->connect(SceneStringName(item_activated), callable_mp(this, &GroupSettingsEditor::_show_rename_dialog));
-	tree->connect("button_clicked", callable_mp(this, &GroupSettingsEditor::_item_button_pressed));
+	tree->connect(SceneStringName(button_clicked), callable_mp(this, &GroupSettingsEditor::_item_button_pressed));
 	tree->set_v_size_flags(SIZE_EXPAND_FILL);
 
 	add_child(tree, true);

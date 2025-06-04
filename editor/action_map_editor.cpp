@@ -627,7 +627,7 @@ ActionMapEditor::ActionMapEditor() {
 	action_tree->set_column_custom_minimum_width(2, 50 * EDSCALE);
 	action_tree->connect(SceneStringName(item_edited), callable_mp(this, &ActionMapEditor::_action_edited), CONNECT_DEFERRED);
 	action_tree->connect(SceneStringName(item_activated), callable_mp(this, &ActionMapEditor::_tree_item_activated));
-	action_tree->connect("button_clicked", callable_mp(this, &ActionMapEditor::_tree_button_pressed));
+	action_tree->connect(SceneStringName(button_clicked), callable_mp(this, &ActionMapEditor::_tree_button_pressed));
 	main_vbox->add_child(action_tree);
 
 	SET_DRAG_FORWARDING_GCD(action_tree, ActionMapEditor);

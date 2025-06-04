@@ -1205,7 +1205,7 @@ VersionControlEditorPlugin::VersionControlEditorPlugin() {
 	unstaged_files->set_select_mode(Tree::SELECT_ROW);
 	unstaged_files->connect(SceneStringName(item_selected), callable_mp(this, &VersionControlEditorPlugin::_load_diff).bind(unstaged_files));
 	unstaged_files->connect(SceneStringName(item_activated), callable_mp(this, &VersionControlEditorPlugin::_item_activated).bind(unstaged_files));
-	unstaged_files->connect(SNAME("button_clicked"), callable_mp(this, &VersionControlEditorPlugin::_cell_button_pressed));
+	unstaged_files->connect(SceneStringName(button_clicked), callable_mp(this, &VersionControlEditorPlugin::_cell_button_pressed));
 	unstaged_files->create_item();
 	unstaged_files->set_hide_root(true);
 	unstage_area->add_child(unstaged_files);
@@ -1235,7 +1235,7 @@ VersionControlEditorPlugin::VersionControlEditorPlugin() {
 	staged_files->set_v_size_flags(Tree::SIZE_EXPAND_FILL);
 	staged_files->set_select_mode(Tree::SELECT_ROW);
 	staged_files->connect(SceneStringName(item_selected), callable_mp(this, &VersionControlEditorPlugin::_load_diff).bind(staged_files));
-	staged_files->connect(SNAME("button_clicked"), callable_mp(this, &VersionControlEditorPlugin::_cell_button_pressed));
+	staged_files->connect(SceneStringName(button_clicked), callable_mp(this, &VersionControlEditorPlugin::_cell_button_pressed));
 	staged_files->connect(SceneStringName(item_activated), callable_mp(this, &VersionControlEditorPlugin::_item_activated).bind(staged_files));
 	staged_files->create_item();
 	staged_files->set_hide_root(true);

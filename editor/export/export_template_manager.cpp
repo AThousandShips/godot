@@ -1147,7 +1147,7 @@ ExportTemplateManager::ExportTemplateManager() {
 	installed_table->set_custom_minimum_size(Size2(0, 100) * EDSCALE);
 	installed_table->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	main_vb->add_child(installed_table);
-	installed_table->connect("button_clicked", callable_mp(this, &ExportTemplateManager::_installed_table_button_cbk));
+	installed_table->connect(SceneStringName(button_clicked), callable_mp(this, &ExportTemplateManager::_installed_table_button_cbk));
 
 	// Dialogs.
 	uninstall_confirm = memnew(ConfirmationDialog);

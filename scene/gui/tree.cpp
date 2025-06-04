@@ -3876,7 +3876,7 @@ void Tree::gui_input(const Ref<InputEvent> &p_event) {
 			}
 			if (selected_item && selected_col != -1 && selected_button != -1) {
 				const TreeItem::Cell &c = selected_item->cells[selected_col];
-				emit_signal("button_clicked", selected_item, selected_col, c.buttons[selected_button].id, MouseButton::LEFT);
+				emit_signal(SceneStringName(button_clicked), selected_item, selected_col, c.buttons[selected_button].id, MouseButton::LEFT);
 			} else if (selected_item->is_selected(selected_col)) {
 				selected_item->deselect(selected_col);
 				emit_signal(SceneStringName(multi_selected), selected_item, selected_col, false);
@@ -3886,7 +3886,7 @@ void Tree::gui_input(const Ref<InputEvent> &p_event) {
 			}
 		} else if (selected_item && selected_col != -1 && selected_button != -1) {
 			const TreeItem::Cell &c = selected_item->cells[selected_col];
-			emit_signal("button_clicked", selected_item, selected_col, c.buttons[selected_button].id, MouseButton::LEFT);
+			emit_signal(SceneStringName(button_clicked), selected_item, selected_col, c.buttons[selected_button].id, MouseButton::LEFT);
 		}
 		accept_event();
 	} else if (p_event->is_action("ui_accept") && p_event->is_pressed()) {
@@ -3894,7 +3894,7 @@ void Tree::gui_input(const Ref<InputEvent> &p_event) {
 			// Bring up editor if possible.
 			if (selected_item && selected_col != -1 && selected_button != -1) {
 				const TreeItem::Cell &c = selected_item->cells[selected_col];
-				emit_signal("button_clicked", selected_item, selected_col, c.buttons[selected_button].id, MouseButton::LEFT);
+				emit_signal(SceneStringName(button_clicked), selected_item, selected_col, c.buttons[selected_button].id, MouseButton::LEFT);
 			} else if (!edit_selected()) {
 				emit_signal(SceneStringName(item_activated));
 				incr_search.clear();
@@ -4067,7 +4067,7 @@ void Tree::gui_input(const Ref<InputEvent> &p_event) {
 				int current_column, current_index, current_section;
 				_find_button_at_pos(mb->get_position(), current_item, current_column, current_index, current_section);
 				if (current_item == cache.click_item && current_column == cache.click_column && current_index == cache.click_index) {
-					emit_signal("button_clicked", cache.click_item, cache.click_column, cache.click_id, mb->get_button_index());
+					emit_signal(SceneStringName(button_clicked), cache.click_item, cache.click_column, cache.click_id, mb->get_button_index());
 				}
 			}
 
@@ -4650,7 +4650,7 @@ void Tree::_accessibility_action_set_dec(const Variant &p_data, TreeItem *p_item
 }
 
 void Tree::_accessibility_action_button_press(const Variant &p_data, TreeItem *p_item, int p_col, int p_btn) {
-	emit_signal("button_clicked", p_item, p_col, p_btn, MouseButton::LEFT);
+	emit_signal(SceneStringName(button_clicked), p_item, p_col, p_btn, MouseButton::LEFT);
 }
 
 RID Tree::get_focused_accessibility_element() const {

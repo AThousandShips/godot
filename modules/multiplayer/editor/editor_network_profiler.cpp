@@ -422,7 +422,7 @@ EditorNetworkProfiler::EditorNetworkProfiler() {
 	replication_display->set_column_expand(4, false);
 	replication_display->set_column_clip_content(4, true);
 	replication_display->set_column_custom_minimum_width(4, 80 * EDSCALE);
-	replication_display->connect("button_clicked", callable_mp(this, &EditorNetworkProfiler::_replication_button_clicked));
+	replication_display->connect(SceneStringName(button_clicked), callable_mp(this, &EditorNetworkProfiler::_replication_button_clicked));
 	sc->add_child(replication_display);
 
 	refresh_timer = memnew(Timer);

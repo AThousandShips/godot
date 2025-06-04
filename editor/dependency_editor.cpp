@@ -254,7 +254,7 @@ DependencyEditor::DependencyEditor() {
 	tree->set_column_clip_content(1, true);
 	tree->set_column_expand_ratio(1, 1);
 	tree->set_hide_root(true);
-	tree->connect("button_clicked", callable_mp(this, &DependencyEditor::_load_pressed));
+	tree->connect(SceneStringName(button_clicked), callable_mp(this, &DependencyEditor::_load_pressed));
 
 	HBoxContainer *hbc = memnew(HBoxContainer);
 	Label *label = memnew(Label(TTR("Dependencies:")));
@@ -913,5 +913,5 @@ OrphanResourcesDialog::OrphanResourcesDialog() {
 	files->set_column_title(1, TTR("Owns"));
 	files->set_hide_root(true);
 	vbc->add_margin_child(TTR("Resources Without Explicit Ownership:"), files, true);
-	files->connect("button_clicked", callable_mp(this, &OrphanResourcesDialog::_button_pressed));
+	files->connect(SceneStringName(button_clicked), callable_mp(this, &OrphanResourcesDialog::_button_pressed));
 }

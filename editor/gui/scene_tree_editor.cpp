@@ -2144,7 +2144,7 @@ SceneTreeEditor::SceneTreeEditor(bool p_label, bool p_can_rename, bool p_can_ope
 	tree->connect(SceneStringName(cell_selected), callable_mp(this, &SceneTreeEditor::_selected_changed));
 	tree->connect(SceneStringName(item_edited), callable_mp(this, &SceneTreeEditor::_edited));
 	tree->connect(SceneStringName(multi_selected), callable_mp(this, &SceneTreeEditor::_cell_multi_selected));
-	tree->connect("button_clicked", callable_mp(this, &SceneTreeEditor::_cell_button_pressed));
+	tree->connect(SceneStringName(button_clicked), callable_mp(this, &SceneTreeEditor::_cell_button_pressed));
 	tree->connect("nothing_selected", callable_mp(this, &SceneTreeEditor::_deselect_items));
 
 	error = memnew(AcceptDialog);

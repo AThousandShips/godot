@@ -50,7 +50,7 @@ void EditorPluginSettings::_notification(int p_what) {
 
 		case NOTIFICATION_READY: {
 			plugin_config_dialog->connect("plugin_ready", callable_mp(EditorNode::get_singleton(), &EditorNode::_on_plugin_ready));
-			plugin_list->connect("button_clicked", callable_mp(this, &EditorPluginSettings::_cell_button_pressed));
+			plugin_list->connect(SceneStringName(button_clicked), callable_mp(this, &EditorPluginSettings::_cell_button_pressed));
 		} break;
 
 		case NOTIFICATION_TRANSLATION_CHANGED: {

@@ -1627,7 +1627,7 @@ ProjectExportDialog::ProjectExportDialog() {
 	patches->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	patches->set_hide_root(true);
 	patches->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
-	patches->connect("button_clicked", callable_mp(this, &ProjectExportDialog::_patch_tree_button_clicked));
+	patches->connect(SceneStringName(button_clicked), callable_mp(this, &ProjectExportDialog::_patch_tree_button_clicked));
 	patches->connect(SceneStringName(item_edited), callable_mp(this, &ProjectExportDialog::_patch_tree_item_edited));
 	SET_DRAG_FORWARDING_GCD(patches, ProjectExportDialog);
 	patches->set_edit_checkbox_cell_only_when_checkbox_is_pressed(true);

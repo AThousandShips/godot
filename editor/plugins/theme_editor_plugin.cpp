@@ -1997,7 +1997,7 @@ ThemeItemEditorDialog::ThemeItemEditorDialog(ThemeTypeEditor *p_theme_type_edito
 	edit_dialog_side_vb->add_child(edit_type_list);
 	edit_type_list->connect(SceneStringName(item_selected), callable_mp(this, &ThemeItemEditorDialog::_edited_type_selected));
 	edit_type_list->connect(SceneStringName(item_edited), callable_mp(this, &ThemeItemEditorDialog::_edited_type_edited));
-	edit_type_list->connect("button_clicked", callable_mp(this, &ThemeItemEditorDialog::_edited_type_button_pressed));
+	edit_type_list->connect(SceneStringName(button_clicked), callable_mp(this, &ThemeItemEditorDialog::_edited_type_button_pressed));
 	edit_type_list->set_theme_type_variation("TreeSecondary");
 
 	Label *edit_add_type_label = memnew(Label);
@@ -2109,7 +2109,7 @@ ThemeItemEditorDialog::ThemeItemEditorDialog(ThemeTypeEditor *p_theme_type_edito
 	edit_items_tree->set_hide_root(true);
 	edit_items_tree->set_columns(1);
 	edit_items_vb->add_child(edit_items_tree);
-	edit_items_tree->connect("button_clicked", callable_mp(this, &ThemeItemEditorDialog::_item_tree_button_pressed));
+	edit_items_tree->connect(SceneStringName(button_clicked), callable_mp(this, &ThemeItemEditorDialog::_item_tree_button_pressed));
 
 	edit_items_message = memnew(Label);
 	edit_items_message->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);

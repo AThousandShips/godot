@@ -918,7 +918,7 @@ CreateDialog::CreateDialog() {
 	search_options->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	search_options->connect(SceneStringName(item_activated), callable_mp(this, &CreateDialog::_confirmed));
 	search_options->connect(SceneStringName(cell_selected), callable_mp(this, &CreateDialog::_item_selected));
-	search_options->connect("button_clicked", callable_mp(this, &CreateDialog::_script_button_clicked));
+	search_options->connect(SceneStringName(button_clicked), callable_mp(this, &CreateDialog::_script_button_clicked));
 	vbc->add_margin_child(TTR("Matches:"), search_options, true);
 
 	help_bit = memnew(EditorHelpBit);

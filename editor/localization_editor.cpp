@@ -44,8 +44,8 @@
 void LocalizationEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
-			translation_list->connect("button_clicked", callable_mp(this, &LocalizationEditor::_translation_delete));
-			translation_pot_list->connect("button_clicked", callable_mp(this, &LocalizationEditor::_pot_delete));
+			translation_list->connect(SceneStringName(button_clicked), callable_mp(this, &LocalizationEditor::_translation_delete));
+			translation_pot_list->connect(SceneStringName(button_clicked), callable_mp(this, &LocalizationEditor::_pot_delete));
 			translation_pot_add_builtin->set_pressed(GLOBAL_GET("internationalization/locale/translation_add_builtin_strings_to_pot"));
 
 			List<String> tfn;
@@ -686,7 +686,7 @@ LocalizationEditor::LocalizationEditor() {
 		translation_remap = memnew(Tree);
 		translation_remap->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 		translation_remap->connect(SceneStringName(cell_selected), callable_mp(this, &LocalizationEditor::_translation_res_select));
-		translation_remap->connect("button_clicked", callable_mp(this, &LocalizationEditor::_translation_res_delete));
+		translation_remap->connect(SceneStringName(button_clicked), callable_mp(this, &LocalizationEditor::_translation_res_delete));
 		tmc->add_child(translation_remap);
 
 		translation_res_file_open_dialog = memnew(EditorFileDialog);
@@ -722,7 +722,7 @@ LocalizationEditor::LocalizationEditor() {
 		translation_remap_options->set_column_clip_content(1, false);
 		translation_remap_options->set_column_custom_minimum_width(1, 250);
 		translation_remap_options->connect(SceneStringName(item_edited), callable_mp(this, &LocalizationEditor::_translation_res_option_changed));
-		translation_remap_options->connect("button_clicked", callable_mp(this, &LocalizationEditor::_translation_res_option_delete));
+		translation_remap_options->connect(SceneStringName(button_clicked), callable_mp(this, &LocalizationEditor::_translation_res_option_delete));
 		translation_remap_options->connect("custom_popup_edited", callable_mp(this, &LocalizationEditor::_translation_res_option_popup));
 		tmc->add_child(translation_remap_options);
 

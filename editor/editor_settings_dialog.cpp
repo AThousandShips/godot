@@ -996,7 +996,7 @@ EditorSettingsDialog::EditorSettingsDialog() {
 	shortcuts->set_column_titles_visible(true);
 	shortcuts->set_column_title(0, TTRC("Name"));
 	shortcuts->set_column_title(1, TTRC("Binding"));
-	shortcuts->connect("button_clicked", callable_mp(this, &EditorSettingsDialog::_shortcut_button_pressed));
+	shortcuts->connect(SceneStringName(button_clicked), callable_mp(this, &EditorSettingsDialog::_shortcut_button_pressed));
 	shortcuts->connect(SceneStringName(item_activated), callable_mp(this, &EditorSettingsDialog::_shortcut_cell_double_clicked));
 	tab_shortcuts->add_child(shortcuts);
 

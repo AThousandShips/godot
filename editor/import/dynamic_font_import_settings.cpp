@@ -1112,7 +1112,7 @@ DynamicFontImportSettingsDialog::DynamicFontImportSettingsDialog() {
 	vars_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	page2_side_vb->add_child(vars_list);
 	vars_list->connect(SceneStringName(item_selected), callable_mp(this, &DynamicFontImportSettingsDialog::_variation_selected));
-	vars_list->connect("button_clicked", callable_mp(this, &DynamicFontImportSettingsDialog::_variation_remove));
+	vars_list->connect(SceneStringName(button_clicked), callable_mp(this, &DynamicFontImportSettingsDialog::_variation_remove));
 
 	inspector_vars = memnew(EditorInspector);
 	inspector_vars->set_v_size_flags(Control::SIZE_EXPAND_FILL);

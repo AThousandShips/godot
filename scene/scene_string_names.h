@@ -157,6 +157,7 @@ public:
 
 	const StringName panel = "panel";
 	const StringName focus = "focus";
+	const StringName button_clicked = "button_clicked";
 	const StringName item_selected = "item_selected";
 	const StringName item_activated = "item_activated";
 	const StringName item_edited = "item_edited";

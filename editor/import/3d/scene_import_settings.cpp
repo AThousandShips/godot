@@ -1912,7 +1912,7 @@ SceneImportSettingsDialog::SceneImportSettingsDialog() {
 	add_child(external_paths);
 	external_path_tree = memnew(Tree);
 	external_paths->add_child(external_path_tree);
-	external_path_tree->connect("button_clicked", callable_mp(this, &SceneImportSettingsDialog::_browse_save_callback));
+	external_path_tree->connect(SceneStringName(button_clicked), callable_mp(this, &SceneImportSettingsDialog::_browse_save_callback));
 	external_paths->connect(SceneStringName(confirmed), callable_mp(this, &SceneImportSettingsDialog::_save_dir_confirm));
 	external_path_tree->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	external_path_tree->set_columns(3);

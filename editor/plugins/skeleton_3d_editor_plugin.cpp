@@ -1126,7 +1126,7 @@ void Skeleton3DEditor::_notification(int p_what) {
 
 			joint_tree->connect(SceneStringName(item_selected), callable_mp(this, &Skeleton3DEditor::_joint_tree_selection_changed));
 			joint_tree->connect("item_mouse_selected", callable_mp(this, &Skeleton3DEditor::_joint_tree_rmb_select));
-			joint_tree->connect("button_clicked", callable_mp(this, &Skeleton3DEditor::_joint_tree_button_clicked));
+			joint_tree->connect(SceneStringName(button_clicked), callable_mp(this, &Skeleton3DEditor::_joint_tree_button_clicked));
 
 			skeleton->connect(SceneStringName(pose_updated), callable_mp(this, &Skeleton3DEditor::_draw_gizmo));
 			skeleton->connect(SceneStringName(pose_updated), callable_mp(this, &Skeleton3DEditor::_update_properties));
