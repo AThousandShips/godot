@@ -157,7 +157,7 @@ void FindReplaceBar::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_THEME_CHANGED: {
-			matches_label->add_theme_color_override(SceneStringName(font_color), results_count > 0 ? get_theme_color(SceneStringName(font_color), SNAME("Label")) : get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+			matches_label->add_theme_color_override(SceneStringName(font_color), results_count > 0 ? get_theme_color(SceneStringName(font_color), SNAME("Label")) : get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 		} break;
 
 		case NOTIFICATION_PREDELETE: {
@@ -375,7 +375,7 @@ void FindReplaceBar::_replace_all() {
 	}
 
 	text_editor->set_v_scroll(vsval);
-	matches_label->add_theme_color_override(SceneStringName(font_color), rc > 0 ? get_theme_color(SceneStringName(font_color), SNAME("Label")) : get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+	matches_label->add_theme_color_override(SceneStringName(font_color), rc > 0 ? get_theme_color(SceneStringName(font_color), SNAME("Label")) : get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 	matches_label->set_text(vformat(TTR("%d replaced."), rc));
 
 	callable_mp((Object *)text_editor, &Object::connect).call_deferred(SceneStringName(text_changed), callable_mp(this, &FindReplaceBar::_editor_text_changed), 0U);
@@ -487,7 +487,7 @@ void FindReplaceBar::_update_matches_display() {
 	} else {
 		matches_label->show();
 
-		matches_label->add_theme_color_override(SceneStringName(font_color), results_count > 0 ? get_theme_color(SceneStringName(font_color), SNAME("Label")) : get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+		matches_label->add_theme_color_override(SceneStringName(font_color), results_count > 0 ? get_theme_color(SceneStringName(font_color), SNAME("Label")) : get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 
 		if (results_count == 0) {
 			matches_label->set_text(TTR("No match"));
@@ -1574,8 +1574,8 @@ void CodeTextEditor::_update_text_editor_theme() {
 		}
 	}
 
-	const Color &error_color = get_theme_color(SNAME("error_color"), EditorStringName(Editor));
-	const Color &warning_color = get_theme_color(SNAME("warning_color"), EditorStringName(Editor));
+	const Color &error_color = get_theme_color(EditorStringName(error_color), EditorStringName(Editor));
+	const Color &warning_color = get_theme_color(EditorStringName(warning_color), EditorStringName(Editor));
 
 	error->add_theme_color_override(SceneStringName(font_color), error_color);
 	error_button->add_theme_color_override(SceneStringName(font_color), error_color);

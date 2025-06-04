@@ -3319,8 +3319,8 @@ void Node3DEditorViewport::_notification(int p_what) {
 			override_button_stylebox(preview_camera, information_3d_stylebox);
 
 			frame_time_gradient->set_color(0, get_theme_color(SNAME("success_color"), EditorStringName(Editor)));
-			frame_time_gradient->set_color(1, get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
-			frame_time_gradient->set_color(2, get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+			frame_time_gradient->set_color(1, get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
+			frame_time_gradient->set_color(2, get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 
 			info_panel->add_theme_style_override(SceneStringName(panel), information_3d_stylebox);
 

@@ -450,8 +450,8 @@ void EditorThemeManager::_create_shared_styles(const Ref<EditorTheme> &p_theme, 
 		p_theme->set_color("highlight_color", EditorStringName(Editor), p_config.highlight_color);
 		p_theme->set_color("highlight_disabled_color", EditorStringName(Editor), p_config.highlight_disabled_color);
 		p_theme->set_color("success_color", EditorStringName(Editor), p_config.success_color);
-		p_theme->set_color("warning_color", EditorStringName(Editor), p_config.warning_color);
-		p_theme->set_color("error_color", EditorStringName(Editor), p_config.error_color);
+		p_theme->set_color(EditorStringName(warning_color), EditorStringName(Editor), p_config.warning_color);
+		p_theme->set_color(EditorStringName(error_color), EditorStringName(Editor), p_config.error_color);
 #ifndef DISABLE_DEPRECATED // Used before 4.3.
 		p_theme->set_color("disabled_highlight_color", EditorStringName(Editor), p_config.highlight_disabled_color);
 #endif
@@ -2278,7 +2278,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 
 		p_theme->set_color("property_color", "EditorProperty", property_color);
 		p_theme->set_color("readonly_color", "EditorProperty", readonly_color);
-		p_theme->set_color("warning_color", "EditorProperty", p_config.warning_color);
+		p_theme->set_color(EditorStringName(warning_color), "EditorProperty", p_config.warning_color);
 		p_theme->set_color("readonly_warning_color", "EditorProperty", readonly_warning_color);
 
 		Ref<StyleBoxFlat> style_property_group_note = p_config.base_style->duplicate();
@@ -2579,7 +2579,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 		{
 			p_theme->set_stylebox(SceneStringName(panel), "GraphStateMachine", p_config.tree_panel_style);
 			p_theme->set_stylebox("error_panel", "GraphStateMachine", p_config.tree_panel_style);
-			p_theme->set_color("error_color", "GraphStateMachine", p_config.error_color);
+			p_theme->set_color(EditorStringName(error_color), "GraphStateMachine", p_config.error_color);
 
 			const int sm_margin_side = 10 * EDSCALE;
 			const int sm_margin_bottom = 2;

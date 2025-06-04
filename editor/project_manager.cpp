@@ -269,8 +269,8 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 			erase_missing_btn->set_button_icon(get_editor_theme_icon(SNAME("Clear")));
 			create_tag_btn->set_button_icon(get_editor_theme_icon("Add"));
 
-			tag_error->add_theme_color_override(SceneStringName(font_color), get_theme_color("error_color", EditorStringName(Editor)));
-			tag_edit_error->add_theme_color_override(SceneStringName(font_color), get_theme_color("error_color", EditorStringName(Editor)));
+			tag_error->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
+			tag_edit_error->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 
 			create_btn->add_theme_constant_override("h_separation", get_theme_constant(SNAME("sidebar_button_icon_separation"), SNAME("ProjectManager")));
 			import_btn->add_theme_constant_override("h_separation", get_theme_constant(SNAME("sidebar_button_icon_separation"), SNAME("ProjectManager")));

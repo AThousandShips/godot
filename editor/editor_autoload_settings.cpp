@@ -898,7 +898,7 @@ EditorAutoloadSettings::EditorAutoloadSettings() {
 	error_message->set_focus_mode(FOCUS_ACCESSIBILITY);
 	error_message->hide();
 	error_message->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_RIGHT);
-	error_message->add_theme_color_override(SceneStringName(font_color), EditorNode::get_singleton()->get_editor_theme()->get_color(SNAME("error_color"), EditorStringName(Editor)));
+	error_message->add_theme_color_override(SceneStringName(font_color), EditorNode::get_singleton()->get_editor_theme()->get_color(EditorStringName(error_color), EditorStringName(Editor)));
 	add_child(error_message);
 
 	Label *l = memnew(Label);

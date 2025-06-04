@@ -1375,7 +1375,7 @@ void VisualShaderGraphPlugin::add_node(VisualShader::Type p_type, int p_id, bool
 	if (!error.is_empty()) {
 		Label *error_label = memnew(Label);
 		error_label->set_focus_mode(Control::FOCUS_ACCESSIBILITY);
-		error_label->add_theme_color_override(SceneStringName(font_color), editor->get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+		error_label->add_theme_color_override(SceneStringName(font_color), editor->get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 		error_label->set_text(error);
 		error_label->set_autowrap_mode(TextServer::AUTOWRAP_WORD);
 		node->add_child(error_label);
@@ -2234,8 +2234,8 @@ void VisualShaderEditor::_update_options_menu() {
 
 	bool is_first_item = true;
 
-	Color unsupported_color = get_theme_color(SNAME("error_color"), EditorStringName(Editor));
-	Color supported_color = get_theme_color(SNAME("warning_color"), EditorStringName(Editor));
+	Color unsupported_color = get_theme_color(EditorStringName(error_color), EditorStringName(Editor));
+	Color supported_color = get_theme_color(EditorStringName(warning_color), EditorStringName(Editor));
 
 	static bool low_driver = GLOBAL_GET("rendering/renderer/rendering_method") == "gl_compatibility";
 
@@ -5230,7 +5230,7 @@ void VisualShaderEditor::_notification(int p_what) {
 				Color function_color = EDITOR_GET("text_editor/theme/highlighting/function_color");
 				Color number_color = EDITOR_GET("text_editor/theme/highlighting/number_color");
 				Color members_color = EDITOR_GET("text_editor/theme/highlighting/member_variable_color");
-				Color error_color = get_theme_color(SNAME("error_color"), EditorStringName(Editor));
+				Color error_color = get_theme_color(EditorStringName(error_color), EditorStringName(Editor));
 
 				preview_text->add_theme_color_override("background_color", background_color);
 				varying_error_label->add_theme_color_override(SceneStringName(font_color), error_color);

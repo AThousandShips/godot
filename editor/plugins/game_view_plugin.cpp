@@ -593,7 +593,7 @@ void GameView::_update_ui() {
 			state_label->remove_theme_color_override(SceneStringName(font_color));
 		}
 	} else {
-		state_label->add_theme_color_override(SceneStringName(font_color), state_label->get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
+		state_label->add_theme_color_override(SceneStringName(font_color), state_label->get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
 	}
 
 	game_size_label->set_visible(show_game_size);

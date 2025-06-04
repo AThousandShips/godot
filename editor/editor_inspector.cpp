@@ -421,7 +421,7 @@ void EditorProperty::_notification(int p_what) {
 
 			Color color;
 			if (draw_warning || draw_prop_warning) {
-				color = get_theme_color(is_read_only() ? SNAME("readonly_warning_color") : SNAME("warning_color"));
+				color = get_theme_color(is_read_only() ? SNAME("readonly_warning_color") : EditorStringName(warning_color));
 			} else {
 				color = get_theme_color(is_read_only() ? SNAME("readonly_color") : SNAME("property_color"));
 			}
@@ -1258,7 +1258,7 @@ Control *EditorProperty::make_custom_tooltip(const String &p_text) const {
 	if (object->has_method("_get_property_warning")) {
 		const String custom_warning = object->call("_get_property_warning", property);
 		if (!custom_warning.is_empty()) {
-			prologue = "[b][color=" + get_theme_color(SNAME("warning_color")).to_html(false) + "]" + custom_warning + "[/color][/b]";
+			prologue = "[b][color=" + get_theme_color(EditorStringName(warning_color)).to_html(false) + "]" + custom_warning + "[/color][/b]";
 		}
 	}
 
@@ -2008,7 +2008,7 @@ void EditorInspectorSection::_notification(int p_what) {
 					text_offset.x = margin_end;
 				}
 				if (object->has_method("_get_property_warning") && !String(object->call("_get_property_warning", related_enable_property)).is_empty()) {
-					font_color = get_theme_color(SNAME("warning_color"), EditorStringName(Editor));
+					font_color = get_theme_color(EditorStringName(warning_color), EditorStringName(Editor));
 				}
 				HorizontalAlignment text_align = rtl ? HORIZONTAL_ALIGNMENT_RIGHT : HORIZONTAL_ALIGNMENT_LEFT;
 				draw_string(font, text_offset, label, text_align, available, font_size, font_color, TextServer::JUSTIFICATION_KASHIDA | TextServer::JUSTIFICATION_CONSTRAIN_ELLIPSIS);
@@ -2101,7 +2101,7 @@ Control *EditorInspectorSection::make_custom_tooltip(const String &p_text) const
 	if (object->has_method("_get_property_warning")) {
 		const String custom_warning = object->call("_get_property_warning", related_enable_property);
 		if (!custom_warning.is_empty()) {
-			prologue = "[b][color=" + get_theme_color(SNAME("warning_color"), EditorStringName(Editor)).to_html(false) + "]" + custom_warning + "[/color][/b]";
+			prologue = "[b][color=" + get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)).to_html(false) + "]" + custom_warning + "[/color][/b]";
 		}
 	}
 

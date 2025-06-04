@@ -48,6 +48,9 @@ public:
 	const StringName EditorFonts = StringName("EditorFonts");
 	const StringName EditorIcons = StringName("EditorIcons");
 	const StringName EditorStyles = StringName("EditorStyles");
+
+	const StringName error_color = StringName("error_color");
+	const StringName warning_color = StringName("warning_color");
 };
 
 #define EditorStringName(m_name) EditorStringNames::get_singleton()->m_name

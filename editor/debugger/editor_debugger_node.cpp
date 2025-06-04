@@ -446,13 +446,13 @@ void EditorDebuggerNode::_update_errors() {
 			if (error_count >= 1 && warning_count >= 1) {
 				debugger_button->set_button_icon(get_editor_theme_icon(SNAME("ErrorWarning")));
 				// Use error color to represent the highest level of severity reported.
-				debugger_button->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+				debugger_button->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 			} else if (error_count >= 1) {
 				debugger_button->set_button_icon(get_editor_theme_icon(SNAME("Error")));
-				debugger_button->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+				debugger_button->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 			} else {
 				debugger_button->set_button_icon(get_editor_theme_icon(SNAME("Warning")));
-				debugger_button->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
+				debugger_button->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
 			}
 		}
 		last_error_count = error_count;

@@ -2164,7 +2164,7 @@ void EditorPropertyQuaternion::_notification(int p_what) {
 			edit_button->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
 			euler_label->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("property_color"), SNAME("EditorProperty")));
 			warning->set_button_icon(get_editor_theme_icon(SNAME("NodeWarning")));
-			warning->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
+			warning->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
 		} break;
 	}
 }

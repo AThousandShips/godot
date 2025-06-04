@@ -624,7 +624,7 @@ void ScriptEditorDebugger::_msg_error(uint64_t p_thread_id, const Array &p_data)
 	error->set_text(0, time);
 	error->set_text_alignment(0, HORIZONTAL_ALIGNMENT_LEFT);
 
-	const Color color = get_theme_color(oe.warning ? SNAME("warning_color") : SNAME("error_color"), EditorStringName(Editor));
+	const Color color = get_theme_color(oe.warning ? EditorStringName(warning_color) : EditorStringName(error_color), EditorStringName(Editor));
 	error->set_custom_color(0, color);
 	error->set_custom_color(1, color);
 
@@ -980,10 +980,10 @@ void ScriptEditorDebugger::_init_parse_message_handlers() {
 void ScriptEditorDebugger::_set_reason_text(const String &p_reason, MessageType p_type) {
 	switch (p_type) {
 		case MESSAGE_ERROR:
-			reason->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+			reason->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 			break;
 		case MESSAGE_WARNING:
-			reason->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
+			reason->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
 			break;
 		default:
 			reason->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("success_color"), EditorStringName(Editor)));
@@ -1017,10 +1017,10 @@ void ScriptEditorDebugger::_notification(int p_what) {
 
 			skip_breakpoints->set_button_icon(get_editor_theme_icon(skip_breakpoints_value ? SNAME("DebugSkipBreakpointsOn") : SNAME("DebugSkipBreakpointsOff")));
 			ignore_error_breaks->set_button_icon(get_editor_theme_icon(ignore_error_breaks_value ? SNAME("NotificationDisabled") : SNAME("Notification")));
-			ignore_error_breaks->add_theme_color_override("icon_normal_color", get_theme_color(SNAME("error_color"), SNAME("Editor")));
-			ignore_error_breaks->add_theme_color_override("icon_hover_color", get_theme_color(SNAME("error_color"), SNAME("Editor")));
-			ignore_error_breaks->add_theme_color_override("icon_pressed_color", get_theme_color(SNAME("error_color"), SNAME("Editor")));
-			ignore_error_breaks->add_theme_color_override("icon_focus_color", get_theme_color(SNAME("error_color"), SNAME("Editor")));
+			ignore_error_breaks->add_theme_color_override("icon_normal_color", get_theme_color(EditorStringName(error_color), SNAME("Editor")));
+			ignore_error_breaks->add_theme_color_override("icon_hover_color", get_theme_color(EditorStringName(error_color), SNAME("Editor")));
+			ignore_error_breaks->add_theme_color_override("icon_pressed_color", get_theme_color(EditorStringName(error_color), SNAME("Editor")));
+			ignore_error_breaks->add_theme_color_override("icon_focus_color", get_theme_color(EditorStringName(error_color), SNAME("Editor")));
 			copy->set_button_icon(get_editor_theme_icon(SNAME("ActionCopy")));
 			step->set_button_icon(get_editor_theme_icon(SNAME("DebugStep")));
 			next->set_button_icon(get_editor_theme_icon(SNAME("DebugNext")));
@@ -1031,7 +1031,7 @@ void ScriptEditorDebugger::_notification(int p_what) {
 			vmem_export->set_button_icon(get_editor_theme_icon(SNAME("Save")));
 			search->set_right_icon(get_editor_theme_icon(SNAME("Search")));
 
-			reason->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+			reason->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 
 			TreeItem *error_root = error_tree->get_root();
 			if (error_root) {
@@ -1039,12 +1039,12 @@ void ScriptEditorDebugger::_notification(int p_what) {
 				while (error) {
 					if (error->has_meta("_is_warning")) {
 						error->set_icon(0, get_editor_theme_icon(SNAME("Warning")));
-						error->set_custom_color(0, get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
-						error->set_custom_color(1, get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
+						error->set_custom_color(0, get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
+						error->set_custom_color(1, get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
 					} else if (error->has_meta("_is_error")) {
 						error->set_icon(0, get_editor_theme_icon(SNAME("Error")));
-						error->set_custom_color(0, get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
-						error->set_custom_color(1, get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+						error->set_custom_color(0, get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
+						error->set_custom_color(1, get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 					}
 
 					error = error->get_next();

@@ -693,8 +693,8 @@ void ConnectDialog::init(const ConnectionData &p_cd, const PackedStringArray &p_
 
 void ConnectDialog::popup_dialog(const String &p_for_signal) {
 	from_signal->set_text(p_for_signal);
-	warning_label->add_theme_color_override(SceneStringName(font_color), warning_label->get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
-	error_label->add_theme_color_override(SceneStringName(font_color), error_label->get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+	warning_label->add_theme_color_override(SceneStringName(font_color), warning_label->get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
+	error_label->add_theme_color_override(SceneStringName(font_color), error_label->get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 	filter_nodes->clear();
 
 	if (!advanced->is_pressed()) {
@@ -1650,7 +1650,7 @@ void ConnectionsDock::update_tree() {
 
 				if (_is_connection_inherited(connection)) {
 					// The scene inherits this connection.
-					connection_item->set_custom_color(0, get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
+					connection_item->set_custom_color(0, get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
 					connection_item->set_meta("_inherited_connection", true);
 				}
 			}

@@ -82,7 +82,7 @@ void AnimationLibraryEditor::_add_library_validate(const String &p_name) {
 	}
 
 	if (error != "") {
-		add_library_validate->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("error_color"), EditorStringName(Editor)));
+		add_library_validate->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 		add_library_validate->set_text(error);
 		add_library_dialog->get_ok_button()->set_disabled(true);
 	} else {

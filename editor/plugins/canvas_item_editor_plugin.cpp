@@ -6391,7 +6391,7 @@ void CanvasItemEditorViewport::_update_theme() {
 		check->set_button_icon(get_editor_theme_icon(check->get_text()));
 	}
 
-	label->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
+	label->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
 }
 
 void CanvasItemEditorViewport::_notification(int p_what) {
