@@ -1470,8 +1470,8 @@ void AnimationNodeBlendTree::add_node(const StringName &p_name, Ref<AnimationNod
 	emit_signal(SceneStringName(tree_changed));
 
 	p_node->connect(SceneStringName(tree_changed), callable_mp(this, &AnimationNodeBlendTree::_tree_changed), CONNECT_REFERENCE_COUNTED);
-	p_node->connect(SNAME("animation_node_renamed"), callable_mp(this, &AnimationNodeBlendTree::_animation_node_renamed), CONNECT_REFERENCE_COUNTED);
-	p_node->connect(SNAME("animation_node_removed"), callable_mp(this, &AnimationNodeBlendTree::_animation_node_removed), CONNECT_REFERENCE_COUNTED);
+	p_node->connect(SceneStringName(animation_node_removed), callable_mp(this, &AnimationNodeBlendTree::_animation_node_renamed), CONNECT_REFERENCE_COUNTED);
+	p_node->connect(SceneStringName(animation_node_removed), callable_mp(this, &AnimationNodeBlendTree::_animation_node_removed), CONNECT_REFERENCE_COUNTED);
 	p_node->connect_changed(callable_mp(this, &AnimationNodeBlendTree::_node_changed).bind(p_name), CONNECT_REFERENCE_COUNTED);
 }
 
@@ -1532,8 +1532,8 @@ void AnimationNodeBlendTree::remove_node(const StringName &p_name) {
 	{
 		Ref<AnimationNode> node = nodes[p_name].node;
 		node->disconnect(SceneStringName(tree_changed), callable_mp(this, &AnimationNodeBlendTree::_tree_changed));
-		node->disconnect(SNAME("animation_node_renamed"), callable_mp(this, &AnimationNodeBlendTree::_animation_node_renamed));
-		node->disconnect(SNAME("animation_node_removed"), callable_mp(this, &AnimationNodeBlendTree::_animation_node_removed));
+		node->disconnect(SceneStringName(animation_node_removed), callable_mp(this, &AnimationNodeBlendTree::_animation_node_renamed));
+		node->disconnect(SceneStringName(animation_node_removed), callable_mp(this, &AnimationNodeBlendTree::_animation_node_removed));
 		node->disconnect_changed(callable_mp(this, &AnimationNodeBlendTree::_node_changed));
 	}
 
@@ -1548,7 +1548,7 @@ void AnimationNodeBlendTree::remove_node(const StringName &p_name) {
 		}
 	}
 
-	emit_signal(SNAME("animation_node_removed"), get_instance_id(), p_name);
+	emit_signal(SceneStringName(animation_node_removed), get_instance_id(), p_name);
 	emit_changed();
 	emit_signal(SceneStringName(tree_changed));
 }
@@ -1575,7 +1575,7 @@ void AnimationNodeBlendTree::rename_node(const StringName &p_name, const StringN
 	// Connection must be done with new name.
 	nodes[p_new_name].node->connect_changed(callable_mp(this, &AnimationNodeBlendTree::_node_changed).bind(p_new_name), CONNECT_REFERENCE_COUNTED);
 
-	emit_signal(SNAME("animation_node_renamed"), get_instance_id(), p_name, p_new_name);
+	emit_signal(SceneStringName(animation_node_removed), get_instance_id(), p_name, p_new_name);
 	emit_signal(SceneStringName(tree_changed));
 }
 
