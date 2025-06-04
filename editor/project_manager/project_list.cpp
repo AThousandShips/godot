@@ -847,7 +847,7 @@ void ProjectList::find_projects_multiple(const PackedStringArray &p_paths) {
 
 		add_child(scan_progress);
 		scan_progress->connect(SceneStringName(confirmed), callable_mp(this, &ProjectList::_scan_finished));
-		scan_progress->connect("canceled", callable_mp(this, &ProjectList::_scan_finished));
+		scan_progress->connect(SceneStringName(canceled), callable_mp(this, &ProjectList::_scan_finished));
 	}
 
 	scan_data = memnew(ScanData);

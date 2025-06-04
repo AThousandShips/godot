@@ -6439,7 +6439,7 @@ CanvasItemEditorViewport::CanvasItemEditorViewport(CanvasItemEditor *p_canvas_it
 	texture_node_type_selector = memnew(AcceptDialog);
 	EditorNode::get_singleton()->get_gui_base()->add_child(texture_node_type_selector);
 	texture_node_type_selector->connect(SceneStringName(confirmed), callable_mp(this, &CanvasItemEditorViewport::_on_change_type_confirmed));
-	texture_node_type_selector->connect("canceled", callable_mp(this, &CanvasItemEditorViewport::_on_change_type_closed));
+	texture_node_type_selector->connect(SceneStringName(canceled), callable_mp(this, &CanvasItemEditorViewport::_on_change_type_closed));
 
 	VBoxContainer *vbc = memnew(VBoxContainer);
 	texture_node_type_selector->add_child(vbc);

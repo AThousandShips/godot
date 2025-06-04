@@ -8263,7 +8263,7 @@ EditorNode::EditorNode() {
 	save_confirmation->set_min_size(Vector2(450.0 * EDSCALE, 0));
 	save_confirmation->connect(SceneStringName(confirmed), callable_mp(this, &EditorNode::_menu_confirm_current));
 	save_confirmation->connect("custom_action", callable_mp(this, &EditorNode::_discard_changes));
-	save_confirmation->connect("canceled", callable_mp(this, &EditorNode::_cancel_close_scene_tab));
+	save_confirmation->connect(SceneStringName(canceled), callable_mp(this, &EditorNode::_cancel_close_scene_tab));
 	save_confirmation->connect(SceneStringName(about_to_popup), callable_mp(this, &EditorNode::_prepare_save_confirmation_popup));
 
 	gradle_build_manage_templates = memnew(ConfirmationDialog);

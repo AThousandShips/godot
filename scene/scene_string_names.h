@@ -166,6 +166,7 @@ public:
 	const StringName cell_selected = "cell_selected";
 	const StringName multi_selected = "multi_selected";
 	const StringName confirmed = "confirmed";
+	const StringName canceled = "canceled";
 	const StringName about_to_popup = "about_to_popup";
 
 	const StringName popup_closed = "popup_closed";

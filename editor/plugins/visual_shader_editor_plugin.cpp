@@ -6677,7 +6677,7 @@ VisualShaderEditor::VisualShaderEditor() {
 	code_preview_window->set_visible(code_preview_showed);
 	code_preview_window->set_ok_button_text(TTR("Close"));
 	code_preview_window->connect(SceneStringName(confirmed), callable_mp(this, &VisualShaderEditor::_preview_close_requested));
-	code_preview_window->connect("canceled", callable_mp(this, &VisualShaderEditor::_preview_close_requested));
+	code_preview_window->connect(SceneStringName(canceled), callable_mp(this, &VisualShaderEditor::_preview_close_requested));
 	add_child(code_preview_window);
 
 	code_preview_vbox = memnew(VBoxContainer);
@@ -6870,7 +6870,7 @@ VisualShaderEditor::VisualShaderEditor() {
 	members_dialog->set_ok_button_text(TTR("Create"));
 	members_dialog->connect(SceneStringName(confirmed), callable_mp(this, &VisualShaderEditor::_member_create));
 	members_dialog->get_ok_button()->set_disabled(true);
-	members_dialog->connect("canceled", callable_mp(this, &VisualShaderEditor::_member_cancel));
+	members_dialog->connect(SceneStringName(canceled), callable_mp(this, &VisualShaderEditor::_member_cancel));
 	members_dialog->register_text_enter(node_filter);
 	add_child(members_dialog);
 

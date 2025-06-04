@@ -303,7 +303,7 @@ void EditorInterface::popup_node_selector(const Callable &p_callback, const Type
 
 	const Callable callback = callable_mp(this, &EditorInterface::_node_selected);
 	node_selector->connect(SceneStringName(selected), callback.bind(p_callback), CONNECT_DEFERRED);
-	node_selector->connect(SNAME("canceled"), callback.bind(NodePath(), p_callback), CONNECT_DEFERRED);
+	node_selector->connect(SceneStringName(canceled), callback.bind(NodePath(), p_callback), CONNECT_DEFERRED);
 }
 
 void EditorInterface::popup_property_selector(Object *p_object, const Callable &p_callback, const PackedInt32Array &p_type_filter, const String &p_current_value) {
@@ -323,7 +323,7 @@ void EditorInterface::popup_property_selector(Object *p_object, const Callable &
 
 	const Callable callback = callable_mp(this, &EditorInterface::_property_selected);
 	property_selector->connect(SceneStringName(selected), callback.bind(p_callback), CONNECT_DEFERRED);
-	property_selector->connect(SNAME("canceled"), callback.bind(String(), p_callback), CONNECT_DEFERRED);
+	property_selector->connect(SceneStringName(canceled), callback.bind(String(), p_callback), CONNECT_DEFERRED);
 }
 
 void EditorInterface::popup_method_selector(Object *p_object, const Callable &p_callback, const String &p_current_value) {
@@ -336,7 +336,7 @@ void EditorInterface::popup_method_selector(Object *p_object, const Callable &p_
 
 	const Callable callback = callable_mp(this, &EditorInterface::_method_selected);
 	method_selector->connect(SceneStringName(selected), callback.bind(p_callback), CONNECT_DEFERRED);
-	method_selector->connect(SNAME("canceled"), callback.bind(String(), p_callback), CONNECT_DEFERRED);
+	method_selector->connect(SceneStringName(canceled), callback.bind(String(), p_callback), CONNECT_DEFERRED);
 }
 
 void EditorInterface::popup_quick_open(const Callable &p_callback, const TypedArray<StringName> &p_base_types) {
@@ -353,7 +353,7 @@ void EditorInterface::popup_quick_open(const Callable &p_callback, const TypedAr
 	}
 
 	EditorQuickOpenDialog *quick_open = EditorNode::get_singleton()->get_quick_open_dialog();
-	quick_open->connect(SNAME("canceled"), callable_mp(this, &EditorInterface::_quick_open).bind(String(), p_callback));
+	quick_open->connect(SceneStringName(canceled), callable_mp(this, &EditorInterface::_quick_open).bind(String(), p_callback));
 	quick_open->popup_dialog(base_types, callable_mp(this, &EditorInterface::_quick_open).bind(p_callback));
 }
 
@@ -381,13 +381,13 @@ void EditorInterface::popup_create_dialog(const Callable &p_callback, const Stri
 
 	const Callable callback = callable_mp(this, &EditorInterface::_create_dialog_item_selected);
 	create_dialog->connect(SNAME("create"), callback.bind(false, p_callback), CONNECT_DEFERRED);
-	create_dialog->connect(SNAME("canceled"), callback.bind(true, p_callback), CONNECT_DEFERRED);
+	create_dialog->connect(SceneStringName(canceled), callback.bind(true, p_callback), CONNECT_DEFERRED);
 }
 
 void EditorInterface::_node_selected(const NodePath &p_node_path, const Callable &p_callback) {
 	const Callable callback = callable_mp(this, &EditorInterface::_node_selected);
 	node_selector->disconnect(SceneStringName(selected), callback);
-	node_selector->disconnect(SNAME("canceled"), callback);
+	node_selector->disconnect(SceneStringName(canceled), callback);
 
 	if (p_node_path.is_empty()) {
 		_call_dialog_callback(p_callback, NodePath(), "node selection canceled");
@@ -400,7 +400,7 @@ void EditorInterface::_node_selected(const NodePath &p_node_path, const Callable
 void EditorInterface::_property_selected(const String &p_property_name, const Callable &p_callback) {
 	const Callable callback = callable_mp(this, &EditorInterface::_property_selected);
 	property_selector->disconnect(SceneStringName(selected), callback);
-	property_selector->disconnect(SNAME("canceled"), callback);
+	property_selector->disconnect(SceneStringName(canceled), callback);
 
 	if (p_property_name.is_empty()) {
 		_call_dialog_callback(p_callback, NodePath(p_property_name).get_as_property_path(), "property selection canceled");
@@ -412,7 +412,7 @@ void EditorInterface::_property_selected(const String &p_property_name, const Ca
 void EditorInterface::_method_selected(const String &p_method_name, const Callable &p_callback) {
 	const Callable callback = callable_mp(this, &EditorInterface::_method_selected);
 	method_selector->disconnect(SceneStringName(selected), callback);
-	method_selector->disconnect(SNAME("canceled"), callback);
+	method_selector->disconnect(SceneStringName(canceled), callback);
 
 	if (p_method_name.is_empty()) {
 		_call_dialog_callback(p_callback, p_method_name, "method selection canceled");
@@ -423,14 +423,14 @@ void EditorInterface::_method_selected(const String &p_method_name, const Callab
 
 void EditorInterface::_quick_open(const String &p_file_path, const Callable &p_callback) {
 	EditorQuickOpenDialog *quick_open = EditorNode::get_singleton()->get_quick_open_dialog();
-	quick_open->disconnect(SNAME("canceled"), callable_mp(this, &EditorInterface::_quick_open));
+	quick_open->disconnect(SceneStringName(canceled), callable_mp(this, &EditorInterface::_quick_open));
 	_call_dialog_callback(p_callback, p_file_path, "quick open");
 }
 
 void EditorInterface::_create_dialog_item_selected(bool p_is_canceled, const Callable &p_callback) {
 	const Callable callback = callable_mp(this, &EditorInterface::_create_dialog_item_selected);
 	create_dialog->disconnect(SNAME("create"), callback);
-	create_dialog->disconnect(SNAME("canceled"), callback);
+	create_dialog->disconnect(SceneStringName(canceled), callback);
 	_call_dialog_callback(p_callback, p_is_canceled ? "" : create_dialog->get_selected_type(), "create dialog");
 }
 

@@ -138,7 +138,7 @@ void FileDialog::_native_dialog_cb(bool p_ok, const Vector<String> &p_files, int
 void FileDialog::_native_dialog_cb_with_options(bool p_ok, const Vector<String> &p_files, int p_filter, const Dictionary &p_selected_options) {
 	if (!p_ok) {
 		filename_edit->set_text("");
-		emit_signal(SNAME("canceled"));
+		emit_signal(SceneStringName(canceled));
 		return;
 	}
 

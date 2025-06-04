@@ -151,7 +151,7 @@ void AcceptDialog::_cancel_pressed() {
 
 	callable_mp((Window *)this, &Window::hide).call_deferred();
 
-	emit_signal(SNAME("canceled"));
+	emit_signal(SceneStringName(canceled));
 
 	cancel_pressed();
 
