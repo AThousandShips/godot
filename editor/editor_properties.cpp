@@ -133,7 +133,7 @@ void EditorPropertyVariant::update_property() {
 		sub_property->set_use_folding(is_using_folding());
 		sub_property->set_read_only(is_read_only());
 		sub_property->set_h_size_flags(SIZE_EXPAND_FILL);
-		sub_property->connect(SNAME("property_changed"), callable_mp((EditorProperty *)this, &EditorProperty::emit_changed));
+		sub_property->connect(EditorStringName(property_changed), callable_mp((EditorProperty *)this, &EditorProperty::emit_changed));
 		content->add_child(sub_property);
 		content->move_child(sub_property, 0);
 		sub_property->update_property();

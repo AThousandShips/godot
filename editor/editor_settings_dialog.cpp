@@ -1107,7 +1107,7 @@ void EditorSettingsPropertyWrapper::setup(const String &p_property, EditorProper
 	_update_override();
 
 	connect(SNAME("property_overridden"), callable_mp(this, &EditorSettingsPropertyWrapper::_create_override));
-	editor_property->connect("property_changed", callable_mp((EditorProperty *)this, &EditorProperty::emit_changed));
+	editor_property->connect(EditorStringName(property_changed), callable_mp((EditorProperty *)this, &EditorProperty::emit_changed));
 }
 
 bool EditorSettingsInspectorPlugin::can_handle(Object *p_object) {

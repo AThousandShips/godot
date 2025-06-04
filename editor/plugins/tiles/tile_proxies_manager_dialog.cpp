@@ -398,7 +398,7 @@ TileProxiesManagerDialog::TileProxiesManagerDialog() {
 	source_from_property_editor = memnew(EditorPropertyInteger);
 	source_from_property_editor->set_label(TTR("From Source"));
 	source_from_property_editor->set_object_and_property(this, "from_source");
-	source_from_property_editor->connect("property_changed", callable_mp(this, &TileProxiesManagerDialog::_property_changed));
+	source_from_property_editor->connect(EditorStringName(property_changed), callable_mp(this, &TileProxiesManagerDialog::_property_changed));
 	source_from_property_editor->set_selectable(false);
 	source_from_property_editor->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	source_from_property_editor->setup(-1, 99999, 1, false, true, false);
@@ -407,7 +407,7 @@ TileProxiesManagerDialog::TileProxiesManagerDialog() {
 	coords_from_property_editor = memnew(EditorPropertyVector2i);
 	coords_from_property_editor->set_label(TTR("From Coords"));
 	coords_from_property_editor->set_object_and_property(this, "from_coords");
-	coords_from_property_editor->connect("property_changed", callable_mp(this, &TileProxiesManagerDialog::_property_changed));
+	coords_from_property_editor->connect(EditorStringName(property_changed), callable_mp(this, &TileProxiesManagerDialog::_property_changed));
 	coords_from_property_editor->set_selectable(false);
 	coords_from_property_editor->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	coords_from_property_editor->setup(-1, 99999, true);
@@ -417,7 +417,7 @@ TileProxiesManagerDialog::TileProxiesManagerDialog() {
 	alternative_from_property_editor = memnew(EditorPropertyInteger);
 	alternative_from_property_editor->set_label(TTR("From Alternative"));
 	alternative_from_property_editor->set_object_and_property(this, "from_alternative");
-	alternative_from_property_editor->connect("property_changed", callable_mp(this, &TileProxiesManagerDialog::_property_changed));
+	alternative_from_property_editor->connect(EditorStringName(property_changed), callable_mp(this, &TileProxiesManagerDialog::_property_changed));
 	alternative_from_property_editor->set_selectable(false);
 	alternative_from_property_editor->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	alternative_from_property_editor->setup(-1, 99999, 1, false, true, false);
@@ -432,7 +432,7 @@ TileProxiesManagerDialog::TileProxiesManagerDialog() {
 	source_to_property_editor = memnew(EditorPropertyInteger);
 	source_to_property_editor->set_label(TTR("To Source"));
 	source_to_property_editor->set_object_and_property(this, "to_source");
-	source_to_property_editor->connect("property_changed", callable_mp(this, &TileProxiesManagerDialog::_property_changed));
+	source_to_property_editor->connect(EditorStringName(property_changed), callable_mp(this, &TileProxiesManagerDialog::_property_changed));
 	source_to_property_editor->set_selectable(false);
 	source_to_property_editor->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	source_to_property_editor->setup(-1, 99999, 1, false, true, false);
@@ -441,7 +441,7 @@ TileProxiesManagerDialog::TileProxiesManagerDialog() {
 	coords_to_property_editor = memnew(EditorPropertyVector2i);
 	coords_to_property_editor->set_label(TTR("To Coords"));
 	coords_to_property_editor->set_object_and_property(this, "to_coords");
-	coords_to_property_editor->connect("property_changed", callable_mp(this, &TileProxiesManagerDialog::_property_changed));
+	coords_to_property_editor->connect(EditorStringName(property_changed), callable_mp(this, &TileProxiesManagerDialog::_property_changed));
 	coords_to_property_editor->set_selectable(false);
 	coords_to_property_editor->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	coords_to_property_editor->setup(-1, 99999, true);
@@ -451,7 +451,7 @@ TileProxiesManagerDialog::TileProxiesManagerDialog() {
 	alternative_to_property_editor = memnew(EditorPropertyInteger);
 	alternative_to_property_editor->set_label(TTR("To Alternative"));
 	alternative_to_property_editor->set_object_and_property(this, "to_alternative");
-	alternative_to_property_editor->connect("property_changed", callable_mp(this, &TileProxiesManagerDialog::_property_changed));
+	alternative_to_property_editor->connect(EditorStringName(property_changed), callable_mp(this, &TileProxiesManagerDialog::_property_changed));
 	alternative_to_property_editor->set_selectable(false);
 	alternative_to_property_editor->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	alternative_to_property_editor->setup(-1, 99999, 1, false, true, false);

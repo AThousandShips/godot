@@ -114,7 +114,7 @@ void BoneMapperItem::create_editor() {
 	skeleton_bone_selector->set_h_size_flags(SIZE_EXPAND_FILL);
 	skeleton_bone_selector->set_object_and_property(bone_map.ptr(), "bone_map/" + String(profile_bone_name));
 	skeleton_bone_selector->update_property();
-	skeleton_bone_selector->connect("property_changed", callable_mp(this, &BoneMapperItem::_value_changed));
+	skeleton_bone_selector->connect(EditorStringName(property_changed), callable_mp(this, &BoneMapperItem::_value_changed));
 	hbox->add_child(skeleton_bone_selector);
 
 	picker_button = memnew(Button);
@@ -272,7 +272,7 @@ void BoneMapper::create_editor() {
 	profile_selector->set_selectable(false);
 	profile_selector->set_object_and_property(bone_map.ptr(), "profile");
 	profile_selector->update_property();
-	profile_selector->connect("property_changed", callable_mp(this, &BoneMapper::_profile_changed));
+	profile_selector->connect(EditorStringName(property_changed), callable_mp(this, &BoneMapper::_profile_changed));
 	add_child(profile_selector);
 	add_child(memnew(HSeparator));
 
@@ -285,7 +285,7 @@ void BoneMapper::create_editor() {
 	profile_group_selector->set_h_size_flags(SIZE_EXPAND_FILL);
 	profile_group_selector->set_object_and_property(this, "current_group_idx");
 	profile_group_selector->update_property();
-	profile_group_selector->connect("property_changed", callable_mp(this, &BoneMapper::_value_changed));
+	profile_group_selector->connect(EditorStringName(property_changed), callable_mp(this, &BoneMapper::_value_changed));
 	group_hbox->add_child(profile_group_selector);
 
 	clear_mapping_button = memnew(Button);

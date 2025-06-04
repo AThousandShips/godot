@@ -510,7 +510,7 @@ void EditorPropertyArray::update_property() {
 				}
 				new_prop->set_selectable(false);
 				new_prop->set_use_folding(is_using_folding());
-				new_prop->connect(SNAME("property_changed"), callable_mp(this, &EditorPropertyArray::_property_changed));
+				new_prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyArray::_property_changed));
 				new_prop->connect(SNAME("object_id_selected"), callable_mp(this, &EditorPropertyArray::_object_id_selected));
 				new_prop->set_h_size_flags(SIZE_EXPAND_FILL);
 				new_prop->set_read_only(is_read_only());
@@ -1398,7 +1398,7 @@ void EditorPropertyDictionary::update_property() {
 				}
 				new_prop->set_selectable(false);
 				new_prop->set_use_folding(is_using_folding());
-				new_prop->connect(SNAME("property_changed"), callable_mp(this, &EditorPropertyDictionary::_property_changed));
+				new_prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyDictionary::_property_changed));
 				new_prop->connect(SNAME("object_id_selected"), callable_mp(this, &EditorPropertyDictionary::_object_id_selected));
 				new_prop->set_h_size_flags(SIZE_EXPAND_FILL);
 				if (slot.index != EditorPropertyDictionaryObject::NEW_KEY_INDEX && slot.index != EditorPropertyDictionaryObject::NEW_VALUE_INDEX) {
@@ -1644,7 +1644,7 @@ void EditorPropertyLocalizableString::update_property() {
 			remove_index = i + offset;
 
 			prop->set_selectable(false);
-			prop->connect("property_changed", callable_mp(this, &EditorPropertyLocalizableString::_property_changed));
+			prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyLocalizableString::_property_changed));
 			prop->connect("object_id_selected", callable_mp(this, &EditorPropertyLocalizableString::_object_id_selected));
 
 			HBoxContainer *hbox = memnew(HBoxContainer);

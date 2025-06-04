@@ -286,7 +286,7 @@ void EditorPropertyFontMetaOverride::update_property() {
 			prop->set_tooltip_text(name);
 			prop->set_selectable(false);
 
-			prop->connect("property_changed", callable_mp(this, &EditorPropertyFontMetaOverride::_property_changed));
+			prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyFontMetaOverride::_property_changed));
 			prop->connect("object_id_selected", callable_mp(this, &EditorPropertyFontMetaOverride::_object_id_selected));
 
 			HBoxContainer *hbox = memnew(HBoxContainer);
@@ -493,7 +493,7 @@ void EditorPropertyOTVariation::update_property() {
 			prop->set_tooltip_text(name);
 			prop->set_selectable(false);
 
-			prop->connect("property_changed", callable_mp(this, &EditorPropertyOTVariation::_property_changed));
+			prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyOTVariation::_property_changed));
 			prop->connect("object_id_selected", callable_mp(this, &EditorPropertyOTVariation::_object_id_selected));
 
 			property_vbox->add_child(prop);
@@ -782,7 +782,7 @@ void EditorPropertyOTFeatures::update_property() {
 				prop->set_tooltip_text(name);
 				prop->set_selectable(false);
 
-				prop->connect("property_changed", callable_mp(this, &EditorPropertyOTFeatures::_property_changed));
+				prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyOTFeatures::_property_changed));
 				prop->connect("object_id_selected", callable_mp(this, &EditorPropertyOTFeatures::_object_id_selected));
 
 				HBoxContainer *hbox = memnew(HBoxContainer);

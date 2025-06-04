@@ -209,7 +209,7 @@ void AnimationNodeBlendTreeEditor::update_graph() {
 				}
 				prop->set_name_split_ratio(ratio);
 				prop->update_property();
-				prop->connect("property_changed", callable_mp(this, &AnimationNodeBlendTreeEditor::_property_changed));
+				prop->connect(EditorStringName(property_changed), callable_mp(this, &AnimationNodeBlendTreeEditor::_property_changed));
 
 				if (F.hint == PROPERTY_HINT_RESOURCE_TYPE) {
 					// Give the resource editor some more space to make the inside readable.

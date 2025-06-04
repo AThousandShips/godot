@@ -51,6 +51,8 @@ public:
 
 	const StringName error_color = StringName("error_color");
 	const StringName warning_color = StringName("warning_color");
+
+	const StringName property_changed = StringName("property_changed");
 };
 
 #define EditorStringName(m_name) EditorStringNames::get_singleton()->m_name

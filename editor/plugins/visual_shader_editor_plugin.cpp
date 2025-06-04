@@ -3294,7 +3294,7 @@ void VisualShaderEditor::_edit_port_default_input(Object *p_button, int p_node, 
 	editing_port = p_port;
 
 	if (property_editor) {
-		property_editor->disconnect("property_changed", callable_mp(this, &VisualShaderEditor::_port_edited));
+		property_editor->disconnect(EditorStringName(property_changed), callable_mp(this, &VisualShaderEditor::_port_edited));
 		property_editor_popup->remove_child(property_editor);
 	}
 
@@ -3328,7 +3328,7 @@ void VisualShaderEditor::_edit_port_default_input(Object *p_button, int p_node, 
 	property_editor->set_name_split_ratio(0);
 	property_editor_popup->add_child(property_editor);
 
-	property_editor->connect("property_changed", callable_mp(this, &VisualShaderEditor::_port_edited));
+	property_editor->connect(EditorStringName(property_changed), callable_mp(this, &VisualShaderEditor::_port_edited));
 
 	Button *button = Object::cast_to<Button>(p_button);
 	if (button) {
@@ -5144,7 +5144,7 @@ void VisualShaderEditor::_param_selected() {
 	if (!prop) {
 		return;
 	}
-	prop->connect("property_changed", callable_mp(this, &VisualShaderEditor::_param_property_changed));
+	prop->connect(EditorStringName(property_changed), callable_mp(this, &VisualShaderEditor::_param_property_changed));
 	prop->set_h_size_flags(SIZE_EXPAND_FILL);
 	prop->set_object_and_property(preview_material.ptr(), "shader_parameter/" + pi.name);
 
@@ -8032,7 +8032,7 @@ public:
 				p_properties[i]->connect("resource_selected", callable_mp(this, &VisualShaderNodePluginDefaultEditor::_resource_selected));
 			}
 
-			properties[i]->connect("property_changed", callable_mp(this, &VisualShaderNodePluginDefaultEditor::_property_changed));
+			properties[i]->connect(EditorStringName(property_changed), callable_mp(this, &VisualShaderNodePluginDefaultEditor::_property_changed));
 			properties[i]->set_object_and_property(node.ptr(), p_names[i]);
 			properties[i]->update_property();
 			properties[i]->set_name_split_ratio(0);

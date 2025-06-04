@@ -59,7 +59,7 @@ void BonePropertiesEditor::create_editors() {
 	enabled_checkbox = memnew(EditorPropertyCheck());
 	enabled_checkbox->set_label("Pose Enabled");
 	enabled_checkbox->set_selectable(false);
-	enabled_checkbox->connect("property_changed", callable_mp(this, &BonePropertiesEditor::_value_changed));
+	enabled_checkbox->connect(EditorStringName(property_changed), callable_mp(this, &BonePropertiesEditor::_value_changed));
 	section->get_vbox()->add_child(enabled_checkbox);
 
 	// Position property.
@@ -67,7 +67,7 @@ void BonePropertiesEditor::create_editors() {
 	position_property->setup(-10000, 10000, 0.001, true);
 	position_property->set_label("Position");
 	position_property->set_selectable(false);
-	position_property->connect("property_changed", callable_mp(this, &BonePropertiesEditor::_value_changed));
+	position_property->connect(EditorStringName(property_changed), callable_mp(this, &BonePropertiesEditor::_value_changed));
 	position_property->connect("property_keyed", callable_mp(this, &BonePropertiesEditor::_property_keyed));
 	section->get_vbox()->add_child(position_property);
 
@@ -76,7 +76,7 @@ void BonePropertiesEditor::create_editors() {
 	rotation_property->setup(-10000, 10000, 0.001, true);
 	rotation_property->set_label("Rotation");
 	rotation_property->set_selectable(false);
-	rotation_property->connect("property_changed", callable_mp(this, &BonePropertiesEditor::_value_changed));
+	rotation_property->connect(EditorStringName(property_changed), callable_mp(this, &BonePropertiesEditor::_value_changed));
 	rotation_property->connect("property_keyed", callable_mp(this, &BonePropertiesEditor::_property_keyed));
 	section->get_vbox()->add_child(rotation_property);
 
@@ -85,7 +85,7 @@ void BonePropertiesEditor::create_editors() {
 	scale_property->setup(-10000, 10000, 0.001, true, true);
 	scale_property->set_label("Scale");
 	scale_property->set_selectable(false);
-	scale_property->connect("property_changed", callable_mp(this, &BonePropertiesEditor::_value_changed));
+	scale_property->connect(EditorStringName(property_changed), callable_mp(this, &BonePropertiesEditor::_value_changed));
 	scale_property->connect("property_keyed", callable_mp(this, &BonePropertiesEditor::_property_keyed));
 	section->get_vbox()->add_child(scale_property);
 
@@ -317,7 +317,7 @@ void BonePropertiesEditor::_update_properties() {
 						editor->set_object_and_property(skeleton, E.name);
 						editor->set_deletable(true);
 						editor->set_selectable(false);
-						editor->connect("property_changed", callable_mp(this, &BonePropertiesEditor::_meta_changed));
+						editor->connect(EditorStringName(property_changed), callable_mp(this, &BonePropertiesEditor::_meta_changed));
 						editor->connect("property_deleted", callable_mp(this, &BonePropertiesEditor::_meta_deleted));
 
 						meta_section->get_vbox()->add_child(editor);
