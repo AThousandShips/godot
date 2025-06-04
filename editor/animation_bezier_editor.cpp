@@ -382,7 +382,7 @@ void AnimationBezierTrackEdit::_notification(int p_what) {
 					}
 				}
 
-				const Color dc = get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor));
+				const Color dc = get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor));
 
 				Ref<Texture2D> remove = get_editor_theme_icon(SNAME("Remove"));
 				float remove_hpos = limit - h_separation - remove->get_width();

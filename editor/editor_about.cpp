@@ -89,7 +89,7 @@ void EditorAbout::_notification(int p_what) {
 				for (int i = 0; i < il->get_item_count(); i++) {
 					if (il->get_item_metadata(i)) {
 						il->set_item_icon(i, get_theme_icon(SNAME("ExternalLink"), EditorStringName(EditorIcons)));
-						il->set_item_icon_modulate(i, get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor)));
+						il->set_item_icon_modulate(i, get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor)));
 					}
 				}
 			}

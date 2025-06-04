@@ -729,7 +729,7 @@ void TileSetAtlasSourceEditor::_update_tile_data_editors() {
 		tile_data_editors["probability"] = tile_data_probability_editor;
 	}
 
-	Color disabled_color = get_theme_color("font_disabled_color", EditorStringName(Editor));
+	Color disabled_color = get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor));
 
 	// --- Physics ---
 	ADD_TILE_DATA_EDITOR_GROUP(TTR("Physics"));
@@ -917,7 +917,7 @@ void TileSetAtlasSourceEditor::_tile_data_editor_dropdown_button_draw() {
 				clr = get_theme_color(SNAME("font_hover_color"));
 				break;
 			case BaseButton::DRAW_DISABLED:
-				clr = get_theme_color(SNAME("font_disabled_color"));
+				clr = get_theme_color(SceneStringName(font_disabled_color));
 				break;
 			default:
 				if (tile_data_editor_dropdown_button->has_focus()) {

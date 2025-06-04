@@ -274,8 +274,8 @@ void TabContainer::_on_theme_changed() {
 	tab_bar->add_theme_color_override(SNAME("font_selected_color"), theme_cache.font_selected_color);
 	tab_bar->add_theme_color_override(SNAME("font_hovered_color"), theme_cache.font_hovered_color);
 	tab_bar->add_theme_color_override(SNAME("font_unselected_color"), theme_cache.font_unselected_color);
-	tab_bar->add_theme_color_override(SNAME("font_disabled_color"), theme_cache.font_disabled_color);
-	tab_bar->add_theme_color_override(SNAME("font_outline_color"), theme_cache.font_outline_color);
+	tab_bar->add_theme_color_override(SceneStringName(font_disabled_color), theme_cache.font_disabled_color);
+	tab_bar->add_theme_color_override(SceneStringName(font_outline_color), theme_cache.font_outline_color);
 
 	tab_bar->add_theme_font_override(SceneStringName(font), theme_cache.tab_font);
 	tab_bar->add_theme_font_size_override(SceneStringName(font_size), theme_cache.tab_font_size);

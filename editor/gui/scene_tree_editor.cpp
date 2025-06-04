@@ -374,7 +374,7 @@ void SceneTreeEditor::_update_node_subtree(Node *p_node, TreeItem *p_parent, boo
 		}
 
 		if (!valid) {
-			_set_item_custom_color(item, get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor)));
+			_set_item_custom_color(item, get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor)));
 			item->set_selectable(0, false);
 			item->deselect(0);
 			if (selected == p_node) {
@@ -440,7 +440,7 @@ void SceneTreeEditor::_update_node(Node *p_node, TreeItem *p_item, bool p_part_o
 		Ref<Script> scr = p_node->get_script();
 		bool has_custom_script = scr.is_valid() && EditorNode::get_singleton()->get_object_custom_type_base(p_node) == scr;
 		if (scr.is_null() || has_custom_script) {
-			_set_item_custom_color(p_item, get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor)));
+			_set_item_custom_color(p_item, get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor)));
 			p_item->set_selectable(0, false);
 
 			accent.a *= 0.7;
@@ -467,7 +467,7 @@ void SceneTreeEditor::_update_node(Node *p_node, TreeItem *p_item, bool p_part_o
 		p_item->set_selectable(0, marked_selectable);
 		_set_item_custom_color(p_item, get_theme_color(SNAME("accent_color"), EditorStringName(Editor)));
 	} else if (!p_node->can_process()) {
-		_set_item_custom_color(p_item, get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor)));
+		_set_item_custom_color(p_item, get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor)));
 	} else if (!marked_selectable && !marked_children_selectable) {
 		Node *node = p_node;
 		while (node) {
@@ -1079,7 +1079,7 @@ bool SceneTreeEditor::_update_filter(TreeItem *p_parent, bool p_scroll_to_select
 				return false;
 			}
 		} else {
-			p_parent->set_custom_color(0, get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor)));
+			p_parent->set_custom_color(0, get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor)));
 			p_parent->set_selectable(0, false);
 			p_parent->deselect(0);
 		}

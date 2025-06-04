@@ -102,7 +102,7 @@ void EditorPluginSettings::update_plugins() {
 				String scr = cfg->get_value("plugin", "script");
 
 				bool is_enabled = EditorNode::get_singleton()->is_addon_plugin_enabled(path);
-				Color disabled_color = get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor));
+				Color disabled_color = get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor));
 
 				const PackedInt32Array boundaries = TS->string_get_word_breaks(description, "", 80);
 				String wrapped_description;
@@ -159,7 +159,7 @@ void EditorPluginSettings::_plugin_activity_changed() {
 	if (is_enabled) {
 		ti->clear_custom_color(COLUMN_NAME);
 	} else {
-		ti->set_custom_color(COLUMN_NAME, get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor)));
+		ti->set_custom_color(COLUMN_NAME, get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor)));
 	}
 }
 

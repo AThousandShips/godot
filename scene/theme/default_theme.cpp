@@ -158,8 +158,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_hover_color", "Button", control_font_hover_color);
 	theme->set_color("font_focus_color", "Button", control_font_focus_color);
 	theme->set_color("font_hover_pressed_color", "Button", control_font_pressed_color);
-	theme->set_color("font_disabled_color", "Button", control_font_disabled_color);
-	theme->set_color("font_outline_color", "Button", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_disabled_color), "Button", control_font_disabled_color);
+	theme->set_color(SceneStringName(font_outline_color), "Button", Color(0, 0, 0));
 
 	theme->set_color("icon_normal_color", "Button", Color(1, 1, 1, 1));
 	theme->set_color("icon_pressed_color", "Button", Color(1, 1, 1, 1));
@@ -188,8 +188,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_hover_color", "MenuBar", control_font_hover_color);
 	theme->set_color("font_focus_color", "MenuBar", control_font_focus_color);
 	theme->set_color("font_hover_pressed_color", "MenuBar", control_font_pressed_color);
-	theme->set_color("font_disabled_color", "MenuBar", control_font_disabled_color);
-	theme->set_color("font_outline_color", "MenuBar", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_disabled_color), "MenuBar", control_font_disabled_color);
+	theme->set_color(SceneStringName(font_outline_color), "MenuBar", Color(0, 0, 0));
 
 	theme->set_constant(SceneStringName(h_separation), "MenuBar", Math::round(4 * scale));
 
@@ -204,7 +204,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_pressed_color", "LinkButton", control_font_pressed_color);
 	theme->set_color("font_hover_color", "LinkButton", control_font_hover_color);
 	theme->set_color("font_focus_color", "LinkButton", control_font_focus_color);
-	theme->set_color("font_outline_color", "LinkButton", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "LinkButton", Color(0, 0, 0));
 
 	theme->set_constant(SceneStringName(outline_size), "LinkButton", 0);
 	theme->set_constant("underline_spacing", "LinkButton", Math::round(2 * scale));
@@ -242,8 +242,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_hover_color", "OptionButton", control_font_hover_color);
 	theme->set_color("font_hover_pressed_color", "OptionButton", control_font_pressed_color);
 	theme->set_color("font_focus_color", "OptionButton", control_font_focus_color);
-	theme->set_color("font_disabled_color", "OptionButton", control_font_disabled_color);
-	theme->set_color("font_outline_color", "OptionButton", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_disabled_color), "OptionButton", control_font_disabled_color);
+	theme->set_color(SceneStringName(font_outline_color), "OptionButton", Color(0, 0, 0));
 
 	theme->set_constant(SceneStringName(h_separation), "OptionButton", Math::round(4 * scale));
 	theme->set_constant("arrow_margin", "OptionButton", Math::round(4 * scale));
@@ -265,8 +265,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_pressed_color", "MenuButton", control_font_pressed_color);
 	theme->set_color("font_hover_color", "MenuButton", control_font_hover_color);
 	theme->set_color("font_focus_color", "MenuButton", control_font_focus_color);
-	theme->set_color("font_disabled_color", "MenuButton", Color(1, 1, 1, 0.3));
-	theme->set_color("font_outline_color", "MenuButton", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_disabled_color), "MenuButton", Color(1, 1, 1, 0.3));
+	theme->set_color(SceneStringName(font_outline_color), "MenuButton", Color(0, 0, 0));
 
 	theme->set_constant(SceneStringName(h_separation), "MenuButton", Math::round(4 * scale));
 	theme->set_constant(SceneStringName(outline_size), "MenuButton", 0);
@@ -302,8 +302,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_hover_color", "CheckBox", control_font_hover_color);
 	theme->set_color("font_hover_pressed_color", "CheckBox", control_font_pressed_color);
 	theme->set_color("font_focus_color", "CheckBox", control_font_focus_color);
-	theme->set_color("font_disabled_color", "CheckBox", control_font_disabled_color);
-	theme->set_color("font_outline_color", "CheckBox", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_disabled_color), "CheckBox", control_font_disabled_color);
+	theme->set_color(SceneStringName(font_outline_color), "CheckBox", Color(0, 0, 0));
 
 	theme->set_constant(SceneStringName(h_separation), "CheckBox", Math::round(4 * scale));
 	theme->set_constant("check_v_offset", "CheckBox", 0);
@@ -342,8 +342,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_hover_color", "CheckButton", control_font_hover_color);
 	theme->set_color("font_hover_pressed_color", "CheckButton", control_font_pressed_color);
 	theme->set_color("font_focus_color", "CheckButton", control_font_focus_color);
-	theme->set_color("font_disabled_color", "CheckButton", control_font_disabled_color);
-	theme->set_color("font_outline_color", "CheckButton", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_disabled_color), "CheckButton", control_font_disabled_color);
+	theme->set_color(SceneStringName(font_outline_color), "CheckButton", Color(0, 0, 0));
 
 	theme->set_constant(SceneStringName(h_separation), "CheckButton", Math::round(4 * scale));
 	theme->set_constant("check_v_offset", "CheckButton", 0);
@@ -383,7 +383,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_color(SceneStringName(font_color), "Label", Color(1, 1, 1));
 	theme->set_color("font_shadow_color", "Label", Color(0, 0, 0, 0));
-	theme->set_color("font_outline_color", "Label", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "Label", Color(0, 0, 0));
 
 	theme->set_constant("shadow_offset_x", "Label", Math::round(1 * scale));
 	theme->set_constant("shadow_offset_y", "Label", Math::round(1 * scale));
@@ -423,7 +423,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_selected_color", "LineEdit", control_font_pressed_color);
 	theme->set_color("font_uneditable_color", "LineEdit", control_font_disabled_color);
 	theme->set_color("font_placeholder_color", "LineEdit", control_font_placeholder_color);
-	theme->set_color("font_outline_color", "LineEdit", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "LineEdit", Color(0, 0, 0));
 	theme->set_color("caret_color", "LineEdit", control_font_hover_color);
 	theme->set_color("selection_color", "LineEdit", control_selection_color);
 	theme->set_color("clear_button_color", "LineEdit", control_font_color);
@@ -444,7 +444,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_font_size(SceneStringName(font_size), "ProgressBar", -1);
 
 	theme->set_color(SceneStringName(font_color), "ProgressBar", control_font_hover_color);
-	theme->set_color("font_outline_color", "ProgressBar", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "ProgressBar", Color(0, 0, 0));
 
 	theme->set_constant(SceneStringName(outline_size), "ProgressBar", 0);
 
@@ -465,7 +465,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_selected_color", "TextEdit", Color(0, 0, 0, 0));
 	theme->set_color("font_readonly_color", "TextEdit", control_font_disabled_color);
 	theme->set_color("font_placeholder_color", "TextEdit", control_font_placeholder_color);
-	theme->set_color("font_outline_color", "TextEdit", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "TextEdit", Color(0, 0, 0));
 	theme->set_color("selection_color", "TextEdit", control_selection_color);
 	theme->set_color("current_line_color", "TextEdit", Color(0.25, 0.25, 0.26, 0.8));
 	theme->set_color("caret_color", "TextEdit", control_font_color);
@@ -510,7 +510,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_selected_color", "CodeEdit", Color(0, 0, 0, 0));
 	theme->set_color("font_readonly_color", "CodeEdit", Color(control_font_color.r, control_font_color.g, control_font_color.b, 0.5f));
 	theme->set_color("font_placeholder_color", "CodeEdit", control_font_placeholder_color);
-	theme->set_color("font_outline_color", "CodeEdit", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "CodeEdit", Color(0, 0, 0));
 	theme->set_color("selection_color", "CodeEdit", control_selection_color);
 	theme->set_color("bookmark_color", "CodeEdit", Color(0.5, 0.64, 1, 0.8));
 	theme->set_color("breakpoint_color", "CodeEdit", Color(0.9, 0.29, 0.3));
@@ -756,10 +756,10 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_color(SceneStringName(font_color), "PopupMenu", control_font_color);
 	theme->set_color("font_accelerator_color", "PopupMenu", Color(0.7, 0.7, 0.7, 0.8));
-	theme->set_color("font_disabled_color", "PopupMenu", Color(0.4, 0.4, 0.4, 0.8));
+	theme->set_color(SceneStringName(font_disabled_color), "PopupMenu", Color(0.4, 0.4, 0.4, 0.8));
 	theme->set_color("font_hover_color", "PopupMenu", control_font_color);
 	theme->set_color("font_separator_color", "PopupMenu", control_font_color);
-	theme->set_color("font_outline_color", "PopupMenu", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "PopupMenu", Color(0, 0, 0));
 	theme->set_color("font_separator_outline_color", "PopupMenu", Color(0, 0, 0));
 
 	theme->set_constant("indent", "PopupMenu", Math::round(10 * scale));
@@ -805,7 +805,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_font_size(SceneStringName(font_size), "GraphNodeTitleLabel", -1);
 	theme->set_color(SceneStringName(font_color), "GraphNodeTitleLabel", control_font_color);
 	theme->set_color("font_shadow_color", "GraphNodeTitleLabel", Color(0, 0, 0, 0));
-	theme->set_color("font_outline_color", "GraphNodeTitleLabel", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "GraphNodeTitleLabel", Color(0, 0, 0));
 	theme->set_constant("shadow_offset_x", "GraphNodeTitleLabel", Math::round(1 * scale));
 	theme->set_constant("shadow_offset_y", "GraphNodeTitleLabel", Math::round(1 * scale));
 	theme->set_constant(SceneStringName(outline_size), "GraphNodeTitleLabel", 0);
@@ -835,7 +835,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_font_size(SceneStringName(font_size), "GraphFrameTitleLabel", 22);
 	theme->set_color(SceneStringName(font_color), "GraphFrameTitleLabel", Color(1, 1, 1));
 	theme->set_color("font_shadow_color", "GraphFrameTitleLabel", Color(0, 0, 0, 0));
-	theme->set_color("font_outline_color", "GraphFrameTitleLabel", Color(1, 1, 1));
+	theme->set_color(SceneStringName(font_outline_color), "GraphFrameTitleLabel", Color(1, 1, 1));
 	theme->set_constant("shadow_offset_x", "GraphFrameTitleLabel", 1 * scale);
 	theme->set_constant("shadow_offset_y", "GraphFrameTitleLabel", 1 * scale);
 	theme->set_constant(SceneStringName(outline_size), "GraphFrameTitleLabel", 0);
@@ -887,8 +887,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_hovered_dimmed_color", "Tree", control_font_color);
 	theme->set_color("font_hovered_selected_color", "Tree", control_font_pressed_color);
 	theme->set_color("font_selected_color", "Tree", control_font_pressed_color);
-	theme->set_color("font_disabled_color", "Tree", control_font_disabled_color);
-	theme->set_color("font_outline_color", "Tree", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_disabled_color), "Tree", control_font_disabled_color);
+	theme->set_color(SceneStringName(font_outline_color), "Tree", Color(0, 0, 0));
 	theme->set_color("guide_color", "Tree", Color(0.7, 0.7, 0.7, 0.25));
 	theme->set_color("drop_position_color", "Tree", Color(1, 1, 1));
 	theme->set_color("relationship_line_color", "Tree", Color(0.27, 0.27, 0.27));
@@ -937,7 +937,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_hovered_color", "ItemList", control_font_hover_color);
 	theme->set_color("font_hovered_selected_color", "ItemList", control_font_pressed_color);
 	theme->set_color("font_selected_color", "ItemList", control_font_pressed_color);
-	theme->set_color("font_outline_color", "ItemList", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "ItemList", Color(0, 0, 0));
 	theme->set_color("guide_color", "ItemList", Color(0.7, 0.7, 0.7, 0.25));
 	theme->set_stylebox("hovered", "ItemList", make_flat_stylebox(Color(1, 1, 1, 0.07)));
 	theme->set_stylebox("hovered_selected", "ItemList", make_flat_stylebox(style_hover_selected_color));
@@ -987,8 +987,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_selected_color", "TabContainer", control_font_hover_color);
 	theme->set_color("font_hovered_color", "TabContainer", control_font_hover_color);
 	theme->set_color("font_unselected_color", "TabContainer", control_font_low_color);
-	theme->set_color("font_disabled_color", "TabContainer", control_font_disabled_color);
-	theme->set_color("font_outline_color", "TabContainer", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_disabled_color), "TabContainer", control_font_disabled_color);
+	theme->set_color(SceneStringName(font_outline_color), "TabContainer", Color(0, 0, 0));
 	theme->set_color("drop_mark_color", "TabContainer", Color(1, 1, 1));
 
 	theme->set_constant("side_margin", "TabContainer", Math::round(8 * scale));
@@ -1019,8 +1019,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_selected_color", "TabBar", control_font_hover_color);
 	theme->set_color("font_hovered_color", "TabBar", control_font_hover_color);
 	theme->set_color("font_unselected_color", "TabBar", control_font_low_color);
-	theme->set_color("font_disabled_color", "TabBar", control_font_disabled_color);
-	theme->set_color("font_outline_color", "TabBar", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_disabled_color), "TabBar", control_font_disabled_color);
+	theme->set_color(SceneStringName(font_outline_color), "TabBar", Color(0, 0, 0));
 	theme->set_color("drop_mark_color", "TabBar", Color(1, 1, 1));
 
 	theme->set_constant(SceneStringName(h_separation), "TabBar", Math::round(4 * scale));
@@ -1113,8 +1113,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_pressed_color", "ColorPickerButton", Color(0.8, 0.8, 0.8, 1));
 	theme->set_color("font_hover_color", "ColorPickerButton", Color(1, 1, 1, 1));
 	theme->set_color("font_focus_color", "ColorPickerButton", Color(1, 1, 1, 1));
-	theme->set_color("font_disabled_color", "ColorPickerButton", Color(0.9, 0.9, 0.9, 0.3));
-	theme->set_color("font_outline_color", "ColorPickerButton", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_disabled_color), "ColorPickerButton", Color(0.9, 0.9, 0.9, 0.3));
+	theme->set_color(SceneStringName(font_outline_color), "ColorPickerButton", Color(0, 0, 0));
 
 	theme->set_constant(SceneStringName(h_separation), "ColorPickerButton", Math::round(4 * scale));
 	theme->set_constant(SceneStringName(outline_size), "ColorPickerButton", 0);
@@ -1143,7 +1143,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_color(SceneStringName(font_color), "TooltipLabel", control_font_color);
 	theme->set_color("font_shadow_color", "TooltipLabel", Color(0, 0, 0, 0));
-	theme->set_color("font_outline_color", "TooltipLabel", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "TooltipLabel", Color(0, 0, 0));
 
 	theme->set_constant("shadow_offset_x", "TooltipLabel", 1);
 	theme->set_constant("shadow_offset_y", "TooltipLabel", 1);
@@ -1171,7 +1171,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_color("font_shadow_color", "RichTextLabel", Color(0, 0, 0, 0));
 
-	theme->set_color("font_outline_color", "RichTextLabel", Color(0, 0, 0));
+	theme->set_color(SceneStringName(font_outline_color), "RichTextLabel", Color(0, 0, 0));
 
 	theme->set_constant("shadow_offset_x", "RichTextLabel", Math::round(1 * scale));
 	theme->set_constant("shadow_offset_y", "RichTextLabel", Math::round(1 * scale));
@@ -1282,7 +1282,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color(SceneStringName(font_color), "FoldableContainer", control_font_color);
 	theme->set_color("hover_font_color", "FoldableContainer", control_font_hover_color);
 	theme->set_color("collapsed_font_color", "FoldableContainer", control_font_pressed_color);
-	theme->set_color("font_outline_color", "FoldableContainer", Color(1, 1, 1));
+	theme->set_color(SceneStringName(font_outline_color), "FoldableContainer", Color(1, 1, 1));
 
 	theme->set_icon("expanded_arrow", "FoldableContainer", icons["arrow_down"]);
 	theme->set_icon("expanded_arrow_mirrored", "FoldableContainer", icons["arrow_up"]);

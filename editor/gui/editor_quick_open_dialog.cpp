@@ -1079,7 +1079,7 @@ void QuickOpenResultListItem::remove_highlight() {
 void QuickOpenResultListItem::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
-			path->add_theme_color_override(SceneStringName(font_color), get_theme_color("font_disabled_color", EditorStringName(Editor)));
+			path->add_theme_color_override(SceneStringName(font_color), get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor)));
 		} break;
 	}
 }

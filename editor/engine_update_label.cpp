@@ -159,7 +159,7 @@ void EngineUpdateLabel::_http_request_completed(int p_result, int p_response_cod
 
 void EngineUpdateLabel::_set_message(const String &p_message, const Color &p_color) {
 	if (is_disabled()) {
-		add_theme_color_override("font_disabled_color", p_color);
+		add_theme_color_override(SceneStringName(font_disabled_color), p_color);
 	} else {
 		add_theme_color_override(SceneStringName(font_color), p_color);
 	}
@@ -258,7 +258,7 @@ void EngineUpdateLabel::_notification(int p_what) {
 
 		case NOTIFICATION_THEME_CHANGED: {
 			theme_cache.default_color = get_theme_color(SceneStringName(font_color), "Button");
-			theme_cache.disabled_color = get_theme_color("font_disabled_color", "Button");
+			theme_cache.disabled_color = get_theme_color(SceneStringName(font_disabled_color), "Button");
 			theme_cache.error_color = get_theme_color("error_color", EditorStringName(Editor));
 			theme_cache.update_color = get_theme_color("warning_color", EditorStringName(Editor));
 		} break;

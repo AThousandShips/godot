@@ -1109,10 +1109,10 @@ void EditorPropertyLayersGrid::_notification(int p_what) {
 
 			Color color = get_theme_color(read_only ? SNAME("highlight_disabled_color") : SNAME("highlight_color"), EditorStringName(Editor));
 
-			Color text_color = get_theme_color(read_only ? SNAME("font_disabled_color") : SceneStringName(font_color), EditorStringName(Editor));
+			Color text_color = get_theme_color(read_only ? SceneStringName(font_disabled_color) : SceneStringName(font_color), EditorStringName(Editor));
 			text_color.a *= 0.5;
 
-			Color text_color_on = get_theme_color(read_only ? SNAME("font_disabled_color") : SNAME("font_hover_color"), EditorStringName(Editor));
+			Color text_color_on = get_theme_color(read_only ? SceneStringName(font_disabled_color) : SNAME("font_hover_color"), EditorStringName(Editor));
 			text_color_on.a *= 0.7;
 
 			const int vofs = (grid_size.height - h) / 2;

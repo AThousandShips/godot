@@ -2136,7 +2136,7 @@ void AnimationTrackEdit::_notification(int p_what) {
 			const int font_size = get_theme_font_size(SceneStringName(font_size), SNAME("Label"));
 			const Color color = get_theme_color(SceneStringName(font_color), SNAME("Label"));
 
-			const Color dc = get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor));
+			const Color dc = get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor));
 
 			// Names and icons.
 

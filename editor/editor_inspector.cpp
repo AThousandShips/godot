@@ -1980,7 +1980,7 @@ void EditorInspectorSection::_notification(int p_what) {
 				if (folded && revertable_properties.size()) {
 					int label_width = font->get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, available, font_size, TextServer::JUSTIFICATION_KASHIDA | TextServer::JUSTIFICATION_CONSTRAIN_ELLIPSIS).x;
 
-					Color light_font_color = get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor));
+					Color light_font_color = get_theme_color(SceneStringName(font_disabled_color), EditorStringName(Editor));
 
 					// Can we fit the long version of the revertable count text?
 					num_revertable_str = vformat(TTRN("(%d change)", "(%d changes)", revertable_properties.size()), revertable_properties.size());
