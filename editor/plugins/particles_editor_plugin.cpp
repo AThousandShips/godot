@@ -868,7 +868,7 @@ Particles3DEditorPlugin::Particles3DEditorPlugin() {
 	valid_types.push_back("MeshInstance3D");
 	emission_tree_dialog->set_valid_types(valid_types);
 	EditorNode::get_singleton()->get_gui_base()->add_child(emission_tree_dialog);
-	emission_tree_dialog->connect("selected", callable_mp(this, &Particles3DEditorPlugin::_node_selected));
+	emission_tree_dialog->connect(SceneStringName(selected), callable_mp(this, &Particles3DEditorPlugin::_node_selected));
 
 	emission_dialog = memnew(ConfirmationDialog);
 	emission_dialog->set_title(TTR("Create Emitter"));

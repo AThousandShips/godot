@@ -850,7 +850,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox("hovered_dimmed", "Tree", make_flat_stylebox(Color(1, 1, 1, 0.03)));
 	theme->set_stylebox("hovered_selected", "Tree", make_flat_stylebox(style_hover_selected_color));
 	theme->set_stylebox("hovered_selected_focus", "Tree", make_flat_stylebox(style_hover_selected_color));
-	theme->set_stylebox("selected", "Tree", make_flat_stylebox(style_selected_color));
+	theme->set_stylebox(SceneStringName(selected), "Tree", make_flat_stylebox(style_selected_color));
 	theme->set_stylebox("selected_focus", "Tree", make_flat_stylebox(style_selected_color));
 	theme->set_stylebox("cursor", "Tree", focus);
 	theme->set_stylebox("cursor_unfocused", "Tree", focus);
@@ -942,7 +942,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox("hovered", "ItemList", make_flat_stylebox(Color(1, 1, 1, 0.07)));
 	theme->set_stylebox("hovered_selected", "ItemList", make_flat_stylebox(style_hover_selected_color));
 	theme->set_stylebox("hovered_selected_focus", "ItemList", make_flat_stylebox(style_hover_selected_color));
-	theme->set_stylebox("selected", "ItemList", make_flat_stylebox(style_selected_color));
+	theme->set_stylebox(SceneStringName(selected), "ItemList", make_flat_stylebox(style_selected_color));
 	theme->set_stylebox("selected_focus", "ItemList", make_flat_stylebox(style_selected_color));
 	theme->set_stylebox("cursor", "ItemList", focus);
 	theme->set_stylebox("cursor_unfocused", "ItemList", focus);

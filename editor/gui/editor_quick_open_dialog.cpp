@@ -973,7 +973,7 @@ void QuickOpenResultItem::_notification(int p_what) {
 			queue_redraw();
 		} break;
 		case NOTIFICATION_THEME_CHANGED: {
-			selected_stylebox = get_theme_stylebox("selected", "Tree");
+			selected_stylebox = get_theme_stylebox(SceneStringName(selected), "Tree");
 			hovering_stylebox = get_theme_stylebox(SNAME("hovered"), "Tree");
 			highlighted_font_color = get_theme_color("font_focus_color", EditorStringName(Editor));
 		} break;

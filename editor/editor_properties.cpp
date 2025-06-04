@@ -2823,7 +2823,7 @@ void EditorPropertyNodePath::_node_assign() {
 		scene_tree->get_scene_tree()->set_show_enabled_subscene(true);
 		scene_tree->set_valid_types(valid_types);
 		add_child(scene_tree);
-		scene_tree->connect("selected", callable_mp(this, &EditorPropertyNodePath::_node_selected).bind(true));
+		scene_tree->connect(SceneStringName(selected), callable_mp(this, &EditorPropertyNodePath::_node_selected).bind(true));
 	}
 
 	Variant val = get_edited_property_value();
@@ -3286,7 +3286,7 @@ void EditorPropertyResource::_resource_changed(const Ref<Resource> &p_resource) 
 			scene_tree->get_scene_tree()->set_show_enabled_subscene(true);
 
 			add_child(scene_tree);
-			scene_tree->connect("selected", callable_mp(this, &EditorPropertyResource::_viewport_selected));
+			scene_tree->connect(SceneStringName(selected), callable_mp(this, &EditorPropertyResource::_viewport_selected));
 		}
 		scene_tree->popup_scenetree_dialog();
 	}

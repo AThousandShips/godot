@@ -302,7 +302,7 @@ void EditorInterface::popup_node_selector(const Callable &p_callback, const Type
 	node_selector->popup_scenetree_dialog(p_current_value);
 
 	const Callable callback = callable_mp(this, &EditorInterface::_node_selected);
-	node_selector->connect(SNAME("selected"), callback.bind(p_callback), CONNECT_DEFERRED);
+	node_selector->connect(SceneStringName(selected), callback.bind(p_callback), CONNECT_DEFERRED);
 	node_selector->connect(SNAME("canceled"), callback.bind(NodePath(), p_callback), CONNECT_DEFERRED);
 }
 
@@ -322,7 +322,7 @@ void EditorInterface::popup_property_selector(Object *p_object, const Callable &
 	property_selector->select_property_from_instance(p_object, p_current_value);
 
 	const Callable callback = callable_mp(this, &EditorInterface::_property_selected);
-	property_selector->connect(SNAME("selected"), callback.bind(p_callback), CONNECT_DEFERRED);
+	property_selector->connect(SceneStringName(selected), callback.bind(p_callback), CONNECT_DEFERRED);
 	property_selector->connect(SNAME("canceled"), callback.bind(String(), p_callback), CONNECT_DEFERRED);
 }
 
@@ -335,7 +335,7 @@ void EditorInterface::popup_method_selector(Object *p_object, const Callable &p_
 	method_selector->select_method_from_instance(p_object, p_current_value);
 
 	const Callable callback = callable_mp(this, &EditorInterface::_method_selected);
-	method_selector->connect(SNAME("selected"), callback.bind(p_callback), CONNECT_DEFERRED);
+	method_selector->connect(SceneStringName(selected), callback.bind(p_callback), CONNECT_DEFERRED);
 	method_selector->connect(SNAME("canceled"), callback.bind(String(), p_callback), CONNECT_DEFERRED);
 }
 
@@ -386,7 +386,7 @@ void EditorInterface::popup_create_dialog(const Callable &p_callback, const Stri
 
 void EditorInterface::_node_selected(const NodePath &p_node_path, const Callable &p_callback) {
 	const Callable callback = callable_mp(this, &EditorInterface::_node_selected);
-	node_selector->disconnect(SNAME("selected"), callback);
+	node_selector->disconnect(SceneStringName(selected), callback);
 	node_selector->disconnect(SNAME("canceled"), callback);
 
 	if (p_node_path.is_empty()) {
@@ -399,7 +399,7 @@ void EditorInterface::_node_selected(const NodePath &p_node_path, const Callable
 
 void EditorInterface::_property_selected(const String &p_property_name, const Callable &p_callback) {
 	const Callable callback = callable_mp(this, &EditorInterface::_property_selected);
-	property_selector->disconnect(SNAME("selected"), callback);
+	property_selector->disconnect(SceneStringName(selected), callback);
 	property_selector->disconnect(SNAME("canceled"), callback);
 
 	if (p_property_name.is_empty()) {
@@ -411,7 +411,7 @@ void EditorInterface::_property_selected(const String &p_property_name, const Ca
 
 void EditorInterface::_method_selected(const String &p_method_name, const Callable &p_callback) {
 	const Callable callback = callable_mp(this, &EditorInterface::_method_selected);
-	method_selector->disconnect(SNAME("selected"), callback);
+	method_selector->disconnect(SceneStringName(selected), callback);
 	method_selector->disconnect(SNAME("canceled"), callback);
 
 	if (p_method_name.is_empty()) {

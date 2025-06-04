@@ -78,6 +78,7 @@ public:
 	const StringName font_disabled_color = "font_disabled_color";
 	const StringName font_outline_color = "font_outline_color";
 	const StringName outline_size = "outline_size";
+	const StringName selected = "selected";
 
 	const StringName mouse_entered = "mouse_entered";
 	const StringName mouse_exited = "mouse_exited";

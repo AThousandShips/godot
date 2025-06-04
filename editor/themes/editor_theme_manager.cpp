@@ -1027,7 +1027,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_stylebox("hovered_selected_focus", "Tree", style_tree_hover_selected);
 
 			p_theme->set_stylebox("selected_focus", "Tree", style_tree_focus);
-			p_theme->set_stylebox("selected", "Tree", style_tree_selected);
+			p_theme->set_stylebox(SceneStringName(selected), "Tree", style_tree_selected);
 
 			Ref<StyleBoxFlat> style_tree_cursor = p_config.base_style->duplicate();
 			style_tree_cursor->set_draw_center(false);
@@ -1076,7 +1076,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_stylebox("cursor", "ItemList", style_itemlist_cursor);
 			p_theme->set_stylebox("cursor_unfocused", "ItemList", style_itemlist_cursor);
 			p_theme->set_stylebox("selected_focus", "ItemList", style_tree_focus);
-			p_theme->set_stylebox("selected", "ItemList", style_tree_selected);
+			p_theme->set_stylebox(SceneStringName(selected), "ItemList", style_tree_selected);
 			p_theme->set_stylebox("hovered", "ItemList", style_itemlist_hover);
 			p_theme->set_stylebox("hovered_selected", "ItemList", style_itemlist_hover_selected);
 			p_theme->set_stylebox("hovered_selected_focus", "ItemList", style_itemlist_hover_selected);

@@ -889,7 +889,7 @@ void EditorProperty::_focusable_focused(int p_index) {
 	selected_focusable = p_index;
 	queue_redraw();
 	if (!already_selected && selected) {
-		emit_signal(SNAME("selected"), property, selected_focusable);
+		emit_signal(SceneStringName(selected), property, selected_focusable);
 	}
 }
 
@@ -926,7 +926,7 @@ void EditorProperty::select(int p_focusable) {
 	}
 
 	if (!already_selected && selected) {
-		emit_signal(SNAME("selected"), property, selected_focusable);
+		emit_signal(SceneStringName(selected), property, selected_focusable);
 	}
 }
 
@@ -3414,7 +3414,7 @@ void EditorInspector::_parse_added_editors(VBoxContainer *current_vbox, EditorIn
 			ep->connect("property_checked", callable_mp(this, &EditorInspector::_property_checked));
 			ep->connect("property_favorited", callable_mp(this, &EditorInspector::_set_property_favorited), CONNECT_DEFERRED);
 			ep->connect("property_pinned", callable_mp(this, &EditorInspector::_property_pinned));
-			ep->connect("selected", callable_mp(this, &EditorInspector::_property_selected));
+			ep->connect(SceneStringName(selected), callable_mp(this, &EditorInspector::_property_selected));
 			ep->connect("multiple_properties_changed", callable_mp(this, &EditorInspector::_multiple_properties_changed));
 			ep->connect("resource_selected", callable_mp(get_root_inspector(), &EditorInspector::_resource_selected), CONNECT_DEFERRED);
 			ep->connect("object_id_selected", callable_mp(this, &EditorInspector::_object_id_selected), CONNECT_DEFERRED);
@@ -4309,7 +4309,7 @@ void EditorInspector::update_tree() {
 				ep->connect("property_favorited", callable_mp(this, &EditorInspector::_set_property_favorited), CONNECT_DEFERRED);
 				ep->connect("property_checked", callable_mp(this, &EditorInspector::_property_checked));
 				ep->connect("property_pinned", callable_mp(this, &EditorInspector::_property_pinned));
-				ep->connect("selected", callable_mp(this, &EditorInspector::_property_selected));
+				ep->connect(SceneStringName(selected), callable_mp(this, &EditorInspector::_property_selected));
 				ep->connect("multiple_properties_changed", callable_mp(this, &EditorInspector::_multiple_properties_changed));
 				ep->connect("resource_selected", callable_mp(get_root_inspector(), &EditorInspector::_resource_selected), CONNECT_DEFERRED);
 				ep->connect("object_id_selected", callable_mp(this, &EditorInspector::_object_id_selected), CONNECT_DEFERRED);

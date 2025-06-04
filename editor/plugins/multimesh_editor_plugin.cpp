@@ -367,7 +367,7 @@ MultiMeshEditor::MultiMeshEditor() {
 	valid_types.push_back("MeshInstance3D");
 	std->set_valid_types(valid_types);
 	populate_dialog->add_child(std);
-	std->connect("selected", callable_mp(this, &MultiMeshEditor::_browsed));
+	std->connect(SceneStringName(selected), callable_mp(this, &MultiMeshEditor::_browsed));
 
 	_last_pp_node = nullptr;
 

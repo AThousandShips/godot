@@ -1613,7 +1613,7 @@ void TileDataCollisionEditor::_polygons_changed() {
 			one_way_property_editor->set_object_and_property(dummy_object, one_way_property);
 			one_way_property_editor->set_label(one_way_property);
 			one_way_property_editor->connect("property_changed", callable_mp(this, &TileDataCollisionEditor::_property_value_changed).unbind(1));
-			one_way_property_editor->connect("selected", callable_mp(this, &TileDataCollisionEditor::_property_selected));
+			one_way_property_editor->connect(SceneStringName(selected), callable_mp(this, &TileDataCollisionEditor::_property_selected));
 			one_way_property_editor->set_tooltip_text(one_way_property_editor->get_edited_property());
 			one_way_property_editor->update_property();
 			add_child(one_way_property_editor);
@@ -1625,7 +1625,7 @@ void TileDataCollisionEditor::_polygons_changed() {
 			one_way_margin_property_editor->set_object_and_property(dummy_object, one_way_margin_property);
 			one_way_margin_property_editor->set_label(one_way_margin_property);
 			one_way_margin_property_editor->connect("property_changed", callable_mp(this, &TileDataCollisionEditor::_property_value_changed).unbind(1));
-			one_way_margin_property_editor->connect("selected", callable_mp(this, &TileDataCollisionEditor::_property_selected));
+			one_way_margin_property_editor->connect(SceneStringName(selected), callable_mp(this, &TileDataCollisionEditor::_property_selected));
 			one_way_margin_property_editor->set_tooltip_text(one_way_margin_property_editor->get_edited_property());
 			one_way_margin_property_editor->update_property();
 			add_child(one_way_margin_property_editor);
@@ -1791,7 +1791,7 @@ TileDataCollisionEditor::TileDataCollisionEditor() {
 	linear_velocity_editor->set_object_and_property(dummy_object, "linear_velocity");
 	linear_velocity_editor->set_label("linear_velocity");
 	linear_velocity_editor->connect("property_changed", callable_mp(this, &TileDataCollisionEditor::_property_value_changed).unbind(1));
-	linear_velocity_editor->connect("selected", callable_mp(this, &TileDataCollisionEditor::_property_selected));
+	linear_velocity_editor->connect(SceneStringName(selected), callable_mp(this, &TileDataCollisionEditor::_property_selected));
 	linear_velocity_editor->set_tooltip_text(linear_velocity_editor->get_edited_property());
 	linear_velocity_editor->update_property();
 	add_child(linear_velocity_editor);
@@ -1801,7 +1801,7 @@ TileDataCollisionEditor::TileDataCollisionEditor() {
 	angular_velocity_editor->set_object_and_property(dummy_object, "angular_velocity");
 	angular_velocity_editor->set_label("angular_velocity");
 	angular_velocity_editor->connect("property_changed", callable_mp(this, &TileDataCollisionEditor::_property_value_changed).unbind(1));
-	angular_velocity_editor->connect("selected", callable_mp(this, &TileDataCollisionEditor::_property_selected));
+	angular_velocity_editor->connect(SceneStringName(selected), callable_mp(this, &TileDataCollisionEditor::_property_selected));
 	angular_velocity_editor->set_tooltip_text(angular_velocity_editor->get_edited_property());
 	angular_velocity_editor->update_property();
 	add_child(angular_velocity_editor);

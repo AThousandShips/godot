@@ -167,7 +167,7 @@ ReplicationEditor::ReplicationEditor() {
 	pick_node = memnew(SceneTreeDialog);
 	add_child(pick_node);
 	pick_node->set_title(TTR("Pick a node to synchronize:"));
-	pick_node->connect("selected", callable_mp(this, &ReplicationEditor::_pick_node_selected));
+	pick_node->connect(SceneStringName(selected), callable_mp(this, &ReplicationEditor::_pick_node_selected));
 	pick_node->get_filter_line_edit()->connect(SceneStringName(text_changed), callable_mp(this, &ReplicationEditor::_pick_node_filter_text_changed));
 
 	prop_selector = memnew(PropertySelector);
@@ -218,7 +218,7 @@ ReplicationEditor::ReplicationEditor() {
 		Variant::PACKED_VECTOR4_ARRAY,
 	};
 	prop_selector->set_type_filter(types);
-	prop_selector->connect("selected", callable_mp(this, &ReplicationEditor::_pick_node_property_selected));
+	prop_selector->connect(SceneStringName(selected), callable_mp(this, &ReplicationEditor::_pick_node_property_selected));
 
 	HBoxContainer *hb = memnew(HBoxContainer);
 	vb->add_child(hb);

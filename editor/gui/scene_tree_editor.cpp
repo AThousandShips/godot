@@ -2308,7 +2308,7 @@ void SceneTreeDialog::_select() {
 	if (tree->get_selected()) {
 		// The signal may cause another dialog to be displayed, so be sure to hide this one first.
 		hide();
-		emit_signal(SNAME("selected"), tree->get_selected()->get_path());
+		emit_signal(SceneStringName(selected), tree->get_selected()->get_path());
 	}
 }
 

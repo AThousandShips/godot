@@ -328,7 +328,7 @@ void PropertySelector::_confirmed() {
 	if (!ti) {
 		return;
 	}
-	emit_signal(SNAME("selected"), ti->get_metadata(0));
+	emit_signal(SceneStringName(selected), ti->get_metadata(0));
 	hide();
 }
 
