@@ -70,7 +70,7 @@ void EditorRunBar::_notification(int p_what) {
 			if (Engine::get_singleton()->is_recovery_mode_hint()) {
 				main_panel->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SNAME("LaunchPadRecoveryMode"), EditorStringName(EditorStyles)));
 				recovery_mode_panel->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SNAME("RecoveryModeButton"), EditorStringName(EditorStyles)));
-				recovery_mode_button->add_theme_style_override("hover", get_theme_stylebox(SNAME("RecoveryModeButton"), EditorStringName(EditorStyles)));
+				recovery_mode_button->add_theme_style_override(SceneStringName(hover), get_theme_stylebox(SNAME("RecoveryModeButton"), EditorStringName(EditorStyles)));
 
 				recovery_mode_button->set_button_icon(get_editor_theme_icon(SNAME("NodeWarning")));
 				recovery_mode_reload_button->set_button_icon(get_editor_theme_icon(SNAME("Reload")));

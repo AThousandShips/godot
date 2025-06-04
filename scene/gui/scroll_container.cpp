@@ -451,7 +451,7 @@ void ScrollContainer::_notification(int p_what) {
 			if (p_what == NOTIFICATION_THEME_CHANGED) {
 				scroll_border = get_theme_constant(SNAME("scroll_border"), SNAME("Tree"));
 				scroll_speed = get_theme_constant(SNAME("scroll_speed"), SNAME("Tree"));
-				focus_panel->add_theme_style_override("panel", theme_cache.focus_style);
+				focus_panel->add_theme_style_override(SceneStringName(panel), theme_cache.focus_style);
 			}
 		} break;
 

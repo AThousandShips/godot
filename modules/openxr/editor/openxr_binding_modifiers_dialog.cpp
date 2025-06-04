@@ -211,7 +211,7 @@ OpenXRBindingModifiersDialog::OpenXRBindingModifiersDialog() {
 
 	add_binding_modifier_btn = memnew(Button);
 	add_binding_modifier_btn->set_text(TTR("Add binding modifier"));
-	add_binding_modifier_btn->connect("pressed", callable_mp(this, &OpenXRBindingModifiersDialog::_on_add_binding_modifier));
+	add_binding_modifier_btn->connect(SceneStringName(pressed), callable_mp(this, &OpenXRBindingModifiersDialog::_on_add_binding_modifier));
 	binding_modifiers_vb->add_child(add_binding_modifier_btn);
 
 	// TODO may need to create our own dialog for this that can filter on binding modifiers recorded on interaction profiles or on individual bindings.

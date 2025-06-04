@@ -2056,9 +2056,9 @@ void ScriptTextEditor::_notification(int p_what) {
 			[[fallthrough]];
 		case NOTIFICATION_ENTER_TREE: {
 			code_editor->get_text_editor()->set_gutter_width(connection_gutter, code_editor->get_text_editor()->get_line_height());
-			Ref<Font> code_font = get_theme_font("font", "CodeEdit");
-			inline_color_options->add_theme_font_override("font", code_font);
-			inline_color_options->get_popup()->add_theme_font_override("font", code_font);
+			Ref<Font> code_font = get_theme_font(SceneStringName(font), "CodeEdit");
+			inline_color_options->add_theme_font_override(SceneStringName(font), code_font);
+			inline_color_options->get_popup()->add_theme_font_override(SceneStringName(font), code_font);
 		} break;
 	}
 }
@@ -2836,7 +2836,7 @@ ScriptTextEditor::ScriptTextEditor() {
 	inline_color_options->set_h_size_flags(SIZE_FILL);
 	inline_color_options->set_text_overrun_behavior(TextServer::OVERRUN_TRIM_ELLIPSIS);
 	inline_color_options->set_fit_to_longest_item(false);
-	inline_color_options->connect("item_selected", callable_mp(this, &ScriptTextEditor::_update_color_text).unbind(1));
+	inline_color_options->connect(SceneStringName(item_selected), callable_mp(this, &ScriptTextEditor::_update_color_text).unbind(1));
 	inline_color_picker->get_slider(ColorPicker::SLIDER_COUNT)->get_parent()->add_sibling(inline_color_options);
 
 	connection_info_dialog = memnew(ConnectionInfoDialog);

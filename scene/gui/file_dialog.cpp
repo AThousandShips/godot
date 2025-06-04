@@ -2242,7 +2242,7 @@ FileDialog::FileDialog() {
 	file_list->set_allow_rmb_select(true);
 	file_vbox->add_child(file_list);
 	file_list->connect("multi_selected", callable_mp(this, &FileDialog::_file_list_multi_selected));
-	file_list->connect("item_selected", callable_mp(this, &FileDialog::_file_list_selected));
+	file_list->connect(SceneStringName(item_selected), callable_mp(this, &FileDialog::_file_list_selected));
 	file_list->connect("item_activated", callable_mp(this, &FileDialog::_file_list_item_activated));
 	file_list->connect("item_clicked", callable_mp(this, &FileDialog::_item_clicked));
 	file_list->connect("empty_clicked", callable_mp(this, &FileDialog::_empty_clicked));
