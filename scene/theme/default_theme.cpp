@@ -154,8 +154,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant(SceneStringName(outline_size), "Button", 0);
 
 	theme->set_color(SceneStringName(font_color), "Button", control_font_color);
-	theme->set_color("font_pressed_color", "Button", control_font_pressed_color);
-	theme->set_color("font_hover_color", "Button", control_font_hover_color);
+	theme->set_color(SceneStringName(font_pressed_color), "Button", control_font_pressed_color);
+	theme->set_color(SceneStringName(font_hover_color), "Button", control_font_hover_color);
 	theme->set_color("font_focus_color", "Button", control_font_focus_color);
 	theme->set_color("font_hover_pressed_color", "Button", control_font_pressed_color);
 	theme->set_color(SceneStringName(font_disabled_color), "Button", control_font_disabled_color);
@@ -184,8 +184,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant(SceneStringName(outline_size), "MenuBar", 0);
 
 	theme->set_color(SceneStringName(font_color), "MenuBar", control_font_color);
-	theme->set_color("font_pressed_color", "MenuBar", control_font_pressed_color);
-	theme->set_color("font_hover_color", "MenuBar", control_font_hover_color);
+	theme->set_color(SceneStringName(font_pressed_color), "MenuBar", control_font_pressed_color);
+	theme->set_color(SceneStringName(font_hover_color), "MenuBar", control_font_hover_color);
 	theme->set_color("font_focus_color", "MenuBar", control_font_focus_color);
 	theme->set_color("font_hover_pressed_color", "MenuBar", control_font_pressed_color);
 	theme->set_color(SceneStringName(font_disabled_color), "MenuBar", control_font_disabled_color);
@@ -201,8 +201,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_font_size(SceneStringName(font_size), "LinkButton", -1);
 
 	theme->set_color(SceneStringName(font_color), "LinkButton", control_font_color);
-	theme->set_color("font_pressed_color", "LinkButton", control_font_pressed_color);
-	theme->set_color("font_hover_color", "LinkButton", control_font_hover_color);
+	theme->set_color(SceneStringName(font_pressed_color), "LinkButton", control_font_pressed_color);
+	theme->set_color(SceneStringName(font_hover_color), "LinkButton", control_font_hover_color);
 	theme->set_color("font_focus_color", "LinkButton", control_font_focus_color);
 	theme->set_color(SceneStringName(font_outline_color), "LinkButton", Color(0, 0, 0));
 
@@ -238,8 +238,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_font_size(SceneStringName(font_size), "OptionButton", -1);
 
 	theme->set_color(SceneStringName(font_color), "OptionButton", control_font_color);
-	theme->set_color("font_pressed_color", "OptionButton", control_font_pressed_color);
-	theme->set_color("font_hover_color", "OptionButton", control_font_hover_color);
+	theme->set_color(SceneStringName(font_pressed_color), "OptionButton", control_font_pressed_color);
+	theme->set_color(SceneStringName(font_hover_color), "OptionButton", control_font_hover_color);
 	theme->set_color("font_hover_pressed_color", "OptionButton", control_font_pressed_color);
 	theme->set_color("font_focus_color", "OptionButton", control_font_focus_color);
 	theme->set_color(SceneStringName(font_disabled_color), "OptionButton", control_font_disabled_color);
@@ -262,8 +262,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_font_size(SceneStringName(font_size), "MenuButton", -1);
 
 	theme->set_color(SceneStringName(font_color), "MenuButton", control_font_color);
-	theme->set_color("font_pressed_color", "MenuButton", control_font_pressed_color);
-	theme->set_color("font_hover_color", "MenuButton", control_font_hover_color);
+	theme->set_color(SceneStringName(font_pressed_color), "MenuButton", control_font_pressed_color);
+	theme->set_color(SceneStringName(font_hover_color), "MenuButton", control_font_hover_color);
 	theme->set_color("font_focus_color", "MenuButton", control_font_focus_color);
 	theme->set_color(SceneStringName(font_disabled_color), "MenuButton", Color(1, 1, 1, 0.3));
 	theme->set_color(SceneStringName(font_outline_color), "MenuButton", Color(0, 0, 0));
@@ -298,8 +298,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_font_size(SceneStringName(font_size), "CheckBox", -1);
 
 	theme->set_color(SceneStringName(font_color), "CheckBox", control_font_color);
-	theme->set_color("font_pressed_color", "CheckBox", control_font_pressed_color);
-	theme->set_color("font_hover_color", "CheckBox", control_font_hover_color);
+	theme->set_color(SceneStringName(font_pressed_color), "CheckBox", control_font_pressed_color);
+	theme->set_color(SceneStringName(font_hover_color), "CheckBox", control_font_hover_color);
 	theme->set_color("font_hover_pressed_color", "CheckBox", control_font_pressed_color);
 	theme->set_color("font_focus_color", "CheckBox", control_font_focus_color);
 	theme->set_color(SceneStringName(font_disabled_color), "CheckBox", control_font_disabled_color);
@@ -338,8 +338,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_font_size(SceneStringName(font_size), "CheckButton", -1);
 
 	theme->set_color(SceneStringName(font_color), "CheckButton", control_font_color);
-	theme->set_color("font_pressed_color", "CheckButton", control_font_pressed_color);
-	theme->set_color("font_hover_color", "CheckButton", control_font_hover_color);
+	theme->set_color(SceneStringName(font_pressed_color), "CheckButton", control_font_pressed_color);
+	theme->set_color(SceneStringName(font_hover_color), "CheckButton", control_font_hover_color);
 	theme->set_color("font_hover_pressed_color", "CheckButton", control_font_pressed_color);
 	theme->set_color("font_focus_color", "CheckButton", control_font_focus_color);
 	theme->set_color(SceneStringName(font_disabled_color), "CheckButton", control_font_disabled_color);
@@ -757,7 +757,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color(SceneStringName(font_color), "PopupMenu", control_font_color);
 	theme->set_color("font_accelerator_color", "PopupMenu", Color(0.7, 0.7, 0.7, 0.8));
 	theme->set_color(SceneStringName(font_disabled_color), "PopupMenu", Color(0.4, 0.4, 0.4, 0.8));
-	theme->set_color("font_hover_color", "PopupMenu", control_font_color);
+	theme->set_color(SceneStringName(font_hover_color), "PopupMenu", control_font_color);
 	theme->set_color("font_separator_color", "PopupMenu", control_font_color);
 	theme->set_color(SceneStringName(font_outline_color), "PopupMenu", Color(0, 0, 0));
 	theme->set_color("font_separator_outline_color", "PopupMenu", Color(0, 0, 0));
@@ -1110,8 +1110,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_font_size(SceneStringName(font_size), "ColorPickerButton", -1);
 
 	theme->set_color(SceneStringName(font_color), "ColorPickerButton", Color(1, 1, 1, 1));
-	theme->set_color("font_pressed_color", "ColorPickerButton", Color(0.8, 0.8, 0.8, 1));
-	theme->set_color("font_hover_color", "ColorPickerButton", Color(1, 1, 1, 1));
+	theme->set_color(SceneStringName(font_pressed_color), "ColorPickerButton", Color(0.8, 0.8, 0.8, 1));
+	theme->set_color(SceneStringName(font_hover_color), "ColorPickerButton", Color(1, 1, 1, 1));
 	theme->set_color("font_focus_color", "ColorPickerButton", Color(1, 1, 1, 1));
 	theme->set_color(SceneStringName(font_disabled_color), "ColorPickerButton", Color(0.9, 0.9, 0.9, 0.3));
 	theme->set_color(SceneStringName(font_outline_color), "ColorPickerButton", Color(0, 0, 0));

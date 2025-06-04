@@ -477,8 +477,8 @@ void EditorThemeManager::_create_shared_styles(const Ref<EditorTheme> &p_theme, 
 
 		p_theme->set_color(SceneStringName(font_color), EditorStringName(Editor), p_config.font_color);
 		p_theme->set_color("font_focus_color", EditorStringName(Editor), p_config.font_focus_color);
-		p_theme->set_color("font_hover_color", EditorStringName(Editor), p_config.font_hover_color);
-		p_theme->set_color("font_pressed_color", EditorStringName(Editor), p_config.font_pressed_color);
+		p_theme->set_color(SceneStringName(font_hover_color), EditorStringName(Editor), p_config.font_hover_color);
+		p_theme->set_color(SceneStringName(font_pressed_color), EditorStringName(Editor), p_config.font_pressed_color);
 		p_theme->set_color("font_hover_pressed_color", EditorStringName(Editor), p_config.font_hover_pressed_color);
 		p_theme->set_color(SceneStringName(font_disabled_color), EditorStringName(Editor), p_config.font_disabled_color);
 		p_theme->set_color("font_readonly_color", EditorStringName(Editor), p_config.font_readonly_color);
@@ -732,10 +732,10 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_stylebox(SceneStringName(disabled), "Button", p_config.button_style_disabled);
 
 		p_theme->set_color(SceneStringName(font_color), "Button", p_config.font_color);
-		p_theme->set_color("font_hover_color", "Button", p_config.font_hover_color);
+		p_theme->set_color(SceneStringName(font_hover_color), "Button", p_config.font_hover_color);
 		p_theme->set_color("font_hover_pressed_color", "Button", p_config.font_hover_pressed_color);
 		p_theme->set_color("font_focus_color", "Button", p_config.font_focus_color);
-		p_theme->set_color("font_pressed_color", "Button", p_config.font_pressed_color);
+		p_theme->set_color(SceneStringName(font_pressed_color), "Button", p_config.font_pressed_color);
 		p_theme->set_color(SceneStringName(font_disabled_color), "Button", p_config.font_disabled_color);
 		p_theme->set_color(SceneStringName(font_outline_color), "Button", p_config.font_outline_color);
 
@@ -760,7 +760,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_stylebox(SceneStringName(disabled), "MenuButton", p_config.panel_container_style);
 
 		p_theme->set_color(SceneStringName(font_color), "MenuButton", p_config.font_color);
-		p_theme->set_color("font_hover_color", "MenuButton", p_config.font_hover_color);
+		p_theme->set_color(SceneStringName(font_hover_color), "MenuButton", p_config.font_hover_color);
 		p_theme->set_color("font_hover_pressed_color", "MenuButton", p_config.font_hover_pressed_color);
 		p_theme->set_color("font_focus_color", "MenuButton", p_config.font_focus_color);
 		p_theme->set_color(SceneStringName(font_outline_color), "MenuButton", p_config.font_outline_color);
@@ -775,10 +775,10 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_stylebox(SceneStringName(disabled), "MenuBar", p_config.button_style_disabled);
 
 		p_theme->set_color(SceneStringName(font_color), "MenuBar", p_config.font_color);
-		p_theme->set_color("font_hover_color", "MenuBar", p_config.font_hover_color);
+		p_theme->set_color(SceneStringName(font_hover_color), "MenuBar", p_config.font_hover_color);
 		p_theme->set_color("font_hover_pressed_color", "MenuBar", p_config.font_hover_pressed_color);
 		p_theme->set_color("font_focus_color", "MenuBar", p_config.font_focus_color);
-		p_theme->set_color("font_pressed_color", "MenuBar", p_config.font_pressed_color);
+		p_theme->set_color(SceneStringName(font_pressed_color), "MenuBar", p_config.font_pressed_color);
 		p_theme->set_color(SceneStringName(font_disabled_color), "MenuBar", p_config.font_disabled_color);
 		p_theme->set_color(SceneStringName(font_outline_color), "MenuBar", p_config.font_outline_color);
 
@@ -817,10 +817,10 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_stylebox("disabled_mirrored", "OptionButton", option_button_disabled_style);
 
 			p_theme->set_color(SceneStringName(font_color), "OptionButton", p_config.font_color);
-			p_theme->set_color("font_hover_color", "OptionButton", p_config.font_hover_color);
+			p_theme->set_color(SceneStringName(font_hover_color), "OptionButton", p_config.font_hover_color);
 			p_theme->set_color("font_hover_pressed_color", "OptionButton", p_config.font_hover_pressed_color);
 			p_theme->set_color("font_focus_color", "OptionButton", p_config.font_focus_color);
-			p_theme->set_color("font_pressed_color", "OptionButton", p_config.font_pressed_color);
+			p_theme->set_color(SceneStringName(font_pressed_color), "OptionButton", p_config.font_pressed_color);
 			p_theme->set_color(SceneStringName(font_disabled_color), "OptionButton", p_config.font_disabled_color);
 			p_theme->set_color(SceneStringName(font_outline_color), "OptionButton", p_config.font_outline_color);
 
@@ -856,10 +856,10 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_icon("unchecked_disabled_mirrored", "CheckButton", p_theme->get_icon(SNAME("GuiToggleOffDisabledMirrored"), EditorStringName(EditorIcons)));
 
 		p_theme->set_color(SceneStringName(font_color), "CheckButton", p_config.font_color);
-		p_theme->set_color("font_hover_color", "CheckButton", p_config.font_hover_color);
+		p_theme->set_color(SceneStringName(font_hover_color), "CheckButton", p_config.font_hover_color);
 		p_theme->set_color("font_hover_pressed_color", "CheckButton", p_config.font_hover_pressed_color);
 		p_theme->set_color("font_focus_color", "CheckButton", p_config.font_focus_color);
-		p_theme->set_color("font_pressed_color", "CheckButton", p_config.font_pressed_color);
+		p_theme->set_color(SceneStringName(font_pressed_color), "CheckButton", p_config.font_pressed_color);
 		p_theme->set_color(SceneStringName(font_disabled_color), "CheckButton", p_config.font_disabled_color);
 		p_theme->set_color(SceneStringName(font_outline_color), "CheckButton", p_config.font_outline_color);
 
@@ -892,10 +892,10 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_icon("radio_unchecked_disabled", "CheckBox", p_theme->get_icon(SNAME("GuiRadioUncheckedDisabled"), EditorStringName(EditorIcons)));
 
 			p_theme->set_color(SceneStringName(font_color), "CheckBox", p_config.font_color);
-			p_theme->set_color("font_hover_color", "CheckBox", p_config.font_hover_color);
+			p_theme->set_color(SceneStringName(font_hover_color), "CheckBox", p_config.font_hover_color);
 			p_theme->set_color("font_hover_pressed_color", "CheckBox", p_config.font_hover_pressed_color);
 			p_theme->set_color("font_focus_color", "CheckBox", p_config.font_focus_color);
-			p_theme->set_color("font_pressed_color", "CheckBox", p_config.font_pressed_color);
+			p_theme->set_color(SceneStringName(font_pressed_color), "CheckBox", p_config.font_pressed_color);
 			p_theme->set_color(SceneStringName(font_disabled_color), "CheckBox", p_config.font_disabled_color);
 			p_theme->set_color(SceneStringName(font_outline_color), "CheckBox", p_config.font_outline_color);
 
@@ -914,10 +914,10 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 
 		p_theme->set_stylebox(SceneStringName(focus), "LinkButton", p_config.base_empty_style);
 		p_theme->set_color(SceneStringName(font_color), "LinkButton", p_config.font_color);
-		p_theme->set_color("font_hover_color", "LinkButton", p_config.font_hover_color);
+		p_theme->set_color(SceneStringName(font_hover_color), "LinkButton", p_config.font_hover_color);
 		p_theme->set_color("font_hover_pressed_color", "LinkButton", p_config.font_hover_pressed_color);
 		p_theme->set_color("font_focus_color", "LinkButton", p_config.font_focus_color);
-		p_theme->set_color("font_pressed_color", "LinkButton", p_config.font_pressed_color);
+		p_theme->set_color(SceneStringName(font_pressed_color), "LinkButton", p_config.font_pressed_color);
 		p_theme->set_color(SceneStringName(font_disabled_color), "LinkButton", p_config.font_disabled_color);
 		p_theme->set_color(SceneStringName(font_outline_color), "LinkButton", p_config.font_outline_color);
 
@@ -1407,7 +1407,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_stylebox("labeled_separator_right", "PopupMenu", style_popup_labeled_separator_right);
 
 			p_theme->set_color(SceneStringName(font_color), "PopupMenu", p_config.font_color);
-			p_theme->set_color("font_hover_color", "PopupMenu", p_config.font_hover_color);
+			p_theme->set_color(SceneStringName(font_hover_color), "PopupMenu", p_config.font_hover_color);
 			p_theme->set_color("font_accelerator_color", "PopupMenu", p_config.font_disabled_color);
 			p_theme->set_color(SceneStringName(font_disabled_color), "PopupMenu", p_config.font_disabled_color);
 			p_theme->set_color("font_separator_color", "PopupMenu", p_config.font_disabled_color);

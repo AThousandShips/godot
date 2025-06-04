@@ -911,10 +911,10 @@ void TileSetAtlasSourceEditor::_tile_data_editor_dropdown_button_draw() {
 	if (get_theme_constant(SNAME("modulate_arrow"))) {
 		switch (tile_data_editor_dropdown_button->get_draw_mode()) {
 			case BaseButton::DRAW_PRESSED:
-				clr = get_theme_color(SNAME("font_pressed_color"));
+				clr = get_theme_color(SceneStringName(font_pressed_color));
 				break;
 			case BaseButton::DRAW_HOVER:
-				clr = get_theme_color(SNAME("font_hover_color"));
+				clr = get_theme_color(SceneStringName(font_hover_color));
 				break;
 			case BaseButton::DRAW_DISABLED:
 				clr = get_theme_color(SceneStringName(font_disabled_color));

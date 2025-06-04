@@ -332,7 +332,7 @@ void Button::_notification(int p_what) {
 
 				} break;
 				case DRAW_PRESSED: {
-					if (has_theme_color(SNAME("font_pressed_color"))) {
+					if (has_theme_color(SceneStringName(font_pressed_color))) {
 						font_color = theme_cache.font_pressed_color;
 					} else {
 						font_color = theme_cache.font_color;

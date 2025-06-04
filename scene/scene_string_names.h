@@ -79,6 +79,8 @@ public:
 	const StringName font_color = "font_color";
 	const StringName font_disabled_color = "font_disabled_color";
 	const StringName font_outline_color = "font_outline_color";
+	const StringName font_pressed_color = "font_pressed_color";
+	const StringName font_hover_color = "font_hover_color";
 	const StringName outline_size = "outline_size";
 	const StringName selected = "selected";
 

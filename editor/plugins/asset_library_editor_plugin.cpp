@@ -98,8 +98,8 @@ void EditorAssetLibraryItem::_notification(int p_what) {
 
 			if (author->get_default_cursor_shape() == CURSOR_ARROW) {
 				// Disable visible feedback if author link isn't clickable.
-				author->add_theme_color_override("font_pressed_color", Color(0.5, 0.5, 0.5));
-				author->add_theme_color_override("font_hover_color", Color(0.5, 0.5, 0.5));
+				author->add_theme_color_override(SceneStringName(font_pressed_color), Color(0.5, 0.5, 0.5));
+				author->add_theme_color_override(SceneStringName(font_hover_color), Color(0.5, 0.5, 0.5));
 			}
 		} break;
 	}

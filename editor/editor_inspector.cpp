@@ -1960,9 +1960,9 @@ void EditorInspectorSection::_notification(int p_what) {
 						checkbox_color.r *= 1.2;
 						checkbox_color.g *= 1.2;
 						checkbox_color.b *= 1.2;
-						check_font_color = checked ? get_theme_color(SNAME("font_hover_pressed_color"), EditorStringName(Editor)) : get_theme_color(SNAME("font_hover_color"), EditorStringName(Editor));
+						check_font_color = checked ? get_theme_color(SNAME("font_hover_pressed_color"), EditorStringName(Editor)) : get_theme_color(SceneStringName(font_hover_color), EditorStringName(Editor));
 					} else if (checked) {
-						check_font_color = get_theme_color(SNAME("font_pressed_color"), EditorStringName(Editor));
+						check_font_color = get_theme_color(SceneStringName(font_pressed_color), EditorStringName(Editor));
 					}
 
 					draw_texture(checkbox, checkbox_position, checkbox_color);

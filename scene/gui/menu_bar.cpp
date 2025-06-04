@@ -462,7 +462,7 @@ void MenuBar::_draw_menu_item(int p_index) {
 		if (!flat) {
 			style->draw(ci, item_rect);
 		}
-		if (has_theme_color(SNAME("font_pressed_color"))) {
+		if (has_theme_color(SceneStringName(font_pressed_color))) {
 			color = theme_cache.font_pressed_color;
 		} else {
 			color = theme_cache.font_color;
