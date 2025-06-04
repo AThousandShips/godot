@@ -2256,7 +2256,7 @@ void RuntimeNodeSelect::_open_selection_list(const Vector<SelectResult> &p_items
 	selection_list->set_auto_translate_mode(Node::AUTO_TRANSLATE_MODE_DISABLED);
 	selection_list->set_force_native(true);
 	selection_list->connect("index_pressed", callable_mp(this, &RuntimeNodeSelect::_items_popup_index_pressed).bind(selection_list));
-	selection_list->connect("popup_hide", callable_mp(this, &RuntimeNodeSelect::_close_selection_list));
+	selection_list->connect(SceneStringName(popup_hide), callable_mp(this, &RuntimeNodeSelect::_close_selection_list));
 
 	root->add_child(selection_list);
 

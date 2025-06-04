@@ -2687,7 +2687,7 @@ void PopupMenu::_about_to_popup() {
 
 void PopupMenu::_about_to_close() {
 	ERR_MAIN_THREAD_GUARD;
-	emit_signal(SNAME("popup_hide"));
+	emit_signal(SceneStringName(popup_hide));
 }
 
 void PopupMenu::activate_item(int p_idx) {

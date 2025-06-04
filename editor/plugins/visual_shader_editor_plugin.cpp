@@ -6967,7 +6967,7 @@ VisualShaderEditor::VisualShaderEditor() {
 	frame_title_change_edit->reset_size();
 	frame_title_change_popup->reset_size();
 	frame_title_change_popup->connect(SceneStringName(focus_exited), callable_mp(this, &VisualShaderEditor::_frame_title_popup_focus_out));
-	frame_title_change_popup->connect("popup_hide", callable_mp(this, &VisualShaderEditor::_frame_title_popup_hide));
+	frame_title_change_popup->connect(SceneStringName(popup_hide), callable_mp(this, &VisualShaderEditor::_frame_title_popup_hide));
 	add_child(frame_title_change_popup);
 
 	frame_tint_color_pick_popup = memnew(PopupPanel);
@@ -6982,7 +6982,7 @@ VisualShaderEditor::VisualShaderEditor() {
 	frame_popup_item_tint_color_editor->add_child(frame_tint_color_confirm_button);
 	frame_tint_color_confirm_button->connect(SceneStringName(pressed), callable_mp(this, &VisualShaderEditor::_frame_color_confirm));
 
-	frame_tint_color_pick_popup->connect("popup_hide", callable_mp(this, &VisualShaderEditor::_frame_color_popup_hide));
+	frame_tint_color_pick_popup->connect(SceneStringName(popup_hide), callable_mp(this, &VisualShaderEditor::_frame_color_popup_hide));
 	add_child(frame_tint_color_pick_popup);
 
 	///////////////////////////////////////

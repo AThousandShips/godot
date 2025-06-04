@@ -1870,7 +1870,7 @@ AnimationNodeStateMachineEditor::AnimationNodeStateMachineEditor() {
 	menu = memnew(PopupMenu);
 	add_child(menu);
 	menu->connect(SceneStringName(id_pressed), callable_mp(this, &AnimationNodeStateMachineEditor::_add_menu_type));
-	menu->connect("popup_hide", callable_mp(this, &AnimationNodeStateMachineEditor::_stop_connecting));
+	menu->connect(SceneStringName(popup_hide), callable_mp(this, &AnimationNodeStateMachineEditor::_stop_connecting));
 
 	animations_menu = memnew(PopupMenu);
 	animations_menu->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
@@ -1880,7 +1880,7 @@ AnimationNodeStateMachineEditor::AnimationNodeStateMachineEditor() {
 	connect_menu = memnew(PopupMenu);
 	add_child(connect_menu);
 	connect_menu->connect(SceneStringName(id_pressed), callable_mp(this, &AnimationNodeStateMachineEditor::_connect_to));
-	connect_menu->connect("popup_hide", callable_mp(this, &AnimationNodeStateMachineEditor::_stop_connecting));
+	connect_menu->connect(SceneStringName(popup_hide), callable_mp(this, &AnimationNodeStateMachineEditor::_stop_connecting));
 
 	state_machine_menu = memnew(PopupMenu);
 	state_machine_menu->set_name("state_machines");

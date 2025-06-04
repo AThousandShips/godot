@@ -1211,7 +1211,7 @@ AnimationNodeBlendTreeEditor::AnimationNodeBlendTreeEditor() {
 	add_node->set_text(TTR("Add Node..."));
 	graph->get_menu_hbox()->move_child(add_node, 0);
 	add_node->get_popup()->connect(SceneStringName(id_pressed), callable_mp(this, &AnimationNodeBlendTreeEditor::_add_node));
-	add_node->get_popup()->connect("popup_hide", callable_mp(this, &AnimationNodeBlendTreeEditor::_popup_hide), CONNECT_DEFERRED);
+	add_node->get_popup()->connect(SceneStringName(popup_hide), callable_mp(this, &AnimationNodeBlendTreeEditor::_popup_hide), CONNECT_DEFERRED);
 	add_node->connect(SceneStringName(about_to_popup), callable_mp(this, &AnimationNodeBlendTreeEditor::_update_options_menu).bind(false));
 	add_node->set_disabled(read_only);
 

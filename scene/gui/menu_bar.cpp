@@ -602,7 +602,7 @@ void MenuBar::add_child_notify(Node *p_child) {
 	menu_cache.push_back(menu);
 	p_child->connect("renamed", callable_mp(this, &MenuBar::_refresh_menu_names));
 	p_child->connect(SceneStringName(about_to_popup), callable_mp(this, &MenuBar::_popup_visibility_changed).bind(true));
-	p_child->connect("popup_hide", callable_mp(this, &MenuBar::_popup_visibility_changed).bind(false));
+	p_child->connect(SceneStringName(popup_hide), callable_mp(this, &MenuBar::_popup_visibility_changed).bind(false));
 
 	if (!global_menu_tag.is_empty()) {
 		NativeMenu *nmenu = NativeMenu::get_singleton();
@@ -691,7 +691,7 @@ void MenuBar::remove_child_notify(Node *p_child) {
 
 	p_child->disconnect("renamed", callable_mp(this, &MenuBar::_refresh_menu_names));
 	p_child->disconnect(SceneStringName(about_to_popup), callable_mp(this, &MenuBar::_popup_visibility_changed));
-	p_child->disconnect("popup_hide", callable_mp(this, &MenuBar::_popup_visibility_changed));
+	p_child->disconnect(SceneStringName(popup_hide), callable_mp(this, &MenuBar::_popup_visibility_changed));
 
 	update_minimum_size();
 }

@@ -83,7 +83,7 @@ void Popup::_notification(int p_what) {
 					if (hide_reason == HIDE_REASON_NONE) {
 						hide_reason = HIDE_REASON_CANCELED;
 					}
-					emit_signal(SNAME("popup_hide"));
+					emit_signal(SceneStringName(popup_hide));
 					popped_up = false;
 				}
 			}

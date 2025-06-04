@@ -197,7 +197,7 @@ FileSystemList::FileSystemList() {
 	line_editor->set_v_size_flags(SIZE_EXPAND_FILL);
 	popup_editor_vb->add_child(line_editor);
 	line_editor->connect(SceneStringName(text_submitted), callable_mp(this, &FileSystemList::_line_editor_submit));
-	popup_editor->connect("popup_hide", callable_mp(this, &FileSystemList::_text_editor_popup_modal_close));
+	popup_editor->connect(SceneStringName(popup_hide), callable_mp(this, &FileSystemList::_text_editor_popup_modal_close));
 }
 
 Ref<Texture2D> FileSystemDock::_get_tree_item_icon(bool p_is_valid, const String &p_file_type, const String &p_icon_path) {

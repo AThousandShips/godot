@@ -653,7 +653,7 @@ OptionButton::OptionButton(const String &p_text) :
 	add_child(popup, false, INTERNAL_MODE_FRONT);
 	popup->connect("index_pressed", callable_mp(this, &OptionButton::_selected));
 	popup->connect("id_focused", callable_mp(this, &OptionButton::_focused));
-	popup->connect("popup_hide", callable_mp((BaseButton *)this, &BaseButton::set_pressed).bind(false));
+	popup->connect(SceneStringName(popup_hide), callable_mp((BaseButton *)this, &BaseButton::set_pressed).bind(false));
 
 	property_helper.setup_for_instance(base_property_helper, this);
 }

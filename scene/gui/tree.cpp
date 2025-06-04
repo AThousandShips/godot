@@ -6702,7 +6702,7 @@ Tree::Tree() {
 	v_scroll->connect(SceneStringName(value_changed), callable_mp(this, &Tree::_scroll_moved));
 	line_editor->connect(SceneStringName(text_submitted), callable_mp(this, &Tree::_line_editor_submit));
 	text_editor->connect(SceneStringName(gui_input), callable_mp(this, &Tree::_text_editor_gui_input));
-	popup_editor->connect("popup_hide", callable_mp(this, &Tree::_text_editor_popup_modal_close));
+	popup_editor->connect(SceneStringName(popup_hide), callable_mp(this, &Tree::_text_editor_popup_modal_close));
 
 	set_notify_transform(true);
 

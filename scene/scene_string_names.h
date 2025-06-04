@@ -168,6 +168,7 @@ public:
 	const StringName confirmed = "confirmed";
 	const StringName canceled = "canceled";
 	const StringName about_to_popup = "about_to_popup";
+	const StringName popup_hide = "popup_hide";
 
 	const StringName popup_closed = "popup_closed";
 	const StringName text_changed = "text_changed";

@@ -235,7 +235,7 @@ MenuButton::MenuButton(const String &p_text) :
 	popup->hide();
 	add_child(popup, false, INTERNAL_MODE_FRONT);
 	popup->connect(SceneStringName(about_to_popup), callable_mp(this, &MenuButton::_popup_visibility_changed).bind(true));
-	popup->connect("popup_hide", callable_mp(this, &MenuButton::_popup_visibility_changed).bind(false));
+	popup->connect(SceneStringName(popup_hide), callable_mp(this, &MenuButton::_popup_visibility_changed).bind(false));
 
 	property_helper.setup_for_instance(base_property_helper, this);
 }

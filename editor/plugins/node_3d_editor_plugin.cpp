@@ -5913,7 +5913,7 @@ Node3DEditorViewport::Node3DEditorViewport(Node3DEditor *p_spatial_editor, int p
 	add_child(selection_menu);
 	selection_menu->set_min_size(Size2(100, 0) * EDSCALE);
 	selection_menu->connect(SceneStringName(id_pressed), callable_mp(this, &Node3DEditorViewport::_selection_result_pressed));
-	selection_menu->connect("popup_hide", callable_mp(this, &Node3DEditorViewport::_selection_menu_hide));
+	selection_menu->connect(SceneStringName(popup_hide), callable_mp(this, &Node3DEditorViewport::_selection_menu_hide));
 
 	if (p_index == 0) {
 		view_display_menu->get_popup()->set_item_checked(view_display_menu->get_popup()->get_item_index(VIEW_AUDIO_LISTENER), true);
