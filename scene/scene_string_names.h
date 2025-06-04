@@ -57,6 +57,7 @@ public:
 	const StringName tree_entered = "tree_entered";
 	const StringName tree_exiting = "tree_exiting";
 	const StringName tree_exited = "tree_exited";
+	const StringName node_removed = "node_removed";
 	const StringName ready = "ready";
 	const StringName _ready = "_ready";
 

@@ -8336,7 +8336,7 @@ void Node3DEditor::_notification(int p_what) {
 
 			_refresh_menu_icons();
 
-			get_tree()->connect("node_removed", callable_mp(this, &Node3DEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &Node3DEditor::_node_removed));
 			get_tree()->connect("node_added", callable_mp(this, &Node3DEditor::_node_added));
 			SceneTreeDock::get_singleton()->get_tree_editor()->connect("node_changed", callable_mp(this, &Node3DEditor::_refresh_menu_icons));
 			editor_selection->connect("selection_changed", callable_mp(this, &Node3DEditor::_selection_changed));

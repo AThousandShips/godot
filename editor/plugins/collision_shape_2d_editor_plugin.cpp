@@ -606,11 +606,11 @@ void CollisionShape2DEditor::forward_canvas_draw_over_viewport(Control *p_overla
 void CollisionShape2DEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
-			get_tree()->connect("node_removed", callable_mp(this, &CollisionShape2DEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &CollisionShape2DEditor::_node_removed));
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
-			get_tree()->disconnect("node_removed", callable_mp(this, &CollisionShape2DEditor::_node_removed));
+			get_tree()->disconnect(SceneStringName(node_removed), callable_mp(this, &CollisionShape2DEditor::_node_removed));
 		} break;
 
 		case NOTIFICATION_PROCESS: {

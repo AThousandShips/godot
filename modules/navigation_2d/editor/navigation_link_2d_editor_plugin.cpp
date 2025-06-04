@@ -39,11 +39,11 @@
 void NavigationLink2DEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
-			get_tree()->connect("node_removed", callable_mp(this, &NavigationLink2DEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &NavigationLink2DEditor::_node_removed));
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
-			get_tree()->disconnect("node_removed", callable_mp(this, &NavigationLink2DEditor::_node_removed));
+			get_tree()->disconnect(SceneStringName(node_removed), callable_mp(this, &NavigationLink2DEditor::_node_removed));
 		} break;
 	}
 }

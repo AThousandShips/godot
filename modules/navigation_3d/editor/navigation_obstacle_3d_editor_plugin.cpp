@@ -247,12 +247,12 @@ void NavigationObstacle3DEditorPlugin::_notification(int p_what) {
 		case NOTIFICATION_READY: {
 			_update_theme();
 			button_edit->set_pressed(true);
-			get_tree()->connect("node_removed", callable_mp(this, &NavigationObstacle3DEditorPlugin::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &NavigationObstacle3DEditorPlugin::_node_removed));
 			EditorNode::get_singleton()->get_gui_base()->connect(SceneStringName(theme_changed), callable_mp(this, &NavigationObstacle3DEditorPlugin::_update_theme));
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
-			get_tree()->disconnect("node_removed", callable_mp(this, &NavigationObstacle3DEditorPlugin::_node_removed));
+			get_tree()->disconnect(SceneStringName(node_removed), callable_mp(this, &NavigationObstacle3DEditorPlugin::_node_removed));
 			EditorNode::get_singleton()->get_gui_base()->disconnect(SceneStringName(theme_changed), callable_mp(this, &NavigationObstacle3DEditorPlugin::_update_theme));
 		} break;
 	}

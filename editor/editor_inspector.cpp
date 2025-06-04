@@ -5293,13 +5293,13 @@ void EditorInspector::_notification(int p_what) {
 			EditorFeatureProfileManager::get_singleton()->connect("current_feature_profile_changed", callable_mp(this, &EditorInspector::_feature_profile_changed));
 			set_process(is_visible_in_tree());
 			if (!is_sub_inspector()) {
-				get_tree()->connect("node_removed", callable_mp(this, &EditorInspector::_node_removed));
+				get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &EditorInspector::_node_removed));
 			}
 		} break;
 
 		case NOTIFICATION_PREDELETE: {
 			if (!is_sub_inspector() && is_inside_tree()) {
-				get_tree()->disconnect("node_removed", callable_mp(this, &EditorInspector::_node_removed));
+				get_tree()->disconnect(SceneStringName(node_removed), callable_mp(this, &EditorInspector::_node_removed));
 			}
 			edit(nullptr);
 		} break;

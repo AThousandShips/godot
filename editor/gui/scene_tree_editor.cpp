@@ -1331,7 +1331,7 @@ void SceneTreeEditor::_notification(int p_what) {
 			get_tree()->connect("tree_changed", callable_mp(this, &SceneTreeEditor::_tree_changed));
 			get_tree()->connect("tree_process_mode_changed", callable_mp(this, &SceneTreeEditor::_tree_process_mode_changed));
 			get_tree()->connect("node_added", callable_mp(this, &SceneTreeEditor::_node_added));
-			get_tree()->connect("node_removed", callable_mp(this, &SceneTreeEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &SceneTreeEditor::_node_removed));
 			get_tree()->connect("node_renamed", callable_mp(this, &SceneTreeEditor::_node_renamed));
 			get_tree()->connect(SceneStringName(node_configuration_warning_changed), callable_mp(this, &SceneTreeEditor::_warning_changed));
 
@@ -1344,7 +1344,7 @@ void SceneTreeEditor::_notification(int p_what) {
 			get_tree()->disconnect("tree_changed", callable_mp(this, &SceneTreeEditor::_tree_changed));
 			get_tree()->disconnect("tree_process_mode_changed", callable_mp(this, &SceneTreeEditor::_tree_process_mode_changed));
 			get_tree()->disconnect("node_added", callable_mp(this, &SceneTreeEditor::_node_added));
-			get_tree()->disconnect("node_removed", callable_mp(this, &SceneTreeEditor::_node_removed));
+			get_tree()->disconnect(SceneStringName(node_removed), callable_mp(this, &SceneTreeEditor::_node_removed));
 			get_tree()->disconnect("node_renamed", callable_mp(this, &SceneTreeEditor::_node_renamed));
 			tree->disconnect("item_collapsed", callable_mp(this, &SceneTreeEditor::_cell_collapsed));
 			get_tree()->disconnect(SceneStringName(node_configuration_warning_changed), callable_mp(this, &SceneTreeEditor::_warning_changed));

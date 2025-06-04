@@ -825,7 +825,7 @@ void TextureRegionEditor::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_ENTER_TREE: {
-			get_tree()->connect("node_removed", callable_mp(this, &TextureRegionEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &TextureRegionEditor::_node_removed));
 
 			hb_grid->set_visible(snap_mode == SNAP_GRID);
 			if (snap_mode == SNAP_AUTOSLICE && is_visible() && autoslice_is_dirty) {
@@ -837,7 +837,7 @@ void TextureRegionEditor::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
-			get_tree()->disconnect("node_removed", callable_mp(this, &TextureRegionEditor::_node_removed));
+			get_tree()->disconnect(SceneStringName(node_removed), callable_mp(this, &TextureRegionEditor::_node_removed));
 		} break;
 
 		case NOTIFICATION_THEME_CHANGED: {

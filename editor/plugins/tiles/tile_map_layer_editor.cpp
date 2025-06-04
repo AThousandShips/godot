@@ -3661,12 +3661,12 @@ void TileMapLayerEditor::_notification(int p_what) {
 
 		case NOTIFICATION_ENTER_TREE: {
 			get_tree()->connect("node_added", callable_mp(this, &TileMapLayerEditor::_node_change));
-			get_tree()->connect("node_removed", callable_mp(this, &TileMapLayerEditor::_node_change));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &TileMapLayerEditor::_node_change));
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
 			get_tree()->disconnect("node_added", callable_mp(this, &TileMapLayerEditor::_node_change));
-			get_tree()->disconnect("node_removed", callable_mp(this, &TileMapLayerEditor::_node_change));
+			get_tree()->disconnect(SceneStringName(node_removed), callable_mp(this, &TileMapLayerEditor::_node_change));
 		} break;
 
 		case NOTIFICATION_THEME_CHANGED: {

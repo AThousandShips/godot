@@ -151,7 +151,6 @@ private:
 
 	StringName tree_changed_name = "tree_changed";
 	StringName node_added_name = "node_added";
-	StringName node_removed_name = "node_removed";
 	StringName node_renamed_name = "node_renamed";
 
 	int64_t current_frame = 0;

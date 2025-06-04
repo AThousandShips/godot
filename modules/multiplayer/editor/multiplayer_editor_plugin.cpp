@@ -130,7 +130,7 @@ void MultiplayerEditorPlugin::_open_request(const String &p_path) {
 void MultiplayerEditorPlugin::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
-			get_tree()->connect("node_removed", callable_mp(this, &MultiplayerEditorPlugin::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &MultiplayerEditorPlugin::_node_removed));
 			add_debugger_plugin(debugger);
 		} break;
 		case NOTIFICATION_EXIT_TREE: {

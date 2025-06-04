@@ -631,7 +631,7 @@ void SpriteFramesEditor::_prepare_sprite_sheet(const String &p_file) {
 void SpriteFramesEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
-			get_tree()->connect("node_removed", callable_mp(this, &SpriteFramesEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &SpriteFramesEditor::_node_removed));
 
 			[[fallthrough]];
 		}
@@ -682,7 +682,7 @@ void SpriteFramesEditor::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
-			get_tree()->disconnect("node_removed", callable_mp(this, &SpriteFramesEditor::_node_removed));
+			get_tree()->disconnect(SceneStringName(node_removed), callable_mp(this, &SpriteFramesEditor::_node_removed));
 		} break;
 	}
 }

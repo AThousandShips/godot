@@ -177,7 +177,7 @@ void AnimationTreeEditor::enter_editor(const String &p_path) {
 void AnimationTreeEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
-			get_tree()->connect("node_removed", callable_mp(this, &AnimationTreeEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &AnimationTreeEditor::_node_removed));
 		} break;
 		case NOTIFICATION_PROCESS: {
 			ObjectID root;
@@ -194,7 +194,7 @@ void AnimationTreeEditor::_notification(int p_what) {
 			}
 		} break;
 		case NOTIFICATION_EXIT_TREE: {
-			get_tree()->disconnect("node_removed", callable_mp(this, &AnimationTreeEditor::_node_removed));
+			get_tree()->disconnect(SceneStringName(node_removed), callable_mp(this, &AnimationTreeEditor::_node_removed));
 		} break;
 	}
 }

@@ -1133,7 +1133,7 @@ void Skeleton3DEditor::_notification(int p_what) {
 			skeleton->connect(SceneStringName(bone_enabled_changed), callable_mp(this, &Skeleton3DEditor::_bone_enabled_changed));
 			skeleton->connect(SceneStringName(show_rest_only_changed), callable_mp(this, &Skeleton3DEditor::_update_gizmo_visible));
 
-			get_tree()->connect("node_removed", callable_mp(this, &Skeleton3DEditor::_node_removed), Object::CONNECT_ONE_SHOT);
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &Skeleton3DEditor::_node_removed), Object::CONNECT_ONE_SHOT);
 		} break;
 		case NOTIFICATION_READY: {
 			// Will trigger NOTIFICATION_THEME_CHANGED, but won't cause any loops if called here.

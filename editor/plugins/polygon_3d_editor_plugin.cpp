@@ -47,7 +47,7 @@ void Polygon3DEditor::_notification(int p_what) {
 			button_create->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
 			button_edit->set_button_icon(get_editor_theme_icon(SNAME("MovePoint")));
 			button_edit->set_pressed(true);
-			get_tree()->connect("node_removed", callable_mp(this, &Polygon3DEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &Polygon3DEditor::_node_removed));
 
 		} break;
 

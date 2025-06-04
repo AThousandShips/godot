@@ -150,7 +150,7 @@ void SceneTree::node_removed(Node *p_node) {
 	if (current_scene == p_node) {
 		current_scene = nullptr;
 	}
-	emit_signal(node_removed_name, p_node);
+	emit_signal(SceneStringName(node_removed), p_node);
 	if (nodes_removed_on_group_call_lock) {
 		nodes_removed_on_group_call.insert(p_node);
 	}

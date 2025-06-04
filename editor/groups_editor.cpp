@@ -369,7 +369,7 @@ void GroupsEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_READY: {
 			get_tree()->connect("node_added", callable_mp(this, &GroupsEditor::_load_scene_groups));
-			get_tree()->connect("node_removed", callable_mp(this, &GroupsEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &GroupsEditor::_node_removed));
 		} break;
 		case NOTIFICATION_THEME_CHANGED: {
 			filter->set_right_icon(get_editor_theme_icon("Search"));

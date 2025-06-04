@@ -166,7 +166,7 @@ void AbstractPolygon2DEditor::_notification(int p_what) {
 
 			button_edit->set_pressed(true);
 
-			get_tree()->connect("node_removed", callable_mp(this, &AbstractPolygon2DEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &AbstractPolygon2DEditor::_node_removed));
 			create_resource->connect(SceneStringName(confirmed), callable_mp(this, &AbstractPolygon2DEditor::_create_resource));
 		} break;
 	}

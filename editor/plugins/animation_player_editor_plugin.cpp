@@ -127,7 +127,7 @@ void AnimationPlayerEditor::_notification(int p_what) {
 
 			blend_editor.next->connect(SceneStringName(item_selected), callable_mp(this, &AnimationPlayerEditor::_blend_editor_next_changed));
 
-			get_tree()->connect(SNAME("node_removed"), callable_mp(this, &AnimationPlayerEditor::_node_removed));
+			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &AnimationPlayerEditor::_node_removed));
 
 			add_theme_style_override(SceneStringName(panel), EditorNode::get_singleton()->get_editor_theme()->get_stylebox(SceneStringName(panel), SNAME("Panel")));
 		} break;
