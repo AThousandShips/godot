@@ -60,5 +60,5 @@ void EditorScriptPlugin::command_palette_about_to_popup() {
 }
 
 EditorScriptPlugin::EditorScriptPlugin() {
-	EditorInterface::get_singleton()->get_command_palette()->connect("about_to_popup", callable_mp(this, &EditorScriptPlugin::command_palette_about_to_popup));
+	EditorInterface::get_singleton()->get_command_palette()->connect(SceneStringName(about_to_popup), callable_mp(this, &EditorScriptPlugin::command_palette_about_to_popup));
 }

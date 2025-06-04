@@ -1981,7 +1981,7 @@ void Window::popup_centered_ratio(float p_ratio) {
 
 void Window::popup(const Rect2i &p_screen_rect) {
 	ERR_MAIN_THREAD_GUARD;
-	emit_signal(SNAME("about_to_popup"));
+	emit_signal(SceneStringName(about_to_popup));
 
 	if (!get_embedder() && get_flag(FLAG_POPUP)) {
 		// Send a focus-out notification when opening a Window Manager Popup.

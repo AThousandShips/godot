@@ -750,7 +750,7 @@ InspectorDock::InspectorDock(EditorData &p_editor_data) {
 	resource_extra_button->set_tooltip_text(TTRC("Extra resource options."));
 	resource_extra_button->set_accessibility_name(TTRC("Resource Options"));
 	general_options_hb->add_child(resource_extra_button);
-	resource_extra_button->connect("about_to_popup", callable_mp(this, &InspectorDock::_prepare_resource_extra_popup));
+	resource_extra_button->connect(SceneStringName(about_to_popup), callable_mp(this, &InspectorDock::_prepare_resource_extra_popup));
 	resource_extra_button->get_popup()->add_shortcut(ED_SHORTCUT("property_editor/paste_resource", TTRC("Edit Resource from Clipboard")), RESOURCE_EDIT_CLIPBOARD);
 	resource_extra_button->get_popup()->add_shortcut(ED_SHORTCUT("property_editor/copy_resource", TTRC("Copy Resource")), RESOURCE_COPY);
 	resource_extra_button->get_popup()->set_item_disabled(1, true);
@@ -785,7 +785,7 @@ InspectorDock::InspectorDock(EditorData &p_editor_data) {
 	history_menu->set_tooltip_text(TTRC("History of recently edited objects."));
 	history_menu->set_accessibility_name(TTRC("Edit History"));
 	general_options_hb->add_child(history_menu);
-	history_menu->connect("about_to_popup", callable_mp(this, &InspectorDock::_prepare_history));
+	history_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &InspectorDock::_prepare_history));
 	history_menu->get_popup()->connect(SceneStringName(id_pressed), callable_mp(this, &InspectorDock::_select_history));
 
 	HBoxContainer *subresource_hb = memnew(HBoxContainer);
@@ -824,7 +824,7 @@ InspectorDock::InspectorDock(EditorData &p_editor_data) {
 	property_tools_hb->add_child(object_menu);
 	object_menu->set_tooltip_text(TTRC("Manage object properties."));
 	object_menu->set_accessibility_name(TTRC("Object Properties"));
-	object_menu->get_popup()->connect("about_to_popup", callable_mp(this, &InspectorDock::_prepare_menu));
+	object_menu->get_popup()->connect(SceneStringName(about_to_popup), callable_mp(this, &InspectorDock::_prepare_menu));
 	object_menu->get_popup()->connect(SceneStringName(id_pressed), callable_mp(this, &InspectorDock::_menu_option));
 
 	info = memnew(Button);

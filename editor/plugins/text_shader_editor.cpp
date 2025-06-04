@@ -1158,7 +1158,7 @@ TextShaderEditor::TextShaderEditor() {
 	edit_menu->set_shortcut_context(this);
 	edit_menu->set_text(TTR("Edit"));
 	edit_menu->set_switch_on_hover(true);
-	edit_menu->connect("about_to_popup", callable_mp(this, &TextShaderEditor::_prepare_edit_menu));
+	edit_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &TextShaderEditor::_prepare_edit_menu));
 
 	edit_menu->get_popup()->add_shortcut(ED_GET_SHORTCUT("ui_undo"), EDIT_UNDO);
 	edit_menu->get_popup()->add_shortcut(ED_GET_SHORTCUT("ui_redo"), EDIT_REDO);
@@ -1205,7 +1205,7 @@ TextShaderEditor::TextShaderEditor() {
 	bookmarks_menu = memnew(PopupMenu);
 	goto_menu->get_popup()->add_submenu_node_item(TTR("Bookmarks"), bookmarks_menu);
 	_update_bookmark_list();
-	bookmarks_menu->connect("about_to_popup", callable_mp(this, &TextShaderEditor::_update_bookmark_list));
+	bookmarks_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &TextShaderEditor::_update_bookmark_list));
 	bookmarks_menu->connect("index_pressed", callable_mp(this, &TextShaderEditor::_bookmark_item_pressed));
 
 	add_child(main_container);

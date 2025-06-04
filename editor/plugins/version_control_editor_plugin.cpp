@@ -1454,7 +1454,7 @@ VersionControlEditorPlugin::VersionControlEditorPlugin() {
 
 	extra_options = memnew(MenuButton);
 	extra_options->set_button_icon(EditorNode::get_singleton()->get_editor_theme()->get_icon(SNAME("GuiTabMenuHl"), EditorStringName(EditorIcons)));
-	extra_options->get_popup()->connect(SNAME("about_to_popup"), callable_mp(this, &VersionControlEditorPlugin::_update_extra_options));
+	extra_options->get_popup()->connect(SceneStringName(about_to_popup), callable_mp(this, &VersionControlEditorPlugin::_update_extra_options));
 	extra_options->get_popup()->connect(SceneStringName(id_pressed), callable_mp(this, &VersionControlEditorPlugin::_extra_option_selected));
 	menu_bar->add_child(extra_options);
 

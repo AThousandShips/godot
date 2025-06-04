@@ -2714,7 +2714,7 @@ void EditorPropertyColor::_color_changed(const Color &p_color) {
 }
 
 void EditorPropertyColor::_picker_created() {
-	picker->get_popup()->connect("about_to_popup", callable_mp(this, &EditorPropertyColor::_popup_opening));
+	picker->get_popup()->connect(SceneStringName(about_to_popup), callable_mp(this, &EditorPropertyColor::_popup_opening));
 	picker->connect("popup_closed", callable_mp(this, &EditorPropertyColor::_popup_closed), CONNECT_DEFERRED);
 }
 
@@ -3081,7 +3081,7 @@ EditorPropertyNodePath::EditorPropertyNodePath() {
 
 	menu = memnew(MenuButton);
 	menu->set_flat(true);
-	menu->connect(SNAME("about_to_popup"), callable_mp(this, &EditorPropertyNodePath::_update_menu));
+	menu->connect(SceneStringName(about_to_popup), callable_mp(this, &EditorPropertyNodePath::_update_menu));
 	hbc->add_child(menu);
 
 	menu->get_popup()->add_item(TTR("Clear"), ACTION_CLEAR);

@@ -2682,7 +2682,7 @@ bool PopupMenu::activate_item_by_event(const Ref<InputEvent> &p_event, bool p_fo
 
 void PopupMenu::_about_to_popup() {
 	ERR_MAIN_THREAD_GUARD;
-	emit_signal(SNAME("about_to_popup"));
+	emit_signal(SceneStringName(about_to_popup));
 }
 
 void PopupMenu::_about_to_close() {

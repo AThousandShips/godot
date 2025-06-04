@@ -2643,7 +2643,7 @@ void ScriptTextEditor::_enable_code_editor() {
 	color_picker = memnew(ColorPicker);
 	color_picker->set_deferred_mode(true);
 	color_picker->connect("color_changed", callable_mp(this, &ScriptTextEditor::_color_changed));
-	color_panel->connect("about_to_popup", callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(color_picker));
+	color_panel->connect(SceneStringName(about_to_popup), callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(color_picker));
 
 	color_panel->add_child(color_picker);
 
@@ -2658,7 +2658,7 @@ void ScriptTextEditor::_enable_code_editor() {
 	add_child(connection_info_dialog);
 
 	edit_hb->add_child(edit_menu);
-	edit_menu->connect("about_to_popup", callable_mp(this, &ScriptTextEditor::_prepare_edit_menu));
+	edit_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &ScriptTextEditor::_prepare_edit_menu));
 	edit_menu->get_popup()->add_shortcut(ED_GET_SHORTCUT("ui_undo"), EDIT_UNDO);
 	edit_menu->get_popup()->add_shortcut(ED_GET_SHORTCUT("ui_redo"), EDIT_REDO);
 	edit_menu->get_popup()->add_separator();
@@ -2739,12 +2739,12 @@ void ScriptTextEditor::_enable_code_editor() {
 
 	goto_menu->get_popup()->add_submenu_node_item(TTRC("Bookmarks"), bookmarks_menu);
 	_update_bookmark_list();
-	bookmarks_menu->connect("about_to_popup", callable_mp(this, &ScriptTextEditor::_update_bookmark_list));
+	bookmarks_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &ScriptTextEditor::_update_bookmark_list));
 	bookmarks_menu->connect("index_pressed", callable_mp(this, &ScriptTextEditor::_bookmark_item_pressed));
 
 	goto_menu->get_popup()->add_submenu_node_item(TTRC("Breakpoints"), breakpoints_menu);
 	_update_breakpoint_list();
-	breakpoints_menu->connect("about_to_popup", callable_mp(this, &ScriptTextEditor::_update_breakpoint_list));
+	breakpoints_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &ScriptTextEditor::_update_breakpoint_list));
 	breakpoints_menu->connect("index_pressed", callable_mp(this, &ScriptTextEditor::_breakpoint_item_pressed));
 
 	goto_menu->get_popup()->connect(SceneStringName(id_pressed), callable_mp(this, &ScriptTextEditor::_edit_option));

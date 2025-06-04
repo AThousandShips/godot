@@ -8264,7 +8264,7 @@ EditorNode::EditorNode() {
 	save_confirmation->connect(SceneStringName(confirmed), callable_mp(this, &EditorNode::_menu_confirm_current));
 	save_confirmation->connect("custom_action", callable_mp(this, &EditorNode::_discard_changes));
 	save_confirmation->connect("canceled", callable_mp(this, &EditorNode::_cancel_close_scene_tab));
-	save_confirmation->connect("about_to_popup", callable_mp(this, &EditorNode::_prepare_save_confirmation_popup));
+	save_confirmation->connect(SceneStringName(about_to_popup), callable_mp(this, &EditorNode::_prepare_save_confirmation_popup));
 
 	gradle_build_manage_templates = memnew(ConfirmationDialog);
 	gradle_build_manage_templates->set_text(TTR("Android build template is missing, please install relevant templates."));
@@ -8349,7 +8349,7 @@ EditorNode::EditorNode() {
 	gui_base->add_child(file_pack_zip);
 
 	file_menu->connect(SceneStringName(id_pressed), callable_mp(this, &EditorNode::_menu_option));
-	file_menu->connect("about_to_popup", callable_mp(this, &EditorNode::_update_file_menu_opened));
+	file_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &EditorNode::_update_file_menu_opened));
 
 	settings_menu->connect(SceneStringName(id_pressed), callable_mp(this, &EditorNode::_menu_option));
 

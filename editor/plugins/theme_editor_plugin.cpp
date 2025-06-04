@@ -1933,7 +1933,7 @@ void ThemeItemEditorDialog::_select_another_theme_cbk(const String &p_path) {
 void ThemeItemEditorDialog::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
-			connect("about_to_popup", callable_mp(this, &ThemeItemEditorDialog::_dialog_about_to_show));
+			connect(SceneStringName(about_to_popup), callable_mp(this, &ThemeItemEditorDialog::_dialog_about_to_show));
 			[[fallthrough]];
 		}
 		case NOTIFICATION_THEME_CHANGED: {
@@ -2287,7 +2287,7 @@ void ThemeTypeDialog::_add_type_confirmed() {
 void ThemeTypeDialog::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
-			connect("about_to_popup", callable_mp(this, &ThemeTypeDialog::_dialog_about_to_show));
+			connect(SceneStringName(about_to_popup), callable_mp(this, &ThemeTypeDialog::_dialog_about_to_show));
 			[[fallthrough]];
 		}
 		case NOTIFICATION_THEME_CHANGED: {
@@ -2628,7 +2628,7 @@ void ThemeTypeEditor::_update_type_items() {
 			if (E.value) {
 				item_editor->set_pick_color(edited_theme->get_color(E.key, edited_type));
 				item_editor->connect("color_changed", callable_mp(this, &ThemeTypeEditor::_color_item_changed).bind(E.key));
-				item_editor->get_popup()->connect("about_to_popup", callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(item_editor->get_picker()));
+				item_editor->get_popup()->connect(SceneStringName(about_to_popup), callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(item_editor->get_picker()));
 			} else {
 				item_editor->set_pick_color(ThemeDB::get_singleton()->get_default_theme()->get_color(E.key, edited_type));
 				item_editor->set_disabled(true);

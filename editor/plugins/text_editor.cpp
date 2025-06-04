@@ -630,7 +630,7 @@ TextEditor::TextEditor() {
 	edit_hb->add_child(edit_menu);
 	edit_menu->set_text(TTRC("Edit"));
 	edit_menu->set_switch_on_hover(true);
-	edit_menu->connect("about_to_popup", callable_mp(this, &TextEditor::_prepare_edit_menu));
+	edit_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &TextEditor::_prepare_edit_menu));
 	edit_menu->get_popup()->connect(SceneStringName(id_pressed), callable_mp(this, &TextEditor::_edit_option));
 
 	edit_menu->get_popup()->add_shortcut(ED_GET_SHORTCUT("ui_undo"), EDIT_UNDO);
@@ -708,7 +708,7 @@ TextEditor::TextEditor() {
 	bookmarks_menu = memnew(PopupMenu);
 	goto_menu->get_popup()->add_submenu_node_item(TTRC("Bookmarks"), bookmarks_menu);
 	_update_bookmark_list();
-	bookmarks_menu->connect("about_to_popup", callable_mp(this, &TextEditor::_update_bookmark_list));
+	bookmarks_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &TextEditor::_update_bookmark_list));
 	bookmarks_menu->connect("index_pressed", callable_mp(this, &TextEditor::_bookmark_item_pressed));
 
 	goto_line_popup = memnew(GotoLinePopup);

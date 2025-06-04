@@ -8071,7 +8071,7 @@ AnimationTrackEditor::AnimationTrackEditor() {
 	edit->get_popup()->add_item(TTR("Clean-Up Animation (no undo)..."), EDIT_CLEAN_UP_ANIMATION);
 
 	edit->get_popup()->connect(SceneStringName(id_pressed), callable_mp(this, &AnimationTrackEditor::_edit_menu_pressed));
-	edit->get_popup()->connect("about_to_popup", callable_mp(this, &AnimationTrackEditor::_edit_menu_about_to_popup));
+	edit->get_popup()->connect(SceneStringName(about_to_popup), callable_mp(this, &AnimationTrackEditor::_edit_menu_about_to_popup));
 
 	pick_track = memnew(SceneTreeDialog);
 	add_child(pick_track);
@@ -9385,7 +9385,7 @@ AnimationMarkerEdit::AnimationMarkerEdit() {
 	marker_insert_vbox->add_child(_create_hbox_labeled_control(TTR("Marker Name"), marker_insert_new_name));
 	marker_insert_color = memnew(ColorPickerButton);
 	marker_insert_color->set_edit_alpha(false);
-	marker_insert_color->get_popup()->connect("about_to_popup", callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(marker_insert_color->get_picker()));
+	marker_insert_color->get_popup()->connect(SceneStringName(about_to_popup), callable_mp(EditorNode::get_singleton(), &EditorNode::setup_color_picker).bind(marker_insert_color->get_picker()));
 	marker_insert_vbox->add_child(_create_hbox_labeled_control(TTR("Marker Color"), marker_insert_color));
 	marker_insert_error_dialog = memnew(AcceptDialog);
 	marker_insert_error_dialog->set_ok_button_text(TTR("Close"));

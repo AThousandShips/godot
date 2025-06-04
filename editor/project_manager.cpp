@@ -1808,8 +1808,8 @@ ProjectManager::ProjectManager() {
 		new_tag_name->set_accessibility_name(TTRC("New Tag Name"));
 		new_tag_name->connect(SceneStringName(text_changed), callable_mp(this, &ProjectManager::_set_new_tag_name));
 		new_tag_name->connect(SceneStringName(text_submitted), callable_mp(this, &ProjectManager::_create_new_tag).unbind(1));
-		create_tag_dialog->connect("about_to_popup", callable_mp(new_tag_name, &LineEdit::clear));
-		create_tag_dialog->connect("about_to_popup", callable_mp((Control *)new_tag_name, &Control::grab_focus), CONNECT_DEFERRED);
+		create_tag_dialog->connect(SceneStringName(about_to_popup), callable_mp(new_tag_name, &LineEdit::clear));
+		create_tag_dialog->connect(SceneStringName(about_to_popup), callable_mp((Control *)new_tag_name, &Control::grab_focus), CONNECT_DEFERRED);
 
 		tag_error = memnew(Label);
 		tag_error->set_focus_mode(FOCUS_ACCESSIBILITY);

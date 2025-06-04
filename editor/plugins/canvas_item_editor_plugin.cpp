@@ -5645,11 +5645,11 @@ CanvasItemEditor::CanvasItemEditor() {
 
 	p = view_menu->get_popup();
 	p->connect(SceneStringName(id_pressed), callable_mp(this, &CanvasItemEditor::_popup_callback));
-	p->connect("about_to_popup", callable_mp(this, &CanvasItemEditor::_prepare_view_menu));
+	p->connect(SceneStringName(about_to_popup), callable_mp(this, &CanvasItemEditor::_prepare_view_menu));
 	p->set_hide_on_checkable_item_selection(false);
 
 	grid_menu = memnew(PopupMenu);
-	grid_menu->connect("about_to_popup", callable_mp(this, &CanvasItemEditor::_prepare_grid_menu));
+	grid_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &CanvasItemEditor::_prepare_grid_menu));
 	grid_menu->connect(SceneStringName(id_pressed), callable_mp(this, &CanvasItemEditor::_on_grid_menu_id_pressed));
 	grid_menu->add_radio_check_item(TTRC("Show"), GRID_VISIBILITY_SHOW);
 	grid_menu->add_radio_check_item(TTRC("Show When Snapping"), GRID_VISIBILITY_SHOW_WHEN_SNAPPING);

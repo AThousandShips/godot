@@ -70,7 +70,7 @@ void EditorTranslationPreviewMenu::_pressed(int p_index) {
 void EditorTranslationPreviewMenu::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_READY: {
-			connect("about_to_popup", callable_mp(this, &EditorTranslationPreviewMenu::_prepare));
+			connect(SceneStringName(about_to_popup), callable_mp(this, &EditorTranslationPreviewMenu::_prepare));
 			connect("index_pressed", callable_mp(this, &EditorTranslationPreviewMenu::_pressed));
 		} break;
 	}

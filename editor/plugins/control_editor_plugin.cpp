@@ -569,7 +569,7 @@ ControlEditorPopupButton::ControlEditorPopupButton() {
 
 	popup_panel = memnew(PopupPanel);
 	add_child(popup_panel);
-	popup_panel->connect("about_to_popup", callable_mp(this, &ControlEditorPopupButton::_popup_visibility_changed).bind(true));
+	popup_panel->connect(SceneStringName(about_to_popup), callable_mp(this, &ControlEditorPopupButton::_popup_visibility_changed).bind(true));
 	popup_panel->connect("popup_hide", callable_mp(this, &ControlEditorPopupButton::_popup_visibility_changed).bind(false));
 
 	popup_vbox = memnew(VBoxContainer);

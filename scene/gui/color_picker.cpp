@@ -2169,7 +2169,7 @@ ColorPicker::ColorPicker() {
 	}
 	shape_popup->set_item_checked(current_shape, true);
 	shape_popup->connect(SceneStringName(id_pressed), callable_mp(this, &ColorPicker::set_picker_shape));
-	shape_popup->connect("about_to_popup", callable_mp(this, &ColorPicker::_block_input_on_popup_show));
+	shape_popup->connect(SceneStringName(about_to_popup), callable_mp(this, &ColorPicker::_block_input_on_popup_show));
 	shape_popup->connect(SNAME("popup_hide"), callable_mp(this, &ColorPicker::_enable_input_on_popup_hide));
 
 	add_mode(memnew(ColorModeRGB(this)));
@@ -2215,7 +2215,7 @@ ColorPicker::ColorPicker() {
 	mode_popup->set_item_checked(current_mode, true);
 	mode_popup->set_item_checked(MODE_MAX + 1, true);
 	mode_popup->connect(SceneStringName(id_pressed), callable_mp(this, &ColorPicker::_set_mode_popup_value));
-	mode_popup->connect("about_to_popup", callable_mp(this, &ColorPicker::_block_input_on_popup_show));
+	mode_popup->connect(SceneStringName(about_to_popup), callable_mp(this, &ColorPicker::_block_input_on_popup_show));
 	mode_popup->connect(SNAME("popup_hide"), callable_mp(this, &ColorPicker::_enable_input_on_popup_hide));
 
 	slider_gc = memnew(GridContainer);
@@ -2304,12 +2304,12 @@ ColorPicker::ColorPicker() {
 	menu_btn->set_focus_mode(FOCUS_ALL);
 	menu_btn->set_tooltip_text(ETR("Show all options available."));
 	menu_btn->set_accessibility_name(ETR("All Options"));
-	menu_btn->connect("about_to_popup", callable_mp(this, &ColorPicker::_update_menu_items));
+	menu_btn->connect(SceneStringName(about_to_popup), callable_mp(this, &ColorPicker::_update_menu_items));
 	palette_box->add_child(menu_btn);
 
 	options_menu = menu_btn->get_popup();
 	options_menu->connect(SceneStringName(id_pressed), callable_mp(this, &ColorPicker::_options_menu_cbk));
-	options_menu->connect("about_to_popup", callable_mp(this, &ColorPicker::_block_input_on_popup_show));
+	options_menu->connect(SceneStringName(about_to_popup), callable_mp(this, &ColorPicker::_block_input_on_popup_show));
 	options_menu->connect(SNAME("popup_hide"), callable_mp(this, &ColorPicker::_enable_input_on_popup_hide));
 
 	palette_name = memnew(Label);
@@ -2538,7 +2538,7 @@ void ColorPickerButton::_update_picker() {
 		popup->add_child(picker);
 		add_child(popup, false, INTERNAL_MODE_FRONT);
 		picker->connect("color_changed", callable_mp(this, &ColorPickerButton::_color_changed));
-		popup->connect("about_to_popup", callable_mp(this, &ColorPickerButton::_about_to_popup));
+		popup->connect(SceneStringName(about_to_popup), callable_mp(this, &ColorPickerButton::_about_to_popup));
 		popup->connect("popup_hide", callable_mp(this, &ColorPickerButton::_modal_closed));
 		picker->connect(SceneStringName(minimum_size_changed), callable_mp((Window *)popup, &Window::reset_size));
 		picker->set_pick_color(color);
