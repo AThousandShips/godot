@@ -41,7 +41,7 @@ ColorChannelSelector::ColorChannelSelector() {
 	toggle_button->set_flat(true);
 	toggle_button->set_toggle_mode(true);
 	toggle_button->connect(SceneStringName(toggled), callable_mp(this, &ColorChannelSelector::on_toggled));
-	toggle_button->add_theme_style_override("focus", memnew(StyleBoxEmpty));
+	toggle_button->add_theme_style_override(SceneStringName(focus), memnew(StyleBoxEmpty));
 	add_child(toggle_button);
 
 	panel = memnew(PanelContainer);
@@ -127,7 +127,7 @@ void ColorChannelSelector::create_button(unsigned int p_channel_index, const Str
 	button->set_pressed(true);
 
 	// Don't show focus, it stands out too much and remains visible which can be confusing.
-	button->add_theme_style_override("focus", memnew(StyleBoxEmpty));
+	button->add_theme_style_override(SceneStringName(focus), memnew(StyleBoxEmpty));
 
 	// Make it look similar to toolbar buttons.
 	button->set_theme_type_variation(SceneStringName(FlatButton));

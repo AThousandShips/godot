@@ -728,7 +728,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_stylebox(CoreStringName(normal), "Button", p_config.button_style);
 		p_theme->set_stylebox(SceneStringName(hover), "Button", p_config.button_style_hover);
 		p_theme->set_stylebox(SceneStringName(pressed), "Button", p_config.button_style_pressed);
-		p_theme->set_stylebox("focus", "Button", p_config.button_style_focus);
+		p_theme->set_stylebox(SceneStringName(focus), "Button", p_config.button_style_focus);
 		p_theme->set_stylebox("disabled", "Button", p_config.button_style_disabled);
 
 		p_theme->set_color(SceneStringName(font_color), "Button", p_config.font_color);
@@ -756,7 +756,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_stylebox(CoreStringName(normal), "MenuButton", p_config.panel_container_style);
 		p_theme->set_stylebox(SceneStringName(hover), "MenuButton", p_config.button_style_hover);
 		p_theme->set_stylebox(SceneStringName(pressed), "MenuButton", p_config.panel_container_style);
-		p_theme->set_stylebox("focus", "MenuButton", p_config.panel_container_style);
+		p_theme->set_stylebox(SceneStringName(focus), "MenuButton", p_config.panel_container_style);
 		p_theme->set_stylebox("disabled", "MenuButton", p_config.panel_container_style);
 
 		p_theme->set_color(SceneStringName(font_color), "MenuButton", p_config.font_color);
@@ -805,7 +805,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			option_button_pressed_style->set_content_margin(SIDE_RIGHT, 4 * EDSCALE);
 			option_button_disabled_style->set_content_margin(SIDE_RIGHT, 4 * EDSCALE);
 
-			p_theme->set_stylebox("focus", "OptionButton", option_button_focus_style);
+			p_theme->set_stylebox(SceneStringName(focus), "OptionButton", option_button_focus_style);
 			p_theme->set_stylebox(CoreStringName(normal), "OptionButton", p_config.button_style);
 			p_theme->set_stylebox(SceneStringName(hover), "OptionButton", p_config.button_style_hover);
 			p_theme->set_stylebox(SceneStringName(pressed), "OptionButton", p_config.button_style_pressed);
@@ -912,7 +912,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 
 		// LinkButton.
 
-		p_theme->set_stylebox("focus", "LinkButton", p_config.base_empty_style);
+		p_theme->set_stylebox(SceneStringName(focus), "LinkButton", p_config.base_empty_style);
 		p_theme->set_color(SceneStringName(font_color), "LinkButton", p_config.font_color);
 		p_theme->set_color("font_hover_color", "LinkButton", p_config.font_hover_color);
 		p_theme->set_color("font_hover_pressed_color", "LinkButton", p_config.font_hover_pressed_color);
@@ -949,7 +949,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_icon("select_arrow", "Tree", p_theme->get_icon(SNAME("GuiDropdown"), EditorStringName(EditorIcons)));
 
 			p_theme->set_stylebox(SceneStringName(panel), "Tree", p_config.tree_panel_style);
-			p_theme->set_stylebox("focus", "Tree", p_config.button_style_focus);
+			p_theme->set_stylebox(SceneStringName(focus), "Tree", p_config.button_style_focus);
 			p_theme->set_stylebox("custom_button", "Tree", make_empty_stylebox());
 			p_theme->set_stylebox("custom_button_pressed", "Tree", make_empty_stylebox());
 			p_theme->set_stylebox("custom_button_hover", "Tree", p_config.button_style);
@@ -1072,7 +1072,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			style_itemlist_hover_selected->set_border_width_all(0);
 
 			p_theme->set_stylebox(SceneStringName(panel), "ItemList", style_itemlist_bg);
-			p_theme->set_stylebox("focus", "ItemList", p_config.button_style_focus);
+			p_theme->set_stylebox(SceneStringName(focus), "ItemList", p_config.button_style_focus);
 			p_theme->set_stylebox("cursor", "ItemList", style_itemlist_cursor);
 			p_theme->set_stylebox("cursor_unfocused", "ItemList", style_itemlist_cursor);
 			p_theme->set_stylebox("selected_focus", "ItemList", style_tree_focus);
@@ -1220,7 +1220,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		// LineEdit.
 
 		p_theme->set_stylebox(CoreStringName(normal), "LineEdit", text_editor_style);
-		p_theme->set_stylebox("focus", "LineEdit", p_config.button_style_focus);
+		p_theme->set_stylebox(SceneStringName(focus), "LineEdit", p_config.button_style_focus);
 		p_theme->set_stylebox("read_only", "LineEdit", text_editor_disabled_style);
 
 		p_theme->set_icon("clear", "LineEdit", p_theme->get_icon(SNAME("GuiClose"), EditorStringName(EditorIcons)));
@@ -1242,7 +1242,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		// TextEdit.
 
 		p_theme->set_stylebox(CoreStringName(normal), "TextEdit", text_editor_style);
-		p_theme->set_stylebox("focus", "TextEdit", p_config.button_style_focus);
+		p_theme->set_stylebox(SceneStringName(focus), "TextEdit", p_config.button_style_focus);
 		p_theme->set_stylebox("read_only", "TextEdit", text_editor_disabled_style);
 
 		p_theme->set_icon("tab", "TextEdit", p_theme->get_icon(SNAME("GuiTab"), EditorStringName(EditorIcons)));
@@ -1313,7 +1313,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		foldable_container_panel->set_corner_radius(CORNER_TOP_LEFT, 0);
 		foldable_container_panel->set_corner_radius(CORNER_TOP_RIGHT, 0);
 		p_theme->set_stylebox(SceneStringName(panel), "FoldableContainer", foldable_container_panel);
-		p_theme->set_stylebox("focus", "FoldableContainer", p_config.button_style_focus);
+		p_theme->set_stylebox(SceneStringName(focus), "FoldableContainer", p_config.button_style_focus);
 
 		p_theme->set_font(SceneStringName(font), "FoldableContainer", p_theme->get_font(SceneStringName(font), SNAME("HeaderSmall")));
 		p_theme->set_font_size(SceneStringName(font_size), "FoldableContainer", p_theme->get_font_size(SceneStringName(font_size), SNAME("HeaderSmall")));
@@ -1500,7 +1500,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		// RichTextLabel.
 
 		p_theme->set_stylebox(CoreStringName(normal), "RichTextLabel", p_config.tree_panel_style);
-		p_theme->set_stylebox("focus", "RichTextLabel", make_empty_stylebox());
+		p_theme->set_stylebox(SceneStringName(focus), "RichTextLabel", make_empty_stylebox());
 
 		p_theme->set_color("default_color", "RichTextLabel", p_config.font_color);
 		p_theme->set_color("font_shadow_color", "RichTextLabel", Color(0, 0, 0, 0));
@@ -1515,7 +1515,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		// Label.
 
 		p_theme->set_stylebox(CoreStringName(normal), "Label", p_config.base_empty_style);
-		p_theme->set_stylebox("focus", "Label", p_config.button_style_focus);
+		p_theme->set_stylebox(SceneStringName(focus), "Label", p_config.button_style_focus);
 
 		p_theme->set_color(SceneStringName(font_color), "Label", p_config.font_color);
 		p_theme->set_color("font_shadow_color", "Label", Color(0, 0, 0, 0));
@@ -1890,7 +1890,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 		p_theme->set_stylebox("FocusViewport", EditorStringName(EditorStyles), style_widget_focus_viewport);
 
 		Ref<StyleBoxFlat> style_widget_scroll_container = p_config.button_style_focus->duplicate();
-		p_theme->set_stylebox("focus", "ScrollContainer", style_widget_scroll_container);
+		p_theme->set_stylebox(SceneStringName(focus), "ScrollContainer", style_widget_scroll_container);
 
 		// This stylebox is used in 3d and 2d viewports (no borders).
 		Ref<StyleBoxFlat> style_content_panel_vp = p_config.content_panel_style->duplicate();
@@ -1988,7 +1988,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 		// Audio bus.
 		p_theme->set_stylebox("normal", "EditorAudioBus", style_bottom_panel);
 		p_theme->set_stylebox("master", "EditorAudioBus", p_config.button_style_disabled);
-		p_theme->set_stylebox("focus", "EditorAudioBus", p_config.button_style_focus);
+		p_theme->set_stylebox(SceneStringName(focus), "EditorAudioBus", p_config.button_style_focus);
 	}
 
 	// Editor GUI widgets.
@@ -2219,7 +2219,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 
 			p_theme->set_stylebox(CoreStringName(normal), "PreviewLightButton", sb_empty_borderless);
 			p_theme->set_stylebox(SceneStringName(hover), "PreviewLightButton", sb_empty_borderless);
-			p_theme->set_stylebox("focus", "PreviewLightButton", sb_empty_borderless);
+			p_theme->set_stylebox(SceneStringName(focus), "PreviewLightButton", sb_empty_borderless);
 			p_theme->set_stylebox(SceneStringName(pressed), "PreviewLightButton", sb_empty_borderless);
 		}
 
@@ -2430,7 +2430,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 
 		p_theme->set_stylebox("odd", "AnimationTrackEdit", style_animation_track_odd);
 		p_theme->set_stylebox(SceneStringName(hover), "AnimationTrackEdit", style_animation_track_hover);
-		p_theme->set_stylebox("focus", "AnimationTrackEdit", p_config.button_style_focus);
+		p_theme->set_stylebox(SceneStringName(focus), "AnimationTrackEdit", p_config.button_style_focus);
 
 		p_theme->set_color("h_line_color", "AnimationTrackEdit", p_config.font_color * Color(1, 1, 1, 0.2));
 
@@ -2761,7 +2761,7 @@ void EditorThemeManager::_populate_text_editor_styles(const Ref<EditorTheme> &p_
 	Ref<StyleBoxFlat> code_edit_stylebox = make_flat_stylebox(background_color, p_config.widget_margin.x, p_config.widget_margin.y, p_config.widget_margin.x, p_config.widget_margin.y, p_config.corner_radius);
 	p_theme->set_stylebox(CoreStringName(normal), "CodeEdit", code_edit_stylebox);
 	p_theme->set_stylebox("read_only", "CodeEdit", code_edit_stylebox);
-	p_theme->set_stylebox("focus", "CodeEdit", memnew(StyleBoxEmpty));
+	p_theme->set_stylebox(SceneStringName(focus), "CodeEdit", memnew(StyleBoxEmpty));
 
 	p_theme->set_color("background_color", "CodeEdit", Color(0, 0, 0, 0)); // Unset any color, we use a stylebox.
 

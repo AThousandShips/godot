@@ -1002,7 +1002,7 @@ void TileSetAtlasSourceEditor::_update_atlas_view() {
 				button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
 				button->add_theme_style_override(CoreStringName(normal), memnew(StyleBoxEmpty));
 				button->add_theme_style_override(SceneStringName(hover), memnew(StyleBoxEmpty));
-				button->add_theme_style_override("focus", memnew(StyleBoxEmpty));
+				button->add_theme_style_override(SceneStringName(focus), memnew(StyleBoxEmpty));
 				button->add_theme_style_override(SceneStringName(pressed), memnew(StyleBoxEmpty));
 				button->add_theme_constant_override("align_to_largest_stylebox", false);
 				button->set_mouse_filter(Control::MOUSE_FILTER_PASS);

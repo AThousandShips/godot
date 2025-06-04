@@ -144,6 +144,7 @@ public:
 	const StringName hover = "hover";
 
 	const StringName panel = "panel";
+	const StringName focus = "focus";
 	const StringName item_selected = "item_selected";
 	const StringName item_activated = "item_activated";
 	const StringName confirmed = "confirmed";

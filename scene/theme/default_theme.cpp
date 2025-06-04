@@ -147,7 +147,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox(SceneStringName(hover), "Button", button_hover);
 	theme->set_stylebox(SceneStringName(pressed), "Button", button_pressed);
 	theme->set_stylebox("disabled", "Button", button_disabled);
-	theme->set_stylebox("focus", "Button", focus);
+	theme->set_stylebox(SceneStringName(focus), "Button", focus);
 
 	theme->set_font(SceneStringName(font), "Button", Ref<Font>());
 	theme->set_font_size(SceneStringName(font_size), "Button", -1);
@@ -195,7 +195,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	// LinkButton
 
-	theme->set_stylebox("focus", "LinkButton", focus);
+	theme->set_stylebox(SceneStringName(focus), "LinkButton", focus);
 
 	theme->set_font(SceneStringName(font), "LinkButton", Ref<Font>());
 	theme->set_font_size(SceneStringName(font_size), "LinkButton", -1);
@@ -210,7 +210,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant("underline_spacing", "LinkButton", Math::round(2 * scale));
 
 	// OptionButton
-	theme->set_stylebox("focus", "OptionButton", focus);
+	theme->set_stylebox(SceneStringName(focus), "OptionButton", focus);
 
 	Ref<StyleBox> sb_optbutton_normal = make_flat_stylebox(style_normal_color, 2 * default_margin, default_margin, 2 * default_margin, default_margin);
 	Ref<StyleBox> sb_optbutton_hover = make_flat_stylebox(style_hover_color, 2 * default_margin, default_margin, 2 * default_margin, default_margin);
@@ -256,7 +256,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox(SceneStringName(pressed), "MenuButton", button_pressed);
 	theme->set_stylebox(SceneStringName(hover), "MenuButton", button_hover);
 	theme->set_stylebox("disabled", "MenuButton", button_disabled);
-	theme->set_stylebox("focus", "MenuButton", focus);
+	theme->set_stylebox(SceneStringName(focus), "MenuButton", focus);
 
 	theme->set_font(SceneStringName(font), "MenuButton", Ref<Font>());
 	theme->set_font_size(SceneStringName(font_size), "MenuButton", -1);
@@ -283,7 +283,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox("disabled", "CheckBox", cbx_empty);
 	theme->set_stylebox(SceneStringName(hover), "CheckBox", cbx_empty);
 	theme->set_stylebox("hover_pressed", "CheckBox", cbx_empty);
-	theme->set_stylebox("focus", "CheckBox", cbx_focus);
+	theme->set_stylebox(SceneStringName(focus), "CheckBox", cbx_focus);
 
 	theme->set_icon("checked", "CheckBox", icons["checked"]);
 	theme->set_icon("checked_disabled", "CheckBox", icons["checked_disabled"]);
@@ -322,7 +322,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox("disabled", "CheckButton", cb_empty);
 	theme->set_stylebox(SceneStringName(hover), "CheckButton", cb_empty);
 	theme->set_stylebox("hover_pressed", "CheckButton", cb_empty);
-	theme->set_stylebox("focus", "CheckButton", focus);
+	theme->set_stylebox(SceneStringName(focus), "CheckButton", focus);
 
 	theme->set_icon("checked", "CheckButton", icons["toggle_on"]);
 	theme->set_icon("checked_disabled", "CheckButton", icons["toggle_on_disabled"]);
@@ -377,7 +377,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	// Label
 
 	theme->set_stylebox(CoreStringName(normal), "Label", memnew(StyleBoxEmpty));
-	theme->set_stylebox("focus", "Label", focus);
+	theme->set_stylebox(SceneStringName(focus), "Label", focus);
 	theme->set_font(SceneStringName(font), "Label", Ref<Font>());
 	theme->set_font_size(SceneStringName(font_size), "Label", -1);
 
@@ -408,7 +408,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	style_line_edit->set_border_color(style_pressed_color);
 	theme->set_stylebox(CoreStringName(normal), "LineEdit", style_line_edit);
 
-	theme->set_stylebox("focus", "LineEdit", focus);
+	theme->set_stylebox(SceneStringName(focus), "LineEdit", focus);
 
 	Ref<StyleBoxFlat> style_line_edit_read_only = make_flat_stylebox(style_disabled_color);
 	// Add a line at the bottom to make LineEdits distinguishable from Buttons.
@@ -451,7 +451,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	// TextEdit
 
 	theme->set_stylebox(CoreStringName(normal), "TextEdit", style_line_edit);
-	theme->set_stylebox("focus", "TextEdit", focus);
+	theme->set_stylebox(SceneStringName(focus), "TextEdit", focus);
 	theme->set_stylebox("read_only", "TextEdit", style_line_edit_read_only);
 
 	theme->set_icon("tab", "TextEdit", icons["text_edit_tab"]);
@@ -481,7 +481,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	// CodeEdit
 
 	theme->set_stylebox(CoreStringName(normal), "CodeEdit", style_line_edit);
-	theme->set_stylebox("focus", "CodeEdit", focus);
+	theme->set_stylebox(SceneStringName(focus), "CodeEdit", focus);
 	theme->set_stylebox("read_only", "CodeEdit", style_line_edit_read_only);
 	theme->set_stylebox("completion", "CodeEdit", make_flat_stylebox(style_normal_color, 0, 0, 0, 0));
 
@@ -655,7 +655,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	focus_style->set_border_width_all(Math::round(2 * scale));
 	focus_style->set_draw_center(false);
 	focus_style->set_border_color(style_focus_color);
-	theme->set_stylebox("focus", "ScrollContainer", focus_style);
+	theme->set_stylebox(SceneStringName(focus), "ScrollContainer", focus_style);
 
 	// Window
 
@@ -845,7 +845,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	// Tree
 
 	theme->set_stylebox(SceneStringName(panel), "Tree", make_flat_stylebox(style_normal_color, 4, 4, 4, 5));
-	theme->set_stylebox("focus", "Tree", focus);
+	theme->set_stylebox(SceneStringName(focus), "Tree", focus);
 	theme->set_stylebox("hovered", "Tree", make_flat_stylebox(Color(1, 1, 1, 0.07)));
 	theme->set_stylebox("hovered_dimmed", "Tree", make_flat_stylebox(Color(1, 1, 1, 0.03)));
 	theme->set_stylebox("hovered_selected", "Tree", make_flat_stylebox(style_hover_selected_color));
@@ -924,7 +924,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	// ItemList
 
 	theme->set_stylebox(SceneStringName(panel), "ItemList", make_flat_stylebox(style_normal_color));
-	theme->set_stylebox("focus", "ItemList", focus);
+	theme->set_stylebox(SceneStringName(focus), "ItemList", focus);
 	theme->set_constant("h_separation", "ItemList", Math::round(4 * scale));
 	theme->set_constant("v_separation", "ItemList", Math::round(4 * scale));
 	theme->set_constant("icon_margin", "ItemList", Math::round(4 * scale));
@@ -1104,7 +1104,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox(SceneStringName(pressed), "ColorPickerButton", button_pressed);
 	theme->set_stylebox(SceneStringName(hover), "ColorPickerButton", button_hover);
 	theme->set_stylebox("disabled", "ColorPickerButton", button_disabled);
-	theme->set_stylebox("focus", "ColorPickerButton", focus);
+	theme->set_stylebox(SceneStringName(focus), "ColorPickerButton", focus);
 
 	theme->set_font(SceneStringName(font), "ColorPickerButton", Ref<Font>());
 	theme->set_font_size(SceneStringName(font_size), "ColorPickerButton", -1);
@@ -1151,7 +1151,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	// RichTextLabel
 
-	theme->set_stylebox("focus", "RichTextLabel", focus);
+	theme->set_stylebox(SceneStringName(focus), "RichTextLabel", focus);
 	theme->set_stylebox(CoreStringName(normal), "RichTextLabel", make_empty_stylebox(0, 0, 0, 0));
 
 	theme->set_font("normal_font", "RichTextLabel", Ref<Font>());
@@ -1274,7 +1274,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	foldable_container_panel->set_corner_radius(CORNER_TOP_RIGHT, 0);
 	theme->set_stylebox(SceneStringName(panel), "FoldableContainer", foldable_container_panel);
 	Ref<StyleBoxFlat> foldable_focus_style = make_flat_stylebox(style_focus_color, default_margin, default_margin, default_margin, default_margin, default_corner_radius, false, 2);
-	theme->set_stylebox("focus", "FoldableContainer", foldable_focus_style);
+	theme->set_stylebox(SceneStringName(focus), "FoldableContainer", foldable_focus_style);
 
 	theme->set_font(SceneStringName(font), "FoldableContainer", Ref<Font>());
 	theme->set_font_size(SceneStringName(font_size), "FoldableContainer", default_font_size);

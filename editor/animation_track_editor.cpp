@@ -2110,7 +2110,7 @@ void AnimationTrackEdit::_notification(int p_what) {
 			int limit = timeline->get_name_limit();
 
 			const Ref<StyleBox> &stylebox_odd = get_theme_stylebox(SNAME("odd"), SNAME("AnimationTrackEdit"));
-			const Ref<StyleBox> &stylebox_focus = get_theme_stylebox(SNAME("focus"), SNAME("AnimationTrackEdit"));
+			const Ref<StyleBox> &stylebox_focus = get_theme_stylebox(SceneStringName(focus), SNAME("AnimationTrackEdit"));
 			const Ref<StyleBox> &stylebox_hover = get_theme_stylebox(SceneStringName(hover), SNAME("AnimationTrackEdit"));
 
 			const Color h_line_color = get_theme_color(SNAME("h_line_color"), SNAME("AnimationTrackEdit"));

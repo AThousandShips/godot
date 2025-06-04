@@ -2920,7 +2920,7 @@ static void override_button_stylebox(Button *p_button, const Ref<StyleBox> p_sty
 	p_button->add_theme_style_override("hover_pressed_mirrored", p_stylebox);
 	p_button->add_theme_style_override(SceneStringName(pressed), p_stylebox);
 	p_button->add_theme_style_override("pressed_mirrored", p_stylebox);
-	p_button->add_theme_style_override("focus", p_stylebox);
+	p_button->add_theme_style_override(SceneStringName(focus), p_stylebox);
 	p_button->add_theme_style_override("focus_mirrored", p_stylebox);
 	p_button->add_theme_style_override("disabled", p_stylebox);
 	p_button->add_theme_style_override("disabled_mirrored", p_stylebox);
