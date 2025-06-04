@@ -104,7 +104,7 @@ void EditorResourcePicker::_update_resource_preview(const String &p_path, const 
 		}
 
 		if (p_preview.is_valid()) {
-			preview_rect->set_offset(SIDE_LEFT, assign_button->get_button_icon()->get_width() + assign_button->get_theme_stylebox(CoreStringName(normal))->get_content_margin(SIDE_LEFT) + get_theme_constant(SNAME("h_separation"), SNAME("Button")));
+			preview_rect->set_offset(SIDE_LEFT, assign_button->get_button_icon()->get_width() + assign_button->get_theme_stylebox(CoreStringName(normal))->get_content_margin(SIDE_LEFT) + get_theme_constant(SceneStringName(h_separation), SNAME("Button")));
 
 			// Resource-specific stretching.
 			if (Ref<GradientTexture1D>(edited_resource).is_valid() || Ref<Gradient>(edited_resource).is_valid()) {
@@ -1154,7 +1154,7 @@ EditorResourcePicker::EditorResourcePicker(bool p_hide_assign_button_controls) {
 	edit_button->connect(SceneStringName(pressed), callable_mp(this, &EditorResourcePicker::_update_menu));
 	edit_button->connect(SceneStringName(gui_input), callable_mp(this, &EditorResourcePicker::_button_input));
 
-	add_theme_constant_override("separation", 0);
+	add_theme_constant_override(SceneStringName(separation), 0);
 }
 
 // EditorScriptPicker

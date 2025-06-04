@@ -538,7 +538,7 @@ AudioStreamImportSettingsDialog::AudioStreamImportSettingsDialog() {
 	add_child(main_vbox);
 
 	HBoxContainer *loop_hb = memnew(HBoxContainer);
-	loop_hb->add_theme_constant_override("separation", 4 * EDSCALE);
+	loop_hb->add_theme_constant_override(SceneStringName(separation), 4 * EDSCALE);
 	loop = memnew(CheckBox);
 	loop->set_text(TTR("Enable"));
 	loop->set_accessibility_name(TTRC("Enable looping"));
@@ -558,7 +558,7 @@ AudioStreamImportSettingsDialog::AudioStreamImportSettingsDialog() {
 	main_vbox->add_margin_child(TTR("Loop:"), loop_hb);
 
 	HBoxContainer *interactive_hb = memnew(HBoxContainer);
-	interactive_hb->add_theme_constant_override("separation", 4 * EDSCALE);
+	interactive_hb->add_theme_constant_override(SceneStringName(separation), 4 * EDSCALE);
 	bpm_enabled = memnew(CheckBox);
 	bpm_enabled->set_text((TTR("BPM:")));
 	bpm_enabled->connect(SceneStringName(toggled), callable_mp(this, &AudioStreamImportSettingsDialog::_settings_changed).unbind(1));
@@ -619,7 +619,7 @@ AudioStreamImportSettingsDialog::AudioStreamImportSettingsDialog() {
 	zoom_bar->connect(SceneStringName(value_changed), callable_mp(this, &AudioStreamImportSettingsDialog::_preview_zoom_offset_changed));
 
 	HBoxContainer *hbox = memnew(HBoxContainer);
-	hbox->add_theme_constant_override("separation", 0);
+	hbox->add_theme_constant_override(SceneStringName(separation), 0);
 	vbox->add_child(hbox);
 
 	_indicator = memnew(Control);

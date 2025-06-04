@@ -1130,7 +1130,7 @@ TextShaderEditor::TextShaderEditor() {
 	code_editor->connect("script_validated", callable_mp(this, &TextShaderEditor::_script_validated));
 
 	code_editor->set_v_size_flags(SIZE_EXPAND_FILL);
-	code_editor->add_theme_constant_override("separation", 0);
+	code_editor->add_theme_constant_override(SceneStringName(separation), 0);
 	code_editor->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
 
 	code_editor->connect("show_warnings_panel", callable_mp(this, &TextShaderEditor::_show_warnings_panel));

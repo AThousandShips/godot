@@ -658,13 +658,13 @@ Vector<Vector<String>> EditorProfiler::get_data_as_csv() const {
 
 EditorProfiler::EditorProfiler() {
 	HBoxContainer *hb = memnew(HBoxContainer);
-	hb->add_theme_constant_override(SNAME("separation"), 8 * EDSCALE);
+	hb->add_theme_constant_override(SceneStringName(separation), 8 * EDSCALE);
 	add_child(hb);
 
 	FlowContainer *container = memnew(FlowContainer);
 	container->set_h_size_flags(SIZE_EXPAND_FILL);
-	container->add_theme_constant_override(SNAME("h_separation"), 8 * EDSCALE);
-	container->add_theme_constant_override(SNAME("v_separation"), 2 * EDSCALE);
+	container->add_theme_constant_override(SceneStringName(h_separation), 8 * EDSCALE);
+	container->add_theme_constant_override(SceneStringName(v_separation), 2 * EDSCALE);
 	hb->add_child(container);
 
 	activate = memnew(Button);
@@ -687,7 +687,7 @@ EditorProfiler::EditorProfiler() {
 	container->add_child(autostart_checkbox);
 
 	HBoxContainer *hb_measure = memnew(HBoxContainer);
-	hb_measure->add_theme_constant_override(SNAME("separation"), 2 * EDSCALE);
+	hb_measure->add_theme_constant_override(SceneStringName(separation), 2 * EDSCALE);
 	container->add_child(hb_measure);
 
 	hb_measure->add_child(memnew(Label(TTR("Measure:"))));
@@ -703,7 +703,7 @@ EditorProfiler::EditorProfiler() {
 	hb_measure->add_child(display_mode);
 
 	HBoxContainer *hb_time = memnew(HBoxContainer);
-	hb_time->add_theme_constant_override(SNAME("separation"), 2 * EDSCALE);
+	hb_time->add_theme_constant_override(SceneStringName(separation), 2 * EDSCALE);
 	container->add_child(hb_time);
 
 	hb_time->add_child(memnew(Label(TTR("Time:"))));
@@ -725,7 +725,7 @@ EditorProfiler::EditorProfiler() {
 	container->add_child(display_internal_profiles);
 
 	HBoxContainer *hb_frame = memnew(HBoxContainer);
-	hb_frame->add_theme_constant_override(SNAME("separation"), 2 * EDSCALE);
+	hb_frame->add_theme_constant_override(SceneStringName(separation), 2 * EDSCALE);
 	hb_frame->set_v_size_flags(SIZE_SHRINK_BEGIN);
 	hb->add_child(hb_frame);
 

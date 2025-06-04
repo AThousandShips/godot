@@ -312,7 +312,7 @@ void EditorPropertyMultilineText::_notification(int p_what) {
 
 EditorPropertyMultilineText::EditorPropertyMultilineText(bool p_expression) {
 	HBoxContainer *hb = memnew(HBoxContainer);
-	hb->add_theme_constant_override("separation", 0);
+	hb->add_theme_constant_override(SceneStringName(separation), 0);
 	add_child(hb);
 	set_bottom_editor(hb);
 	text = memnew(TextEdit);
@@ -3065,7 +3065,7 @@ Node *EditorPropertyNodePath::get_base_node() {
 
 EditorPropertyNodePath::EditorPropertyNodePath() {
 	HBoxContainer *hbc = memnew(HBoxContainer);
-	hbc->add_theme_constant_override("separation", 0);
+	hbc->add_theme_constant_override(SceneStringName(separation), 0);
 	add_child(hbc);
 	assign = memnew(Button);
 	assign->set_accessibility_name(TTRC("Assign Node"));

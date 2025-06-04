@@ -227,5 +227,5 @@ EditorZoomWidget::EditorZoomWidget() {
 
 	_update_zoom_label();
 
-	add_theme_constant_override("separation", 0);
+	add_theme_constant_override(SceneStringName(separation), 0);
 }

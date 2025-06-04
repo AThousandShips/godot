@@ -3957,7 +3957,7 @@ ThemeEditor::ThemeEditor() {
 
 	VBoxContainer *preview_tabs_vb = memnew(VBoxContainer);
 	preview_tabs_vb->set_h_size_flags(SIZE_EXPAND_FILL);
-	preview_tabs_vb->add_theme_constant_override("separation", 2 * EDSCALE);
+	preview_tabs_vb->add_theme_constant_override(SceneStringName(separation), 2 * EDSCALE);
 	main_hs->add_child(preview_tabs_vb);
 	HBoxContainer *preview_tabbar_hb = memnew(HBoxContainer);
 	preview_tabs_vb->add_child(preview_tabbar_hb);

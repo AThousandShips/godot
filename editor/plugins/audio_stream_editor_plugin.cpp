@@ -236,7 +236,7 @@ AudioStreamEditor::AudioStreamEditor() {
 	_preview->add_child(_indicator);
 
 	HBoxContainer *hbox = memnew(HBoxContainer);
-	hbox->add_theme_constant_override("separation", 0);
+	hbox->add_theme_constant_override(SceneStringName(separation), 0);
 	vbox->add_child(hbox);
 
 	_play_button = memnew(Button);

@@ -286,7 +286,7 @@ void AnimationNodeBlendTreeEditor::update_graph() {
 			node->add_theme_style_override(SceneStringName(panel), sb_panel);
 		}
 
-		node->add_theme_constant_override("separation", 4 * EDSCALE);
+		node->add_theme_constant_override(SceneStringName(separation), 4 * EDSCALE);
 	}
 
 	List<AnimationNodeBlendTree::NodeConnection> node_connections;

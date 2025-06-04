@@ -312,6 +312,6 @@ EditorMainScreen::EditorMainScreen() {
 	main_screen_vbox = memnew(VBoxContainer);
 	main_screen_vbox->set_name("MainScreen");
 	main_screen_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	main_screen_vbox->add_theme_constant_override("separation", 0);
+	main_screen_vbox->add_theme_constant_override(SceneStringName(separation), 0);
 	add_child(main_screen_vbox);
 }

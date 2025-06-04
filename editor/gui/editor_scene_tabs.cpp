@@ -328,7 +328,7 @@ void EditorSceneTabs::_scene_tabs_resized() {
 		}
 
 		Rect2 last_tab = scene_tabs->get_tab_rect(scene_tabs->get_tab_count() - 1);
-		int hsep = scene_tabs->get_theme_constant(SNAME("h_separation"));
+		int hsep = scene_tabs->get_theme_constant(SceneStringName(h_separation));
 		if (scene_tabs->is_layout_rtl()) {
 			scene_tab_add->set_rect(Rect2(Point2(last_tab.position.x - add_button_size.x - hsep, last_tab.position.y), add_button_size));
 		} else {

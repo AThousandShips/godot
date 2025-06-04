@@ -592,7 +592,7 @@ void ControlEditorPresetPicker::_add_row_button(HBoxContainer *p_row, const int 
 }
 
 void ControlEditorPresetPicker::_add_separator(BoxContainer *p_box, Separator *p_separator) {
-	p_separator->add_theme_constant_override("separation", grid_separation);
+	p_separator->add_theme_constant_override(SceneStringName(separation), grid_separation);
 	p_separator->set_custom_minimum_size(Size2i(1, 1));
 	p_box->add_child(p_separator);
 }
@@ -635,12 +635,12 @@ void AnchorPresetPicker::_bind_methods() {
 
 AnchorPresetPicker::AnchorPresetPicker() {
 	VBoxContainer *main_vb = memnew(VBoxContainer);
-	main_vb->add_theme_constant_override("separation", grid_separation);
+	main_vb->add_theme_constant_override(SceneStringName(separation), grid_separation);
 	add_child(main_vb);
 
 	HBoxContainer *top_row = memnew(HBoxContainer);
 	top_row->set_alignment(BoxContainer::ALIGNMENT_CENTER);
-	top_row->add_theme_constant_override("separation", grid_separation);
+	top_row->add_theme_constant_override(SceneStringName(separation), grid_separation);
 	main_vb->add_child(top_row);
 
 	_add_row_button(top_row, PRESET_TOP_LEFT, TTRC("Top Left"));
@@ -651,7 +651,7 @@ AnchorPresetPicker::AnchorPresetPicker() {
 
 	HBoxContainer *mid_row = memnew(HBoxContainer);
 	mid_row->set_alignment(BoxContainer::ALIGNMENT_CENTER);
-	mid_row->add_theme_constant_override("separation", grid_separation);
+	mid_row->add_theme_constant_override(SceneStringName(separation), grid_separation);
 	main_vb->add_child(mid_row);
 
 	_add_row_button(mid_row, PRESET_CENTER_LEFT, TTRC("Center Left"));
@@ -662,7 +662,7 @@ AnchorPresetPicker::AnchorPresetPicker() {
 
 	HBoxContainer *bot_row = memnew(HBoxContainer);
 	bot_row->set_alignment(BoxContainer::ALIGNMENT_CENTER);
-	bot_row->add_theme_constant_override("separation", grid_separation);
+	bot_row->add_theme_constant_override(SceneStringName(separation), grid_separation);
 	main_vb->add_child(bot_row);
 
 	_add_row_button(bot_row, PRESET_BOTTOM_LEFT, TTRC("Bottom Left"));
@@ -675,7 +675,7 @@ AnchorPresetPicker::AnchorPresetPicker() {
 
 	HBoxContainer *extra_row = memnew(HBoxContainer);
 	extra_row->set_alignment(BoxContainer::ALIGNMENT_CENTER);
-	extra_row->add_theme_constant_override("separation", grid_separation);
+	extra_row->add_theme_constant_override(SceneStringName(separation), grid_separation);
 	main_vb->add_child(extra_row);
 
 	_add_row_button(extra_row, PRESET_LEFT_WIDE, TTRC("Left Wide"));
@@ -750,7 +750,7 @@ SizeFlagPresetPicker::SizeFlagPresetPicker(bool p_vertical) {
 
 	HBoxContainer *main_row = memnew(HBoxContainer);
 	main_row->set_alignment(BoxContainer::ALIGNMENT_CENTER);
-	main_row->add_theme_constant_override("separation", grid_separation);
+	main_row->add_theme_constant_override(SceneStringName(separation), grid_separation);
 	main_vb->add_child(main_row);
 
 	_add_row_button(main_row, SIZE_SHRINK_BEGIN, TTR("Shrink Begin"));

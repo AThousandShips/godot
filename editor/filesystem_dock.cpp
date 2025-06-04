@@ -189,7 +189,7 @@ FileSystemList::FileSystemList() {
 	add_child(popup_editor);
 
 	popup_editor_vb = memnew(VBoxContainer);
-	popup_editor_vb->add_theme_constant_override("separation", 0);
+	popup_editor_vb->add_theme_constant_override(SceneStringName(separation), 0);
 	popup_editor_vb->set_anchors_and_offsets_preset(PRESET_FULL_RECT);
 	popup_editor->add_child(popup_editor_vb);
 
@@ -4134,7 +4134,7 @@ FileSystemDock::FileSystemDock() {
 	top_vbc->add_child(toolbar_hbc);
 
 	HBoxContainer *nav_hbc = memnew(HBoxContainer);
-	nav_hbc->add_theme_constant_override("separation", 0);
+	nav_hbc->add_theme_constant_override(SceneStringName(separation), 0);
 	toolbar_hbc->add_child(nav_hbc);
 
 	button_hist_prev = memnew(Button);

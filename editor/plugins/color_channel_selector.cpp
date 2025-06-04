@@ -48,7 +48,7 @@ ColorChannelSelector::ColorChannelSelector() {
 	panel->hide();
 
 	HBoxContainer *container = memnew(HBoxContainer);
-	container->add_theme_constant_override("separation", 0);
+	container->add_theme_constant_override(SceneStringName(separation), 0);
 
 	create_button(0, "R", container);
 	create_button(1, "G", container);

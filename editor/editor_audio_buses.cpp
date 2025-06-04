@@ -826,7 +826,7 @@ EditorAudioBus::EditorAudioBus(EditorAudioBuses *p_buses, bool p_is_master) {
 	set_tooltip_text(TTR("Drag & drop to rearrange."));
 
 	VBoxContainer *vb = memnew(VBoxContainer);
-	vb->add_theme_constant_override("separation", 4 * EDSCALE);
+	vb->add_theme_constant_override(SceneStringName(separation), 4 * EDSCALE);
 	add_child(vb);
 
 	set_v_size_flags(SIZE_EXPAND_FILL);

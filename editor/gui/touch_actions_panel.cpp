@@ -240,7 +240,7 @@ TouchActionsPanel::TouchActionsPanel() {
 	}
 
 	box = memnew(BoxContainer);
-	box->add_theme_constant_override("separation", 20);
+	box->add_theme_constant_override(SceneStringName(separation), 20);
 	if (is_floating) {
 		box->set_vertical(EDITOR_DEF("_touch_actions_panel_vertical_layout", false));
 	} else {

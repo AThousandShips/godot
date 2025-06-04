@@ -2000,5 +2000,5 @@ CodeTextEditor::CodeTextEditor() {
 
 	code_complete_timer->connect(SceneStringName(timeout), callable_mp(this, &CodeTextEditor::_code_complete_timer_timeout));
 
-	add_theme_constant_override("separation", 4 * EDSCALE);
+	add_theme_constant_override(SceneStringName(separation), 4 * EDSCALE);
 }

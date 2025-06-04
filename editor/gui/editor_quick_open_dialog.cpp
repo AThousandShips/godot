@@ -101,7 +101,7 @@ void HighlightedLabel::_notification(int p_notification) {
 
 EditorQuickOpenDialog::EditorQuickOpenDialog() {
 	VBoxContainer *vbc = memnew(VBoxContainer);
-	vbc->add_theme_constant_override("separation", 0);
+	vbc->add_theme_constant_override(SceneStringName(separation), 0);
 	add_child(vbc);
 
 	{
@@ -189,7 +189,7 @@ void style_button(Button *p_button) {
 QuickOpenResultContainer::QuickOpenResultContainer() {
 	set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	add_theme_constant_override("separation", 0);
+	add_theme_constant_override(SceneStringName(separation), 0);
 	history_file.instantiate();
 
 	{
@@ -223,15 +223,15 @@ QuickOpenResultContainer::QuickOpenResultContainer() {
 
 			list = memnew(VBoxContainer);
 			list->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-			list->add_theme_constant_override(SNAME("separation"), 0);
+			list->add_theme_constant_override(SceneStringName(separation), 0);
 			list->hide();
 			scroll_container->add_child(list);
 
 			grid = memnew(HFlowContainer);
 			grid->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 			grid->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-			grid->add_theme_constant_override(SNAME("v_separation"), 0);
-			grid->add_theme_constant_override(SNAME("h_separation"), 0);
+			grid->add_theme_constant_override(SceneStringName(v_separation), 0);
+			grid->add_theme_constant_override(SceneStringName(h_separation), 0);
 			grid->hide();
 			scroll_container->add_child(grid);
 
@@ -259,7 +259,7 @@ QuickOpenResultContainer::QuickOpenResultContainer() {
 		HBoxContainer *bottom_bar = memnew(HBoxContainer);
 		bottom_bar->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 		bottom_bar->set_alignment(ALIGNMENT_END);
-		bottom_bar->add_theme_constant_override("separation", 3);
+		bottom_bar->add_theme_constant_override(SceneStringName(separation), 3);
 		add_child(bottom_bar);
 
 		fuzzy_search_toggle = memnew(CheckButton);
@@ -1011,7 +1011,7 @@ QuickOpenResultListItem::QuickOpenResultListItem() {
 	add_theme_constant_override("margin_right", 6 * EDSCALE);
 
 	hbc = memnew(HBoxContainer);
-	hbc->add_theme_constant_override(SNAME("separation"), 4 * EDSCALE);
+	hbc->add_theme_constant_override(SceneStringName(separation), 4 * EDSCALE);
 	add_child(hbc);
 
 	const int max_size = 36 * EDSCALE;
@@ -1025,7 +1025,7 @@ QuickOpenResultListItem::QuickOpenResultListItem() {
 	hbc->add_child(thumbnail);
 
 	text_container = memnew(VBoxContainer);
-	text_container->add_theme_constant_override(SNAME("separation"), -7 * EDSCALE);
+	text_container->add_theme_constant_override(SceneStringName(separation), -7 * EDSCALE);
 	text_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	text_container->set_v_size_flags(Control::SIZE_FILL);
 	hbc->add_child(text_container);
@@ -1095,7 +1095,7 @@ QuickOpenResultGridItem::QuickOpenResultGridItem() {
 	vbc = memnew(VBoxContainer);
 	vbc->set_h_size_flags(Control::SIZE_FILL);
 	vbc->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	vbc->add_theme_constant_override(SNAME("separation"), 0);
+	vbc->add_theme_constant_override(SceneStringName(separation), 0);
 	add_child(vbc);
 
 	const int max_size = 64 * EDSCALE;

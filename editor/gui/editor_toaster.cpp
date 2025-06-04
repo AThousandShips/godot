@@ -432,7 +432,7 @@ void EditorToaster::_popup_str(const String &p_message, Severity p_severity, con
 	// Create a new message if needed.
 	if (control == nullptr) {
 		HBoxContainer *hb = memnew(HBoxContainer);
-		hb->add_theme_constant_override("separation", 0);
+		hb->add_theme_constant_override(SceneStringName(separation), 0);
 
 		Label *label = memnew(Label);
 		label->set_focus_mode(FOCUS_ACCESSIBILITY);

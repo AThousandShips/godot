@@ -68,7 +68,10 @@ public:
 	const StringName update = "update";
 	const StringName updated = "updated";
 
+	const StringName separation = "separation";
 	const StringName line_separation = "line_separation";
+	const StringName h_separation = "h_separation";
+	const StringName v_separation = "v_separation";
 	const StringName font = "font";
 	const StringName font_size = "font_size";
 	const StringName font_color = "font_color";

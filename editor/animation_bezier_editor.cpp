@@ -300,8 +300,8 @@ void AnimationBezierTrackEdit::_notification(int p_what) {
 			const Color focus_color = get_theme_color(SNAME("focus_color"), SNAME("AnimationBezierTrackEdit"));
 			const Color track_focus_color = get_theme_color(SNAME("track_focus_color"), SNAME("AnimationBezierTrackEdit"));
 
-			const int h_separation = get_theme_constant(SNAME("h_separation"), SNAME("AnimationBezierTrackEdit"));
-			const int v_separation = get_theme_constant(SNAME("h_separation"), SNAME("AnimationBezierTrackEdit"));
+			const int h_separation = get_theme_constant(SceneStringName(h_separation), SNAME("AnimationBezierTrackEdit"));
+			const int v_separation = get_theme_constant(SceneStringName(h_separation), SNAME("AnimationBezierTrackEdit"));
 
 			if (has_focus()) {
 				draw_rect(Rect2(Point2(), get_size()), focus_color, false, Math::round(EDSCALE));

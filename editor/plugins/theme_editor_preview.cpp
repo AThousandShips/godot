@@ -310,12 +310,12 @@ DefaultThemeEditorPreview::DefaultThemeEditorPreview() {
 
 	HBoxContainer *main_hb = memnew(HBoxContainer);
 	main_mc->add_child(main_hb);
-	main_hb->add_theme_constant_override("separation", 20 * EDSCALE);
+	main_hb->add_theme_constant_override(SceneStringName(separation), 20 * EDSCALE);
 
 	VBoxContainer *first_vb = memnew(VBoxContainer);
 	main_hb->add_child(first_vb);
 	first_vb->set_h_size_flags(SIZE_EXPAND_FILL);
-	first_vb->add_theme_constant_override("separation", 10 * EDSCALE);
+	first_vb->add_theme_constant_override(SceneStringName(separation), 10 * EDSCALE);
 
 	first_vb->add_child(memnew(Label("Label")));
 
@@ -375,7 +375,7 @@ DefaultThemeEditorPreview::DefaultThemeEditorPreview() {
 	VBoxContainer *second_vb = memnew(VBoxContainer);
 	second_vb->set_h_size_flags(SIZE_EXPAND_FILL);
 	main_hb->add_child(second_vb);
-	second_vb->add_theme_constant_override("separation", 10 * EDSCALE);
+	second_vb->add_theme_constant_override(SceneStringName(separation), 10 * EDSCALE);
 	LineEdit *le = memnew(LineEdit);
 	le->set_text("LineEdit");
 	second_vb->add_child(le);
@@ -415,7 +415,7 @@ DefaultThemeEditorPreview::DefaultThemeEditorPreview() {
 
 	VBoxContainer *third_vb = memnew(VBoxContainer);
 	third_vb->set_h_size_flags(SIZE_EXPAND_FILL);
-	third_vb->add_theme_constant_override("separation", 10 * EDSCALE);
+	third_vb->add_theme_constant_override(SceneStringName(separation), 10 * EDSCALE);
 	main_hb->add_child(third_vb);
 
 	TabContainer *tc = memnew(TabContainer);

@@ -138,7 +138,7 @@ Label *EditorAbout::_create_section(Control *p_parent, const String &p_name, con
 	il->set_same_column_width(true);
 	il->set_auto_height(true);
 	il->set_max_columns(p_flags.has_flag(FLAG_SINGLE_COLUMN) ? 1 : 16);
-	il->add_theme_constant_override("h_separation", 16 * EDSCALE);
+	il->add_theme_constant_override(SceneStringName(h_separation), 16 * EDSCALE);
 
 	if (p_flags.has_flag(FLAG_ALLOW_WEBSITE) || (p_flags.has_flag(FLAG_EASTER_EGG) && EditorNode::get_singleton())) {
 		Ref<StyleBoxEmpty> empty_stylebox = memnew(StyleBoxEmpty);
@@ -201,7 +201,7 @@ EditorAbout::EditorAbout() {
 	HBoxContainer *hbc = memnew(HBoxContainer);
 	hbc->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	hbc->set_alignment(BoxContainer::ALIGNMENT_CENTER);
-	hbc->add_theme_constant_override("separation", 30 * EDSCALE);
+	hbc->add_theme_constant_override(SceneStringName(separation), 30 * EDSCALE);
 	vbc->add_child(hbc);
 
 	_logo = memnew(TextureRect);

@@ -1433,7 +1433,7 @@ int AnimationTimelineEdit::get_buttons_width() const {
 	const Ref<Texture2D> remove_icon = get_editor_theme_icon(SNAME("Remove"));
 	const Ref<Texture2D> down_icon = get_theme_icon(SNAME("select_arrow"), SNAME("Tree"));
 
-	const int h_separation = get_theme_constant(SNAME("h_separation"), SNAME("AnimationTrackEdit"));
+	const int h_separation = get_theme_constant(SceneStringName(h_separation), SNAME("AnimationTrackEdit"));
 
 	int total_w = interp_mode->get_width() + interp_type->get_width() + loop_type->get_width() + remove_icon->get_width();
 	total_w += (down_icon->get_width() + h_separation) * 4;
@@ -2114,7 +2114,7 @@ void AnimationTrackEdit::_notification(int p_what) {
 			const Ref<StyleBox> &stylebox_hover = get_theme_stylebox(SceneStringName(hover), SNAME("AnimationTrackEdit"));
 
 			const Color h_line_color = get_theme_color(SNAME("h_line_color"), SNAME("AnimationTrackEdit"));
-			const int h_separation = get_theme_constant(SNAME("h_separation"), SNAME("AnimationTrackEdit"));
+			const int h_separation = get_theme_constant(SceneStringName(h_separation), SNAME("AnimationTrackEdit"));
 			const int outer_margin = get_theme_constant(SNAME("outer_margin"), SNAME("AnimationTrackEdit"));
 
 			if (track % 2 == 1) {
@@ -2704,7 +2704,7 @@ Size2 AnimationTrackEdit::get_minimum_size() const {
 	Ref<Texture2D> texture = get_editor_theme_icon(SNAME("Object"));
 	const Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 	const int font_size = get_theme_font_size(SceneStringName(font_size), SNAME("Label"));
-	const int separation = get_theme_constant(SNAME("v_separation"), SNAME("ItemList"));
+	const int separation = get_theme_constant(SceneStringName(v_separation), SNAME("ItemList"));
 
 	int max_h = MAX(texture->get_height(), font->get_height(font_size));
 	max_h = MAX(max_h, get_key_height());
@@ -3753,7 +3753,7 @@ void AnimationTrackEditGroup::_notification(int p_what) {
 
 			const Color h_line_color = get_theme_color(SNAME("h_line_color"), SNAME("AnimationTrackEditGroup"));
 			const Color v_line_color = get_theme_color(SNAME("v_line_color"), SNAME("AnimationTrackEditGroup"));
-			const int h_separation = get_theme_constant(SNAME("h_separation"), SNAME("AnimationTrackEditGroup"));
+			const int h_separation = get_theme_constant(SceneStringName(h_separation), SNAME("AnimationTrackEditGroup"));
 
 			if (root) {
 				Node *n = root->get_node_or_null(node);
@@ -3871,7 +3871,7 @@ void AnimationTrackEditGroup::set_type_and_name(const Ref<Texture2D> &p_type, co
 Size2 AnimationTrackEditGroup::get_minimum_size() const {
 	const Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 	const int font_size = get_theme_font_size(SceneStringName(font_size), SNAME("Label"));
-	const int separation = get_theme_constant(SNAME("v_separation"), SNAME("ItemList"));
+	const int separation = get_theme_constant(SceneStringName(v_separation), SNAME("ItemList"));
 
 	const Ref<StyleBox> &header_style = get_theme_stylebox(SNAME("header"), SNAME("AnimationTrackEditGroup"));
 	const int content_margin = header_style->get_content_margin(SIDE_TOP) + header_style->get_content_margin(SIDE_BOTTOM);
@@ -5141,7 +5141,7 @@ void AnimationTrackEditor::_update_tracks() {
 				g->set_editor(this);
 				groups.push_back(g);
 				VBoxContainer *vb = memnew(VBoxContainer);
-				vb->add_theme_constant_override("separation", 0);
+				vb->add_theme_constant_override(SceneStringName(separation), 0);
 				vb->add_child(g);
 				group_sort[base_path] = vb;
 				group_containers.push_back(vb);
@@ -5387,10 +5387,10 @@ void AnimationTrackEditor::_notification(int p_what) {
 			auto_fit_bezier->set_button_icon(get_editor_theme_icon(SNAME("AnimationAutoFitBezier")));
 
 			const int timeline_separation = get_theme_constant(SNAME("timeline_v_separation"), SNAME("AnimationTrackEditor"));
-			timeline_vbox->add_theme_constant_override("separation", timeline_separation);
+			timeline_vbox->add_theme_constant_override(SceneStringName(separation), timeline_separation);
 
 			const int track_separation = get_theme_constant(SNAME("track_v_separation"), SNAME("AnimationTrackEditor"));
-			track_vbox->add_theme_constant_override("separation", track_separation);
+			track_vbox->add_theme_constant_override(SceneStringName(separation), track_separation);
 
 			function_name_toggler->add_theme_color_override("icon_pressed_color", get_theme_color("icon_disabled_color", EditorStringName(Editor)));
 		} break;
@@ -9075,7 +9075,7 @@ Size2 AnimationMarkerEdit::get_minimum_size() const {
 	Ref<Texture2D> texture = get_editor_theme_icon(SNAME("Object"));
 	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 	int font_size = get_theme_font_size(SceneStringName(font_size), SNAME("Label"));
-	int separation = get_theme_constant(SNAME("v_separation"), SNAME("ItemList"));
+	int separation = get_theme_constant(SceneStringName(v_separation), SNAME("ItemList"));
 
 	int max_h = MAX(texture->get_height(), font->get_height(font_size));
 	max_h = MAX(max_h, get_key_height());

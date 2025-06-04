@@ -1137,7 +1137,7 @@ void Skeleton3DEditor::_notification(int p_what) {
 		} break;
 		case NOTIFICATION_READY: {
 			// Will trigger NOTIFICATION_THEME_CHANGED, but won't cause any loops if called here.
-			add_theme_constant_override("separation", 0);
+			add_theme_constant_override(SceneStringName(separation), 0);
 		} break;
 		case NOTIFICATION_THEME_CHANGED: {
 			skeleton_options->set_button_icon(get_editor_theme_icon(SNAME("Skeleton3D")));

@@ -168,7 +168,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("icon_focus_color", "Button", Color(1, 1, 1, 1));
 	theme->set_color("icon_disabled_color", "Button", Color(1, 1, 1, 0.4));
 
-	theme->set_constant("h_separation", "Button", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "Button", Math::round(4 * scale));
 	theme->set_constant("icon_max_width", "Button", 0);
 
 	theme->set_constant("align_to_largest_stylebox", "Button", 0); // Disabled.
@@ -191,7 +191,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_disabled_color", "MenuBar", control_font_disabled_color);
 	theme->set_color("font_outline_color", "MenuBar", Color(0, 0, 0));
 
-	theme->set_constant("h_separation", "MenuBar", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "MenuBar", Math::round(4 * scale));
 
 	// LinkButton
 
@@ -245,7 +245,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_disabled_color", "OptionButton", control_font_disabled_color);
 	theme->set_color("font_outline_color", "OptionButton", Color(0, 0, 0));
 
-	theme->set_constant("h_separation", "OptionButton", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "OptionButton", Math::round(4 * scale));
 	theme->set_constant("arrow_margin", "OptionButton", Math::round(4 * scale));
 	theme->set_constant("outline_size", "OptionButton", 0);
 	theme->set_constant("modulate_arrow", "OptionButton", false);
@@ -268,7 +268,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_disabled_color", "MenuButton", Color(1, 1, 1, 0.3));
 	theme->set_color("font_outline_color", "MenuButton", Color(0, 0, 0));
 
-	theme->set_constant("h_separation", "MenuButton", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "MenuButton", Math::round(4 * scale));
 	theme->set_constant("outline_size", "MenuButton", 0);
 
 	// CheckBox
@@ -305,7 +305,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_disabled_color", "CheckBox", control_font_disabled_color);
 	theme->set_color("font_outline_color", "CheckBox", Color(0, 0, 0));
 
-	theme->set_constant("h_separation", "CheckBox", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "CheckBox", Math::round(4 * scale));
 	theme->set_constant("check_v_offset", "CheckBox", 0);
 	theme->set_constant("outline_size", "CheckBox", 0);
 
@@ -345,7 +345,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_disabled_color", "CheckButton", control_font_disabled_color);
 	theme->set_color("font_outline_color", "CheckButton", Color(0, 0, 0));
 
-	theme->set_constant("h_separation", "CheckButton", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "CheckButton", Math::round(4 * scale));
 	theme->set_constant("check_v_offset", "CheckButton", 0);
 	theme->set_constant("outline_size", "CheckButton", 0);
 
@@ -763,8 +763,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_separator_outline_color", "PopupMenu", Color(0, 0, 0));
 
 	theme->set_constant("indent", "PopupMenu", Math::round(10 * scale));
-	theme->set_constant("h_separation", "PopupMenu", Math::round(4 * scale));
-	theme->set_constant("v_separation", "PopupMenu", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "PopupMenu", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(v_separation), "PopupMenu", Math::round(4 * scale));
 	theme->set_constant("outline_size", "PopupMenu", 0);
 	theme->set_constant("separator_outline_size", "PopupMenu", 0);
 	theme->set_constant("item_start_padding", "PopupMenu", Math::round(2 * scale));
@@ -793,7 +793,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("port", "GraphNode", icons["graph_port"]);
 	theme->set_icon("resizer", "GraphNode", icons["resizer_se"]);
 	theme->set_color("resizer_color", "GraphNode", control_font_color);
-	theme->set_constant("separation", "GraphNode", Math::round(2 * scale));
+	theme->set_constant(SceneStringName(separation), "GraphNode", Math::round(2 * scale));
 	theme->set_constant("port_h_offset", "GraphNode", 0);
 
 	// GraphNodes's title Label.
@@ -896,8 +896,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("children_hl_line_color", "Tree", Color(0.27, 0.27, 0.27));
 	theme->set_color("custom_button_font_highlight", "Tree", control_font_hover_color);
 
-	theme->set_constant("h_separation", "Tree", Math::round(4 * scale));
-	theme->set_constant("v_separation", "Tree", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "Tree", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(v_separation), "Tree", Math::round(4 * scale));
 	theme->set_constant("item_margin", "Tree", Math::round(16 * scale));
 	theme->set_constant("inner_item_margin_bottom", "Tree", 0);
 	theme->set_constant("inner_item_margin_left", "Tree", 0);
@@ -925,8 +925,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_stylebox(SceneStringName(panel), "ItemList", make_flat_stylebox(style_normal_color));
 	theme->set_stylebox(SceneStringName(focus), "ItemList", focus);
-	theme->set_constant("h_separation", "ItemList", Math::round(4 * scale));
-	theme->set_constant("v_separation", "ItemList", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "ItemList", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(v_separation), "ItemList", Math::round(4 * scale));
 	theme->set_constant("icon_margin", "ItemList", Math::round(4 * scale));
 	theme->set_constant(SceneStringName(line_separation), "ItemList", Math::round(2 * scale));
 
@@ -1023,7 +1023,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_outline_color", "TabBar", Color(0, 0, 0));
 	theme->set_color("drop_mark_color", "TabBar", Color(1, 1, 1));
 
-	theme->set_constant("h_separation", "TabBar", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "TabBar", Math::round(4 * scale));
 	theme->set_constant("icon_max_width", "TabBar", 0);
 	theme->set_constant("outline_size", "TabBar", 0);
 
@@ -1034,8 +1034,8 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_icon("close", "Icons", icons["close"]);
 
-	theme->set_constant("separation", "HSeparator", Math::round(4 * scale));
-	theme->set_constant("separation", "VSeparator", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "HSeparator", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "VSeparator", Math::round(4 * scale));
 
 	// ColorPicker
 	Ref<StyleBoxFlat> focus_circle = make_flat_stylebox(style_focus_color, default_margin, default_margin, default_margin, default_margin, default_corner_radius, false, 2);
@@ -1116,7 +1116,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_disabled_color", "ColorPickerButton", Color(0.9, 0.9, 0.9, 0.3));
 	theme->set_color("font_outline_color", "ColorPickerButton", Color(0, 0, 0));
 
-	theme->set_constant("h_separation", "ColorPickerButton", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "ColorPickerButton", Math::round(4 * scale));
 	theme->set_constant("outline_size", "ColorPickerButton", 0);
 
 	// ColorPresetButton
@@ -1204,30 +1204,30 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("grabber", "VSplitContainer", icons["vsplitter"]);
 	theme->set_icon("grabber", "HSplitContainer", icons["hsplitter"]);
 
-	theme->set_constant("separation", "BoxContainer", Math::round(4 * scale));
-	theme->set_constant("separation", "HBoxContainer", Math::round(4 * scale));
-	theme->set_constant("separation", "VBoxContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "BoxContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "HBoxContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "VBoxContainer", Math::round(4 * scale));
 	theme->set_constant("margin_left", "MarginContainer", 0);
 	theme->set_constant("margin_top", "MarginContainer", 0);
 	theme->set_constant("margin_right", "MarginContainer", 0);
 	theme->set_constant("margin_bottom", "MarginContainer", 0);
-	theme->set_constant("h_separation", "GridContainer", Math::round(4 * scale));
-	theme->set_constant("v_separation", "GridContainer", Math::round(4 * scale));
-	theme->set_constant("separation", "SplitContainer", Math::round(12 * scale));
-	theme->set_constant("separation", "HSplitContainer", Math::round(12 * scale));
-	theme->set_constant("separation", "VSplitContainer", Math::round(12 * scale));
+	theme->set_constant(SceneStringName(h_separation), "GridContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(v_separation), "GridContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(separation), "SplitContainer", Math::round(12 * scale));
+	theme->set_constant(SceneStringName(separation), "HSplitContainer", Math::round(12 * scale));
+	theme->set_constant(SceneStringName(separation), "VSplitContainer", Math::round(12 * scale));
 	theme->set_constant("minimum_grab_thickness", "SplitContainer", Math::round(6 * scale));
 	theme->set_constant("minimum_grab_thickness", "HSplitContainer", Math::round(6 * scale));
 	theme->set_constant("minimum_grab_thickness", "VSplitContainer", Math::round(6 * scale));
 	theme->set_constant("autohide", "SplitContainer", 1);
 	theme->set_constant("autohide", "HSplitContainer", 1);
 	theme->set_constant("autohide", "VSplitContainer", 1);
-	theme->set_constant("h_separation", "FlowContainer", Math::round(4 * scale));
-	theme->set_constant("v_separation", "FlowContainer", Math::round(4 * scale));
-	theme->set_constant("h_separation", "HFlowContainer", Math::round(4 * scale));
-	theme->set_constant("v_separation", "HFlowContainer", Math::round(4 * scale));
-	theme->set_constant("h_separation", "VFlowContainer", Math::round(4 * scale));
-	theme->set_constant("v_separation", "VFlowContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "FlowContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(v_separation), "FlowContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "HFlowContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(v_separation), "HFlowContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(h_separation), "VFlowContainer", Math::round(4 * scale));
+	theme->set_constant(SceneStringName(v_separation), "VFlowContainer", Math::round(4 * scale));
 
 	theme->set_stylebox(SceneStringName(panel), "PanelContainer", make_flat_stylebox(style_normal_color, 0, 0, 0, 0));
 	theme->set_stylebox("split_bar_background", "SplitContainer", make_empty_stylebox(0, 0, 0, 0));
@@ -1290,7 +1290,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("folded_arrow_mirrored", "FoldableContainer", icons["arrow_left"]);
 
 	theme->set_constant("outline_size", "FoldableContainer", 0);
-	theme->set_constant("h_separation", "FoldableContainer", Math::round(2 * scale));
+	theme->set_constant(SceneStringName(h_separation), "FoldableContainer", Math::round(2 * scale));
 
 	// Visual Node Ports
 

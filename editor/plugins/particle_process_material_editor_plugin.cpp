@@ -393,7 +393,7 @@ void ParticleProcessMaterialMinMaxPropertyEditor::update_property() {
 
 ParticleProcessMaterialMinMaxPropertyEditor::ParticleProcessMaterialMinMaxPropertyEditor() {
 	VBoxContainer *content_vb = memnew(VBoxContainer);
-	content_vb->add_theme_constant_override(SNAME("separation"), 0);
+	content_vb->add_theme_constant_override(SceneStringName(separation), 0);
 	add_child(content_vb);
 
 	// Helper Range objects to keep absolute min and max values.

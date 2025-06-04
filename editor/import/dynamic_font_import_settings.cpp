@@ -1247,7 +1247,7 @@ DynamicFontImportSettingsDialog::DynamicFontImportSettingsDialog() {
 	}
 	glyph_table->add_theme_style_override("selected", glyph_table->get_theme_stylebox(SceneStringName(panel)));
 	glyph_table->add_theme_style_override("selected_focus", glyph_table->get_theme_stylebox(SceneStringName(panel)));
-	glyph_table->add_theme_constant_override("h_separation", 0);
+	glyph_table->add_theme_constant_override(SceneStringName(h_separation), 0);
 	glyph_table->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	glyph_table->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	glyphs_split->add_child(glyph_table);

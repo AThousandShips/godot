@@ -3330,7 +3330,7 @@ void Node3DEditorViewport::_notification(int p_what) {
 			// GPU time of 999.99 ms in the current editor language.
 			const float min_width = get_theme_font(SNAME("main"), EditorStringName(EditorFonts))->get_string_size(vformat(TTR("GPU Time: %s ms"), 999.99)).x;
 			frame_time_panel->set_custom_minimum_size(Size2(min_width, 0) * EDSCALE);
-			frame_time_vbox->add_theme_constant_override("separation", Math::round(-1 * EDSCALE));
+			frame_time_vbox->add_theme_constant_override(SceneStringName(separation), Math::round(-1 * EDSCALE));
 
 			cinema_label->add_theme_style_override(CoreStringName(normal), information_3d_stylebox);
 			locked_label->add_theme_style_override(CoreStringName(normal), information_3d_stylebox);
@@ -5849,7 +5849,7 @@ Node3DEditorViewport::Node3DEditorViewport(Node3DEditor *p_spatial_editor, int p
 	frame_time_gradient->add_point(0.5, Color());
 
 	top_right_vbox = memnew(VBoxContainer);
-	top_right_vbox->add_theme_constant_override("separation", 10.0 * EDSCALE);
+	top_right_vbox->add_theme_constant_override(SceneStringName(separation), 10.0 * EDSCALE);
 	top_right_vbox->set_anchors_and_offsets_preset(PRESET_TOP_RIGHT, PRESET_MODE_MINSIZE, 10.0 * EDSCALE);
 	top_right_vbox->set_h_grow_direction(GROW_DIRECTION_BEGIN);
 
@@ -5984,8 +5984,8 @@ void Node3DEditorViewportContainer::gui_input(const Ref<InputEvent> &p_event) {
 		if (mb->is_pressed()) {
 			Vector2 size = get_size();
 
-			int h_sep = get_theme_constant(SNAME("separation"), SNAME("HSplitContainer"));
-			int v_sep = get_theme_constant(SNAME("separation"), SNAME("VSplitContainer"));
+			int h_sep = get_theme_constant(SceneStringName(separation), SNAME("HSplitContainer"));
+			int v_sep = get_theme_constant(SceneStringName(separation), SNAME("VSplitContainer"));
 
 			int mid_w = size.width * ratio_h;
 			int mid_h = size.height * ratio_v;
@@ -6030,8 +6030,8 @@ void Node3DEditorViewportContainer::gui_input(const Ref<InputEvent> &p_event) {
 		if (view == VIEW_USE_3_VIEWPORTS || view == VIEW_USE_3_VIEWPORTS_ALT || view == VIEW_USE_4_VIEWPORTS) {
 			Vector2 size = get_size();
 
-			int h_sep = get_theme_constant(SNAME("separation"), SNAME("HSplitContainer"));
-			int v_sep = get_theme_constant(SNAME("separation"), SNAME("VSplitContainer"));
+			int h_sep = get_theme_constant(SceneStringName(separation), SNAME("HSplitContainer"));
+			int v_sep = get_theme_constant(SceneStringName(separation), SNAME("VSplitContainer"));
 
 			int mid_w = size.width * ratio_h;
 			int mid_h = size.height * ratio_v;
@@ -6082,9 +6082,9 @@ void Node3DEditorViewportContainer::_notification(int p_what) {
 
 				Vector2 size = get_size();
 
-				int h_sep = get_theme_constant(SNAME("separation"), SNAME("HSplitContainer"));
+				int h_sep = get_theme_constant(SceneStringName(separation), SNAME("HSplitContainer"));
 
-				int v_sep = get_theme_constant(SNAME("separation"), SNAME("VSplitContainer"));
+				int v_sep = get_theme_constant(SceneStringName(separation), SNAME("VSplitContainer"));
 
 				int mid_w = size.width * ratio_h;
 				int mid_h = size.height * ratio_v;
@@ -6171,9 +6171,9 @@ void Node3DEditorViewportContainer::_notification(int p_what) {
 				}
 				return;
 			}
-			int h_sep = get_theme_constant(SNAME("separation"), SNAME("HSplitContainer"));
+			int h_sep = get_theme_constant(SceneStringName(separation), SNAME("HSplitContainer"));
 
-			int v_sep = get_theme_constant(SNAME("separation"), SNAME("VSplitContainer"));
+			int v_sep = get_theme_constant(SceneStringName(separation), SNAME("VSplitContainer"));
 
 			int mid_w = size.width * ratio_h;
 			int mid_h = size.height * ratio_v;
@@ -9640,7 +9640,7 @@ void fragment() {
 		sun_angle_azimuth->connect(SceneStringName(value_changed), callable_mp(this, &Node3DEditor::_sun_direction_set_azimuth));
 		sun_angle_azimuth_vbox->add_child(sun_angle_azimuth);
 		sun_angle_hbox->add_child(sun_angle_azimuth_vbox);
-		sun_angle_hbox->add_theme_constant_override("separation", 10);
+		sun_angle_hbox->add_theme_constant_override(SceneStringName(separation), 10);
 		sun_vb->add_child(sun_angle_hbox);
 
 		sun_color = memnew(ColorPickerButton);

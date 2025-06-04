@@ -614,7 +614,7 @@ void EditorNode::_update_theme(bool p_skip_creation) {
 
 		gui_base->add_theme_style_override(SceneStringName(panel), theme->get_stylebox(SNAME("Background"), EditorStringName(EditorStyles)));
 		main_vbox->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT, Control::PRESET_MODE_MINSIZE, theme->get_constant(SNAME("window_border_margin"), EditorStringName(Editor)));
-		main_vbox->add_theme_constant_override("separation", theme->get_constant(SNAME("top_bar_separation"), EditorStringName(Editor)));
+		main_vbox->add_theme_constant_override(SceneStringName(separation), theme->get_constant(SNAME("top_bar_separation"), EditorStringName(Editor)));
 
 		if (main_menu_button != nullptr) {
 			main_menu_button->set_button_icon(theme->get_icon(SNAME("TripleBar"), EditorStringName(EditorIcons)));
@@ -7212,7 +7212,7 @@ void EditorNode::_update_main_menu_type() {
 
 #ifdef ANDROID_ENABLED
 		// Align main menu icon visually with TouchActionsPanel buttons.
-		main_menu_button->get_popup()->add_theme_constant_override("v_separation", 16 * EDSCALE);
+		main_menu_button->get_popup()->add_theme_constant_override(SceneStringName(v_separation), 16 * EDSCALE);
 		menu_btn_spacer = memnew(Control);
 		menu_btn_spacer->set_custom_minimum_size(Vector2(8, 0) * EDSCALE);
 		title_bar->add_child(menu_btn_spacer);
@@ -7771,7 +7771,7 @@ EditorNode::EditorNode() {
 
 	VBoxContainer *srt = memnew(VBoxContainer);
 	srt->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	srt->add_theme_constant_override("separation", 0);
+	srt->add_theme_constant_override(SceneStringName(separation), 0);
 	top_split->add_child(srt);
 
 	scene_tabs = memnew(EditorSceneTabs);
