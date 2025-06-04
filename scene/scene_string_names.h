@@ -158,6 +158,7 @@ public:
 	const StringName id_pressed = "id_pressed";
 	const StringName toggled = "toggled";
 	const StringName hover = "hover";
+	const StringName disabled = "disabled";
 
 	const StringName panel = "panel";
 	const StringName focus = "focus";
