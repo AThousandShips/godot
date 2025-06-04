@@ -138,7 +138,7 @@ void SceneTree::ClientPhysicsInterpolation::physics_process() {
 #endif // _3D_DISABLED
 
 void SceneTree::tree_changed() {
-	emit_signal(tree_changed_name);
+	emit_signal(SceneStringName(tree_changed));
 }
 
 void SceneTree::node_added(Node *p_node) {

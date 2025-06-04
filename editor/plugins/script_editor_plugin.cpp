@@ -1788,7 +1788,7 @@ void ScriptEditor::_notification(int p_what) {
 			// Can't set own styles in NOTIFICATION_THEME_CHANGED, so for now this will do.
 			add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SNAME("ScriptEditorPanel"), EditorStringName(EditorStyles)));
 
-			get_tree()->connect("tree_changed", callable_mp(this, &ScriptEditor::_tree_changed));
+			get_tree()->connect(SceneStringName(tree_changed), callable_mp(this, &ScriptEditor::_tree_changed));
 			InspectorDock::get_singleton()->connect("request_help", callable_mp(this, &ScriptEditor::_help_class_open));
 			EditorNode::get_singleton()->connect("request_help_search", callable_mp(this, &ScriptEditor::_help_search));
 			EditorNode::get_singleton()->connect("scene_closed", callable_mp(this, &ScriptEditor::_close_builtin_scripts_from_scene));

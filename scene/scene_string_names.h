@@ -54,6 +54,7 @@ public:
 	const StringName gui_input = "gui_input";
 	const StringName window_input = "window_input";
 
+	const StringName tree_changed = "tree_changed";
 	const StringName tree_entered = "tree_entered";
 	const StringName tree_exiting = "tree_exiting";
 	const StringName tree_exited = "tree_exited";

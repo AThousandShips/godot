@@ -149,7 +149,6 @@ private:
 	bool _physics_interpolation_enabled = false;
 	SceneTreeFTI scene_tree_fti;
 
-	StringName tree_changed_name = "tree_changed";
 	StringName node_added_name = "node_added";
 	StringName node_renamed_name = "node_renamed";
 

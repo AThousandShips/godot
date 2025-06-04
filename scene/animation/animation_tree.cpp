@@ -597,7 +597,7 @@ AnimationNode::AnimationNode() {
 ////////////////////
 
 void AnimationRootNode::_tree_changed() {
-	emit_signal(SNAME("tree_changed"));
+	emit_signal(SceneStringName(tree_changed));
 }
 
 void AnimationRootNode::_animation_node_renamed(const ObjectID &p_oid, const String &p_old_name, const String &p_new_name) {
@@ -612,7 +612,7 @@ void AnimationRootNode::_animation_node_removed(const ObjectID &p_oid, const Str
 
 void AnimationTree::set_root_animation_node(const Ref<AnimationRootNode> &p_animation_node) {
 	if (root_animation_node.is_valid()) {
-		root_animation_node->disconnect(SNAME("tree_changed"), callable_mp(this, &AnimationTree::_tree_changed));
+		root_animation_node->disconnect(SceneStringName(tree_changed), callable_mp(this, &AnimationTree::_tree_changed));
 		root_animation_node->disconnect(SNAME("animation_node_renamed"), callable_mp(this, &AnimationTree::_animation_node_renamed));
 		root_animation_node->disconnect(SNAME("animation_node_removed"), callable_mp(this, &AnimationTree::_animation_node_removed));
 	}
@@ -620,7 +620,7 @@ void AnimationTree::set_root_animation_node(const Ref<AnimationRootNode> &p_anim
 	root_animation_node = p_animation_node;
 
 	if (root_animation_node.is_valid()) {
-		root_animation_node->connect(SNAME("tree_changed"), callable_mp(this, &AnimationTree::_tree_changed));
+		root_animation_node->connect(SceneStringName(tree_changed), callable_mp(this, &AnimationTree::_tree_changed));
 		root_animation_node->connect(SNAME("animation_node_renamed"), callable_mp(this, &AnimationTree::_animation_node_renamed));
 		root_animation_node->connect(SNAME("animation_node_removed"), callable_mp(this, &AnimationTree::_animation_node_removed));
 	}

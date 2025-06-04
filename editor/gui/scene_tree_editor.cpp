@@ -1328,7 +1328,7 @@ void SceneTreeEditor::_tree_scroll_to_item(ObjectID p_item_id) {
 void SceneTreeEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
-			get_tree()->connect("tree_changed", callable_mp(this, &SceneTreeEditor::_tree_changed));
+			get_tree()->connect(SceneStringName(tree_changed), callable_mp(this, &SceneTreeEditor::_tree_changed));
 			get_tree()->connect("tree_process_mode_changed", callable_mp(this, &SceneTreeEditor::_tree_process_mode_changed));
 			get_tree()->connect("node_added", callable_mp(this, &SceneTreeEditor::_node_added));
 			get_tree()->connect(SceneStringName(node_removed), callable_mp(this, &SceneTreeEditor::_node_removed));
@@ -1341,7 +1341,7 @@ void SceneTreeEditor::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
-			get_tree()->disconnect("tree_changed", callable_mp(this, &SceneTreeEditor::_tree_changed));
+			get_tree()->disconnect(SceneStringName(tree_changed), callable_mp(this, &SceneTreeEditor::_tree_changed));
 			get_tree()->disconnect("tree_process_mode_changed", callable_mp(this, &SceneTreeEditor::_tree_process_mode_changed));
 			get_tree()->disconnect("node_added", callable_mp(this, &SceneTreeEditor::_node_added));
 			get_tree()->disconnect(SceneStringName(node_removed), callable_mp(this, &SceneTreeEditor::_node_removed));

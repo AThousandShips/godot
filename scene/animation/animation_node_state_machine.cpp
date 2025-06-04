@@ -1262,9 +1262,9 @@ void AnimationNodeStateMachine::add_node(const StringName &p_name, Ref<Animation
 	states[p_name] = state_new;
 
 	emit_changed();
-	emit_signal(SNAME("tree_changed"));
+	emit_signal(SceneStringName(tree_changed));
 
-	p_node->connect("tree_changed", callable_mp(this, &AnimationNodeStateMachine::_tree_changed), CONNECT_REFERENCE_COUNTED);
+	p_node->connect(SceneStringName(tree_changed), callable_mp(this, &AnimationNodeStateMachine::_tree_changed), CONNECT_REFERENCE_COUNTED);
 	p_node->connect("animation_node_renamed", callable_mp(this, &AnimationNodeStateMachine::_animation_node_renamed), CONNECT_REFERENCE_COUNTED);
 	p_node->connect("animation_node_removed", callable_mp(this, &AnimationNodeStateMachine::_animation_node_removed), CONNECT_REFERENCE_COUNTED);
 }
@@ -1277,7 +1277,7 @@ void AnimationNodeStateMachine::replace_node(const StringName &p_name, Ref<Anima
 	{
 		Ref<AnimationNode> node = states[p_name].node;
 		if (node.is_valid()) {
-			node->disconnect("tree_changed", callable_mp(this, &AnimationNodeStateMachine::_tree_changed));
+			node->disconnect(SceneStringName(tree_changed), callable_mp(this, &AnimationNodeStateMachine::_tree_changed));
 			node->disconnect("animation_node_renamed", callable_mp(this, &AnimationNodeStateMachine::_animation_node_renamed));
 			node->disconnect("animation_node_removed", callable_mp(this, &AnimationNodeStateMachine::_animation_node_removed));
 		}
@@ -1286,9 +1286,9 @@ void AnimationNodeStateMachine::replace_node(const StringName &p_name, Ref<Anima
 	states[p_name].node = p_node;
 
 	emit_changed();
-	emit_signal(SNAME("tree_changed"));
+	emit_signal(SceneStringName(tree_changed));
 
-	p_node->connect("tree_changed", callable_mp(this, &AnimationNodeStateMachine::_tree_changed), CONNECT_REFERENCE_COUNTED);
+	p_node->connect(SceneStringName(tree_changed), callable_mp(this, &AnimationNodeStateMachine::_tree_changed), CONNECT_REFERENCE_COUNTED);
 	p_node->connect("animation_node_renamed", callable_mp(this, &AnimationNodeStateMachine::_animation_node_renamed), CONNECT_REFERENCE_COUNTED);
 	p_node->connect("animation_node_removed", callable_mp(this, &AnimationNodeStateMachine::_animation_node_removed), CONNECT_REFERENCE_COUNTED);
 }
@@ -1296,7 +1296,7 @@ void AnimationNodeStateMachine::replace_node(const StringName &p_name, Ref<Anima
 void AnimationNodeStateMachine::set_state_machine_type(StateMachineType p_state_machine_type) {
 	state_machine_type = p_state_machine_type;
 	emit_changed();
-	emit_signal(SNAME("tree_changed"));
+	emit_signal(SceneStringName(tree_changed));
 	notify_property_list_changed();
 }
 
@@ -1383,7 +1383,7 @@ void AnimationNodeStateMachine::remove_node(const StringName &p_name) {
 	{
 		Ref<AnimationNode> node = states[p_name].node;
 		ERR_FAIL_COND(node.is_null());
-		node->disconnect("tree_changed", callable_mp(this, &AnimationNodeStateMachine::_tree_changed));
+		node->disconnect(SceneStringName(tree_changed), callable_mp(this, &AnimationNodeStateMachine::_tree_changed));
 		node->disconnect("animation_node_renamed", callable_mp(this, &AnimationNodeStateMachine::_animation_node_renamed));
 		node->disconnect("animation_node_removed", callable_mp(this, &AnimationNodeStateMachine::_animation_node_removed));
 	}
@@ -1392,7 +1392,7 @@ void AnimationNodeStateMachine::remove_node(const StringName &p_name) {
 
 	emit_signal(SNAME("animation_node_removed"), get_instance_id(), p_name);
 	emit_changed();
-	emit_signal(SNAME("tree_changed"));
+	emit_signal(SceneStringName(tree_changed));
 }
 
 void AnimationNodeStateMachine::rename_node(const StringName &p_name, const StringName &p_new_name) {
@@ -1407,7 +1407,7 @@ void AnimationNodeStateMachine::rename_node(const StringName &p_name, const Stri
 
 	emit_signal(SNAME("animation_node_renamed"), get_instance_id(), p_name, p_new_name);
 	emit_changed();
-	emit_signal(SNAME("tree_changed"));
+	emit_signal(SceneStringName(tree_changed));
 }
 
 void AnimationNodeStateMachine::_rename_transitions(const StringName &p_name, const StringName &p_new_name) {
@@ -1749,7 +1749,7 @@ void AnimationNodeStateMachine::reset_state() {
 	states[SceneStringName(End)] = end;
 
 	emit_changed();
-	emit_signal(SNAME("tree_changed"));
+	emit_signal(SceneStringName(tree_changed));
 }
 
 void AnimationNodeStateMachine::set_node_position(const StringName &p_name, const Vector2 &p_position) {
