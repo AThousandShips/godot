@@ -668,7 +668,7 @@ PropertySelector::PropertySelector() {
 	get_ok_button()->set_disabled(true);
 	register_text_enter(search_box);
 	set_hide_on_ok(false);
-	search_options->connect("item_activated", callable_mp(this, &PropertySelector::_confirmed));
+	search_options->connect(SceneStringName(item_activated), callable_mp(this, &PropertySelector::_confirmed));
 	search_options->connect("cell_selected", callable_mp(this, &PropertySelector::_item_selected));
 	search_options->set_hide_root(true);
 

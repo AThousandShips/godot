@@ -2339,7 +2339,7 @@ ThemeTypeDialog::ThemeTypeDialog() {
 	add_type_options->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	add_type_vb->add_child(add_type_options);
 	add_type_options->connect(SceneStringName(item_selected), callable_mp(this, &ThemeTypeDialog::_add_type_options_cbk));
-	add_type_options->connect("item_activated", callable_mp(this, &ThemeTypeDialog::_add_type_dialog_activated));
+	add_type_options->connect(SceneStringName(item_activated), callable_mp(this, &ThemeTypeDialog::_add_type_dialog_activated));
 
 	add_type_confirmation = memnew(ConfirmationDialog);
 	add_type_confirmation->set_title(TTR("Type name is empty!"));

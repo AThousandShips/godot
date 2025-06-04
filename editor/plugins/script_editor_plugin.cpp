@@ -455,7 +455,7 @@ ScriptEditorQuickOpen::ScriptEditorQuickOpen() {
 	get_ok_button()->set_disabled(true);
 	register_text_enter(search_box);
 	set_hide_on_ok(false);
-	search_options->connect("item_activated", callable_mp(this, &ScriptEditorQuickOpen::_confirmed));
+	search_options->connect(SceneStringName(item_activated), callable_mp(this, &ScriptEditorQuickOpen::_confirmed));
 	search_options->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	search_options->set_hide_root(true);
 	search_options->set_hide_folding(true);

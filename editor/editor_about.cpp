@@ -145,7 +145,7 @@ Label *EditorAbout::_create_section(Control *p_parent, const String &p_name, con
 		il->add_theme_style_override("focus", empty_stylebox);
 		il->add_theme_style_override("selected", empty_stylebox);
 
-		il->connect("item_activated", callable_mp(this, &EditorAbout::_item_activated).bind(il));
+		il->connect(SceneStringName(item_activated), callable_mp(this, &EditorAbout::_item_activated).bind(il));
 	} else {
 		il->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
 		il->set_focus_mode(Control::FOCUS_NONE);

@@ -3034,7 +3034,7 @@ void Tree::_range_click_timeout() {
 		}
 
 		if (propagate_mouse_activated) {
-			emit_signal(SNAME("item_activated"));
+			emit_signal(SceneStringName(item_activated));
 			propagate_mouse_activated = false;
 		}
 
@@ -3896,7 +3896,7 @@ void Tree::gui_input(const Ref<InputEvent> &p_event) {
 				const TreeItem::Cell &c = selected_item->cells[selected_col];
 				emit_signal("button_clicked", selected_item, selected_col, c.buttons[selected_button].id, MouseButton::LEFT);
 			} else if (!edit_selected()) {
-				emit_signal(SNAME("item_activated"));
+				emit_signal(SceneStringName(item_activated));
 				incr_search.clear();
 			}
 		}
@@ -4168,7 +4168,7 @@ void Tree::gui_input(const Ref<InputEvent> &p_event) {
 				}
 
 				if (propagate_mouse_activated) {
-					emit_signal(SNAME("item_activated"));
+					emit_signal(SceneStringName(item_activated));
 					propagate_mouse_activated = false;
 				}
 

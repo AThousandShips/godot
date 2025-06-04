@@ -836,7 +836,7 @@ void ItemList::gui_input(const Ref<InputEvent> &p_event) {
 				emit_signal(SNAME("item_clicked"), i, get_local_mouse_position(), mb->get_button_index());
 
 				if (mb->get_button_index() == MouseButton::LEFT && mb->is_double_click()) {
-					emit_signal(SNAME("item_activated"), i);
+					emit_signal(SceneStringName(item_activated), i);
 				}
 			}
 
@@ -1108,7 +1108,7 @@ void ItemList::gui_input(const Ref<InputEvent> &p_event) {
 			search_string = ""; //any mousepress cancels
 
 			if (current >= 0 && current < items.size() && !items[current].disabled) {
-				emit_signal(SNAME("item_activated"), current);
+				emit_signal(SceneStringName(item_activated), current);
 			}
 		} else {
 			Ref<InputEventKey> k = p_event;

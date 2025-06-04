@@ -869,7 +869,7 @@ CreateDialog::CreateDialog() {
 	favorites->set_hide_folding(true);
 	favorites->set_allow_reselect(true);
 	favorites->connect("cell_selected", callable_mp(this, &CreateDialog::_favorite_selected));
-	favorites->connect("item_activated", callable_mp(this, &CreateDialog::_favorite_activated));
+	favorites->connect(SceneStringName(item_activated), callable_mp(this, &CreateDialog::_favorite_activated));
 	favorites->add_theme_constant_override("draw_guides", 1);
 	favorites->set_theme_type_variation("TreeSecondary");
 	SET_DRAG_FORWARDING_GCD(favorites, CreateDialog);
@@ -886,7 +886,7 @@ CreateDialog::CreateDialog() {
 	rec_vb->add_margin_child(TTR("Recent:"), recent, true);
 	recent->set_allow_reselect(true);
 	recent->connect(SceneStringName(item_selected), callable_mp(this, &CreateDialog::_history_selected));
-	recent->connect("item_activated", callable_mp(this, &CreateDialog::_history_activated));
+	recent->connect(SceneStringName(item_activated), callable_mp(this, &CreateDialog::_history_activated));
 	recent->add_theme_constant_override("draw_guides", 1);
 	recent->set_theme_type_variation("ItemListSecondary");
 
@@ -916,7 +916,7 @@ CreateDialog::CreateDialog() {
 	search_options = memnew(Tree);
 	search_options->set_accessibility_name(TTRC("Matches"));
 	search_options->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
-	search_options->connect("item_activated", callable_mp(this, &CreateDialog::_confirmed));
+	search_options->connect(SceneStringName(item_activated), callable_mp(this, &CreateDialog::_confirmed));
 	search_options->connect("cell_selected", callable_mp(this, &CreateDialog::_item_selected));
 	search_options->connect("button_clicked", callable_mp(this, &CreateDialog::_script_button_clicked));
 	vbc->add_margin_child(TTR("Matches:"), search_options, true);

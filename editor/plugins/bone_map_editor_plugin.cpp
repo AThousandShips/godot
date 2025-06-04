@@ -173,7 +173,7 @@ void BonePicker::create_editors() {
 	bones->set_select_mode(Tree::SELECT_SINGLE);
 	bones->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	bones->set_hide_root(true);
-	bones->connect("item_activated", callable_mp(this, &BonePicker::_confirm));
+	bones->connect(SceneStringName(item_activated), callable_mp(this, &BonePicker::_confirm));
 	vbox->add_child(bones);
 
 	create_bones_tree(skeleton);

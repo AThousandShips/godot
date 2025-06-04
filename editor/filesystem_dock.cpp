@@ -526,7 +526,7 @@ void FileSystemDock::_notification(int p_what) {
 			EditorResourcePreview::get_singleton()->connect("preview_invalidated", callable_mp(this, &FileSystemDock::_preview_invalidated));
 
 			button_file_list_display_mode->connect(SceneStringName(pressed), callable_mp(this, &FileSystemDock::_toggle_file_display));
-			files->connect("item_activated", callable_mp(this, &FileSystemDock::_file_list_activate_file));
+			files->connect(SceneStringName(item_activated), callable_mp(this, &FileSystemDock::_file_list_activate_file));
 			button_hist_next->connect(SceneStringName(pressed), callable_mp(this, &FileSystemDock::_fw_history));
 			button_hist_prev->connect(SceneStringName(pressed), callable_mp(this, &FileSystemDock::_bw_history));
 			file_list_popup->connect(SceneStringName(id_pressed), callable_mp(this, &FileSystemDock::_file_list_rmb_option));
@@ -4216,7 +4216,7 @@ FileSystemDock::FileSystemDock() {
 	tree->set_column_clip_content(0, true);
 	split_box->add_child(tree);
 
-	tree->connect("item_activated", callable_mp(this, &FileSystemDock::_tree_activate_file));
+	tree->connect(SceneStringName(item_activated), callable_mp(this, &FileSystemDock::_tree_activate_file));
 	tree->connect("multi_selected", callable_mp(this, &FileSystemDock::_tree_multi_selected));
 	tree->connect("item_mouse_selected", callable_mp(this, &FileSystemDock::_tree_rmb_select));
 	tree->connect("empty_clicked", callable_mp(this, &FileSystemDock::_tree_empty_click));

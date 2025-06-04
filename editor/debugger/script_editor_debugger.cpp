@@ -1007,8 +1007,8 @@ void ScriptEditorDebugger::_notification(int p_what) {
 			le_set->connect(SceneStringName(pressed), callable_mp(this, &ScriptEditorDebugger::_live_edit_set));
 			le_clear->connect(SceneStringName(pressed), callable_mp(this, &ScriptEditorDebugger::_live_edit_clear));
 			error_tree->connect(SceneStringName(item_selected), callable_mp(this, &ScriptEditorDebugger::_error_selected));
-			error_tree->connect("item_activated", callable_mp(this, &ScriptEditorDebugger::_error_activated));
-			breakpoints_tree->connect("item_activated", callable_mp(this, &ScriptEditorDebugger::_breakpoint_tree_clicked));
+			error_tree->connect(SceneStringName(item_activated), callable_mp(this, &ScriptEditorDebugger::_error_activated));
+			breakpoints_tree->connect(SceneStringName(item_activated), callable_mp(this, &ScriptEditorDebugger::_breakpoint_tree_clicked));
 			connect("started", callable_mp(expression_evaluator, &EditorExpressionEvaluator::on_start));
 		} break;
 
@@ -2276,7 +2276,7 @@ Instead, use the monitors tab to obtain more precise VRAM usage.
 		vmem_tree->set_column_title(3, TTR("Usage"));
 		vmem_tree->set_column_custom_minimum_width(3, 80 * EDSCALE);
 		vmem_tree->set_hide_root(true);
-		vmem_tree->connect("item_activated", callable_mp(this, &ScriptEditorDebugger::_vmem_item_activated));
+		vmem_tree->connect(SceneStringName(item_activated), callable_mp(this, &ScriptEditorDebugger::_vmem_item_activated));
 
 		tabs->add_child(vmem_vb);
 	}

@@ -393,7 +393,7 @@ DependencyEditorOwners::DependencyEditorOwners() {
 	owners->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 	owners->set_select_mode(ItemList::SELECT_MULTI);
 	owners->connect("item_clicked", callable_mp(this, &DependencyEditorOwners::_list_rmb_clicked));
-	owners->connect("item_activated", callable_mp(this, &DependencyEditorOwners::_select_file));
+	owners->connect(SceneStringName(item_activated), callable_mp(this, &DependencyEditorOwners::_select_file));
 	owners->connect("empty_clicked", callable_mp(this, &DependencyEditorOwners::_empty_clicked));
 	owners->set_allow_rmb_select(true);
 	add_child(owners);

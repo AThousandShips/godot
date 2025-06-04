@@ -6838,7 +6838,7 @@ VisualShaderEditor::VisualShaderEditor() {
 	members->set_allow_reselect(true);
 	members->set_hide_folding(false);
 	members->set_custom_minimum_size(Size2(180 * EDSCALE, 200 * EDSCALE));
-	members->connect("item_activated", callable_mp(this, &VisualShaderEditor::_member_create));
+	members->connect(SceneStringName(item_activated), callable_mp(this, &VisualShaderEditor::_member_create));
 	members->connect(SceneStringName(item_selected), callable_mp(this, &VisualShaderEditor::_member_selected));
 
 	HBoxContainer *desc_hbox = memnew(HBoxContainer);
@@ -6945,7 +6945,7 @@ VisualShaderEditor::VisualShaderEditor() {
 		varyings->set_allow_reselect(true);
 		varyings->set_hide_folding(false);
 		varyings->set_custom_minimum_size(Size2(180 * EDSCALE, 200 * EDSCALE));
-		varyings->connect("item_activated", callable_mp(this, &VisualShaderEditor::_varying_deleted));
+		varyings->connect(SceneStringName(item_activated), callable_mp(this, &VisualShaderEditor::_varying_deleted));
 		varyings->connect(SceneStringName(item_selected), callable_mp(this, &VisualShaderEditor::_varying_selected));
 		varyings->connect("nothing_selected", callable_mp(this, &VisualShaderEditor::_varying_unselected));
 	}

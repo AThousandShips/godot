@@ -1163,7 +1163,7 @@ DynamicFontImportSettingsDialog::DynamicFontImportSettingsDialog() {
 	locale_tree->set_column_custom_minimum_width(0, 120 * EDSCALE);
 	locale_tree->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	page2_0_vb->add_child(locale_tree);
-	locale_tree->connect("item_activated", callable_mp(this, &DynamicFontImportSettingsDialog::_locale_edited));
+	locale_tree->connect(SceneStringName(item_activated), callable_mp(this, &DynamicFontImportSettingsDialog::_locale_edited));
 
 	locale_root = locale_tree->create_item();
 
@@ -1251,7 +1251,7 @@ DynamicFontImportSettingsDialog::DynamicFontImportSettingsDialog() {
 	glyph_table->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	glyph_table->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	glyphs_split->add_child(glyph_table);
-	glyph_table->connect("item_activated", callable_mp(this, &DynamicFontImportSettingsDialog::_glyph_selected));
+	glyph_table->connect(SceneStringName(item_activated), callable_mp(this, &DynamicFontImportSettingsDialog::_glyph_selected));
 
 	glyph_tree = memnew(Tree);
 	glyph_tree->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
@@ -1267,7 +1267,7 @@ DynamicFontImportSettingsDialog::DynamicFontImportSettingsDialog() {
 		_add_glyph_range_item(unicode_ranges[i].start, unicode_ranges[i].end, unicode_ranges[i].name);
 	}
 	glyphs_split->add_child(glyph_tree);
-	glyph_tree->connect("item_activated", callable_mp(this, &DynamicFontImportSettingsDialog::_range_edited));
+	glyph_tree->connect(SceneStringName(item_activated), callable_mp(this, &DynamicFontImportSettingsDialog::_range_edited));
 	glyph_tree->connect(SceneStringName(item_selected), callable_mp(this, &DynamicFontImportSettingsDialog::_range_selected));
 
 	// Common

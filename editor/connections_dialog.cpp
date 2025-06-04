@@ -751,7 +751,7 @@ ConnectDialog::ConnectDialog() {
 	tree->set_connecting_signal(true);
 	tree->set_show_enabled_subscene(true);
 	tree->set_v_size_flags(Control::SIZE_FILL | Control::SIZE_EXPAND);
-	tree->get_scene_tree()->connect("item_activated", callable_mp(this, &ConnectDialog::_item_activated));
+	tree->get_scene_tree()->connect(SceneStringName(item_activated), callable_mp(this, &ConnectDialog::_item_activated));
 	tree->connect("node_selected", callable_mp(this, &ConnectDialog::_tree_node_selected));
 	tree->set_connect_to_script_mode(true);
 
@@ -807,7 +807,7 @@ ConnectDialog::ConnectDialog() {
 	method_tree->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	method_tree->set_hide_root(true);
 	method_tree->connect(SceneStringName(item_selected), callable_mp(this, &ConnectDialog::_method_selected));
-	method_tree->connect("item_activated", callable_mp((Window *)method_popup, &Window::hide));
+	method_tree->connect(SceneStringName(item_activated), callable_mp((Window *)method_popup, &Window::hide));
 
 	empty_tree_label = memnew(Label(TTR("No method found matching given filters.")));
 	method_popup->add_child(empty_tree_label);
@@ -1729,7 +1729,7 @@ ConnectionsDock::ConnectionsDock() {
 
 	connect_dialog->connect("connected", callable_mp(this, &ConnectionsDock::_make_or_edit_connection));
 	tree->connect(SceneStringName(item_selected), callable_mp(this, &ConnectionsDock::_tree_item_selected));
-	tree->connect("item_activated", callable_mp(this, &ConnectionsDock::_tree_item_activated));
+	tree->connect(SceneStringName(item_activated), callable_mp(this, &ConnectionsDock::_tree_item_activated));
 	tree->connect(SceneStringName(gui_input), callable_mp(this, &ConnectionsDock::_tree_gui_input));
 
 	add_theme_constant_override("separation", 3 * EDSCALE);
