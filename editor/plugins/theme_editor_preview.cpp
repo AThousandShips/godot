@@ -271,10 +271,10 @@ ThemeEditorPreview::ThemeEditorPreview() {
 	preview_root->add_child(preview_bg);
 
 	preview_content = memnew(MarginContainer);
-	preview_content->add_theme_constant_override("margin_right", 4 * EDSCALE);
-	preview_content->add_theme_constant_override("margin_top", 4 * EDSCALE);
-	preview_content->add_theme_constant_override("margin_left", 4 * EDSCALE);
-	preview_content->add_theme_constant_override("margin_bottom", 4 * EDSCALE);
+	preview_content->add_theme_constant_override(SceneStringName(margin_right), 4 * EDSCALE);
+	preview_content->add_theme_constant_override(SceneStringName(margin_top), 4 * EDSCALE);
+	preview_content->add_theme_constant_override(SceneStringName(margin_left), 4 * EDSCALE);
+	preview_content->add_theme_constant_override(SceneStringName(margin_bottom), 4 * EDSCALE);
 	preview_root->add_child(preview_content);
 
 	preview_overlay = memnew(MarginContainer);
@@ -302,10 +302,10 @@ DefaultThemeEditorPreview::DefaultThemeEditorPreview() {
 	preview_content->add_child(main_panel);
 
 	MarginContainer *main_mc = memnew(MarginContainer);
-	main_mc->add_theme_constant_override("margin_right", 4 * EDSCALE);
-	main_mc->add_theme_constant_override("margin_top", 4 * EDSCALE);
-	main_mc->add_theme_constant_override("margin_left", 4 * EDSCALE);
-	main_mc->add_theme_constant_override("margin_bottom", 4 * EDSCALE);
+	main_mc->add_theme_constant_override(SceneStringName(margin_right), 4 * EDSCALE);
+	main_mc->add_theme_constant_override(SceneStringName(margin_top), 4 * EDSCALE);
+	main_mc->add_theme_constant_override(SceneStringName(margin_left), 4 * EDSCALE);
+	main_mc->add_theme_constant_override(SceneStringName(margin_bottom), 4 * EDSCALE);
 	preview_content->add_child(main_mc);
 
 	HBoxContainer *main_hb = memnew(HBoxContainer);

@@ -520,7 +520,7 @@ void ColorPickerShapeWheel::_update_cursor(const Vector2 &p_color_change_vector,
 void ColorPickerShapeWheel::update_theme() {
 	const ColorPicker::ThemeCache &theme_cache = color_picker->theme_cache;
 	wheel_margin->set_custom_minimum_size(Size2(theme_cache.sv_width, theme_cache.sv_height));
-	wheel_margin->add_theme_constant_override(SNAME("margin_bottom"), 8 * theme_cache.base_scale);
+	wheel_margin->add_theme_constant_override(SceneStringName(margin_bottom), 8 * theme_cache.base_scale);
 }
 
 void ColorPickerShapeWheel::grab_focus() {
@@ -582,7 +582,7 @@ void ColorPickerShapeCircle::_initialize_controls() {
 void ColorPickerShapeCircle::update_theme() {
 	const ColorPicker::ThemeCache &theme_cache = color_picker->theme_cache;
 	circle_margin->set_custom_minimum_size(Size2(theme_cache.sv_width, theme_cache.sv_height));
-	circle_margin->add_theme_constant_override(SNAME("margin_bottom"), 8 * theme_cache.base_scale);
+	circle_margin->add_theme_constant_override(SceneStringName(margin_bottom), 8 * theme_cache.base_scale);
 	value_slider->set_custom_minimum_size(Size2(theme_cache.h_width, 0));
 }
 

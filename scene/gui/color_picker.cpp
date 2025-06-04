@@ -159,10 +159,10 @@ void ColorPicker::_notification(int p_what) {
 			}
 
 			internal_margin->begin_bulk_theme_override();
-			internal_margin->add_theme_constant_override(SNAME("margin_bottom"), theme_cache.content_margin);
-			internal_margin->add_theme_constant_override(SNAME("margin_left"), theme_cache.content_margin);
-			internal_margin->add_theme_constant_override(SNAME("margin_right"), theme_cache.content_margin);
-			internal_margin->add_theme_constant_override(SNAME("margin_top"), theme_cache.content_margin);
+			internal_margin->add_theme_constant_override(SceneStringName(margin_bottom), theme_cache.content_margin);
+			internal_margin->add_theme_constant_override(SceneStringName(margin_left), theme_cache.content_margin);
+			internal_margin->add_theme_constant_override(SceneStringName(margin_right), theme_cache.content_margin);
+			internal_margin->add_theme_constant_override(SceneStringName(margin_top), theme_cache.content_margin);
 			internal_margin->end_bulk_theme_override();
 
 			_reset_sliders_theme();

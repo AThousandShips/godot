@@ -66,10 +66,10 @@ void BitMapEditor::_draw_outline() {
 BitMapEditor::BitMapEditor() {
 	MarginContainer *margin_container = memnew(MarginContainer);
 	const float outline_width = Math::round(EDSCALE);
-	margin_container->add_theme_constant_override("margin_right", outline_width);
-	margin_container->add_theme_constant_override("margin_top", outline_width);
-	margin_container->add_theme_constant_override("margin_left", outline_width);
-	margin_container->add_theme_constant_override("margin_bottom", outline_width);
+	margin_container->add_theme_constant_override(SceneStringName(margin_right), outline_width);
+	margin_container->add_theme_constant_override(SceneStringName(margin_top), outline_width);
+	margin_container->add_theme_constant_override(SceneStringName(margin_left), outline_width);
+	margin_container->add_theme_constant_override(SceneStringName(margin_bottom), outline_width);
 	add_child(margin_container);
 
 	centering_container = memnew(AspectRatioContainer);

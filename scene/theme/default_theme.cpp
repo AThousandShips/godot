@@ -1207,10 +1207,10 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant(SceneStringName(separation), "BoxContainer", Math::round(4 * scale));
 	theme->set_constant(SceneStringName(separation), "HBoxContainer", Math::round(4 * scale));
 	theme->set_constant(SceneStringName(separation), "VBoxContainer", Math::round(4 * scale));
-	theme->set_constant("margin_left", "MarginContainer", 0);
-	theme->set_constant("margin_top", "MarginContainer", 0);
-	theme->set_constant("margin_right", "MarginContainer", 0);
-	theme->set_constant("margin_bottom", "MarginContainer", 0);
+	theme->set_constant(SceneStringName(margin_left), "MarginContainer", 0);
+	theme->set_constant(SceneStringName(margin_top), "MarginContainer", 0);
+	theme->set_constant(SceneStringName(margin_right), "MarginContainer", 0);
+	theme->set_constant(SceneStringName(margin_bottom), "MarginContainer", 0);
 	theme->set_constant(SceneStringName(h_separation), "GridContainer", Math::round(4 * scale));
 	theme->set_constant(SceneStringName(v_separation), "GridContainer", Math::round(4 * scale));
 	theme->set_constant(SceneStringName(separation), "SplitContainer", Math::round(12 * scale));

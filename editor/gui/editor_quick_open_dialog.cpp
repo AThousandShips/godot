@@ -107,10 +107,10 @@ EditorQuickOpenDialog::EditorQuickOpenDialog() {
 	{
 		// Search bar
 		MarginContainer *mc = memnew(MarginContainer);
-		mc->add_theme_constant_override("margin_top", 6);
-		mc->add_theme_constant_override("margin_bottom", 6);
-		mc->add_theme_constant_override("margin_left", 1);
-		mc->add_theme_constant_override("margin_right", 1);
+		mc->add_theme_constant_override(SceneStringName(margin_top), 6);
+		mc->add_theme_constant_override(SceneStringName(margin_bottom), 6);
+		mc->add_theme_constant_override(SceneStringName(margin_left), 1);
+		mc->add_theme_constant_override(SceneStringName(margin_right), 1);
 		vbc->add_child(mc);
 
 		search_box = memnew(LineEdit);
@@ -1007,8 +1007,8 @@ static Vector2i _get_name_interval(const Vector2i &p_interval, int p_dir_index) 
 
 QuickOpenResultListItem::QuickOpenResultListItem() {
 	set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	add_theme_constant_override("margin_left", 6 * EDSCALE);
-	add_theme_constant_override("margin_right", 6 * EDSCALE);
+	add_theme_constant_override(SceneStringName(margin_left), 6 * EDSCALE);
+	add_theme_constant_override(SceneStringName(margin_right), 6 * EDSCALE);
 
 	hbc = memnew(HBoxContainer);
 	hbc->add_theme_constant_override(SceneStringName(separation), 4 * EDSCALE);
@@ -1088,9 +1088,9 @@ void QuickOpenResultListItem::_notification(int p_what) {
 
 QuickOpenResultGridItem::QuickOpenResultGridItem() {
 	set_custom_minimum_size(Size2i(120 * EDSCALE, 0));
-	add_theme_constant_override("margin_top", 6 * EDSCALE);
-	add_theme_constant_override("margin_left", 2 * EDSCALE);
-	add_theme_constant_override("margin_right", 2 * EDSCALE);
+	add_theme_constant_override(SceneStringName(margin_top), 6 * EDSCALE);
+	add_theme_constant_override(SceneStringName(margin_left), 2 * EDSCALE);
+	add_theme_constant_override(SceneStringName(margin_right), 2 * EDSCALE);
 
 	vbc = memnew(VBoxContainer);
 	vbc->set_h_size_flags(Control::SIZE_FILL);

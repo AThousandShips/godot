@@ -80,6 +80,11 @@ public:
 	const StringName outline_size = "outline_size";
 	const StringName selected = "selected";
 
+	const StringName margin_left = "margin_left";
+	const StringName margin_top = "margin_top";
+	const StringName margin_right = "margin_right";
+	const StringName margin_bottom = "margin_bottom";
+
 	const StringName mouse_entered = "mouse_entered";
 	const StringName mouse_exited = "mouse_exited";
 	const StringName mouse_shape_entered = "mouse_shape_entered";

@@ -969,8 +969,8 @@ GameView::GameView(Ref<GameViewDebugger> p_debugger, EmbeddedProcessBase *p_embe
 	// This prevents the first button's hover/pressed effect from "touching" the panel's border,
 	// which looks ugly.
 	MarginContainer *toolbar_margin = memnew(MarginContainer);
-	toolbar_margin->add_theme_constant_override("margin_left", 4 * EDSCALE);
-	toolbar_margin->add_theme_constant_override("margin_right", 4 * EDSCALE);
+	toolbar_margin->add_theme_constant_override(SceneStringName(margin_left), 4 * EDSCALE);
+	toolbar_margin->add_theme_constant_override(SceneStringName(margin_right), 4 * EDSCALE);
 	add_child(toolbar_margin);
 
 	HBoxContainer *main_menu_hbox = memnew(HBoxContainer);
@@ -1152,8 +1152,8 @@ GameView::GameView(Ref<GameViewDebugger> p_debugger, EmbeddedProcessBase *p_embe
 	embedded_process->set_custom_minimum_size(Size2i(100, 100));
 
 	MarginContainer *state_container = memnew(MarginContainer);
-	state_container->add_theme_constant_override("margin_left", 8 * EDSCALE);
-	state_container->add_theme_constant_override("margin_right", 8 * EDSCALE);
+	state_container->add_theme_constant_override(SceneStringName(margin_left), 8 * EDSCALE);
+	state_container->add_theme_constant_override(SceneStringName(margin_right), 8 * EDSCALE);
 	state_container->set_anchors_and_offsets_preset(PRESET_FULL_RECT);
 #ifdef MACOS_ENABLED
 	state_container->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);

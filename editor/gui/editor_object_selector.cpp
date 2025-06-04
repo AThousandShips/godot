@@ -212,8 +212,8 @@ EditorObjectSelector::EditorObjectSelector(EditorSelectionHistory *p_history) {
 
 	MarginContainer *main_mc = memnew(MarginContainer);
 	main_mc->set_anchors_and_offsets_preset(PRESET_FULL_RECT);
-	main_mc->add_theme_constant_override("margin_left", 4 * EDSCALE);
-	main_mc->add_theme_constant_override("margin_right", 6 * EDSCALE);
+	main_mc->add_theme_constant_override(SceneStringName(margin_left), 4 * EDSCALE);
+	main_mc->add_theme_constant_override(SceneStringName(margin_right), 6 * EDSCALE);
 	add_child(main_mc);
 
 	HBoxContainer *main_hb = memnew(HBoxContainer);

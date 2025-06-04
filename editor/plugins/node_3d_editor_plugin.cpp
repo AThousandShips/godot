@@ -9126,8 +9126,8 @@ Node3DEditor::Node3DEditor() {
 	// This prevents the first button's hover/pressed effect from "touching" the panel's border,
 	// which looks ugly.
 	MarginContainer *toolbar_margin = memnew(MarginContainer);
-	toolbar_margin->add_theme_constant_override("margin_left", 4 * EDSCALE);
-	toolbar_margin->add_theme_constant_override("margin_right", 4 * EDSCALE);
+	toolbar_margin->add_theme_constant_override(SceneStringName(margin_left), 4 * EDSCALE);
+	toolbar_margin->add_theme_constant_override(SceneStringName(margin_right), 4 * EDSCALE);
 	vbc->add_child(toolbar_margin);
 
 	// A fluid container for all toolbars.

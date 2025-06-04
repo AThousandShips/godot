@@ -1266,10 +1266,10 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_constant(SceneStringName(separation), "BoxContainer", p_config.separation_margin);
 		p_theme->set_constant(SceneStringName(separation), "HBoxContainer", p_config.separation_margin);
 		p_theme->set_constant(SceneStringName(separation), "VBoxContainer", p_config.separation_margin);
-		p_theme->set_constant("margin_left", "MarginContainer", 0);
-		p_theme->set_constant("margin_top", "MarginContainer", 0);
-		p_theme->set_constant("margin_right", "MarginContainer", 0);
-		p_theme->set_constant("margin_bottom", "MarginContainer", 0);
+		p_theme->set_constant(SceneStringName(margin_left), "MarginContainer", 0);
+		p_theme->set_constant(SceneStringName(margin_top), "MarginContainer", 0);
+		p_theme->set_constant(SceneStringName(margin_right), "MarginContainer", 0);
+		p_theme->set_constant(SceneStringName(margin_bottom), "MarginContainer", 0);
 		p_theme->set_constant(SceneStringName(h_separation), "GridContainer", p_config.separation_margin);
 		p_theme->set_constant(SceneStringName(v_separation), "GridContainer", p_config.separation_margin);
 		p_theme->set_constant(SceneStringName(h_separation), "FlowContainer", p_config.separation_margin);
@@ -2056,10 +2056,10 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 	{
 		// Custom theme type for MarginContainer with 4px margins.
 		p_theme->set_type_variation("MarginContainer4px", "MarginContainer");
-		p_theme->set_constant("margin_left", "MarginContainer4px", 4 * EDSCALE);
-		p_theme->set_constant("margin_top", "MarginContainer4px", 4 * EDSCALE);
-		p_theme->set_constant("margin_right", "MarginContainer4px", 4 * EDSCALE);
-		p_theme->set_constant("margin_bottom", "MarginContainer4px", 4 * EDSCALE);
+		p_theme->set_constant(SceneStringName(margin_left), "MarginContainer4px", 4 * EDSCALE);
+		p_theme->set_constant(SceneStringName(margin_top), "MarginContainer4px", 4 * EDSCALE);
+		p_theme->set_constant(SceneStringName(margin_right), "MarginContainer4px", 4 * EDSCALE);
+		p_theme->set_constant(SceneStringName(margin_bottom), "MarginContainer4px", 4 * EDSCALE);
 
 		// Header LinkButton variation.
 		p_theme->set_type_variation("HeaderSmallLink", "LinkButton");

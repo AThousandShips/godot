@@ -225,10 +225,10 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 	// Update styles.
 	{
 		const int top_bar_separation = get_theme_constant(SNAME("top_bar_separation"), EditorStringName(Editor));
-		root_container->add_theme_constant_override("margin_left", top_bar_separation);
-		root_container->add_theme_constant_override("margin_top", top_bar_separation);
-		root_container->add_theme_constant_override("margin_bottom", top_bar_separation);
-		root_container->add_theme_constant_override("margin_right", top_bar_separation);
+		root_container->add_theme_constant_override(SceneStringName(margin_left), top_bar_separation);
+		root_container->add_theme_constant_override(SceneStringName(margin_top), top_bar_separation);
+		root_container->add_theme_constant_override(SceneStringName(margin_bottom), top_bar_separation);
+		root_container->add_theme_constant_override(SceneStringName(margin_right), top_bar_separation);
 		main_vbox->add_theme_constant_override(SceneStringName(separation), top_bar_separation);
 
 		background_panel->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SNAME("Background"), EditorStringName(EditorStyles)));
