@@ -893,12 +893,12 @@ void GridMapEditor::_mesh_library_palette_input(const Ref<InputEvent> &p_ie) {
 	if (mb.is_valid() && mb->is_pressed() && mb->is_command_or_control_pressed()) {
 		if (mb->is_pressed() && mb->get_button_index() == MouseButton::WHEEL_UP) {
 			zoom_widget->set_zoom(zoom_widget->get_zoom() + 0.2);
-			zoom_widget->emit_signal(SNAME("zoom_changed"), zoom_widget->get_zoom());
+			zoom_widget->emit_signal(EditorStringName(zoom_changed), zoom_widget->get_zoom());
 		}
 
 		if (mb->is_pressed() && mb->get_button_index() == MouseButton::WHEEL_DOWN) {
 			zoom_widget->set_zoom(zoom_widget->get_zoom() - 0.2);
-			zoom_widget->emit_signal(SNAME("zoom_changed"), zoom_widget->get_zoom());
+			zoom_widget->emit_signal(EditorStringName(zoom_changed), zoom_widget->get_zoom());
 		}
 	}
 }
@@ -1519,7 +1519,7 @@ GridMapEditor::GridMapEditor() {
 	zoom_widget->setup_zoom_limits(0.2, 4);
 	zoom_widget->set_zoom(1.0);
 	zoom_widget->set_anchors_and_offsets_preset(Control::PRESET_TOP_LEFT, Control::PRESET_MODE_MINSIZE, 2 * EDSCALE);
-	zoom_widget->connect("zoom_changed", callable_mp(this, &GridMapEditor::_icon_size_changed));
+	zoom_widget->connect(EditorStringName(zoom_changed), callable_mp(this, &GridMapEditor::_icon_size_changed));
 	zoom_widget->set_shortcut_context(this);
 
 	mode_thumbnail = memnew(Button);

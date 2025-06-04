@@ -5406,7 +5406,7 @@ CanvasItemEditor::CanvasItemEditor() {
 	zoom_widget->set_anchors_and_offsets_preset(Control::PRESET_TOP_LEFT, Control::PRESET_MODE_MINSIZE, 2 * EDSCALE);
 	zoom_widget->set_shortcut_context(this);
 	controls_hb->add_child(zoom_widget);
-	zoom_widget->connect("zoom_changed", callable_mp(this, &CanvasItemEditor::_update_zoom));
+	zoom_widget->connect(EditorStringName(zoom_changed), callable_mp(this, &CanvasItemEditor::_update_zoom));
 
 	EditorTranslationPreviewButton *translation_preview_button = memnew(EditorTranslationPreviewButton);
 	translation_preview_button->set_flat(true);

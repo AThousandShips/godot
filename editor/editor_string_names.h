@@ -52,6 +52,8 @@ public:
 	const StringName error_color = StringName("error_color");
 	const StringName warning_color = StringName("warning_color");
 
+	const StringName zoom_changed = StringName("zoom_changed");
+
 	const StringName property_changed = StringName("property_changed");
 };
 

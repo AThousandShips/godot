@@ -852,7 +852,7 @@ Control::CursorShape AnimationBezierTrackEdit::get_cursor_shape(const Point2 &p_
 
 void AnimationBezierTrackEdit::set_timeline(AnimationTimelineEdit *p_timeline) {
 	timeline = p_timeline;
-	timeline->connect("zoom_changed", callable_mp(this, &AnimationBezierTrackEdit::_zoom_changed));
+	timeline->connect(EditorStringName(zoom_changed), callable_mp(this, &AnimationBezierTrackEdit::_zoom_changed));
 	timeline->connect("name_limit_changed", callable_mp(this, &AnimationBezierTrackEdit::_zoom_changed));
 }
 

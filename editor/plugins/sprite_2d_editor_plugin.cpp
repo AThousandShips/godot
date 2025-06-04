@@ -664,7 +664,7 @@ Sprite2DEditor::Sprite2DEditor() {
 	zoom_widget = memnew(EditorZoomWidget);
 	debug_uv->add_child(zoom_widget);
 	zoom_widget->set_anchors_and_offsets_preset(Control::PRESET_TOP_LEFT, Control::PRESET_MODE_MINSIZE, 2 * EDSCALE);
-	zoom_widget->connect("zoom_changed", callable_mp(this, &Sprite2DEditor::_update_zoom_and_pan).unbind(1).bind(true));
+	zoom_widget->connect(EditorStringName(zoom_changed), callable_mp(this, &Sprite2DEditor::_update_zoom_and_pan).unbind(1).bind(true));
 	zoom_widget->set_shortcut_context(nullptr);
 
 	v_scroll = memnew(VScrollBar);

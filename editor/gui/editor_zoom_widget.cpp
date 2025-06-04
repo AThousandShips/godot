@@ -52,17 +52,17 @@ void EditorZoomWidget::_update_zoom_label() {
 
 void EditorZoomWidget::_button_zoom_minus() {
 	set_zoom_by_increments(-6, Input::get_singleton()->is_key_pressed(Key::ALT));
-	emit_signal(SNAME("zoom_changed"), zoom);
+	emit_signal(EditorStringName(zoom_changed), zoom);
 }
 
 void EditorZoomWidget::_button_zoom_reset() {
 	set_zoom(1.0 * MAX(1, EDSCALE));
-	emit_signal(SNAME("zoom_changed"), zoom);
+	emit_signal(EditorStringName(zoom_changed), zoom);
 }
 
 void EditorZoomWidget::_button_zoom_plus() {
 	set_zoom_by_increments(6, Input::get_singleton()->is_key_pressed(Key::ALT));
-	emit_signal(SNAME("zoom_changed"), zoom);
+	emit_signal(EditorStringName(zoom_changed), zoom);
 }
 
 float EditorZoomWidget::get_zoom() {
@@ -93,10 +93,10 @@ void EditorZoomWidget::setup_zoom_limits(float p_min, float p_max) {
 
 	if (zoom > max_zoom) {
 		set_zoom(max_zoom);
-		emit_signal(SNAME("zoom_changed"), zoom);
+		emit_signal(EditorStringName(zoom_changed), zoom);
 	} else if (zoom < min_zoom) {
 		set_zoom(min_zoom);
-		emit_signal(SNAME("zoom_changed"), zoom);
+		emit_signal(EditorStringName(zoom_changed), zoom);
 	}
 }
 

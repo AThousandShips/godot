@@ -1341,7 +1341,7 @@ void AnimationTimelineEdit::_zoom_changed(double) {
 
 	queue_redraw();
 	play_position->queue_redraw();
-	emit_signal(SNAME("zoom_changed"));
+	emit_signal(EditorStringName(zoom_changed));
 }
 
 float AnimationTimelineEdit::get_zoom_scale() const {
@@ -2715,7 +2715,7 @@ Size2 AnimationTrackEdit::get_minimum_size() const {
 void AnimationTrackEdit::set_timeline(AnimationTimelineEdit *p_timeline) {
 	timeline = p_timeline;
 	timeline->set_track_edit(this);
-	timeline->connect("zoom_changed", callable_mp(this, &AnimationTrackEdit::_zoom_changed));
+	timeline->connect(EditorStringName(zoom_changed), callable_mp(this, &AnimationTrackEdit::_zoom_changed));
 	timeline->connect("name_limit_changed", callable_mp(this, &AnimationTrackEdit::_zoom_changed));
 }
 
@@ -3885,7 +3885,7 @@ String AnimationTrackEditGroup::get_node_name() const {
 
 void AnimationTrackEditGroup::set_timeline(AnimationTimelineEdit *p_timeline) {
 	timeline = p_timeline;
-	timeline->connect("zoom_changed", callable_mp(this, &AnimationTrackEditGroup::_zoom_changed));
+	timeline->connect(EditorStringName(zoom_changed), callable_mp(this, &AnimationTrackEditGroup::_zoom_changed));
 	timeline->connect("name_limit_changed", callable_mp(this, &AnimationTrackEditGroup::_zoom_changed));
 }
 
@@ -9085,7 +9085,7 @@ Size2 AnimationMarkerEdit::get_minimum_size() const {
 
 void AnimationMarkerEdit::set_timeline(AnimationTimelineEdit *p_timeline) {
 	timeline = p_timeline;
-	timeline->connect("zoom_changed", callable_mp(this, &AnimationMarkerEdit::_zoom_changed));
+	timeline->connect(EditorStringName(zoom_changed), callable_mp(this, &AnimationMarkerEdit::_zoom_changed));
 	timeline->connect("name_limit_changed", callable_mp(this, &AnimationMarkerEdit::_zoom_changed));
 }
 
