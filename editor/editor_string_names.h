@@ -55,6 +55,10 @@ public:
 	const StringName zoom_changed = StringName("zoom_changed");
 
 	const StringName property_changed = StringName("property_changed");
+
+	const StringName needs_redraw = StringName("needs_redraw");
+
+	const StringName object_id_selected = StringName("object_id_selected");
 };
 
 #define EditorStringName(m_name) EditorStringNames::get_singleton()->m_name

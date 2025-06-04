@@ -1038,7 +1038,7 @@ GenericTilePolygonEditor::GenericTilePolygonEditor() {
 void TileDataDefaultEditor::_property_value_changed(const StringName &p_property, const Variant &p_value, const StringName &p_field) {
 	ERR_FAIL_NULL(dummy_object);
 	dummy_object->set(p_property, p_value);
-	emit_signal(SNAME("needs_redraw"));
+	emit_signal(EditorStringName(needs_redraw));
 }
 
 Variant TileDataDefaultEditor::_get_painted_value() {
@@ -1909,7 +1909,7 @@ void TileDataTerrainsEditor::_property_value_changed(const StringName &p_propert
 		}
 		_update_terrain_selector();
 	}
-	emit_signal(SNAME("needs_redraw"));
+	emit_signal(EditorStringName(needs_redraw));
 }
 
 void TileDataTerrainsEditor::_tile_set_changed() {
