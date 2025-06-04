@@ -3278,13 +3278,13 @@ PopupMenu::PopupMenu() {
 	submenu_timer = memnew(Timer);
 	submenu_timer->set_wait_time(0.3);
 	submenu_timer->set_one_shot(true);
-	submenu_timer->connect("timeout", callable_mp(this, &PopupMenu::_submenu_timeout));
+	submenu_timer->connect(SceneStringName(timeout), callable_mp(this, &PopupMenu::_submenu_timeout));
 	add_child(submenu_timer, false, INTERNAL_MODE_FRONT);
 
 	minimum_lifetime_timer = memnew(Timer);
 	minimum_lifetime_timer->set_wait_time(0.3);
 	minimum_lifetime_timer->set_one_shot(true);
-	minimum_lifetime_timer->connect("timeout", callable_mp(this, &PopupMenu::_minimum_lifetime_timeout));
+	minimum_lifetime_timer->connect(SceneStringName(timeout), callable_mp(this, &PopupMenu::_minimum_lifetime_timeout));
 	add_child(minimum_lifetime_timer, false, INTERNAL_MODE_FRONT);
 
 	property_helper.setup_for_instance(base_property_helper, this);

@@ -1330,7 +1330,7 @@ void EditorNode::_sources_changed(bool p_exist) {
 		if (!singleton->cmdline_mode) {
 			EditorResourcePreview::get_singleton()->start();
 		}
-		get_tree()->create_timer(1.0f)->connect("timeout", callable_mp(this, &EditorNode::_remove_lock_file));
+		get_tree()->create_timer(1.0f)->connect(SceneStringName(timeout), callable_mp(this, &EditorNode::_remove_lock_file));
 	}
 }
 
@@ -7756,12 +7756,12 @@ EditorNode::EditorNode() {
 	add_child(editor_layout_save_delay_timer);
 	editor_layout_save_delay_timer->set_wait_time(0.5);
 	editor_layout_save_delay_timer->set_one_shot(true);
-	editor_layout_save_delay_timer->connect("timeout", callable_mp(this, &EditorNode::_save_editor_layout));
+	editor_layout_save_delay_timer->connect(SceneStringName(timeout), callable_mp(this, &EditorNode::_save_editor_layout));
 
 	scan_changes_timer = memnew(Timer);
 	scan_changes_timer->set_wait_time(0.5);
 	scan_changes_timer->set_autostart(EDITOR_GET("interface/editor/import_resources_when_unfocused"));
-	scan_changes_timer->connect("timeout", callable_mp(EditorFileSystem::get_singleton(), &EditorFileSystem::scan_changes));
+	scan_changes_timer->connect(SceneStringName(timeout), callable_mp(EditorFileSystem::get_singleton(), &EditorFileSystem::scan_changes));
 	add_child(scan_changes_timer);
 
 	top_split = memnew(VSplitContainer);
@@ -8639,7 +8639,7 @@ EditorNode::EditorNode() {
 	screenshot_timer = memnew(Timer);
 	screenshot_timer->set_one_shot(true);
 	screenshot_timer->set_wait_time(settings_menu->get_submenu_popup_delay() + 0.1f);
-	screenshot_timer->connect("timeout", callable_mp(this, &EditorNode::_request_screenshot));
+	screenshot_timer->connect(SceneStringName(timeout), callable_mp(this, &EditorNode::_request_screenshot));
 	add_child(screenshot_timer);
 	screenshot_timer->set_owner(get_owner());
 
@@ -8673,7 +8673,7 @@ EditorNode::EditorNode() {
 	use_system_accent_color = EDITOR_GET("interface/theme/use_system_accent_color");
 	system_theme_timer = memnew(Timer);
 	system_theme_timer->set_wait_time(1.0);
-	system_theme_timer->connect("timeout", callable_mp(this, &EditorNode::_check_system_theme_changed));
+	system_theme_timer->connect(SceneStringName(timeout), callable_mp(this, &EditorNode::_check_system_theme_changed));
 	add_child(system_theme_timer);
 	system_theme_timer->set_owner(get_owner());
 	system_theme_timer->set_autostart(true);

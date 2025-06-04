@@ -666,6 +666,6 @@ HTTPRequest::HTTPRequest() {
 	tls_options = TLSOptions::client();
 	timer = memnew(Timer);
 	timer->set_one_shot(true);
-	timer->connect("timeout", callable_mp(this, &HTTPRequest::_timeout));
+	timer->connect(SceneStringName(timeout), callable_mp(this, &HTTPRequest::_timeout));
 	add_child(timer);
 }
