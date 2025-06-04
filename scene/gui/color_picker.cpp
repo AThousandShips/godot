@@ -1156,7 +1156,7 @@ void ColorPicker::_ensure_file_dialog() {
 	file_dialog->set_access(FileDialog::ACCESS_FILESYSTEM);
 	file_dialog->set_current_dir(Engine::get_singleton()->is_editor_hint() ? "res://" : "user://");
 	add_child(file_dialog, false, INTERNAL_MODE_FRONT);
-	file_dialog->connect("file_selected", callable_mp(this, &ColorPicker::_palette_file_selected));
+	file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &ColorPicker::_palette_file_selected));
 }
 
 void ColorPicker::add_preset(const Color &p_color) {

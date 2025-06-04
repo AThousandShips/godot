@@ -116,6 +116,6 @@ OccluderInstance3DEditorPlugin::OccluderInstance3DEditorPlugin() {
 	file_dialog->set_file_mode(EditorFileDialog::FILE_MODE_SAVE_FILE);
 	file_dialog->add_filter("*.occ", "Occluder3D");
 	file_dialog->set_title(TTR("Select occluder bake file:"));
-	file_dialog->connect("file_selected", callable_mp(this, &OccluderInstance3DEditorPlugin::_bake_select_file));
+	file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &OccluderInstance3DEditorPlugin::_bake_select_file));
 	bake->add_child(file_dialog);
 }

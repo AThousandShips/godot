@@ -340,7 +340,7 @@ void EditorResourcePicker::_edit_menu_cbk(int p_which) {
 				file_dialog = memnew(EditorFileDialog);
 				file_dialog->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
 				add_child(file_dialog);
-				file_dialog->connect("file_selected", callable_mp(this, &EditorResourcePicker::_file_selected));
+				file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &EditorResourcePicker::_file_selected));
 			}
 
 			file_dialog->clear_filters();

@@ -924,7 +924,7 @@ void ProjectDialog::_notification(int p_what) {
 			fdialog_project->set_previews_enabled(false); // Crucial, otherwise the engine crashes.
 			fdialog_project->set_access(EditorFileDialog::ACCESS_FILESYSTEM);
 			fdialog_project->connect("dir_selected", callable_mp(this, &ProjectDialog::_project_path_selected));
-			fdialog_project->connect("file_selected", callable_mp(this, &ProjectDialog::_project_path_selected));
+			fdialog_project->connect(SceneStringName(file_selected), callable_mp(this, &ProjectDialog::_project_path_selected));
 			fdialog_project->connect(SceneStringName(canceled), callable_mp(this, &ProjectDialog::show_dialog).bind(false), CONNECT_DEFERRED);
 			callable_mp((Node *)this, &Node::add_sibling).call_deferred(fdialog_project, false);
 		} break;
@@ -1158,7 +1158,7 @@ ProjectDialog::ProjectDialog() {
 	install_path->connect(SceneStringName(text_submitted), callable_mp(this, &ProjectDialog::ok_pressed).unbind(1));
 
 	fdialog_install->connect("dir_selected", callable_mp(this, &ProjectDialog::_install_path_selected));
-	fdialog_install->connect("file_selected", callable_mp(this, &ProjectDialog::_install_path_selected));
+	fdialog_install->connect(SceneStringName(file_selected), callable_mp(this, &ProjectDialog::_install_path_selected));
 
 	set_hide_on_ok(false);
 

@@ -820,7 +820,7 @@ AnimationNodeBlendSpace1DEditor::AnimationNodeBlendSpace1DEditor() {
 	add_child(open_file);
 	open_file->set_title(TTR("Open Animation Node"));
 	open_file->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
-	open_file->connect("file_selected", callable_mp(this, &AnimationNodeBlendSpace1DEditor::_file_opened));
+	open_file->connect(SceneStringName(file_selected), callable_mp(this, &AnimationNodeBlendSpace1DEditor::_file_opened));
 
 	set_custom_minimum_size(Size2(0, 150 * EDSCALE));
 }

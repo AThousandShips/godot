@@ -276,7 +276,7 @@ DependencyEditor::DependencyEditor() {
 
 	set_title(TTR("Dependency Editor"));
 	search = memnew(EditorFileDialog);
-	search->connect("file_selected", callable_mp(this, &DependencyEditor::_searched));
+	search->connect(SceneStringName(file_selected), callable_mp(this, &DependencyEditor::_searched));
 	search->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
 	search->set_title(TTR("Search Replacement Resource:"));
 	add_child(search);

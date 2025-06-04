@@ -1944,7 +1944,7 @@ SceneImportSettingsDialog::SceneImportSettingsDialog() {
 	item_save_path->add_filter("*.tres", TTR("Text Resource"));
 	item_save_path->add_filter("*.res", TTR("Binary Resource"));
 	add_child(item_save_path);
-	item_save_path->connect("file_selected", callable_mp(this, &SceneImportSettingsDialog::_save_path_changed));
+	item_save_path->connect(SceneStringName(file_selected), callable_mp(this, &SceneImportSettingsDialog::_save_path_changed));
 
 	save_path->connect("dir_selected", callable_mp(this, &SceneImportSettingsDialog::_save_dir_callback));
 

@@ -2174,7 +2174,7 @@ ScriptEditorDebugger::ScriptEditorDebugger() {
 
 	{ // File dialog
 		file_dialog = memnew(EditorFileDialog);
-		file_dialog->connect("file_selected", callable_mp(this, &ScriptEditorDebugger::_file_selected));
+		file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &ScriptEditorDebugger::_file_selected));
 		add_child(file_dialog);
 	}
 

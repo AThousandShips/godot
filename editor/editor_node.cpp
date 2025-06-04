@@ -8278,7 +8278,7 @@ EditorNode::EditorNode() {
 	file_android_build_source->set_access(EditorFileDialog::ACCESS_FILESYSTEM);
 	file_android_build_source->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
 	file_android_build_source->add_filter("*.zip");
-	file_android_build_source->connect("file_selected", callable_mp(this, &EditorNode::_android_build_source_selected));
+	file_android_build_source->connect(SceneStringName(file_selected), callable_mp(this, &EditorNode::_android_build_source_selected));
 	gui_base->add_child(file_android_build_source);
 
 	{
@@ -8323,7 +8323,7 @@ EditorNode::EditorNode() {
 	file_export_lib = memnew(EditorFileDialog);
 	file_export_lib->set_title(TTR("Export Library"));
 	file_export_lib->set_file_mode(EditorFileDialog::FILE_MODE_SAVE_FILE);
-	file_export_lib->connect("file_selected", callable_mp(this, &EditorNode::_dialog_action));
+	file_export_lib->connect(SceneStringName(file_selected), callable_mp(this, &EditorNode::_dialog_action));
 	file_export_lib->add_option(TTR("Merge With Existing"), Vector<String>(), true);
 	file_export_lib->add_option(TTR("Apply MeshInstance Transforms"), Vector<String>(), false);
 	gui_base->add_child(file_export_lib);
@@ -8338,10 +8338,10 @@ EditorNode::EditorNode() {
 		file_script->add_filter("*." + E);
 	}
 	gui_base->add_child(file_script);
-	file_script->connect("file_selected", callable_mp(this, &EditorNode::_dialog_action));
+	file_script->connect(SceneStringName(file_selected), callable_mp(this, &EditorNode::_dialog_action));
 
 	file_pack_zip = memnew(EditorFileDialog);
-	file_pack_zip->connect("file_selected", callable_mp(this, &EditorNode::_dialog_action));
+	file_pack_zip->connect(SceneStringName(file_selected), callable_mp(this, &EditorNode::_dialog_action));
 	file_pack_zip->set_file_mode(EditorFileDialog::FILE_MODE_SAVE_FILE);
 	file_pack_zip->set_access(EditorFileDialog::ACCESS_FILESYSTEM);
 	file_pack_zip->add_filter("*.zip", "ZIP Archive");
@@ -8353,8 +8353,8 @@ EditorNode::EditorNode() {
 
 	settings_menu->connect(SceneStringName(id_pressed), callable_mp(this, &EditorNode::_menu_option));
 
-	file->connect("file_selected", callable_mp(this, &EditorNode::_dialog_action));
-	file_templates->connect("file_selected", callable_mp(this, &EditorNode::_dialog_action));
+	file->connect(SceneStringName(file_selected), callable_mp(this, &EditorNode::_dialog_action));
+	file_templates->connect(SceneStringName(file_selected), callable_mp(this, &EditorNode::_dialog_action));
 
 	audio_preview_gen = memnew(AudioStreamPreviewGenerator);
 	add_child(audio_preview_gen);

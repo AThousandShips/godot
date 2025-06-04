@@ -591,7 +591,7 @@ String EditorPropertyPath::_get_path_text() {
 void EditorPropertyPath::_path_pressed() {
 	if (!dialog) {
 		dialog = memnew(EditorFileDialog);
-		dialog->connect("file_selected", callable_mp(this, &EditorPropertyPath::_path_selected));
+		dialog->connect(SceneStringName(file_selected), callable_mp(this, &EditorPropertyPath::_path_selected));
 		dialog->connect("dir_selected", callable_mp(this, &EditorPropertyPath::_path_selected));
 		add_child(dialog);
 	}

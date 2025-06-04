@@ -266,7 +266,7 @@ Particles2DEditorPlugin::Particles2DEditorPlugin() {
 
 	file->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
 	EditorNode::get_singleton()->get_gui_base()->add_child(file);
-	file->connect("file_selected", callable_mp(this, &Particles2DEditorPlugin::_file_selected));
+	file->connect(SceneStringName(file_selected), callable_mp(this, &Particles2DEditorPlugin::_file_selected));
 
 	emission_mask = memnew(ConfirmationDialog);
 	emission_mask->set_title(TTR("Load Emission Mask"));

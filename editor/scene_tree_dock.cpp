@@ -4875,7 +4875,7 @@ SceneTreeDock::SceneTreeDock(Node *p_scene_root, EditorSelection *p_editor_selec
 	new_scene_from_dialog->add_option(TTR("Reset Rotation"), Vector<String>(), false);
 	new_scene_from_dialog->add_option(TTR("Reset Scale"), Vector<String>(), false);
 	add_child(new_scene_from_dialog);
-	new_scene_from_dialog->connect("file_selected", callable_mp(this, &SceneTreeDock::_new_scene_from));
+	new_scene_from_dialog->connect(SceneStringName(file_selected), callable_mp(this, &SceneTreeDock::_new_scene_from));
 
 	menu = memnew(PopupMenu);
 	add_child(menu);

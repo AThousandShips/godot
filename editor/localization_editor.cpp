@@ -764,7 +764,7 @@ LocalizationEditor::LocalizationEditor() {
 		pot_generate_dialog = memnew(EditorFileDialog);
 		pot_generate_dialog->set_file_mode(EditorFileDialog::FILE_MODE_SAVE_FILE);
 		pot_generate_dialog->set_current_path(EditorSettings::get_singleton()->get_project_metadata("pot_generator", "last_pot_path", String()));
-		pot_generate_dialog->connect("file_selected", callable_mp(this, &LocalizationEditor::_pot_generate));
+		pot_generate_dialog->connect(SceneStringName(file_selected), callable_mp(this, &LocalizationEditor::_pot_generate));
 		add_child(pot_generate_dialog);
 
 		pot_file_open_dialog = memnew(EditorFileDialog);

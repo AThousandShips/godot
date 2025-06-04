@@ -1637,7 +1637,7 @@ ProjectExportDialog::ProjectExportDialog() {
 	patch_dialog->add_filter("*.pck", TTR("Godot Project Pack"));
 	patch_dialog->set_access(EditorFileDialog::ACCESS_FILESYSTEM);
 	patch_dialog->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
-	patch_dialog->connect("file_selected", callable_mp(this, &ProjectExportDialog::_patch_file_selected));
+	patch_dialog->connect(SceneStringName(file_selected), callable_mp(this, &ProjectExportDialog::_patch_file_selected));
 	add_child(patch_dialog);
 
 	patch_erase = memnew(ConfirmationDialog);
@@ -1792,7 +1792,7 @@ ProjectExportDialog::ProjectExportDialog() {
 	export_pck_zip->set_access(EditorFileDialog::ACCESS_FILESYSTEM);
 	export_pck_zip->set_file_mode(EditorFileDialog::FILE_MODE_SAVE_FILE);
 	add_child(export_pck_zip);
-	export_pck_zip->connect("file_selected", callable_mp(this, &ProjectExportDialog::_export_pck_zip_selected));
+	export_pck_zip->connect(SceneStringName(file_selected), callable_mp(this, &ProjectExportDialog::_export_pck_zip_selected));
 
 	// Export warnings and errors bottom section.
 
@@ -1845,7 +1845,7 @@ ProjectExportDialog::ProjectExportDialog() {
 	export_project = memnew(EditorFileDialog);
 	export_project->set_access(EditorFileDialog::ACCESS_FILESYSTEM);
 	add_child(export_project);
-	export_project->connect("file_selected", callable_mp(this, &ProjectExportDialog::_export_project_to_path));
+	export_project->connect(SceneStringName(file_selected), callable_mp(this, &ProjectExportDialog::_export_project_to_path));
 	export_project->get_line_edit()->connect(SceneStringName(text_changed), callable_mp(this, &ProjectExportDialog::_validate_export_path));
 
 	export_project->add_option(TTR("Export With Debug"), Vector<String>(), EditorSettings::get_singleton()->get_project_metadata("export_options", "export_debug", true));

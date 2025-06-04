@@ -1279,7 +1279,7 @@ AnimationNodeBlendTreeEditor::AnimationNodeBlendTreeEditor() {
 	add_child(open_file);
 	open_file->set_title(TTR("Open Animation Node"));
 	open_file->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
-	open_file->connect("file_selected", callable_mp(this, &AnimationNodeBlendTreeEditor::_file_opened));
+	open_file->connect(SceneStringName(file_selected), callable_mp(this, &AnimationNodeBlendTreeEditor::_file_opened));
 
 	animation_node_inspector_plugin.instantiate();
 	EditorInspector::add_inspector_plugin(animation_node_inspector_plugin);

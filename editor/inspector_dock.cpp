@@ -864,7 +864,7 @@ InspectorDock::InspectorDock(EditorData &p_editor_data) {
 	load_resource_dialog = memnew(EditorFileDialog);
 	add_child(load_resource_dialog);
 	load_resource_dialog->set_current_dir("res://");
-	load_resource_dialog->connect("file_selected", callable_mp(this, &InspectorDock::_resource_file_selected));
+	load_resource_dialog->connect(SceneStringName(file_selected), callable_mp(this, &InspectorDock::_resource_file_selected));
 
 	inspector = memnew(EditorInspector);
 	add_child(inspector);

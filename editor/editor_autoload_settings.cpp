@@ -920,13 +920,13 @@ EditorAutoloadSettings::EditorAutoloadSettings() {
 
 	file_dialog = memnew(EditorFileDialog);
 	hbc->add_child(file_dialog);
-	file_dialog->connect("file_selected", callable_mp(this, &EditorAutoloadSettings::_set_autoload_add_path));
+	file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &EditorAutoloadSettings::_set_autoload_add_path));
 	file_dialog->connect("dir_selected", callable_mp(this, &EditorAutoloadSettings::_set_autoload_add_path));
 	file_dialog->connect("files_selected", callable_mp(this, &EditorAutoloadSettings::_set_autoload_add_path));
 
 	hbc->set_h_size_flags(SIZE_EXPAND_FILL);
 	file_dialog->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
-	file_dialog->connect("file_selected", callable_mp(this, &EditorAutoloadSettings::_autoload_file_callback));
+	file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &EditorAutoloadSettings::_autoload_file_callback));
 
 	l = memnew(Label);
 	l->set_text(TTRC("Node Name:"));

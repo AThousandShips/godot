@@ -2532,7 +2532,7 @@ SpriteFramesEditor::SpriteFramesEditor() {
 	file_split_sheet->set_title(TTR("Create Frames from Sprite Sheet"));
 	file_split_sheet->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
 	add_child(file_split_sheet);
-	file_split_sheet->connect("file_selected", callable_mp(this, &SpriteFramesEditor::_prepare_sprite_sheet));
+	file_split_sheet->connect(SceneStringName(file_selected), callable_mp(this, &SpriteFramesEditor::_prepare_sprite_sheet));
 
 	// Config scale.
 	scale_ratio = 1.2f;

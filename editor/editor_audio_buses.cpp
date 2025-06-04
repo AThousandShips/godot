@@ -1381,7 +1381,7 @@ EditorAudioBuses::EditorAudioBuses() {
 		file_dialog->add_filter("*." + E, TTR("Audio Bus Layout"));
 	}
 	add_child(file_dialog);
-	file_dialog->connect("file_selected", callable_mp(this, &EditorAudioBuses::_file_dialog_callback));
+	file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &EditorAudioBuses::_file_dialog_callback));
 
 	AudioServer::get_singleton()->connect("bus_layout_changed", callable_mp(this, &EditorAudioBuses::_rebuild_buses));
 

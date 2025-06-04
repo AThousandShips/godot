@@ -1348,7 +1348,7 @@ EditorBuildProfileManager::EditorBuildProfileManager() {
 	add_child(import_profile);
 	import_profile->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
 	import_profile->add_filter("*.gdbuild,*.build", TTR("Engine Compilation Profile"));
-	import_profile->connect("file_selected", callable_mp(this, &EditorBuildProfileManager::_import_profile));
+	import_profile->connect(SceneStringName(file_selected), callable_mp(this, &EditorBuildProfileManager::_import_profile));
 	import_profile->set_title(TTR("Load Profile"));
 	import_profile->set_access(EditorFileDialog::ACCESS_FILESYSTEM);
 
@@ -1356,7 +1356,7 @@ EditorBuildProfileManager::EditorBuildProfileManager() {
 	add_child(export_profile);
 	export_profile->set_file_mode(EditorFileDialog::FILE_MODE_SAVE_FILE);
 	export_profile->add_filter("*.gdbuild,*.build", TTR("Engine Compilation Profile"));
-	export_profile->connect("file_selected", callable_mp(this, &EditorBuildProfileManager::_export_profile));
+	export_profile->connect(SceneStringName(file_selected), callable_mp(this, &EditorBuildProfileManager::_export_profile));
 	export_profile->set_title(TTR("Export Profile"));
 	export_profile->set_access(EditorFileDialog::ACCESS_FILESYSTEM);
 

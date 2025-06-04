@@ -271,7 +271,7 @@ MeshLibraryEditor::MeshLibraryEditor() {
 		file->add_filter("*." + extension, extension.to_upper());
 	}
 	add_child(file);
-	file->connect("file_selected", callable_mp(this, &MeshLibraryEditor::_import_scene_cbk));
+	file->connect(SceneStringName(file_selected), callable_mp(this, &MeshLibraryEditor::_import_scene_cbk));
 
 	menu = memnew(MenuButton);
 	Node3DEditor::get_singleton()->add_control_to_menu_panel(menu);

@@ -1015,7 +1015,7 @@ AnimationLibraryEditor::AnimationLibraryEditor() {
 
 	file_dialog = memnew(EditorFileDialog);
 	add_child(file_dialog);
-	file_dialog->connect("file_selected", callable_mp(this, &AnimationLibraryEditor::_load_file));
+	file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &AnimationLibraryEditor::_load_file));
 	file_dialog->connect("files_selected", callable_mp(this, &AnimationLibraryEditor::_load_files));
 
 	add_library_dialog = memnew(ConfirmationDialog);

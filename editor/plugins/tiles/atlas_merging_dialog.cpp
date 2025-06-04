@@ -364,6 +364,6 @@ AtlasMergingDialog::AtlasMergingDialog() {
 	editor_file_dialog = memnew(EditorFileDialog);
 	editor_file_dialog->set_file_mode(EditorFileDialog::FILE_MODE_SAVE_FILE);
 	editor_file_dialog->add_filter("*.png");
-	editor_file_dialog->connect("file_selected", callable_mp(this, &AtlasMergingDialog::_merge_confirmed));
+	editor_file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &AtlasMergingDialog::_merge_confirmed));
 	add_child(editor_file_dialog);
 }

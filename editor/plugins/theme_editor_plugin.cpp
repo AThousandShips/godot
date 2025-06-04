@@ -2178,7 +2178,7 @@ ThemeItemEditorDialog::ThemeItemEditorDialog(ThemeTypeEditor *p_theme_type_edito
 		import_another_theme_dialog->add_filter("*." + E, TTR("Theme Resource"));
 	}
 	import_another_file_hb->add_child(import_another_theme_dialog);
-	import_another_theme_dialog->connect("file_selected", callable_mp(this, &ThemeItemEditorDialog::_select_another_theme_cbk));
+	import_another_theme_dialog->connect(SceneStringName(file_selected), callable_mp(this, &ThemeItemEditorDialog::_select_another_theme_cbk));
 
 	import_other_theme_items = memnew(ThemeItemImportTree);
 	import_other_theme_items->set_v_size_flags(Control::SIZE_EXPAND_FILL);
@@ -3993,7 +3993,7 @@ ThemeEditor::ThemeEditor() {
 		preview_scene_dialog->add_filter("*." + E, TTR("Scene"));
 	}
 	main_hs->add_child(preview_scene_dialog);
-	preview_scene_dialog->connect("file_selected", callable_mp(this, &ThemeEditor::_preview_scene_dialog_cbk));
+	preview_scene_dialog->connect(SceneStringName(file_selected), callable_mp(this, &ThemeEditor::_preview_scene_dialog_cbk));
 
 	main_hs->add_child(theme_type_editor);
 	theme_type_editor->set_custom_minimum_size(Size2(280, 0) * EDSCALE);

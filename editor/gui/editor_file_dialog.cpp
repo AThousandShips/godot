@@ -183,9 +183,9 @@ void EditorFileDialog::_native_dialog_cb(bool p_ok, const Vector<String> &p_file
 				String ext = flt.get_slicec(',', 0).strip_edges().get_extension();
 				f += "." + ext;
 			}
-			emit_signal(SNAME("file_selected"), f);
+			emit_signal(SceneStringName(file_selected), f);
 		} else if ((mode == FILE_MODE_OPEN_ANY || mode == FILE_MODE_OPEN_FILE) && dir_access->file_exists(f)) {
-			emit_signal(SNAME("file_selected"), f);
+			emit_signal(SceneStringName(file_selected), f);
 		} else if (mode == FILE_MODE_OPEN_ANY || mode == FILE_MODE_OPEN_DIR) {
 			emit_signal(SNAME("dir_selected"), f);
 		}
@@ -468,7 +468,7 @@ void EditorFileDialog::_save_confirm_pressed() {
 	String f = dir_access->get_current_dir().path_join(file->get_text());
 	_save_to_recent();
 	hide();
-	emit_signal(SNAME("file_selected"), f);
+	emit_signal(SceneStringName(file_selected), f);
 }
 
 void EditorFileDialog::_post_popup() {
@@ -589,7 +589,7 @@ void EditorFileDialog::_action_pressed() {
 	if ((mode == FILE_MODE_OPEN_ANY || mode == FILE_MODE_OPEN_FILE) && (dir_access->file_exists(f) || dir_access->is_bundle(f))) {
 		_save_to_recent();
 		hide();
-		emit_signal(SNAME("file_selected"), f);
+		emit_signal(SceneStringName(file_selected), f);
 	} else if (mode == FILE_MODE_OPEN_ANY || mode == FILE_MODE_OPEN_DIR) {
 		String path = dir_access->get_current_dir();
 
@@ -687,7 +687,7 @@ void EditorFileDialog::_action_pressed() {
 		} else {
 			_save_to_recent();
 			hide();
-			emit_signal(SNAME("file_selected"), f);
+			emit_signal(SceneStringName(file_selected), f);
 		}
 	}
 }

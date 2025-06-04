@@ -217,9 +217,9 @@ void FileDialog::_native_dialog_cb_with_options(bool p_ok, const Vector<String> 
 				String ext = flt.get_slicec(',', 0).strip_edges().get_extension();
 				f += "." + ext;
 			}
-			emit_signal(SNAME("file_selected"), f);
+			emit_signal(SceneStringName(file_selected), f);
 		} else if ((mode == FILE_MODE_OPEN_ANY || mode == FILE_MODE_OPEN_FILE) && dir_access->file_exists(f)) {
-			emit_signal(SNAME("file_selected"), f);
+			emit_signal(SceneStringName(file_selected), f);
 		} else if (mode == FILE_MODE_OPEN_ANY || mode == FILE_MODE_OPEN_DIR) {
 			emit_signal(SNAME("dir_selected"), f);
 		}
@@ -411,7 +411,7 @@ void FileDialog::_save_confirm_pressed() {
 	_save_to_recent();
 
 	String f = dir_access->get_current_dir().path_join(filename_edit->get_text());
-	emit_signal(SNAME("file_selected"), f);
+	emit_signal(SceneStringName(file_selected), f);
 	hide();
 }
 
@@ -465,7 +465,7 @@ void FileDialog::_action_pressed() {
 
 	if ((mode == FILE_MODE_OPEN_ANY || mode == FILE_MODE_OPEN_FILE) && (dir_access->file_exists(f) || dir_access->is_bundle(f))) {
 		_save_to_recent();
-		emit_signal(SNAME("file_selected"), f);
+		emit_signal(SceneStringName(file_selected), f);
 		hide();
 	} else if (mode == FILE_MODE_OPEN_ANY || mode == FILE_MODE_OPEN_DIR) {
 		String path = dir_access->get_current_dir();
@@ -542,7 +542,7 @@ void FileDialog::_action_pressed() {
 			confirm_save->popup_centered(Size2(250, 80));
 		} else {
 			_save_to_recent();
-			emit_signal(SNAME("file_selected"), f);
+			emit_signal(SceneStringName(file_selected), f);
 			hide();
 		}
 	}

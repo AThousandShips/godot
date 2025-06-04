@@ -179,7 +179,7 @@ FBXImporterManager::FBXImporterManager() {
 	browse_dialog->add_filter("*.exe");
 #endif
 
-	browse_dialog->connect("file_selected", callable_mp(this, &FBXImporterManager::_select_file));
+	browse_dialog->connect(SceneStringName(file_selected), callable_mp(this, &FBXImporterManager::_select_file));
 
 	add_child(browse_dialog);
 }

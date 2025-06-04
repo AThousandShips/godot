@@ -4445,7 +4445,7 @@ ScriptEditor::ScriptEditor(WindowWrapper *p_wrapper) {
 	file_dialog_option = -1;
 	file_dialog = memnew(EditorFileDialog);
 	add_child(file_dialog);
-	file_dialog->connect("file_selected", callable_mp(this, &ScriptEditor::_file_dialog_action));
+	file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &ScriptEditor::_file_dialog_action));
 
 	error_dialog = memnew(AcceptDialog);
 	add_child(error_dialog);

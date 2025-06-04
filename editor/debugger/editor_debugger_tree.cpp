@@ -54,7 +54,7 @@ EditorDebuggerTree::EditorDebuggerTree() {
 
 	// File Dialog
 	file_dialog = memnew(EditorFileDialog);
-	file_dialog->connect("file_selected", callable_mp(this, &EditorDebuggerTree::_file_selected));
+	file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &EditorDebuggerTree::_file_selected));
 	add_child(file_dialog);
 
 	accept = memnew(AcceptDialog);

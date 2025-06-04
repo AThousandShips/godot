@@ -995,7 +995,7 @@ ScriptCreateDialog::ScriptCreateDialog() {
 	add_child(select_class);
 
 	file_browse = memnew(EditorFileDialog);
-	file_browse->connect("file_selected", callable_mp(this, &ScriptCreateDialog::_file_selected));
+	file_browse->connect(SceneStringName(file_selected), callable_mp(this, &ScriptCreateDialog::_file_selected));
 	file_browse->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
 	add_child(file_browse);
 	set_ok_button_text(TTR("Create"));

@@ -51,7 +51,7 @@ SceneExporterGLTFPlugin::SceneExporterGLTFPlugin() {
 	_gltf_document.instantiate();
 	// Set up the file dialog.
 	_file_dialog = memnew(EditorFileDialog);
-	_file_dialog->connect("file_selected", callable_mp(this, &SceneExporterGLTFPlugin::_export_scene_as_gltf));
+	_file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &SceneExporterGLTFPlugin::_export_scene_as_gltf));
 	_file_dialog->set_title(TTR("Export Library"));
 	_file_dialog->set_file_mode(EditorFileDialog::FILE_MODE_SAVE_FILE);
 	_file_dialog->set_access(EditorFileDialog::ACCESS_FILESYSTEM);

@@ -1105,7 +1105,7 @@ AnimationNodeBlendSpace2DEditor::AnimationNodeBlendSpace2DEditor() {
 	add_child(open_file);
 	open_file->set_title(TTR("Open Animation Node"));
 	open_file->set_file_mode(EditorFileDialog::FILE_MODE_OPEN_FILE);
-	open_file->connect("file_selected", callable_mp(this, &AnimationNodeBlendSpace2DEditor::_file_opened));
+	open_file->connect(SceneStringName(file_selected), callable_mp(this, &AnimationNodeBlendSpace2DEditor::_file_opened));
 
 	selected_point = -1;
 	selected_triangle = -1;

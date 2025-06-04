@@ -990,7 +990,7 @@ void Skeleton3DEditor::create_editors() {
 
 	// Create File dialog.
 	file_dialog = memnew(EditorFileDialog);
-	file_dialog->connect("file_selected", callable_mp(this, &Skeleton3DEditor::_file_selected));
+	file_dialog->connect(SceneStringName(file_selected), callable_mp(this, &Skeleton3DEditor::_file_selected));
 	add_child(file_dialog);
 
 	// Create Top Menu Bar.
