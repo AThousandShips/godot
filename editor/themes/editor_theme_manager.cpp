@@ -747,7 +747,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_color("icon_disabled_color", "Button", p_config.icon_disabled_color);
 
 		p_theme->set_constant(SceneStringName(h_separation), "Button", 4 * EDSCALE);
-		p_theme->set_constant("outline_size", "Button", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "Button", 0);
 
 		p_theme->set_constant("align_to_largest_stylebox", "Button", 1); // Enabled.
 
@@ -765,7 +765,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_color("font_focus_color", "MenuButton", p_config.font_focus_color);
 		p_theme->set_color("font_outline_color", "MenuButton", p_config.font_outline_color);
 
-		p_theme->set_constant("outline_size", "MenuButton", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "MenuButton", 0);
 
 		// MenuBar.
 
@@ -789,7 +789,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_color("icon_disabled_color", "MenuBar", p_config.icon_disabled_color);
 
 		p_theme->set_constant(SceneStringName(h_separation), "MenuBar", 4 * EDSCALE);
-		p_theme->set_constant("outline_size", "MenuBar", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "MenuBar", 0);
 
 		// OptionButton.
 		{
@@ -834,7 +834,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_constant("arrow_margin", "OptionButton", p_config.widget_margin.x - 2 * EDSCALE);
 			p_theme->set_constant("modulate_arrow", "OptionButton", true);
 			p_theme->set_constant(SceneStringName(h_separation), "OptionButton", 4 * EDSCALE);
-			p_theme->set_constant("outline_size", "OptionButton", 0);
+			p_theme->set_constant(SceneStringName(outline_size), "OptionButton", 0);
 		}
 
 		// CheckButton.
@@ -871,7 +871,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 
 		p_theme->set_constant(SceneStringName(h_separation), "CheckButton", 8 * EDSCALE);
 		p_theme->set_constant("check_v_offset", "CheckButton", 0);
-		p_theme->set_constant("outline_size", "CheckButton", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "CheckButton", 0);
 
 		// CheckBox.
 		{
@@ -907,7 +907,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 
 			p_theme->set_constant(SceneStringName(h_separation), "CheckBox", 8 * EDSCALE);
 			p_theme->set_constant("check_v_offset", "CheckBox", 0);
-			p_theme->set_constant("outline_size", "CheckBox", 0);
+			p_theme->set_constant(SceneStringName(outline_size), "CheckBox", 0);
 		}
 
 		// LinkButton.
@@ -921,7 +921,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_color("font_disabled_color", "LinkButton", p_config.font_disabled_color);
 		p_theme->set_color("font_outline_color", "LinkButton", p_config.font_outline_color);
 
-		p_theme->set_constant("outline_size", "LinkButton", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "LinkButton", 0);
 	}
 
 	// Tree & ItemList.
@@ -976,7 +976,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_constant("button_margin", "Tree", p_config.base_margin * EDSCALE);
 			p_theme->set_constant("scroll_border", "Tree", 40 * EDSCALE);
 			p_theme->set_constant("scroll_speed", "Tree", 12);
-			p_theme->set_constant("outline_size", "Tree", 0);
+			p_theme->set_constant(SceneStringName(outline_size), "Tree", 0);
 			p_theme->set_constant("scrollbar_margin_left", "Tree", 0);
 			p_theme->set_constant("scrollbar_margin_top", "Tree", 0);
 			p_theme->set_constant("scrollbar_margin_right", "Tree", 0);
@@ -1090,7 +1090,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_constant(SceneStringName(h_separation), "ItemList", (p_config.increased_margin + 2) * EDSCALE);
 			p_theme->set_constant("icon_margin", "ItemList", (p_config.increased_margin + 2) * EDSCALE);
 			p_theme->set_constant(SceneStringName(line_separation), "ItemList", p_config.separation_margin);
-			p_theme->set_constant("outline_size", "ItemList", 0);
+			p_theme->set_constant(SceneStringName(outline_size), "ItemList", 0);
 		}
 	}
 
@@ -1186,9 +1186,9 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_icon("drop_mark", "TabBar", p_theme->get_icon(SNAME("GuiTabDropMark"), EditorStringName(EditorIcons)));
 
 		p_theme->set_constant("side_margin", "TabContainer", 0);
-		p_theme->set_constant("outline_size", "TabContainer", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "TabContainer", 0);
 		p_theme->set_constant(SceneStringName(h_separation), "TabBar", 4 * EDSCALE);
-		p_theme->set_constant("outline_size", "TabBar", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "TabBar", 0);
 	}
 
 	// Separators.
@@ -1236,7 +1236,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_color("clear_button_color_pressed", "LineEdit", p_config.accent_color);
 
 		p_theme->set_constant("minimum_character_width", "LineEdit", 4);
-		p_theme->set_constant("outline_size", "LineEdit", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "LineEdit", 0);
 		p_theme->set_constant("caret_width", "LineEdit", 1);
 
 		// TextEdit.
@@ -1257,7 +1257,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_color("background_color", "TextEdit", Color(0, 0, 0, 0));
 
 		p_theme->set_constant("line_spacing", "TextEdit", 4 * EDSCALE);
-		p_theme->set_constant("outline_size", "TextEdit", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "TextEdit", 0);
 		p_theme->set_constant("caret_width", "TextEdit", 1);
 	}
 
@@ -1328,7 +1328,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_icon("folded_arrow", "FoldableContainer", p_theme->get_icon(SNAME("GuiTreeArrowRight"), EditorStringName(EditorIcons)));
 		p_theme->set_icon("folded_arrow_mirrored", "FoldableContainer", p_theme->get_icon(SNAME("GuiTreeArrowLeft"), EditorStringName(EditorIcons)));
 
-		p_theme->set_constant("outline_size", "FoldableContainer", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "FoldableContainer", 0);
 		p_theme->set_constant(SceneStringName(h_separation), "FoldableContainer", p_config.separation_margin);
 	}
 
@@ -1425,7 +1425,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_icon("submenu_mirrored", "PopupMenu", p_theme->get_icon(SNAME("ArrowLeft"), EditorStringName(EditorIcons)));
 
 			p_theme->set_constant(SceneStringName(v_separation), "PopupMenu", p_config.forced_even_separation * EDSCALE);
-			p_theme->set_constant("outline_size", "PopupMenu", 0);
+			p_theme->set_constant(SceneStringName(outline_size), "PopupMenu", 0);
 			p_theme->set_constant("item_start_padding", "PopupMenu", p_config.separation_margin);
 			p_theme->set_constant("item_end_padding", "PopupMenu", p_config.separation_margin);
 		}
@@ -1510,7 +1510,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_constant("shadow_offset_x", "RichTextLabel", 1 * EDSCALE);
 		p_theme->set_constant("shadow_offset_y", "RichTextLabel", 1 * EDSCALE);
 		p_theme->set_constant("shadow_outline_size", "RichTextLabel", 1 * EDSCALE);
-		p_theme->set_constant("outline_size", "RichTextLabel", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "RichTextLabel", 0);
 
 		// Label.
 
@@ -1525,7 +1525,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 		p_theme->set_constant("shadow_offset_y", "Label", 1 * EDSCALE);
 		p_theme->set_constant("shadow_outline_size", "Label", 1 * EDSCALE);
 		p_theme->set_constant("line_spacing", "Label", 3 * EDSCALE);
-		p_theme->set_constant("outline_size", "Label", 0);
+		p_theme->set_constant(SceneStringName(outline_size), "Label", 0);
 	}
 
 	// SpinBox.
@@ -1575,7 +1575,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 	p_theme->set_stylebox("fill", "ProgressBar", make_stylebox(p_theme->get_icon(SNAME("GuiProgressFill"), EditorStringName(EditorIcons)), 6, 6, 6, 6, 2, 1, 2, 1));
 	p_theme->set_color(SceneStringName(font_color), "ProgressBar", p_config.font_color);
 	p_theme->set_color("font_outline_color", "ProgressBar", p_config.font_outline_color);
-	p_theme->set_constant("outline_size", "ProgressBar", 0);
+	p_theme->set_constant(SceneStringName(outline_size), "ProgressBar", 0);
 
 	// GraphEdit and related nodes.
 	{
@@ -1770,7 +1770,7 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 			p_theme->set_color("font_outline_color", "GraphFrameTitleLabel", Color(1, 1, 1));
 			p_theme->set_constant("shadow_offset_x", "GraphFrameTitleLabel", 1 * EDSCALE);
 			p_theme->set_constant("shadow_offset_y", "GraphFrameTitleLabel", 1 * EDSCALE);
-			p_theme->set_constant("outline_size", "GraphFrameTitleLabel", 0);
+			p_theme->set_constant(SceneStringName(outline_size), "GraphFrameTitleLabel", 0);
 			p_theme->set_constant("shadow_outline_size", "GraphFrameTitleLabel", 1 * EDSCALE);
 			p_theme->set_constant("line_spacing", "GraphFrameTitleLabel", 3 * EDSCALE);
 		}

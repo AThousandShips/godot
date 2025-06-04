@@ -75,6 +75,7 @@ public:
 	const StringName font = "font";
 	const StringName font_size = "font_size";
 	const StringName font_color = "font_color";
+	const StringName outline_size = "outline_size";
 
 	const StringName mouse_entered = "mouse_entered";
 	const StringName mouse_exited = "mouse_exited";

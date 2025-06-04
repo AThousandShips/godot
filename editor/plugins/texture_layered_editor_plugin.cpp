@@ -408,7 +408,7 @@ TextureLayeredEditor::TextureLayeredEditor() {
 	info->add_theme_color_override("font_shadow_color", Color(0, 0, 0));
 	info->add_theme_font_size_override(SceneStringName(font_size), 14 * EDSCALE);
 	info->add_theme_color_override("font_outline_color", Color(0, 0, 0));
-	info->add_theme_constant_override("outline_size", 8 * EDSCALE);
+	info->add_theme_constant_override(SceneStringName(outline_size), 8 * EDSCALE);
 
 	info->set_h_grow_direction(GROW_DIRECTION_BEGIN);
 	info->set_v_grow_direction(GROW_DIRECTION_BEGIN);

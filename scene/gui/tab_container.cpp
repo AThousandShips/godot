@@ -283,7 +283,7 @@ void TabContainer::_on_theme_changed() {
 	tab_bar->add_theme_constant_override(SceneStringName(h_separation), theme_cache.icon_separation);
 	tab_bar->add_theme_constant_override(SNAME("tab_separation"), theme_cache.tab_separation);
 	tab_bar->add_theme_constant_override(SNAME("icon_max_width"), theme_cache.icon_max_width);
-	tab_bar->add_theme_constant_override(SNAME("outline_size"), theme_cache.outline_size);
+	tab_bar->add_theme_constant_override(SceneStringName(outline_size), theme_cache.outline_size);
 
 	tab_bar->end_bulk_theme_override();
 

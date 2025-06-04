@@ -5410,7 +5410,7 @@ CanvasItemEditor::CanvasItemEditor() {
 
 	EditorTranslationPreviewButton *translation_preview_button = memnew(EditorTranslationPreviewButton);
 	translation_preview_button->set_flat(true);
-	translation_preview_button->add_theme_constant_override("outline_size", Math::ceil(2 * EDSCALE));
+	translation_preview_button->add_theme_constant_override(SceneStringName(outline_size), Math::ceil(2 * EDSCALE));
 	translation_preview_button->add_theme_color_override("font_outline_color", Color(0, 0, 0));
 	translation_preview_button->add_theme_color_override(SceneStringName(font_color), Color(1, 1, 1));
 	controls_hb->add_child(translation_preview_button);

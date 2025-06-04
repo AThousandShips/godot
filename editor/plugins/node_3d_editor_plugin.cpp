@@ -3337,7 +3337,7 @@ void Node3DEditorViewport::_notification(int p_what) {
 
 			ruler_label->add_theme_color_override(SceneStringName(font_color), Color(1.0, 0.9, 0.0, 1.0));
 			ruler_label->add_theme_color_override("font_outline_color", Color(0.0, 0.0, 0.0, 1.0));
-			ruler_label->add_theme_constant_override("outline_size", 4 * EDSCALE);
+			ruler_label->add_theme_constant_override(SceneStringName(outline_size), 4 * EDSCALE);
 			ruler_label->add_theme_font_size_override(SceneStringName(font_size), 15 * EDSCALE);
 			ruler_label->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("bold"), EditorStringName(EditorFonts)));
 		} break;

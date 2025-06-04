@@ -151,7 +151,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_font(SceneStringName(font), "Button", Ref<Font>());
 	theme->set_font_size(SceneStringName(font_size), "Button", -1);
-	theme->set_constant("outline_size", "Button", 0);
+	theme->set_constant(SceneStringName(outline_size), "Button", 0);
 
 	theme->set_color(SceneStringName(font_color), "Button", control_font_color);
 	theme->set_color("font_pressed_color", "Button", control_font_pressed_color);
@@ -181,7 +181,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_font(SceneStringName(font), "MenuBar", Ref<Font>());
 	theme->set_font_size(SceneStringName(font_size), "MenuBar", -1);
-	theme->set_constant("outline_size", "MenuBar", 0);
+	theme->set_constant(SceneStringName(outline_size), "MenuBar", 0);
 
 	theme->set_color(SceneStringName(font_color), "MenuBar", control_font_color);
 	theme->set_color("font_pressed_color", "MenuBar", control_font_pressed_color);
@@ -206,7 +206,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_focus_color", "LinkButton", control_font_focus_color);
 	theme->set_color("font_outline_color", "LinkButton", Color(0, 0, 0));
 
-	theme->set_constant("outline_size", "LinkButton", 0);
+	theme->set_constant(SceneStringName(outline_size), "LinkButton", 0);
 	theme->set_constant("underline_spacing", "LinkButton", Math::round(2 * scale));
 
 	// OptionButton
@@ -247,7 +247,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_constant(SceneStringName(h_separation), "OptionButton", Math::round(4 * scale));
 	theme->set_constant("arrow_margin", "OptionButton", Math::round(4 * scale));
-	theme->set_constant("outline_size", "OptionButton", 0);
+	theme->set_constant(SceneStringName(outline_size), "OptionButton", 0);
 	theme->set_constant("modulate_arrow", "OptionButton", false);
 
 	// MenuButton
@@ -269,7 +269,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_outline_color", "MenuButton", Color(0, 0, 0));
 
 	theme->set_constant(SceneStringName(h_separation), "MenuButton", Math::round(4 * scale));
-	theme->set_constant("outline_size", "MenuButton", 0);
+	theme->set_constant(SceneStringName(outline_size), "MenuButton", 0);
 
 	// CheckBox
 
@@ -307,7 +307,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_constant(SceneStringName(h_separation), "CheckBox", Math::round(4 * scale));
 	theme->set_constant("check_v_offset", "CheckBox", 0);
-	theme->set_constant("outline_size", "CheckBox", 0);
+	theme->set_constant(SceneStringName(outline_size), "CheckBox", 0);
 
 	theme->set_color("checkbox_checked_color", "CheckBox", Color(1, 1, 1));
 	theme->set_color("checkbox_unchecked_color", "CheckBox", Color(1, 1, 1));
@@ -347,7 +347,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_constant(SceneStringName(h_separation), "CheckButton", Math::round(4 * scale));
 	theme->set_constant("check_v_offset", "CheckButton", 0);
-	theme->set_constant("outline_size", "CheckButton", 0);
+	theme->set_constant(SceneStringName(outline_size), "CheckButton", 0);
 
 	theme->set_color("button_checked_color", "CheckButton", Color(1, 1, 1));
 	theme->set_color("button_unchecked_color", "CheckButton", Color(1, 1, 1));
@@ -387,7 +387,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_constant("shadow_offset_x", "Label", Math::round(1 * scale));
 	theme->set_constant("shadow_offset_y", "Label", Math::round(1 * scale));
-	theme->set_constant("outline_size", "Label", 0);
+	theme->set_constant(SceneStringName(outline_size), "Label", 0);
 	theme->set_constant("shadow_outline_size", "Label", Math::round(1 * scale));
 	theme->set_constant("line_spacing", "Label", Math::round(3 * scale));
 
@@ -430,7 +430,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("clear_button_color_pressed", "LineEdit", control_font_pressed_color);
 
 	theme->set_constant("minimum_character_width", "LineEdit", 4);
-	theme->set_constant("outline_size", "LineEdit", 0);
+	theme->set_constant(SceneStringName(outline_size), "LineEdit", 0);
 	theme->set_constant("caret_width", "LineEdit", 1);
 
 	theme->set_icon("clear", "LineEdit", icons["line_edit_clear"]);
@@ -446,7 +446,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color(SceneStringName(font_color), "ProgressBar", control_font_hover_color);
 	theme->set_color("font_outline_color", "ProgressBar", Color(0, 0, 0));
 
-	theme->set_constant("outline_size", "ProgressBar", 0);
+	theme->set_constant(SceneStringName(outline_size), "ProgressBar", 0);
 
 	// TextEdit
 
@@ -475,7 +475,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("search_result_border_color", "TextEdit", Color(0.3, 0.3, 0.3, 0.4));
 
 	theme->set_constant("line_spacing", "TextEdit", Math::round(4 * scale));
-	theme->set_constant("outline_size", "TextEdit", 0);
+	theme->set_constant(SceneStringName(outline_size), "TextEdit", 0);
 	theme->set_constant("caret_width", "TextEdit", 1);
 
 	// CodeEdit
@@ -531,7 +531,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant("completion_max_width", "CodeEdit", 50);
 	theme->set_constant("completion_scroll_width", "CodeEdit", 6);
 	theme->set_constant("line_spacing", "CodeEdit", Math::round(4 * scale));
-	theme->set_constant("outline_size", "CodeEdit", 0);
+	theme->set_constant(SceneStringName(outline_size), "CodeEdit", 0);
 
 	Ref<Texture2D> empty_icon = memnew(ImageTexture);
 
@@ -765,7 +765,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant("indent", "PopupMenu", Math::round(10 * scale));
 	theme->set_constant(SceneStringName(h_separation), "PopupMenu", Math::round(4 * scale));
 	theme->set_constant(SceneStringName(v_separation), "PopupMenu", Math::round(4 * scale));
-	theme->set_constant("outline_size", "PopupMenu", 0);
+	theme->set_constant(SceneStringName(outline_size), "PopupMenu", 0);
 	theme->set_constant("separator_outline_size", "PopupMenu", 0);
 	theme->set_constant("item_start_padding", "PopupMenu", Math::round(2 * scale));
 	theme->set_constant("item_end_padding", "PopupMenu", Math::round(2 * scale));
@@ -808,7 +808,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_outline_color", "GraphNodeTitleLabel", Color(0, 0, 0));
 	theme->set_constant("shadow_offset_x", "GraphNodeTitleLabel", Math::round(1 * scale));
 	theme->set_constant("shadow_offset_y", "GraphNodeTitleLabel", Math::round(1 * scale));
-	theme->set_constant("outline_size", "GraphNodeTitleLabel", 0);
+	theme->set_constant(SceneStringName(outline_size), "GraphNodeTitleLabel", 0);
 	theme->set_constant("shadow_outline_size", "GraphNodeTitleLabel", Math::round(1 * scale));
 	theme->set_constant("line_spacing", "GraphNodeTitleLabel", Math::round(3 * scale));
 
@@ -838,7 +838,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_outline_color", "GraphFrameTitleLabel", Color(1, 1, 1));
 	theme->set_constant("shadow_offset_x", "GraphFrameTitleLabel", 1 * scale);
 	theme->set_constant("shadow_offset_y", "GraphFrameTitleLabel", 1 * scale);
-	theme->set_constant("outline_size", "GraphFrameTitleLabel", 0);
+	theme->set_constant(SceneStringName(outline_size), "GraphFrameTitleLabel", 0);
 	theme->set_constant("shadow_outline_size", "GraphFrameTitleLabel", 1 * scale);
 	theme->set_constant("line_spacing", "GraphFrameTitleLabel", 3 * scale);
 
@@ -912,7 +912,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant("draw_guides", "Tree", 1);
 	theme->set_constant("scroll_border", "Tree", Math::round(4 * scale));
 	theme->set_constant("scroll_speed", "Tree", 12);
-	theme->set_constant("outline_size", "Tree", 0);
+	theme->set_constant(SceneStringName(outline_size), "Tree", 0);
 	theme->set_constant("icon_max_width", "Tree", 0);
 	theme->set_constant("scrollbar_margin_left", "Tree", -1);
 	theme->set_constant("scrollbar_margin_top", "Tree", -1);
@@ -947,7 +947,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_stylebox("cursor", "ItemList", focus);
 	theme->set_stylebox("cursor_unfocused", "ItemList", focus);
 
-	theme->set_constant("outline_size", "ItemList", 0);
+	theme->set_constant(SceneStringName(outline_size), "ItemList", 0);
 
 	// TabContainer
 
@@ -994,7 +994,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant("side_margin", "TabContainer", Math::round(8 * scale));
 	theme->set_constant("icon_separation", "TabContainer", Math::round(4 * scale));
 	theme->set_constant("icon_max_width", "TabContainer", 0);
-	theme->set_constant("outline_size", "TabContainer", 0);
+	theme->set_constant(SceneStringName(outline_size), "TabContainer", 0);
 
 	// TabBar
 
@@ -1025,7 +1025,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_constant(SceneStringName(h_separation), "TabBar", Math::round(4 * scale));
 	theme->set_constant("icon_max_width", "TabBar", 0);
-	theme->set_constant("outline_size", "TabBar", 0);
+	theme->set_constant(SceneStringName(outline_size), "TabBar", 0);
 
 	// Separators
 
@@ -1117,7 +1117,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_color("font_outline_color", "ColorPickerButton", Color(0, 0, 0));
 
 	theme->set_constant(SceneStringName(h_separation), "ColorPickerButton", Math::round(4 * scale));
-	theme->set_constant("outline_size", "ColorPickerButton", 0);
+	theme->set_constant(SceneStringName(outline_size), "ColorPickerButton", 0);
 
 	// ColorPresetButton
 
@@ -1147,7 +1147,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 
 	theme->set_constant("shadow_offset_x", "TooltipLabel", 1);
 	theme->set_constant("shadow_offset_y", "TooltipLabel", 1);
-	theme->set_constant("outline_size", "TooltipLabel", 0);
+	theme->set_constant(SceneStringName(outline_size), "TooltipLabel", 0);
 
 	// RichTextLabel
 
@@ -1181,7 +1181,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_constant("table_h_separation", "RichTextLabel", Math::round(3 * scale));
 	theme->set_constant("table_v_separation", "RichTextLabel", Math::round(3 * scale));
 
-	theme->set_constant("outline_size", "RichTextLabel", 0);
+	theme->set_constant(SceneStringName(outline_size), "RichTextLabel", 0);
 
 	theme->set_color("table_odd_row_bg", "RichTextLabel", Color(0, 0, 0, 0));
 	theme->set_color("table_even_row_bg", "RichTextLabel", Color(0, 0, 0, 0));
@@ -1289,7 +1289,7 @@ void fill_default_theme(Ref<Theme> &theme, const Ref<Font> &default_font, const 
 	theme->set_icon("folded_arrow", "FoldableContainer", icons["arrow_right"]);
 	theme->set_icon("folded_arrow_mirrored", "FoldableContainer", icons["arrow_left"]);
 
-	theme->set_constant("outline_size", "FoldableContainer", 0);
+	theme->set_constant(SceneStringName(outline_size), "FoldableContainer", 0);
 	theme->set_constant(SceneStringName(h_separation), "FoldableContainer", Math::round(2 * scale));
 
 	// Visual Node Ports

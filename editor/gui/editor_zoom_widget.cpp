@@ -203,7 +203,7 @@ EditorZoomWidget::EditorZoomWidget() {
 	zoom_reset->add_theme_style_override(SceneStringName(hover), empty_stylebox);
 	zoom_reset->add_theme_style_override(SceneStringName(focus), empty_stylebox);
 	zoom_reset->add_theme_style_override(SceneStringName(pressed), empty_stylebox);
-	zoom_reset->add_theme_constant_override("outline_size", Math::ceil(2 * EDSCALE));
+	zoom_reset->add_theme_constant_override(SceneStringName(outline_size), Math::ceil(2 * EDSCALE));
 	zoom_reset->add_theme_color_override("font_outline_color", Color(0, 0, 0));
 	zoom_reset->add_theme_color_override(SceneStringName(font_color), Color(1, 1, 1));
 
