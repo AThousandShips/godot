@@ -1955,7 +1955,7 @@ ScriptEditorDebugger::ScriptEditorDebugger() {
 	add_child(tabs);
 	tabs->connect("tab_changed", callable_mp(this, &ScriptEditorDebugger::_tab_changed));
 
-	InspectorDock::get_inspector_singleton()->connect("object_id_selected", callable_mp(this, &ScriptEditorDebugger::_remote_object_selected));
+	InspectorDock::get_inspector_singleton()->connect(EditorStringName(object_id_selected), callable_mp(this, &ScriptEditorDebugger::_remote_object_selected));
 	EditorFileSystem::get_singleton()->connect("resources_reimported", callable_mp(this, &ScriptEditorDebugger::_resources_reimported));
 
 	{ //debugger

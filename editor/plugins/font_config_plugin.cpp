@@ -215,7 +215,7 @@ void EditorPropertyFontMetaOverride::_add_lang(const String &p_locale) {
 }
 
 void EditorPropertyFontMetaOverride::_object_id_selected(const StringName &p_property, ObjectID p_id) {
-	emit_signal(SNAME("object_id_selected"), p_property, p_id);
+	emit_signal(EditorStringName(object_id_selected), p_property, p_id);
 }
 
 void EditorPropertyFontMetaOverride::update_property() {
@@ -287,7 +287,7 @@ void EditorPropertyFontMetaOverride::update_property() {
 			prop->set_selectable(false);
 
 			prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyFontMetaOverride::_property_changed));
-			prop->connect("object_id_selected", callable_mp(this, &EditorPropertyFontMetaOverride::_object_id_selected));
+			prop->connect(EditorStringName(object_id_selected), callable_mp(this, &EditorPropertyFontMetaOverride::_object_id_selected));
 
 			HBoxContainer *hbox = memnew(HBoxContainer);
 			property_vbox->add_child(hbox);
@@ -390,7 +390,7 @@ void EditorPropertyOTVariation::_property_changed(const String &p_property, cons
 }
 
 void EditorPropertyOTVariation::_object_id_selected(const StringName &p_property, ObjectID p_id) {
-	emit_signal(SNAME("object_id_selected"), p_property, p_id);
+	emit_signal(EditorStringName(object_id_selected), p_property, p_id);
 }
 
 void EditorPropertyOTVariation::update_property() {
@@ -494,7 +494,7 @@ void EditorPropertyOTVariation::update_property() {
 			prop->set_selectable(false);
 
 			prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyOTVariation::_property_changed));
-			prop->connect("object_id_selected", callable_mp(this, &EditorPropertyOTVariation::_object_id_selected));
+			prop->connect(EditorStringName(object_id_selected), callable_mp(this, &EditorPropertyOTVariation::_object_id_selected));
 
 			property_vbox->add_child(prop);
 
@@ -604,7 +604,7 @@ void EditorPropertyOTFeatures::_add_feature(int p_option) {
 }
 
 void EditorPropertyOTFeatures::_object_id_selected(const StringName &p_property, ObjectID p_id) {
-	emit_signal(SNAME("object_id_selected"), p_property, p_id);
+	emit_signal(EditorStringName(object_id_selected), p_property, p_id);
 }
 
 void EditorPropertyOTFeatures::update_property() {
@@ -783,7 +783,7 @@ void EditorPropertyOTFeatures::update_property() {
 				prop->set_selectable(false);
 
 				prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyOTFeatures::_property_changed));
-				prop->connect("object_id_selected", callable_mp(this, &EditorPropertyOTFeatures::_object_id_selected));
+				prop->connect(EditorStringName(object_id_selected), callable_mp(this, &EditorPropertyOTFeatures::_object_id_selected));
 
 				HBoxContainer *hbox = memnew(HBoxContainer);
 				property_vbox->add_child(hbox);

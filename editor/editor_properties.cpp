@@ -1464,7 +1464,7 @@ void EditorPropertyObjectID::_set_read_only(bool p_read_only) {
 }
 
 void EditorPropertyObjectID::_edit_pressed() {
-	emit_signal(SNAME("object_id_selected"), get_edited_property(), get_edited_property_value());
+	emit_signal(EditorStringName(object_id_selected), get_edited_property(), get_edited_property_value());
 }
 
 void EditorPropertyObjectID::update_property() {
@@ -1504,7 +1504,7 @@ EditorPropertyObjectID::EditorPropertyObjectID() {
 
 void EditorPropertySignal::_edit_pressed() {
 	Signal signal = get_edited_property_value();
-	emit_signal(SNAME("object_id_selected"), get_edited_property(), signal.get_object_id());
+	emit_signal(EditorStringName(object_id_selected), get_edited_property(), signal.get_object_id());
 }
 
 void EditorPropertySignal::update_property() {
@@ -3304,7 +3304,7 @@ void EditorPropertyResource::_sub_inspector_resource_selected(const Ref<Resource
 }
 
 void EditorPropertyResource::_sub_inspector_object_id_selected(int p_id) {
-	emit_signal(SNAME("object_id_selected"), get_edited_property(), p_id);
+	emit_signal(EditorStringName(object_id_selected), get_edited_property(), p_id);
 }
 
 void EditorPropertyResource::_open_editor_pressed() {
@@ -3425,7 +3425,7 @@ void EditorPropertyResource::update_property() {
 
 				sub_inspector->connect("property_keyed", callable_mp(this, &EditorPropertyResource::_sub_inspector_property_keyed));
 				sub_inspector->connect("resource_selected", callable_mp(this, &EditorPropertyResource::_sub_inspector_resource_selected));
-				sub_inspector->connect("object_id_selected", callable_mp(this, &EditorPropertyResource::_sub_inspector_object_id_selected));
+				sub_inspector->connect(EditorStringName(object_id_selected), callable_mp(this, &EditorPropertyResource::_sub_inspector_object_id_selected));
 				sub_inspector->set_keying(is_keying());
 				sub_inspector->set_read_only(is_read_only());
 				sub_inspector->set_use_folding(is_using_folding());

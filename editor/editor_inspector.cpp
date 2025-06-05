@@ -3417,7 +3417,7 @@ void EditorInspector::_parse_added_editors(VBoxContainer *current_vbox, EditorIn
 			ep->connect("selected", callable_mp(this, &EditorInspector::_property_selected));
 			ep->connect("multiple_properties_changed", callable_mp(this, &EditorInspector::_multiple_properties_changed));
 			ep->connect("resource_selected", callable_mp(get_root_inspector(), &EditorInspector::_resource_selected), CONNECT_DEFERRED);
-			ep->connect("object_id_selected", callable_mp(this, &EditorInspector::_object_id_selected), CONNECT_DEFERRED);
+			ep->connect(EditorStringName(object_id_selected), callable_mp(this, &EditorInspector::_object_id_selected), CONNECT_DEFERRED);
 
 			if (F.properties.size()) {
 				if (F.properties.size() == 1) {
@@ -4312,7 +4312,7 @@ void EditorInspector::update_tree() {
 				ep->connect("selected", callable_mp(this, &EditorInspector::_property_selected));
 				ep->connect("multiple_properties_changed", callable_mp(this, &EditorInspector::_multiple_properties_changed));
 				ep->connect("resource_selected", callable_mp(get_root_inspector(), &EditorInspector::_resource_selected), CONNECT_DEFERRED);
-				ep->connect("object_id_selected", callable_mp(this, &EditorInspector::_object_id_selected), CONNECT_DEFERRED);
+				ep->connect(EditorStringName(object_id_selected), callable_mp(this, &EditorInspector::_object_id_selected), CONNECT_DEFERRED);
 
 				ep->set_tooltip_text(doc_tooltip_text);
 				ep->has_doc_tooltip = use_doc_hints;
@@ -5078,7 +5078,7 @@ void EditorInspector::_property_selected(const String &p_path, int p_focusable) 
 }
 
 void EditorInspector::_object_id_selected(const String &p_path, ObjectID p_id) {
-	emit_signal(SNAME("object_id_selected"), p_id);
+	emit_signal(EditorStringName(object_id_selected), p_id);
 }
 
 void EditorInspector::_resource_selected(const String &p_path, Ref<Resource> p_resource) {

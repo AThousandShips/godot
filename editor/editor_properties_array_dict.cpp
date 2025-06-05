@@ -298,7 +298,7 @@ void EditorPropertyArray::_change_type_menu(int p_index) {
 }
 
 void EditorPropertyArray::_object_id_selected(const StringName &p_property, ObjectID p_id) {
-	emit_signal(SNAME("object_id_selected"), p_property, p_id);
+	emit_signal(EditorStringName(object_id_selected), p_property, p_id);
 }
 
 void EditorPropertyArray::_create_new_property_slot() {
@@ -511,7 +511,7 @@ void EditorPropertyArray::update_property() {
 				new_prop->set_selectable(false);
 				new_prop->set_use_folding(is_using_folding());
 				new_prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyArray::_property_changed));
-				new_prop->connect(SNAME("object_id_selected"), callable_mp(this, &EditorPropertyArray::_object_id_selected));
+				new_prop->connect(EditorStringName(object_id_selected), callable_mp(this, &EditorPropertyArray::_object_id_selected));
 				new_prop->set_h_size_flags(SIZE_EXPAND_FILL);
 				new_prop->set_read_only(is_read_only());
 				slot.prop->add_sibling(new_prop, false);
@@ -1399,7 +1399,7 @@ void EditorPropertyDictionary::update_property() {
 				new_prop->set_selectable(false);
 				new_prop->set_use_folding(is_using_folding());
 				new_prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyDictionary::_property_changed));
-				new_prop->connect(SNAME("object_id_selected"), callable_mp(this, &EditorPropertyDictionary::_object_id_selected));
+				new_prop->connect(EditorStringName(object_id_selected), callable_mp(this, &EditorPropertyDictionary::_object_id_selected));
 				new_prop->set_h_size_flags(SIZE_EXPAND_FILL);
 				if (slot.index != EditorPropertyDictionaryObject::NEW_KEY_INDEX && slot.index != EditorPropertyDictionaryObject::NEW_VALUE_INDEX) {
 					new_prop->set_draw_label(false);
@@ -1447,7 +1447,7 @@ void EditorPropertyDictionary::_remove_pressed(int p_slot_index) {
 }
 
 void EditorPropertyDictionary::_object_id_selected(const StringName &p_property, ObjectID p_id) {
-	emit_signal(SNAME("object_id_selected"), p_property, p_id);
+	emit_signal(EditorStringName(object_id_selected), p_property, p_id);
 }
 
 void EditorPropertyDictionary::_notification(int p_what) {
@@ -1645,7 +1645,7 @@ void EditorPropertyLocalizableString::update_property() {
 
 			prop->set_selectable(false);
 			prop->connect(EditorStringName(property_changed), callable_mp(this, &EditorPropertyLocalizableString::_property_changed));
-			prop->connect("object_id_selected", callable_mp(this, &EditorPropertyLocalizableString::_object_id_selected));
+			prop->connect(EditorStringName(object_id_selected), callable_mp(this, &EditorPropertyLocalizableString::_object_id_selected));
 
 			HBoxContainer *hbox = memnew(HBoxContainer);
 			property_vbox->add_child(hbox);
@@ -1681,7 +1681,7 @@ void EditorPropertyLocalizableString::update_property() {
 }
 
 void EditorPropertyLocalizableString::_object_id_selected(const StringName &p_property, ObjectID p_id) {
-	emit_signal(SNAME("object_id_selected"), p_property, p_id);
+	emit_signal(EditorStringName(object_id_selected), p_property, p_id);
 }
 
 void EditorPropertyLocalizableString::_notification(int p_what) {
