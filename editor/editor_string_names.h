@@ -69,6 +69,7 @@ public:
 	const StringName set_owner = StringName("set_owner");
 	const StringName add_child = StringName("add_child");
 	const StringName remove_child = StringName("remove_child");
+	const StringName set = StringName("set");
 	const StringName set_meta = StringName("set_meta");
 	const StringName connect_nodes = StringName("connect_nodes");
 	const StringName disconnect_nodes = StringName("disconnect_nodes");

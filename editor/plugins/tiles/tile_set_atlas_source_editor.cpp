@@ -1408,7 +1408,7 @@ void TileSetAtlasSourceEditor::_end_dragging() {
 						String property = E_property->get()->name;
 						Variant value = tile_set_atlas_source->get(property);
 						if (value.get_type() != Variant::NIL) {
-							undo_redo->add_undo_method(tile_set_atlas_source, "set", E_property->get()->name, value);
+							undo_redo->add_undo_method(tile_set_atlas_source, EditorStringName(set), E_property->get()->name, value);
 						}
 					}
 				}
@@ -1462,7 +1462,7 @@ void TileSetAtlasSourceEditor::_end_dragging() {
 						String property = E_property->get()->name;
 						Variant value = tile_set_atlas_source->get(property);
 						if (value.get_type() != Variant::NIL) {
-							undo_redo->add_undo_method(tile_set_atlas_source, "set", E_property->get()->name, value);
+							undo_redo->add_undo_method(tile_set_atlas_source, EditorStringName(set), E_property->get()->name, value);
 						}
 					}
 				}
@@ -1628,7 +1628,7 @@ void TileSetAtlasSourceEditor::_menu_option(int p_option) {
 							String property = E_property->get()->name;
 							Variant value = tile_set_atlas_source->get(property);
 							if (value.get_type() != Variant::NIL) {
-								undo_redo->add_undo_method(tile_set_atlas_source, "set", E_property->get()->name, value);
+								undo_redo->add_undo_method(tile_set_atlas_source, EditorStringName(set), E_property->get()->name, value);
 							}
 						}
 					}
@@ -1649,7 +1649,7 @@ void TileSetAtlasSourceEditor::_menu_option(int p_option) {
 								String property = E_property->get()->name;
 								Variant value = tile_set_atlas_source->get(property);
 								if (value.get_type() != Variant::NIL) {
-									undo_redo->add_undo_method(tile_set_atlas_source, "set", E_property->get()->name, value);
+									undo_redo->add_undo_method(tile_set_atlas_source, EditorStringName(set), E_property->get()->name, value);
 								}
 							}
 						}
@@ -2298,7 +2298,7 @@ void TileSetAtlasSourceEditor::_cleanup_outside_tiles() {
 				String property = E_property->get()->name;
 				Variant value = tile_set_atlas_source->get(property);
 				if (value.get_type() != Variant::NIL) {
-					undo_redo->add_undo_method(tile_set_atlas_source, "set", E_property->get()->name, value);
+					undo_redo->add_undo_method(tile_set_atlas_source, EditorStringName(set), E_property->get()->name, value);
 				}
 			}
 		}
@@ -2413,7 +2413,7 @@ void TileSetAtlasSourceEditor::_auto_remove_tiles() {
 						String property = E_property->get()->name;
 						Variant value = tile_set_atlas_source->get(property);
 						if (value.get_type() != Variant::NIL) {
-							undo_redo->add_undo_method(tile_set_atlas_source, "set", E_property->get()->name, value);
+							undo_redo->add_undo_method(tile_set_atlas_source, EditorStringName(set), E_property->get()->name, value);
 						}
 					}
 				}

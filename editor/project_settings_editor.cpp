@@ -193,7 +193,7 @@ void ProjectSettingsEditor::_delete_setting() {
 	undo_redo->create_action(TTR("Delete Item"));
 
 	undo_redo->add_do_method(ps, "clear", setting);
-	undo_redo->add_undo_method(ps, "set", setting, value);
+	undo_redo->add_undo_method(ps, EditorStringName(set), setting, value);
 	undo_redo->add_undo_method(ps, "set_order", setting, order);
 
 	undo_redo->add_do_method(general_settings_inspector, "update_category_list");
@@ -451,7 +451,7 @@ void ProjectSettingsEditor::_action_added(const String &p_name) {
 
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	undo_redo->create_action(TTR("Add Input Action"));
-	undo_redo->add_do_method(ProjectSettings::get_singleton(), "set", name, action);
+	undo_redo->add_do_method(ProjectSettings::get_singleton(), EditorStringName(set), name, action);
 	undo_redo->add_undo_method(ProjectSettings::get_singleton(), "clear", name);
 
 	undo_redo->add_do_method(this, "_update_action_map_editor");
@@ -469,14 +469,14 @@ void ProjectSettingsEditor::_action_edited(const String &p_name, const Dictionar
 	if (old_val["deadzone"] != p_action["deadzone"]) {
 		// Deadzone Changed
 		undo_redo->create_action(TTR("Change Action deadzone"));
-		undo_redo->add_do_method(ProjectSettings::get_singleton(), "set", property_name, p_action);
-		undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set", property_name, old_val);
+		undo_redo->add_do_method(ProjectSettings::get_singleton(), EditorStringName(set), property_name, p_action);
+		undo_redo->add_undo_method(ProjectSettings::get_singleton(), EditorStringName(set), property_name, old_val);
 
 	} else {
 		// Events changed
 		undo_redo->create_action(TTR("Change Input Action Event(s)"));
-		undo_redo->add_do_method(ProjectSettings::get_singleton(), "set", property_name, p_action);
-		undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set", property_name, old_val);
+		undo_redo->add_do_method(ProjectSettings::get_singleton(), EditorStringName(set), property_name, p_action);
+		undo_redo->add_undo_method(ProjectSettings::get_singleton(), EditorStringName(set), property_name, old_val);
 	}
 
 	undo_redo->add_do_method(this, "_update_action_map_editor");
@@ -495,7 +495,7 @@ void ProjectSettingsEditor::_action_removed(const String &p_name) {
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	undo_redo->create_action(TTR("Erase Input Action"));
 	undo_redo->add_do_method(ProjectSettings::get_singleton(), "clear", property_name);
-	undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set", property_name, old_val);
+	undo_redo->add_undo_method(ProjectSettings::get_singleton(), EditorStringName(set), property_name, old_val);
 	undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set_order", property_name, order);
 
 	undo_redo->add_do_method(this, "_update_action_map_editor");
@@ -519,11 +519,11 @@ void ProjectSettingsEditor::_action_renamed(const String &p_old_name, const Stri
 	undo_redo->create_action(TTR("Rename Input Action"));
 	// Do: clear old, set new
 	undo_redo->add_do_method(ProjectSettings::get_singleton(), "clear", old_property_name);
-	undo_redo->add_do_method(ProjectSettings::get_singleton(), "set", new_property_name, action);
+	undo_redo->add_do_method(ProjectSettings::get_singleton(), EditorStringName(set), new_property_name, action);
 	undo_redo->add_do_method(ProjectSettings::get_singleton(), "set_order", new_property_name, order);
 	// Undo: clear new, set old
 	undo_redo->add_undo_method(ProjectSettings::get_singleton(), "clear", new_property_name);
-	undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set", old_property_name, action);
+	undo_redo->add_undo_method(ProjectSettings::get_singleton(), EditorStringName(set), old_property_name, action);
 	undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set_order", old_property_name, order);
 
 	undo_redo->add_do_method(this, "_update_action_map_editor");
@@ -568,23 +568,23 @@ void ProjectSettingsEditor::_action_reordered(const String &p_action_name, const
 		if (name == target_name) {
 			if (p_before) {
 				// Insert before target
-				undo_redo->add_do_method(ProjectSettings::get_singleton(), "set", action_name, action_value);
-				undo_redo->add_do_method(ProjectSettings::get_singleton(), "set", target_name, target_value);
+				undo_redo->add_do_method(ProjectSettings::get_singleton(), EditorStringName(set), action_name, action_value);
+				undo_redo->add_do_method(ProjectSettings::get_singleton(), EditorStringName(set), target_name, target_value);
 
-				undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set", target_name, target_value);
-				undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set", action_name, action_value);
+				undo_redo->add_undo_method(ProjectSettings::get_singleton(), EditorStringName(set), target_name, target_value);
+				undo_redo->add_undo_method(ProjectSettings::get_singleton(), EditorStringName(set), action_name, action_value);
 			} else {
 				// Insert after target
-				undo_redo->add_do_method(ProjectSettings::get_singleton(), "set", target_name, target_value);
-				undo_redo->add_do_method(ProjectSettings::get_singleton(), "set", action_name, action_value);
+				undo_redo->add_do_method(ProjectSettings::get_singleton(), EditorStringName(set), target_name, target_value);
+				undo_redo->add_do_method(ProjectSettings::get_singleton(), EditorStringName(set), action_name, action_value);
 
-				undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set", action_name, action_value);
-				undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set", target_name, target_value);
+				undo_redo->add_undo_method(ProjectSettings::get_singleton(), EditorStringName(set), action_name, action_value);
+				undo_redo->add_undo_method(ProjectSettings::get_singleton(), EditorStringName(set), target_name, target_value);
 			}
 
 		} else if (name != action_name) {
-			undo_redo->add_do_method(ProjectSettings::get_singleton(), "set", name, value);
-			undo_redo->add_undo_method(ProjectSettings::get_singleton(), "set", name, value);
+			undo_redo->add_do_method(ProjectSettings::get_singleton(), EditorStringName(set), name, value);
+			undo_redo->add_undo_method(ProjectSettings::get_singleton(), EditorStringName(set), name, value);
 		}
 	}
 

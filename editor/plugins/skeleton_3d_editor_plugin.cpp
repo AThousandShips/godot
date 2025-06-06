@@ -829,8 +829,8 @@ void Skeleton3DEditor::_joint_tree_button_clicked(Object *p_item, int p_column, 
 			bool is_valid = false;
 			Variant new_enabled = EditorPropertyRevert::get_property_revert_value(skeleton, bone_enabled_property, &is_valid);
 			if (is_valid) {
-				ur->add_undo_method(skeleton, "set", bone_enabled_property, current_enabled);
-				ur->add_do_method(skeleton, "set", bone_enabled_property, new_enabled);
+				ur->add_undo_method(skeleton, EditorStringName(set), bone_enabled_property, current_enabled);
+				ur->add_do_method(skeleton, EditorStringName(set), bone_enabled_property, new_enabled);
 			}
 		}
 
@@ -839,8 +839,8 @@ void Skeleton3DEditor::_joint_tree_button_clicked(Object *p_item, int p_column, 
 			bool is_valid = false;
 			Variant new_parent = EditorPropertyRevert::get_property_revert_value(skeleton, bone_parent_property, &is_valid);
 			if (is_valid) {
-				ur->add_undo_method(skeleton, "set", bone_parent_property, current_parent);
-				ur->add_do_method(skeleton, "set", bone_parent_property, new_parent);
+				ur->add_undo_method(skeleton, EditorStringName(set), bone_parent_property, current_parent);
+				ur->add_do_method(skeleton, EditorStringName(set), bone_parent_property, new_parent);
 			}
 		}
 		bool can_revert_name = EditorPropertyRevert::can_property_revert(skeleton, bone_name_property, &current_name);
@@ -848,8 +848,8 @@ void Skeleton3DEditor::_joint_tree_button_clicked(Object *p_item, int p_column, 
 			bool is_valid = false;
 			Variant new_name = EditorPropertyRevert::get_property_revert_value(skeleton, bone_name_property, &is_valid);
 			if (is_valid) {
-				ur->add_undo_method(skeleton, "set", bone_name_property, current_name);
-				ur->add_do_method(skeleton, "set", bone_name_property, new_name);
+				ur->add_undo_method(skeleton, EditorStringName(set), bone_name_property, current_name);
+				ur->add_do_method(skeleton, EditorStringName(set), bone_name_property, new_name);
 			}
 		}
 		bool can_revert_position = EditorPropertyRevert::can_property_revert(skeleton, bone_position_property, &current_position);
@@ -857,8 +857,8 @@ void Skeleton3DEditor::_joint_tree_button_clicked(Object *p_item, int p_column, 
 			bool is_valid = false;
 			Variant new_position = EditorPropertyRevert::get_property_revert_value(skeleton, bone_position_property, &is_valid);
 			if (is_valid) {
-				ur->add_undo_method(skeleton, "set", bone_position_property, current_position);
-				ur->add_do_method(skeleton, "set", bone_position_property, new_position);
+				ur->add_undo_method(skeleton, EditorStringName(set), bone_position_property, current_position);
+				ur->add_do_method(skeleton, EditorStringName(set), bone_position_property, new_position);
 			}
 		}
 		bool can_revert_rotation = EditorPropertyRevert::can_property_revert(skeleton, bone_rotation_property, &current_rotation);
@@ -866,8 +866,8 @@ void Skeleton3DEditor::_joint_tree_button_clicked(Object *p_item, int p_column, 
 			bool is_valid = false;
 			Variant new_rotation = EditorPropertyRevert::get_property_revert_value(skeleton, bone_rotation_property, &is_valid);
 			if (is_valid) {
-				ur->add_undo_method(skeleton, "set", bone_rotation_property, current_rotation);
-				ur->add_do_method(skeleton, "set", bone_rotation_property, new_rotation);
+				ur->add_undo_method(skeleton, EditorStringName(set), bone_rotation_property, current_rotation);
+				ur->add_do_method(skeleton, EditorStringName(set), bone_rotation_property, new_rotation);
 			}
 		}
 		bool can_revert_scale = EditorPropertyRevert::can_property_revert(skeleton, bone_scale_property, &current_scale);
@@ -875,8 +875,8 @@ void Skeleton3DEditor::_joint_tree_button_clicked(Object *p_item, int p_column, 
 			bool is_valid = false;
 			Variant new_scale = EditorPropertyRevert::get_property_revert_value(skeleton, bone_scale_property, &is_valid);
 			if (is_valid) {
-				ur->add_undo_method(skeleton, "set", bone_scale_property, current_scale);
-				ur->add_do_method(skeleton, "set", bone_scale_property, new_scale);
+				ur->add_undo_method(skeleton, EditorStringName(set), bone_scale_property, current_scale);
+				ur->add_do_method(skeleton, EditorStringName(set), bone_scale_property, new_scale);
 			}
 		}
 		bool can_revert_rest = EditorPropertyRevert::can_property_revert(skeleton, bone_rest_property, &current_rest);
@@ -884,8 +884,8 @@ void Skeleton3DEditor::_joint_tree_button_clicked(Object *p_item, int p_column, 
 			bool is_valid = false;
 			Variant new_rest = EditorPropertyRevert::get_property_revert_value(skeleton, bone_rest_property, &is_valid);
 			if (is_valid) {
-				ur->add_undo_method(skeleton, "set", bone_rest_property, current_rest);
-				ur->add_do_method(skeleton, "set", bone_rest_property, new_rest);
+				ur->add_undo_method(skeleton, EditorStringName(set), bone_rest_property, current_rest);
+				ur->add_do_method(skeleton, EditorStringName(set), bone_rest_property, new_rest);
 			}
 		}
 
