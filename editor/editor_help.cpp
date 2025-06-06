@@ -199,15 +199,15 @@ static String _contextualize_class_specifier(const String &p_class_specifier, co
 void EditorHelp::_update_theme_item_cache() {
 	VBoxContainer::_update_theme_item_cache();
 
-	theme_cache.text_color = get_theme_color(SNAME("text_color"), SNAME("EditorHelp"));
-	theme_cache.title_color = get_theme_color(SNAME("title_color"), SNAME("EditorHelp"));
-	theme_cache.headline_color = get_theme_color(SNAME("headline_color"), SNAME("EditorHelp"));
-	theme_cache.comment_color = get_theme_color(SNAME("comment_color"), SNAME("EditorHelp"));
-	theme_cache.symbol_color = get_theme_color(SNAME("symbol_color"), SNAME("EditorHelp"));
-	theme_cache.value_color = get_theme_color(SNAME("value_color"), SNAME("EditorHelp"));
-	theme_cache.qualifier_color = get_theme_color(SNAME("qualifier_color"), SNAME("EditorHelp"));
-	theme_cache.type_color = get_theme_color(SNAME("type_color"), SNAME("EditorHelp"));
-	theme_cache.override_color = get_theme_color(SNAME("override_color"), SNAME("EditorHelp"));
+	theme_cache.text_color = get_theme_color(SNAME("text_color"), EditorStringName(EditorHelp));
+	theme_cache.title_color = get_theme_color(SNAME("title_color"), EditorStringName(EditorHelp));
+	theme_cache.headline_color = get_theme_color(SNAME("headline_color"), EditorStringName(EditorHelp));
+	theme_cache.comment_color = get_theme_color(SNAME("comment_color"), EditorStringName(EditorHelp));
+	theme_cache.symbol_color = get_theme_color(SNAME("symbol_color"), EditorStringName(EditorHelp));
+	theme_cache.value_color = get_theme_color(SNAME("value_color"), EditorStringName(EditorHelp));
+	theme_cache.qualifier_color = get_theme_color(SNAME("qualifier_color"), EditorStringName(EditorHelp));
+	theme_cache.type_color = get_theme_color(SNAME("type_color"), EditorStringName(EditorHelp));
+	theme_cache.override_color = get_theme_color(SNAME("override_color"), EditorStringName(EditorHelp));
 
 	theme_cache.doc_font = get_theme_font(SNAME("doc"), EditorStringName(EditorFonts));
 	theme_cache.doc_bold_font = get_theme_font(SNAME("doc_bold"), EditorStringName(EditorFonts));
@@ -221,17 +221,17 @@ void EditorHelp::_update_theme_item_cache() {
 	theme_cache.doc_code_font_size = get_theme_font_size(SNAME("doc_source_size"), EditorStringName(EditorFonts));
 	theme_cache.doc_kbd_font_size = get_theme_font_size(SNAME("doc_keyboard_size"), EditorStringName(EditorFonts));
 
-	theme_cache.background_style = get_theme_stylebox(SNAME("background"), SNAME("EditorHelp"));
+	theme_cache.background_style = get_theme_stylebox(SNAME("background"), EditorStringName(EditorHelp));
 
 	class_desc->begin_bulk_theme_override();
 	class_desc->add_theme_font_override("normal_font", theme_cache.doc_font);
 	class_desc->add_theme_font_size_override("normal_font_size", theme_cache.doc_font_size);
 
-	class_desc->add_theme_constant_override(SceneStringName(line_separation), get_theme_constant(SceneStringName(line_separation), SNAME("EditorHelp")));
-	class_desc->add_theme_constant_override("table_h_separation", get_theme_constant(SNAME("table_h_separation"), SNAME("EditorHelp")));
-	class_desc->add_theme_constant_override("table_v_separation", get_theme_constant(SNAME("table_v_separation"), SNAME("EditorHelp")));
-	class_desc->add_theme_constant_override("text_highlight_h_padding", get_theme_constant(SNAME("text_highlight_h_padding"), SNAME("EditorHelp")));
-	class_desc->add_theme_constant_override("text_highlight_v_padding", get_theme_constant(SNAME("text_highlight_v_padding"), SNAME("EditorHelp")));
+	class_desc->add_theme_constant_override(SceneStringName(line_separation), get_theme_constant(SceneStringName(line_separation), EditorStringName(EditorHelp)));
+	class_desc->add_theme_constant_override("table_h_separation", get_theme_constant(SNAME("table_h_separation"), EditorStringName(EditorHelp)));
+	class_desc->add_theme_constant_override("table_v_separation", get_theme_constant(SNAME("table_v_separation"), EditorStringName(EditorHelp)));
+	class_desc->add_theme_constant_override("text_highlight_h_padding", get_theme_constant(SNAME("text_highlight_h_padding"), EditorStringName(EditorHelp)));
+	class_desc->add_theme_constant_override("text_highlight_v_padding", get_theme_constant(SNAME("text_highlight_v_padding"), EditorStringName(EditorHelp)));
 	class_desc->end_bulk_theme_override();
 }
 
@@ -383,7 +383,7 @@ void EditorHelp::_class_desc_resized(bool p_force_update_theme) {
 }
 
 static void _add_type_to_rt(const String &p_type, const String &p_enum, bool p_is_bitfield, RichTextLabel *p_rt, const Control *p_owner_node, const String &p_class) {
-	const Color type_color = p_owner_node->get_theme_color(SNAME("type_color"), SNAME("EditorHelp"));
+	const Color type_color = p_owner_node->get_theme_color(SNAME("type_color"), EditorStringName(EditorHelp));
 
 	if (p_type.is_empty() || p_type == "void") {
 		p_rt->push_color(Color(type_color, 0.5));
@@ -2407,19 +2407,19 @@ static void _add_text_to_rt(const String &p_bbcode, RichTextLabel *p_rt, const C
 	const int doc_code_font_size = p_owner_node->get_theme_font_size(SNAME("doc_source_size"), EditorStringName(EditorFonts));
 	const int doc_kbd_font_size = p_owner_node->get_theme_font_size(SNAME("doc_keyboard_size"), EditorStringName(EditorFonts));
 
-	const Color type_color = p_owner_node->get_theme_color(SNAME("type_color"), SNAME("EditorHelp"));
-	const Color code_color = p_owner_node->get_theme_color(SNAME("code_color"), SNAME("EditorHelp"));
-	const Color kbd_color = p_owner_node->get_theme_color(SNAME("kbd_color"), SNAME("EditorHelp"));
+	const Color type_color = p_owner_node->get_theme_color(SNAME("type_color"), EditorStringName(EditorHelp));
+	const Color code_color = p_owner_node->get_theme_color(SNAME("code_color"), EditorStringName(EditorHelp));
+	const Color kbd_color = p_owner_node->get_theme_color(SNAME("kbd_color"), EditorStringName(EditorHelp));
 	const Color code_dark_color = Color(code_color, 0.8);
 
-	const Color link_color = p_owner_node->get_theme_color(SNAME("link_color"), SNAME("EditorHelp"));
+	const Color link_color = p_owner_node->get_theme_color(SNAME("link_color"), EditorStringName(EditorHelp));
 	const Color link_method_color = p_owner_node->get_theme_color(SNAME("accent_color"), EditorStringName(Editor));
 	const Color link_property_color = link_color.lerp(p_owner_node->get_theme_color(SNAME("accent_color"), EditorStringName(Editor)), 0.25);
 	const Color link_annotation_color = link_color.lerp(p_owner_node->get_theme_color(SNAME("accent_color"), EditorStringName(Editor)), 0.5);
 
-	const Color code_bg_color = p_owner_node->get_theme_color(SNAME("code_bg_color"), SNAME("EditorHelp"));
-	const Color kbd_bg_color = p_owner_node->get_theme_color(SNAME("kbd_bg_color"), SNAME("EditorHelp"));
-	const Color param_bg_color = p_owner_node->get_theme_color(SNAME("param_bg_color"), SNAME("EditorHelp"));
+	const Color code_bg_color = p_owner_node->get_theme_color(SNAME("code_bg_color"), EditorStringName(EditorHelp));
+	const Color kbd_bg_color = p_owner_node->get_theme_color(SNAME("kbd_bg_color"), EditorStringName(EditorHelp));
+	const Color param_bg_color = p_owner_node->get_theme_color(SNAME("param_bg_color"), EditorStringName(EditorHelp));
 
 	String bbcode = p_bbcode.dedent().remove_chars("\t\r").strip_edges();
 
@@ -3868,7 +3868,7 @@ void EditorHelpBit::_update_labels() {
 		title->push_font(doc_bold_font);
 
 		if (!symbol_type.is_empty()) {
-			title->push_color(get_theme_color(SNAME("title_color"), SNAME("EditorHelp")));
+			title->push_color(get_theme_color(SNAME("title_color"), EditorStringName(EditorHelp)));
 			title->add_text(symbol_type);
 			title->pop(); // color
 		}
@@ -3892,9 +3892,9 @@ void EditorHelpBit::_update_labels() {
 
 		title->pop(); // font
 
-		const Color symbol_color = get_theme_color(SNAME("symbol_color"), SNAME("EditorHelp"));
-		const Color value_color = get_theme_color(SNAME("value_color"), SNAME("EditorHelp"));
-		const Color qualifier_color = get_theme_color(SNAME("qualifier_color"), SNAME("EditorHelp"));
+		const Color symbol_color = get_theme_color(SNAME("symbol_color"), EditorStringName(EditorHelp));
+		const Color value_color = get_theme_color(SNAME("value_color"), EditorStringName(EditorHelp));
+		const Color qualifier_color = get_theme_color(SNAME("qualifier_color"), EditorStringName(EditorHelp));
 		const Ref<Font> doc_source = get_theme_font(SNAME("doc_source"), EditorStringName(EditorFonts));
 		const int doc_source_size = get_theme_font_size(SNAME("doc_source_size"), EditorStringName(EditorFonts));
 
@@ -4072,7 +4072,7 @@ void EditorHelpBit::_update_labels() {
 		}
 		has_prev_text = true;
 
-		const Color comment_color = get_theme_color(SNAME("comment_color"), SNAME("EditorHelp"));
+		const Color comment_color = get_theme_color(SNAME("comment_color"), EditorStringName(EditorHelp));
 		_add_text_to_rt(help_data.description.replace("<EditorHelpBitCommentColor>", comment_color.to_html()), content, this, symbol_class_name);
 	}
 

@@ -2465,31 +2465,31 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 		Ref<StyleBoxFlat> style_editor_help = p_config.base_style->duplicate();
 		style_editor_help->set_bg_color(p_config.dark_color_2);
 		style_editor_help->set_border_color(p_config.dark_color_3);
-		p_theme->set_stylebox("background", "EditorHelp", style_editor_help);
+		p_theme->set_stylebox("background", EditorStringName(EditorHelp), style_editor_help);
 
 		const Color kbd_color = p_config.font_color.lerp(Color(0.5, 0.5, 0.5), 0.5);
 
-		p_theme->set_color("title_color", "EditorHelp", p_config.accent_color);
-		p_theme->set_color("headline_color", "EditorHelp", p_config.mono_color);
-		p_theme->set_color("text_color", "EditorHelp", p_config.font_color);
-		p_theme->set_color("comment_color", "EditorHelp", p_config.font_color * Color(1, 1, 1, 0.6));
-		p_theme->set_color("symbol_color", "EditorHelp", p_config.font_color * Color(1, 1, 1, 0.6));
-		p_theme->set_color("value_color", "EditorHelp", p_config.font_color * Color(1, 1, 1, 0.6));
-		p_theme->set_color("qualifier_color", "EditorHelp", p_config.font_color * Color(1, 1, 1, 0.8));
-		p_theme->set_color("type_color", "EditorHelp", p_config.accent_color.lerp(p_config.font_color, 0.5));
-		p_theme->set_color("override_color", "EditorHelp", p_config.warning_color);
-		p_theme->set_color("selection_color", "EditorHelp", p_config.selection_color);
-		p_theme->set_color("link_color", "EditorHelp", p_config.accent_color.lerp(p_config.mono_color, 0.8));
-		p_theme->set_color("code_color", "EditorHelp", p_config.accent_color.lerp(p_config.mono_color, 0.6));
-		p_theme->set_color("kbd_color", "EditorHelp", p_config.accent_color.lerp(kbd_color, 0.6));
-		p_theme->set_color("code_bg_color", "EditorHelp", p_config.dark_color_3);
-		p_theme->set_color("kbd_bg_color", "EditorHelp", p_config.dark_color_1);
-		p_theme->set_color("param_bg_color", "EditorHelp", p_config.dark_color_1);
-		p_theme->set_constant(SceneStringName(line_separation), "EditorHelp", Math::round(6 * EDSCALE));
-		p_theme->set_constant("table_h_separation", "EditorHelp", 16 * EDSCALE);
-		p_theme->set_constant("table_v_separation", "EditorHelp", 6 * EDSCALE);
-		p_theme->set_constant("text_highlight_h_padding", "EditorHelp", 1 * EDSCALE);
-		p_theme->set_constant("text_highlight_v_padding", "EditorHelp", 2 * EDSCALE);
+		p_theme->set_color("title_color", EditorStringName(EditorHelp), p_config.accent_color);
+		p_theme->set_color("headline_color", EditorStringName(EditorHelp), p_config.mono_color);
+		p_theme->set_color("text_color", EditorStringName(EditorHelp), p_config.font_color);
+		p_theme->set_color("comment_color", EditorStringName(EditorHelp), p_config.font_color * Color(1, 1, 1, 0.6));
+		p_theme->set_color("symbol_color", EditorStringName(EditorHelp), p_config.font_color * Color(1, 1, 1, 0.6));
+		p_theme->set_color("value_color", EditorStringName(EditorHelp), p_config.font_color * Color(1, 1, 1, 0.6));
+		p_theme->set_color("qualifier_color", EditorStringName(EditorHelp), p_config.font_color * Color(1, 1, 1, 0.8));
+		p_theme->set_color("type_color", EditorStringName(EditorHelp), p_config.accent_color.lerp(p_config.font_color, 0.5));
+		p_theme->set_color("override_color", EditorStringName(EditorHelp), p_config.warning_color);
+		p_theme->set_color("selection_color", EditorStringName(EditorHelp), p_config.selection_color);
+		p_theme->set_color("link_color", EditorStringName(EditorHelp), p_config.accent_color.lerp(p_config.mono_color, 0.8));
+		p_theme->set_color("code_color", EditorStringName(EditorHelp), p_config.accent_color.lerp(p_config.mono_color, 0.6));
+		p_theme->set_color("kbd_color", EditorStringName(EditorHelp), p_config.accent_color.lerp(kbd_color, 0.6));
+		p_theme->set_color("code_bg_color", EditorStringName(EditorHelp), p_config.dark_color_3);
+		p_theme->set_color("kbd_bg_color", EditorStringName(EditorHelp), p_config.dark_color_1);
+		p_theme->set_color("param_bg_color", EditorStringName(EditorHelp), p_config.dark_color_1);
+		p_theme->set_constant(SceneStringName(line_separation), EditorStringName(EditorHelp), Math::round(6 * EDSCALE));
+		p_theme->set_constant("table_h_separation", EditorStringName(EditorHelp), 16 * EDSCALE);
+		p_theme->set_constant("table_v_separation", EditorStringName(EditorHelp), 6 * EDSCALE);
+		p_theme->set_constant("text_highlight_h_padding", EditorStringName(EditorHelp), 1 * EDSCALE);
+		p_theme->set_constant("text_highlight_v_padding", EditorStringName(EditorHelp), 2 * EDSCALE);
 	}
 
 	// EditorHelpBitTitle.
