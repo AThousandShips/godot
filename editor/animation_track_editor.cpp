@@ -1509,21 +1509,21 @@ void AnimationTimelineEdit::_notification(int p_what) {
 			const Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));
 			const int font_size = get_theme_font_size(SceneStringName(font_size), SNAME("Label"));
 
-			const Ref<StyleBox> &stylebox_time_unavailable = get_theme_stylebox(SNAME("time_unavailable"), SNAME("AnimationTimelineEdit"));
-			const Ref<StyleBox> &stylebox_time_available = get_theme_stylebox(SNAME("time_available"), SNAME("AnimationTimelineEdit"));
+			const Ref<StyleBox> &stylebox_time_unavailable = get_theme_stylebox(SNAME("time_unavailable"), EditorStringName(AnimationTimelineEdit));
+			const Ref<StyleBox> &stylebox_time_available = get_theme_stylebox(SNAME("time_available"), EditorStringName(AnimationTimelineEdit));
 
-			const Color v_line_primary_color = get_theme_color(SNAME("v_line_primary_color"), SNAME("AnimationTimelineEdit"));
-			const Color v_line_secondary_color = get_theme_color(SNAME("v_line_secondary_color"), SNAME("AnimationTimelineEdit"));
-			const Color h_line_color = get_theme_color(SNAME("h_line_color"), SNAME("AnimationTimelineEdit"));
-			const Color font_primary_color = get_theme_color(SNAME("font_primary_color"), SNAME("AnimationTimelineEdit"));
-			const Color font_secondary_color = get_theme_color(SNAME("font_secondary_color"), SNAME("AnimationTimelineEdit"));
+			const Color v_line_primary_color = get_theme_color(SNAME("v_line_primary_color"), EditorStringName(AnimationTimelineEdit));
+			const Color v_line_secondary_color = get_theme_color(SNAME("v_line_secondary_color"), EditorStringName(AnimationTimelineEdit));
+			const Color h_line_color = get_theme_color(SNAME("h_line_color"), EditorStringName(AnimationTimelineEdit));
+			const Color font_primary_color = get_theme_color(SNAME("font_primary_color"), EditorStringName(AnimationTimelineEdit));
+			const Color font_secondary_color = get_theme_color(SNAME("font_secondary_color"), EditorStringName(AnimationTimelineEdit));
 
-			const int v_line_primary_margin = get_theme_constant(SNAME("v_line_primary_margin"), SNAME("AnimationTimelineEdit"));
-			const int v_line_secondary_margin = get_theme_constant(SNAME("v_line_secondary_margin"), SNAME("AnimationTimelineEdit"));
-			const int v_line_primary_width = get_theme_constant(SNAME("v_line_primary_width"), SNAME("AnimationTimelineEdit"));
-			const int v_line_secondary_width = get_theme_constant(SNAME("v_line_secondary_width"), SNAME("AnimationTimelineEdit"));
-			const int text_primary_margin = get_theme_constant(SNAME("text_primary_margin"), SNAME("AnimationTimelineEdit"));
-			const int text_secondary_margin = get_theme_constant(SNAME("text_secondary_margin"), SNAME("AnimationTimelineEdit"));
+			const int v_line_primary_margin = get_theme_constant(SNAME("v_line_primary_margin"), EditorStringName(AnimationTimelineEdit));
+			const int v_line_secondary_margin = get_theme_constant(SNAME("v_line_secondary_margin"), EditorStringName(AnimationTimelineEdit));
+			const int v_line_primary_width = get_theme_constant(SNAME("v_line_primary_width"), EditorStringName(AnimationTimelineEdit));
+			const int v_line_secondary_width = get_theme_constant(SNAME("v_line_secondary_width"), EditorStringName(AnimationTimelineEdit));
+			const int text_primary_margin = get_theme_constant(SNAME("text_primary_margin"), EditorStringName(AnimationTimelineEdit));
+			const int text_secondary_margin = get_theme_constant(SNAME("text_secondary_margin"), EditorStringName(AnimationTimelineEdit));
 
 			int zoomw = key_range;
 			float scale = get_zoom_scale();

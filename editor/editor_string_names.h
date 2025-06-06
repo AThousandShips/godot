@@ -65,6 +65,7 @@ public:
 	const StringName Edit = StringName("Edit");
 	const StringName Search = StringName("Search");
 	const StringName ActionCopy = StringName("ActionCopy");
+	const StringName AnimationTimelineEdit = StringName("AnimationTimelineEdit");
 };
 
 #define EditorStringName(m_name) EditorStringNames::get_singleton()->m_name

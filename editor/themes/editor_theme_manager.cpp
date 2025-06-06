@@ -2407,21 +2407,21 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 		Ref<StyleBoxFlat> style_time_unavailable = make_flat_stylebox(p_config.dark_color_2, 0, 0, 0, 0, 0);
 		Ref<StyleBoxFlat> style_time_available = make_flat_stylebox(p_config.font_color * Color(1, 1, 1, 0.2), 0, 0, 0, 0, 0);
 
-		p_theme->set_stylebox("time_unavailable", "AnimationTimelineEdit", style_time_unavailable);
-		p_theme->set_stylebox("time_available", "AnimationTimelineEdit", style_time_available);
+		p_theme->set_stylebox("time_unavailable", EditorStringName(AnimationTimelineEdit), style_time_unavailable);
+		p_theme->set_stylebox("time_available", EditorStringName(AnimationTimelineEdit), style_time_available);
 
-		p_theme->set_color("v_line_primary_color", "AnimationTimelineEdit", p_config.font_color * Color(1, 1, 1, 0.2));
-		p_theme->set_color("v_line_secondary_color", "AnimationTimelineEdit", p_config.font_color * Color(1, 1, 1, 0.2));
-		p_theme->set_color("h_line_color", "AnimationTimelineEdit", p_config.font_color * Color(1, 1, 1, 0.2));
-		p_theme->set_color("font_primary_color", "AnimationTimelineEdit", p_config.font_color);
-		p_theme->set_color("font_secondary_color", "AnimationTimelineEdit", p_config.font_color * Color(1, 1, 1, 0.5));
+		p_theme->set_color("v_line_primary_color", EditorStringName(AnimationTimelineEdit), p_config.font_color * Color(1, 1, 1, 0.2));
+		p_theme->set_color("v_line_secondary_color", EditorStringName(AnimationTimelineEdit), p_config.font_color * Color(1, 1, 1, 0.2));
+		p_theme->set_color("h_line_color", EditorStringName(AnimationTimelineEdit), p_config.font_color * Color(1, 1, 1, 0.2));
+		p_theme->set_color("font_primary_color", EditorStringName(AnimationTimelineEdit), p_config.font_color);
+		p_theme->set_color("font_secondary_color", EditorStringName(AnimationTimelineEdit), p_config.font_color * Color(1, 1, 1, 0.5));
 
-		p_theme->set_constant("v_line_primary_margin", "AnimationTimelineEdit", 0);
-		p_theme->set_constant("v_line_secondary_margin", "AnimationTimelineEdit", 0);
-		p_theme->set_constant("v_line_primary_width", "AnimationTimelineEdit", 1 * EDSCALE);
-		p_theme->set_constant("v_line_secondary_width", "AnimationTimelineEdit", 1 * EDSCALE);
-		p_theme->set_constant("text_primary_margin", "AnimationTimelineEdit", 3 * EDSCALE);
-		p_theme->set_constant("text_secondary_margin", "AnimationTimelineEdit", 3 * EDSCALE);
+		p_theme->set_constant("v_line_primary_margin", EditorStringName(AnimationTimelineEdit), 0);
+		p_theme->set_constant("v_line_secondary_margin", EditorStringName(AnimationTimelineEdit), 0);
+		p_theme->set_constant("v_line_primary_width", EditorStringName(AnimationTimelineEdit), 1 * EDSCALE);
+		p_theme->set_constant("v_line_secondary_width", EditorStringName(AnimationTimelineEdit), 1 * EDSCALE);
+		p_theme->set_constant("text_primary_margin", EditorStringName(AnimationTimelineEdit), 3 * EDSCALE);
+		p_theme->set_constant("text_secondary_margin", EditorStringName(AnimationTimelineEdit), 3 * EDSCALE);
 
 		// AnimationTrackEdit.
 
