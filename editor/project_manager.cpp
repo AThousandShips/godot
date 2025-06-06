@@ -245,7 +245,7 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 			project_list_panel->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SNAME("project_list"), SNAME("ProjectManager")));
 
 			empty_list_create_project->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
-			empty_list_import_project->set_button_icon(get_editor_theme_icon(SNAME("Load")));
+			empty_list_import_project->set_button_icon(get_editor_theme_icon(EditorStringName(Load)));
 			empty_list_open_assetlib->set_button_icon(get_editor_theme_icon(SNAME("AssetLib")));
 
 			empty_list_online_warning->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("italic"), EditorStringName(EditorFonts)));
@@ -257,7 +257,7 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 
 			// Sidebar.
 			create_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
-			import_btn->set_button_icon(get_editor_theme_icon(SNAME("Load")));
+			import_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Load)));
 			scan_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Search)));
 			open_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 			open_options_btn->set_button_icon(get_editor_theme_icon(SNAME("Collapse")));

@@ -464,7 +464,7 @@ void InspectorDock::_notification(int p_what) {
 		case NOTIFICATION_THEME_CHANGED:
 		case NOTIFICATION_LAYOUT_DIRECTION_CHANGED: {
 			resource_new_button->set_button_icon(get_editor_theme_icon(SNAME("New")));
-			resource_load_button->set_button_icon(get_editor_theme_icon(SNAME("Load")));
+			resource_load_button->set_button_icon(get_editor_theme_icon(EditorStringName(Load)));
 			resource_save_button->set_button_icon(get_editor_theme_icon(SNAME("Save")));
 			resource_extra_button->set_button_icon(get_editor_theme_icon(SNAME("GuiTabMenuHl")));
 			open_docs_button->set_button_icon(get_editor_theme_icon(SNAME("HelpSearch")));

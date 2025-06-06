@@ -648,7 +648,7 @@ void SpriteFramesEditor::_notification(int p_what) {
 			play_bw->set_button_icon(get_editor_theme_icon(SNAME("PlayStartBackwards")));
 			play_bw_from->set_button_icon(get_editor_theme_icon(SNAME("PlayBackwards")));
 
-			load->set_button_icon(get_editor_theme_icon(SNAME("Load")));
+			load->set_button_icon(get_editor_theme_icon(EditorStringName(Load)));
 			load_sheet->set_button_icon(get_editor_theme_icon(SNAME("SpriteSheet")));
 			copy->set_button_icon(get_editor_theme_icon(EditorStringName(ActionCopy)));
 			paste->set_button_icon(get_editor_theme_icon(SNAME("ActionPaste")));

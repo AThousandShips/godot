@@ -211,7 +211,7 @@ void ResourcePreloaderEditor::_update_library() {
 		if (type == "PackedScene") {
 			ti->add_button(1, get_editor_theme_icon(SNAME("InstanceOptions")), BUTTON_OPEN_SCENE, false, TTR("Open in Editor"));
 		} else {
-			ti->add_button(1, get_editor_theme_icon(SNAME("Load")), BUTTON_EDIT_RESOURCE, false, TTR("Open in Editor"));
+			ti->add_button(1, get_editor_theme_icon(EditorStringName(Load)), BUTTON_EDIT_RESOURCE, false, TTR("Open in Editor"));
 		}
 		ti->add_button(1, get_editor_theme_icon(EditorStringName(Remove)), BUTTON_REMOVE, false, TTR("Remove"));
 	}

@@ -4088,7 +4088,7 @@ void EditorHelpBit::_update_labels() {
 		const bool is_valid = is_dir || EditorFileSystem::get_singleton()->get_valid_extensions().has(ext);
 		if (!is_dir && is_valid) {
 			content->push_meta("open-res:" + help_data.resource_path, RichTextLabel::META_UNDERLINE_ON_HOVER);
-			content->add_image(get_editor_theme_icon(SNAME("Load")));
+			content->add_image(get_editor_theme_icon(EditorStringName(Load)));
 			content->add_text(nbsp + TTR("Open"));
 			content->pop(); // meta
 			content->add_newline();

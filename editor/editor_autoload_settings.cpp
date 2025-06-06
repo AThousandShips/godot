@@ -537,7 +537,7 @@ void EditorAutoloadSettings::update_autoload() {
 		item->set_editable(2, true);
 		item->set_text(2, TTRC("Enable"));
 		item->set_checked(2, info.is_singleton);
-		item->add_button(3, get_editor_theme_icon(SNAME("Load")), BUTTON_OPEN);
+		item->add_button(3, get_editor_theme_icon(EditorStringName(Load)), BUTTON_OPEN);
 		item->add_button(3, get_editor_theme_icon(SNAME("MoveUp")), BUTTON_MOVE_UP);
 		item->add_button(3, get_editor_theme_icon(SNAME("MoveDown")), BUTTON_MOVE_DOWN);
 		item->add_button(3, get_editor_theme_icon(EditorStringName(Remove)), BUTTON_DELETE);
