@@ -63,6 +63,7 @@ public:
 	const StringName queue_redraw = StringName("queue_redraw");
 	const StringName update_tree = StringName("update_tree");
 	const StringName set_polygon = StringName("set_polygon");
+	const StringName set_owner = StringName("set_owner");
 };
 
 #define EditorStringName(m_name) EditorStringNames::get_singleton()->m_name

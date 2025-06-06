@@ -346,7 +346,7 @@ void SceneTreeDock::_perform_instantiate_scenes(const Vector<String> &p_files, N
 		if (p_pos >= 0) {
 			undo_redo->add_do_method(p_parent, "move_child", instantiated_scene, p_pos + i);
 		}
-		undo_redo->add_do_method(instantiated_scene, "set_owner", edited_scene);
+		undo_redo->add_do_method(instantiated_scene, EditorStringName(set_owner), edited_scene);
 		undo_redo->add_do_method(editor_selection, "add_node", instantiated_scene);
 		undo_redo->add_do_reference(instantiated_scene);
 		undo_redo->add_undo_method(p_parent, "remove_child", instantiated_scene);
@@ -419,7 +419,7 @@ void SceneTreeDock::_perform_create_audio_stream_players(const Vector<String> &p
 		if (p_pos >= 0) {
 			undo_redo->add_do_method(p_parent, "move_child", node, p_pos + i);
 		}
-		undo_redo->add_do_method(node, "set_owner", edited_scene);
+		undo_redo->add_do_method(node, EditorStringName(set_owner), edited_scene);
 		undo_redo->add_do_method(editor_selection, "add_node", node);
 		undo_redo->add_do_reference(node);
 		undo_redo->add_undo_method(p_parent, "remove_child", node);
@@ -487,7 +487,7 @@ void SceneTreeDock::_replace_with_branch_scene(const String &p_file, Node *base)
 	for (Node *F : owned) {
 		owners.push_back(F);
 	}
-	undo_redo->add_do_method(instantiated_scene, "set_owner", edited_scene);
+	undo_redo->add_do_method(instantiated_scene, EditorStringName(set_owner), edited_scene);
 	undo_redo->add_undo_method(this, "_set_owners", edited_scene, owners);
 
 	undo_redo->add_do_method(editor_selection, "clear");
@@ -940,10 +940,10 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 						continue;
 					}
 					Node *d = duplimap[F];
-					undo_redo->add_do_method(d, "set_owner", edited_scene);
+					undo_redo->add_do_method(d, EditorStringName(set_owner), edited_scene);
 				}
 				undo_redo->add_do_method(editor_selection, "add_node", dup);
-				undo_redo->add_do_method(dup, "set_owner", edited_scene);
+				undo_redo->add_do_method(dup, EditorStringName(set_owner), edited_scene);
 				undo_redo->add_undo_method(parent, "remove_child", dup);
 				undo_redo->add_do_reference(dup);
 
@@ -1034,8 +1034,8 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			undo_redo->add_do_method(node, "add_child", root, true);
 			undo_redo->add_do_method(node, "set_scene_file_path", root->get_scene_file_path());
 			undo_redo->add_do_method(root, "set_scene_file_path", String());
-			undo_redo->add_do_method(node, "set_owner", (Object *)nullptr);
-			undo_redo->add_do_method(root, "set_owner", node);
+			undo_redo->add_do_method(node, EditorStringName(set_owner), (Object *)nullptr);
+			undo_redo->add_do_method(root, EditorStringName(set_owner), node);
 			undo_redo->add_do_method(node, "set_unique_name_in_owner", false);
 			_node_replace_owner(root, root, node, MODE_DO);
 
@@ -1045,8 +1045,8 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			undo_redo->add_undo_method(EditorNode::get_singleton(), "set_edited_scene", root);
 			undo_redo->add_undo_method(node->get_parent(), "add_child", node, true);
 			undo_redo->add_undo_method(node->get_parent(), "move_child", node, node->get_index(false));
-			undo_redo->add_undo_method(root, "set_owner", (Object *)nullptr);
-			undo_redo->add_undo_method(node, "set_owner", root);
+			undo_redo->add_undo_method(root, EditorStringName(set_owner), (Object *)nullptr);
+			undo_redo->add_undo_method(node, EditorStringName(set_owner), root);
 			undo_redo->add_undo_method(node, "set_unique_name_in_owner", node->is_unique_name_in_owner());
 			_node_replace_owner(root, root, root, MODE_UNDO);
 
@@ -1799,8 +1799,8 @@ void SceneTreeDock::_node_replace_owner(Node *p_base, Node *p_node, Node *p_root
 					// Will create a unique name conflict. Disable before setting owner.
 					undo_redo->add_do_method(p_node, "set_unique_name_in_owner", false);
 				}
-				undo_redo->add_do_method(p_node, "set_owner", p_root);
-				undo_redo->add_undo_method(p_node, "set_owner", p_base);
+				undo_redo->add_do_method(p_node, EditorStringName(set_owner), p_root);
+				undo_redo->add_undo_method(p_node, EditorStringName(set_owner), p_base);
 				if (disable_unique) {
 					// Will create a unique name conflict. Enable after setting owner.
 					undo_redo->add_undo_method(p_node, "set_unique_name_in_owner", true);
@@ -1808,11 +1808,11 @@ void SceneTreeDock::_node_replace_owner(Node *p_base, Node *p_node, Node *p_root
 
 			} break;
 			case MODE_DO: {
-				undo_redo->add_do_method(p_node, "set_owner", p_root);
+				undo_redo->add_do_method(p_node, EditorStringName(set_owner), p_root);
 
 			} break;
 			case MODE_UNDO: {
-				undo_redo->add_undo_method(p_node, "set_owner", p_root);
+				undo_redo->add_undo_method(p_node, EditorStringName(set_owner), p_root);
 
 			} break;
 		}
@@ -2787,7 +2787,7 @@ void SceneTreeDock::_delete_confirm(bool p_cut) {
 	if (entire_scene) {
 		undo_redo->add_do_method(EditorNode::get_singleton(), "set_edited_scene", (Object *)nullptr);
 		undo_redo->add_undo_method(EditorNode::get_singleton(), "set_edited_scene", edited_scene);
-		undo_redo->add_undo_method(edited_scene, "set_owner", edited_scene->get_owner());
+		undo_redo->add_undo_method(edited_scene, EditorStringName(set_owner), edited_scene->get_owner());
 		undo_redo->add_undo_method(scene_tree, EditorStringName(update_tree));
 		undo_redo->add_undo_reference(edited_scene);
 	} else {
@@ -2927,7 +2927,7 @@ Node *SceneTreeDock::_do_create(Node *p_parent) {
 
 	if (edited_scene) {
 		undo_redo->add_do_method(p_parent, "add_child", child, true);
-		undo_redo->add_do_method(child, "set_owner", edited_scene);
+		undo_redo->add_do_method(child, EditorStringName(set_owner), edited_scene);
 		undo_redo->add_do_reference(child);
 		undo_redo->add_undo_method(p_parent, "remove_child", child);
 
@@ -3637,7 +3637,7 @@ void SceneTreeDock::_script_dropped(const String &p_file, NodePath p_to) {
 
 		undo_redo->create_action(TTR("Instantiate Script"));
 		undo_redo->add_do_method(n, "add_child", new_node, true);
-		undo_redo->add_do_method(new_node, "set_owner", edited_scene);
+		undo_redo->add_do_method(new_node, EditorStringName(set_owner), edited_scene);
 		undo_redo->add_do_method(editor_selection, "clear");
 		undo_redo->add_do_method(editor_selection, "add_node", new_node);
 		undo_redo->add_do_reference(new_node);
@@ -4302,13 +4302,13 @@ List<Node *> SceneTreeDock::paste_nodes(bool p_paste_as_sibling) {
 			// and added to the node_clipboard_edited_scene_owned list.
 			if (d != dup && E2.key->get_owner() == nullptr) {
 				if (node_clipboard_edited_scene_owned.find(const_cast<Node *>(E2.key))) {
-					ur->add_do_method(d, "set_owner", owner);
+					ur->add_do_method(d, EditorStringName(set_owner), owner);
 				}
 			}
 		}
 
 		if (dup != owner) {
-			ur->add_do_method(dup, "set_owner", edited_scene);
+			ur->add_do_method(dup, EditorStringName(set_owner), edited_scene);
 		}
 		ur->add_do_method(editor_selection, "add_node", dup);
 

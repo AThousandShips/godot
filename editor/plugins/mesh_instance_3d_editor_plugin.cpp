@@ -170,14 +170,14 @@ void MeshInstance3DEditor::_create_collision_shape() {
 			StaticBody3D *body = memnew(StaticBody3D);
 
 			ur->add_do_method(instance, "add_child", body, true);
-			ur->add_do_method(body, "set_owner", owner);
+			ur->add_do_method(body, EditorStringName(set_owner), owner);
 			ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), body);
 
 			for (Ref<Shape3D> shape : shapes) {
 				CollisionShape3D *cshape = memnew(CollisionShape3D);
 				cshape->set_shape(shape);
 				body->add_child(cshape, true);
-				ur->add_do_method(cshape, "set_owner", owner);
+				ur->add_do_method(cshape, EditorStringName(set_owner), owner);
 				ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), cshape);
 			}
 			ur->add_do_reference(body);
@@ -189,7 +189,7 @@ void MeshInstance3DEditor::_create_collision_shape() {
 				cshape->set_name("CollisionShape3D");
 				cshape->set_transform(instance->get_transform());
 				ur->add_do_method(E, "add_sibling", cshape, true);
-				ur->add_do_method(cshape, "set_owner", owner);
+				ur->add_do_method(cshape, EditorStringName(set_owner), owner);
 				ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), cshape);
 				ur->add_do_reference(cshape);
 				ur->add_undo_method(instance->get_parent(), "remove_child", cshape);
@@ -231,7 +231,7 @@ void MeshInstance3DEditor::_menu_option(int p_option) {
 
 				ur->add_do_reference(tangents);
 				ur->add_do_method(node, "add_child", tangents, true);
-				ur->add_do_method(tangents, "set_owner", owner);
+				ur->add_do_method(tangents, EditorStringName(set_owner), owner);
 
 				ur->add_undo_method(node, "remove_child", tangents);
 			}
@@ -506,7 +506,7 @@ void MeshInstance3DEditor::_create_navigation_mesh() {
 	ur->create_action(TTR("Create Navigation Mesh"));
 
 	ur->add_do_method(node, "add_child", nmi, true);
-	ur->add_do_method(nmi, "set_owner", owner);
+	ur->add_do_method(nmi, EditorStringName(set_owner), owner);
 	ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), nmi);
 
 	ur->add_do_reference(nmi);
@@ -556,7 +556,7 @@ void MeshInstance3DEditor::_create_outline_mesh() {
 	ur->create_action(TTR("Create Outline"));
 
 	ur->add_do_method(node, "add_child", mi, true);
-	ur->add_do_method(mi, "set_owner", owner);
+	ur->add_do_method(mi, EditorStringName(set_owner), owner);
 	ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), mi);
 
 	ur->add_do_reference(mi);
