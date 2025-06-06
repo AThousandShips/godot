@@ -515,7 +515,7 @@ void Skeleton3DEditor::create_physical_skeleton() {
 	ur->create_action(TTR("Create physical bones"), UndoRedo::MERGE_ALL);
 
 	PhysicalBoneSimulator3D *simulator = memnew(PhysicalBoneSimulator3D);
-	ur->add_do_method(skeleton, "add_child", simulator);
+	ur->add_do_method(skeleton, EditorStringName(add_child), simulator);
 	ur->add_do_method(simulator, EditorStringName(set_owner), owner);
 	ur->add_do_method(simulator, "set_name", "PhysicalBoneSimulator3D");
 	for (int bone_id = 0; bone_count > bone_id; ++bone_id) {
@@ -536,7 +536,7 @@ void Skeleton3DEditor::create_physical_skeleton() {
 					if (collision_shape) {
 						bones_infos.write[parent].physical_bone = physical_bone;
 
-						ur->add_do_method(simulator, "add_child", physical_bone);
+						ur->add_do_method(simulator, EditorStringName(add_child), physical_bone);
 						ur->add_do_method(physical_bone, EditorStringName(set_owner), owner);
 						ur->add_do_method(collision_shape, EditorStringName(set_owner), owner);
 						ur->add_do_property(physical_bone, "bone_name", skeleton->get_bone_name(parent));

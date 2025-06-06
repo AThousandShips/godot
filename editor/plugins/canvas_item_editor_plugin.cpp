@@ -4885,15 +4885,15 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 					continue;
 				}
 
-				undo_redo->add_do_method(n2d_parent, "add_child", new_bone);
+				undo_redo->add_do_method(n2d_parent, EditorStringName(add_child), new_bone);
 				undo_redo->add_do_method(n2d_parent, EditorStringName(remove_child), n2d);
-				undo_redo->add_do_method(new_bone, "add_child", n2d);
+				undo_redo->add_do_method(new_bone, EditorStringName(add_child), n2d);
 				undo_redo->add_do_method(n2d, "set_transform", Transform2D());
 				undo_redo->add_do_method(this, "_set_owner_for_node_and_children", new_bone, editor_root);
 				undo_redo->add_do_reference(new_bone);
 
 				undo_redo->add_undo_method(new_bone, EditorStringName(remove_child), n2d);
-				undo_redo->add_undo_method(n2d_parent, "add_child", n2d);
+				undo_redo->add_undo_method(n2d_parent, EditorStringName(add_child), n2d);
 				undo_redo->add_undo_method(n2d_parent, EditorStringName(remove_child), new_bone);
 				undo_redo->add_undo_method(n2d, "set_transform", new_bone->get_transform());
 				undo_redo->add_undo_method(this, "_set_owner_for_node_and_children", n2d, editor_root);
@@ -5976,7 +5976,7 @@ void CanvasItemEditorViewport::_create_texture_node(Node *p_parent, Node *p_chil
 	Ref<Texture2D> texture = ResourceCache::get_ref(p_path);
 
 	if (p_parent) {
-		undo_redo->add_do_method(p_parent, "add_child", p_child, true);
+		undo_redo->add_do_method(p_parent, EditorStringName(add_child), p_child, true);
 		undo_redo->add_do_method(p_child, EditorStringName(set_owner), EditorNode::get_singleton()->get_edited_scene());
 		undo_redo->add_do_reference(p_child);
 		undo_redo->add_undo_method(p_parent, EditorStringName(remove_child), p_child);
@@ -6046,7 +6046,7 @@ void CanvasItemEditorViewport::_create_audio_node(Node *p_parent, const String &
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 
 	if (p_parent) {
-		undo_redo->add_do_method(p_parent, "add_child", child, true);
+		undo_redo->add_do_method(p_parent, EditorStringName(add_child), child, true);
 		undo_redo->add_do_method(child, EditorStringName(set_owner), EditorNode::get_singleton()->get_edited_scene());
 		undo_redo->add_do_reference(child);
 		undo_redo->add_undo_method(p_parent, EditorStringName(remove_child), child);
@@ -6104,7 +6104,7 @@ bool CanvasItemEditorViewport::_create_instance(Node *p_parent, const String &p_
 
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	EditorSelection *editor_selection = EditorNode::get_singleton()->get_editor_selection();
-	undo_redo->add_do_method(p_parent, "add_child", instantiated_scene, true);
+	undo_redo->add_do_method(p_parent, EditorStringName(add_child), instantiated_scene, true);
 	undo_redo->add_do_method(instantiated_scene, EditorStringName(set_owner), edited_scene);
 	undo_redo->add_do_reference(instantiated_scene);
 	undo_redo->add_undo_method(p_parent, EditorStringName(remove_child), instantiated_scene);

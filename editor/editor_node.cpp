@@ -7291,14 +7291,14 @@ void EditorNode::_touch_actions_panel_mode_changed() {
 				touch_actions_panel->queue_free();
 			}
 			touch_actions_panel = memnew(TouchActionsPanel);
-			main_hbox->call_deferred("add_child", touch_actions_panel);
+			main_hbox->call_deferred(EditorStringName(add_child), touch_actions_panel);
 			break;
 		case 2:
 			if (touch_actions_panel != nullptr) {
 				touch_actions_panel->queue_free();
 			}
 			touch_actions_panel = memnew(TouchActionsPanel);
-			call_deferred("add_child", touch_actions_panel);
+			call_deferred(EditorStringName(add_child), touch_actions_panel);
 			break;
 		case 0:
 			if (touch_actions_panel != nullptr) {

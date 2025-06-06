@@ -4824,7 +4824,7 @@ bool Node3DEditorViewport::_create_instance(Node *p_parent, const String &p_path
 	}
 
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
-	undo_redo->add_do_method(p_parent, "add_child", instantiated_scene, true);
+	undo_redo->add_do_method(p_parent, EditorStringName(add_child), instantiated_scene, true);
 	undo_redo->add_do_method(instantiated_scene, EditorStringName(set_owner), EditorNode::get_singleton()->get_edited_scene());
 	undo_redo->add_do_reference(instantiated_scene);
 	undo_redo->add_undo_method(p_parent, EditorStringName(remove_child), instantiated_scene);
@@ -4871,7 +4871,7 @@ bool Node3DEditorViewport::_create_audio_node(Node *p_parent, const String &p_pa
 	}
 
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
-	undo_redo->add_do_method(p_parent, "add_child", audio_player, true);
+	undo_redo->add_do_method(p_parent, EditorStringName(add_child), audio_player, true);
 	undo_redo->add_do_method(audio_player, EditorStringName(set_owner), EditorNode::get_singleton()->get_edited_scene());
 	undo_redo->add_do_reference(audio_player);
 	undo_redo->add_undo_method(p_parent, EditorStringName(remove_child), audio_player);
@@ -8241,7 +8241,7 @@ void Node3DEditor::_add_sun_to_scene(bool p_already_added_environment) {
 
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	undo_redo->create_action(TTR("Add Preview Sun to Scene"));
-	undo_redo->add_do_method(base, "add_child", new_sun, true);
+	undo_redo->add_do_method(base, EditorStringName(add_child), new_sun, true);
 	// Move to the beginning of the scene tree since more "global" nodes
 	// generally look better when placed at the top.
 	undo_redo->add_do_method(base, "move_child", new_sun, 0);
@@ -8275,7 +8275,7 @@ void Node3DEditor::_add_environment_to_scene(bool p_already_added_sun) {
 
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	undo_redo->create_action(TTR("Add Preview Environment to Scene"));
-	undo_redo->add_do_method(base, "add_child", new_env, true);
+	undo_redo->add_do_method(base, EditorStringName(add_child), new_env, true);
 	// Move to the beginning of the scene tree since more "global" nodes
 	// generally look better when placed at the top.
 	undo_redo->add_do_method(base, "move_child", new_env, 0);

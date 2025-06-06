@@ -169,7 +169,7 @@ void MeshInstance3DEditor::_create_collision_shape() {
 		if (placement_option == SHAPE_PLACEMENT_STATIC_BODY_CHILD) {
 			StaticBody3D *body = memnew(StaticBody3D);
 
-			ur->add_do_method(instance, "add_child", body, true);
+			ur->add_do_method(instance, EditorStringName(add_child), body, true);
 			ur->add_do_method(body, EditorStringName(set_owner), owner);
 			ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), body);
 
@@ -230,7 +230,7 @@ void MeshInstance3DEditor::_menu_option(int p_option) {
 				Node *owner = get_tree()->get_edited_scene_root();
 
 				ur->add_do_reference(tangents);
-				ur->add_do_method(node, "add_child", tangents, true);
+				ur->add_do_method(node, EditorStringName(add_child), tangents, true);
 				ur->add_do_method(tangents, EditorStringName(set_owner), owner);
 
 				ur->add_undo_method(node, EditorStringName(remove_child), tangents);
@@ -505,7 +505,7 @@ void MeshInstance3DEditor::_create_navigation_mesh() {
 	EditorUndoRedoManager *ur = EditorUndoRedoManager::get_singleton();
 	ur->create_action(TTR("Create Navigation Mesh"));
 
-	ur->add_do_method(node, "add_child", nmi, true);
+	ur->add_do_method(node, EditorStringName(add_child), nmi, true);
 	ur->add_do_method(nmi, EditorStringName(set_owner), owner);
 	ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), nmi);
 
@@ -555,7 +555,7 @@ void MeshInstance3DEditor::_create_outline_mesh() {
 
 	ur->create_action(TTR("Create Outline"));
 
-	ur->add_do_method(node, "add_child", mi, true);
+	ur->add_do_method(node, EditorStringName(add_child), mi, true);
 	ur->add_do_method(mi, EditorStringName(set_owner), owner);
 	ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), mi);
 
