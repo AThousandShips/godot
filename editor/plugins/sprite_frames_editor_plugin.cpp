@@ -650,7 +650,7 @@ void SpriteFramesEditor::_notification(int p_what) {
 
 			load->set_button_icon(get_editor_theme_icon(SNAME("Load")));
 			load_sheet->set_button_icon(get_editor_theme_icon(SNAME("SpriteSheet")));
-			copy->set_button_icon(get_editor_theme_icon(SNAME("ActionCopy")));
+			copy->set_button_icon(get_editor_theme_icon(EditorStringName(ActionCopy)));
 			paste->set_button_icon(get_editor_theme_icon(SNAME("ActionPaste")));
 			empty_before->set_button_icon(get_editor_theme_icon(SNAME("InsertBefore")));
 			empty_after->set_button_icon(get_editor_theme_icon(SNAME("InsertAfter")));

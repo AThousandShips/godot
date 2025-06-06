@@ -3016,7 +3016,7 @@ void EditorPropertyNodePath::_notification(int p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			menu->set_button_icon(get_editor_theme_icon(SNAME("GuiTabMenuHl")));
 			menu->get_popup()->set_item_icon(ACTION_CLEAR, get_editor_theme_icon(SNAME("Clear")));
-			menu->get_popup()->set_item_icon(ACTION_COPY, get_editor_theme_icon(SNAME("ActionCopy")));
+			menu->get_popup()->set_item_icon(ACTION_COPY, get_editor_theme_icon(EditorStringName(ActionCopy)));
 			menu->get_popup()->set_item_icon(ACTION_EDIT, get_editor_theme_icon(EditorStringName(Edit)));
 			menu->get_popup()->set_item_icon(ACTION_SELECT, get_editor_theme_icon(SNAME("ExternalLink")));
 		} break;

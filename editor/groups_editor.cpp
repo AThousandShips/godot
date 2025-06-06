@@ -228,7 +228,7 @@ void GroupsEditor::_update_tree() {
 		if (!scene_groups[E]) {
 			item->add_button(0, get_editor_theme_icon(SNAME("Lock")), -1, true, TTR("This group belongs to another scene and can't be edited."));
 		}
-		item->add_button(0, get_editor_theme_icon(SNAME("ActionCopy")), COPY_GROUP, false, TTR("Copy group name to clipboard."));
+		item->add_button(0, get_editor_theme_icon(EditorStringName(ActionCopy)), COPY_GROUP, false, TTR("Copy group name to clipboard."));
 	}
 
 	List<StringName> keys;
@@ -259,7 +259,7 @@ void GroupsEditor::_update_tree() {
 		if (!global_groups[E].is_empty()) {
 			item->set_tooltip_text(0, vformat("%s\n\n%s", E, global_groups[E]));
 		}
-		item->add_button(0, get_editor_theme_icon(SNAME("ActionCopy")), COPY_GROUP, false, TTR("Copy group name to clipboard."));
+		item->add_button(0, get_editor_theme_icon(EditorStringName(ActionCopy)), COPY_GROUP, false, TTR("Copy group name to clipboard."));
 	}
 
 	updating_tree = false;

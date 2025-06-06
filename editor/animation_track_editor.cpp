@@ -3191,7 +3191,7 @@ void AnimationTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 					menu->add_separator();
 					menu->add_icon_item(get_editor_theme_icon(SNAME("Duplicate")), TTR("Duplicate Key(s)"), MENU_KEY_DUPLICATE);
 					menu->add_icon_item(get_editor_theme_icon(SNAME("ActionCut")), TTR("Cut Key(s)"), MENU_KEY_CUT);
-					menu->add_icon_item(get_editor_theme_icon(SNAME("ActionCopy")), TTR("Copy Key(s)"), MENU_KEY_COPY);
+					menu->add_icon_item(get_editor_theme_icon(EditorStringName(ActionCopy)), TTR("Copy Key(s)"), MENU_KEY_COPY);
 				}
 				if (editor->is_key_clipboard_active()) {
 					menu->add_icon_item(get_editor_theme_icon(SNAME("ActionPaste")), TTR("Paste Key(s)"), MENU_KEY_PASTE);

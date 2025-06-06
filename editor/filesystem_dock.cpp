@@ -3366,7 +3366,7 @@ void FileSystemDock::_file_and_folders_fill_popup(PopupMenu *p_popup, const Vect
 
 	// Add the options that are only available when a single item is selected.
 	if (p_paths.size() == 1) {
-		p_popup->add_icon_shortcut(get_editor_theme_icon(SNAME("ActionCopy")), ED_GET_SHORTCUT("filesystem_dock/copy_path"), FILE_MENU_COPY_PATH);
+		p_popup->add_icon_shortcut(get_editor_theme_icon(EditorStringName(ActionCopy)), ED_GET_SHORTCUT("filesystem_dock/copy_path"), FILE_MENU_COPY_PATH);
 		p_popup->add_shortcut(ED_GET_SHORTCUT("filesystem_dock/copy_absolute_path"), FILE_MENU_COPY_ABSOLUTE_PATH);
 		if (ResourceLoader::get_resource_uid(p_paths[0]) != ResourceUID::INVALID_ID) {
 			p_popup->add_icon_shortcut(get_editor_theme_icon(SNAME("Instance")), ED_GET_SHORTCUT("filesystem_dock/copy_uid"), FILE_MENU_COPY_UID);

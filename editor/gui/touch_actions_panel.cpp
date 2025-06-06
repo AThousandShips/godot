@@ -68,7 +68,7 @@ void TouchActionsPanel::_notification(int p_what) {
 			undo_button->set_button_icon(get_editor_theme_icon(SNAME("UndoRedo")));
 			redo_button->set_button_icon(get_editor_theme_icon(SNAME("Redo")));
 			cut_button->set_button_icon(get_editor_theme_icon(SNAME("ActionCut")));
-			copy_button->set_button_icon(get_editor_theme_icon(SNAME("ActionCopy")));
+			copy_button->set_button_icon(get_editor_theme_icon(EditorStringName(ActionCopy)));
 			paste_button->set_button_icon(get_editor_theme_icon(SNAME("ActionPaste")));
 		} break;
 	}

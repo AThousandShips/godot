@@ -1448,7 +1448,7 @@ void ConnectionsDock::_notification(int p_what) {
 
 			signal_menu->set_item_icon(signal_menu->get_item_index(SIGNAL_MENU_CONNECT), get_editor_theme_icon(SNAME("Instance")));
 			signal_menu->set_item_icon(signal_menu->get_item_index(SIGNAL_MENU_DISCONNECT_ALL), get_editor_theme_icon(SNAME("Unlinked")));
-			signal_menu->set_item_icon(signal_menu->get_item_index(SIGNAL_MENU_COPY_NAME), get_editor_theme_icon(SNAME("ActionCopy")));
+			signal_menu->set_item_icon(signal_menu->get_item_index(SIGNAL_MENU_COPY_NAME), get_editor_theme_icon(EditorStringName(ActionCopy)));
 			signal_menu->set_item_icon(signal_menu->get_item_index(SIGNAL_MENU_OPEN_DOCS), get_editor_theme_icon(SNAME("Help")));
 
 			slot_menu->set_item_icon(slot_menu->get_item_index(SLOT_MENU_EDIT), get_editor_theme_icon(EditorStringName(Edit)));

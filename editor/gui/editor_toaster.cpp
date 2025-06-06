@@ -503,7 +503,7 @@ void EditorToaster::_toast_theme_changed(Control *p_control) {
 		toast.close_button->set_button_icon(get_editor_theme_icon(SNAME("Close")));
 	}
 	if (toast.copy_button) {
-		toast.copy_button->set_button_icon(get_editor_theme_icon(SNAME("ActionCopy")));
+		toast.copy_button->set_button_icon(get_editor_theme_icon(EditorStringName(ActionCopy)));
 	}
 }
 

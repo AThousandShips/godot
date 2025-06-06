@@ -110,7 +110,7 @@ void EditorLog::_update_theme() {
 	type_filter_map[MSG_TYPE_EDITOR]->toggle_button->set_theme_type_variation("EditorLogFilterButton");
 
 	clear_button->set_button_icon(get_editor_theme_icon(SNAME("Clear")));
-	copy_button->set_button_icon(get_editor_theme_icon(SNAME("ActionCopy")));
+	copy_button->set_button_icon(get_editor_theme_icon(EditorStringName(ActionCopy)));
 	collapse_button->set_button_icon(get_editor_theme_icon(SNAME("CombineLines")));
 	show_search_button->set_button_icon(get_editor_theme_icon(EditorStringName(Search)));
 	search_box->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));

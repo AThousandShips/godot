@@ -742,7 +742,7 @@ void AnimationLibraryEditor::update_tree() {
 			anitem->set_editable(0, !animation_library_is_foreign);
 			anitem->set_metadata(0, L);
 			anitem->set_icon(0, get_editor_theme_icon("Animation"));
-			anitem->add_button(0, get_editor_theme_icon("ActionCopy"), ANIM_BUTTON_COPY, animation_library_is_foreign, TTR("Copy animation to clipboard."));
+			anitem->add_button(0, get_editor_theme_icon(EditorStringName(ActionCopy)), ANIM_BUTTON_COPY, animation_library_is_foreign, TTR("Copy animation to clipboard."));
 
 			Ref<Animation> anim = al->get_animation(L);
 			String anim_path = anim->get_path();
