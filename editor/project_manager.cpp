@@ -259,7 +259,7 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 			create_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			import_btn->set_button_icon(get_editor_theme_icon(SNAME("Load")));
 			scan_btn->set_button_icon(get_editor_theme_icon(SNAME("Search")));
-			open_btn->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+			open_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 			open_options_btn->set_button_icon(get_editor_theme_icon(SNAME("Collapse")));
 			run_btn->set_button_icon(get_editor_theme_icon(SNAME("Play")));
 			rename_btn->set_button_icon(get_editor_theme_icon(SNAME("Rename")));

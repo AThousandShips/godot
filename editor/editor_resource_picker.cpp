@@ -227,7 +227,7 @@ void EditorResourcePicker::_update_menu_items() {
 			// The 'Search' icon is a magnifying glass, which seems appropriate, but maybe a bespoke icon is preferred here.
 			edit_menu->add_icon_item(get_editor_theme_icon(SNAME("Search")), TTR("Inspect"), OBJ_MENU_INSPECT);
 		} else {
-			edit_menu->add_icon_item(get_editor_theme_icon(SNAME("Edit")), TTR("Edit"), OBJ_MENU_INSPECT);
+			edit_menu->add_icon_item(get_editor_theme_icon(EditorStringName(Edit)), TTR("Edit"), OBJ_MENU_INSPECT);
 		}
 
 		if (is_editable()) {

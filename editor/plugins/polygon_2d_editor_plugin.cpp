@@ -110,14 +110,14 @@ void Polygon2DEditor::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_READY: {
-			action_buttons[ACTION_CREATE]->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+			action_buttons[ACTION_CREATE]->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 			action_buttons[ACTION_CREATE_INTERNAL]->set_button_icon(get_editor_theme_icon(SNAME("EditInternal")));
 			action_buttons[ACTION_REMOVE_INTERNAL]->set_button_icon(get_editor_theme_icon(SNAME("RemoveInternal")));
 			action_buttons[ACTION_EDIT_POINT]->set_button_icon(get_editor_theme_icon(SNAME("ToolSelect")));
 			action_buttons[ACTION_MOVE]->set_button_icon(get_editor_theme_icon(SNAME("ToolMove")));
 			action_buttons[ACTION_ROTATE]->set_button_icon(get_editor_theme_icon(SNAME("ToolRotate")));
 			action_buttons[ACTION_SCALE]->set_button_icon(get_editor_theme_icon(SNAME("ToolScale")));
-			action_buttons[ACTION_ADD_POLYGON]->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+			action_buttons[ACTION_ADD_POLYGON]->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 			action_buttons[ACTION_REMOVE_POLYGON]->set_button_icon(get_editor_theme_icon(SNAME("Close")));
 			action_buttons[ACTION_PAINT_WEIGHT]->set_button_icon(get_editor_theme_icon(SNAME("Bucket")));
 			action_buttons[ACTION_CLEAR_WEIGHT]->set_button_icon(get_editor_theme_icon(SNAME("Clear")));

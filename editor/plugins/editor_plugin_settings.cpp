@@ -129,7 +129,7 @@ void EditorPluginSettings::update_plugins() {
 				item->set_text(COLUMN_STATUS, TTRC("On"));
 				item->set_checked(COLUMN_STATUS, is_enabled);
 				item->set_editable(COLUMN_STATUS, true);
-				item->add_button(COLUMN_EDIT, get_editor_theme_icon(SNAME("Edit")), BUTTON_PLUGIN_EDIT, false, TTRC("Edit Plugin"));
+				item->add_button(COLUMN_EDIT, get_editor_theme_icon(EditorStringName(Edit)), BUTTON_PLUGIN_EDIT, false, TTRC("Edit Plugin"));
 			}
 		}
 	}

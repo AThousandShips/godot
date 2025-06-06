@@ -451,7 +451,7 @@ TreeItem *EditorSettingsDialog::_create_shortcut_treeitem(TreeItem *p_parent, co
 		event_item->set_text(1, ie->as_text());
 		event_item->set_auto_translate_mode(1, AUTO_TRANSLATE_MODE_DISABLED);
 
-		event_item->add_button(1, shortcuts->get_editor_theme_icon(SNAME("Edit")), SHORTCUT_EDIT);
+		event_item->add_button(1, shortcuts->get_editor_theme_icon(EditorStringName(Edit)), SHORTCUT_EDIT);
 		event_item->add_button(1, shortcuts->get_editor_theme_icon(SNAME("Close")), SHORTCUT_ERASE);
 
 		event_item->set_custom_bg_color(0, shortcuts->get_theme_color(SNAME("dark_color_3"), EditorStringName(Editor)));

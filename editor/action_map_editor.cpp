@@ -515,7 +515,7 @@ void ActionMapEditor::update_action_list(const Vector<ActionInfo> &p_action_info
 			}
 
 			// Third Column - Buttons
-			event_item->add_button(2, action_tree->get_editor_theme_icon(SNAME("Edit")), BUTTON_EDIT_EVENT, false, TTRC("Edit Event"), TTRC("Edit Event"));
+			event_item->add_button(2, action_tree->get_editor_theme_icon(EditorStringName(Edit)), BUTTON_EDIT_EVENT, false, TTRC("Edit Event"), TTRC("Edit Event"));
 			event_item->add_button(2, action_tree->get_editor_theme_icon(EditorStringName(Remove)), BUTTON_REMOVE_EVENT, false, TTRC("Remove Event"), TTRC("Remove Event"));
 			event_item->set_button_color(2, 0, Color(1, 1, 1, 0.75));
 			event_item->set_button_color(2, 1, Color(1, 1, 1, 0.75));

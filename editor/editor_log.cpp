@@ -102,7 +102,7 @@ void EditorLog::_update_theme() {
 	type_filter_map[MSG_TYPE_STD]->toggle_button->set_button_icon(get_editor_theme_icon(SNAME("Popup")));
 	type_filter_map[MSG_TYPE_ERROR]->toggle_button->set_button_icon(get_editor_theme_icon(SNAME("StatusError")));
 	type_filter_map[MSG_TYPE_WARNING]->toggle_button->set_button_icon(get_editor_theme_icon(SNAME("StatusWarning")));
-	type_filter_map[MSG_TYPE_EDITOR]->toggle_button->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+	type_filter_map[MSG_TYPE_EDITOR]->toggle_button->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 
 	type_filter_map[MSG_TYPE_STD]->toggle_button->set_theme_type_variation("EditorLogFilterButton");
 	type_filter_map[MSG_TYPE_ERROR]->toggle_button->set_theme_type_variation("EditorLogFilterButton");

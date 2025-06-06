@@ -580,7 +580,7 @@ void AnimationNodeBlendSpace1DEditor::_notification(int p_what) {
 			tool_create->set_button_icon(get_editor_theme_icon(SNAME("EditKey")));
 			tool_erase->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 			snap->set_button_icon(get_editor_theme_icon(SNAME("SnapGrid")));
-			open_editor->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+			open_editor->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 			interpolation->clear();
 			interpolation->add_icon_item(get_editor_theme_icon(SNAME("TrackContinuous")), TTR("Continuous"), 0);
 			interpolation->add_icon_item(get_editor_theme_icon(SNAME("TrackDiscrete")), TTR("Discrete"), 1);

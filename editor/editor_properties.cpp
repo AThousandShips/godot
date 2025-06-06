@@ -102,7 +102,7 @@ void EditorPropertyVariant::_set_read_only(bool p_read_only) {
 
 void EditorPropertyVariant::_notification(int p_what) {
 	if (p_what == NOTIFICATION_THEME_CHANGED) {
-		edit_button->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+		edit_button->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 	}
 }
 
@@ -438,7 +438,7 @@ void EditorPropertyTextEnum::setup(const Vector<String> &p_options, bool p_strin
 void EditorPropertyTextEnum::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
-			edit_button->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+			edit_button->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 			accept_button->set_button_icon(get_editor_theme_icon(SNAME("ImportCheck")));
 			cancel_button->set_button_icon(get_editor_theme_icon(SNAME("ImportFail")));
 		} break;
@@ -1361,7 +1361,7 @@ void EditorPropertyLayers::_button_pressed() {
 		layers->set_item_disabled(0, true);
 	}
 	layers->add_separator();
-	layers->add_icon_item(get_editor_theme_icon("Edit"), TTR("Edit Layer Names"), grid->layer_count);
+	layers->add_icon_item(get_editor_theme_icon(EditorStringName(Edit)), TTR("Edit Layer Names"), grid->layer_count);
 
 	Rect2 gp = button->get_screen_rect();
 	layers->reset_size();
@@ -2161,7 +2161,7 @@ void EditorPropertyQuaternion::_notification(int p_what) {
 			for (int i = 0; i < 3; i++) {
 				euler[i]->add_theme_color_override("label_color", colors[i]);
 			}
-			edit_button->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+			edit_button->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 			euler_label->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("property_color"), SNAME("EditorProperty")));
 			warning->set_button_icon(get_editor_theme_icon(SNAME("NodeWarning")));
 			warning->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));
@@ -3017,7 +3017,7 @@ void EditorPropertyNodePath::_notification(int p_what) {
 			menu->set_button_icon(get_editor_theme_icon(SNAME("GuiTabMenuHl")));
 			menu->get_popup()->set_item_icon(ACTION_CLEAR, get_editor_theme_icon(SNAME("Clear")));
 			menu->get_popup()->set_item_icon(ACTION_COPY, get_editor_theme_icon(SNAME("ActionCopy")));
-			menu->get_popup()->set_item_icon(ACTION_EDIT, get_editor_theme_icon(SNAME("Edit")));
+			menu->get_popup()->set_item_icon(ACTION_EDIT, get_editor_theme_icon(EditorStringName(Edit)));
 			menu->get_popup()->set_item_icon(ACTION_SELECT, get_editor_theme_icon(SNAME("ExternalLink")));
 		} break;
 

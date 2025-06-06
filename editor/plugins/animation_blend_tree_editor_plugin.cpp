@@ -229,7 +229,7 @@ void AnimationNodeBlendTreeEditor::update_graph() {
 			node->add_child(memnew(HSeparator));
 			Button *open_in_editor = memnew(Button);
 			open_in_editor->set_text(TTR("Open Editor"));
-			open_in_editor->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+			open_in_editor->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 			node->add_child(open_in_editor);
 			open_in_editor->connect(SceneStringName(pressed), callable_mp(this, &AnimationNodeBlendTreeEditor::_open_in_editor).bind(E), CONNECT_DEFERRED);
 			open_in_editor->set_h_size_flags(SIZE_SHRINK_CENTER);
@@ -1385,7 +1385,7 @@ void AnimationNodeAnimationEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			button->set_theme_type_variation(SNAME("InspectorActionButton"));
-			button->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+			button->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 		} break;
 	}
 }

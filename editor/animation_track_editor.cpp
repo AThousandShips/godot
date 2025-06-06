@@ -8828,7 +8828,7 @@ void AnimationMarkerEdit::gui_input(const Ref<InputEvent> &p_event) {
 				menu->add_icon_item(get_editor_theme_icon(SNAME("Key")), TTR("Insert Marker..."), MENU_KEY_INSERT);
 
 				if (selected || selection.size() > 0) {
-					menu->add_icon_item(get_editor_theme_icon(SNAME("Edit")), TTR("Rename Marker"), MENU_KEY_RENAME);
+					menu->add_icon_item(get_editor_theme_icon(EditorStringName(Edit)), TTR("Rename Marker"), MENU_KEY_RENAME);
 					menu->add_icon_item(get_editor_theme_icon(EditorStringName(Remove)), TTR("Delete Marker(s)"), MENU_KEY_DELETE);
 				}
 

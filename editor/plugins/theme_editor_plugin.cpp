@@ -1411,7 +1411,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 			for (const StringName &E : names) {
 				TreeItem *item = edit_items_tree->create_item(color_root);
 				item->set_text(0, E);
-				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Edit)), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
 				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
@@ -1434,7 +1434,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 			for (const StringName &E : names) {
 				TreeItem *item = edit_items_tree->create_item(constant_root);
 				item->set_text(0, E);
-				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Edit)), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
 				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
@@ -1457,7 +1457,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 			for (const StringName &E : names) {
 				TreeItem *item = edit_items_tree->create_item(font_root);
 				item->set_text(0, E);
-				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Edit)), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
 				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
@@ -1480,7 +1480,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 			for (const StringName &E : names) {
 				TreeItem *item = edit_items_tree->create_item(font_size_root);
 				item->set_text(0, E);
-				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Edit)), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
 				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
@@ -1503,7 +1503,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 			for (const StringName &E : names) {
 				TreeItem *item = edit_items_tree->create_item(icon_root);
 				item->set_text(0, E);
-				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Edit)), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
 				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
@@ -1526,7 +1526,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 			for (const StringName &E : names) {
 				TreeItem *item = edit_items_tree->create_item(stylebox_root);
 				item->set_text(0, E);
-				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Edit)), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
 				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
@@ -2554,7 +2554,7 @@ HBoxContainer *ThemeTypeEditor::_create_property_control(Theme::DataType p_data_
 		item_name_edit->hide();
 
 		Button *item_rename_button = memnew(Button);
-		item_rename_button->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+		item_rename_button->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 		item_rename_button->set_tooltip_text(TTR("Rename Item"));
 		item_rename_button->set_accessibility_name(TTRC("Rename Item"));
 		item_rename_button->set_flat(true);

@@ -36,7 +36,7 @@
 void InputEventConfigContainer::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
-			open_config_button->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+			open_config_button->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 		} break;
 	}
 }

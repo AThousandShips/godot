@@ -323,7 +323,7 @@ void EditorPropertyArray::_create_new_property_slot() {
 	if (is_untyped_array) {
 		Button *edit_btn = memnew(Button);
 		edit_btn->set_accessibility_name(TTRC("Edit"));
-		edit_btn->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+		edit_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 		edit_btn->set_disabled(is_read_only());
 		edit_btn->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyArray::_change_type).bind(edit_btn, idx));
 		hbox->add_child(edit_btn);
@@ -1070,7 +1070,7 @@ void EditorPropertyDictionary::_create_new_property_slot(int p_idx) {
 	if (is_untyped_dict) {
 		Button *edit_btn = memnew(Button);
 		edit_btn->set_accessibility_name(TTRC("Edit"));
-		edit_btn->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
+		edit_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 		edit_btn->set_disabled(is_read_only());
 		edit_btn->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyDictionary::_change_type).bind(edit_btn, slots.size()));
 		hbox->add_child(edit_btn);
