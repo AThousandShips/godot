@@ -550,13 +550,13 @@ void Skeleton3DEditor::create_physical_skeleton() {
 						ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), collision_shape);
 
 						ur->add_do_reference(physical_bone);
-						ur->add_undo_method(simulator, "remove_child", physical_bone);
+						ur->add_undo_method(simulator, EditorStringName(remove_child), physical_bone);
 					}
 				}
 			}
 		}
 	}
-	ur->add_undo_method(skeleton, "remove_child", simulator);
+	ur->add_undo_method(skeleton, EditorStringName(remove_child), simulator);
 	ur->commit_action();
 }
 

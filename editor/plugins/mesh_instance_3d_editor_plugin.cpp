@@ -181,7 +181,7 @@ void MeshInstance3DEditor::_create_collision_shape() {
 				ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), cshape);
 			}
 			ur->add_do_reference(body);
-			ur->add_undo_method(instance, "remove_child", body);
+			ur->add_undo_method(instance, EditorStringName(remove_child), body);
 		} else {
 			for (Ref<Shape3D> shape : shapes) {
 				CollisionShape3D *cshape = memnew(CollisionShape3D);
@@ -192,7 +192,7 @@ void MeshInstance3DEditor::_create_collision_shape() {
 				ur->add_do_method(cshape, EditorStringName(set_owner), owner);
 				ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), cshape);
 				ur->add_do_reference(cshape);
-				ur->add_undo_method(instance->get_parent(), "remove_child", cshape);
+				ur->add_undo_method(instance->get_parent(), EditorStringName(remove_child), cshape);
 			}
 		}
 	}
@@ -233,7 +233,7 @@ void MeshInstance3DEditor::_menu_option(int p_option) {
 				ur->add_do_method(node, "add_child", tangents, true);
 				ur->add_do_method(tangents, EditorStringName(set_owner), owner);
 
-				ur->add_undo_method(node, "remove_child", tangents);
+				ur->add_undo_method(node, EditorStringName(remove_child), tangents);
 			}
 
 			ur->commit_action();
@@ -510,7 +510,7 @@ void MeshInstance3DEditor::_create_navigation_mesh() {
 	ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), nmi);
 
 	ur->add_do_reference(nmi);
-	ur->add_undo_method(node, "remove_child", nmi);
+	ur->add_undo_method(node, EditorStringName(remove_child), nmi);
 	ur->commit_action();
 }
 
@@ -560,7 +560,7 @@ void MeshInstance3DEditor::_create_outline_mesh() {
 	ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), mi);
 
 	ur->add_do_reference(mi);
-	ur->add_undo_method(node, "remove_child", mi);
+	ur->add_undo_method(node, EditorStringName(remove_child), mi);
 	ur->commit_action();
 }
 

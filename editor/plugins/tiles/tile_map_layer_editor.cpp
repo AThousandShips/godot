@@ -3941,7 +3941,7 @@ void TileMapLayerEditor::_advanced_menu_button_id_pressed(int p_id) {
 			undo_redo->add_do_method(tile_map, "add_child", new_layer);
 			undo_redo->add_do_method(new_layer, EditorStringName(set_owner), edited_scene_root);
 			undo_redo->add_do_property(new_layer, "tile_set", tile_map->get_tileset()); // Workaround for a bug: #89947.
-			undo_redo->add_undo_method(tile_map, "remove_child", new_layer);
+			undo_redo->add_undo_method(tile_map, EditorStringName(remove_child), new_layer);
 			undo_redo->add_do_reference(new_layer);
 		}
 

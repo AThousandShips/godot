@@ -4827,7 +4827,7 @@ bool Node3DEditorViewport::_create_instance(Node *p_parent, const String &p_path
 	undo_redo->add_do_method(p_parent, "add_child", instantiated_scene, true);
 	undo_redo->add_do_method(instantiated_scene, EditorStringName(set_owner), EditorNode::get_singleton()->get_edited_scene());
 	undo_redo->add_do_reference(instantiated_scene);
-	undo_redo->add_undo_method(p_parent, "remove_child", instantiated_scene);
+	undo_redo->add_undo_method(p_parent, EditorStringName(remove_child), instantiated_scene);
 	undo_redo->add_do_method(editor_selection, "add_node", instantiated_scene);
 
 	String new_name = p_parent->validate_child_name(instantiated_scene);
@@ -4874,7 +4874,7 @@ bool Node3DEditorViewport::_create_audio_node(Node *p_parent, const String &p_pa
 	undo_redo->add_do_method(p_parent, "add_child", audio_player, true);
 	undo_redo->add_do_method(audio_player, EditorStringName(set_owner), EditorNode::get_singleton()->get_edited_scene());
 	undo_redo->add_do_reference(audio_player);
-	undo_redo->add_undo_method(p_parent, "remove_child", audio_player);
+	undo_redo->add_undo_method(p_parent, EditorStringName(remove_child), audio_player);
 	undo_redo->add_do_method(editor_selection, "add_node", audio_player);
 
 	const String new_name = p_parent->validate_child_name(audio_player);
@@ -8246,7 +8246,7 @@ void Node3DEditor::_add_sun_to_scene(bool p_already_added_environment) {
 	// generally look better when placed at the top.
 	undo_redo->add_do_method(base, "move_child", new_sun, 0);
 	undo_redo->add_do_method(new_sun, EditorStringName(set_owner), base);
-	undo_redo->add_undo_method(base, "remove_child", new_sun);
+	undo_redo->add_undo_method(base, EditorStringName(remove_child), new_sun);
 	undo_redo->add_do_reference(new_sun);
 	undo_redo->commit_action();
 }
@@ -8280,7 +8280,7 @@ void Node3DEditor::_add_environment_to_scene(bool p_already_added_sun) {
 	// generally look better when placed at the top.
 	undo_redo->add_do_method(base, "move_child", new_env, 0);
 	undo_redo->add_do_method(new_env, EditorStringName(set_owner), base);
-	undo_redo->add_undo_method(base, "remove_child", new_env);
+	undo_redo->add_undo_method(base, EditorStringName(remove_child), new_env);
 	undo_redo->add_do_reference(new_env);
 	undo_redo->commit_action();
 }
