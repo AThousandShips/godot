@@ -132,7 +132,7 @@ void SceneTreeEditor::_cell_button_pressed(Object *p_item, int p_column, int p_i
 	} else if (p_id == BUTTON_LOCK) {
 		undo_redo->create_action(TTR("Unlock Node"));
 		undo_redo->add_do_method(n, "remove_meta", "_edit_lock_");
-		undo_redo->add_undo_method(n, "set_meta", "_edit_lock_", true);
+		undo_redo->add_undo_method(n, EditorStringName(set_meta), "_edit_lock_", true);
 		undo_redo->add_do_method(this, "_update_tree");
 		undo_redo->add_undo_method(this, "_update_tree");
 		undo_redo->add_do_method(this, "emit_signal", "node_changed");
@@ -149,7 +149,7 @@ void SceneTreeEditor::_cell_button_pressed(Object *p_item, int p_column, int p_i
 
 		if (n->is_class("CanvasItem") || n->is_class("Node3D")) {
 			undo_redo->add_do_method(n, "remove_meta", "_edit_group_");
-			undo_redo->add_undo_method(n, "set_meta", "_edit_group_", true);
+			undo_redo->add_undo_method(n, EditorStringName(set_meta), "_edit_group_", true);
 			undo_redo->add_do_method(this, "_update_tree");
 			undo_redo->add_undo_method(this, "_update_tree");
 			undo_redo->add_do_method(this, "emit_signal", "node_changed");

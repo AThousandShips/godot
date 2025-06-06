@@ -4968,7 +4968,7 @@ void EditorInspector::_property_deleted(const String &p_path) {
 		EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 		undo_redo->create_action(vformat(TTR("Remove metadata %s"), name));
 		undo_redo->add_do_method(object, "remove_meta", name);
-		undo_redo->add_undo_method(object, "set_meta", name, object->get_meta(name));
+		undo_redo->add_undo_method(object, EditorStringName(set_meta), name, object->get_meta(name));
 		undo_redo->commit_action();
 	}
 
@@ -5459,7 +5459,7 @@ void EditorInspector::_add_meta_confirm() {
 	String name = add_meta_dialog->get_meta_name();
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	undo_redo->create_action(vformat(TTR("Add metadata %s"), name));
-	undo_redo->add_do_method(object, "set_meta", name, add_meta_dialog->get_meta_defval());
+	undo_redo->add_do_method(object, EditorStringName(set_meta), name, add_meta_dialog->get_meta_defval());
 	undo_redo->add_undo_method(object, "remove_meta", name);
 	undo_redo->commit_action();
 }

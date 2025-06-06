@@ -1221,18 +1221,18 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 						if (dragged_guide_index >= 0) {
 							vguides[dragged_guide_index] = edited.x;
 							undo_redo->create_action(TTR("Move Vertical Guide"));
-							undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", vguides);
-							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", prev_vguides);
+							undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_vertical_guides_", vguides);
+							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_vertical_guides_", prev_vguides);
 							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
 						} else {
 							vguides.push_back(edited.x);
 							undo_redo->create_action(TTR("Create Vertical Guide"));
-							undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", vguides);
+							undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_vertical_guides_", vguides);
 							if (prev_vguides.is_empty()) {
 								undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "remove_meta", "_edit_vertical_guides_");
 							} else {
-								undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", prev_vguides);
+								undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_vertical_guides_", prev_vguides);
 							}
 							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
@@ -1244,9 +1244,9 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 							if (vguides.is_empty()) {
 								undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "remove_meta", "_edit_vertical_guides_");
 							} else {
-								undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", vguides);
+								undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_vertical_guides_", vguides);
 							}
-							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", prev_vguides);
+							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_vertical_guides_", prev_vguides);
 							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
 						}
@@ -1258,18 +1258,18 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 						if (dragged_guide_index >= 0) {
 							hguides[dragged_guide_index] = edited.y;
 							undo_redo->create_action(TTR("Move Horizontal Guide"));
-							undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", hguides);
-							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", prev_hguides);
+							undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_horizontal_guides_", hguides);
+							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_horizontal_guides_", prev_hguides);
 							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
 						} else {
 							hguides.push_back(edited.y);
 							undo_redo->create_action(TTR("Create Horizontal Guide"));
-							undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", hguides);
+							undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_horizontal_guides_", hguides);
 							if (prev_hguides.is_empty()) {
 								undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "remove_meta", "_edit_horizontal_guides_");
 							} else {
-								undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", prev_hguides);
+								undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_horizontal_guides_", prev_hguides);
 							}
 							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
@@ -1281,9 +1281,9 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 							if (hguides.is_empty()) {
 								undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "remove_meta", "_edit_horizontal_guides_");
 							} else {
-								undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", hguides);
+								undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_horizontal_guides_", hguides);
 							}
-							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", prev_hguides);
+							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_horizontal_guides_", prev_hguides);
 							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
 						}
@@ -1296,17 +1296,17 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 						vguides.push_back(edited.x);
 						hguides.push_back(edited.y);
 						undo_redo->create_action(TTR("Create Horizontal and Vertical Guides"));
-						undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", vguides);
-						undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", hguides);
+						undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_vertical_guides_", vguides);
+						undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_horizontal_guides_", hguides);
 						if (prev_vguides.is_empty()) {
 							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "remove_meta", "_edit_vertical_guides_");
 						} else {
-							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", prev_vguides);
+							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_vertical_guides_", prev_vguides);
 						}
 						if (prev_hguides.is_empty()) {
 							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "remove_meta", "_edit_horizontal_guides_");
 						} else {
-							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", prev_hguides);
+							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), EditorStringName(set_meta), "_edit_horizontal_guides_", prev_hguides);
 						}
 						undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 						undo_redo->commit_action();
@@ -4666,7 +4666,7 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 					continue;
 				}
 
-				undo_redo->add_do_method(ci, "set_meta", "_edit_lock_", true);
+				undo_redo->add_do_method(ci, EditorStringName(set_meta), "_edit_lock_", true);
 				undo_redo->add_undo_method(ci, "remove_meta", "_edit_lock_");
 				undo_redo->add_do_method(this, "emit_signal", "item_lock_status_changed");
 				undo_redo->add_undo_method(this, "emit_signal", "item_lock_status_changed");
@@ -4686,7 +4686,7 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 				}
 
 				undo_redo->add_do_method(ci, "remove_meta", "_edit_lock_");
-				undo_redo->add_undo_method(ci, "set_meta", "_edit_lock_", true);
+				undo_redo->add_undo_method(ci, EditorStringName(set_meta), "_edit_lock_", true);
 				undo_redo->add_do_method(this, "emit_signal", "item_lock_status_changed");
 				undo_redo->add_undo_method(this, "emit_signal", "item_lock_status_changed");
 			}
@@ -4704,7 +4704,7 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 					continue;
 				}
 
-				undo_redo->add_do_method(ci, "set_meta", "_edit_group_", true);
+				undo_redo->add_do_method(ci, EditorStringName(set_meta), "_edit_group_", true);
 				undo_redo->add_undo_method(ci, "remove_meta", "_edit_group_");
 				undo_redo->add_do_method(this, "emit_signal", "item_group_status_changed");
 				undo_redo->add_undo_method(this, "emit_signal", "item_group_status_changed");
@@ -4724,7 +4724,7 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 				}
 
 				undo_redo->add_do_method(ci, "remove_meta", "_edit_group_");
-				undo_redo->add_undo_method(ci, "set_meta", "_edit_group_", true);
+				undo_redo->add_undo_method(ci, EditorStringName(set_meta), "_edit_group_", true);
 				undo_redo->add_do_method(this, "emit_signal", "item_group_status_changed");
 				undo_redo->add_undo_method(this, "emit_signal", "item_group_status_changed");
 			}
@@ -4833,13 +4833,13 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 					Array hguides = root->get_meta("_edit_horizontal_guides_");
 
 					undo_redo->add_do_method(root, "remove_meta", "_edit_horizontal_guides_");
-					undo_redo->add_undo_method(root, "set_meta", "_edit_horizontal_guides_", hguides);
+					undo_redo->add_undo_method(root, EditorStringName(set_meta), "_edit_horizontal_guides_", hguides);
 				}
 				if (root->has_meta("_edit_vertical_guides_")) {
 					Array vguides = root->get_meta("_edit_vertical_guides_");
 
 					undo_redo->add_do_method(root, "remove_meta", "_edit_vertical_guides_");
-					undo_redo->add_undo_method(root, "set_meta", "_edit_vertical_guides_", vguides);
+					undo_redo->add_undo_method(root, EditorStringName(set_meta), "_edit_vertical_guides_", vguides);
 				}
 				undo_redo->add_do_method(viewport, EditorStringName(queue_redraw));
 				undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));

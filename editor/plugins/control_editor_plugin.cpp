@@ -806,12 +806,12 @@ void ControlEditorToolbar::_anchors_to_current_ratio() {
 			undo_redo->add_do_method(control, "set_anchor", SIDE_RIGHT, bottom_right_anchor.x, false, true);
 			undo_redo->add_do_method(control, "set_anchor", SIDE_TOP, top_left_anchor.y, false, true);
 			undo_redo->add_do_method(control, "set_anchor", SIDE_BOTTOM, bottom_right_anchor.y, false, true);
-			undo_redo->add_do_method(control, "set_meta", "_edit_use_anchors_", true);
+			undo_redo->add_do_method(control, EditorStringName(set_meta), "_edit_use_anchors_", true);
 
 			const bool use_anchors = control->get_meta("_edit_use_anchors_", false);
 			undo_redo->add_undo_method(control, "_edit_set_state", control->_edit_get_state());
 			if (use_anchors) {
-				undo_redo->add_undo_method(control, "set_meta", "_edit_use_anchors_", true);
+				undo_redo->add_undo_method(control, EditorStringName(set_meta), "_edit_use_anchors_", true);
 			} else {
 				undo_redo->add_undo_method(control, "remove_meta", "_edit_use_anchors_");
 			}
