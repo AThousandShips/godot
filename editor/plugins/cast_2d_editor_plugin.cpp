@@ -90,9 +90,9 @@ bool Cast2DEditor::forward_canvas_gui_input(const Ref<InputEvent> &p_event) {
 				EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 				undo_redo->create_action(TTR("Set Target Position"));
 				undo_redo->add_do_property(node, "target_position", target_position);
-				undo_redo->add_do_method(canvas_item_editor, "update_viewport");
+				undo_redo->add_do_method(canvas_item_editor, EditorStringName(update_viewport));
 				undo_redo->add_undo_property(node, "target_position", original_target_position);
-				undo_redo->add_undo_method(canvas_item_editor, "update_viewport");
+				undo_redo->add_undo_method(canvas_item_editor, EditorStringName(update_viewport));
 				undo_redo->commit_action();
 			}
 

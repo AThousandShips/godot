@@ -104,8 +104,8 @@ Vector2 AbstractPolygon2DEditor::_get_offset(int p_idx) const {
 
 void AbstractPolygon2DEditor::_commit_action() {
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
-	undo_redo->add_do_method(canvas_item_editor, "update_viewport");
-	undo_redo->add_undo_method(canvas_item_editor, "update_viewport");
+	undo_redo->add_do_method(canvas_item_editor, EditorStringName(update_viewport));
+	undo_redo->add_undo_method(canvas_item_editor, EditorStringName(update_viewport));
 	undo_redo->commit_action();
 }
 

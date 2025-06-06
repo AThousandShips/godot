@@ -388,8 +388,8 @@ void Polygon2DEditor::_update_polygon_editing_state() {
 void Polygon2DEditor::_commit_action() {
 	// Makes that undo/redoing actions made outside of the UV editor still affect its polygon.
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
-	undo_redo->add_do_method(CanvasItemEditor::get_singleton(), "update_viewport");
-	undo_redo->add_undo_method(CanvasItemEditor::get_singleton(), "update_viewport");
+	undo_redo->add_do_method(CanvasItemEditor::get_singleton(), EditorStringName(update_viewport));
+	undo_redo->add_undo_method(CanvasItemEditor::get_singleton(), EditorStringName(update_viewport));
 	undo_redo->commit_action();
 }
 
