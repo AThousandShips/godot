@@ -295,7 +295,7 @@ void EditorPropertyFontMetaOverride::update_property() {
 			prop->set_h_size_flags(SIZE_EXPAND_FILL);
 			Button *remove = memnew(Button);
 			remove->set_accessibility_name(TTRC("Remove"));
-			remove->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+			remove->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 			hbox->add_child(remove);
 			remove->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyFontMetaOverride::_remove).bind(remove, name));
 
@@ -791,7 +791,7 @@ void EditorPropertyOTFeatures::update_property() {
 				prop->set_h_size_flags(SIZE_EXPAND_FILL);
 				Button *remove = memnew(Button);
 				remove->set_accessibility_name(TTRC("Remove"));
-				remove->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+				remove->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 				hbox->add_child(remove);
 				remove->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyOTFeatures::_remove).bind(remove, name_tag));
 

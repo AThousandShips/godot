@@ -384,7 +384,7 @@ void AnimationBezierTrackEdit::_notification(int p_what) {
 
 				const Color dc = get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor));
 
-				Ref<Texture2D> remove = get_editor_theme_icon(SNAME("Remove"));
+				Ref<Texture2D> remove = get_editor_theme_icon(EditorStringName(Remove));
 				float remove_hpos = limit - h_separation - remove->get_width();
 
 				Ref<Texture2D> lock = get_editor_theme_icon(SNAME("Lock"));
@@ -1227,7 +1227,7 @@ void AnimationBezierTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 
 				if (selected || selection.size()) {
 					menu->add_separator();
-					menu->add_icon_item(get_editor_theme_icon(SNAME("Remove")), TTR("Delete Selected Key(s)"), MENU_KEY_DELETE);
+					menu->add_icon_item(get_editor_theme_icon(EditorStringName(Remove)), TTR("Delete Selected Key(s)"), MENU_KEY_DELETE);
 					menu->add_separator();
 					menu->add_icon_item(get_editor_theme_icon(SNAME("BezierHandlesFree")), TTR("Make Handles Free"), MENU_KEY_SET_HANDLE_FREE);
 					menu->add_icon_item(get_editor_theme_icon(SNAME("BezierHandlesLinear")), TTR("Make Handles Linear"), MENU_KEY_SET_HANDLE_LINEAR);

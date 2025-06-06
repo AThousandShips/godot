@@ -330,7 +330,7 @@ void EditorPropertyArray::_create_new_property_slot() {
 	} else {
 		Button *remove_btn = memnew(Button);
 		remove_btn->set_accessibility_name(TTRC("Remove"));
-		remove_btn->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+		remove_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 		remove_btn->set_disabled(is_read_only());
 		remove_btn->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyArray::_remove_pressed).bind(idx));
 		hbox->add_child(remove_btn);
@@ -1077,7 +1077,7 @@ void EditorPropertyDictionary::_create_new_property_slot(int p_idx) {
 	} else if (p_idx >= 0) {
 		Button *remove_btn = memnew(Button);
 		remove_btn->set_accessibility_name(TTRC("Remove"));
-		remove_btn->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+		remove_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 		remove_btn->set_disabled(is_read_only());
 		remove_btn->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyDictionary::_remove_pressed).bind(slots.size()));
 		hbox->add_child(remove_btn);
@@ -1653,7 +1653,7 @@ void EditorPropertyLocalizableString::update_property() {
 			prop->set_h_size_flags(SIZE_EXPAND_FILL);
 			Button *edit_btn = memnew(Button);
 			edit_btn->set_accessibility_name(TTRC("Remove Translation"));
-			edit_btn->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+			edit_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 			hbox->add_child(edit_btn);
 			edit_btn->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyLocalizableString::_remove_item).bind(edit_btn, remove_index));
 

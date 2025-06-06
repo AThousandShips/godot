@@ -3380,7 +3380,7 @@ void FileSystemDock::_file_and_folders_fill_popup(PopupMenu *p_popup, const Vect
 	// Add the options that are only available when the root path is not selected.
 	if (root_path_not_selected) {
 		p_popup->add_icon_item(get_editor_theme_icon(SNAME("MoveUp")), TTRC("Move/Duplicate To..."), FILE_MENU_MOVE);
-		p_popup->add_icon_shortcut(get_editor_theme_icon(SNAME("Remove")), ED_GET_SHORTCUT("filesystem_dock/delete"), FILE_MENU_REMOVE);
+		p_popup->add_icon_shortcut(get_editor_theme_icon(EditorStringName(Remove)), ED_GET_SHORTCUT("filesystem_dock/delete"), FILE_MENU_REMOVE);
 	}
 
 	// Only add a separator if we have actually placed any options in the menu since the last separator.

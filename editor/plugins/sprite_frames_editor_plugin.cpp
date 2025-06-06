@@ -656,13 +656,13 @@ void SpriteFramesEditor::_notification(int p_what) {
 			empty_after->set_button_icon(get_editor_theme_icon(SNAME("InsertAfter")));
 			move_up->set_button_icon(get_editor_theme_icon(SNAME("MoveLeft")));
 			move_down->set_button_icon(get_editor_theme_icon(SNAME("MoveRight")));
-			delete_frame->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+			delete_frame->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 			zoom_out->set_button_icon(get_editor_theme_icon(SNAME("ZoomLess")));
 			zoom_reset->set_button_icon(get_editor_theme_icon(SNAME("ZoomReset")));
 			zoom_in->set_button_icon(get_editor_theme_icon(SNAME("ZoomMore")));
 			add_anim->set_button_icon(get_editor_theme_icon(SNAME("New")));
 			duplicate_anim->set_button_icon(get_editor_theme_icon(SNAME("Duplicate")));
-			delete_anim->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+			delete_anim->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 			anim_search_box->set_right_icon(get_editor_theme_icon(SNAME("Search")));
 			split_sheet_zoom_out->set_button_icon(get_editor_theme_icon(SNAME("ZoomLess")));
 			split_sheet_zoom_reset->set_button_icon(get_editor_theme_icon(SNAME("ZoomReset")));

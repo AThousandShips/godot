@@ -213,7 +213,7 @@ void ResourcePreloaderEditor::_update_library() {
 		} else {
 			ti->add_button(1, get_editor_theme_icon(SNAME("Load")), BUTTON_EDIT_RESOURCE, false, TTR("Open in Editor"));
 		}
-		ti->add_button(1, get_editor_theme_icon(SNAME("Remove")), BUTTON_REMOVE, false, TTR("Remove"));
+		ti->add_button(1, get_editor_theme_icon(EditorStringName(Remove)), BUTTON_REMOVE, false, TTR("Remove"));
 	}
 
 	//player->add_resource("default",resource);

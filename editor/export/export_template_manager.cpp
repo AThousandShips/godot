@@ -150,7 +150,7 @@ void ExportTemplateManager::_update_template_status() {
 #ifndef ANDROID_ENABLED
 		ti->add_button(0, get_editor_theme_icon(SNAME("Folder")), OPEN_TEMPLATE_FOLDER, false, TTR("Open the folder containing these templates."));
 #endif
-		ti->add_button(0, get_editor_theme_icon(SNAME("Remove")), UNINSTALL_TEMPLATE, false, TTR("Uninstall these templates."));
+		ti->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), UNINSTALL_TEMPLATE, false, TTR("Uninstall these templates."));
 	}
 }
 

@@ -1430,7 +1430,7 @@ int AnimationTimelineEdit::get_buttons_width() const {
 	const Ref<Texture2D> interp_mode = get_editor_theme_icon(SNAME("TrackContinuous"));
 	const Ref<Texture2D> interp_type = get_editor_theme_icon(SNAME("InterpRaw"));
 	const Ref<Texture2D> loop_type = get_editor_theme_icon(SNAME("InterpWrapClamp"));
-	const Ref<Texture2D> remove_icon = get_editor_theme_icon(SNAME("Remove"));
+	const Ref<Texture2D> remove_icon = get_editor_theme_icon(EditorStringName(Remove));
 	const Ref<Texture2D> down_icon = get_theme_icon(SNAME("select_arrow"), SNAME("Tree"));
 
 	const int h_separation = get_theme_constant(SNAME("h_separation"), SNAME("AnimationTrackEdit"));
@@ -2455,7 +2455,7 @@ void AnimationTrackEdit::_notification(int p_what) {
 				{
 					// Erase.
 
-					Ref<Texture2D> icon = get_editor_theme_icon(animation->track_is_compressed(track) ? SNAME("Lock") : SNAME("Remove"));
+					Ref<Texture2D> icon = get_editor_theme_icon(animation->track_is_compressed(track) ? SNAME("Lock") : EditorStringName(Remove));
 
 					remove_rect.position.x = ofs + ((get_size().width - ofs) - icon->get_width()) - outer_margin;
 					remove_rect.position.y = Math::round((get_size().height - icon->get_height()) / 2);
@@ -3203,7 +3203,7 @@ void AnimationTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 					}
 
 					menu->add_separator();
-					menu->add_icon_item(get_editor_theme_icon(SNAME("Remove")), TTR("Delete Key(s)"), MENU_KEY_DELETE);
+					menu->add_icon_item(get_editor_theme_icon(EditorStringName(Remove)), TTR("Delete Key(s)"), MENU_KEY_DELETE);
 				}
 				menu->reset_size();
 
@@ -8829,7 +8829,7 @@ void AnimationMarkerEdit::gui_input(const Ref<InputEvent> &p_event) {
 
 				if (selected || selection.size() > 0) {
 					menu->add_icon_item(get_editor_theme_icon(SNAME("Edit")), TTR("Rename Marker"), MENU_KEY_RENAME);
-					menu->add_icon_item(get_editor_theme_icon(SNAME("Remove")), TTR("Delete Marker(s)"), MENU_KEY_DELETE);
+					menu->add_icon_item(get_editor_theme_icon(EditorStringName(Remove)), TTR("Delete Marker(s)"), MENU_KEY_DELETE);
 				}
 
 				menu->add_icon_item(get_editor_theme_icon(should_show_all_marker_names ? SNAME("GuiChecked") : SNAME("GuiUnchecked")), TTR("Show All Marker Names"), MENU_KEY_TOGGLE_MARKER_NAMES);

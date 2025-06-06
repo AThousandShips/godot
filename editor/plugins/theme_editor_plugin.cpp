@@ -1267,7 +1267,7 @@ void ThemeItemEditorDialog::_update_edit_types() {
 		list_item->set_metadata(0, E);
 		list_item->set_editable(0, true);
 		list_item->set_icon(0, item_icon);
-		list_item->add_button(0, get_editor_theme_icon(SNAME("Remove")), TYPES_TREE_REMOVE_ITEM, false, TTRC("Remove Type"));
+		list_item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), TYPES_TREE_REMOVE_ITEM, false, TTRC("Remove Type"));
 
 		if (E == edited_item_type) {
 			list_item->select(0);
@@ -1412,7 +1412,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 				TreeItem *item = edit_items_tree->create_item(color_root);
 				item->set_text(0, E);
 				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
-				item->add_button(0, get_editor_theme_icon(SNAME("Remove")), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
 			has_any_items = true;
@@ -1435,7 +1435,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 				TreeItem *item = edit_items_tree->create_item(constant_root);
 				item->set_text(0, E);
 				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
-				item->add_button(0, get_editor_theme_icon(SNAME("Remove")), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
 			has_any_items = true;
@@ -1458,7 +1458,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 				TreeItem *item = edit_items_tree->create_item(font_root);
 				item->set_text(0, E);
 				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
-				item->add_button(0, get_editor_theme_icon(SNAME("Remove")), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
 			has_any_items = true;
@@ -1481,7 +1481,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 				TreeItem *item = edit_items_tree->create_item(font_size_root);
 				item->set_text(0, E);
 				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
-				item->add_button(0, get_editor_theme_icon(SNAME("Remove")), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
 			has_any_items = true;
@@ -1504,7 +1504,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 				TreeItem *item = edit_items_tree->create_item(icon_root);
 				item->set_text(0, E);
 				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
-				item->add_button(0, get_editor_theme_icon(SNAME("Remove")), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
 			has_any_items = true;
@@ -1527,7 +1527,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 				TreeItem *item = edit_items_tree->create_item(stylebox_root);
 				item->set_text(0, E);
 				item->add_button(0, get_editor_theme_icon(SNAME("Edit")), ITEMS_TREE_RENAME_ITEM, false, TTR("Rename Item"));
-				item->add_button(0, get_editor_theme_icon(SNAME("Remove")), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
+				item->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), ITEMS_TREE_REMOVE_ITEM, false, TTR("Remove Item"));
 			}
 
 			has_any_items = true;
@@ -2562,7 +2562,7 @@ HBoxContainer *ThemeTypeEditor::_create_property_control(Theme::DataType p_data_
 		item_rename_button->connect(SceneStringName(pressed), callable_mp(this, &ThemeTypeEditor::_item_rename_cbk).bind(p_data_type, p_item_name, item_name_container));
 
 		Button *item_remove_button = memnew(Button);
-		item_remove_button->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+		item_remove_button->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 		item_remove_button->set_tooltip_text(TTR("Remove Item"));
 		item_remove_button->set_accessibility_name(TTRC("Remove Item"));
 		item_remove_button->set_flat(true);
@@ -3501,7 +3501,7 @@ void ThemeTypeEditor::_notification(int p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			add_type_button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			rename_type_button->set_button_icon(get_editor_theme_icon(SNAME("Rename")));
-			remove_type_button->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+			remove_type_button->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 
 			data_type_tabs->set_tab_icon(0, get_editor_theme_icon(SNAME("Color")));
 			data_type_tabs->set_tab_icon(1, get_editor_theme_icon(SNAME("MemberConstant")));

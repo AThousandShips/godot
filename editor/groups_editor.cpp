@@ -470,7 +470,7 @@ void GroupsEditor::_item_mouse_selected(const Vector2 &p_pos, MouseButton p_mous
 		if (global_groups.has(group_name) || scene_groups[group_name]) {
 			menu->add_separator();
 			menu->add_icon_shortcut(get_editor_theme_icon(SNAME("Rename")), ED_GET_SHORTCUT("groups_editor/rename"), RENAME_GROUP);
-			menu->add_icon_shortcut(get_editor_theme_icon(SNAME("Remove")), ED_GET_SHORTCUT("groups_editor/delete"), DELETE_GROUP);
+			menu->add_icon_shortcut(get_editor_theme_icon(EditorStringName(Remove)), ED_GET_SHORTCUT("groups_editor/delete"), DELETE_GROUP);
 		}
 
 		menu->set_position(tree->get_screen_position() + p_pos);

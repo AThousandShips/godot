@@ -800,7 +800,7 @@ void AnimationNodeBlendSpace2DEditor::_notification(int p_what) {
 			tool_select->set_button_icon(get_editor_theme_icon(SNAME("ToolSelect")));
 			tool_create->set_button_icon(get_editor_theme_icon(SNAME("EditKey")));
 			tool_triangle->set_button_icon(get_editor_theme_icon(SNAME("ToolTriangle")));
-			tool_erase->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+			tool_erase->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 			snap->set_button_icon(get_editor_theme_icon(SNAME("SnapGrid")));
 			open_editor->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
 			auto_triangles->set_button_icon(get_editor_theme_icon(SNAME("AutoTriangle")));

@@ -1471,7 +1471,7 @@ void EditorProperty::_update_popup() {
 			menu->add_icon_item(get_editor_theme_icon(SNAME("Override")), TTRC("Override for Project"), MENU_OVERRIDE_FOR_PROJECT);
 		}
 		if (deletable) {
-			menu->add_icon_item(get_editor_theme_icon(SNAME("Remove")), TTR("Delete Property"), MENU_DELETE);
+			menu->add_icon_item(get_editor_theme_icon(EditorStringName(Remove)), TTR("Delete Property"), MENU_DELETE);
 		}
 		if (can_revert) {
 			menu->add_icon_item(get_editor_theme_icon(SNAME("Reload")), TTR("Revert Value"), MENU_REVERT_VALUE);
@@ -2952,7 +2952,7 @@ void EditorInspectorArray::_setup() {
 		if (!unresizable) {
 			ae.erase = memnew(Button);
 			ae.erase->set_accessibility_name(TTRC("Remove"));
-			ae.erase->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+			ae.erase->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 			ae.erase->set_v_size_flags(SIZE_SHRINK_CENTER);
 			ae.erase->connect(SceneStringName(pressed), callable_mp(this, &EditorInspectorArray::_remove_item).bind(element_position));
 			ae.hbox->add_child(ae.erase);
@@ -3085,7 +3085,7 @@ void EditorInspectorArray::_notification(int p_what) {
 				ae.margin->end_bulk_theme_override();
 
 				if (ae.erase) {
-					ae.erase->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+					ae.erase->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 				}
 			}
 

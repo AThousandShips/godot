@@ -233,7 +233,7 @@ void EditorFileDialog::_update_theme_item_cache() {
 	theme_cache.folder_icon_color = get_theme_color(SNAME("folder_icon_color"), SNAME("FileDialog"));
 
 	theme_cache.action_copy = get_editor_theme_icon(SNAME("ActionCopy"));
-	theme_cache.action_delete = get_editor_theme_icon(SNAME("Remove"));
+	theme_cache.action_delete = get_editor_theme_icon(EditorStringName(Remove));
 	theme_cache.filesystem = get_editor_theme_icon(SNAME("Filesystem"));
 
 	theme_cache.folder_medium_thumbnail = get_editor_theme_icon(SNAME("FolderMediumThumb"));

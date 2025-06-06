@@ -265,7 +265,7 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 			rename_btn->set_button_icon(get_editor_theme_icon(SNAME("Rename")));
 			duplicate_btn->set_button_icon(get_editor_theme_icon(SNAME("Duplicate")));
 			manage_tags_btn->set_button_icon(get_editor_theme_icon("Script"));
-			erase_btn->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
+			erase_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
 			erase_missing_btn->set_button_icon(get_editor_theme_icon(SNAME("Clear")));
 			create_tag_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 

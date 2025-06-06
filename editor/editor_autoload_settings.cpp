@@ -540,7 +540,7 @@ void EditorAutoloadSettings::update_autoload() {
 		item->add_button(3, get_editor_theme_icon(SNAME("Load")), BUTTON_OPEN);
 		item->add_button(3, get_editor_theme_icon(SNAME("MoveUp")), BUTTON_MOVE_UP);
 		item->add_button(3, get_editor_theme_icon(SNAME("MoveDown")), BUTTON_MOVE_DOWN);
-		item->add_button(3, get_editor_theme_icon(SNAME("Remove")), BUTTON_DELETE);
+		item->add_button(3, get_editor_theme_icon(EditorStringName(Remove)), BUTTON_DELETE);
 		item->set_selectable(3, false);
 	}
 

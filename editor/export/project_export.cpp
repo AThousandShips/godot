@@ -104,13 +104,13 @@ void ProjectExportDialog::_notification(int p_what) {
 
 		case NOTIFICATION_THEME_CHANGED: {
 			duplicate_preset->set_button_icon(presets->get_editor_theme_icon(SNAME("Duplicate")));
-			delete_preset->set_button_icon(presets->get_editor_theme_icon(SNAME("Remove")));
+			delete_preset->set_button_icon(presets->get_editor_theme_icon(EditorStringName(Remove)));
 			patch_add_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 		} break;
 
 		case NOTIFICATION_READY: {
 			duplicate_preset->set_button_icon(presets->get_editor_theme_icon(SNAME("Duplicate")));
-			delete_preset->set_button_icon(presets->get_editor_theme_icon(SNAME("Remove")));
+			delete_preset->set_button_icon(presets->get_editor_theme_icon(EditorStringName(Remove)));
 			patch_add_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			connect(SceneStringName(confirmed), callable_mp(this, &ProjectExportDialog::_export_pck_zip));
 			_update_export_all();
@@ -309,7 +309,7 @@ void ProjectExportDialog::_edit_preset(int p_index) {
 		patch->set_text(0, patch_path.get_file());
 		patch->set_tooltip_text(0, patch_path);
 		patch->set_metadata(0, i);
-		patch->add_button(0, get_editor_theme_icon(SNAME("Remove")), 0);
+		patch->add_button(0, get_editor_theme_icon(EditorStringName(Remove)), 0);
 		patch->add_button(0, get_editor_theme_icon(SNAME("FileBrowse")), 1);
 	}
 

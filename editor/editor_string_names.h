@@ -61,6 +61,7 @@ public:
 	const StringName object_id_selected = StringName("object_id_selected");
 
 	const StringName Add = StringName("Add");
+	const StringName Remove = StringName("Remove");
 };
 
 #define EditorStringName(m_name) EditorStringNames::get_singleton()->m_name

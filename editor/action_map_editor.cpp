@@ -467,7 +467,7 @@ void ActionMapEditor::update_action_list(const Vector<ActionInfo> &p_action_info
 			action_item->add_button(2, action_tree->get_editor_theme_icon(SNAME("ReloadSmall")), BUTTON_REVERT_ACTION, action_eq, action_eq ? TTRC("Cannot Revert - Action is same as initial") : TTRC("Revert Action"));
 		}
 		action_item->add_button(2, action_tree->get_editor_theme_icon(EditorStringName(Add)), BUTTON_ADD_EVENT, false, TTRC("Add Event"));
-		action_item->add_button(2, action_tree->get_editor_theme_icon(SNAME("Remove")), BUTTON_REMOVE_ACTION, !action_info.editable, action_info.editable ? TTRC("Remove Action") : TTRC("Cannot Remove Action"));
+		action_item->add_button(2, action_tree->get_editor_theme_icon(EditorStringName(Remove)), BUTTON_REMOVE_ACTION, !action_info.editable, action_info.editable ? TTRC("Remove Action") : TTRC("Cannot Remove Action"));
 
 		action_item->set_custom_bg_color(0, action_tree->get_theme_color(SNAME("prop_subsection"), EditorStringName(Editor)));
 		action_item->set_custom_bg_color(1, action_tree->get_theme_color(SNAME("prop_subsection"), EditorStringName(Editor)));
@@ -516,7 +516,7 @@ void ActionMapEditor::update_action_list(const Vector<ActionInfo> &p_action_info
 
 			// Third Column - Buttons
 			event_item->add_button(2, action_tree->get_editor_theme_icon(SNAME("Edit")), BUTTON_EDIT_EVENT, false, TTRC("Edit Event"), TTRC("Edit Event"));
-			event_item->add_button(2, action_tree->get_editor_theme_icon(SNAME("Remove")), BUTTON_REMOVE_EVENT, false, TTRC("Remove Event"), TTRC("Remove Event"));
+			event_item->add_button(2, action_tree->get_editor_theme_icon(EditorStringName(Remove)), BUTTON_REMOVE_EVENT, false, TTRC("Remove Event"), TTRC("Remove Event"));
 			event_item->set_button_color(2, 0, Color(1, 1, 1, 0.75));
 			event_item->set_button_color(2, 1, Color(1, 1, 1, 0.75));
 		}

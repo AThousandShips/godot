@@ -3961,7 +3961,7 @@ void SceneTreeDock::_tree_rmb(const Vector2 &p_menu_pos) {
 
 	if (profile_allow_editing) {
 		menu->add_separator();
-		menu->add_icon_shortcut(get_editor_theme_icon(SNAME("Remove")), ED_GET_SHORTCUT("scene_tree/delete"), TOOL_ERASE);
+		menu->add_icon_shortcut(get_editor_theme_icon(EditorStringName(Remove)), ED_GET_SHORTCUT("scene_tree/delete"), TOOL_ERASE);
 	}
 
 	Vector<String> p_paths;

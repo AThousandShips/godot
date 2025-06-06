@@ -136,7 +136,7 @@ void EditorVariantTypePopupMenu::_populate() {
 
 void EditorVariantTypePopupMenu::_update_menu_icons() {
 	if (remove_item) {
-		set_item_icon(get_item_index(Variant::VARIANT_MAX), get_editor_theme_icon(SNAME("Remove")));
+		set_item_icon(get_item_index(Variant::VARIANT_MAX), get_editor_theme_icon(EditorStringName(Remove)));
 	}
 
 	for (int i = 0; i < get_item_count(); i++) {

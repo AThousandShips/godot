@@ -730,7 +730,7 @@ void AnimationLibraryEditor::update_tree() {
 		libitem->add_button(0, get_editor_theme_icon("ActionPaste"), LIB_BUTTON_PASTE, animation_library_is_foreign, TTR("Paste animation to library from clipboard."));
 
 		libitem->add_button(1, get_editor_theme_icon("Save"), LIB_BUTTON_FILE, false, TTR("Save animation library to resource on disk."));
-		libitem->add_button(1, get_editor_theme_icon("Remove"), LIB_BUTTON_DELETE, false, TTR("Remove animation library."));
+		libitem->add_button(1, get_editor_theme_icon(EditorStringName(Remove)), LIB_BUTTON_DELETE, false, TTR("Remove animation library."));
 
 		libitem->set_custom_bg_color(0, ss_color);
 
@@ -771,7 +771,7 @@ void AnimationLibraryEditor::update_tree() {
 			}
 
 			anitem->add_button(1, get_editor_theme_icon("Save"), ANIM_BUTTON_FILE, animation_library_is_foreign, TTR("Save animation to resource on disk."));
-			anitem->add_button(1, get_editor_theme_icon("Remove"), ANIM_BUTTON_DELETE, animation_library_is_foreign, TTR("Remove animation from Library."));
+			anitem->add_button(1, get_editor_theme_icon(EditorStringName(Remove)), ANIM_BUTTON_DELETE, animation_library_is_foreign, TTR("Remove animation from Library."));
 
 			for (const uint64_t &lib_id : collapsed_lib_ids) {
 				Object *lib_obj = ObjectDB::get_instance(ObjectID(lib_id));
