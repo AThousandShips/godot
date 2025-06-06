@@ -343,8 +343,8 @@ void GroupsEditor::_item_edited() {
 		undo_redo->add_undo_method(this, "_set_group_checked", name, false);
 
 		// To force redraw of scene tree.
-		undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree");
-		undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree");
+		undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree));
+		undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree));
 
 		undo_redo->commit_action();
 
@@ -358,8 +358,8 @@ void GroupsEditor::_item_edited() {
 		undo_redo->add_undo_method(this, "_set_group_checked", name, true);
 
 		// To force redraw of scene tree.
-		undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree");
-		undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree");
+		undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree));
+		undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree));
 
 		undo_redo->commit_action();
 	}
@@ -511,8 +511,8 @@ void GroupsEditor::_confirm_add() {
 	undo_redo->add_undo_method(this, "_update_tree");
 
 	// To force redraw of scene tree.
-	undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree");
-	undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree");
+	undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree));
+	undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree));
 
 	undo_redo->commit_action();
 	tree->grab_focus();

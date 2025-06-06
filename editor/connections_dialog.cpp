@@ -1069,10 +1069,10 @@ void ConnectionsDock::_connect(const ConnectDialog::ConnectionData &p_cd) {
 	undo_redo->create_action(vformat(TTR("Connect '%s' to '%s'"), String(p_cd.signal), String(p_cd.method)));
 	undo_redo->add_do_method(source, "connect", p_cd.signal, callable, p_cd.flags);
 	undo_redo->add_undo_method(source, "disconnect", p_cd.signal, callable);
-	undo_redo->add_do_method(this, "update_tree");
-	undo_redo->add_undo_method(this, "update_tree");
-	undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree"); // To force redraw of scene tree.
-	undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree");
+	undo_redo->add_do_method(this, EditorStringName(update_tree));
+	undo_redo->add_undo_method(this, EditorStringName(update_tree));
+	undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree)); // To force redraw of scene tree.
+	undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree));
 
 	undo_redo->commit_action();
 }
@@ -1089,10 +1089,10 @@ void ConnectionsDock::_disconnect(const ConnectDialog::ConnectionData &p_cd) {
 	Callable callable = p_cd.get_callable();
 	undo_redo->add_do_method(selected_node, "disconnect", p_cd.signal, callable);
 	undo_redo->add_undo_method(selected_node, "connect", p_cd.signal, callable, p_cd.flags);
-	undo_redo->add_do_method(this, "update_tree");
-	undo_redo->add_undo_method(this, "update_tree");
-	undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree"); // To force redraw of scene tree.
-	undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree");
+	undo_redo->add_do_method(this, EditorStringName(update_tree));
+	undo_redo->add_undo_method(this, EditorStringName(update_tree));
+	undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree)); // To force redraw of scene tree.
+	undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree));
 
 	undo_redo->commit_action();
 }
@@ -1122,10 +1122,10 @@ void ConnectionsDock::_disconnect_all() {
 		child = child->get_next();
 	}
 
-	undo_redo->add_do_method(this, "update_tree");
-	undo_redo->add_undo_method(this, "update_tree");
-	undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree");
-	undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), "update_tree");
+	undo_redo->add_do_method(this, EditorStringName(update_tree));
+	undo_redo->add_undo_method(this, EditorStringName(update_tree));
+	undo_redo->add_do_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree));
+	undo_redo->add_undo_method(SceneTreeDock::get_singleton()->get_tree_editor(), EditorStringName(update_tree));
 
 	undo_redo->commit_action();
 }

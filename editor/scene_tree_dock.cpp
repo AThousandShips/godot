@@ -1050,8 +1050,8 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			undo_redo->add_undo_method(node, "set_unique_name_in_owner", node->is_unique_name_in_owner());
 			_node_replace_owner(root, root, root, MODE_UNDO);
 
-			undo_redo->add_do_method(scene_tree, "update_tree");
-			undo_redo->add_undo_method(scene_tree, "update_tree");
+			undo_redo->add_do_method(scene_tree, EditorStringName(update_tree));
+			undo_redo->add_undo_method(scene_tree, EditorStringName(update_tree));
 			undo_redo->commit_action();
 		} break;
 		case TOOL_MULTI_EDIT: {
@@ -1354,8 +1354,8 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 					_node_replace_owner(node, node, root);
 					_node_strip_signal_inheritance(node);
 					NodeDock::get_singleton()->set_node(node); // Refresh.
-					undo_redo->add_do_method(scene_tree, "update_tree");
-					undo_redo->add_undo_method(scene_tree, "update_tree");
+					undo_redo->add_do_method(scene_tree, EditorStringName(update_tree));
+					undo_redo->add_undo_method(scene_tree, EditorStringName(update_tree));
 					undo_redo->commit_action();
 				}
 			}
@@ -1590,7 +1590,7 @@ void SceneTreeDock::add_root_node(Node *p_node) {
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	undo_redo->create_action_for_history(TTR("New Scene Root"), editor_data->get_current_edited_scene_history_id());
 	undo_redo->add_do_method(EditorNode::get_singleton(), "set_edited_scene", p_node);
-	undo_redo->add_do_method(scene_tree, "update_tree");
+	undo_redo->add_do_method(scene_tree, EditorStringName(update_tree));
 	undo_redo->add_do_reference(p_node);
 	undo_redo->add_undo_method(EditorNode::get_singleton(), "set_edited_scene", (Object *)nullptr);
 	undo_redo->commit_action();
@@ -2750,8 +2750,8 @@ void SceneTreeDock::_toggle_editable_children(Node *p_node) {
 	undo_redo->add_undo_method(Node3DEditor::get_singleton(), "update_all_gizmos", p_node);
 	undo_redo->add_do_method(Node3DEditor::get_singleton(), "update_all_gizmos", p_node);
 
-	undo_redo->add_undo_method(scene_tree, "update_tree");
-	undo_redo->add_do_method(scene_tree, "update_tree");
+	undo_redo->add_undo_method(scene_tree, EditorStringName(update_tree));
+	undo_redo->add_do_method(scene_tree, EditorStringName(update_tree));
 
 	undo_redo->commit_action();
 }
@@ -2788,7 +2788,7 @@ void SceneTreeDock::_delete_confirm(bool p_cut) {
 		undo_redo->add_do_method(EditorNode::get_singleton(), "set_edited_scene", (Object *)nullptr);
 		undo_redo->add_undo_method(EditorNode::get_singleton(), "set_edited_scene", edited_scene);
 		undo_redo->add_undo_method(edited_scene, "set_owner", edited_scene->get_owner());
-		undo_redo->add_undo_method(scene_tree, "update_tree");
+		undo_redo->add_undo_method(scene_tree, EditorStringName(update_tree));
 		undo_redo->add_undo_reference(edited_scene);
 	} else {
 		if (delete_tracks_checkbox->is_pressed() || p_cut) {
@@ -2937,7 +2937,7 @@ Node *SceneTreeDock::_do_create(Node *p_parent) {
 
 	} else {
 		undo_redo->add_do_method(EditorNode::get_singleton(), "set_edited_scene", child);
-		undo_redo->add_do_method(scene_tree, "update_tree");
+		undo_redo->add_do_method(scene_tree, EditorStringName(update_tree));
 		undo_redo->add_do_reference(child);
 		undo_redo->add_undo_method(EditorNode::get_singleton(), "set_edited_scene", (Object *)nullptr);
 	}
