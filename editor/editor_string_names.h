@@ -65,6 +65,8 @@ public:
 	const StringName update_node = StringName("update_node");
 	const StringName set_polygon = StringName("set_polygon");
 	const StringName set_owner = StringName("set_owner");
+	const StringName connect_nodes = StringName("connect_nodes");
+	const StringName disconnect_nodes = StringName("disconnect_nodes");
 };
 
 #define EditorStringName(m_name) EditorStringNames::get_singleton()->m_name
