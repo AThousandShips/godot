@@ -63,6 +63,7 @@ public:
 	const StringName queue_redraw = StringName("queue_redraw");
 	const StringName update_tree = StringName("update_tree");
 	const StringName update_node = StringName("update_node");
+	const StringName _update_space = StringName("_update_space");
 	const StringName set_polygon = StringName("set_polygon");
 	const StringName set_owner = StringName("set_owner");
 	const StringName add_child = StringName("add_child");
