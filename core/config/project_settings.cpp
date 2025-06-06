@@ -526,7 +526,7 @@ void ProjectSettings::_emit_changed() {
 		return;
 	}
 	is_changed = false;
-	emit_signal("settings_changed");
+	emit_signal(CoreStringName(settings_changed));
 }
 
 bool ProjectSettings::load_resource_pack(const String &p_pack, bool p_replace_files, int p_offset) {

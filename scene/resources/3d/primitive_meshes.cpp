@@ -367,7 +367,7 @@ PrimitiveMesh::PrimitiveMesh() {
 		texel_size = 0.2;
 	}
 	ProjectSettings *project_settings = ProjectSettings::get_singleton();
-	project_settings->connect("settings_changed", callable_mp(this, &PrimitiveMesh::_on_settings_changed));
+	project_settings->connect(CoreStringName(settings_changed), callable_mp(this, &PrimitiveMesh::_on_settings_changed));
 }
 
 PrimitiveMesh::~PrimitiveMesh() {
@@ -376,7 +376,7 @@ PrimitiveMesh::~PrimitiveMesh() {
 
 	ERR_FAIL_NULL(ProjectSettings::get_singleton());
 	ProjectSettings *project_settings = ProjectSettings::get_singleton();
-	project_settings->disconnect("settings_changed", callable_mp(this, &PrimitiveMesh::_on_settings_changed));
+	project_settings->disconnect(CoreStringName(settings_changed), callable_mp(this, &PrimitiveMesh::_on_settings_changed));
 }
 
 /**

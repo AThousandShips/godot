@@ -1015,7 +1015,7 @@ EditorSettingsDialog::EditorSettingsDialog() {
 	timer->connect("timeout", callable_mp(this, &EditorSettingsDialog::_settings_save));
 	timer->set_one_shot(true);
 	add_child(timer);
-	EditorSettings::get_singleton()->connect("settings_changed", callable_mp(this, &EditorSettingsDialog::_settings_changed));
+	EditorSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &EditorSettingsDialog::_settings_changed));
 	set_ok_button_text(TTRC("Close"));
 
 	Ref<EditorSettingsInspectorPlugin> plugin;

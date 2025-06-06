@@ -1488,8 +1488,8 @@ void Window::_notification(int p_what) {
 
 		case NOTIFICATION_ENTER_TREE: {
 			if (is_in_edited_scene_root()) {
-				if (!ProjectSettings::get_singleton()->is_connected("settings_changed", callable_mp(this, &Window::_settings_changed))) {
-					ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &Window::_settings_changed));
+				if (!ProjectSettings::get_singleton()->is_connected(CoreStringName(settings_changed), callable_mp(this, &Window::_settings_changed))) {
+					ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &Window::_settings_changed));
 				}
 			}
 
@@ -1617,8 +1617,8 @@ void Window::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
-			if (ProjectSettings::get_singleton()->is_connected("settings_changed", callable_mp(this, &Window::_settings_changed))) {
-				ProjectSettings::get_singleton()->disconnect("settings_changed", callable_mp(this, &Window::_settings_changed));
+			if (ProjectSettings::get_singleton()->is_connected(CoreStringName(settings_changed), callable_mp(this, &Window::_settings_changed))) {
+				ProjectSettings::get_singleton()->disconnect(CoreStringName(settings_changed), callable_mp(this, &Window::_settings_changed));
 			}
 
 			set_theme_context(nullptr, false);

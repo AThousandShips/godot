@@ -773,7 +773,7 @@ void EditorNode::_notification(int p_what) {
 
 			if (settings_overrides_changed) {
 				EditorSettings::get_singleton()->notify_changes();
-				EditorSettings::get_singleton()->emit_signal(SNAME("settings_changed"));
+				EditorSettings::get_singleton()->emit_signal(CoreStringName(settings_changed));
 				settings_overrides_changed = false;
 			}
 		} break;
@@ -7382,7 +7382,7 @@ EditorNode::EditorNode() {
 	EditorUndoRedoManager::get_singleton()->connect("version_changed", callable_mp(this, &EditorNode::_update_unsaved_cache));
 	EditorUndoRedoManager::get_singleton()->connect("history_changed", callable_mp(this, &EditorNode::_update_undo_redo_allowed));
 	EditorUndoRedoManager::get_singleton()->connect("history_changed", callable_mp(this, &EditorNode::_update_unsaved_cache));
-	ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &EditorNode::_update_from_settings));
+	ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &EditorNode::_update_from_settings));
 	GDExtensionManager::get_singleton()->connect("extensions_reloaded", callable_mp(this, &EditorNode::_gdextensions_reloaded));
 
 	TranslationServer::get_singleton()->get_main_domain()->set_enabled(false);

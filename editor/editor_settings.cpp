@@ -76,7 +76,7 @@ bool EditorSettings::_set(const StringName &p_name, const Variant &p_value) {
 				changed_settings.insert(exec_args_name);
 			}
 		}
-		emit_signal(SNAME("settings_changed"));
+		emit_signal(CoreStringName(settings_changed));
 
 		if (p_name == SNAME("interface/editor/editor_language")) {
 			setup_language();
@@ -1762,7 +1762,7 @@ void EditorSettings::load_text_editor_theme() {
 			}
 		}
 	}
-	emit_signal(SNAME("settings_changed"));
+	emit_signal(CoreStringName(settings_changed));
 	// if it doesn't load just use what is currently loaded
 }
 

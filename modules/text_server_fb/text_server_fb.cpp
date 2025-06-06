@@ -5191,7 +5191,7 @@ void TextServerFallback::_update_settings() {
 
 TextServerFallback::TextServerFallback() {
 	_insert_feature_sets();
-	ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &TextServerFallback::_update_settings));
+	ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &TextServerFallback::_update_settings));
 }
 
 void TextServerFallback::_font_clear_system_fallback_cache() {

@@ -438,7 +438,7 @@ EditorLog::EditorLog() {
 	add_child(save_state_timer);
 
 	line_limit = int(EDITOR_GET("run/output/max_lines"));
-	EditorSettings::get_singleton()->connect("settings_changed", callable_mp(this, &EditorLog::_editor_settings_changed));
+	EditorSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &EditorLog::_editor_settings_changed));
 
 	HBoxContainer *hb = this;
 

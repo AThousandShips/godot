@@ -4351,7 +4351,7 @@ FileSystemDock::FileSystemDock() {
 	old_display_mode = DISPLAY_MODE_TREE_ONLY;
 	file_list_display_mode = FILE_LIST_DISPLAY_THUMBNAILS;
 
-	ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &FileSystemDock::_project_settings_changed));
+	ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &FileSystemDock::_project_settings_changed));
 	add_resource_tooltip_plugin(memnew(EditorTextureTooltipPlugin));
 	add_resource_tooltip_plugin(memnew(EditorAudioStreamTooltipPlugin));
 }

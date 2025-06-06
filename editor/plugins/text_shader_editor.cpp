@@ -1135,8 +1135,8 @@ TextShaderEditor::TextShaderEditor() {
 
 	code_editor->connect("show_warnings_panel", callable_mp(this, &TextShaderEditor::_show_warnings_panel));
 	code_editor->connect(CoreStringName(script_changed), callable_mp(this, &TextShaderEditor::apply_shaders));
-	EditorSettings::get_singleton()->connect("settings_changed", callable_mp(this, &TextShaderEditor::_editor_settings_changed));
-	ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &TextShaderEditor::_project_settings_changed));
+	EditorSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &TextShaderEditor::_editor_settings_changed));
+	ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &TextShaderEditor::_project_settings_changed));
 
 	code_editor->get_text_editor()->set_symbol_lookup_on_click_enabled(true);
 	code_editor->get_text_editor()->set_context_menu_enabled(false);

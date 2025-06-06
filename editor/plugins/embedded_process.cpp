@@ -39,7 +39,7 @@
 void EmbeddedProcessBase::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_READY: {
-			ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &EmbeddedProcessBase::_project_settings_changed));
+			ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &EmbeddedProcessBase::_project_settings_changed));
 		} break;
 		case NOTIFICATION_ENTER_TREE: {
 			window = get_window();

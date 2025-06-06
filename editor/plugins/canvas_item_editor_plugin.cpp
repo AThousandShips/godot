@@ -4153,7 +4153,7 @@ void CanvasItemEditor::_notification(int p_what) {
 			_update_lock_and_group_button();
 
 			SceneTreeDock::get_singleton()->get_tree_editor()->connect("node_changed", callable_mp(this, &CanvasItemEditor::_update_lock_and_group_button));
-			ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &CanvasItemEditor::_project_settings_changed));
+			ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &CanvasItemEditor::_project_settings_changed));
 		} break;
 
 		case NOTIFICATION_ACCESSIBILITY_UPDATE: {

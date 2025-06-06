@@ -1171,8 +1171,8 @@ void LineEdit::_notification(int p_what) {
 				set_caret_blink_enabled(EDITOR_GET("text_editor/appearance/caret/caret_blink"));
 				set_caret_blink_interval(EDITOR_GET("text_editor/appearance/caret/caret_blink_interval"));
 
-				if (!EditorSettings::get_singleton()->is_connected("settings_changed", callable_mp(this, &LineEdit::_editor_settings_changed))) {
-					EditorSettings::get_singleton()->connect("settings_changed", callable_mp(this, &LineEdit::_editor_settings_changed));
+				if (!EditorSettings::get_singleton()->is_connected(CoreStringName(settings_changed), callable_mp(this, &LineEdit::_editor_settings_changed))) {
+					EditorSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &LineEdit::_editor_settings_changed));
 				}
 			}
 		} break;

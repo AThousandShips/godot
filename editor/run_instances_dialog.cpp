@@ -335,7 +335,7 @@ RunInstancesDialog::RunInstancesDialog() {
 	main_args_edit->set_accessibility_name(TTRC("Launch Arguments"));
 	main_gc->add_child(main_args_edit);
 	_fetch_main_args();
-	ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &RunInstancesDialog::_fetch_main_args));
+	ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &RunInstancesDialog::_fetch_main_args));
 	main_args_edit->connect(SceneStringName(text_changed), callable_mp(this, &RunInstancesDialog::_start_main_timer).unbind(1));
 
 	main_features_edit = memnew(LineEdit);

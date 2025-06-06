@@ -3290,7 +3290,7 @@ PopupMenu::PopupMenu() {
 	property_helper.setup_for_instance(base_property_helper, this);
 
 #ifdef TOOLS_ENABLED
-	ProjectSettings::get_singleton()->connect("settings_changed", callable_mp((Node *)this, &Node::update_configuration_warnings));
+	ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp((Node *)this, &Node::update_configuration_warnings));
 #endif
 }
 

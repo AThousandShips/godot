@@ -47,7 +47,7 @@ void CodeEdit::_notification(int p_what) {
 			_apply_project_settings();
 #ifdef TOOLS_ENABLED
 			if (Engine::get_singleton()->is_editor_hint()) {
-				ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &CodeEdit::_apply_project_settings));
+				ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &CodeEdit::_apply_project_settings));
 			}
 #endif // TOOLS_ENABLED
 		} break;

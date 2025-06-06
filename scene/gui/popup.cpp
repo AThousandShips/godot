@@ -439,6 +439,6 @@ PopupPanel::PopupPanel() {
 	add_child(panel, false, INTERNAL_MODE_FRONT);
 
 #ifdef TOOLS_ENABLED
-	ProjectSettings::get_singleton()->connect("settings_changed", callable_mp((Node *)this, &Node::update_configuration_warnings));
+	ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp((Node *)this, &Node::update_configuration_warnings));
 #endif
 }

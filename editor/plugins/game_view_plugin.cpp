@@ -751,8 +751,8 @@ void GameView::_notification(int p_what) {
 				EditorRun::instance_starting_callback = _instance_starting_static;
 
 				// Listen for project settings changes to update the window size and aspect ratio.
-				ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &GameView::_editor_or_project_settings_changed));
-				EditorSettings::get_singleton()->connect("settings_changed", callable_mp(this, &GameView::_editor_or_project_settings_changed));
+				ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &GameView::_editor_or_project_settings_changed));
+				EditorSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &GameView::_editor_or_project_settings_changed));
 			} else {
 				// Embedding not available.
 				embedding_separator->hide();

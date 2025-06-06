@@ -344,7 +344,7 @@ void Camera2D::_notification(int p_what) {
 #ifdef TOOLS_ENABLED
 		case NOTIFICATION_READY: {
 			if (is_part_of_edited_scene()) {
-				ProjectSettings::get_singleton()->connect(SNAME("settings_changed"), callable_mp(this, &Camera2D::_project_settings_changed));
+				ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &Camera2D::_project_settings_changed));
 			}
 		} break;
 #endif

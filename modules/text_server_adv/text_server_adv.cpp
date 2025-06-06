@@ -8072,7 +8072,7 @@ TextServerAdvanced::TextServerAdvanced() {
 	_insert_num_systems_lang();
 	_insert_feature_sets();
 	_bmp_create_font_funcs();
-	ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &TextServerAdvanced::_update_settings));
+	ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &TextServerAdvanced::_update_settings));
 }
 
 void TextServerAdvanced::_font_clear_system_fallback_cache() {

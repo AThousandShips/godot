@@ -1414,7 +1414,7 @@ EditorPropertyLayers::EditorPropertyLayers() {
 	layers->set_hide_on_checkable_item_selection(false);
 	layers->connect(SceneStringName(id_pressed), callable_mp(this, &EditorPropertyLayers::_menu_pressed));
 	layers->connect("popup_hide", callable_mp((BaseButton *)button, &BaseButton::set_pressed).bind(false));
-	ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &EditorPropertyLayers::_refresh_names));
+	ProjectSettings::get_singleton()->connect(CoreStringName(settings_changed), callable_mp(this, &EditorPropertyLayers::_refresh_names));
 }
 
 ///////////////////// INT /////////////////////////
