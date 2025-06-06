@@ -226,7 +226,7 @@ void EditorFileDialog::_update_theme_item_cache() {
 	theme_cache.create_folder = get_editor_theme_icon(SNAME("FolderCreate"));
 	theme_cache.open_folder = get_editor_theme_icon(SNAME("FolderBrowse"));
 
-	theme_cache.filter_box = get_editor_theme_icon(SNAME("Search"));
+	theme_cache.filter_box = get_editor_theme_icon(EditorStringName(Search));
 	theme_cache.file_sort_button = get_editor_theme_icon(SNAME("Sort"));
 
 	theme_cache.folder = get_editor_theme_icon(SNAME("Folder"));

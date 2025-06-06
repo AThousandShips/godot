@@ -429,7 +429,7 @@ void ScriptEditorQuickOpen::_notification(int p_what) {
 			[[fallthrough]];
 		}
 		case NOTIFICATION_VISIBILITY_CHANGED: {
-			search_box->set_right_icon(search_options->get_editor_theme_icon(SNAME("Search")));
+			search_box->set_right_icon(search_options->get_editor_theme_icon(EditorStringName(Search)));
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
@@ -1772,8 +1772,8 @@ void ScriptEditor::_notification(int p_what) {
 
 			members_overview_alphabeta_sort_button->set_button_icon(get_editor_theme_icon(SNAME("Sort")));
 
-			filter_scripts->set_right_icon(get_editor_theme_icon(SNAME("Search")));
-			filter_methods->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			filter_scripts->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
+			filter_methods->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 
 			filename->add_theme_style_override(CoreStringName(normal), get_theme_stylebox(CoreStringName(normal), SNAME("LineEdit")));
 

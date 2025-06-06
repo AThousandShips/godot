@@ -112,8 +112,8 @@ void EditorLog::_update_theme() {
 	clear_button->set_button_icon(get_editor_theme_icon(SNAME("Clear")));
 	copy_button->set_button_icon(get_editor_theme_icon(SNAME("ActionCopy")));
 	collapse_button->set_button_icon(get_editor_theme_icon(SNAME("CombineLines")));
-	show_search_button->set_button_icon(get_editor_theme_icon(SNAME("Search")));
-	search_box->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+	show_search_button->set_button_icon(get_editor_theme_icon(EditorStringName(Search)));
+	search_box->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 
 	theme_cache.error_color = get_theme_color(EditorStringName(error_color), EditorStringName(Editor));
 	theme_cache.error_icon = get_editor_theme_icon(SNAME("Error"));

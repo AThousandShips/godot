@@ -663,7 +663,7 @@ void SpriteFramesEditor::_notification(int p_what) {
 			add_anim->set_button_icon(get_editor_theme_icon(SNAME("New")));
 			duplicate_anim->set_button_icon(get_editor_theme_icon(SNAME("Duplicate")));
 			delete_anim->set_button_icon(get_editor_theme_icon(EditorStringName(Remove)));
-			anim_search_box->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			anim_search_box->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 			split_sheet_zoom_out->set_button_icon(get_editor_theme_icon(SNAME("ZoomLess")));
 			split_sheet_zoom_reset->set_button_icon(get_editor_theme_icon(SNAME("ZoomReset")));
 			split_sheet_zoom_in->set_button_icon(get_editor_theme_icon(SNAME("ZoomMore")));

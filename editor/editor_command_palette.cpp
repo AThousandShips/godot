@@ -166,7 +166,7 @@ void EditorCommandPalette::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_THEME_CHANGED: {
-			command_search_box->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			command_search_box->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 		} break;
 
 		case EditorSettings::NOTIFICATION_EDITOR_SETTINGS_CHANGED: {

@@ -63,6 +63,7 @@ public:
 	const StringName Add = StringName("Add");
 	const StringName Remove = StringName("Remove");
 	const StringName Edit = StringName("Edit");
+	const StringName Search = StringName("Search");
 };
 
 #define EditorStringName(m_name) EditorStringNames::get_singleton()->m_name

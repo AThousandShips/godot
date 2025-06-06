@@ -1715,10 +1715,10 @@ void SceneTreeDock::_notification(int p_what) {
 			button_extend_script->set_button_icon(get_editor_theme_icon(SNAME("ScriptExtend")));
 			button_tree_menu->set_button_icon(get_editor_theme_icon(SNAME("GuiTabMenuHl")));
 
-			filter->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			filter->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 
 			PopupMenu *filter_menu = filter->get_menu();
-			filter_menu->set_item_icon(filter_menu->get_item_idx_from_text(TTR("Filters")), get_editor_theme_icon(SNAME("Search")));
+			filter_menu->set_item_icon(filter_menu->get_item_idx_from_text(TTR("Filters")), get_editor_theme_icon(EditorStringName(Search)));
 			filter_menu->set_item_icon(filter_menu->get_item_index(FILTER_BY_TYPE), get_editor_theme_icon(SNAME("Node")));
 			filter_menu->set_item_icon(filter_menu->get_item_index(FILTER_BY_GROUP), get_editor_theme_icon(SNAME("Groups")));
 

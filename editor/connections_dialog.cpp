@@ -494,7 +494,7 @@ void ConnectDialog::_notification(int p_what) {
 			[[fallthrough]];
 		}
 		case NOTIFICATION_THEME_CHANGED: {
-			method_search->set_right_icon(get_editor_theme_icon("Search"));
+			method_search->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 			open_method_tree->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 		} break;
 	}
@@ -1442,7 +1442,7 @@ void ConnectionsDock::_connect_pressed() {
 void ConnectionsDock::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
-			search_box->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			search_box->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 
 			class_menu->set_item_icon(class_menu->get_item_index(CLASS_MENU_OPEN_DOCS), get_editor_theme_icon(SNAME("Help")));
 

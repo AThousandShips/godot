@@ -570,7 +570,7 @@ void CreateDialog::_notification(int p_what) {
 			favorites->add_theme_constant_override("icon_max_width", icon_width);
 			recent->set_fixed_icon_size(Size2(icon_width, icon_width));
 
-			search_box->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			search_box->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 			favorite->set_button_icon(get_editor_theme_icon(SNAME("Favorites")));
 		} break;
 	}

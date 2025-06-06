@@ -651,7 +651,7 @@ void EditorAssetLibrary::_notification(int p_what) {
 
 		case NOTIFICATION_THEME_CHANGED: {
 			error_tr->set_texture(get_editor_theme_icon(SNAME("Error")));
-			filter->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			filter->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 			library_scroll_bg->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SceneStringName(panel), SNAME("Tree")));
 			downloads_scroll->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SceneStringName(panel), SNAME("Tree")));
 			error_label->add_theme_color_override("color", get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));

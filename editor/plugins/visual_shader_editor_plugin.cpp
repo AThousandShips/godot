@@ -5214,8 +5214,8 @@ void VisualShaderEditor::_notification(int p_what) {
 			site_search->set_button_icon(get_editor_theme_icon(SNAME("ExternalLink")));
 			highend_label->set_modulate(get_theme_color(SNAME("highend_color"), EditorStringName(Editor)));
 
-			param_filter->set_right_icon(Control::get_editor_theme_icon(SNAME("Search")));
-			node_filter->set_right_icon(Control::get_editor_theme_icon(SNAME("Search")));
+			param_filter->set_right_icon(Control::get_editor_theme_icon(EditorStringName(Search)));
+			node_filter->set_right_icon(Control::get_editor_theme_icon(EditorStringName(Search)));
 
 			code_preview_button->set_button_icon(Control::get_editor_theme_icon(SNAME("Shader")));
 			shader_preview_button->set_button_icon(Control::get_editor_theme_icon(SNAME("SubViewport")));

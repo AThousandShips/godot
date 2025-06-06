@@ -305,9 +305,9 @@ void EditorSettingsDialog::shortcut_input(const Ref<InputEvent> &p_event) {
 }
 
 void EditorSettingsDialog::_update_icons() {
-	search_box->set_right_icon(shortcuts->get_editor_theme_icon(SNAME("Search")));
+	search_box->set_right_icon(shortcuts->get_editor_theme_icon(EditorStringName(Search)));
 	search_box->set_clear_button_enabled(true);
-	shortcut_search_box->set_right_icon(shortcuts->get_editor_theme_icon(SNAME("Search")));
+	shortcut_search_box->set_right_icon(shortcuts->get_editor_theme_icon(EditorStringName(Search)));
 	shortcut_search_box->set_clear_button_enabled(true);
 
 	restart_close_button->set_button_icon(shortcuts->get_editor_theme_icon(SNAME("Close")));

@@ -241,8 +241,8 @@ void EditorHelpSearch::_notification(int p_what) {
 			const int icon_width = get_theme_constant(SNAME("class_icon_size"), EditorStringName(Editor));
 			results_tree->add_theme_constant_override("icon_max_width", icon_width);
 
-			search_box->set_right_icon(get_editor_theme_icon(SNAME("Search")));
-			search_box->add_theme_icon_override("right_icon", get_editor_theme_icon(SNAME("Search")));
+			search_box->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
+			search_box->add_theme_icon_override("right_icon", get_editor_theme_icon(EditorStringName(Search)));
 
 			case_sensitive_button->set_button_icon(get_editor_theme_icon(SNAME("MatchCase")));
 			hierarchy_button->set_button_icon(get_editor_theme_icon(SNAME("ClassList")));

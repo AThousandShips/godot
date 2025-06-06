@@ -487,7 +487,7 @@ void InspectorDock::_notification(int p_what) {
 
 			history_menu->set_button_icon(get_editor_theme_icon(SNAME("History")));
 			object_menu->set_button_icon(get_editor_theme_icon(SNAME("Tools")));
-			search->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			search->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 			if (info_is_warning) {
 				info->set_button_icon(get_editor_theme_icon(SNAME("NodeWarning")));
 				info->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(warning_color), EditorStringName(Editor)));

@@ -601,10 +601,10 @@ void FileSystemDock::_notification(int p_what) {
 				button_file_list_display_mode->set_button_icon(get_editor_theme_icon(SNAME("FileList")));
 			}
 
-			tree_search_box->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			tree_search_box->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 			tree_button_sort->set_button_icon(get_editor_theme_icon(SNAME("Sort")));
 
-			file_list_search_box->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			file_list_search_box->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 			file_list_button_sort->set_button_icon(get_editor_theme_icon(SNAME("Sort")));
 
 			button_dock_placement->set_button_icon(get_editor_theme_icon(SNAME("GuiTabMenuHl")));

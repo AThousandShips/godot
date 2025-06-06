@@ -873,7 +873,7 @@ void ThemeItemImportTree::_notification(int p_what) {
 			select_icons_warning_icon->set_texture(get_editor_theme_icon(SNAME("StatusWarning")));
 			select_icons_warning->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor)));
 
-			import_items_filter->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			import_items_filter->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 
 			// Bottom panel buttons.
 			import_collapse_types_button->set_button_icon(get_editor_theme_icon(SNAME("CollapseTree")));

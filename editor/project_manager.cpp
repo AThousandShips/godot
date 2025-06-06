@@ -252,13 +252,13 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 			empty_list_online_warning->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("font_placeholder_color"), EditorStringName(Editor)));
 
 			// Top bar.
-			search_box->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			search_box->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 			quick_settings_button->set_button_icon(get_editor_theme_icon(SNAME("Tools")));
 
 			// Sidebar.
 			create_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			import_btn->set_button_icon(get_editor_theme_icon(SNAME("Load")));
-			scan_btn->set_button_icon(get_editor_theme_icon(SNAME("Search")));
+			scan_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Search)));
 			open_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Edit)));
 			open_options_btn->set_button_icon(get_editor_theme_icon(SNAME("Collapse")));
 			run_btn->set_button_icon(get_editor_theme_icon(SNAME("Play")));

@@ -1029,7 +1029,7 @@ void ScriptEditorDebugger::_notification(int p_what) {
 			vmem_notice_icon->set_texture(get_editor_theme_icon(SNAME("NodeInfo")));
 			vmem_refresh->set_button_icon(get_editor_theme_icon(SNAME("Reload")));
 			vmem_export->set_button_icon(get_editor_theme_icon(SNAME("Save")));
-			search->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			search->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 
 			reason->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 

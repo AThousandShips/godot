@@ -572,7 +572,7 @@ void InputEventConfigurationDialog::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_THEME_CHANGED: {
-			input_list_search->set_right_icon(get_editor_theme_icon(SNAME("Search")));
+			input_list_search->set_right_icon(get_editor_theme_icon(EditorStringName(Search)));
 
 			key_mode->set_item_icon(KEYMODE_KEYCODE, get_editor_theme_icon(SNAME("Keyboard")));
 			key_mode->set_item_icon(KEYMODE_PHY_KEYCODE, get_editor_theme_icon(SNAME("KeyboardPhysical")));
