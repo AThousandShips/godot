@@ -835,8 +835,8 @@ void ThemeItemImportTree::_import_selected() {
 	ur->add_undo_method(*edited_theme, "clear");
 	ur->add_undo_method(*edited_theme, "merge_with", old_snapshot);
 
-	ur->add_do_method(this, "emit_signal", SNAME("items_imported"));
-	ur->add_undo_method(this, "emit_signal", SNAME("items_imported"));
+	ur->add_do_method(this, CoreStringName(emit_signal), SNAME("items_imported"));
+	ur->add_undo_method(this, CoreStringName(emit_signal), SNAME("items_imported"));
 
 	ur->commit_action();
 }

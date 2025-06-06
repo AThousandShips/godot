@@ -61,8 +61,8 @@ bool EditorDebuggerRemoteObjects::_set_impl(const StringName &p_name, const Vari
 	const int size = remote_object_ids.size();
 	ur->create_action(size == 1 ? vformat(TTR("Set %s"), name) : vformat(TTR("Set %s on %d objects"), name, size), UndoRedo::MERGE_ENDS);
 
-	ur->add_do_method(this, SNAME("emit_signal"), SNAME("values_edited"), name, values, p_field);
-	ur->add_undo_method(this, SNAME("emit_signal"), SNAME("values_edited"), name, old_values, p_field);
+	ur->add_do_method(this, CoreStringName(emit_signal), SNAME("values_edited"), name, values, p_field);
+	ur->add_undo_method(this, CoreStringName(emit_signal), SNAME("values_edited"), name, old_values, p_field);
 	ur->commit_action();
 
 	return true;

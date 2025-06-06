@@ -84,6 +84,7 @@ public:
 	const StringName notification = "notification";
 	const StringName property_list_changed = "property_list_changed";
 	const StringName settings_changed = "settings_changed";
+	const StringName emit_signal = "emit_signal";
 };
 
 #define CoreStringName(m_name) CoreStringNames::get_singleton()->m_name

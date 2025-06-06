@@ -3651,7 +3651,7 @@ void GDScriptAnalyzer::reduce_call(GDScriptParser::CallNode *p_call, bool p_is_a
 		}
 
 		// Consider `emit_signal()`, `connect()`, and `disconnect()` as implicit uses of the signal.
-		if (is_self && (p_call->function_name == SNAME("emit_signal") || p_call->function_name == SNAME("connect") || p_call->function_name == SNAME("disconnect")) && !p_call->arguments.is_empty()) {
+		if (is_self && (p_call->function_name == CoreStringName(emit_signal) || p_call->function_name == SNAME("connect") || p_call->function_name == SNAME("disconnect")) && !p_call->arguments.is_empty()) {
 			const GDScriptParser::ExpressionNode *signal_arg = p_call->arguments[0];
 			if (signal_arg && signal_arg->is_constant) {
 				const StringName &signal_name = signal_arg->reduced_value;

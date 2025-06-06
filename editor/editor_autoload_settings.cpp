@@ -230,8 +230,8 @@ void EditorAutoloadSettings::_autoload_edited() {
 		undo_redo->add_do_method(this, CoreStringName(call_deferred), "update_autoload");
 		undo_redo->add_undo_method(this, CoreStringName(call_deferred), "update_autoload");
 
-		undo_redo->add_do_method(this, "emit_signal", autoload_changed);
-		undo_redo->add_undo_method(this, "emit_signal", autoload_changed);
+		undo_redo->add_do_method(this, CoreStringName(emit_signal), autoload_changed);
+		undo_redo->add_undo_method(this, CoreStringName(emit_signal), autoload_changed);
 
 		undo_redo->commit_action();
 
@@ -265,8 +265,8 @@ void EditorAutoloadSettings::_autoload_edited() {
 		undo_redo->add_do_method(this, CoreStringName(call_deferred), "update_autoload");
 		undo_redo->add_undo_method(this, CoreStringName(call_deferred), "update_autoload");
 
-		undo_redo->add_do_method(this, "emit_signal", autoload_changed);
-		undo_redo->add_undo_method(this, "emit_signal", autoload_changed);
+		undo_redo->add_do_method(this, CoreStringName(emit_signal), autoload_changed);
+		undo_redo->add_undo_method(this, CoreStringName(emit_signal), autoload_changed);
 
 		undo_redo->commit_action();
 	}
@@ -318,8 +318,8 @@ void EditorAutoloadSettings::_autoload_button_pressed(Object *p_item, int p_colu
 			undo_redo->add_do_method(this, "update_autoload");
 			undo_redo->add_undo_method(this, "update_autoload");
 
-			undo_redo->add_do_method(this, "emit_signal", autoload_changed);
-			undo_redo->add_undo_method(this, "emit_signal", autoload_changed);
+			undo_redo->add_do_method(this, CoreStringName(emit_signal), autoload_changed);
+			undo_redo->add_undo_method(this, CoreStringName(emit_signal), autoload_changed);
 
 			undo_redo->commit_action();
 		} break;
@@ -336,8 +336,8 @@ void EditorAutoloadSettings::_autoload_button_pressed(Object *p_item, int p_colu
 			undo_redo->add_do_method(this, "update_autoload");
 			undo_redo->add_undo_method(this, "update_autoload");
 
-			undo_redo->add_do_method(this, "emit_signal", autoload_changed);
-			undo_redo->add_undo_method(this, "emit_signal", autoload_changed);
+			undo_redo->add_do_method(this, CoreStringName(emit_signal), autoload_changed);
+			undo_redo->add_undo_method(this, CoreStringName(emit_signal), autoload_changed);
 
 			undo_redo->commit_action();
 		} break;
@@ -770,8 +770,8 @@ void EditorAutoloadSettings::drop_data_fw(const Point2 &p_point, const Variant &
 	undo_redo->add_do_method(this, "update_autoload");
 	undo_redo->add_undo_method(this, "update_autoload");
 
-	undo_redo->add_do_method(this, "emit_signal", autoload_changed);
-	undo_redo->add_undo_method(this, "emit_signal", autoload_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), autoload_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), autoload_changed);
 
 	undo_redo->commit_action();
 }
@@ -812,8 +812,8 @@ bool EditorAutoloadSettings::autoload_add(const String &p_name, const String &p_
 	undo_redo->add_do_method(this, "update_autoload");
 	undo_redo->add_undo_method(this, "update_autoload");
 
-	undo_redo->add_do_method(this, "emit_signal", autoload_changed);
-	undo_redo->add_undo_method(this, "emit_signal", autoload_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), autoload_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), autoload_changed);
 
 	undo_redo->commit_action();
 
@@ -837,8 +837,8 @@ void EditorAutoloadSettings::autoload_remove(const String &p_name) {
 	undo_redo->add_do_method(this, "update_autoload");
 	undo_redo->add_undo_method(this, "update_autoload");
 
-	undo_redo->add_do_method(this, "emit_signal", autoload_changed);
-	undo_redo->add_undo_method(this, "emit_signal", autoload_changed);
+	undo_redo->add_do_method(this, CoreStringName(emit_signal), autoload_changed);
+	undo_redo->add_undo_method(this, CoreStringName(emit_signal), autoload_changed);
 
 	undo_redo->commit_action();
 }

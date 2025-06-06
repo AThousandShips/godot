@@ -608,7 +608,7 @@ void EditorResourcePreview::check_for_invalidation(const String &p_path) {
 	}
 
 	if (call_invalidated) { //do outside mutex
-		call_deferred(SNAME("emit_signal"), "preview_invalidated", p_path);
+		call_deferred(CoreStringName(emit_signal), "preview_invalidated", p_path);
 	}
 }
 
