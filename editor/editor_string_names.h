@@ -64,6 +64,7 @@ public:
 	const StringName update_tree = StringName("update_tree");
 	const StringName update_viewport = StringName("update_viewport");
 	const StringName update_node = StringName("update_node");
+	const StringName _update_library = StringName("_update_library");
 	const StringName _update_space = StringName("_update_space");
 	const StringName set_polygon = StringName("set_polygon");
 	const StringName set_owner = StringName("set_owner");
