@@ -96,8 +96,8 @@ void Polygon3DEditor::_wip_close() {
 	ERR_FAIL_NULL_MSG(obj, "Edited object is not valid.");
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	undo_redo->create_action(TTR("Create Polygon3D"));
-	undo_redo->add_undo_method(obj, "set_polygon", obj->call("get_polygon"));
-	undo_redo->add_do_method(obj, "set_polygon", wip);
+	undo_redo->add_undo_method(obj, EditorStringName(set_polygon), obj->call("get_polygon"));
+	undo_redo->add_do_method(obj, EditorStringName(set_polygon), wip);
 	undo_redo->add_do_method(this, "_polygon_draw");
 	undo_redo->add_undo_method(this, "_polygon_draw");
 	wip.clear();
@@ -186,9 +186,9 @@ EditorPlugin::AfterGUIInput Polygon3DEditor::forward_3d_gui_input(Camera3D *p_ca
 							if (poly.size() < 3) {
 								EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 								undo_redo->create_action(TTR("Edit Poly"));
-								undo_redo->add_undo_method(obj, "set_polygon", poly);
+								undo_redo->add_undo_method(obj, EditorStringName(set_polygon), poly);
 								poly.push_back(cpoint);
-								undo_redo->add_do_method(obj, "set_polygon", poly);
+								undo_redo->add_do_method(obj, EditorStringName(set_polygon), poly);
 								undo_redo->add_do_method(this, "_polygon_draw");
 								undo_redo->add_undo_method(this, "_polygon_draw");
 								undo_redo->commit_action();
@@ -263,8 +263,8 @@ EditorPlugin::AfterGUIInput Polygon3DEditor::forward_3d_gui_input(Camera3D *p_ca
 							poly.write[edited_point] = edited_point_pos;
 							EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 							undo_redo->create_action(TTR("Edit Poly"));
-							undo_redo->add_do_method(obj, "set_polygon", poly);
-							undo_redo->add_undo_method(obj, "set_polygon", pre_move_edit);
+							undo_redo->add_do_method(obj, EditorStringName(set_polygon), poly);
+							undo_redo->add_undo_method(obj, EditorStringName(set_polygon), pre_move_edit);
 							undo_redo->add_do_method(this, "_polygon_draw");
 							undo_redo->add_undo_method(this, "_polygon_draw");
 							undo_redo->commit_action();
@@ -292,9 +292,9 @@ EditorPlugin::AfterGUIInput Polygon3DEditor::forward_3d_gui_input(Camera3D *p_ca
 					if (closest_idx >= 0) {
 						EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 						undo_redo->create_action(TTR("Edit Poly (Remove Point)"));
-						undo_redo->add_undo_method(obj, "set_polygon", poly);
+						undo_redo->add_undo_method(obj, EditorStringName(set_polygon), poly);
 						poly.remove_at(closest_idx);
-						undo_redo->add_do_method(obj, "set_polygon", poly);
+						undo_redo->add_do_method(obj, EditorStringName(set_polygon), poly);
 						undo_redo->add_do_method(this, "_polygon_draw");
 						undo_redo->add_undo_method(this, "_polygon_draw");
 						undo_redo->commit_action();
@@ -361,7 +361,7 @@ PackedVector2Array Polygon3DEditor::_get_polygon() {
 void Polygon3DEditor::_set_polygon(const PackedVector2Array &p_poly) {
 	Object *obj = node_resource.is_valid() ? (Object *)node_resource.ptr() : node;
 	ERR_FAIL_NULL_MSG(obj, "Edited object is not valid.");
-	obj->call("set_polygon", p_poly);
+	obj->call(EditorStringName(set_polygon), p_poly);
 }
 
 void Polygon3DEditor::_polygon_draw() {

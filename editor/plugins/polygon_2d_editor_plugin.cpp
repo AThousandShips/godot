@@ -328,8 +328,8 @@ void Polygon2DEditor::_edit_menu_option(int p_option) {
 			}
 
 			undo_redo->create_action(TTR("Create Polygon"));
-			undo_redo->add_do_method(node, "set_polygon", uvs);
-			undo_redo->add_undo_method(node, "set_polygon", points);
+			undo_redo->add_do_method(node, EditorStringName(set_polygon), uvs);
+			undo_redo->add_undo_method(node, EditorStringName(set_polygon), points);
 			undo_redo->commit_action();
 		} break;
 		case MENU_UV_CLEAR: {
@@ -499,8 +499,8 @@ void Polygon2DEditor::_canvas_input(const Ref<InputEvent> &p_input) {
 							undo_redo->create_action(TTR("Create Polygon & UV"));
 							undo_redo->add_do_method(node, "set_uv", node->get_uv());
 							undo_redo->add_undo_method(node, "set_uv", previous_uv);
-							undo_redo->add_do_method(node, "set_polygon", node->get_polygon());
-							undo_redo->add_undo_method(node, "set_polygon", previous_polygon);
+							undo_redo->add_do_method(node, EditorStringName(set_polygon), node->get_polygon());
+							undo_redo->add_undo_method(node, EditorStringName(set_polygon), previous_polygon);
 							undo_redo->add_do_method(node, "set_internal_vertex_count", 0);
 							undo_redo->add_undo_method(node, "set_internal_vertex_count", previous_internal_vertices);
 							undo_redo->add_do_method(node, "set_vertex_colors", Vector<Color>());
@@ -546,8 +546,8 @@ void Polygon2DEditor::_canvas_input(const Ref<InputEvent> &p_input) {
 					undo_redo->create_action(TTR("Create Internal Vertex"));
 					undo_redo->add_do_method(node, "set_uv", previous_uv);
 					undo_redo->add_undo_method(node, "set_uv", node->get_uv());
-					undo_redo->add_do_method(node, "set_polygon", previous_polygon);
-					undo_redo->add_undo_method(node, "set_polygon", node->get_polygon());
+					undo_redo->add_do_method(node, EditorStringName(set_polygon), previous_polygon);
+					undo_redo->add_undo_method(node, EditorStringName(set_polygon), node->get_polygon());
 					undo_redo->add_do_method(node, "set_vertex_colors", previous_colors);
 					undo_redo->add_undo_method(node, "set_vertex_colors", node->get_vertex_colors());
 					for (int i = 0; i < node->get_bone_count(); i++) {
@@ -599,8 +599,8 @@ void Polygon2DEditor::_canvas_input(const Ref<InputEvent> &p_input) {
 					undo_redo->create_action(TTR("Remove Internal Vertex"));
 					undo_redo->add_do_method(node, "set_uv", previous_uv);
 					undo_redo->add_undo_method(node, "set_uv", node->get_uv());
-					undo_redo->add_do_method(node, "set_polygon", previous_polygon);
-					undo_redo->add_undo_method(node, "set_polygon", node->get_polygon());
+					undo_redo->add_do_method(node, EditorStringName(set_polygon), previous_polygon);
+					undo_redo->add_undo_method(node, EditorStringName(set_polygon), node->get_polygon());
 					undo_redo->add_do_method(node, "set_vertex_colors", previous_colors);
 					undo_redo->add_undo_method(node, "set_vertex_colors", node->get_vertex_colors());
 					for (int i = 0; i < node->get_bone_count(); i++) {
@@ -742,8 +742,8 @@ void Polygon2DEditor::_canvas_input(const Ref<InputEvent> &p_input) {
 							case ACTION_ROTATE:
 							case ACTION_SCALE: {
 								undo_redo->create_action(TTR("Transform Polygon"));
-								undo_redo->add_do_method(node, "set_polygon", node->get_polygon());
-								undo_redo->add_undo_method(node, "set_polygon", editing_points);
+								undo_redo->add_do_method(node, EditorStringName(set_polygon), node->get_polygon());
+								undo_redo->add_undo_method(node, EditorStringName(set_polygon), editing_points);
 								undo_redo->commit_action();
 							} break;
 							default: {
