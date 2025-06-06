@@ -1455,7 +1455,7 @@ int AnimationTimelineEdit::get_name_limit() const {
 void AnimationTimelineEdit::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
-			add_track->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			add_track->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			loop->set_button_icon(get_editor_theme_icon(SNAME("Loop")));
 			time_icon->set_texture(get_editor_theme_icon(SNAME("Time")));
 			filter_track->set_right_icon(get_editor_theme_icon(SNAME("Search")));

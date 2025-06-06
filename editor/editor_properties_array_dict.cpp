@@ -457,7 +457,7 @@ void EditorPropertyArray::update_property() {
 			vbox->add_child(property_vbox);
 
 			button_add_item = EditorInspector::create_inspector_action_button(TTR("Add Element"));
-			button_add_item->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			button_add_item->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			button_add_item->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyArray::_add_element));
 			button_add_item->connect(SceneStringName(draw), callable_mp(this, &EditorPropertyArray::_button_add_item_draw));
 			SET_DRAG_FORWARDING_CD(button_add_item, EditorPropertyArray);
@@ -752,7 +752,7 @@ void EditorPropertyArray::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			if (button_add_item) {
-				button_add_item->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+				button_add_item->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			}
 		} break;
 
@@ -1306,7 +1306,7 @@ void EditorPropertyDictionary::update_property() {
 			_create_new_property_slot(EditorPropertyDictionaryObject::NEW_VALUE_INDEX);
 
 			button_add_item = EditorInspector::create_inspector_action_button(TTR("Add Key/Value Pair"));
-			button_add_item->set_button_icon(get_theme_icon(SNAME("Add"), EditorStringName(EditorIcons)));
+			button_add_item->set_button_icon(get_theme_icon(EditorStringName(Add), EditorStringName(EditorIcons)));
 			button_add_item->set_disabled(is_read_only());
 			button_add_item->set_accessibility_name(TTRC("Add"));
 			button_add_item->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyDictionary::_add_key_value));
@@ -1454,7 +1454,7 @@ void EditorPropertyDictionary::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			if (button_add_item) {
-				button_add_item->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+				button_add_item->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 				add_panel->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SNAME("DictionaryAddItem")));
 			}
 		} break;
@@ -1663,7 +1663,7 @@ void EditorPropertyLocalizableString::update_property() {
 		if (page_index == max_page) {
 			button_add_item = EditorInspector::create_inspector_action_button(TTR("Add Translation"));
 			button_add_item->set_accessibility_name(TTRC("Add Translation"));
-			button_add_item->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			button_add_item->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			button_add_item->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyLocalizableString::_add_locale_popup));
 			property_vbox->add_child(button_add_item);
 		}
@@ -1688,7 +1688,7 @@ void EditorPropertyLocalizableString::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			if (button_add_item) {
-				button_add_item->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+				button_add_item->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			}
 		} break;
 	}

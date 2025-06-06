@@ -105,13 +105,13 @@ void ProjectExportDialog::_notification(int p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			duplicate_preset->set_button_icon(presets->get_editor_theme_icon(SNAME("Duplicate")));
 			delete_preset->set_button_icon(presets->get_editor_theme_icon(SNAME("Remove")));
-			patch_add_btn->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			patch_add_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 		} break;
 
 		case NOTIFICATION_READY: {
 			duplicate_preset->set_button_icon(presets->get_editor_theme_icon(SNAME("Duplicate")));
 			delete_preset->set_button_icon(presets->get_editor_theme_icon(SNAME("Remove")));
-			patch_add_btn->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			patch_add_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			connect(SceneStringName(confirmed), callable_mp(this, &ProjectExportDialog::_export_pck_zip));
 			_update_export_all();
 		} break;

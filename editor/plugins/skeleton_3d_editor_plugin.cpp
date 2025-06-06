@@ -121,7 +121,7 @@ void BonePropertiesEditor::_notification(int p_what) {
 			const Color section_color = get_theme_color(SNAME("prop_subsection"), EditorStringName(Editor));
 			section->set_bg_color(section_color);
 			rest_section->set_bg_color(section_color);
-			add_metadata_button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			add_metadata_button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 		} break;
 	}
 }

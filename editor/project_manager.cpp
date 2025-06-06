@@ -244,7 +244,7 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 			loading_label->add_theme_font_override(SceneStringName(font), get_theme_font(SNAME("bold"), EditorStringName(EditorFonts)));
 			project_list_panel->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SNAME("project_list"), SNAME("ProjectManager")));
 
-			empty_list_create_project->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			empty_list_create_project->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			empty_list_import_project->set_button_icon(get_editor_theme_icon(SNAME("Load")));
 			empty_list_open_assetlib->set_button_icon(get_editor_theme_icon(SNAME("AssetLib")));
 
@@ -256,7 +256,7 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 			quick_settings_button->set_button_icon(get_editor_theme_icon(SNAME("Tools")));
 
 			// Sidebar.
-			create_btn->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			create_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			import_btn->set_button_icon(get_editor_theme_icon(SNAME("Load")));
 			scan_btn->set_button_icon(get_editor_theme_icon(SNAME("Search")));
 			open_btn->set_button_icon(get_editor_theme_icon(SNAME("Edit")));
@@ -267,7 +267,7 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 			manage_tags_btn->set_button_icon(get_editor_theme_icon("Script"));
 			erase_btn->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
 			erase_missing_btn->set_button_icon(get_editor_theme_icon(SNAME("Clear")));
-			create_tag_btn->set_button_icon(get_editor_theme_icon("Add"));
+			create_tag_btn->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 
 			tag_error->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));
 			tag_edit_error->add_theme_color_override(SceneStringName(font_color), get_theme_color(EditorStringName(error_color), EditorStringName(Editor)));

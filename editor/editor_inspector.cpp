@@ -3089,7 +3089,7 @@ void EditorInspectorArray::_notification(int p_what) {
 				}
 			}
 
-			add_button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			add_button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 		} break;
 
 		case NOTIFICATION_DRAG_BEGIN: {
@@ -4472,7 +4472,7 @@ void EditorInspector::update_tree() {
 		main_vbox->add_child(spacer);
 
 		Button *add_md = EditorInspector::create_inspector_action_button(TTR("Add Metadata"));
-		add_md->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+		add_md->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 		add_md->connect(SceneStringName(pressed), callable_mp(this, &EditorInspector::_show_add_meta_dialog));
 		main_vbox->add_child(add_md);
 		if (all_read_only) {

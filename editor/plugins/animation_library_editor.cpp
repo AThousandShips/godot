@@ -725,7 +725,7 @@ void AnimationLibraryEditor::update_tree() {
 		libitem->set_metadata(0, K);
 		libitem->set_icon(0, get_editor_theme_icon("AnimationLibrary"));
 
-		libitem->add_button(0, get_editor_theme_icon("Add"), LIB_BUTTON_ADD, animation_library_is_foreign, TTR("Add animation to library."));
+		libitem->add_button(0, get_editor_theme_icon(EditorStringName(Add)), LIB_BUTTON_ADD, animation_library_is_foreign, TTR("Add animation to library."));
 		libitem->add_button(0, get_editor_theme_icon("Load"), LIB_BUTTON_LOAD, animation_library_is_foreign, TTR("Load animation from file and add to library."));
 		libitem->add_button(0, get_editor_theme_icon("ActionPaste"), LIB_BUTTON_PASTE, animation_library_is_foreign, TTR("Paste animation to library from clipboard."));
 
@@ -973,7 +973,7 @@ void AnimationLibraryEditor::show_dialog() {
 void AnimationLibraryEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
-			new_library_button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			new_library_button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			load_library_button->set_button_icon(get_editor_theme_icon(SNAME("Load")));
 		}
 	}

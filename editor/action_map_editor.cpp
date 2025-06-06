@@ -372,7 +372,7 @@ void ActionMapEditor::_notification(int p_what) {
 
 		case NOTIFICATION_THEME_CHANGED: {
 			action_list_search->set_right_icon(get_editor_theme_icon(SNAME("Search")));
-			add_button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			add_button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			if (!actions_cache.is_empty()) {
 				update_action_list();
 			}
@@ -466,7 +466,7 @@ void ActionMapEditor::update_action_list(const Vector<ActionInfo> &p_action_info
 			action_item->set_meta("__action_initial", action_info.action_initial);
 			action_item->add_button(2, action_tree->get_editor_theme_icon(SNAME("ReloadSmall")), BUTTON_REVERT_ACTION, action_eq, action_eq ? TTRC("Cannot Revert - Action is same as initial") : TTRC("Revert Action"));
 		}
-		action_item->add_button(2, action_tree->get_editor_theme_icon(SNAME("Add")), BUTTON_ADD_EVENT, false, TTRC("Add Event"));
+		action_item->add_button(2, action_tree->get_editor_theme_icon(EditorStringName(Add)), BUTTON_ADD_EVENT, false, TTRC("Add Event"));
 		action_item->add_button(2, action_tree->get_editor_theme_icon(SNAME("Remove")), BUTTON_REMOVE_ACTION, !action_info.editable, action_info.editable ? TTRC("Remove Action") : TTRC("Cannot Remove Action"));
 
 		action_item->set_custom_bg_color(0, action_tree->get_theme_color(SNAME("prop_subsection"), EditorStringName(Editor)));

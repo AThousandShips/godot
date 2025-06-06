@@ -429,7 +429,7 @@ TreeItem *EditorSettingsDialog::_create_shortcut_treeitem(TreeItem *p_parent, co
 		shortcut_item->add_button(1, shortcuts->get_editor_theme_icon(SNAME("Reload")), SHORTCUT_REVERT);
 	}
 
-	shortcut_item->add_button(1, shortcuts->get_editor_theme_icon(SNAME("Add")), SHORTCUT_ADD);
+	shortcut_item->add_button(1, shortcuts->get_editor_theme_icon(EditorStringName(Add)), SHORTCUT_ADD);
 	shortcut_item->add_button(1, shortcuts->get_editor_theme_icon(SNAME("Close")), SHORTCUT_ERASE);
 
 	shortcut_item->set_meta("is_action", p_is_action);

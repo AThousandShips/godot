@@ -65,7 +65,7 @@ void EditorAutoloadSettings::_notification(int p_what) {
 
 		case NOTIFICATION_THEME_CHANGED: {
 			browse_button->set_button_icon(get_editor_theme_icon(SNAME("Folder")));
-			add_autoload->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			add_autoload->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 		} break;
 
 		case NOTIFICATION_VISIBILITY_CHANGED: {

@@ -1948,7 +1948,7 @@ void ThemeItemEditorDialog::_notification(int p_what) {
 			edit_items_remove_custom->set_button_icon(get_editor_theme_icon(SNAME("ThemeRemoveCustomItems")));
 			edit_items_remove_all->set_button_icon(get_editor_theme_icon(SNAME("ThemeRemoveAllItems")));
 
-			edit_add_type_button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			edit_add_type_button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 
 			import_another_theme_button->set_button_icon(get_editor_theme_icon(SNAME("Folder")));
 		} break;
@@ -2590,7 +2590,7 @@ HBoxContainer *ThemeTypeEditor::_create_property_control(Theme::DataType p_data_
 		item_name->add_theme_color_override(SceneStringName(font_color), get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor)));
 
 		Button *item_override_button = memnew(Button);
-		item_override_button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+		item_override_button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 		item_override_button->set_tooltip_text(TTR("Override Item"));
 		item_override_button->set_accessibility_name(TTRC("Override Item"));
 		item_override_button->set_flat(true);
@@ -3499,7 +3499,7 @@ void ThemeTypeEditor::_add_type_dialog_selected(const String p_type_name) {
 void ThemeTypeEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
-			add_type_button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			add_type_button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			rename_type_button->set_button_icon(get_editor_theme_icon(SNAME("Rename")));
 			remove_type_button->set_button_icon(get_editor_theme_icon(SNAME("Remove")));
 
@@ -3511,7 +3511,7 @@ void ThemeTypeEditor::_notification(int p_what) {
 			data_type_tabs->set_tab_icon(5, get_editor_theme_icon(SNAME("StyleBoxFlat")));
 			data_type_tabs->set_tab_icon(6, get_editor_theme_icon(SNAME("Tools")));
 
-			type_variation_button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			type_variation_button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 		} break;
 	}
 }
@@ -3900,7 +3900,7 @@ void ThemeEditor::_notification(int p_what) {
 			preview_tabs->add_theme_style_override("tab_unselected", get_theme_stylebox(SNAME("ThemeEditorPreviewBG"), EditorStringName(EditorStyles)));
 			preview_tabs_content->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SceneStringName(panel), SNAME("TabContainerOdd")));
 
-			add_preview_button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			add_preview_button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 		} break;
 	}
 }

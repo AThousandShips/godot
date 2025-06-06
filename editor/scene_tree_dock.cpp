@@ -1676,7 +1676,7 @@ void SceneTreeDock::_notification(int p_what) {
 			button_custom = memnew(Button);
 			node_shortcuts->add_child(button_custom);
 			button_custom->set_text(TTR("Other Node"));
-			button_custom->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			button_custom->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			button_custom->connect(SceneStringName(pressed), callable_mp(this, &SceneTreeDock::_tool_selected).bind(TOOL_NEW, false));
 
 			button_clipboard = memnew(Button);
@@ -1708,7 +1708,7 @@ void SceneTreeDock::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_THEME_CHANGED: {
-			button_add->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+			button_add->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			button_instance->set_button_icon(get_editor_theme_icon(SNAME("Instance")));
 			button_create_script->set_button_icon(get_editor_theme_icon(SNAME("ScriptCreate")));
 			button_detach_script->set_button_icon(get_editor_theme_icon(SNAME("ScriptRemove")));
@@ -1733,7 +1733,7 @@ void SceneTreeDock::_notification(int p_what) {
 				button_ui->set_button_icon(get_editor_theme_icon(SNAME("Control")));
 			}
 			if (button_custom) {
-				button_custom->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+				button_custom->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			}
 			if (button_clipboard) {
 				button_clipboard->set_button_icon(get_editor_theme_icon(SNAME("ActionPaste")));
@@ -3758,7 +3758,7 @@ void SceneTreeDock::_tree_rmb(const Vector2 &p_menu_pos) {
 			return;
 		}
 
-		menu->add_icon_shortcut(get_editor_theme_icon(SNAME("Add")), ED_GET_SHORTCUT("scene_tree/add_child_node"), TOOL_NEW);
+		menu->add_icon_shortcut(get_editor_theme_icon(EditorStringName(Add)), ED_GET_SHORTCUT("scene_tree/add_child_node"), TOOL_NEW);
 		menu->add_icon_shortcut(get_editor_theme_icon(SNAME("Instance")), ED_GET_SHORTCUT("scene_tree/instantiate_scene"), TOOL_INSTANTIATE);
 
 		menu->reset_size();
@@ -3782,7 +3782,7 @@ void SceneTreeDock::_tree_rmb(const Vector2 &p_menu_pos) {
 				menu->add_separator();
 			}
 
-			menu->add_icon_shortcut(get_editor_theme_icon(SNAME("Add")), ED_GET_SHORTCUT("scene_tree/add_child_node"), TOOL_NEW);
+			menu->add_icon_shortcut(get_editor_theme_icon(EditorStringName(Add)), ED_GET_SHORTCUT("scene_tree/add_child_node"), TOOL_NEW);
 			menu->add_icon_shortcut(get_editor_theme_icon(SNAME("Instance")), ED_GET_SHORTCUT("scene_tree/instantiate_scene"), TOOL_INSTANTIATE);
 		}
 		menu->add_icon_shortcut(get_editor_theme_icon(SNAME("Collapse")), ED_GET_SHORTCUT("scene_tree/expand_collapse_all"), TOOL_EXPAND_COLLAPSE);

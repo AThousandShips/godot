@@ -999,7 +999,7 @@ void TileSetAtlasSourceEditor::_update_atlas_view() {
 				// Create and position the button.
 				Button *button = memnew(Button);
 				button->set_flat(true);
-				button->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+				button->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 				button->add_theme_style_override(CoreStringName(normal), memnew(StyleBoxEmpty));
 				button->add_theme_style_override(SceneStringName(hover), memnew(StyleBoxEmpty));
 				button->add_theme_style_override("focus", memnew(StyleBoxEmpty));

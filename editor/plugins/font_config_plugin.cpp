@@ -148,7 +148,7 @@ void EditorPropertyFontMetaOverride::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			if (button_add) {
-				button_add->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+				button_add->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			}
 		} break;
 	}
@@ -553,7 +553,7 @@ void EditorPropertyOTFeatures::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			if (button_add) {
-				button_add->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+				button_add->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 			}
 		} break;
 	}
@@ -800,7 +800,7 @@ void EditorPropertyOTFeatures::update_property() {
 		}
 
 		button_add = EditorInspector::create_inspector_action_button(TTR("Add Feature"));
-		button_add->set_button_icon(get_editor_theme_icon(SNAME("Add")));
+		button_add->set_button_icon(get_editor_theme_icon(EditorStringName(Add)));
 		button_add->connect(SceneStringName(pressed), callable_mp(this, &EditorPropertyOTFeatures::_add_menu));
 		property_vbox->add_child(button_add);
 
