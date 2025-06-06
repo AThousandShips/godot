@@ -59,6 +59,8 @@ public:
 	const StringName needs_redraw = StringName("needs_redraw");
 
 	const StringName object_id_selected = StringName("object_id_selected");
+
+	const StringName queue_redraw = StringName("queue_redraw");
 };
 
 #define EditorStringName(m_name) EditorStringNames::get_singleton()->m_name

@@ -432,8 +432,8 @@ void TextureRegionEditor::_texture_overlay_input(const Ref<InputEvent> &p_input)
 
 								undo_redo->add_do_method(this, "_update_rect");
 								undo_redo->add_undo_method(this, "_update_rect");
-								undo_redo->add_do_method(texture_overlay, "queue_redraw");
-								undo_redo->add_undo_method(texture_overlay, "queue_redraw");
+								undo_redo->add_do_method(texture_overlay, EditorStringName(queue_redraw));
+								undo_redo->add_undo_method(texture_overlay, EditorStringName(queue_redraw));
 								undo_redo->commit_action();
 								break;
 							}
@@ -483,8 +483,8 @@ void TextureRegionEditor::_texture_overlay_input(const Ref<InputEvent> &p_input)
 				}
 				undo_redo->add_do_method(this, "_update_rect");
 				undo_redo->add_undo_method(this, "_update_rect");
-				undo_redo->add_do_method(texture_overlay, "queue_redraw");
-				undo_redo->add_undo_method(texture_overlay, "queue_redraw");
+				undo_redo->add_do_method(texture_overlay, EditorStringName(queue_redraw));
+				undo_redo->add_undo_method(texture_overlay, EditorStringName(queue_redraw));
 				undo_redo->commit_action();
 				drag = false;
 				creating = false;

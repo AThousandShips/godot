@@ -325,26 +325,26 @@ void GenericTilePolygonEditor::_advanced_menu_item_pressed(int p_item_pressed) {
 				polygon.write[i] = polygon[i] * tile_set->get_tile_size();
 			}
 			undo_redo->add_do_method(this, "add_polygon", polygon);
-			undo_redo->add_do_method(base_control, "queue_redraw");
+			undo_redo->add_do_method(base_control, EditorStringName(queue_redraw));
 			undo_redo->add_do_method(this, "emit_signal", "polygons_changed");
 			undo_redo->add_undo_method(this, "clear_polygons");
 			for (const PackedVector2Array &poly : polygons) {
 				undo_redo->add_undo_method(this, "add_polygon", poly);
 			}
-			undo_redo->add_undo_method(base_control, "queue_redraw");
+			undo_redo->add_undo_method(base_control, EditorStringName(queue_redraw));
 			undo_redo->add_undo_method(this, "emit_signal", "polygons_changed");
 			undo_redo->commit_action(true);
 		} break;
 		case CLEAR_TILE: {
 			undo_redo->create_action(TTR("Clear Polygons"));
 			undo_redo->add_do_method(this, "clear_polygons");
-			undo_redo->add_do_method(base_control, "queue_redraw");
+			undo_redo->add_do_method(base_control, EditorStringName(queue_redraw));
 			undo_redo->add_do_method(this, "emit_signal", "polygons_changed");
 			undo_redo->add_undo_method(this, "clear_polygons");
 			for (const PackedVector2Array &polygon : polygons) {
 				undo_redo->add_undo_method(this, "add_polygon", polygon);
 			}
-			undo_redo->add_undo_method(base_control, "queue_redraw");
+			undo_redo->add_undo_method(base_control, EditorStringName(queue_redraw));
 			undo_redo->add_undo_method(this, "emit_signal", "polygons_changed");
 			undo_redo->commit_action(true);
 		} break;
@@ -392,12 +392,12 @@ void GenericTilePolygonEditor::_advanced_menu_item_pressed(int p_item_pressed) {
 				}
 				undo_redo->add_do_method(this, "set_polygon", i, new_polygon);
 			}
-			undo_redo->add_do_method(base_control, "queue_redraw");
+			undo_redo->add_do_method(base_control, EditorStringName(queue_redraw));
 			undo_redo->add_do_method(this, "emit_signal", "polygons_changed");
 			for (unsigned int i = 0; i < polygons.size(); i++) {
 				undo_redo->add_undo_method(this, "set_polygon", i, polygons[i]);
 			}
-			undo_redo->add_undo_method(base_control, "queue_redraw");
+			undo_redo->add_undo_method(base_control, EditorStringName(queue_redraw));
 			undo_redo->add_undo_method(this, "emit_signal", "polygons_changed");
 			undo_redo->commit_action(true);
 		} break;
@@ -596,9 +596,9 @@ void GenericTilePolygonEditor::_base_control_gui_input(Ref<InputEvent> p_event) 
 							undo_redo->add_do_method(this, "clear_polygons");
 						}
 						undo_redo->add_do_method(this, "add_polygon", in_creation_polygon);
-						undo_redo->add_do_method(base_control, "queue_redraw");
+						undo_redo->add_do_method(base_control, EditorStringName(queue_redraw));
 						undo_redo->add_undo_method(this, "remove_polygon", added);
-						undo_redo->add_undo_method(base_control, "queue_redraw");
+						undo_redo->add_undo_method(base_control, EditorStringName(queue_redraw));
 						undo_redo->commit_action(false);
 						emit_signal(SNAME("polygons_changed"));
 					} else {
@@ -644,8 +644,8 @@ void GenericTilePolygonEditor::_base_control_gui_input(Ref<InputEvent> p_event) 
 							undo_redo->add_do_method(this, "set_polygon", closest_polygon, polygons[closest_polygon]);
 							undo_redo->add_undo_method(this, "set_polygon", closest_polygon, old_polygon);
 						}
-						undo_redo->add_do_method(base_control, "queue_redraw");
-						undo_redo->add_undo_method(base_control, "queue_redraw");
+						undo_redo->add_do_method(base_control, EditorStringName(queue_redraw));
+						undo_redo->add_undo_method(base_control, EditorStringName(queue_redraw));
 						undo_redo->commit_action(false);
 						emit_signal(SNAME("polygons_changed"));
 					}
@@ -654,9 +654,9 @@ void GenericTilePolygonEditor::_base_control_gui_input(Ref<InputEvent> p_event) 
 				if (drag_type == DRAG_TYPE_DRAG_POINT) {
 					undo_redo->create_action(TTR("Edit Polygons"));
 					undo_redo->add_do_method(this, "set_polygon", drag_polygon_index, polygons[drag_polygon_index]);
-					undo_redo->add_do_method(base_control, "queue_redraw");
+					undo_redo->add_do_method(base_control, EditorStringName(queue_redraw));
 					undo_redo->add_undo_method(this, "set_polygon", drag_polygon_index, drag_old_polygon);
-					undo_redo->add_undo_method(base_control, "queue_redraw");
+					undo_redo->add_undo_method(base_control, EditorStringName(queue_redraw));
 					undo_redo->commit_action(false);
 					emit_signal(SNAME("polygons_changed"));
 				} else if (drag_type == DRAG_TYPE_CREATE_POINT) {
@@ -689,8 +689,8 @@ void GenericTilePolygonEditor::_base_control_gui_input(Ref<InputEvent> p_event) 
 							undo_redo->add_do_method(this, "set_polygon", closest_polygon, polygons[closest_polygon]);
 							undo_redo->add_undo_method(this, "set_polygon", closest_polygon, old_polygon);
 						}
-						undo_redo->add_do_method(base_control, "queue_redraw");
-						undo_redo->add_undo_method(base_control, "queue_redraw");
+						undo_redo->add_do_method(base_control, EditorStringName(queue_redraw));
+						undo_redo->add_undo_method(base_control, EditorStringName(queue_redraw));
 						undo_redo->commit_action(false);
 						emit_signal(SNAME("polygons_changed"));
 						drag_type = DRAG_TYPE_NONE;

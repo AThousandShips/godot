@@ -9153,10 +9153,10 @@ void AnimationMarkerEdit::_move_selection_commit() {
 			undo_redo->add_undo_method(player, "set_section_with_markers", selected_section[0], selected_section[1]);
 		}
 	}
-	undo_redo->add_do_method(timeline, "queue_redraw");
-	undo_redo->add_undo_method(timeline, "queue_redraw");
-	undo_redo->add_do_method(this, "queue_redraw");
-	undo_redo->add_undo_method(this, "queue_redraw");
+	undo_redo->add_do_method(timeline, EditorStringName(queue_redraw));
+	undo_redo->add_undo_method(timeline, EditorStringName(queue_redraw));
+	undo_redo->add_do_method(this, EditorStringName(queue_redraw));
+	undo_redo->add_undo_method(this, EditorStringName(queue_redraw));
 	undo_redo->commit_action();
 	_update_key_edit();
 }
@@ -9173,8 +9173,8 @@ void AnimationMarkerEdit::_delete_selected_markers() {
 		}
 		_clear_selection_for_anim(animation);
 
-		undo_redo->add_do_method(this, "queue_redraw");
-		undo_redo->add_undo_method(this, "queue_redraw");
+		undo_redo->add_do_method(this, EditorStringName(queue_redraw));
+		undo_redo->add_undo_method(this, EditorStringName(queue_redraw));
 		undo_redo->commit_action();
 		_update_key_edit();
 	}
@@ -9307,8 +9307,8 @@ void AnimationMarkerEdit::_marker_insert_confirmed() {
 	}
 	undo_redo->add_do_method(animation.ptr(), "set_marker_color", name, marker_insert_color->get_pick_color());
 
-	undo_redo->add_do_method(this, "queue_redraw");
-	undo_redo->add_undo_method(this, "queue_redraw");
+	undo_redo->add_do_method(this, EditorStringName(queue_redraw));
+	undo_redo->add_undo_method(this, EditorStringName(queue_redraw));
 
 	undo_redo->commit_action();
 
@@ -9441,8 +9441,8 @@ bool AnimationMarkerKeyEdit::_set(const StringName &p_name, const Variant &p_val
 			undo_redo->create_action(TTR("Edit Marker Color"), UndoRedo::MERGE_ENDS);
 			undo_redo->add_do_method(animation.ptr(), "set_marker_color", marker_name, color);
 			undo_redo->add_undo_method(animation.ptr(), "set_marker_color", marker_name, prev_color);
-			undo_redo->add_do_method(marker_edit, "queue_redraw");
-			undo_redo->add_undo_method(marker_edit, "queue_redraw");
+			undo_redo->add_do_method(marker_edit, EditorStringName(queue_redraw));
+			undo_redo->add_undo_method(marker_edit, EditorStringName(queue_redraw));
 			undo_redo->commit_action();
 		}
 		return true;
@@ -9493,8 +9493,8 @@ bool AnimationMultiMarkerKeyEdit::_set(const StringName &p_name, const Variant &
 			undo_redo->add_undo_method(animation.ptr(), "set_marker_color", marker_name, animation->get_marker_color(marker_name));
 		}
 
-		undo_redo->add_do_method(marker_edit, "queue_redraw");
-		undo_redo->add_undo_method(marker_edit, "queue_redraw");
+		undo_redo->add_do_method(marker_edit, EditorStringName(queue_redraw));
+		undo_redo->add_undo_method(marker_edit, EditorStringName(queue_redraw));
 		undo_redo->commit_action();
 
 		return true;
@@ -9558,8 +9558,8 @@ void AnimationMarkerKeyEditEditor::_time_edit_exited() {
 		AnimationTrackEditor *ate = ape->get_track_editor();
 		if (ate) {
 			AnimationMarkerEdit *ame = ate->marker_edit;
-			undo_redo->add_do_method(ame, "queue_redraw");
-			undo_redo->add_undo_method(ame, "queue_redraw");
+			undo_redo->add_do_method(ame, EditorStringName(queue_redraw));
+			undo_redo->add_undo_method(ame, EditorStringName(queue_redraw));
 		}
 	}
 	undo_redo->commit_action();

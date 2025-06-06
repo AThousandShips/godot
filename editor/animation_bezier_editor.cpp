@@ -2252,8 +2252,8 @@ void AnimationBezierTrackEdit::duplicate_selected_keys(real_t p_ofs, bool p_ofs_
 		undo_redo->add_do_method(ape, "_animation_update_key_frame");
 		undo_redo->add_undo_method(ape, "_animation_update_key_frame");
 	}
-	undo_redo->add_do_method(this, "queue_redraw");
-	undo_redo->add_undo_method(this, "queue_redraw");
+	undo_redo->add_do_method(this, EditorStringName(queue_redraw));
+	undo_redo->add_undo_method(this, EditorStringName(queue_redraw));
 	undo_redo->commit_action();
 }
 
@@ -2307,8 +2307,8 @@ void AnimationBezierTrackEdit::copy_selected_keys(bool p_cut) {
 			undo_redo->add_do_method(ape, "_animation_update_key_frame");
 			undo_redo->add_undo_method(ape, "_animation_update_key_frame");
 		}
-		undo_redo->add_do_method(this, "queue_redraw");
-		undo_redo->add_undo_method(this, "queue_redraw");
+		undo_redo->add_do_method(this, EditorStringName(queue_redraw));
+		undo_redo->add_undo_method(this, EditorStringName(queue_redraw));
 
 		undo_redo->commit_action();
 	}
@@ -2393,8 +2393,8 @@ void AnimationBezierTrackEdit::paste_keys(real_t p_ofs, bool p_ofs_valid) {
 			undo_redo->add_do_method(ape, "_animation_update_key_frame");
 			undo_redo->add_undo_method(ape, "_animation_update_key_frame");
 		}
-		undo_redo->add_do_method(this, "queue_redraw");
-		undo_redo->add_undo_method(this, "queue_redraw");
+		undo_redo->add_do_method(this, EditorStringName(queue_redraw));
+		undo_redo->add_undo_method(this, EditorStringName(queue_redraw));
 
 		undo_redo->commit_action();
 	}

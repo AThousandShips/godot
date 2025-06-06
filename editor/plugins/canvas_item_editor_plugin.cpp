@@ -932,8 +932,8 @@ void CanvasItemEditor::_commit_canvas_item_state(const List<CanvasItem *> &p_can
 			}
 		}
 	}
-	undo_redo->add_do_method(viewport, "queue_redraw");
-	undo_redo->add_undo_method(viewport, "queue_redraw");
+	undo_redo->add_do_method(viewport, EditorStringName(queue_redraw));
+	undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 	undo_redo->commit_action();
 }
 
@@ -1223,7 +1223,7 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 							undo_redo->create_action(TTR("Move Vertical Guide"));
 							undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", vguides);
 							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", prev_vguides);
-							undo_redo->add_undo_method(viewport, "queue_redraw");
+							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
 						} else {
 							vguides.push_back(edited.x);
@@ -1234,7 +1234,7 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 							} else {
 								undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", prev_vguides);
 							}
-							undo_redo->add_undo_method(viewport, "queue_redraw");
+							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
 						}
 					} else {
@@ -1247,7 +1247,7 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 								undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", vguides);
 							}
 							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_vertical_guides_", prev_vguides);
-							undo_redo->add_undo_method(viewport, "queue_redraw");
+							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
 						}
 					}
@@ -1260,7 +1260,7 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 							undo_redo->create_action(TTR("Move Horizontal Guide"));
 							undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", hguides);
 							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", prev_hguides);
-							undo_redo->add_undo_method(viewport, "queue_redraw");
+							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
 						} else {
 							hguides.push_back(edited.y);
@@ -1271,7 +1271,7 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 							} else {
 								undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", prev_hguides);
 							}
-							undo_redo->add_undo_method(viewport, "queue_redraw");
+							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
 						}
 					} else {
@@ -1284,7 +1284,7 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 								undo_redo->add_do_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", hguides);
 							}
 							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", prev_hguides);
-							undo_redo->add_undo_method(viewport, "queue_redraw");
+							undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 							undo_redo->commit_action();
 						}
 					}
@@ -1308,7 +1308,7 @@ bool CanvasItemEditor::_gui_input_rulers_and_guides(const Ref<InputEvent> &p_eve
 						} else {
 							undo_redo->add_undo_method(EditorNode::get_singleton()->get_edited_scene(), "set_meta", "_edit_horizontal_guides_", prev_hguides);
 						}
-						undo_redo->add_undo_method(viewport, "queue_redraw");
+						undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 						undo_redo->commit_action();
 					}
 				}
@@ -4671,8 +4671,8 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 				undo_redo->add_do_method(this, "emit_signal", "item_lock_status_changed");
 				undo_redo->add_undo_method(this, "emit_signal", "item_lock_status_changed");
 			}
-			undo_redo->add_do_method(viewport, "queue_redraw");
-			undo_redo->add_undo_method(viewport, "queue_redraw");
+			undo_redo->add_do_method(viewport, EditorStringName(queue_redraw));
+			undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 			undo_redo->commit_action();
 		} break;
 		case UNLOCK_SELECTED: {
@@ -4690,8 +4690,8 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 				undo_redo->add_do_method(this, "emit_signal", "item_lock_status_changed");
 				undo_redo->add_undo_method(this, "emit_signal", "item_lock_status_changed");
 			}
-			undo_redo->add_do_method(viewport, "queue_redraw");
-			undo_redo->add_undo_method(viewport, "queue_redraw");
+			undo_redo->add_do_method(viewport, EditorStringName(queue_redraw));
+			undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 			undo_redo->commit_action();
 		} break;
 		case GROUP_SELECTED: {
@@ -4709,8 +4709,8 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 				undo_redo->add_do_method(this, "emit_signal", "item_group_status_changed");
 				undo_redo->add_undo_method(this, "emit_signal", "item_group_status_changed");
 			}
-			undo_redo->add_do_method(viewport, "queue_redraw");
-			undo_redo->add_undo_method(viewport, "queue_redraw");
+			undo_redo->add_do_method(viewport, EditorStringName(queue_redraw));
+			undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 			undo_redo->commit_action();
 		} break;
 		case UNGROUP_SELECTED: {
@@ -4728,8 +4728,8 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 				undo_redo->add_do_method(this, "emit_signal", "item_group_status_changed");
 				undo_redo->add_undo_method(this, "emit_signal", "item_group_status_changed");
 			}
-			undo_redo->add_do_method(viewport, "queue_redraw");
-			undo_redo->add_undo_method(viewport, "queue_redraw");
+			undo_redo->add_do_method(viewport, EditorStringName(queue_redraw));
+			undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 			undo_redo->commit_action();
 		} break;
 
@@ -4841,8 +4841,8 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 					undo_redo->add_do_method(root, "remove_meta", "_edit_vertical_guides_");
 					undo_redo->add_undo_method(root, "set_meta", "_edit_vertical_guides_", vguides);
 				}
-				undo_redo->add_do_method(viewport, "queue_redraw");
-				undo_redo->add_undo_method(viewport, "queue_redraw");
+				undo_redo->add_do_method(viewport, EditorStringName(queue_redraw));
+				undo_redo->add_undo_method(viewport, EditorStringName(queue_redraw));
 				undo_redo->commit_action();
 			}
 
