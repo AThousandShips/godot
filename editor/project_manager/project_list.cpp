@@ -726,7 +726,7 @@ void ProjectList::update_project_list() {
 		// Clear whole list
 		for (int i = 0; i < _projects.size(); ++i) {
 			Item &project = _projects.write[i];
-			CRASH_COND(project.control == nullptr);
+			CRASH_NULL(project.control);
 			memdelete(project.control); // Why not queue_free()?
 		}
 

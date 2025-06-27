@@ -72,7 +72,7 @@ const Vector<String> ignored_types = {};
 
 #ifdef TOOLS_ENABLED
 static bool _create_project_solution_if_needed() {
-	CRASH_COND(CSharpLanguage::get_singleton()->get_godotsharp_editor() == nullptr);
+	CRASH_NULL(CSharpLanguage::get_singleton()->get_godotsharp_editor());
 	return CSharpLanguage::get_singleton()->get_godotsharp_editor()->call("CreateProjectSolutionIfNeeded");
 }
 #endif
@@ -1081,10 +1081,10 @@ void CSharpLanguage::_editor_init_callback() {
 	Object *editor_plugin_obj = GDMono::get_singleton()->get_plugin_callbacks().LoadToolsAssemblyCallback(
 			GodotSharpDirs::get_data_editor_tools_dir().path_join("GodotTools.dll").utf16().get_data(),
 			interop_funcs, interop_funcs_size);
-	CRASH_COND(editor_plugin_obj == nullptr);
+	CRASH_NULL(editor_plugin_obj);
 
 	EditorPlugin *godotsharp_editor = Object::cast_to<EditorPlugin>(editor_plugin_obj);
-	CRASH_COND(godotsharp_editor == nullptr);
+	CRASH_NULL(godotsharp_editor);
 
 	// Add plugin to EditorNode and enable it
 	EditorNode::add_editor_plugin(godotsharp_editor);
@@ -1256,14 +1256,14 @@ GDExtensionBool CSharpLanguage::_instance_binding_reference_callback(void *p_tok
 	// and the C# language has already been finalized.
 	DEV_ASSERT(CSharpLanguage::get_singleton() != nullptr);
 
-	CRASH_COND(!p_binding);
+	CRASH_NULL(p_binding);
 
 	CSharpScriptBinding &script_binding = ((RBMap<Object *, CSharpScriptBinding>::Element *)p_binding)->get();
 
 	RefCounted *rc_owner = Object::cast_to<RefCounted>(script_binding.owner);
 
 #ifdef DEBUG_ENABLED
-	CRASH_COND(!rc_owner);
+	CRASH_NULL(rc_owner);
 #endif // DEBUG_ENABLED
 
 	MonoGCHandleData &gchandle = script_binding.gchandle;
@@ -1367,7 +1367,7 @@ bool CSharpLanguage::has_instance_binding(Object *p_object) {
 void CSharpLanguage::tie_native_managed_to_unmanaged(GCHandleIntPtr p_gchandle_intptr, Object *p_unmanaged, const StringName *p_native_name, bool p_ref_counted) {
 	// This method should not fail
 
-	CRASH_COND(!p_unmanaged);
+	CRASH_NULL(p_unmanaged);
 
 	// All mono objects created from the managed world (e.g.: 'new Player()')
 	// need to have a CSharpScript in order for their methods to be callable from the unmanaged side
@@ -1416,7 +1416,7 @@ void CSharpLanguage::tie_user_managed_to_unmanaged(GCHandleIntPtr p_gchandle_int
 	// We take care of destructing this reference here, so the managed code won't need to do another P/Invoke call
 	p_script->~Ref();
 
-	CRASH_COND(!p_unmanaged);
+	CRASH_NULL(p_unmanaged);
 
 	// All mono objects created from the managed world (e.g.: 'new Player()')
 	// need to have a CSharpScript in order for their methods to be callable from the unmanaged side
@@ -1440,7 +1440,7 @@ void CSharpLanguage::tie_user_managed_to_unmanaged(GCHandleIntPtr p_gchandle_int
 void CSharpLanguage::tie_managed_to_unmanaged_with_pre_setup(GCHandleIntPtr p_gchandle_intptr, Object *p_unmanaged) {
 	// This method should not fail
 
-	CRASH_COND(!p_unmanaged);
+	CRASH_NULL(p_unmanaged);
 
 	CSharpInstance *instance = CAST_CSHARP_INSTANCE(p_unmanaged->get_script_instance());
 
@@ -1710,7 +1710,7 @@ Variant CSharpInstance::callp(const StringName &p_method, const Variant **p_args
 bool CSharpInstance::_reference_owner_unsafe() {
 #ifdef DEBUG_ENABLED
 	CRASH_COND(!base_ref_counted);
-	CRASH_COND(owner == nullptr);
+	CRASH_NULL(owner);
 	CRASH_COND(unsafe_referenced); // already referenced
 #endif // DEBUG_ENABLED
 
@@ -1731,7 +1731,7 @@ bool CSharpInstance::_reference_owner_unsafe() {
 bool CSharpInstance::_unreference_owner_unsafe() {
 #ifdef DEBUG_ENABLED
 	CRASH_COND(!base_ref_counted);
-	CRASH_COND(owner == nullptr);
+	CRASH_NULL(owner);
 #endif // DEBUG_ENABLED
 
 	if (!unsafe_referenced) {
@@ -1849,7 +1849,7 @@ void CSharpInstance::disconnect_event_signals() {
 void CSharpInstance::refcount_incremented() {
 #ifdef DEBUG_ENABLED
 	CRASH_COND(!base_ref_counted);
-	CRASH_COND(owner == nullptr);
+	CRASH_NULL(owner);
 #endif // DEBUG_ENABLED
 
 	RefCounted *rc_owner = Object::cast_to<RefCounted>(owner);
@@ -1880,7 +1880,7 @@ void CSharpInstance::refcount_incremented() {
 bool CSharpInstance::refcount_decremented() {
 #ifdef DEBUG_ENABLED
 	CRASH_COND(!base_ref_counted);
-	CRASH_COND(owner == nullptr);
+	CRASH_NULL(owner);
 #endif // DEBUG_ENABLED
 
 	RefCounted *rc_owner = Object::cast_to<RefCounted>(owner);
@@ -2030,7 +2030,7 @@ CSharpInstance::~CSharpInstance() {
 		CRASH_COND(die); // `owner_keep_alive` holds a reference, so it can't die
 
 		void *data = CSharpLanguage::get_instance_binding_with_setup(owner);
-		CRASH_COND(data == nullptr);
+		CRASH_NULL(data);
 		CSharpScriptBinding &script_binding = ((RBMap<Object *, CSharpScriptBinding>::Element *)data)->get();
 		CRASH_COND(!script_binding.inited);
 
@@ -2381,7 +2381,7 @@ CSharpInstance *CSharpScript::_create_instance(const Variant **p_args, int p_arg
 	// If the object had a script instance binding, dispose it before adding the CSharpInstance
 	if (CSharpLanguage::has_instance_binding(p_owner)) {
 		void *data = CSharpLanguage::get_existing_instance_binding(p_owner);
-		CRASH_COND(data == nullptr);
+		CRASH_NULL(data);
 
 		CSharpScriptBinding &script_binding = ((RBMap<Object *, CSharpScriptBinding>::Element *)data)->get();
 		if (script_binding.inited && !script_binding.gchandle.is_released()) {

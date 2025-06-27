@@ -674,9 +674,9 @@ public:
 	}
 
 	const V &operator[](const K &p_key) const {
-		CRASH_COND(!_data._root);
+		CRASH_NULL(_data._root);
 		const Element *e = find(p_key);
-		CRASH_COND(!e);
+		CRASH_NULL(e);
 		return e->_data.value;
 	}
 

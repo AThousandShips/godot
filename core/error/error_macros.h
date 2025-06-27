@@ -573,6 +573,22 @@ void _physics_interpolation_warning(const char *p_function, const char *p_file, 
 		((void)0)
 
 /**
+ * Try using `ERR_FAIL_NULL_MSG` or `ERR_FAIL_NULL_V_MSG`.
+ * Only use this macro if there is no sensible fallback i.e. the error is unrecoverable, and
+ * there is no sensible error message.
+ *
+ * Ensures `m_param` is not null.
+ * If `m_param` is null, the application crashes.
+ */
+#define CRASH_NULL(m_param)                                                                                    \
+	if (unlikely(m_param == nullptr)) {                                                                        \
+		_err_print_error(FUNCTION_STR, __FILE__, __LINE__, "FATAL: Parameter \"" _STR(m_param) "\" is null."); \
+		_err_flush_stdout();                                                                                   \
+		GENERATE_TRAP();                                                                                       \
+	} else                                                                                                     \
+		((void)0)
+
+/**
  * Try using `ERR_FAIL_COND_MSG` or `ERR_FAIL_COND_V_MSG`.
  * Only use this macro if there is no sensible fallback i.e. the error is unrecoverable.
  *
@@ -585,6 +601,21 @@ void _physics_interpolation_warning(const char *p_function, const char *p_file, 
 		_err_flush_stdout();                                                                                         \
 		GENERATE_TRAP();                                                                                             \
 	} else                                                                                                           \
+		((void)0)
+
+/**
+ * Try using `ERR_FAIL_NULL_MSG` or `ERR_FAIL_NULL_V_MSG`.
+ * Only use this macro if there is no sensible fallback i.e. the error is unrecoverable.
+ *
+ * Ensures `m_param` is not null.
+ * If `m_param` is null, prints `m_msg` and the application crashes.
+ */
+#define CRASH_NULL_MSG(m_param, m_msg)                                                                                \
+	if (unlikely(m_param == nullptr)) {                                                                               \
+		_err_print_error(FUNCTION_STR, __FILE__, __LINE__, "FATAL: Parameter \"" _STR(m_param) "\" is null.", m_msg); \
+		_err_flush_stdout();                                                                                          \
+		GENERATE_TRAP();                                                                                              \
+	} else                                                                                                            \
 		((void)0)
 
 // Generic error macros.

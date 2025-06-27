@@ -2806,7 +2806,7 @@ Error BindingsGenerator::_generate_cs_property(const BindingsGenerator::TypeInte
 			if (idx_arg.type.cname != name_cache.type_int) {
 				// Assume the index parameter is an enum
 				const TypeInterface *idx_arg_type = _get_type_or_null(idx_arg.type);
-				CRASH_COND(idx_arg_type == nullptr);
+				CRASH_NULL(idx_arg_type);
 				p_output.append("(" + idx_arg_type->proxy_name + ")(" + itos(p_iprop.index) + ")");
 			} else {
 				p_output.append(itos(p_iprop.index));
@@ -2824,7 +2824,7 @@ Error BindingsGenerator::_generate_cs_property(const BindingsGenerator::TypeInte
 			if (idx_arg.type.cname != name_cache.type_int) {
 				// Assume the index parameter is an enum
 				const TypeInterface *idx_arg_type = _get_type_or_null(idx_arg.type);
-				CRASH_COND(idx_arg_type == nullptr);
+				CRASH_NULL(idx_arg_type);
 				p_output.append("(" + idx_arg_type->proxy_name + ")(" + itos(p_iprop.index) + "), ");
 			} else {
 				p_output.append(itos(p_iprop.index) + ", ");

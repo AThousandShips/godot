@@ -838,7 +838,7 @@ GodotSharp *GodotSharp::singleton = nullptr;
 
 void GodotSharp::reload_assemblies(bool p_soft_reload) {
 #ifdef GD_MONO_HOT_RELOAD
-	CRASH_COND(CSharpLanguage::get_singleton() == nullptr);
+	CRASH_NULL(CSharpLanguage::get_singleton());
 	// This method may be called more than once with `call_deferred`, so we need to check
 	// again if reloading is needed to avoid reloading multiple times unnecessarily.
 	if (CSharpLanguage::get_singleton()->is_assembly_reloading_needed()) {

@@ -767,7 +767,7 @@ void EditorProperty::update_editor_property_status() {
 	bool new_pinned = false;
 	if (can_pin) {
 		Node *node = Object::cast_to<Node>(object);
-		CRASH_COND(!node);
+		CRASH_NULL(node);
 		new_pinned = node->is_property_pinned(property);
 	}
 

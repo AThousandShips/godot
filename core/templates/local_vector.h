@@ -172,7 +172,7 @@ public:
 				}
 			}
 			data = (T *)memrealloc(data, capacity * sizeof(T));
-			CRASH_COND_MSG(!data, "Out of memory");
+			CRASH_NULL_MSG(data, "Out of memory.");
 		}
 	}
 

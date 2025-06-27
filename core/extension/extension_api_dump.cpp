@@ -493,7 +493,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 		const DocData::ClassDoc *global_scope_doc = nullptr;
 		if (p_include_docs) {
 			global_scope_doc = EditorHelp::get_doc_data()->class_list.getptr("@GlobalScope");
-			CRASH_COND_MSG(!global_scope_doc, "Could not find '@GlobalScope' in DocData.");
+			CRASH_NULL_MSG(global_scope_doc, "Could not find '@GlobalScope' in DocData.");
 		}
 
 		for (int i = 0; i < CoreConstants::get_global_constant_count(); i++) {
@@ -564,7 +564,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 		const DocData::ClassDoc *global_scope_doc = nullptr;
 		if (p_include_docs) {
 			global_scope_doc = EditorHelp::get_doc_data()->class_list.getptr("@GlobalScope");
-			CRASH_COND_MSG(!global_scope_doc, "Could not find '@GlobalScope' in DocData.");
+			CRASH_NULL_MSG(global_scope_doc, "Could not find '@GlobalScope' in DocData.");
 		}
 
 		for (const StringName &name : utility_func_names) {
@@ -641,7 +641,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 			DocData::ClassDoc *builtin_doc = nullptr;
 			if (p_include_docs && d["name"] != "Nil") {
 				builtin_doc = EditorHelp::get_doc_data()->class_list.getptr(d["name"]);
-				CRASH_COND_MSG(!builtin_doc, vformat("Could not find '%s' in DocData.", d["name"]));
+				CRASH_NULL_MSG(builtin_doc, vformat("Could not find '%s' in DocData.", d["name"]));
 			}
 
 			{
@@ -922,7 +922,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 			DocData::ClassDoc *class_doc = nullptr;
 			if (p_include_docs) {
 				class_doc = EditorHelp::get_doc_data()->class_list.getptr(class_name);
-				CRASH_COND_MSG(!class_doc, vformat("Could not find '%s' in DocData.", class_name));
+				CRASH_NULL_MSG(class_doc, vformat("Could not find '%s' in DocData.", class_name));
 			}
 
 			{

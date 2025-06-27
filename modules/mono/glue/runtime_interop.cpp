@@ -108,7 +108,7 @@ bool godotsharp_internal_script_debugger_is_active() {
 
 GCHandleIntPtr godotsharp_internal_object_get_associated_gchandle(Object *p_ptr) {
 #ifdef DEBUG_ENABLED
-	CRASH_COND(p_ptr == nullptr);
+	CRASH_NULL(p_ptr);
 #endif
 
 	if (p_ptr->get_script_instance()) {
@@ -136,7 +136,7 @@ GCHandleIntPtr godotsharp_internal_object_get_associated_gchandle(Object *p_ptr)
 
 void godotsharp_internal_object_disposed(Object *p_ptr, GCHandleIntPtr p_gchandle_to_free) {
 #ifdef DEBUG_ENABLED
-	CRASH_COND(p_ptr == nullptr);
+	CRASH_NULL(p_ptr);
 #endif
 
 	if (p_ptr->get_script_instance()) {
@@ -164,9 +164,9 @@ void godotsharp_internal_object_disposed(Object *p_ptr, GCHandleIntPtr p_gchandl
 
 void godotsharp_internal_refcounted_disposed(Object *p_ptr, GCHandleIntPtr p_gchandle_to_free, bool p_is_finalizer) {
 #ifdef DEBUG_ENABLED
-	CRASH_COND(p_ptr == nullptr);
+	CRASH_NULL(p_ptr);
 	// This is only called with RefCounted derived classes
-	CRASH_COND(!Object::cast_to<RefCounted>(p_ptr));
+	CRASH_NULL(Object::cast_to<RefCounted>(p_ptr));
 #endif
 
 	RefCounted *rc = static_cast<RefCounted *>(p_ptr);
@@ -217,7 +217,7 @@ int32_t godotsharp_internal_signal_awaiter_connect(Object *p_source, StringName 
 
 GCHandleIntPtr godotsharp_internal_unmanaged_get_script_instance_managed(Object *p_unmanaged, bool *r_has_cs_script_instance) {
 #ifdef DEBUG_ENABLED
-	CRASH_COND(!p_unmanaged);
+	CRASH_NULL(p_unmanaged);
 	CRASH_COND(!r_has_cs_script_instance);
 #endif
 
@@ -236,7 +236,7 @@ GCHandleIntPtr godotsharp_internal_unmanaged_get_script_instance_managed(Object 
 
 GCHandleIntPtr godotsharp_internal_unmanaged_get_instance_binding_managed(Object *p_unmanaged) {
 #ifdef DEBUG_ENABLED
-	CRASH_COND(!p_unmanaged);
+	CRASH_NULL(p_unmanaged);
 #endif
 
 	void *data = CSharpLanguage::get_instance_binding_with_setup(p_unmanaged);
@@ -249,7 +249,7 @@ GCHandleIntPtr godotsharp_internal_unmanaged_get_instance_binding_managed(Object
 
 GCHandleIntPtr godotsharp_internal_unmanaged_instance_binding_create_managed(Object *p_unmanaged, GCHandleIntPtr p_old_gchandle) {
 #ifdef DEBUG_ENABLED
-	CRASH_COND(!p_unmanaged);
+	CRASH_NULL(p_unmanaged);
 #endif
 
 	void *data = CSharpLanguage::get_instance_binding_with_setup(p_unmanaged);
@@ -341,7 +341,7 @@ bool godotsharp_internal_script_load(const String *p_path, Ref<CSharpScript> *r_
 }
 
 void godotsharp_internal_reload_registered_script(CSharpScript *p_script) {
-	CRASH_COND(!p_script);
+	CRASH_NULL(p_script);
 	CSharpScript::reload_registered_script(Ref<CSharpScript>(p_script));
 }
 
@@ -1552,7 +1552,7 @@ Object *godotsharp_instance_from_id(uint64_t p_instance_id) {
 void godotsharp_object_to_string(Object *p_ptr, godot_string *r_str) {
 #ifdef DEBUG_ENABLED
 	// Cannot happen in C#; would get an ObjectDisposedException instead.
-	CRASH_COND(p_ptr == nullptr);
+	CRASH_NULL(p_ptr);
 #endif
 	// Can't call 'Object::to_string()' here, as that can end up calling 'ToString' again resulting in an endless circular loop.
 	memnew_placement(r_str,
