@@ -64,7 +64,7 @@ String EventListenerLineEdit::get_event_text(const Ref<InputEvent> &p_event, boo
 	Ref<InputEventKey> key = p_event;
 	if (key.is_valid()) {
 		String mods_text = key->InputEventWithModifiers::as_text();
-		mods_text = mods_text.is_empty() ? mods_text : mods_text + "+";
+		mods_text = mods_text.is_empty() ? mods_text : mods_text + '+';
 		if (key->is_command_or_control_autoremap()) {
 			if (OS::get_singleton()->has_feature("macos") || OS::get_singleton()->has_feature("web_macos") || OS::get_singleton()->has_feature("web_ios")) {
 				mods_text = mods_text.replace("Command", "Command/Ctrl");
@@ -78,23 +78,23 @@ String EventListenerLineEdit::get_event_text(const Ref<InputEvent> &p_event, boo
 		}
 		if (key->get_physical_keycode() != Key::NONE) {
 			if (!text.is_empty()) {
-				text += " " + TTR("or") + " ";
+				text += ' ' + TTR("or") + ' ';
 			}
 			text += mods_text + keycode_get_string(key->get_physical_keycode()) + " (" + TTR("Physical");
 			if (key->get_location() != KeyLocation::UNSPECIFIED) {
-				text += " " + key->as_text_location();
+				text += ' ' + key->as_text_location();
 			}
-			text += ")";
+			text += ')';
 		}
 		if (key->get_key_label() != Key::NONE) {
 			if (!text.is_empty()) {
-				text += " " + TTR("or") + " ";
+				text += ' ' + TTR("or") + ' ';
 			}
-			text += mods_text + keycode_get_string(key->get_key_label()) + " (" + TTR("Unicode") + ")";
+			text += mods_text + keycode_get_string(key->get_key_label()) + " (" + TTR("Unicode") + ')';
 		}
 
 		if (text.is_empty()) {
-			text = "(" + TTR("Unset") + ")";
+			text = '(' + TTR("Unset") + ')';
 		}
 	} else {
 		text = p_event->as_text();
@@ -125,7 +125,7 @@ String EventListenerLineEdit::get_device_string(int p_device) {
 	if (p_device == InputMap::ALL_DEVICES) {
 		return TTR("All Devices");
 	}
-	return TTR("Device") + " " + itos(p_device);
+	return TTR("Device") + ' ' + itos(p_device);
 }
 
 bool EventListenerLineEdit::_is_event_allowed(const Ref<InputEvent> &p_event) const {

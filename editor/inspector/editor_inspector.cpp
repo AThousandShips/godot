@@ -152,10 +152,10 @@ bool EditorInspector::_resource_properties_matches(const Ref<Resource> &p_resour
 
 		// Add the group and subgroup to the path.
 		if (!subgroup.is_empty()) {
-			path = subgroup + "/" + path;
+			path = subgroup + '/' + path;
 		}
 		if (!group.is_empty()) {
-			path = group + "/" + path;
+			path = group + '/' + path;
 		}
 
 		// Get the property label's string.
@@ -174,7 +174,7 @@ bool EditorInspector::_resource_properties_matches(const Ref<Resource> &p_resour
 		}
 
 		// Check if the property matches the filter.
-		const String property_path = (path.is_empty() ? "" : path + "/") + name_override;
+		const String property_path = (path.is_empty() ? "" : path + '/') + name_override;
 		if (_property_path_matches(property_path, p_filter, property_name_style)) {
 			return true;
 		}
@@ -1258,7 +1258,7 @@ Control *EditorProperty::make_custom_tooltip(const String &p_text) const {
 	if (object->has_method("_get_property_warning")) {
 		const String custom_warning = object->call("_get_property_warning", property);
 		if (!custom_warning.is_empty()) {
-			prologue = "[b][color=" + get_theme_color(SNAME("warning_color")).to_html(false) + "]" + custom_warning + "[/color][/b]";
+			prologue = "[b][color=" + get_theme_color(SNAME("warning_color")).to_html(false) + ']' + custom_warning + "[/color][/b]";
 		}
 	}
 
@@ -2120,7 +2120,7 @@ Control *EditorInspectorSection::make_custom_tooltip(const String &p_text) const
 	if (object->has_method("_get_property_warning")) {
 		const String custom_warning = object->call("_get_property_warning", related_enable_property);
 		if (!custom_warning.is_empty()) {
-			prologue = "[b][color=" + theme_cache.warning_color.to_html(false) + "]" + custom_warning + "[/color][/b]";
+			prologue = "[b][color=" + theme_cache.warning_color.to_html(false) + ']' + custom_warning + "[/color][/b]";
 		}
 	}
 
@@ -2915,7 +2915,7 @@ void EditorInspectorArray::_setup() {
 		int digits_found = count;
 		String test;
 		while (digits_found) {
-			test += "8";
+			test += '8';
 			digits_found /= 10;
 		}
 		numbers_min_w = numbers_font->get_string_size(test).width;
@@ -3818,7 +3818,7 @@ void EditorInspector::update_tree() {
 
 				if (use_doc_hints) {
 					// `|` separators used in `EditorHelpBit`.
-					category_tooltip = "class|" + doc_name + "|";
+					category_tooltip = "class|" + doc_name + '|';
 				}
 			}
 
@@ -3948,10 +3948,10 @@ void EditorInspector::update_tree() {
 
 			// Add the group and subgroup to the path.
 			if (!subgroup.is_empty()) {
-				path = subgroup + "/" + path;
+				path = subgroup + '/' + path;
 			}
 			if (!group.is_empty()) {
-				path = group + "/" + path;
+				path = group + '/' + path;
 			}
 		}
 
@@ -3984,7 +3984,7 @@ void EditorInspector::update_tree() {
 		// Ignore properties that do not fit the filter.
 		bool sub_inspector_use_filter = false;
 		if (use_filter && !filter.is_empty()) {
-			const String property_path = property_prefix + (path.is_empty() ? "" : path + "/") + name_override;
+			const String property_path = property_prefix + (path.is_empty() ? "" : path + '/') + name_override;
 			if (!_property_path_matches(property_path, filter, property_name_style)) {
 				if (!sub_inspectors_enabled || p.hint != PROPERTY_HINT_RESOURCE_TYPE) {
 					continue;
@@ -4030,7 +4030,7 @@ void EditorInspector::update_tree() {
 		Vector<String> components = path.split("/");
 		for (int i = 0; i < components.size(); i++) {
 			const String &component = components[i];
-			acc_path += (i > 0) ? "/" + component : component;
+			acc_path += (i > 0) ? '/' + component : component;
 
 			if (!vbox_per_path[root_vbox].has(acc_path)) {
 				// If the section does not exists, create it.
@@ -4226,7 +4226,7 @@ void EditorInspector::update_tree() {
 					// Check if it's a theme item first.
 					if (slices.size() == 2 && slices[0].begins_with("theme_override_")) {
 						for (int i = 0; i < F->value.theme_properties.size(); i++) {
-							String doc_path_current = "class_theme_item:" + F->value.name + ":" + F->value.theme_properties[i].name;
+							String doc_path_current = "class_theme_item:" + F->value.name + ':' + F->value.theme_properties[i].name;
 							if (F->value.theme_properties[i].name == slices[1]) {
 								doc_path = doc_path_current;
 								theme_item_name = F->value.theme_properties[i].name;
@@ -4234,7 +4234,7 @@ void EditorInspector::update_tree() {
 						}
 					} else {
 						for (int i = 0; i < F->value.properties.size(); i++) {
-							String doc_path_current = "class_property:" + F->value.name + ":" + F->value.properties[i].name;
+							String doc_path_current = "class_property:" + F->value.name + ':' + F->value.properties[i].name;
 							if (F->value.properties[i].name == propname.operator String()) {
 								doc_path = doc_path_current;
 							}
@@ -4261,15 +4261,15 @@ void EditorInspector::update_tree() {
 				if (p.name.contains("shader_parameter/")) {
 					ShaderMaterial *shader_material = Object::cast_to<ShaderMaterial>(object);
 					if (shader_material) {
-						doc_tooltip_text = "property|" + shader_material->get_shader()->get_path() + "|" + property_prefix + p.name;
+						doc_tooltip_text = "property|" + shader_material->get_shader()->get_path() + '|' + property_prefix + p.name;
 					}
 				} else if (p.usage & PROPERTY_USAGE_INTERNAL) {
-					doc_tooltip_text = "internal_property|" + classname + "|" + property_prefix + p.name;
+					doc_tooltip_text = "internal_property|" + classname + '|' + property_prefix + p.name;
 				} else {
-					doc_tooltip_text = "property|" + classname + "|" + property_prefix + p.name;
+					doc_tooltip_text = "property|" + classname + '|' + property_prefix + p.name;
 				}
 			} else {
-				doc_tooltip_text = "theme_item|" + classname + "|" + theme_item_name;
+				doc_tooltip_text = "theme_item|" + classname + '|' + theme_item_name;
 			}
 		}
 
@@ -4401,7 +4401,7 @@ void EditorInspector::update_tree() {
 					togglable_editor_inspector_sections[group] = group_togglable_property;
 				}
 				if (subgroup_togglable_property) {
-					togglable_editor_inspector_sections[group + "/" + subgroup] = subgroup_togglable_property;
+					togglable_editor_inspector_sections[group + '/' + subgroup] = subgroup_togglable_property;
 				}
 			} else {
 				current_vbox->add_child(editors[i].property_editor);
@@ -4522,8 +4522,8 @@ void EditorInspector::update_tree() {
 					section->setup("", section_name, object, sscolor, false);
 					section->set_tooltip_text(tooltip);
 
-					if (togglable_editor_inspector_sections.has(KV.key + "/" + section_name)) {
-						EditorInspectorSection *corresponding_section = togglable_editor_inspector_sections.get(KV.key + "/" + section_name);
+					if (togglable_editor_inspector_sections.has(KV.key + '/' + section_name)) {
+						EditorInspectorSection *corresponding_section = togglable_editor_inspector_sections.get(KV.key + '/' + section_name);
 
 						bool valid = false;
 						Variant value_checked = object->get(corresponding_section->related_enable_property, &valid);
@@ -5062,7 +5062,7 @@ void EditorInspector::_multiple_properties_changed(const Vector<String> &p_paths
 	String names;
 	for (int i = 0; i < p_paths.size(); i++) {
 		if (i > 0) {
-			names += ",";
+			names += ',';
 		}
 		names += p_paths[i];
 	}

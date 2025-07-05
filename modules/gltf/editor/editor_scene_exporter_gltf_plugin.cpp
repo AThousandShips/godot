@@ -84,7 +84,7 @@ void SceneExporterGLTFPlugin::_popup_gltf_export_dialog() {
 	if (filename.is_empty()) {
 		filename = root->get_name();
 	}
-	_file_dialog->set_current_file(filename + String(".gltf"));
+	_file_dialog->set_current_file(filename + ".gltf");
 	// Generate and refresh the export settings.
 	_export_settings->generate_property_list(_gltf_document, root);
 	_settings_inspector->edit(nullptr);

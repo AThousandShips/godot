@@ -119,7 +119,7 @@ void OpenXRDebugUtilsExtension::on_instance_created(const XrInstance p_instance)
 
 		XrResult result = xrCreateDebugUtilsMessengerEXT(p_instance, &callback_info, &default_messenger);
 		if (XR_FAILED(result)) {
-			ERR_PRINT("OpenXR: Failed to create debug callback [" + OpenXRAPI::get_singleton()->get_error_string(result) + "]");
+			ERR_PRINT("OpenXR: Failed to create debug callback [" + OpenXRAPI::get_singleton()->get_error_string(result) + ']');
 		}
 
 		set_object_name(XR_OBJECT_TYPE_INSTANCE, uint64_t(p_instance), "Main Godot OpenXR Instance");
@@ -130,7 +130,7 @@ void OpenXRDebugUtilsExtension::on_instance_destroyed() {
 	if (default_messenger != XR_NULL_HANDLE) {
 		XrResult result = xrDestroyDebugUtilsMessengerEXT(default_messenger);
 		if (XR_FAILED(result)) {
-			ERR_PRINT("OpenXR: Failed to destroy debug callback [" + OpenXRAPI::get_singleton()->get_error_string(result) + "]");
+			ERR_PRINT("OpenXR: Failed to destroy debug callback [" + OpenXRAPI::get_singleton()->get_error_string(result) + ']');
 		}
 
 		default_messenger = XR_NULL_HANDLE;
@@ -163,7 +163,7 @@ void OpenXRDebugUtilsExtension::set_object_name(XrObjectType p_object_type, uint
 
 	XrResult result = xrSetDebugUtilsObjectNameEXT_ptr(OpenXRAPI::get_singleton()->get_instance(), &space_name_info);
 	if (XR_FAILED(result)) {
-		ERR_PRINT("OpenXR: Failed to set object name [" + OpenXRAPI::get_singleton()->get_error_string(result) + "]");
+		ERR_PRINT("OpenXR: Failed to set object name [" + OpenXRAPI::get_singleton()->get_error_string(result) + ']');
 	}
 }
 
@@ -179,7 +179,7 @@ void OpenXRDebugUtilsExtension::begin_debug_label_region(const char *p_label_nam
 
 	XrResult result = xrSessionBeginDebugUtilsLabelRegionEXT_ptr(OpenXRAPI::get_singleton()->get_session(), &session_active_region_label);
 	if (XR_FAILED(result)) {
-		ERR_PRINT("OpenXR: Failed to begin label region [" + OpenXRAPI::get_singleton()->get_error_string(result) + "]");
+		ERR_PRINT("OpenXR: Failed to begin label region [" + OpenXRAPI::get_singleton()->get_error_string(result) + ']');
 	}
 }
 
@@ -189,7 +189,7 @@ void OpenXRDebugUtilsExtension::end_debug_label_region() {
 
 	XrResult result = xrSessionEndDebugUtilsLabelRegionEXT_ptr(OpenXRAPI::get_singleton()->get_session());
 	if (XR_FAILED(result)) {
-		ERR_PRINT("OpenXR: Failed to end label region [" + OpenXRAPI::get_singleton()->get_error_string(result) + "]");
+		ERR_PRINT("OpenXR: Failed to end label region [" + OpenXRAPI::get_singleton()->get_error_string(result) + ']');
 	}
 }
 
@@ -205,7 +205,7 @@ void OpenXRDebugUtilsExtension::insert_debug_label(const char *p_label_name) {
 
 	XrResult result = xrSessionInsertDebugUtilsLabelEXT_ptr(OpenXRAPI::get_singleton()->get_session(), &session_active_region_label);
 	if (XR_FAILED(result)) {
-		ERR_PRINT("OpenXR: Failed to insert label [" + OpenXRAPI::get_singleton()->get_error_string(result) + "]");
+		ERR_PRINT("OpenXR: Failed to insert label [" + OpenXRAPI::get_singleton()->get_error_string(result) + ']');
 	}
 }
 
@@ -233,7 +233,7 @@ XrBool32 OpenXRDebugUtilsExtension::debug_callback(XrDebugUtilsMessageSeverityFl
 	} else if (p_message_types == XR_DEBUG_UTILS_MESSAGE_TYPE_CONFORMANCE_BIT_EXT) {
 		msg = ", type: Conformance";
 	} else {
-		msg = ", type: Unknown (" + String::num_uint64(p_message_types) + ")";
+		msg = ", type: Unknown (" + String::num_uint64(p_message_types) + ')';
 	}
 
 	if (p_callback_data->functionName) {

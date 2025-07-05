@@ -800,7 +800,7 @@ String SkinTool::_gen_unique_bone_name(HashSet<String> &r_unique_names, const St
 		u_name = s_name;
 
 		if (index > 1) {
-			u_name += "_" + itos(index);
+			u_name += '_' + itos(index);
 		}
 		if (!r_unique_names.has(u_name)) {
 			break;

@@ -879,9 +879,9 @@ Error OS_Unix::execute(const String &p_path, const List<String> &p_arguments, St
 	ERR_FAIL_V(ERR_BUG);
 #else
 	if (r_pipe) {
-		String command = "\"" + p_path + "\"";
+		String command = '"' + p_path + '"';
 		for (const String &arg : p_arguments) {
-			command += String(" \"") + arg + "\"";
+			command += " \"" + arg + '"';
 		}
 		if (read_stderr) {
 			command += " 2>&1"; // Include stderr
@@ -890,7 +890,7 @@ Error OS_Unix::execute(const String &p_path, const List<String> &p_arguments, St
 		}
 
 		FILE *f = popen(command.utf8().get_data(), "r");
-		ERR_FAIL_NULL_V_MSG(f, ERR_CANT_OPEN, "Cannot create pipe from command: " + command + ".");
+		ERR_FAIL_NULL_V_MSG(f, ERR_CANT_OPEN, "Cannot create pipe from command: " + command + '.');
 		char buf[65535];
 		while (fgets(buf, 65535, f)) {
 			if (p_pipe_mutex) {
@@ -1081,7 +1081,7 @@ Error OS_Unix::get_dynamic_library_symbol_handle(void *p_library_handle, const S
 
 	error = dlerror();
 	if (error != nullptr) {
-		ERR_FAIL_COND_V_MSG(!p_optional, ERR_CANT_RESOLVE, "Can't resolve symbol " + p_name + ". Error: " + error + ".");
+		ERR_FAIL_COND_V_MSG(!p_optional, ERR_CANT_RESOLVE, "Can't resolve symbol " + p_name + ". Error: " + error + '.');
 
 		return ERR_CANT_RESOLVE;
 	}

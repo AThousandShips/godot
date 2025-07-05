@@ -449,14 +449,14 @@ GDScriptCodeGenerator::Address GDScriptCompiler::_parse_expression(CodeGen &code
 								// Should not need to pass p_owner since analyzer will already have done it.
 								res = GDScriptCache::get_shallow_script(global_class_path, err);
 								if (err != OK) {
-									_set_error("Can't load global class " + String(identifier), p_expression);
+									_set_error("Can't load global class " + identifier, p_expression);
 									r_error = ERR_COMPILATION_FAILED;
 									return GDScriptCodeGenerator::Address();
 								}
 							} else {
 								res = ResourceLoader::load(global_class_path);
 								if (res.is_null()) {
-									_set_error("Can't load global class " + String(identifier) + ", cyclic reference?", p_expression);
+									_set_error("Can't load global class " + identifier + ", cyclic reference?", p_expression);
 									r_error = ERR_COMPILATION_FAILED;
 									return GDScriptCodeGenerator::Address();
 								}
@@ -478,7 +478,7 @@ GDScriptCodeGenerator::Address GDScriptCompiler::_parse_expression(CodeGen &code
 			}
 
 			// Not found, error.
-			_set_error("Identifier not found: " + String(identifier), p_expression);
+			_set_error("Identifier not found: " + identifier, p_expression);
 			r_error = ERR_COMPILATION_FAILED;
 			return GDScriptCodeGenerator::Address();
 		} break;
@@ -2485,9 +2485,9 @@ GDScriptFunction *GDScriptCompiler::_parse_function(Error &r_error, GDScript *p_
 		// Function and class.
 
 		if (p_class->identifier) {
-			signature += "::" + String(p_class->identifier->name) + "." + String(func_name);
+			signature += "::" + String(p_class->identifier->name) + '.' + func_name;
 		} else {
-			signature += "::" + String(func_name);
+			signature += "::" + func_name;
 		}
 
 		if (p_for_lambda) {
@@ -2658,9 +2658,9 @@ GDScriptFunction *GDScriptCompiler::_make_static_initializer(Error &r_error, GDS
 		// Function and class.
 
 		if (p_class->identifier) {
-			signature += "::" + String(p_class->identifier->name) + "." + String(func_name);
+			signature += "::" + String(p_class->identifier->name) + '.' + func_name;
 		} else {
-			signature += "::" + String(func_name);
+			signature += "::" + func_name;
 		}
 
 		codegen.generator->set_signature(signature);
@@ -2862,10 +2862,10 @@ Error GDScriptCompiler::_prepare_compilation(GDScript *p_script, const GDScriptP
 						break;
 					case GDScriptParser::VariableNode::PROP_INLINE:
 						if (variable->setter != nullptr) {
-							minfo.setter = "@" + variable->identifier->name + "_setter";
+							minfo.setter = '@' + variable->identifier->name + "_setter";
 						}
 						if (variable->getter != nullptr) {
-							minfo.getter = "@" + variable->identifier->name + "_getter";
+							minfo.getter = '@' + variable->identifier->name + "_getter";
 						}
 						break;
 				}

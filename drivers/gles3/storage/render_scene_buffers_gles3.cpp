@@ -593,7 +593,7 @@ void RenderSceneBuffersGLES3::check_glow_buffers() {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
 
-		GLES3::Utilities::get_singleton()->texture_allocated_data(glow.levels[i].color, level_size.x * level_size.y * color_format_size, String("Glow buffer ") + String::num_int64(i));
+		GLES3::Utilities::get_singleton()->texture_allocated_data(glow.levels[i].color, level_size.x * level_size.y * color_format_size, "Glow buffer " + String::num_int64(i));
 
 		// Create our FBO
 		glGenFramebuffers(1, &glow.levels[i].fbo);

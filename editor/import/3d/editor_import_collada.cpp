@@ -1413,7 +1413,7 @@ void ColladaImport::_fix_param_animation_tracks() {
 								ERR_FAIL_COND(weight_src.array.size() != target_src.sarray.size());
 
 								for (int i = 0; i < weight_src.array.size(); i++) {
-									String track_name = weights + "(" + itos(i) + ")";
+									String track_name = weights + '(' + itos(i) + ')';
 									String mesh_name = target_src.sarray[i];
 									if (collada.state.mesh_name_map.has(mesh_name) && collada.state.referenced_tracks.has(track_name)) {
 										const Vector<int> &rt = collada.state.referenced_tracks[track_name];
@@ -1570,7 +1570,7 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 		if (nm.bone >= 0) {
 			Skeleton3D *sk = static_cast<Skeleton3D *>(nm.node);
 			String name = sk->get_bone_name(nm.bone);
-			path = path + ":" + name;
+			path += ':' + name;
 		}
 
 		bool found_anim = false;
@@ -1668,7 +1668,7 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 				}
 
 				if (xform_idx == -1) {
-					WARN_PRINT("Collada: Couldn't find matching node " + at.target + " xform for track " + at.param + ".");
+					WARN_PRINT("Collada: Couldn't find matching node " + at.target + " xform for track " + at.param + '.');
 					continue;
 				}
 
@@ -1690,7 +1690,7 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 				} else if (data.size() == xf.data.size()) {
 					xf.data = data;
 				} else {
-					ERR_CONTINUE_MSG(data.size() != xf.data.size(), "Component " + at.component + " has datasize " + itos(data.size()) + ", xfdatasize " + itos(xf.data.size()) + ".");
+					ERR_CONTINUE_MSG(data.size() != xf.data.size(), "Component " + at.component + " has datasize " + itos(data.size()) + ", xfdatasize " + itos(xf.data.size()) + '.');
 				}
 			}
 
@@ -1761,7 +1761,7 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 			animation->add_track(Animation::TYPE_BLEND_SHAPE);
 			int track = animation->get_track_count() - 1;
 
-			path = path + ":" + at.param;
+			path += ':' + at.param;
 			animation->track_set_path(track, path);
 			animation->track_set_imported(track, true); //helps merging later
 

@@ -1544,7 +1544,7 @@ LightmapperRD::BakeError LightmapperRD::bake(BakeQuality p_quality, bool p_use_d
 
 	Ref<RDShaderFile> compute_shader;
 	String defines = "";
-	defines += "\n#define CLUSTER_SIZE " + uitos(cluster_size) + "\n";
+	defines += "\n#define CLUSTER_SIZE " + uitos(cluster_size) + '\n';
 
 	if (p_bake_sh) {
 		defines += "\n#define USE_SH_LIGHTMAPS\n";

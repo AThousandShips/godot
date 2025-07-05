@@ -130,9 +130,9 @@ void CodeEdit::_notification(int p_what) {
 
 						int begin = 0;
 						int end = 0;
-						if (line.contains(String::chr(0xFFFF))) {
-							begin = theme_cache.font->get_string_size(line.substr(0, line.find(String::chr(0xFFFF))), HORIZONTAL_ALIGNMENT_LEFT, -1, theme_cache.font_size).x;
-							end = theme_cache.font->get_string_size(line.substr(0, line.rfind(String::chr(0xFFFF))), HORIZONTAL_ALIGNMENT_LEFT, -1, theme_cache.font_size).x;
+						if (line.contains_char(0xFFFF)) {
+							begin = theme_cache.font->get_string_size(line.substr(0, line.find_char(0xFFFF)), HORIZONTAL_ALIGNMENT_LEFT, -1, theme_cache.font_size).x;
+							end = theme_cache.font->get_string_size(line.substr(0, line.rfind_char(0xFFFF)), HORIZONTAL_ALIGNMENT_LEFT, -1, theme_cache.font_size).x;
 						}
 
 						Point2 round_ofs = hint_ofs + theme_cache.code_hint_style->get_offset() + Vector2(0, theme_cache.font->get_ascent(theme_cache.font_size) + font_height * i + yofs);
@@ -1147,7 +1147,7 @@ void CodeEdit::_new_line(bool p_split_current_line, bool p_above) {
 			break;
 		}
 		if (p_above) {
-			ins += "\n";
+			ins += '\n';
 		}
 
 		if (is_line_folded(cl)) {
@@ -1185,10 +1185,10 @@ void CodeEdit::_new_line(bool p_split_current_line, bool p_above) {
 					// No need to move the brace below if we are not taking the text with us.
 					if (p_split_current_line) {
 						brace_indent = true;
-						ins += "\n" + ins.substr(indent_text.size(), ins.length() - 2);
+						ins += '\n' + ins.substr(indent_text.size(), ins.length() - 2);
 					} else {
 						brace_indent = false;
-						ins = "\n" + ins.substr(indent_text.size(), ins.length() - 2);
+						ins = '\n' + ins.substr(indent_text.size(), ins.length() - 2);
 					}
 				}
 			}
@@ -1889,8 +1889,8 @@ void CodeEdit::create_code_region() {
 	// Add start and end region tags.
 	int line_offset = 0;
 	for (Point2i line_range : line_ranges) {
-		insert_text("\n" + code_region_end_string, line_range.y + line_offset, get_line(line_range.y + line_offset).length());
-		insert_line_at(line_range.x + line_offset, code_region_start_string + " " + region_name);
+		insert_text('\n' + code_region_end_string, line_range.y + line_offset, get_line(line_range.y + line_offset).length());
+		insert_line_at(line_range.x + line_offset, code_region_start_string + ' ' + region_name);
 		fold_line(line_range.x + line_offset);
 		line_offset += 2;
 	}
@@ -2648,7 +2648,7 @@ void CodeEdit::duplicate_selection() {
 			continue;
 		}
 
-		String text_to_insert = get_line(get_caret_line(i)) + "\n";
+		String text_to_insert = get_line(get_caret_line(i)) + '\n';
 		// Insert new text before the line, so the caret is on the second one.
 		insert_text(text_to_insert, get_caret_line(i), 0);
 	}
@@ -2681,7 +2681,7 @@ void CodeEdit::duplicate_lines() {
 		String text_to_insert;
 
 		for (int i = line_range.x + line_offset; i <= line_range.y + line_offset; i++) {
-			text_to_insert += get_line(i) + "\n";
+			text_to_insert += get_line(i) + '\n';
 			unfold_line(i);
 		}
 
@@ -3457,7 +3457,7 @@ TypedArray<String> CodeEdit::_get_delimiters(DelimiterType p_type) const {
 		if (delimiters[i].type != p_type) {
 			continue;
 		}
-		r_delimiters.push_back(delimiters[i].start_key + (delimiters[i].end_key.is_empty() ? "" : " " + delimiters[i].end_key));
+		r_delimiters.push_back(delimiters[i].start_key + (delimiters[i].end_key.is_empty() ? "" : ' ' + delimiters[i].end_key));
 	}
 	return r_delimiters;
 }

@@ -498,7 +498,7 @@ void Control::_validate_property(PropertyInfo &p_property) const {
 				continue;
 			}
 
-			hint_string += String(E) + ",";
+			hint_string += String(E) + ',';
 			unique_names.append(E);
 		}
 
@@ -558,19 +558,19 @@ void Control::_validate_property(PropertyInfo &p_property) const {
 			}
 			if (size_flags.has(SIZE_EXPAND)) {
 				if (!hint_string.is_empty()) {
-					hint_string += ",";
+					hint_string += ',';
 				}
 				hint_string += "Expand:2";
 			}
 			if (size_flags.has(SIZE_SHRINK_CENTER)) {
 				if (!hint_string.is_empty()) {
-					hint_string += ",";
+					hint_string += ',';
 				}
 				hint_string += "Shrink Center:4";
 			}
 			if (size_flags.has(SIZE_SHRINK_END)) {
 				if (!hint_string.is_empty()) {
-					hint_string += ",";
+					hint_string += ',';
 				}
 				hint_string += "Shrink End:8";
 			}
@@ -2035,7 +2035,7 @@ Variant Control::get_drag_data(const Point2 &p_point) {
 		Callable::CallError ce;
 		data.forward_drag.callp((const Variant **)vp, 1, ret, ce);
 		if (ce.error != Callable::CallError::CALL_OK) {
-			ERR_FAIL_V_MSG(Variant(), "Error calling forwarded method from 'get_drag_data': " + Variant::get_callable_error_text(data.forward_drag, (const Variant **)vp, 1, ce) + ".");
+			ERR_FAIL_V_MSG(Variant(), "Error calling forwarded method from 'get_drag_data': " + Variant::get_callable_error_text(data.forward_drag, (const Variant **)vp, 1, ce) + '.');
 		}
 		return ret;
 	}
@@ -2053,7 +2053,7 @@ bool Control::can_drop_data(const Point2 &p_point, const Variant &p_data) const 
 		Callable::CallError ce;
 		data.forward_can_drop.callp((const Variant **)vp, 2, ret, ce);
 		if (ce.error != Callable::CallError::CALL_OK) {
-			ERR_FAIL_V_MSG(Variant(), "Error calling forwarded method from 'can_drop_data': " + Variant::get_callable_error_text(data.forward_can_drop, (const Variant **)vp, 2, ce) + ".");
+			ERR_FAIL_V_MSG(Variant(), "Error calling forwarded method from 'can_drop_data': " + Variant::get_callable_error_text(data.forward_can_drop, (const Variant **)vp, 2, ce) + '.');
 		}
 		return ret;
 	}
@@ -2072,7 +2072,7 @@ void Control::drop_data(const Point2 &p_point, const Variant &p_data) {
 		Callable::CallError ce;
 		data.forward_drop.callp((const Variant **)vp, 2, ret, ce);
 		if (ce.error != Callable::CallError::CALL_OK) {
-			ERR_FAIL_MSG("Error calling forwarded method from 'drop_data': " + Variant::get_callable_error_text(data.forward_drop, (const Variant **)vp, 2, ce) + ".");
+			ERR_FAIL_MSG("Error calling forwarded method from 'drop_data': " + Variant::get_callable_error_text(data.forward_drop, (const Variant **)vp, 2, ce) + '.');
 		}
 		return;
 	}
@@ -3703,7 +3703,7 @@ void Control::_notification(int p_notification) {
 			// Base info.
 			if (get_parent_control()) {
 				String container_info = get_parent_control()->get_accessibility_container_name(this);
-				DisplayServer::get_singleton()->accessibility_update_set_name(ae, container_info.is_empty() ? get_accessibility_name() : get_accessibility_name() + " " + container_info);
+				DisplayServer::get_singleton()->accessibility_update_set_name(ae, container_info.is_empty() ? get_accessibility_name() : get_accessibility_name() + ' ' + container_info);
 			} else {
 				DisplayServer::get_singleton()->accessibility_update_set_name(ae, get_accessibility_name());
 			}

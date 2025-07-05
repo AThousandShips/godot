@@ -54,7 +54,7 @@ ParticlesStorage::ParticlesStorage() {
 	/* Particles */
 
 	{
-		String defines = "#define SAMPLERS_BINDING_FIRST_INDEX " + itos(SAMPLERS_BINDING_FIRST_INDEX) + "\n";
+		String defines = "#define SAMPLERS_BINDING_FIRST_INDEX " + itos(SAMPLERS_BINDING_FIRST_INDEX) + '\n';
 		// Initialize particles
 		Vector<String> particles_modes;
 		particles_modes.push_back("");
@@ -168,9 +168,9 @@ void process() {
 				copy_modes.push_back("\n#define MODE_FILL_SORT_BUFFER\n#define USE_SORT_BUFFER\n");
 				copy_modes.push_back("\n#define MODE_FILL_INSTANCES\n#define USE_SORT_BUFFER\n");
 			} else {
-				copy_modes.push_back("\n#define MODE_FILL_INSTANCES\n#define USERDATA_COUNT " + itos(i) + "\n");
-				copy_modes.push_back("\n#define MODE_FILL_SORT_BUFFER\n#define USE_SORT_BUFFER\n#define USERDATA_COUNT " + itos(i) + "\n");
-				copy_modes.push_back("\n#define MODE_FILL_INSTANCES\n#define USE_SORT_BUFFER\n#define USERDATA_COUNT " + itos(i) + "\n");
+				copy_modes.push_back("\n#define MODE_FILL_INSTANCES\n#define USERDATA_COUNT " + itos(i) + '\n');
+				copy_modes.push_back("\n#define MODE_FILL_SORT_BUFFER\n#define USE_SORT_BUFFER\n#define USERDATA_COUNT " + itos(i) + '\n');
+				copy_modes.push_back("\n#define MODE_FILL_INSTANCES\n#define USE_SORT_BUFFER\n#define USERDATA_COUNT " + itos(i) + '\n');
 			}
 		}
 

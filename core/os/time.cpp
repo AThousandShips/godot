@@ -115,19 +115,19 @@ static const uint8_t MONTH_DAYS_TABLE[2][12] = {
 
 #define VALIDATE_YMDHMS(ret)                                                                                                                                              \
 	ERR_FAIL_COND_V_MSG(month == 0, ret, "Invalid month value of: " + itos(month) + ", months are 1-indexed and cannot be 0. See the Time.Month enum for valid values."); \
-	ERR_FAIL_COND_V_MSG(month < 0, ret, "Invalid month value of: " + itos(month) + ".");                                                                                  \
+	ERR_FAIL_COND_V_MSG(month < 0, ret, "Invalid month value of: " + itos(month) + '.');                                                                                  \
 	ERR_FAIL_COND_V_MSG(month > 12, ret, "Invalid month value of: " + itos(month) + ". See the Time.Month enum for valid values.");                                       \
-	ERR_FAIL_COND_V_MSG(hour > 23, ret, "Invalid hour value of: " + itos(hour) + ".");                                                                                    \
-	ERR_FAIL_COND_V_MSG(hour < 0, ret, "Invalid hour value of: " + itos(hour) + ".");                                                                                     \
-	ERR_FAIL_COND_V_MSG(minute > 59, ret, "Invalid minute value of: " + itos(minute) + ".");                                                                              \
-	ERR_FAIL_COND_V_MSG(minute < 0, ret, "Invalid minute value of: " + itos(minute) + ".");                                                                               \
+	ERR_FAIL_COND_V_MSG(hour > 23, ret, "Invalid hour value of: " + itos(hour) + '.');                                                                                    \
+	ERR_FAIL_COND_V_MSG(hour < 0, ret, "Invalid hour value of: " + itos(hour) + '.');                                                                                     \
+	ERR_FAIL_COND_V_MSG(minute > 59, ret, "Invalid minute value of: " + itos(minute) + '.');                                                                              \
+	ERR_FAIL_COND_V_MSG(minute < 0, ret, "Invalid minute value of: " + itos(minute) + '.');                                                                               \
 	ERR_FAIL_COND_V_MSG(second > 59, ret, "Invalid second value of: " + itos(second) + " (leap seconds are not supported).");                                             \
-	ERR_FAIL_COND_V_MSG(second < 0, ret, "Invalid second value of: " + itos(second) + ".");                                                                               \
+	ERR_FAIL_COND_V_MSG(second < 0, ret, "Invalid second value of: " + itos(second) + '.');                                                                               \
 	ERR_FAIL_COND_V_MSG(day == 0, ret, "Invalid day value of: " + itos(day) + ", days are 1-indexed and cannot be 0.");                                                   \
-	ERR_FAIL_COND_V_MSG(day < 0, ret, "Invalid day value of: " + itos(day) + ".");                                                                                        \
+	ERR_FAIL_COND_V_MSG(day < 0, ret, "Invalid day value of: " + itos(day) + '.');                                                                                        \
 	/* Do this check after month is tested as valid. */                                                                                                                   \
 	uint8_t days_in_this_month = MONTH_DAYS_TABLE[IS_LEAP_YEAR(year)][month - 1];                                                                                         \
-	ERR_FAIL_COND_V_MSG(day > days_in_this_month, ret, "Invalid day value of: " + itos(day) + " which is larger than the maximum for this month, " + itos(days_in_this_month) + ".");
+	ERR_FAIL_COND_V_MSG(day > days_in_this_month, ret, "Invalid day value of: " + itos(day) + " which is larger than the maximum for this month, " + itos(days_in_this_month) + '.');
 
 #define YMD_TO_DAY_NUMBER                                                           \
 	/* The day number since Unix epoch (0-index). Days before 1970 are negative. */ \

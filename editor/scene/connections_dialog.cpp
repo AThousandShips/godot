@@ -576,7 +576,7 @@ String ConnectDialog::get_signature(const MethodInfo &p_method, PackedStringArra
 				break;
 			case Variant::ARRAY:
 				if (pi.hint == PROPERTY_HINT_ARRAY_TYPE && !pi.hint_string.is_empty() && !pi.hint_string.begins_with("res://")) {
-					type_name = "Array[" + pi.hint_string + "]";
+					type_name = "Array[" + pi.hint_string + ']';
 				} else {
 					type_name = "Array";
 				}
@@ -593,7 +593,7 @@ String ConnectDialog::get_signature(const MethodInfo &p_method, PackedStringArra
 						value_hint = "Variant";
 					}
 					if (key_hint != "Variant" || value_hint != "Variant") {
-						type_name += "[" + key_hint + ", " + value_hint + "]";
+						type_name += '[' + key_hint + ", " + value_hint + ']';
 					}
 				}
 				break;
@@ -1205,7 +1205,7 @@ void ConnectionsDock::_open_connection_dialog(TreeItem &p_item) {
 	cd.method = ConnectDialog::generate_method_callback_name(cd.source, signal_name, cd.target);
 	connect_dialog->init(cd, signal_args);
 	connect_dialog->set_title(TTR("Connect a Signal to a Method"));
-	connect_dialog->popup_dialog(signal_name.operator String() + "(" + String(", ").join(signal_args) + ")");
+	connect_dialog->popup_dialog(signal_name.operator String() + '(' + String(", ").join(signal_args) + ')');
 }
 
 /*
@@ -1227,7 +1227,7 @@ void ConnectionsDock::_open_edit_connection_dialog(TreeItem &p_item) {
 
 		connect_dialog->init(cd, signal_args, true);
 		connect_dialog->set_title(vformat(TTR("Edit Connection: '%s'"), cd.signal));
-		connect_dialog->popup_dialog(signal_name.operator String() + "(" + String(", ").join(signal_args) + ")");
+		connect_dialog->popup_dialog(signal_name.operator String() + '(' + String(", ").join(signal_args) + ')');
 	}
 }
 
@@ -1291,7 +1291,7 @@ void ConnectionsDock::_handle_signal_menu_option(int p_option) {
 			DisplayServer::get_singleton()->clipboard_set(meta["name"]);
 		} break;
 		case SIGNAL_MENU_OPEN_DOCS: {
-			ScriptEditor::get_singleton()->goto_help("class_signal:" + String(meta["class"]) + ":" + String(meta["name"]));
+			ScriptEditor::get_singleton()->goto_help("class_signal:" + String(meta["class"]) + ':' + String(meta["name"]));
 			EditorNode::get_singleton()->get_editor_main_screen()->select(EditorMainScreen::EDITOR_SCRIPT);
 		} break;
 	}
@@ -1577,7 +1577,7 @@ void ConnectionsDock::update_tree() {
 			section_item = tree->create_item(root);
 			section_item->set_text(0, class_name);
 			// `|` separators used in `EditorHelpBit`.
-			section_item->set_tooltip_text(0, "class|" + doc_class_name + "|");
+			section_item->set_tooltip_text(0, "class|" + doc_class_name + '|');
 			section_item->set_icon(0, class_icon);
 			section_item->set_selectable(0, false);
 			section_item->set_editable(0, false);
@@ -1609,7 +1609,7 @@ void ConnectionsDock::update_tree() {
 			signal_item->set_metadata(0, sinfo);
 			signal_item->set_icon(0, get_editor_theme_icon(SNAME("Signal")));
 			// `|` separators used in `EditorHelpBit`.
-			signal_item->set_tooltip_text(0, "signal|" + doc_class_name + "|" + String(signal_name));
+			signal_item->set_tooltip_text(0, "signal|" + doc_class_name + '|' + signal_name);
 
 			// List existing connections.
 			List<Object::Connection> existing_connections;
@@ -1638,7 +1638,7 @@ void ConnectionsDock::update_tree() {
 					path += " (source)";
 				}
 				if (cd.unbinds > 0) {
-					path += " unbinds(" + itos(cd.unbinds) + ")";
+					path += " unbinds(" + itos(cd.unbinds) + ')';
 				} else if (!cd.binds.is_empty()) {
 					path += " binds(";
 					for (int i = 0; i < cd.binds.size(); i++) {
@@ -1647,7 +1647,7 @@ void ConnectionsDock::update_tree() {
 						}
 						path += cd.binds[i].operator String();
 					}
-					path += ")";
+					path += ')';
 				}
 
 				TreeItem *connection_item = tree->create_item(signal_item);

@@ -240,7 +240,7 @@ String TextServerFallback::_tag_to_name(int64_t p_tag) const {
 	char name[5];
 	memset(name, 0, 5);
 	ot_tag_to_string(p_tag, name);
-	return String("custom_") + String(name);
+	return "custom_" + String(name);
 }
 
 /*************************************************************************/
@@ -607,7 +607,7 @@ _FORCE_INLINE_ TextServerFallback::FontGlyph TextServerFallback::rasterize_bitma
 						}
 					} break;
 					default:
-						ERR_FAIL_V_MSG(FontGlyph(), "Font uses unsupported pixel format: " + String::num_int64(p_bitmap.pixel_mode) + ".");
+						ERR_FAIL_V_MSG(FontGlyph(), "Font uses unsupported pixel format: " + String::num_int64(p_bitmap.pixel_mode) + '.');
 						break;
 				}
 			}
@@ -2654,7 +2654,7 @@ Vector2 TextServerFallback::_font_get_kerning(const RID &p_font_rid, int64_t p_s
 }
 
 int64_t TextServerFallback::_font_get_glyph_index(const RID &p_font_rid, int64_t p_size, int64_t p_char, int64_t p_variation_selector) const {
-	ERR_FAIL_COND_V_MSG((p_char >= 0xd800 && p_char <= 0xdfff) || (p_char > 0x10ffff), 0, "Unicode parsing error: Invalid unicode codepoint " + String::num_int64(p_char, 16) + ".");
+	ERR_FAIL_COND_V_MSG((p_char >= 0xd800 && p_char <= 0xdfff) || (p_char > 0x10ffff), 0, "Unicode parsing error: Invalid unicode codepoint " + String::num_int64(p_char, 16) + '.');
 	return (int64_t)p_char;
 }
 
@@ -2664,7 +2664,7 @@ int64_t TextServerFallback::_font_get_char_from_glyph_index(const RID &p_font_ri
 
 bool TextServerFallback::_font_has_char(const RID &p_font_rid, int64_t p_char) const {
 	FontFallback *fd = _get_font_data(p_font_rid);
-	ERR_FAIL_COND_V_MSG((p_char >= 0xd800 && p_char <= 0xdfff) || (p_char > 0x10ffff), false, "Unicode parsing error: Invalid unicode codepoint " + String::num_int64(p_char, 16) + ".");
+	ERR_FAIL_COND_V_MSG((p_char >= 0xd800 && p_char <= 0xdfff) || (p_char > 0x10ffff), false, "Unicode parsing error: Invalid unicode codepoint " + String::num_int64(p_char, 16) + '.');
 	if (!fd) {
 		return false;
 	}
@@ -2704,7 +2704,7 @@ String TextServerFallback::_font_get_supported_chars(const RID &p_font_rid) cons
 		FT_ULong charcode = FT_Get_First_Char(ffsd->face, &gindex);
 		while (gindex != 0) {
 			if (charcode != 0) {
-				chars = chars + String::chr(charcode);
+				chars += String::chr(charcode);
 			}
 			charcode = FT_Get_Next_Char(ffsd->face, charcode, &gindex);
 		}
@@ -2713,7 +2713,7 @@ String TextServerFallback::_font_get_supported_chars(const RID &p_font_rid) cons
 #endif
 	const HashMap<int32_t, FontGlyph> &gl = ffsd->glyph_map;
 	for (const KeyValue<int32_t, FontGlyph> &E : gl) {
-		chars = chars + String::chr(E.key);
+		chars += String::chr(E.key);
 	}
 	return chars;
 }
@@ -2754,8 +2754,8 @@ PackedInt32Array TextServerFallback::_font_get_supported_glyphs(const RID &p_fon
 void TextServerFallback::_font_render_range(const RID &p_font_rid, const Vector2i &p_size, int64_t p_start, int64_t p_end) {
 	FontFallback *fd = _get_font_data(p_font_rid);
 	ERR_FAIL_NULL(fd);
-	ERR_FAIL_COND_MSG((p_start >= 0xd800 && p_start <= 0xdfff) || (p_start > 0x10ffff), "Unicode parsing error: Invalid unicode codepoint " + String::num_int64(p_start, 16) + ".");
-	ERR_FAIL_COND_MSG((p_end >= 0xd800 && p_end <= 0xdfff) || (p_end > 0x10ffff), "Unicode parsing error: Invalid unicode codepoint " + String::num_int64(p_end, 16) + ".");
+	ERR_FAIL_COND_MSG((p_start >= 0xd800 && p_start <= 0xdfff) || (p_start > 0x10ffff), "Unicode parsing error: Invalid unicode codepoint " + String::num_int64(p_start, 16) + '.');
+	ERR_FAIL_COND_MSG((p_end >= 0xd800 && p_end <= 0xdfff) || (p_end > 0x10ffff), "Unicode parsing error: Invalid unicode codepoint " + String::num_int64(p_end, 16) + '.');
 
 	MutexLock lock(fd->mutex);
 	Vector2i size = _get_size_outline(fd, p_size);
@@ -3771,7 +3771,7 @@ bool TextServerFallback::_shaped_text_add_string(const RID &p_shaped, const Stri
 	span.meta = p_meta;
 
 	sd->spans.push_back(span);
-	sd->text = sd->text + p_text;
+	sd->text += p_text;
 	sd->end += p_text.length();
 	invalidate(sd);
 
@@ -3803,7 +3803,7 @@ bool TextServerFallback::_shaped_text_add_object(const RID &p_shaped, const Vari
 	obj.baseline = p_baseline;
 
 	sd->spans.push_back(span);
-	sd->text = sd->text + String::chr(0xfffc).repeat(p_length);
+	sd->text += String::chr(0xfffc).repeat(p_length);
 	sd->end += p_length;
 	sd->objects[p_key] = obj;
 	invalidate(sd);

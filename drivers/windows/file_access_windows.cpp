@@ -168,7 +168,7 @@ Error FileAccessWindows::open_internal(const String &p_path, int p_mode_flags) {
 		bool mismatch = false;
 
 		for (const String &part : parts) {
-			working_path = working_path + "\\" + part;
+			working_path += '\\' + part;
 
 			HANDLE fnd = FindFirstFileW((LPCWSTR)(working_path.utf16().get_data()), &d);
 			if (fnd == INVALID_HANDLE_VALUE) {

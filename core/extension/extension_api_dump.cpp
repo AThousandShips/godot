@@ -54,20 +54,20 @@ static String get_property_info_type_name(const PropertyInfo &p_info) {
 		if (p_info.hint_string.is_empty()) {
 			return "void*";
 		} else {
-			return p_info.hint_string + "*";
+			return p_info.hint_string + '*';
 		}
 	}
 	if (p_info.type == Variant::ARRAY && (p_info.hint == PROPERTY_HINT_ARRAY_TYPE)) {
-		return String("typedarray::") + p_info.hint_string;
+		return "typedarray::" + p_info.hint_string;
 	}
 	if (p_info.type == Variant::DICTIONARY && (p_info.hint == PROPERTY_HINT_DICTIONARY_TYPE)) {
-		return String("typeddictionary::") + p_info.hint_string;
+		return "typeddictionary::" + p_info.hint_string;
 	}
 	if (p_info.type == Variant::INT && (p_info.usage & (PROPERTY_USAGE_CLASS_IS_ENUM))) {
-		return String("enum::") + String(p_info.class_name);
+		return "enum::" + p_info.class_name;
 	}
 	if (p_info.type == Variant::INT && (p_info.usage & (PROPERTY_USAGE_CLASS_IS_BITFIELD))) {
-		return String("bitfield::") + String(p_info.class_name);
+		return "bitfield::" + p_info.class_name;
 	}
 	if (p_info.type == Variant::INT && (p_info.usage & PROPERTY_USAGE_ARRAY)) {
 		return "int";
@@ -1320,7 +1320,7 @@ void GDExtensionAPIDump::generate_extension_json_file(const String &p_path, bool
 	Ref<JSON> json;
 	json.instantiate();
 
-	String text = json->stringify(api, "\t", false) + "\n";
+	String text = json->stringify(api, "\t", false) + '\n';
 	Ref<FileAccess> fa = FileAccess::open(p_path, FileAccess::WRITE);
 	ERR_FAIL_COND_MSG(fa.is_null(), vformat("Cannot open file '%s' for writing.", p_path));
 	fa->store_string(text);
@@ -1328,7 +1328,7 @@ void GDExtensionAPIDump::generate_extension_json_file(const String &p_path, bool
 
 static bool compare_value(const String &p_path, const String &p_field, const Variant &p_old_value, const Variant &p_new_value, bool p_allow_name_change) {
 	bool failed = false;
-	String path = p_path + "/" + p_field;
+	String path = p_path + '/' + p_field;
 	if (p_old_value.get_type() == Variant::ARRAY && p_new_value.get_type() == Variant::ARRAY) {
 		Array old_array = p_old_value;
 		Array new_array = p_new_value;
@@ -1390,7 +1390,7 @@ static bool compare_dict_array(const Dictionary &p_old_api, const Dictionary &p_
 			name = name.trim_suffix(".0"); // Make "integers" stringified as integers.
 		}
 		if (p_compare_operators && elem.has("right_type")) {
-			name += " " + String(elem["right_type"]);
+			name += ' ' + String(elem["right_type"]);
 		}
 		new_api_assoc.insert(name, elem);
 	}
@@ -1408,7 +1408,7 @@ static bool compare_dict_array(const Dictionary &p_old_api, const Dictionary &p_
 			name = name.trim_suffix(".0"); // Make "integers" stringified as integers.
 		}
 		if (p_compare_operators && old_elem.has("right_type")) {
-			name += " " + String(old_elem["right_type"]);
+			name += ' ' + String(old_elem["right_type"]);
 		}
 		if (!new_api_assoc.has(name)) {
 			failed = true;
@@ -1478,10 +1478,10 @@ static bool compare_dict_array(const Dictionary &p_old_api, const Dictionary &p_
 				}
 			}
 			if (enum_values) {
-				if (!compare_dict_array(old_elem, new_elem, field, "name", { "value" }, false, base_array + "/" + name + "/", false, true)) {
+				if (!compare_dict_array(old_elem, new_elem, field, "name", { "value" }, false, base_array + '/' + name + '/', false, true)) {
 					failed = true;
 				}
-			} else if (!compare_value(base_array + "/" + name, field, old_value, new_value, allow_name_change)) {
+			} else if (!compare_value(base_array + '/' + name, field, old_value, new_value, allow_name_change)) {
 				failed = true;
 			}
 		}
@@ -1567,7 +1567,7 @@ static bool compare_sub_dict_array(HashSet<String> &r_removed_classes_registered
 
 		Dictionary new_elem = new_api_assoc[name];
 
-		if (!compare_dict_array(old_elem, new_elem, p_base_array, p_name_field, p_fields_to_compare, p_compare_hashes, p_outer + "/" + name + "/", p_compare_operators)) {
+		if (!compare_dict_array(old_elem, new_elem, p_base_array, p_name_field, p_fields_to_compare, p_compare_hashes, p_outer + '/' + name + '/', p_compare_operators)) {
 			failed = true;
 		}
 	}

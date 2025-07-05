@@ -47,7 +47,7 @@ void SceneTreeFTITests::debug_verify_failed(const Node3D *p_node_3d, const Trans
 		int32_t depth = MAX(p_node_3d->_get_scene_tree_depth(), 0);
 		String tabs;
 		for (int32_t n = 0; n < depth; n++) {
-			tabs += "\t";
+			tabs += '\t';
 		}
 
 		bool interp_equal = p_node_3d->_get_cached_global_transform_interpolated() == p_test;
@@ -56,10 +56,10 @@ void SceneTreeFTITests::debug_verify_failed(const Node3D *p_node_3d, const Trans
 		String sz = tabs + p_node_3d->get_name() + " [ " + p_node_3d->get_class_name() + " ]\n";
 
 		if (first) {
-			sz += tabs + "... " + String(Variant(p_test)) + "\n";
+			sz += tabs + "... " + String(Variant(p_test)) + '\n';
 		}
 
-		sz += tabs + (p_node_3d->data.fti_global_xform_interp_set ? "[I] " : "[i] ") + String(Variant(p_node_3d->_get_cached_global_transform_interpolated())) + (interp_equal ? " ***" : "") + "\n";
+		sz += tabs + (p_node_3d->data.fti_global_xform_interp_set ? "[I] " : "[i] ") + String(Variant(p_node_3d->_get_cached_global_transform_interpolated())) + (interp_equal ? " ***" : "") + '\n';
 		sz += tabs + "[g] " + String(Variant(p_node_3d->get_global_transform())) + (glob_equal ? " ***" : "");
 
 		print_line(sz);

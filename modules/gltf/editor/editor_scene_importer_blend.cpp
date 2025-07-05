@@ -523,7 +523,7 @@ bool EditorFileSystemImportFormatSupportQueryBlend::query() {
 
 		String select_exec_label = TTR("Blender 3.0+ is required to import '.blend' files.\nPlease provide a valid path to a Blender executable.");
 #ifdef MACOS_ENABLED
-		select_exec_label += "\n" + TTR("On macOS, this should be the `Contents/MacOS/blender` file within the Blender `.app` folder.");
+		select_exec_label += '\n' + TTR("On macOS, this should be the `Contents/MacOS/blender` file within the Blender `.app` folder.");
 #endif
 		VBoxContainer *vb = memnew(VBoxContainer);
 		vb->add_child(memnew(Label(select_exec_label)));

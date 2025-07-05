@@ -849,7 +849,7 @@ Path2DEditor::Path2DEditor() {
 	curve_edit->set_toggle_mode(true);
 	curve_edit->set_pressed(true);
 	curve_edit->set_focus_mode(Control::FOCUS_ACCESSIBILITY);
-	curve_edit->set_tooltip_text(TTR("Select Points") + "\n" + TTR("Shift+Drag: Select Control Points") + "\n" + keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Click: Add Point") + "\n" + TTR("Left Click: Split Segment (in curve)") + "\n" + TTR("Right Click: Delete Point"));
+	curve_edit->set_tooltip_text(TTR("Select Points") + '\n' + TTR("Shift+Drag: Select Control Points") + '\n' + keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Click: Add Point") + '\n' + TTR("Left Click: Split Segment (in curve)") + '\n' + TTR("Right Click: Delete Point"));
 	curve_edit->set_accessibility_name(TTRC("Select Points"));
 	curve_edit->connect(SceneStringName(pressed), callable_mp(this, &Path2DEditor::_mode_selected).bind(MODE_EDIT));
 	toolbar->add_child(curve_edit);
@@ -867,7 +867,7 @@ Path2DEditor::Path2DEditor() {
 	curve_create->set_theme_type_variation(SceneStringName(FlatButton));
 	curve_create->set_toggle_mode(true);
 	curve_create->set_focus_mode(Control::FOCUS_ACCESSIBILITY);
-	curve_create->set_tooltip_text(TTR("Add Point (in empty space)") + "\n" + TTR("Right Click: Delete Point"));
+	curve_create->set_tooltip_text(TTR("Add Point (in empty space)") + '\n' + TTR("Right Click: Delete Point"));
 	curve_create->set_accessibility_name(TTRC("Add Point (in empty space)"));
 	curve_create->connect(SceneStringName(pressed), callable_mp(this, &Path2DEditor::_mode_selected).bind(MODE_CREATE));
 	toolbar->add_child(curve_create);

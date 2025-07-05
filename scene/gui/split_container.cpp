@@ -425,7 +425,7 @@ bool SplitContainer::is_collapsed() const {
 }
 
 void SplitContainer::set_vertical(bool p_vertical) {
-	ERR_FAIL_COND_MSG(is_fixed, "Can't change orientation of " + get_class() + ".");
+	ERR_FAIL_COND_MSG(is_fixed, "Can't change orientation of " + get_class() + '.');
 	if (vertical == p_vertical) {
 		return;
 	}

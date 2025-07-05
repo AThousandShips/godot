@@ -235,9 +235,9 @@ void EditorDebuggerTree::update_scene_tree(const SceneDebuggerTree *p_tree, int 
 		TreeItem *item = create_item(parent);
 		item->set_text(0, node.name);
 		if (node.scene_file_path.is_empty()) {
-			item->set_tooltip_text(0, node.name + "\n" + TTR("Type:") + " " + node.type_name);
+			item->set_tooltip_text(0, node.name + '\n' + TTR("Type:") + ' ' + node.type_name);
 		} else {
-			item->set_tooltip_text(0, node.name + "\n" + TTR("Instance:") + " " + node.scene_file_path + "\n" + TTR("Type:") + " " + node.type_name);
+			item->set_tooltip_text(0, node.name + '\n' + TTR("Instance:") + ' ' + node.scene_file_path + '\n' + TTR("Type:") + ' ' + node.type_name);
 		}
 		Ref<Texture2D> icon = EditorNode::get_singleton()->get_class_icon(node.type_name, "");
 		if (icon.is_valid()) {
@@ -254,7 +254,7 @@ void EditorDebuggerTree::update_scene_tree(const SceneDebuggerTree *p_tree, int 
 				item->set_collapsed(true);
 			}
 		}
-		item->set_meta("node_path", current_path + "/" + item->get_text(0));
+		item->set_meta("node_path", current_path + '/' + item->get_text(0));
 
 		// Select previously selected nodes.
 		if (debugger_id == p_debugger) { // Can use remote id.
@@ -435,7 +435,7 @@ Variant EditorDebuggerTree::get_drag_data(const Point2 &p_point) {
 	} else {
 		while (selected->get_parent()->get_parent() != get_root()) {
 			selected = selected->get_parent();
-			path = selected->get_text(0) + "/" + path;
+			path = selected->get_text(0) + '/' + path;
 		}
 	}
 
@@ -467,7 +467,7 @@ void EditorDebuggerTree::_item_menu_id_pressed(int p_option) {
 				file_dialog->add_filter("*." + extension, extension.to_upper());
 			}
 
-			String filename = get_selected_path().get_file() + "." + extensions.front()->get().to_lower();
+			String filename = get_selected_path().get_file() + '.' + extensions.front()->get().to_lower();
 			file_dialog->set_current_path(filename);
 			file_dialog->popup_file_dialog();
 		} break;

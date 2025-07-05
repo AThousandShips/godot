@@ -326,7 +326,7 @@ bool EditorImportBlendRunner::_extract_error_message_xml(const Vector<uint8_t> &
 		if (parser->get_node_type() == XMLParser::NODE_TEXT) {
 			if (parser->get_node_data().size()) {
 				if (r_error_message.size()) {
-					r_error_message += " ";
+					r_error_message += ' ';
 				}
 				r_error_message += parser->get_node_data().trim_suffix("\n");
 			}

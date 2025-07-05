@@ -778,7 +778,7 @@ void SceneDebuggerObject::_parse_script_properties(Script *p_script, ScriptInsta
 		for (const StringName &E : sm.value) {
 			Variant m;
 			if (p_instance->get(E, m)) {
-				String script_path = sm.key == p_script ? "" : sm.key->get_path().get_file() + "/";
+				String script_path = sm.key == p_script ? "" : sm.key->get_path().get_file() + '/';
 				PropertyInfo pi(m.get_type(), "Members/" + script_path + E);
 				properties.push_back(SceneDebuggerProperty(pi, m));
 			}
@@ -787,7 +787,7 @@ void SceneDebuggerObject::_parse_script_properties(Script *p_script, ScriptInsta
 	// Constants
 	for (KeyValue<const Script *, HashMap<StringName, Variant>> &sc : constants) {
 		for (const KeyValue<StringName, Variant> &E : sc.value) {
-			String script_path = sc.key == p_script ? "" : sc.key->get_path().get_file() + "/";
+			String script_path = sc.key == p_script ? "" : sc.key->get_path().get_file() + '/';
 			if (E.value.get_type() == Variant::OBJECT) {
 				Variant inst_id = ((Object *)E.value)->get_instance_id();
 				PropertyInfo pi(inst_id.get_type(), "Constants/" + E.key, PROPERTY_HINT_OBJECT_ID, "Object");

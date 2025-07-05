@@ -224,13 +224,13 @@ String snake_to_pascal_case(const String &p_identifier, bool p_input_is_upper) {
 		} else {
 			if (i == 0 || i == (parts.size() - 1)) {
 				// Preserve underscores at the beginning and end
-				ret += "_";
+				ret += '_';
 			} else {
 				// Preserve contiguous underscores
 				if (parts[i - 1].length()) {
 					ret += "__";
 				} else {
-					ret += "_";
+					ret += '_';
 				}
 			}
 		}
@@ -277,13 +277,13 @@ String snake_to_camel_case(const String &p_identifier, bool p_input_is_upper) {
 		} else {
 			if (i == 0 || i == (parts.size() - 1)) {
 				// Preserve underscores at the beginning and end
-				ret += "_";
+				ret += '_';
 			} else {
 				// Preserve contiguous underscores
 				if (parts[i - 1].length()) {
 					ret += "__";
 				} else {
-					ret += "_";
+					ret += '_';
 				}
 			}
 		}

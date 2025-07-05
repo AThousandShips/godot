@@ -145,7 +145,7 @@ void ReplicationEditor::_add_sync_property(String p_path) {
 }
 
 void ReplicationEditor::_pick_node_property_selected(String p_name) {
-	String adding_prop_path = String(adding_node_path) + ":" + p_name;
+	String adding_prop_path = String(adding_node_path) + ':' + p_name;
 
 	_add_sync_property(adding_prop_path);
 }
@@ -340,7 +340,7 @@ void ReplicationEditor::_drop_data_fw(const Point2 &p_point, const Variant &p_da
 	}
 
 	String path = String(root->get_path_to(node));
-	path += ":" + String(d["property"]);
+	path += ':' + String(d["property"]);
 
 	_add_sync_property(path);
 }
@@ -381,7 +381,7 @@ void ReplicationEditor::_add_pressed() {
 	if (idx == -1) {
 		np_text = ".:" + np_text;
 	} else if (idx == 0) {
-		np_text = "." + np_text;
+		np_text = '.' + np_text;
 	}
 	NodePath path = NodePath(np_text);
 	if (path.is_empty()) {
@@ -444,7 +444,7 @@ void ReplicationEditor::_tree_button_pressed(Object *p_item, int p_column, int p
 		return;
 	}
 	deleting = ti->get_metadata(0);
-	delete_dialog->set_text(TTR("Delete Property?") + "\n\"" + ti->get_text(0) + "\"");
+	delete_dialog->set_text(TTR("Delete Property?") + "\n\"" + ti->get_text(0) + '"');
 	delete_dialog->popup_centered();
 }
 
@@ -562,7 +562,7 @@ void ReplicationEditor::_add_property(const NodePath &p_property, bool p_spawn, 
 		if (!node) {
 			node = root_node;
 		}
-		item->set_text(0, String(node->get_name()) + ":" + subpath);
+		item->set_text(0, String(node->get_name()) + ':' + subpath);
 		icon = _get_class_icon(node);
 		bool valid = false;
 		Variant value = node->get(subpath, &valid);
@@ -583,7 +583,7 @@ void ReplicationEditor::_add_property(const NodePath &p_property, bool p_spawn, 
 	item->set_text_alignment(2, HORIZONTAL_ALIGNMENT_CENTER);
 	item->set_cell_mode(2, TreeItem::CELL_MODE_RANGE);
 	item->set_range_config(2, 0, 2, 1);
-	item->set_text(2, TTR("Never", "Replication Mode") + "," + TTR("Always", "Replication Mode") + "," + TTR("On Change", "Replication Mode"));
+	item->set_text(2, TTR("Never", "Replication Mode") + ',' + TTR("Always", "Replication Mode") + ',' + TTR("On Change", "Replication Mode"));
 	item->set_range(2, (int)p_mode);
 	item->set_editable(2, true);
 }

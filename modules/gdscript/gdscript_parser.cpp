@@ -1283,7 +1283,7 @@ void GDScriptParser::parse_property_setter(VariableNode *p_variable) {
 			FunctionNode *function = alloc_node<FunctionNode>();
 			IdentifierNode *identifier = alloc_node<IdentifierNode>();
 			complete_extents(identifier);
-			identifier->name = "@" + p_variable->identifier->name + "_setter";
+			identifier->name = '@' + p_variable->identifier->name + "_setter";
 			function->identifier = identifier;
 			function->is_static = p_variable->is_static;
 
@@ -1340,7 +1340,7 @@ void GDScriptParser::parse_property_getter(VariableNode *p_variable) {
 
 			IdentifierNode *identifier = alloc_node<IdentifierNode>();
 			complete_extents(identifier);
-			identifier->name = "@" + p_variable->identifier->name + "_getter";
+			identifier->name = '@' + p_variable->identifier->name + "_getter";
 			function->identifier = identifier;
 			function->is_static = p_variable->is_static;
 
@@ -3507,7 +3507,7 @@ GDScriptParser::ExpressionNode *GDScriptParser::parse_get_node(ExpressionNode *p
 				return nullptr;
 			}
 
-			get_node->full_path += "%";
+			get_node->full_path += '%';
 
 			path_state = PATH_STATE_PERCENT;
 		} else if (previous.type == GDScriptTokenizer::Token::SLASH) {
@@ -3517,7 +3517,7 @@ GDScriptParser::ExpressionNode *GDScriptParser::parse_get_node(ExpressionNode *p
 				return nullptr;
 			}
 
-			get_node->full_path += "/";
+			get_node->full_path += '/';
 
 			path_state = PATH_STATE_SLASH;
 		}
@@ -3863,7 +3863,7 @@ static String _process_doc_line(const String &p_line, const String &p_text, cons
 					} else {
 						result += line.substr(buffer_start, lb_pos - buffer_start) + '\n';
 					}
-					result += "[" + tag + "]";
+					result += '[' + tag + ']';
 					if (from < len) {
 						result += '\n';
 					}
@@ -4417,7 +4417,7 @@ static String _get_annotation_error_string(const StringName &p_annotation_name, 
 	for (int i = 0; i < p_expected_types.size(); i++) {
 		const Variant::Type &type = p_expected_types[i];
 		types.push_back(Variant::get_type_name(type));
-		types.push_back("Array[" + Variant::get_type_name(type) + "]");
+		types.push_back("Array[" + Variant::get_type_name(type) + ']');
 		switch (type) {
 			case Variant::INT:
 				types.push_back("PackedByteArray");
@@ -4598,7 +4598,7 @@ bool GDScriptParser::export_annotations(AnnotationNode *p_annotation, Node *p_ta
 		}
 
 		if (i > 0) {
-			hint_string += ",";
+			hint_string += ',';
 		}
 		hint_string += arg_string;
 	}
@@ -4699,12 +4699,12 @@ bool GDScriptParser::export_annotations(AnnotationNode *p_annotation, Node *p_ta
 					bool first = true;
 					for (const KeyValue<StringName, int64_t> &E : export_type.enum_values) {
 						if (!first) {
-							enum_hint_string += ",";
+							enum_hint_string += ',';
 						} else {
 							first = false;
 						}
 						enum_hint_string += E.key.operator String().capitalize().xml_escape();
-						enum_hint_string += ":";
+						enum_hint_string += ':';
 						enum_hint_string += String::num_int64(E.value).xml_escape();
 					}
 
@@ -4732,9 +4732,9 @@ bool GDScriptParser::export_annotations(AnnotationNode *p_annotation, Node *p_ta
 		if (is_dict) {
 			String key_prefix = itos(variable->export_info.type);
 			if (variable->export_info.hint) {
-				key_prefix += "/" + itos(variable->export_info.hint);
+				key_prefix += '/' + itos(variable->export_info.hint);
 			}
-			key_prefix += ":" + variable->export_info.hint_string;
+			key_prefix += ':' + variable->export_info.hint_string;
 
 			// Now parse value.
 			export_type = export_type.get_container_element_type(0);
@@ -4776,12 +4776,12 @@ bool GDScriptParser::export_annotations(AnnotationNode *p_annotation, Node *p_ta
 						bool first = true;
 						for (const KeyValue<StringName, int64_t> &E : export_type.enum_values) {
 							if (!first) {
-								enum_hint_string += ",";
+								enum_hint_string += ',';
 							} else {
 								first = false;
 							}
 							enum_hint_string += E.key.operator String().capitalize().xml_escape();
-							enum_hint_string += ":";
+							enum_hint_string += ':';
 							enum_hint_string += String::num_int64(E.value).xml_escape();
 						}
 
@@ -4802,13 +4802,13 @@ bool GDScriptParser::export_annotations(AnnotationNode *p_annotation, Node *p_ta
 
 			String value_prefix = itos(variable->export_info.type);
 			if (variable->export_info.hint) {
-				value_prefix += "/" + itos(variable->export_info.hint);
+				value_prefix += '/' + itos(variable->export_info.hint);
 			}
-			value_prefix += ":" + variable->export_info.hint_string;
+			value_prefix += ':' + variable->export_info.hint_string;
 
 			variable->export_info.type = Variant::DICTIONARY;
 			variable->export_info.hint = PROPERTY_HINT_TYPE_STRING;
-			variable->export_info.hint_string = key_prefix + ";" + value_prefix;
+			variable->export_info.hint_string = key_prefix + ';' + value_prefix;
 			variable->export_info.usage = PROPERTY_USAGE_DEFAULT;
 			variable->export_info.class_name = StringName();
 		}
@@ -4845,11 +4845,11 @@ bool GDScriptParser::export_annotations(AnnotationNode *p_annotation, Node *p_ta
 	if (is_array) {
 		String hint_prefix = itos(variable->export_info.type);
 		if (variable->export_info.hint) {
-			hint_prefix += "/" + itos(variable->export_info.hint);
+			hint_prefix += '/' + itos(variable->export_info.hint);
 		}
 		variable->export_info.type = original_export_type_builtin;
 		variable->export_info.hint = PROPERTY_HINT_TYPE_STRING;
-		variable->export_info.hint_string = hint_prefix + ":" + variable->export_info.hint_string;
+		variable->export_info.hint_string = hint_prefix + ':' + variable->export_info.hint_string;
 		variable->export_info.usage = PROPERTY_USAGE_DEFAULT;
 		variable->export_info.class_name = StringName();
 	}
@@ -4944,7 +4944,7 @@ bool GDScriptParser::export_tool_button_annotation(AnnotationNode *p_annotation,
 	// Build the hint string (format: `<text>[,<icon>]`).
 	String hint_string = p_annotation->resolved_arguments[0].operator String(); // Button text.
 	if (p_annotation->resolved_arguments.size() > 1) {
-		hint_string += "," + p_annotation->resolved_arguments[1].operator String(); // Button icon.
+		hint_string += ',' + p_annotation->resolved_arguments[1].operator String(); // Button icon.
 	}
 
 	variable->export_info.type = Variant::CALLABLE;
@@ -5368,7 +5368,7 @@ PropertyInfo GDScriptParser::DataType::to_property_info(const String &p_name) co
 						break;
 				}
 				result.hint = PROPERTY_HINT_DICTIONARY_TYPE;
-				result.hint_string = key_hint + ";" + value_hint;
+				result.hint_string = key_hint + ';' + value_hint;
 			}
 			break;
 		case NATIVE:
@@ -5540,9 +5540,9 @@ void GDScriptParser::TreePrinter::increase_indent() {
 	indent = "";
 	for (int i = 0; i < indent_level * 4; i++) {
 		if (i % 4 == 0) {
-			indent += "|";
+			indent += '|';
 		} else {
-			indent += " ";
+			indent += ' ';
 		}
 	}
 }
@@ -5552,9 +5552,9 @@ void GDScriptParser::TreePrinter::decrease_indent() {
 	indent = "";
 	for (int i = 0; i < indent_level * 4; i++) {
 		if (i % 4 == 0) {
-			indent += "|";
+			indent += '|';
 		} else {
-			indent += " ";
+			indent += ' ';
 		}
 	}
 }

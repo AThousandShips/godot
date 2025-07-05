@@ -142,7 +142,7 @@ String PluginConfigAppleEmbedded::get_plugin_main_binary(PluginConfigAppleEmbedd
 	String plugin_binary_dir = plugin_config.binary.get_base_dir();
 	String plugin_name_prefix = plugin_config.binary.get_basename().get_file();
 	String plugin_extension = plugin_config.binary.get_extension();
-	String plugin_file = plugin_name_prefix + "." + (p_debug ? "debug" : "release") + "." + plugin_extension;
+	String plugin_file = plugin_name_prefix + '.' + (p_debug ? "debug" : "release") + '.' + plugin_extension;
 
 	return plugin_binary_dir.path_join(plugin_file);
 }

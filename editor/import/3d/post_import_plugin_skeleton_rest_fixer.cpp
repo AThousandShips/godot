@@ -277,7 +277,7 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 						if (src_idx == -1) {
 							continue;
 						}
-						String insert_path = track_path + ":" + bone_name;
+						String insert_path = track_path + ':' + bone_name;
 						int rot_track = anim->find_track(insert_path, Animation::TYPE_ROTATION_3D);
 						if (rot_track == -1) {
 							int track = anim->add_track(Animation::TYPE_ROTATION_3D);
@@ -594,11 +594,11 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 											Vector<StringName> names = anim->track_get_path(i).get_names();
 											names.remove_at(0);
 											for (int j = 0; j < names.size(); j++) {
-												path_string += "/" + names[i].operator String();
+												path_string += '/' + names[i].operator String();
 											}
 										}
 										if (anim->track_get_path(i).get_subname_count() > 0) {
-											path_string = path_string + String(":") + anim->track_get_path(i).get_concatenated_subnames();
+											path_string += ':' + anim->track_get_path(i).get_concatenated_subnames();
 										}
 										anim->track_set_path(i, path_string);
 									}

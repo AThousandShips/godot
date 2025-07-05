@@ -337,7 +337,7 @@ Ref<DirAccess> DirAccess::create_temp(const String &p_prefix, bool p_keep, Error
 		String datetime = Time::get_singleton()->get_datetime_string_from_system().remove_chars("-T:");
 		datetime += itos(Time::get_singleton()->get_ticks_usec());
 		String suffix = datetime + (suffix_i > 0 ? itos(suffix_i) : "");
-		path = (p_prefix.is_empty() ? "" : p_prefix + "-") + suffix;
+		path = (p_prefix.is_empty() ? "" : p_prefix + '-') + suffix;
 		if (!path.is_valid_filename()) {
 			*r_error = ERR_FILE_BAD_PATH;
 			return Ref<DirAccess>();
@@ -522,7 +522,7 @@ Error DirAccess::_copy_dir(Ref<DirAccess> &p_target_da, const String &p_to, int 
 		Error err = change_dir(rel_path);
 		ERR_FAIL_COND_V_MSG(err != OK, err, vformat("Cannot change current directory to '%s'.", rel_path));
 
-		err = _copy_dir(p_target_da, p_to + rel_path + "/", p_chmod_flags, p_copy_links);
+		err = _copy_dir(p_target_da, p_to + rel_path + '/', p_chmod_flags, p_copy_links);
 		if (err) {
 			change_dir("..");
 			ERR_FAIL_V_MSG(err, "Failed to copy recursively.");
@@ -546,7 +546,7 @@ Error DirAccess::copy_dir(const String &p_from, String p_to, int p_chmod_flags, 
 	}
 
 	if (!p_to.ends_with("/")) {
-		p_to = p_to + "/";
+		p_to += '/';
 	}
 
 	DirChanger dir_changer(this, p_from);

@@ -418,7 +418,7 @@ void AudioStreamImportSettingsDialog::edit(const String &p_path, const String &p
 	stream = p_stream;
 	_player->set_stream(stream);
 	_current = 0;
-	String text = String::num(stream->get_length(), 2).pad_decimals(2) + "s";
+	String text = String::num(stream->get_length(), 2).pad_decimals(2) + 's';
 	_duration_label->set_text(text);
 
 	if (stream.is_valid()) {

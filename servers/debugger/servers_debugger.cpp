@@ -455,9 +455,9 @@ void ServersDebugger::_send_resource_usage() {
 		}
 
 		if (E.depth == 0) {
-			info.format = itos(E.width) + "x" + itos(E.height) + " " + Image::get_format_name(E.format);
+			info.format = itos(E.width) + 'x' + itos(E.height) + ' ' + Image::get_format_name(E.format);
 		} else {
-			info.format = itos(E.width) + "x" + itos(E.height) + "x" + itos(E.depth) + " " + Image::get_format_name(E.format);
+			info.format = itos(E.width) + 'x' + itos(E.height) + 'x' + itos(E.depth) + ' ' + Image::get_format_name(E.format);
 		}
 		usage.infos.push_back(info);
 	}

@@ -34,7 +34,7 @@
 
 void SpriteFrames::add_frame(const StringName &p_anim, const Ref<Texture2D> &p_texture, float p_duration, int p_at_pos) {
 	HashMap<StringName, Anim>::Iterator E = animations.find(p_anim);
-	ERR_FAIL_COND_MSG(!E, "Animation '" + String(p_anim) + "' doesn't exist.");
+	ERR_FAIL_COND_MSG(!E, "Animation '" + p_anim + "' doesn't exist.");
 
 	p_duration = MAX(SPRITE_FRAME_MINIMUM_DURATION, p_duration);
 
@@ -51,7 +51,7 @@ void SpriteFrames::add_frame(const StringName &p_anim, const Ref<Texture2D> &p_t
 
 void SpriteFrames::set_frame(const StringName &p_anim, int p_idx, const Ref<Texture2D> &p_texture, float p_duration) {
 	HashMap<StringName, Anim>::Iterator E = animations.find(p_anim);
-	ERR_FAIL_COND_MSG(!E, "Animation '" + String(p_anim) + "' doesn't exist.");
+	ERR_FAIL_COND_MSG(!E, "Animation '" + p_anim + "' doesn't exist.");
 	ERR_FAIL_COND(p_idx < 0);
 	if (p_idx >= E->value.frames.size()) {
 		return;
@@ -68,14 +68,14 @@ void SpriteFrames::set_frame(const StringName &p_anim, int p_idx, const Ref<Text
 
 int SpriteFrames::get_frame_count(const StringName &p_anim) const {
 	HashMap<StringName, Anim>::ConstIterator E = animations.find(p_anim);
-	ERR_FAIL_COND_V_MSG(!E, 0, "Animation '" + String(p_anim) + "' doesn't exist.");
+	ERR_FAIL_COND_V_MSG(!E, 0, "Animation '" + p_anim + "' doesn't exist.");
 
 	return E->value.frames.size();
 }
 
 void SpriteFrames::remove_frame(const StringName &p_anim, int p_idx) {
 	HashMap<StringName, Anim>::Iterator E = animations.find(p_anim);
-	ERR_FAIL_COND_MSG(!E, "Animation '" + String(p_anim) + "' doesn't exist.");
+	ERR_FAIL_COND_MSG(!E, "Animation '" + p_anim + "' doesn't exist.");
 
 	E->value.frames.remove_at(p_idx);
 
@@ -84,7 +84,7 @@ void SpriteFrames::remove_frame(const StringName &p_anim, int p_idx) {
 
 void SpriteFrames::clear(const StringName &p_anim) {
 	HashMap<StringName, Anim>::Iterator E = animations.find(p_anim);
-	ERR_FAIL_COND_MSG(!E, "Animation '" + String(p_anim) + "' doesn't exist.");
+	ERR_FAIL_COND_MSG(!E, "Animation '" + p_anim + "' doesn't exist.");
 
 	E->value.frames.clear();
 
@@ -117,8 +117,8 @@ void SpriteFrames::remove_animation(const StringName &p_anim) {
 }
 
 void SpriteFrames::rename_animation(const StringName &p_prev, const StringName &p_next) {
-	ERR_FAIL_COND_MSG(!animations.has(p_prev), "SpriteFrames doesn't have animation '" + String(p_prev) + "'.");
-	ERR_FAIL_COND_MSG(animations.has(p_next), "Animation '" + String(p_next) + "' already exists.");
+	ERR_FAIL_COND_MSG(!animations.has(p_prev), "SpriteFrames doesn't have animation '" + p_prev + "'.");
+	ERR_FAIL_COND_MSG(animations.has(p_next), "Animation '" + p_next + "' already exists.");
 
 	Anim anim = animations[p_prev];
 	animations.erase(p_prev);
@@ -143,25 +143,25 @@ Vector<String> SpriteFrames::get_animation_names() const {
 void SpriteFrames::set_animation_speed(const StringName &p_anim, double p_fps) {
 	ERR_FAIL_COND_MSG(p_fps < 0, "Animation speed cannot be negative (" + itos(p_fps) + ").");
 	HashMap<StringName, Anim>::Iterator E = animations.find(p_anim);
-	ERR_FAIL_COND_MSG(!E, "Animation '" + String(p_anim) + "' doesn't exist.");
+	ERR_FAIL_COND_MSG(!E, "Animation '" + p_anim + "' doesn't exist.");
 	E->value.speed = p_fps;
 }
 
 double SpriteFrames::get_animation_speed(const StringName &p_anim) const {
 	HashMap<StringName, Anim>::ConstIterator E = animations.find(p_anim);
-	ERR_FAIL_COND_V_MSG(!E, 0, "Animation '" + String(p_anim) + "' doesn't exist.");
+	ERR_FAIL_COND_V_MSG(!E, 0, "Animation '" + p_anim + "' doesn't exist.");
 	return E->value.speed;
 }
 
 void SpriteFrames::set_animation_loop(const StringName &p_anim, bool p_loop) {
 	HashMap<StringName, Anim>::Iterator E = animations.find(p_anim);
-	ERR_FAIL_COND_MSG(!E, "Animation '" + String(p_anim) + "' doesn't exist.");
+	ERR_FAIL_COND_MSG(!E, "Animation '" + p_anim + "' doesn't exist.");
 	E->value.loop = p_loop;
 }
 
 bool SpriteFrames::get_animation_loop(const StringName &p_anim) const {
 	HashMap<StringName, Anim>::ConstIterator E = animations.find(p_anim);
-	ERR_FAIL_COND_V_MSG(!E, false, "Animation '" + String(p_anim) + "' doesn't exist.");
+	ERR_FAIL_COND_V_MSG(!E, false, "Animation '" + p_anim + "' doesn't exist.");
 	return E->value.loop;
 }
 

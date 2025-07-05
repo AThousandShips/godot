@@ -66,8 +66,8 @@ void TTS_Windows::process_events() {
 
 		String text;
 		DWORD flags = SPF_ASYNC | SPF_PURGEBEFORESPEAK | SPF_IS_XML;
-		String pitch_tag = String("<pitch absmiddle=\"") + String::num_int64(message.pitch * 10 - 10, 10) + String("\">");
-		text = pitch_tag + message.text + String("</pitch>");
+		String pitch_tag = "<pitch absmiddle=\"" + String::num_int64(message.pitch * 10 - 10, 10) + "\">";
+		text = pitch_tag + message.text + "</pitch>";
 
 		IEnumSpObjectTokens *cpEnum;
 		ISpObjectToken *cpVoiceToken;
@@ -168,7 +168,7 @@ Array TTS_Windows::get_voices() const {
 						} else {
 							voice_d["name"] = voice_d["id"].operator String().replace("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\", "");
 						}
-						voice_d["language"] = String::utf16((const char16_t *)w_lang_code) + "_" + String::utf16((const char16_t *)w_reg_code);
+						voice_d["language"] = String::utf16((const char16_t *)w_lang_code) + '_' + String::utf16((const char16_t *)w_reg_code);
 						list.push_back(voice_d);
 
 						delete[] w_lang_code;

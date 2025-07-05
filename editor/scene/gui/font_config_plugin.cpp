@@ -361,7 +361,7 @@ EditorPropertyFontMetaOverride::EditorPropertyFontMetaOverride(bool p_script) {
 	if (script_editor) {
 		script_codes = TranslationServer::get_singleton()->get_all_scripts();
 		for (int i = 0; i < script_codes.size(); i++) {
-			menu->add_item(TranslationServer::get_singleton()->get_script_name(script_codes[i]) + " (" + script_codes[i] + ")", i);
+			menu->add_item(TranslationServer::get_singleton()->get_script_name(script_codes[i]) + " (" + script_codes[i] + ')', i);
 		}
 	}
 	add_child(menu);
@@ -483,7 +483,7 @@ void EditorPropertyOTVariation::update_property() {
 					if (slice.length() > 0) {
 						slice[0] = String::char_uppercase(slice[0]);
 						if (i > 0) {
-							name_cap += " ";
+							name_cap += ' ';
 						}
 						name_cap += slice;
 					}

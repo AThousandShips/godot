@@ -399,7 +399,7 @@ String InputEventKey::as_text_physical_keycode() const {
 	if (physical_keycode != Key::NONE) {
 		kc = keycode_get_string(physical_keycode);
 	} else {
-		kc = "(" + RTR("Unset") + ")";
+		kc = '(' + RTR("Unset") + ')';
 	}
 
 	if (kc.is_empty()) {
@@ -407,7 +407,7 @@ String InputEventKey::as_text_physical_keycode() const {
 	}
 
 	String mods_text = InputEventWithModifiers::as_text();
-	return mods_text.is_empty() ? kc : mods_text + "+" + kc;
+	return mods_text.is_empty() ? kc : mods_text + '+' + kc;
 }
 
 String InputEventKey::as_text_keycode() const {
@@ -416,7 +416,7 @@ String InputEventKey::as_text_keycode() const {
 	if (keycode != Key::NONE) {
 		kc = keycode_get_string(keycode);
 	} else {
-		kc = "(" + RTR("Unset") + ")";
+		kc = '(' + RTR("Unset") + ')';
 	}
 
 	if (kc.is_empty()) {
@@ -424,7 +424,7 @@ String InputEventKey::as_text_keycode() const {
 	}
 
 	String mods_text = InputEventWithModifiers::as_text();
-	return mods_text.is_empty() ? kc : mods_text + "+" + kc;
+	return mods_text.is_empty() ? kc : mods_text + '+' + kc;
 }
 
 String InputEventKey::as_text_key_label() const {
@@ -433,7 +433,7 @@ String InputEventKey::as_text_key_label() const {
 	if (key_label != Key::NONE) {
 		kc = keycode_get_string(key_label);
 	} else {
-		kc = "(" + RTR("Unset") + ")";
+		kc = '(' + RTR("Unset") + ')';
 	}
 
 	if (kc.is_empty()) {
@@ -441,7 +441,7 @@ String InputEventKey::as_text_key_label() const {
 	}
 
 	String mods_text = InputEventWithModifiers::as_text();
-	return mods_text.is_empty() ? kc : mods_text + "+" + kc;
+	return mods_text.is_empty() ? kc : mods_text + '+' + kc;
 }
 
 String InputEventKey::as_text_location() const {
@@ -469,9 +469,9 @@ String InputEventKey::as_text() const {
 	} else if (keycode != Key::NONE) {
 		kc = keycode_get_string(keycode);
 	} else if (physical_keycode != Key::NONE) {
-		kc = keycode_get_string(physical_keycode) + " (" + RTR("Physical") + ")";
+		kc = keycode_get_string(physical_keycode) + " (" + RTR("Physical") + ')';
 	} else {
-		kc = "(" + RTR("Unset") + ")";
+		kc = '(' + RTR("Unset") + ')';
 	}
 
 	if (kc.is_empty()) {
@@ -479,7 +479,7 @@ String InputEventKey::as_text() const {
 	}
 
 	String mods_text = InputEventWithModifiers::as_text();
-	return mods_text.is_empty() ? kc : mods_text + "+" + kc;
+	return mods_text.is_empty() ? kc : mods_text + '+' + kc;
 }
 
 String InputEventKey::to_string() {
@@ -495,14 +495,14 @@ String InputEventKey::to_string() {
 	}
 
 	if (keycode == Key::NONE && physical_keycode == Key::NONE && unicode != 0) {
-		kc = "U+" + String::num_uint64(unicode, 16) + " (" + String::chr(unicode) + ")";
+		kc = "U+" + String::num_uint64(unicode, 16) + " (" + String::chr(unicode) + ')';
 	} else if (keycode != Key::NONE) {
-		kc = itos((int64_t)keycode) + " (" + keycode_get_string(keycode) + ")";
+		kc = itos((int64_t)keycode) + " (" + keycode_get_string(keycode) + ')';
 	} else if (physical_keycode != Key::NONE) {
-		kc = itos((int64_t)physical_keycode) + " (" + keycode_get_string(physical_keycode) + ")";
+		kc = itos((int64_t)physical_keycode) + " (" + keycode_get_string(physical_keycode) + ')';
 		physical = "true";
 	} else {
-		kc = "(" + RTR("Unset") + ")";
+		kc = '(' + RTR("Unset") + ')';
 	}
 
 	String mods = InputEventWithModifiers::as_text();
@@ -813,7 +813,7 @@ static const char *_mouse_button_descriptions[9] = {
 String InputEventMouseButton::as_text() const {
 	// Modifiers
 	String mods_text = InputEventWithModifiers::as_text();
-	String full_string = mods_text.is_empty() ? "" : mods_text + "+";
+	String full_string = mods_text.is_empty() ? "" : mods_text + '+';
 
 	// Button
 	MouseButton idx = get_button_index();
@@ -836,7 +836,7 @@ String InputEventMouseButton::as_text() const {
 
 	// Double Click
 	if (double_click) {
-		full_string += " (" + RTR("Double Click") + ")";
+		full_string += " (" + RTR("Double Click") + ')';
 	}
 
 	return full_string;
@@ -1290,7 +1290,7 @@ String InputEventJoypadButton::as_text() const {
 	}
 
 	if (pressure != 0) {
-		text += ", " + RTR("Pressure:") + " " + String(Variant(pressure));
+		text += ", " + RTR("Pressure:") + ' ' + String(Variant(pressure));
 	}
 
 	return text;

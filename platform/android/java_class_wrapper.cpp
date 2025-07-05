@@ -855,7 +855,7 @@ Ref<JavaClass> JavaClass::get_java_parent_class() const {
 }
 
 String JavaClass::to_string() {
-	return "<JavaClass:" + java_class_name + ">";
+	return "<JavaClass:" + java_class_name + '>';
 }
 
 JavaClass::JavaClass() {
@@ -942,31 +942,31 @@ bool JavaClassWrapper::_get_type_sig(JNIEnv *env, jobject obj, uint32_t &sig, St
 
 	if (str_type == "void" || str_type == "V") {
 		t |= JavaClass::ARG_TYPE_VOID;
-		strsig += "V";
+		strsig += 'V';
 	} else if (str_type == "boolean" || str_type == "Z") {
 		t |= JavaClass::ARG_TYPE_BOOLEAN;
-		strsig += "Z";
+		strsig += 'Z';
 	} else if (str_type == "byte" || str_type == "B") {
 		t |= JavaClass::ARG_TYPE_BYTE;
-		strsig += "B";
+		strsig += 'B';
 	} else if (str_type == "char" || str_type == "C") {
 		t |= JavaClass::ARG_TYPE_CHAR;
-		strsig += "C";
+		strsig += 'C';
 	} else if (str_type == "short" || str_type == "S") {
 		t |= JavaClass::ARG_TYPE_SHORT;
-		strsig += "S";
+		strsig += 'S';
 	} else if (str_type == "int" || str_type == "I") {
 		t |= JavaClass::ARG_TYPE_INT;
-		strsig += "I";
+		strsig += 'I';
 	} else if (str_type == "long" || str_type == "J") {
 		t |= JavaClass::ARG_TYPE_LONG;
-		strsig += "J";
+		strsig += 'J';
 	} else if (str_type == "float" || str_type == "F") {
 		t |= JavaClass::ARG_TYPE_FLOAT;
-		strsig += "F";
+		strsig += 'F';
 	} else if (str_type == "double" || str_type == "D") {
 		t |= JavaClass::ARG_TYPE_DOUBLE;
-		strsig += "D";
+		strsig += 'D';
 	} else if (str_type == "java.lang.String") {
 		t |= JavaClass::ARG_TYPE_STRING;
 		strsig += "Ljava/lang/String;";
@@ -1002,7 +1002,7 @@ bool JavaClassWrapper::_get_type_sig(JNIEnv *env, jobject obj, uint32_t &sig, St
 		strsig += "Ljava/lang/Double;";
 	} else {
 		//a class likely
-		strsig += "L" + str_type.replace_char('.', '/') + ";";
+		strsig += 'L' + str_type.replace_char('.', '/') + ';';
 		t |= JavaClass::ARG_TYPE_CLASS;
 	}
 
@@ -1556,10 +1556,10 @@ Ref<JavaClass> JavaClassWrapper::_wrap(const String &p_class, bool p_allow_priva
 			continue;
 		}
 
-		signature += ")";
+		signature += ')';
 
 		if (is_constructor) {
-			signature += "V";
+			signature += 'V';
 			mi.return_type = JavaClass::ARG_TYPE_CLASS;
 		} else {
 			jobject return_type = (jobject)env->CallObjectMethod(obj, Method_getReturnType);

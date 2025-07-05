@@ -268,7 +268,7 @@ void image_decompress_bcdec(Image *p_image) {
 			break;
 
 		default:
-			ERR_FAIL_MSG("bcdec: Can't decompress unknown format: " + Image::get_format_name(source_format) + ".");
+			ERR_FAIL_MSG("bcdec: Can't decompress unknown format: " + Image::get_format_name(source_format) + '.');
 			break;
 	}
 

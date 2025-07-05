@@ -190,7 +190,7 @@ void Fog::init_fog_shader(uint32_t p_max_directional_lights, int p_roughness_lay
 	MaterialStorage *material_storage = MaterialStorage::get_singleton();
 
 	{
-		String defines = "#define SAMPLERS_BINDING_FIRST_INDEX " + itos(SAMPLERS_BINDING_FIRST_INDEX) + "\n";
+		String defines = "#define SAMPLERS_BINDING_FIRST_INDEX " + itos(SAMPLERS_BINDING_FIRST_INDEX) + '\n';
 		// Initialize local fog shader
 		Vector<String> volumetric_fog_modes;
 		volumetric_fog_modes.push_back("");
@@ -270,7 +270,7 @@ ALBEDO = vec3(1.0);
 	}
 
 	{
-		String defines = "\n#define MAX_DIRECTIONAL_LIGHT_DATA_STRUCTS " + itos(p_max_directional_lights) + "\n";
+		String defines = "\n#define MAX_DIRECTIONAL_LIGHT_DATA_STRUCTS " + itos(p_max_directional_lights) + '\n';
 		defines += "\n#define MAX_SKY_LOD " + itos(p_roughness_layers - 1) + ".0\n";
 		if (p_is_using_radiance_cubemap_array) {
 			defines += "\n#define USE_RADIANCE_CUBEMAP_ARRAY \n";

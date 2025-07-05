@@ -384,7 +384,7 @@ void PListNode::store_text(String &p_stream, uint8_t p_indent) const {
 			p_stream += "<data>\n";
 			p_stream += String("\t").repeat(p_indent);
 			// Data should be Base64 (i.e. ASCII only).
-			p_stream += String::ascii(data_string) + "\n";
+			p_stream += String::ascii(data_string) + '\n';
 			p_stream += String("\t").repeat(p_indent);
 			p_stream += "</data>\n";
 		} break;

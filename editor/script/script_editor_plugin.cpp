@@ -1032,7 +1032,7 @@ void ScriptEditor::_queue_close_tabs() {
 }
 
 void ScriptEditor::_ask_close_current_unsaved_tab(ScriptEditorBase *current) {
-	erase_tab_confirm->set_text(TTR("Close and save changes?") + "\n\"" + current->get_name() + "\"");
+	erase_tab_confirm->set_text(TTR("Close and save changes?") + "\n\"" + current->get_name() + '"');
 	erase_tab_confirm->popup_centered();
 }
 
@@ -1229,7 +1229,7 @@ void ScriptEditor::_file_dialog_action(const String &p_file) {
 			{
 				Ref<FileAccess> file = FileAccess::open(p_file, FileAccess::WRITE, &err);
 				if (err) {
-					EditorNode::get_singleton()->show_warning(TTR("Error writing TextFile:") + "\n" + p_file, TTR("Error!"));
+					EditorNode::get_singleton()->show_warning(TTR("Error writing TextFile:") + '\n' + p_file, TTR("Error!"));
 					break;
 				}
 			}
@@ -1755,7 +1755,7 @@ void ScriptEditor::_notification(int p_what) {
 			_update_online_doc();
 			if (!make_floating->is_disabled()) {
 				// Override default ScreenSelect tooltip if multi-window support is available.
-				make_floating->set_tooltip_text(TTR("Make the script editor floating.") + "\n" + TTR("Right-click to open the screen selector."));
+				make_floating->set_tooltip_text(TTR("Make the script editor floating.") + '\n' + TTR("Right-click to open the screen selector."));
 			}
 			[[fallthrough]];
 		}
@@ -1875,7 +1875,7 @@ Vector<String> ScriptEditor::_get_breakpoints() {
 
 		PackedInt32Array bpoints = se->get_breakpoints();
 		for (int32_t bpoint : bpoints) {
-			ret.push_back(base + ":" + itos((int)bpoint + 1));
+			ret.push_back(base + ':' + itos((int)bpoint + 1));
 		}
 	}
 
@@ -1888,7 +1888,7 @@ Vector<String> ScriptEditor::_get_breakpoints() {
 
 		Array breakpoints = _get_cached_breakpoints_for_script(E);
 		for (int breakpoint : breakpoints) {
-			ret.push_back(E + ":" + itos((int)breakpoint + 1));
+			ret.push_back(E + ':' + itos((int)breakpoint + 1));
 		}
 	}
 	return ret;
@@ -1915,7 +1915,7 @@ void ScriptEditor::get_breakpoints(List<String> *p_breakpoints) {
 
 		PackedInt32Array bpoints = se->get_breakpoints();
 		for (int32_t bpoint : bpoints) {
-			p_breakpoints->push_back(base + ":" + itos((int)bpoint + 1));
+			p_breakpoints->push_back(base + ':' + itos((int)bpoint + 1));
 		}
 	}
 
@@ -1928,7 +1928,7 @@ void ScriptEditor::get_breakpoints(List<String> *p_breakpoints) {
 
 		Array breakpoints = _get_cached_breakpoints_for_script(E);
 		for (int breakpoint : breakpoints) {
-			p_breakpoints->push_back(E + ":" + itos((int)breakpoint + 1));
+			p_breakpoints->push_back(E + ':' + itos((int)breakpoint + 1));
 		}
 	}
 }

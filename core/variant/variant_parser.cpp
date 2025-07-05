@@ -1831,10 +1831,10 @@ Error VariantParser::_parse_tag(Token &token, Stream *p_stream, int &line, Strin
 		}
 
 		if (parsing_tag && token.type == TK_PERIOD) {
-			r_tag.name += "."; //support tags such as [someprop.Android] for specific platforms
+			r_tag.name += '.'; //support tags such as [someprop.Android] for specific platforms
 			get_token(p_stream, token, line, r_err_str);
 		} else if (parsing_tag && token.type == TK_COLON) {
-			r_tag.name += ":"; //support tags such as [someprop.Android] for specific platforms
+			r_tag.name += ':'; // Support tags such as [someprop.Android] for specific platforms.
 			get_token(p_stream, token, line, r_err_str);
 		} else {
 			parsing_tag = false;
@@ -2041,54 +2041,54 @@ Error VariantWriter::write(const Variant &p_variant, StoreStringFunc p_store_str
 		} break;
 		case Variant::STRING: {
 			String str = p_variant;
-			str = "\"" + str.c_escape_multiline() + "\"";
+			str = '"' + str.c_escape_multiline() + '"';
 			p_store_string_func(p_store_string_ud, str);
 		} break;
 
 		// Math types.
 		case Variant::VECTOR2: {
 			Vector2 v = p_variant;
-			p_store_string_func(p_store_string_ud, "Vector2(" + rtos_fix(v.x, p_compat) + ", " + rtos_fix(v.y, p_compat) + ")");
+			p_store_string_func(p_store_string_ud, "Vector2(" + rtos_fix(v.x, p_compat) + ", " + rtos_fix(v.y, p_compat) + ')');
 		} break;
 		case Variant::VECTOR2I: {
 			Vector2i v = p_variant;
-			p_store_string_func(p_store_string_ud, "Vector2i(" + itos(v.x) + ", " + itos(v.y) + ")");
+			p_store_string_func(p_store_string_ud, "Vector2i(" + itos(v.x) + ", " + itos(v.y) + ')');
 		} break;
 		case Variant::RECT2: {
 			Rect2 aabb = p_variant;
-			p_store_string_func(p_store_string_ud, "Rect2(" + rtos_fix(aabb.position.x, p_compat) + ", " + rtos_fix(aabb.position.y, p_compat) + ", " + rtos_fix(aabb.size.x, p_compat) + ", " + rtos_fix(aabb.size.y, p_compat) + ")");
+			p_store_string_func(p_store_string_ud, "Rect2(" + rtos_fix(aabb.position.x, p_compat) + ", " + rtos_fix(aabb.position.y, p_compat) + ", " + rtos_fix(aabb.size.x, p_compat) + ", " + rtos_fix(aabb.size.y, p_compat) + ')');
 		} break;
 		case Variant::RECT2I: {
 			Rect2i aabb = p_variant;
-			p_store_string_func(p_store_string_ud, "Rect2i(" + itos(aabb.position.x) + ", " + itos(aabb.position.y) + ", " + itos(aabb.size.x) + ", " + itos(aabb.size.y) + ")");
+			p_store_string_func(p_store_string_ud, "Rect2i(" + itos(aabb.position.x) + ", " + itos(aabb.position.y) + ", " + itos(aabb.size.x) + ", " + itos(aabb.size.y) + ')');
 		} break;
 		case Variant::VECTOR3: {
 			Vector3 v = p_variant;
-			p_store_string_func(p_store_string_ud, "Vector3(" + rtos_fix(v.x, p_compat) + ", " + rtos_fix(v.y, p_compat) + ", " + rtos_fix(v.z, p_compat) + ")");
+			p_store_string_func(p_store_string_ud, "Vector3(" + rtos_fix(v.x, p_compat) + ", " + rtos_fix(v.y, p_compat) + ", " + rtos_fix(v.z, p_compat) + ')');
 		} break;
 		case Variant::VECTOR3I: {
 			Vector3i v = p_variant;
-			p_store_string_func(p_store_string_ud, "Vector3i(" + itos(v.x) + ", " + itos(v.y) + ", " + itos(v.z) + ")");
+			p_store_string_func(p_store_string_ud, "Vector3i(" + itos(v.x) + ", " + itos(v.y) + ", " + itos(v.z) + ')');
 		} break;
 		case Variant::VECTOR4: {
 			Vector4 v = p_variant;
-			p_store_string_func(p_store_string_ud, "Vector4(" + rtos_fix(v.x, p_compat) + ", " + rtos_fix(v.y, p_compat) + ", " + rtos_fix(v.z, p_compat) + ", " + rtos_fix(v.w, p_compat) + ")");
+			p_store_string_func(p_store_string_ud, "Vector4(" + rtos_fix(v.x, p_compat) + ", " + rtos_fix(v.y, p_compat) + ", " + rtos_fix(v.z, p_compat) + ", " + rtos_fix(v.w, p_compat) + ')');
 		} break;
 		case Variant::VECTOR4I: {
 			Vector4i v = p_variant;
-			p_store_string_func(p_store_string_ud, "Vector4i(" + itos(v.x) + ", " + itos(v.y) + ", " + itos(v.z) + ", " + itos(v.w) + ")");
+			p_store_string_func(p_store_string_ud, "Vector4i(" + itos(v.x) + ", " + itos(v.y) + ", " + itos(v.z) + ", " + itos(v.w) + ')');
 		} break;
 		case Variant::PLANE: {
 			Plane p = p_variant;
-			p_store_string_func(p_store_string_ud, "Plane(" + rtos_fix(p.normal.x, p_compat) + ", " + rtos_fix(p.normal.y, p_compat) + ", " + rtos_fix(p.normal.z, p_compat) + ", " + rtos_fix(p.d, p_compat) + ")");
+			p_store_string_func(p_store_string_ud, "Plane(" + rtos_fix(p.normal.x, p_compat) + ", " + rtos_fix(p.normal.y, p_compat) + ", " + rtos_fix(p.normal.z, p_compat) + ", " + rtos_fix(p.d, p_compat) + ')');
 		} break;
 		case Variant::AABB: {
 			AABB aabb = p_variant;
-			p_store_string_func(p_store_string_ud, "AABB(" + rtos_fix(aabb.position.x, p_compat) + ", " + rtos_fix(aabb.position.y, p_compat) + ", " + rtos_fix(aabb.position.z, p_compat) + ", " + rtos_fix(aabb.size.x, p_compat) + ", " + rtos_fix(aabb.size.y, p_compat) + ", " + rtos_fix(aabb.size.z, p_compat) + ")");
+			p_store_string_func(p_store_string_ud, "AABB(" + rtos_fix(aabb.position.x, p_compat) + ", " + rtos_fix(aabb.position.y, p_compat) + ", " + rtos_fix(aabb.position.z, p_compat) + ", " + rtos_fix(aabb.size.x, p_compat) + ", " + rtos_fix(aabb.size.y, p_compat) + ", " + rtos_fix(aabb.size.z, p_compat) + ')');
 		} break;
 		case Variant::QUATERNION: {
 			Quaternion quaternion = p_variant;
-			p_store_string_func(p_store_string_ud, "Quaternion(" + rtos_fix(quaternion.x, p_compat) + ", " + rtos_fix(quaternion.y, p_compat) + ", " + rtos_fix(quaternion.z, p_compat) + ", " + rtos_fix(quaternion.w, p_compat) + ")");
+			p_store_string_func(p_store_string_ud, "Quaternion(" + rtos_fix(quaternion.x, p_compat) + ", " + rtos_fix(quaternion.y, p_compat) + ", " + rtos_fix(quaternion.z, p_compat) + ", " + rtos_fix(quaternion.w, p_compat) + ')');
 		} break;
 		case Variant::TRANSFORM2D: {
 			String s = "Transform2D(";
@@ -2102,7 +2102,7 @@ Error VariantWriter::write(const Variant &p_variant, StoreStringFunc p_store_str
 				}
 			}
 
-			p_store_string_func(p_store_string_ud, s + ")");
+			p_store_string_func(p_store_string_ud, s + ')');
 		} break;
 		case Variant::BASIS: {
 			String s = "Basis(";
@@ -2116,7 +2116,7 @@ Error VariantWriter::write(const Variant &p_variant, StoreStringFunc p_store_str
 				}
 			}
 
-			p_store_string_func(p_store_string_ud, s + ")");
+			p_store_string_func(p_store_string_ud, s + ')');
 		} break;
 		case Variant::TRANSFORM3D: {
 			String s = "Transform3D(";
@@ -2131,9 +2131,9 @@ Error VariantWriter::write(const Variant &p_variant, StoreStringFunc p_store_str
 				}
 			}
 
-			s = s + ", " + rtos_fix(t.origin.x, p_compat) + ", " + rtos_fix(t.origin.y, p_compat) + ", " + rtos_fix(t.origin.z, p_compat);
+			s += ", " + rtos_fix(t.origin.x, p_compat) + ", " + rtos_fix(t.origin.y, p_compat) + ", " + rtos_fix(t.origin.z, p_compat);
 
-			p_store_string_func(p_store_string_ud, s + ")");
+			p_store_string_func(p_store_string_ud, s + ')');
 		} break;
 		case Variant::PROJECTION: {
 			String s = "Projection(";
@@ -2147,17 +2147,17 @@ Error VariantWriter::write(const Variant &p_variant, StoreStringFunc p_store_str
 				}
 			}
 
-			p_store_string_func(p_store_string_ud, s + ")");
+			p_store_string_func(p_store_string_ud, s + ')');
 		} break;
 
 		// Misc types.
 		case Variant::COLOR: {
 			Color c = p_variant;
-			p_store_string_func(p_store_string_ud, "Color(" + rtos_fix(c.r, p_compat) + ", " + rtos_fix(c.g, p_compat) + ", " + rtos_fix(c.b, p_compat) + ", " + rtos_fix(c.a, p_compat) + ")");
+			p_store_string_func(p_store_string_ud, "Color(" + rtos_fix(c.r, p_compat) + ", " + rtos_fix(c.g, p_compat) + ", " + rtos_fix(c.b, p_compat) + ", " + rtos_fix(c.a, p_compat) + ')');
 		} break;
 		case Variant::STRING_NAME: {
 			String str = p_variant;
-			str = "&\"" + str.c_escape() + "\"";
+			str = "&\"" + str.c_escape() + '"';
 			p_store_string_func(p_store_string_ud, str);
 		} break;
 		case Variant::NODE_PATH: {
@@ -2170,7 +2170,7 @@ Error VariantWriter::write(const Variant &p_variant, StoreStringFunc p_store_str
 			if (rid == RID()) {
 				p_store_string_func(p_store_string_ud, "RID()");
 			} else {
-				p_store_string_func(p_store_string_ud, "RID(" + itos(rid.get_id()) + ")");
+				p_store_string_func(p_store_string_ud, "RID(" + itos(rid.get_id()) + ')');
 			}
 		} break;
 
@@ -2222,7 +2222,7 @@ Error VariantWriter::write(const Variant &p_variant, StoreStringFunc p_store_str
 
 			//store as generic object
 
-			p_store_string_func(p_store_string_ud, "Object(" + obj->get_class() + ",");
+			p_store_string_func(p_store_string_ud, "Object(" + obj->get_class() + ',');
 
 			List<PropertyInfo> props;
 			obj->get_property_list(&props);
@@ -2237,7 +2237,7 @@ Error VariantWriter::write(const Variant &p_variant, StoreStringFunc p_store_str
 						p_store_string_func(p_store_string_ud, ",");
 					}
 
-					p_store_string_func(p_store_string_ud, "\"" + E.name + "\":");
+					p_store_string_func(p_store_string_ud, '"' + E.name + "\":");
 					write(obj->get(E.name), p_store_string_func, p_store_string_ud, p_encode_res_func, p_encode_res_ud, p_recursion_count, p_compat);
 				}
 			}
@@ -2497,7 +2497,7 @@ Error VariantWriter::write(const Variant &p_variant, StoreStringFunc p_store_str
 				if (i > 0) {
 					p_store_string_func(p_store_string_ud, ", ");
 				}
-				p_store_string_func(p_store_string_ud, "\"" + ptr[i].c_escape() + "\"");
+				p_store_string_func(p_store_string_ud, '"' + ptr[i].c_escape() + '"');
 			}
 
 			p_store_string_func(p_store_string_ud, ")");

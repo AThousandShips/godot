@@ -244,10 +244,10 @@ void AnimationNodeStateMachinePlayback::_set_current(AnimationNodeStateMachine *
 			WARN_PRINT_ED("There are two or more transitions to the End of Grouped AnimationNodeStateMachine in AnimationNodeStateMachine: " + base_path + current + ", which may result in unintended transitions.");
 		}
 		if (anodesm_start_size != group_start_size) {
-			ERR_PRINT_ED("There is a mismatch in the number of start transitions in and out of the Grouped AnimationNodeStateMachine on AnimationNodeStateMachine: " + base_path + current + ".");
+			ERR_PRINT_ED("There is a mismatch in the number of start transitions in and out of the Grouped AnimationNodeStateMachine on AnimationNodeStateMachine: " + base_path + current + '.');
 		}
 		if (anodesm_end_size != group_end_size) {
-			ERR_PRINT_ED("There is a mismatch in the number of end transitions in and out of the Grouped AnimationNodeStateMachine on AnimationNodeStateMachine: " + base_path + current + ".");
+			ERR_PRINT_ED("There is a mismatch in the number of end transitions in and out of the Grouped AnimationNodeStateMachine on AnimationNodeStateMachine: " + base_path + current + '.');
 		}
 	} else {
 		_signal_state_change(tree, current, true);
@@ -381,7 +381,7 @@ void AnimationNodeStateMachinePlayback::_clear_path_children(AnimationTree *p_tr
 		if (_is_grouped_state_machine(anodesm)) {
 			Ref<AnimationNodeStateMachinePlayback> playback = p_tree->get(base_path + child_node.name + "/playback");
 			ERR_FAIL_COND(playback.is_null());
-			playback->_set_base_path(base_path + child_node.name + "/");
+			playback->_set_base_path(base_path + child_node.name + '/');
 			if (p_test_only) {
 				playback = playback->duplicate();
 			}
@@ -411,7 +411,7 @@ void AnimationNodeStateMachinePlayback::_start_children(AnimationTree *p_tree, A
 			}
 			Ref<AnimationNodeStateMachinePlayback> playback = p_tree->get(base_path + concatenated + "/playback");
 			ERR_FAIL_COND(playback.is_null());
-			playback->_set_base_path(base_path + concatenated + "/");
+			playback->_set_base_path(base_path + concatenated + '/');
 			if (p_test_only) {
 				playback = playback->duplicate();
 			}
@@ -443,7 +443,7 @@ bool AnimationNodeStateMachinePlayback::_travel_children(AnimationTree *p_tree, 
 			}
 			Ref<AnimationNodeStateMachinePlayback> playback = p_tree->get(base_path + concatenated + "/playback");
 			ERR_FAIL_COND_V(playback.is_null(), false);
-			playback->_set_base_path(base_path + concatenated + "/");
+			playback->_set_base_path(base_path + concatenated + '/');
 			if (p_test_only) {
 				playback = playback->duplicate();
 			}
@@ -458,7 +458,7 @@ bool AnimationNodeStateMachinePlayback::_travel_children(AnimationTree *p_tree, 
 			bool is_current_same_state = temp_path[i] == playback->get_current_node();
 			if (!is_parent_same_state) {
 				// Force travel to end current child state machine.
-				String child_path = "/" + playback->get_current_node();
+				String child_path = '/' + playback->get_current_node();
 				while (true) {
 					Ref<AnimationNodeStateMachine> child_anodesm = p_state_machine->find_node_by_path(concatenated + child_path);
 					if (child_anodesm.is_null() || child_anodesm->get_state_machine_type() != AnimationNodeStateMachine::STATE_MACHINE_TYPE_GROUPED) {
@@ -466,13 +466,13 @@ bool AnimationNodeStateMachinePlayback::_travel_children(AnimationTree *p_tree, 
 					}
 					Ref<AnimationNodeStateMachinePlayback> child_playback = p_tree->get(base_path + concatenated + child_path + "/playback");
 					ERR_FAIL_COND_V(child_playback.is_null(), false);
-					child_playback->_set_base_path(base_path + concatenated + "/");
+					child_playback->_set_base_path(base_path + concatenated + '/');
 					if (p_test_only) {
 						child_playback = child_playback->duplicate();
 					}
 					child_playback->_travel_main(SceneStringName(End));
 					child_found_route &= child_playback->_travel(p_tree, child_anodesm.ptr(), false, p_test_only);
-					child_path += "/" + child_playback->get_current_node();
+					child_path += '/' + child_playback->get_current_node();
 				}
 				// Force restart target state machine.
 				playback->_start(anodesm.ptr());
@@ -532,7 +532,7 @@ String AnimationNodeStateMachinePlayback::_validate_path(AnimationNodeStateMachi
 	while (anodesm.is_valid() && anodesm->get_state_machine_type() == AnimationNodeStateMachine::STATE_MACHINE_TYPE_GROUPED) {
 		Vector<int> indices = anodesm->find_transition_from(SceneStringName(Start));
 		if (indices.size()) {
-			target = target + "/" + anodesm->get_transition_to(indices[0]); // Find next state of Start.
+			target += '/' + anodesm->get_transition_to(indices[0]); // Find next state of Start.
 		} else {
 			break; // There is no transition in Start state of grouped state machine.
 		}
@@ -673,7 +673,7 @@ bool AnimationNodeStateMachinePlayback::_make_travel_path(AnimationTree *p_tree,
 			if (anodesm.is_valid() && anodesm->get_state_machine_type() == AnimationNodeStateMachine::STATE_MACHINE_TYPE_GROUPED) {
 				Ref<AnimationNodeStateMachinePlayback> playback = p_tree->get(base_path + current_path + "/playback");
 				ERR_FAIL_COND_V(playback.is_null(), false);
-				playback->_set_base_path(base_path + current_path + "/");
+				playback->_set_base_path(base_path + current_path + '/');
 				if (p_test_only) {
 					playback = playback->duplicate();
 				}
@@ -771,7 +771,7 @@ AnimationNode::NodeTimeInfo AnimationNodeStateMachinePlayback::_process(Animatio
 			_start(p_state_machine);
 		} else {
 			StringName node = start_request;
-			ERR_FAIL_V_MSG(AnimationNode::NodeTimeInfo(), "No such node: '" + node + "'");
+			ERR_FAIL_V_MSG(AnimationNode::NodeTimeInfo(), "No such node: '" + node + '\'');
 		}
 	}
 
@@ -805,7 +805,7 @@ AnimationNode::NodeTimeInfo AnimationNodeStateMachinePlayback::_process(Animatio
 					teleport_request = true;
 				}
 			} else {
-				ERR_FAIL_V_MSG(AnimationNode::NodeTimeInfo(), "No such node: '" + temp_travel_request + "'");
+				ERR_FAIL_V_MSG(AnimationNode::NodeTimeInfo(), "No such node: '" + temp_travel_request + '\'');
 			}
 		}
 	}
@@ -1016,7 +1016,7 @@ bool AnimationNodeStateMachinePlayback::_can_transition_to_next(AnimationTree *p
 		if (anodesm.is_valid() && anodesm->get_state_machine_type() == AnimationNodeStateMachine::STATE_MACHINE_TYPE_GROUPED) {
 			Ref<AnimationNodeStateMachinePlayback> playback = p_tree->get(base_path + current + "/playback");
 			ERR_FAIL_COND_V(playback.is_null(), false);
-			playback->_set_base_path(base_path + current + "/");
+			playback->_set_base_path(base_path + current + '/');
 			if (p_test_only) {
 				playback = playback->duplicate();
 			}
@@ -1188,7 +1188,7 @@ Ref<AnimationNodeStateMachine> AnimationNodeStateMachinePlayback::_get_parent_st
 	ERR_FAIL_COND_V_MSG(split.size() < 3, Ref<AnimationNodeStateMachine>(), "Path is too short.");
 	split = split.slice(1, split.size() - 2);
 	Ref<AnimationNode> root = p_tree->get_root_animation_node();
-	ERR_FAIL_COND_V_MSG(root.is_null(), Ref<AnimationNodeStateMachine>(), "There is no root AnimationNode in AnimationTree: " + String(p_tree->get_name()));
+	ERR_FAIL_COND_V_MSG(root.is_null(), Ref<AnimationNodeStateMachine>(), "There is no root AnimationNode in AnimationTree: " + p_tree->get_name());
 	String anodesm_path = String("/").join(split);
 	Ref<AnimationNodeStateMachine> anodesm = !anodesm_path.size() ? root : root->find_node_by_path(anodesm_path);
 	ERR_FAIL_COND_V_MSG(anodesm.is_null(), Ref<AnimationNodeStateMachine>(), "Can't get state machine with path: " + anodesm_path);

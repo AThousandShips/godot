@@ -92,7 +92,7 @@ Error HTTPClientWeb::request(Method p_method, const String &p_url, const Vector<
 		return err;
 	}
 
-	String url = (use_tls ? "https://" : "http://") + host + ":" + itos(port) + p_url;
+	String url = (use_tls ? "https://" : "http://") + host + ':' + itos(port) + p_url;
 	Vector<CharString> keeper;
 	Vector<const char *> c_strings;
 	for (int i = 0; i < p_headers.size(); i++) {

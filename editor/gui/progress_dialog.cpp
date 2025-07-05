@@ -45,7 +45,7 @@ void BackgroundProgress::_add_task(const String &p_task, const String &p_label, 
 	BackgroundProgress::Task t;
 	t.hb = memnew(HBoxContainer);
 	Label *l = memnew(Label);
-	l->set_text(p_label + " ");
+	l->set_text(p_label + ' ');
 	t.hb->add_child(l);
 	t.progress = memnew(ProgressBar);
 	t.progress->set_max(p_steps);

@@ -289,7 +289,7 @@ void ShaderCreateDialog::_type_changed(int p_language) {
 	current_type = p_language;
 	ShaderTypeData shader_type_data = type_data.get(p_language);
 
-	String selected_ext = "." + shader_type_data.default_extension;
+	String selected_ext = '.' + shader_type_data.default_extension;
 	String path = file_path->get_text();
 	String extension = "";
 
@@ -402,7 +402,7 @@ void ShaderCreateDialog::_path_submitted(const String &p_path) {
 void ShaderCreateDialog::config(const String &p_base_path, bool p_built_in_enabled, bool p_load_enabled, int p_preferred_type, int p_preferred_mode) {
 	if (!p_base_path.is_empty()) {
 		initial_base_path = p_base_path.get_basename();
-		file_path->set_text(initial_base_path + "." + type_data.get(type_menu->get_selected()).default_extension);
+		file_path->set_text(initial_base_path + '.' + type_data.get(type_menu->get_selected()).default_extension);
 		current_type = type_menu->get_selected();
 	} else {
 		initial_base_path = "";

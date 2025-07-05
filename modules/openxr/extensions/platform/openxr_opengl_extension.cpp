@@ -458,7 +458,7 @@ String OpenXROpenGLExtension::get_swapchain_format_name(int64_t p_swapchain_form
 		ENUM_TO_STRING_CASE(GL_DEPTH32F_STENCIL8)
 #endif
 		default: {
-			return String("Swapchain format 0x") + String::num_int64(p_swapchain_format, 16);
+			return "Swapchain format 0x" + String::num_int64(p_swapchain_format, 16);
 		} break;
 	}
 }

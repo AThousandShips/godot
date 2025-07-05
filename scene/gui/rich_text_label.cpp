@@ -238,7 +238,7 @@ String RichTextLabel::_get_prefix(Item *p_item, const Vector<int> &p_list_index,
 			}
 			break;
 		}
-		prefix = "." + prefix;
+		prefix = '.' + prefix;
 		if (p_list_items[i]->list_type == LIST_NUMBERS) {
 			segment = itos(p_list_index[i]);
 			if (is_localizing_numeral_system()) {
@@ -254,7 +254,7 @@ String RichTextLabel::_get_prefix(Item *p_item, const Vector<int> &p_list_index,
 		}
 		prefix = segment + prefix;
 	}
-	return prefix + " ";
+	return prefix + ' ';
 }
 
 void RichTextLabel::_update_line_font(ItemFrame *p_frame, int p_line, const Ref<Font> &p_base_font, int p_base_font_size) {
@@ -552,7 +552,7 @@ float RichTextLabel::_shape_line(ItemFrame *p_frame, int p_line, const Ref<Font>
 					font_size = font_size_it->font_size;
 				}
 				l.text_buf->add_string(String::chr(0x200B), font, font_size, String(), it->rid);
-				txt += "\n";
+				txt += '\n';
 				l.char_count++;
 				remaining_characters--;
 			} break;
@@ -595,7 +595,7 @@ float RichTextLabel::_shape_line(ItemFrame *p_frame, int p_line, const Ref<Font>
 					img_size = _get_image_size(img->image, img->width_in_percent ? (p_width * img->rq_size.width / 100.f) : img->rq_size.width, img->height_in_percent ? (p_width * img->rq_size.height / 100.f) : img->rq_size.height, img->region);
 				}
 				l.text_buf->add_object(it->rid, img_size, img->inline_align, 1);
-				txt += String::chr(0xfffc);
+				txt += 0xfffc;
 				l.char_count++;
 				remaining_characters--;
 			} break;
@@ -5184,7 +5184,7 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 			}
 
 			if (!tag_ok) {
-				txt += "[" + tag;
+				txt += '[' + tag;
 				add_text(txt);
 				after_list_open_tag = false;
 				after_list_close_tag = false;
@@ -5202,7 +5202,7 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 					// Make sure text ends with a newline character, that is, the last item
 					// will wrap at the end of block.
 					if (!txt.ends_with("\n")) {
-						txt += "\n";
+						txt += '\n';
 					}
 				} else if (!after_list_close_tag) {
 					txt = "\n"; // Make the innermost list item wrap at the end of lists.
@@ -6551,14 +6551,14 @@ bool RichTextLabel::_search_line(ItemFrame *p_frame, int p_line, const String &p
 	for (Item *it = l.from; it && it != it_to; it = _get_next_item(it)) {
 		switch (it->type) {
 			case ITEM_NEWLINE: {
-				txt += "\n";
+				txt += '\n';
 			} break;
 			case ITEM_TEXT: {
 				ItemText *t = static_cast<ItemText *>(it);
 				txt += t->text;
 			} break;
 			case ITEM_IMAGE: {
-				txt += " ";
+				txt += ' ';
 			} break;
 			case ITEM_TABLE: {
 				ItemTable *table = static_cast<ItemTable *>(it);
@@ -6722,9 +6722,9 @@ String RichTextLabel::_get_line_text(ItemFrame *p_frame, int p_line, Selection p
 			const ItemText *t = static_cast<ItemText *>(it);
 			txt += t->text;
 		} else if (it->type == ITEM_NEWLINE) {
-			txt += "\n";
+			txt += '\n';
 		} else if (it->type == ITEM_IMAGE) {
-			txt += " ";
+			txt += ' ';
 		}
 	}
 	if ((l.from != nullptr) && (p_frame == p_selection.to_frame) && (p_selection.to_item != nullptr) && (p_selection.to_item->index >= l.from->index) && (p_selection.to_item->index < end_idx)) {
@@ -6960,11 +6960,11 @@ String RichTextLabel::get_parsed_text() const {
 			ItemText *t = static_cast<ItemText *>(it);
 			txt += t->text;
 		} else if (it->type == ITEM_NEWLINE) {
-			txt += "\n";
+			txt += '\n';
 		} else if (it->type == ITEM_IMAGE) {
-			txt += " ";
+			txt += ' ';
 		} else if (it->type == ITEM_INDENT || it->type == ITEM_LIST) {
-			txt += "\t";
+			txt += '\t';
 		}
 		it = _get_next_item(it, true);
 	}

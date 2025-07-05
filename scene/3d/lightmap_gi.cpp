@@ -832,7 +832,7 @@ LightmapGI::BakeError LightmapGI::_save_and_reimport_atlas_textures(const Ref<Li
 			texture_image->blit_rect(images[i * slices_per_texture + j], Rect2i(0, 0, slice_width, slice_height), Point2i(0, slice_height * j));
 		}
 
-		const String atlas_path = (texture_count > 1 ? p_base_name + "_" + itos(i) : p_base_name) + (p_is_shadowmask ? ".png" : ".exr");
+		const String atlas_path = (texture_count > 1 ? p_base_name + '_' + itos(i) : p_base_name) + (p_is_shadowmask ? ".png" : ".exr");
 		const String config_path = atlas_path + ".import";
 
 		Ref<ConfigFile> config;

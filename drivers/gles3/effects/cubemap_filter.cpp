@@ -48,7 +48,7 @@ CubemapFilter::CubemapFilter() {
 
 	{
 		String defines;
-		defines += "\n#define MAX_SAMPLE_COUNT " + itos(ggx_samples) + "\n";
+		defines += "\n#define MAX_SAMPLE_COUNT " + itos(ggx_samples) + '\n';
 		cubemap_filter.shader.initialize(defines);
 		cubemap_filter.shader_version = cubemap_filter.shader.version_create();
 	}

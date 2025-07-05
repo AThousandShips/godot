@@ -196,5 +196,5 @@ Transform3D::operator String() const {
 	return "[X: " + basis.get_column(0).operator String() +
 			", Y: " + basis.get_column(1).operator String() +
 			", Z: " + basis.get_column(2).operator String() +
-			", O: " + origin.operator String() + "]";
+			", O: " + origin.operator String() + ']';
 }

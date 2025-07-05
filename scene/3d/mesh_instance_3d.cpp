@@ -404,7 +404,7 @@ void MeshInstance3D::_mesh_changed() {
 
 	if (surface_count > 0) {
 		for (uint32_t i = 0; i < blend_shape_tracks.size(); i++) {
-			blend_shape_properties["blend_shapes/" + String(mesh->get_blend_shape_name(i))] = i;
+			blend_shape_properties["blend_shapes/" + mesh->get_blend_shape_name(i)] = i;
 			if (i < initialize_bs_from) {
 				set_blend_shape_value(i, blend_shape_tracks[i]);
 			} else {

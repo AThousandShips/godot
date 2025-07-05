@@ -95,19 +95,19 @@ String ShaderIncludeDB::parse_include_files(const String &p_code) {
 						line_count = lines.size();
 					} else {
 						// Just add it back in, this will cause a compile error to alert the user.
-						parsed_code += l + "\n";
+						parsed_code += l + '\n';
 					}
 				} else {
 					// Include as is.
-					parsed_code += l + "\n";
+					parsed_code += l + '\n';
 				}
 			} else {
 				// Include as is.
-				parsed_code += l + "\n";
+				parsed_code += l + '\n';
 			}
 		} else {
 			// Include as is.
-			parsed_code += l + "\n";
+			parsed_code += l + '\n';
 		}
 	}
 

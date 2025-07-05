@@ -297,7 +297,7 @@ void OpenXRActionMapEditor::_load_action_map(const String p_path, bool p_create_
 	}
 
 	edited_path = p_path;
-	header_label->set_text(TTR("OpenXR Action map:") + " " + edited_path.get_file());
+	header_label->set_text(TTR("OpenXR Action map:") + ' ' + edited_path.get_file());
 }
 
 void OpenXRActionMapEditor::_on_save_action_map() {

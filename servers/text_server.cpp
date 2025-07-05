@@ -63,7 +63,7 @@ void TextServerManager::add_interface(const Ref<TextServer> &p_interface) {
 	};
 
 	interfaces.push_back(p_interface);
-	print_verbose("TextServer: Added interface \"" + p_interface->get_name() + "\"");
+	print_verbose("TextServer: Added interface \"" + p_interface->get_name() + '"');
 	emit_signal(SNAME("interface_added"), p_interface->get_name());
 }
 
@@ -80,7 +80,7 @@ void TextServerManager::remove_interface(const Ref<TextServer> &p_interface) {
 	};
 
 	ERR_FAIL_COND_MSG(idx == -1, "Interface not found.");
-	print_verbose("TextServer: Removed interface \"" + p_interface->get_name() + "\"");
+	print_verbose("TextServer: Removed interface \"" + p_interface->get_name() + '"');
 	emit_signal(SNAME("interface_removed"), p_interface->get_name());
 	interfaces.remove_at(idx);
 }
@@ -717,7 +717,7 @@ String TextServer::tag_to_name(int64_t p_tag) const {
 	char name[5];
 	memset(name, 0, 5);
 	ot_tag_to_string(p_tag, name);
-	return String("custom_") + String(name);
+	return "custom_" + String(name);
 }
 
 Vector2 TextServer::get_hex_code_box_size(int64_t p_size, int64_t p_index) const {
@@ -1917,46 +1917,46 @@ void TextServer::shaped_text_draw_outline(const RID &p_shaped, const RID &p_canv
 void TextServer::debug_print_glyph(int p_idx, const Glyph &p_glyph) const {
 	String flags;
 	if (p_glyph.flags & GRAPHEME_IS_VALID) {
-		flags += "v";
+		flags += 'v';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_RTL) {
-		flags += "R";
+		flags += 'R';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_VIRTUAL) {
-		flags += "V";
+		flags += 'V';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_SPACE) {
-		flags += "w";
+		flags += 'w';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_BREAK_HARD) {
-		flags += "h";
+		flags += 'h';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_BREAK_SOFT) {
-		flags += "s";
+		flags += 's';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_TAB) {
-		flags += "t";
+		flags += 't';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_ELONGATION) {
-		flags += "e";
+		flags += 'e';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_PUNCTUATION) {
-		flags += "p";
+		flags += 'p';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_UNDERSCORE) {
-		flags += "u";
+		flags += 'u';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_CONNECTED) {
-		flags += "C";
+		flags += 'C';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_SAFE_TO_INSERT_TATWEEL) {
-		flags += "S";
+		flags += 'S';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_EMBEDDED_OBJECT) {
-		flags += "E";
+		flags += 'E';
 	}
 	if (p_glyph.flags & GRAPHEME_IS_SOFT_HYPHEN) {
-		flags += "h";
+		flags += 'h';
 	}
 	print_line(vformat("   %d => range: %d-%d cnt:%d index:%x font:%x(%d) offset:%fx%f adv:%f rep:%d flags:%s", p_idx, p_glyph.start, p_glyph.end, p_glyph.count, p_glyph.index, p_glyph.font_rid.get_id(), p_glyph.font_size, p_glyph.x_off, p_glyph.y_off, p_glyph.advance, p_glyph.repeat, flags));
 }

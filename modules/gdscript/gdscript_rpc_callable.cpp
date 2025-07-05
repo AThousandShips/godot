@@ -51,12 +51,12 @@ String GDScriptRPCCallable::get_as_text() const {
 	Ref<Script> script = object->get_script();
 	if (script.is_valid()) {
 		if (!script->get_global_name().is_empty()) {
-			class_name += "(" + script->get_global_name() + ")";
+			class_name += '(' + script->get_global_name() + ')';
 		} else if (script->get_path().is_resource_file()) {
-			class_name += "(" + script->get_path().get_file() + ")";
+			class_name += '(' + script->get_path().get_file() + ')';
 		}
 	}
-	return class_name + "::" + String(method) + " (rpc)";
+	return class_name + "::" + method + " (rpc)";
 }
 
 CallableCustom::CompareEqualFunc GDScriptRPCCallable::get_compare_equal_func() const {

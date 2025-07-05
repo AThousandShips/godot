@@ -66,7 +66,7 @@ void ThemeDB::initialize_theme() {
 		if (theme.is_valid()) {
 			set_project_theme(theme);
 		} else {
-			ERR_PRINT("Error loading custom project theme '" + project_theme_path + "'");
+			ERR_PRINT("Error loading custom project theme '" + project_theme_path + '\'');
 		}
 	}
 
@@ -76,7 +76,7 @@ void ThemeDB::initialize_theme() {
 		if (project_font.is_valid()) {
 			set_fallback_font(project_font);
 		} else {
-			ERR_PRINT("Error loading custom project font '" + project_font_path + "'");
+			ERR_PRINT("Error loading custom project font '" + project_font_path + '\'');
 		}
 	}
 

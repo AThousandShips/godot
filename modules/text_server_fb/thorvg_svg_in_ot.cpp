@@ -98,7 +98,7 @@ static void construct_xml(Ref<XMLParser> &parser, double &r_embox_x, double &r_e
 		if (parser->is_empty()) {
 			*p_xml += "/>";
 		} else {
-			*p_xml += ">";
+			*p_xml += '>';
 			if (r_tag_count >= 0) {
 				r_tag_count++;
 			}

@@ -145,7 +145,7 @@ void RotatedFileLogger::rotate_file() {
 			String timestamp = Time::get_singleton()->get_datetime_string_from_system().replace_char(':', '.');
 			String backup_name = base_path.get_basename() + timestamp;
 			if (!base_path.get_extension().is_empty()) {
-				backup_name += "." + base_path.get_extension();
+				backup_name += '.' + base_path.get_extension();
 			}
 
 			Ref<DirAccess> da = DirAccess::open(base_path.get_base_dir());

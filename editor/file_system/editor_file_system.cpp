@@ -1832,7 +1832,7 @@ void EditorFileSystem::_save_filesystem_cache(EditorFileSystemDirectory *p_dir, 
 
 		String type = file_info->type;
 		if (file_info->resource_script_class) {
-			type += "/" + String(file_info->resource_script_class);
+			type += '/' + file_info->resource_script_class;
 		}
 
 		PackedStringArray cache_string;
@@ -2653,24 +2653,24 @@ Error EditorFileSystem::_reimport_group(const String &p_group_file, const Vector
 			//write manually, as order matters ([remap] has to go first for performance).
 			f->store_line("[remap]");
 			f->store_line("");
-			f->store_line("importer=\"" + importer->get_importer_name() + "\"");
+			f->store_line("importer=\"" + importer->get_importer_name() + '"');
 			int version = importer->get_format_version();
 			if (version > 0) {
 				f->store_line("importer_version=" + itos(version));
 			}
 			if (!importer->get_resource_type().is_empty()) {
-				f->store_line("type=\"" + importer->get_resource_type() + "\"");
+				f->store_line("type=\"" + importer->get_resource_type() + '"');
 			}
 
 			if (uid == ResourceUID::INVALID_ID) {
 				uid = ResourceUID::get_singleton()->create_id_for_path(file);
 			}
 
-			f->store_line("uid=\"" + ResourceUID::get_singleton()->id_to_text(uid) + "\""); // Store in readable format.
+			f->store_line("uid=\"" + ResourceUID::get_singleton()->id_to_text(uid) + '"'); // Store in readable format.
 
 			if (err == OK) {
-				String path = base_path + "." + importer->get_save_extension();
-				f->store_line("path=\"" + path + "\"");
+				String path = base_path + '.' + importer->get_save_extension();
+				f->store_line("path=\"" + path + '"');
 				dest_paths.push_back(path);
 			}
 
@@ -2691,7 +2691,7 @@ Error EditorFileSystem::_reimport_group(const String &p_group_file, const Vector
 				for (int i = 0; i < dest_paths.size(); i++) {
 					dp.push_back(dest_paths[i]);
 				}
-				f->store_line("dest_files=" + Variant(dp).get_construct_string() + "\n");
+				f->store_line("dest_files=" + Variant(dp).get_construct_string() + '\n');
 			}
 			f->store_line("[params]");
 			f->store_line("");
@@ -2709,7 +2709,7 @@ Error EditorFileSystem::_reimport_group(const String &p_group_file, const Vector
 				}
 				String value;
 				VariantWriter::write_to_string(v, value);
-				f->store_line(base + "=" + value);
+				f->store_line(base + '=' + value);
 			}
 		}
 
@@ -2718,7 +2718,7 @@ Error EditorFileSystem::_reimport_group(const String &p_group_file, const Vector
 			Ref<FileAccess> md5s = FileAccess::open(base_path + ".md5", FileAccess::WRITE);
 			ERR_FAIL_COND_V_MSG(md5s.is_null(), ERR_FILE_CANT_OPEN, "Cannot open MD5 file '" + base_path + ".md5'.");
 
-			md5s->store_line("source_md5=\"" + FileAccess::get_md5(file) + "\"");
+			md5s->store_line("source_md5=\"" + FileAccess::get_md5(file) + '"');
 			if (dest_paths.size()) {
 				md5s->store_line("dest_md5=\"" + FileAccess::get_multiple_md5(dest_paths) + "\"\n");
 			}
@@ -2905,16 +2905,16 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 		// Write manually, as order matters ([remap] has to go first for performance).
 		f->store_line("[remap]");
 		f->store_line("");
-		f->store_line("importer=\"" + importer->get_importer_name() + "\"");
+		f->store_line("importer=\"" + importer->get_importer_name() + '"');
 		int version = importer->get_format_version();
 		if (version > 0) {
 			f->store_line("importer_version=" + itos(version));
 		}
 		if (!importer->get_resource_type().is_empty()) {
-			f->store_line("type=\"" + importer->get_resource_type() + "\"");
+			f->store_line("type=\"" + importer->get_resource_type() + '"');
 		}
 
-		f->store_line("uid=\"" + ResourceUID::get_singleton()->id_to_text(uid) + "\""); // Store in readable format.
+		f->store_line("uid=\"" + ResourceUID::get_singleton()->id_to_text(uid) + '"'); // Store in readable format.
 
 		if (err == OK) {
 			if (importer->get_save_extension().is_empty()) {
@@ -2922,14 +2922,14 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 			} else if (import_variants.size()) {
 				//import with variants
 				for (const String &E : import_variants) {
-					String path = base_path.c_escape() + "." + E + "." + importer->get_save_extension();
+					String path = base_path.c_escape() + '.' + E + '.' + importer->get_save_extension();
 
-					f->store_line("path." + E + "=\"" + path + "\"");
+					f->store_line("path." + E + "=\"" + path + '"');
 					dest_paths.push_back(path);
 				}
 			} else {
-				String path = base_path + "." + importer->get_save_extension();
-				f->store_line("path=\"" + path + "\"");
+				String path = base_path + '.' + importer->get_save_extension();
+				f->store_line("path=\"" + path + '"');
 				dest_paths.push_back(path);
 			}
 
@@ -2982,7 +2982,7 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 			String base = E.option.name;
 			String value;
 			VariantWriter::write_to_string(params[base], value);
-			f->store_line(base + "=" + value);
+			f->store_line(base + '=' + value);
 		}
 	}
 
@@ -2991,7 +2991,7 @@ Error EditorFileSystem::_reimport_file(const String &p_file, const HashMap<Strin
 		Ref<FileAccess> md5s = FileAccess::open(base_path + ".md5", FileAccess::WRITE);
 		ERR_FAIL_COND_V_MSG(md5s.is_null(), ERR_FILE_CANT_OPEN, "Cannot open MD5 file '" + base_path + ".md5'.");
 
-		md5s->store_line("source_md5=\"" + FileAccess::get_md5(p_file) + "\"");
+		md5s->store_line("source_md5=\"" + FileAccess::get_md5(p_file) + '"');
 		if (dest_paths.size()) {
 			md5s->store_line("dest_md5=\"" + FileAccess::get_multiple_md5(dest_paths) + "\"\n");
 		}
@@ -3410,7 +3410,7 @@ Ref<Resource> EditorFileSystem::_load_resource_on_startup(ResourceFormatImporter
 
 bool EditorFileSystem::_should_skip_directory(const String &p_path) {
 	String project_data_path = ProjectSettings::get_singleton()->get_project_data_path();
-	if (p_path == project_data_path || p_path.begins_with(project_data_path + "/")) {
+	if (p_path == project_data_path || p_path.begins_with(project_data_path + '/')) {
 		return true;
 	}
 
@@ -3691,7 +3691,7 @@ void EditorFileSystem::_update_extensions() {
 	extensionsl.clear();
 	ResourceFormatImporter::get_singleton()->get_recognized_extensions(&extensionsl);
 	for (const String &E : extensionsl) {
-		import_extensions.insert(!E.begins_with(".") ? "." + E : E);
+		import_extensions.insert(!E.begins_with(".") ? '.' + E : E);
 	}
 }
 

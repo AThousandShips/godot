@@ -88,7 +88,7 @@ void EditorPluginSettings::update_plugins() {
 			Vector<String> missing_keys;
 			for (const String required_key : { "name", "author", "version", "description", "script" }) {
 				if (!cfg->has_section_key("plugin", required_key)) {
-					missing_keys.append("\"plugin/" + required_key + "\"");
+					missing_keys.append("\"plugin/" + required_key + '"');
 				}
 			}
 
@@ -110,7 +110,7 @@ void EditorPluginSettings::update_plugins() {
 				for (int j = 0; j < boundaries.size(); j += 2) {
 					const int start = boundaries[j];
 					const int end = boundaries[j + 1];
-					wrapped_description += "\n" + description.substr(start, end - start + 1).rstrip("\n");
+					wrapped_description += '\n' + description.substr(start, end - start + 1).rstrip("\n");
 				}
 
 				TreeItem *item = plugin_list->create_item(root);

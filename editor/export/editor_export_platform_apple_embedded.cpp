@@ -168,13 +168,13 @@ String EditorExportPlatformAppleEmbedded::get_export_option_warning(const Editor
 		if (p_name == "application/app_store_team_id") {
 			String team_id = p_preset->get("application/app_store_team_id");
 			if (team_id.is_empty()) {
-				return TTR("App Store Team ID not specified.") + "\n";
+				return TTR("App Store Team ID not specified.") + '\n';
 			}
 		} else if (p_name == "application/bundle_identifier") {
 			String identifier = p_preset->get("application/bundle_identifier");
 			String pn_err;
 			if (!is_package_name_valid(identifier, &pn_err)) {
-				return TTR("Invalid Identifier:") + " " + pn_err;
+				return TTR("Invalid Identifier:") + ' ' + pn_err;
 			}
 		} else if (p_name == "privacy/file_timestamp_access_reasons") {
 			int access = p_preset->get("privacy/file_timestamp_access_reasons");
@@ -326,7 +326,7 @@ void EditorExportPlatformAppleEmbedded::get_export_options(List<ExportOption> *r
 		String hint;
 		for (int j = 0; j < api_info[i].prop_flag_value.size(); j++) {
 			if (j != 0) {
-				hint += ",";
+				hint += ',';
 			}
 			hint += vformat("%s - %s:%d", api_info[i].prop_flag_value[j], api_info[i].prop_flag_name[j], (1 << j));
 		}
@@ -340,7 +340,7 @@ void EditorExportPlatformAppleEmbedded::get_export_options(List<ExportOption> *r
 		String hint;
 		for (uint64_t i = 0; i < std::size(data_collect_purpose_info); ++i) {
 			if (i != 0) {
-				hint += ",";
+				hint += ',';
 			}
 			hint += vformat("%s:%d", data_collect_purpose_info[i].prop_name, (1 << i));
 		}
@@ -388,58 +388,58 @@ void EditorExportPlatformAppleEmbedded::_fix_config_file(const Ref<EditorExportP
 	Vector<String> lines = str.split("\n");
 	for (int i = 0; i < lines.size(); i++) {
 		if (lines[i].contains("$binary")) {
-			strnew += lines[i].replace("$binary", p_config.binary_name) + "\n";
+			strnew += lines[i].replace("$binary", p_config.binary_name) + '\n';
 		} else if (lines[i].contains("$modules_buildfile")) {
-			strnew += lines[i].replace("$modules_buildfile", p_config.modules_buildfile) + "\n";
+			strnew += lines[i].replace("$modules_buildfile", p_config.modules_buildfile) + '\n';
 		} else if (lines[i].contains("$modules_fileref")) {
-			strnew += lines[i].replace("$modules_fileref", p_config.modules_fileref) + "\n";
+			strnew += lines[i].replace("$modules_fileref", p_config.modules_fileref) + '\n';
 		} else if (lines[i].contains("$modules_buildphase")) {
-			strnew += lines[i].replace("$modules_buildphase", p_config.modules_buildphase) + "\n";
+			strnew += lines[i].replace("$modules_buildphase", p_config.modules_buildphase) + '\n';
 		} else if (lines[i].contains("$modules_buildgrp")) {
-			strnew += lines[i].replace("$modules_buildgrp", p_config.modules_buildgrp) + "\n";
+			strnew += lines[i].replace("$modules_buildgrp", p_config.modules_buildgrp) + '\n';
 		} else if (lines[i].contains("$name")) {
-			strnew += lines[i].replace("$name", p_config.pkg_name) + "\n";
+			strnew += lines[i].replace("$name", p_config.pkg_name) + '\n';
 		} else if (lines[i].contains("$bundle_identifier")) {
-			strnew += lines[i].replace("$bundle_identifier", p_preset->get("application/bundle_identifier")) + "\n";
+			strnew += lines[i].replace("$bundle_identifier", p_preset->get("application/bundle_identifier")) + '\n';
 		} else if (lines[i].contains("$short_version")) {
-			strnew += lines[i].replace("$short_version", p_preset->get_version("application/short_version")) + "\n";
+			strnew += lines[i].replace("$short_version", p_preset->get_version("application/short_version")) + '\n';
 		} else if (lines[i].contains("$version")) {
-			strnew += lines[i].replace("$version", p_preset->get_version("application/version")) + "\n";
+			strnew += lines[i].replace("$version", p_preset->get_version("application/version")) + '\n';
 		} else if (lines[i].contains("$min_version")) {
 			strnew += lines[i].replace("$min_version",
 							  p_preset->get("application/min_" + get_platform_name() + "_version")) +
 					"\n";
 		} else if (lines[i].contains("$signature")) {
-			strnew += lines[i].replace("$signature", p_preset->get("application/signature")) + "\n";
+			strnew += lines[i].replace("$signature", p_preset->get("application/signature")) + '\n';
 		} else if (lines[i].contains("$team_id")) {
-			strnew += lines[i].replace("$team_id", p_preset->get("application/app_store_team_id")) + "\n";
+			strnew += lines[i].replace("$team_id", p_preset->get("application/app_store_team_id")) + '\n';
 		} else if (lines[i].contains("$default_build_config")) {
-			strnew += lines[i].replace("$default_build_config", p_debug ? "Debug" : "Release") + "\n";
+			strnew += lines[i].replace("$default_build_config", p_debug ? "Debug" : "Release") + '\n';
 		} else if (lines[i].contains("$export_method")) {
 			int export_method = p_preset->get(p_debug ? "application/export_method_debug" : "application/export_method_release");
-			strnew += lines[i].replace("$export_method", export_method_string[export_method]) + "\n";
+			strnew += lines[i].replace("$export_method", export_method_string[export_method]) + '\n';
 		} else if (lines[i].contains("$provisioning_profile_specifier_debug")) {
-			strnew += lines[i].replace("$provisioning_profile_specifier_debug", provisioning_profile_specifier_dbg) + "\n";
+			strnew += lines[i].replace("$provisioning_profile_specifier_debug", provisioning_profile_specifier_dbg) + '\n';
 		} else if (lines[i].contains("$provisioning_profile_specifier_release")) {
-			strnew += lines[i].replace("$provisioning_profile_specifier_release", provisioning_profile_specifier_rel) + "\n";
+			strnew += lines[i].replace("$provisioning_profile_specifier_release", provisioning_profile_specifier_rel) + '\n';
 		} else if (lines[i].contains("$provisioning_profile_specifier")) {
 			String specifier = p_debug ? provisioning_profile_specifier_dbg : provisioning_profile_specifier_rel;
-			strnew += lines[i].replace("$provisioning_profile_specifier", specifier) + "\n";
+			strnew += lines[i].replace("$provisioning_profile_specifier", specifier) + '\n';
 		} else if (lines[i].contains("$provisioning_profile_uuid_release")) {
-			strnew += lines[i].replace("$provisioning_profile_uuid_release", p_preset->get_or_env("application/provisioning_profile_uuid_release", ENV_APPLE_PLATFORM_PROFILE_UUID_RELEASE)) + "\n";
+			strnew += lines[i].replace("$provisioning_profile_uuid_release", p_preset->get_or_env("application/provisioning_profile_uuid_release", ENV_APPLE_PLATFORM_PROFILE_UUID_RELEASE)) + '\n';
 		} else if (lines[i].contains("$provisioning_profile_uuid_debug")) {
-			strnew += lines[i].replace("$provisioning_profile_uuid_debug", p_preset->get_or_env("application/provisioning_profile_uuid_debug", ENV_APPLE_PLATFORM_PROFILE_UUID_DEBUG)) + "\n";
+			strnew += lines[i].replace("$provisioning_profile_uuid_debug", p_preset->get_or_env("application/provisioning_profile_uuid_debug", ENV_APPLE_PLATFORM_PROFILE_UUID_DEBUG)) + '\n';
 		} else if (lines[i].contains("$code_sign_style_debug")) {
 			if (dbg_manual) {
-				strnew += lines[i].replace("$code_sign_style_debug", "Manual") + "\n";
+				strnew += lines[i].replace("$code_sign_style_debug", "Manual") + '\n';
 			} else {
-				strnew += lines[i].replace("$code_sign_style_debug", "Automatic") + "\n";
+				strnew += lines[i].replace("$code_sign_style_debug", "Automatic") + '\n';
 			}
 		} else if (lines[i].contains("$code_sign_style_release")) {
 			if (rel_manual) {
-				strnew += lines[i].replace("$code_sign_style_release", "Manual") + "\n";
+				strnew += lines[i].replace("$code_sign_style_release", "Manual") + '\n';
 			} else {
-				strnew += lines[i].replace("$code_sign_style_release", "Automatic") + "\n";
+				strnew += lines[i].replace("$code_sign_style_release", "Automatic") + '\n';
 			}
 		} else if (lines[i].contains("$provisioning_profile_uuid")) {
 			String uuid = p_debug ? p_preset->get_or_env("application/provisioning_profile_uuid_debug", ENV_APPLE_PLATFORM_PROFILE_UUID_DEBUG) : p_preset->get_or_env("application/provisioning_profile_uuid_release", ENV_APPLE_PLATFORM_PROFILE_UUID_RELEASE);
@@ -448,17 +448,17 @@ void EditorExportPlatformAppleEmbedded::_fix_config_file(const Ref<EditorExportP
 				bool valid = p_debug ? valid_dbg_specifier : valid_rel_specifier;
 				uuid = valid ? variant : "";
 			}
-			strnew += lines[i].replace("$provisioning_profile_uuid", uuid) + "\n";
+			strnew += lines[i].replace("$provisioning_profile_uuid", uuid) + '\n';
 		} else if (lines[i].contains("$code_sign_identity_debug")) {
-			strnew += lines[i].replace("$code_sign_identity_debug", dbg_sign_id) + "\n";
+			strnew += lines[i].replace("$code_sign_identity_debug", dbg_sign_id) + '\n';
 		} else if (lines[i].contains("$code_sign_identity_release")) {
-			strnew += lines[i].replace("$code_sign_identity_release", rel_sign_id) + "\n";
+			strnew += lines[i].replace("$code_sign_identity_release", rel_sign_id) + '\n';
 		} else if (lines[i].contains("$additional_plist_content")) {
-			strnew += lines[i].replace("$additional_plist_content", p_config.plist_content) + "\n";
+			strnew += lines[i].replace("$additional_plist_content", p_config.plist_content) + '\n';
 		} else if (lines[i].contains("$godot_archs")) {
-			strnew += lines[i].replace("$godot_archs", p_config.architectures) + "\n";
+			strnew += lines[i].replace("$godot_archs", p_config.architectures) + '\n';
 		} else if (lines[i].contains("$linker_flags")) {
-			strnew += lines[i].replace("$linker_flags", p_config.linker_flags) + "\n";
+			strnew += lines[i].replace("$linker_flags", p_config.linker_flags) + '\n';
 		} else if (lines[i].contains("$targeted_device_family")) {
 			String xcode_value;
 			switch ((int)p_preset->get("application/targeted_device_family")) {
@@ -472,17 +472,17 @@ void EditorExportPlatformAppleEmbedded::_fix_config_file(const Ref<EditorExportP
 					xcode_value = "1,2";
 					break;
 			}
-			strnew += lines[i].replace("$targeted_device_family", xcode_value) + "\n";
+			strnew += lines[i].replace("$targeted_device_family", xcode_value) + '\n';
 		} else if (lines[i].contains("$cpp_code")) {
-			strnew += lines[i].replace("$cpp_code", p_config.cpp_code) + "\n";
+			strnew += lines[i].replace("$cpp_code", p_config.cpp_code) + '\n';
 		} else if (lines[i].contains("$docs_in_place")) {
-			strnew += lines[i].replace("$docs_in_place", ((bool)p_preset->get("user_data/accessible_from_files_app")) ? "<true/>" : "<false/>") + "\n";
+			strnew += lines[i].replace("$docs_in_place", ((bool)p_preset->get("user_data/accessible_from_files_app")) ? "<true/>" : "<false/>") + '\n';
 		} else if (lines[i].contains("$docs_sharing")) {
-			strnew += lines[i].replace("$docs_sharing", ((bool)p_preset->get("user_data/accessible_from_itunes_sharing")) ? "<true/>" : "<false/>") + "\n";
+			strnew += lines[i].replace("$docs_sharing", ((bool)p_preset->get("user_data/accessible_from_itunes_sharing")) ? "<true/>" : "<false/>") + '\n';
 		} else if (lines[i].contains("$entitlements_full")) {
 			String entitlements;
 			if ((String)p_preset->get("entitlements/push_notifications") != "Disabled") {
-				entitlements += "<key>aps-environment</key>\n<string>" + p_preset->get("entitlements/push_notifications").operator String().to_lower() + "</string>" + "\n";
+				entitlements += "<key>aps-environment</key>\n<string>" + p_preset->get("entitlements/push_notifications").operator String().to_lower() + "</string>\n";
 			}
 			if ((bool)p_preset->get("entitlements/game_center")) {
 				entitlements += "<key>com.apple.developer.game-center</key>\n<true/>\n";
@@ -490,7 +490,7 @@ void EditorExportPlatformAppleEmbedded::_fix_config_file(const Ref<EditorExportP
 			if ((bool)p_preset->get("entitlements/increased_memory_limit")) {
 				entitlements += "<key>com.apple.developer.kernel.increased-memory-limit</key>\n<true/>\n";
 			}
-			entitlements += p_preset->get("entitlements/additional").operator String() + "\n";
+			entitlements += p_preset->get("entitlements/additional").operator String() + '\n';
 
 			strnew += lines[i].replace("$entitlements_full", entitlements);
 		} else if (lines[i].contains("$required_device_capabilities")) {
@@ -596,31 +596,31 @@ void EditorExportPlatformAppleEmbedded::_fix_config_file(const Ref<EditorExportP
 			strnew += lines[i].replace("$ipad_interface_orientations", orientations);
 		} else if (lines[i].contains("$camera_usage_description")) {
 			String description = p_preset->get("privacy/camera_usage_description");
-			strnew += lines[i].replace("$camera_usage_description", description) + "\n";
+			strnew += lines[i].replace("$camera_usage_description", description) + '\n';
 		} else if (lines[i].contains("$microphone_usage_description")) {
 			String description = p_preset->get("privacy/microphone_usage_description");
-			strnew += lines[i].replace("$microphone_usage_description", description) + "\n";
+			strnew += lines[i].replace("$microphone_usage_description", description) + '\n';
 		} else if (lines[i].contains("$photolibrary_usage_description")) {
 			String description = p_preset->get("privacy/photolibrary_usage_description");
-			strnew += lines[i].replace("$photolibrary_usage_description", description) + "\n";
+			strnew += lines[i].replace("$photolibrary_usage_description", description) + '\n';
 		} else if (lines[i].contains("$plist_launch_screen_name")) {
 			String value = "<key>UILaunchStoryboardName</key>\n<string>Launch Screen</string>";
-			strnew += lines[i].replace("$plist_launch_screen_name", value) + "\n";
+			strnew += lines[i].replace("$plist_launch_screen_name", value) + '\n';
 		} else if (lines[i].contains("$pbx_launch_screen_file_reference")) {
 			String value = "90DD2D9D24B36E8000717FE1 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = \"Launch Screen.storyboard\"; sourceTree = \"<group>\"; };";
-			strnew += lines[i].replace("$pbx_launch_screen_file_reference", value) + "\n";
+			strnew += lines[i].replace("$pbx_launch_screen_file_reference", value) + '\n';
 		} else if (lines[i].contains("$pbx_launch_screen_copy_files")) {
 			String value = "90DD2D9D24B36E8000717FE1 /* Launch Screen.storyboard */,";
-			strnew += lines[i].replace("$pbx_launch_screen_copy_files", value) + "\n";
+			strnew += lines[i].replace("$pbx_launch_screen_copy_files", value) + '\n';
 		} else if (lines[i].contains("$pbx_launch_screen_build_phase")) {
 			String value = "90DD2D9E24B36E8000717FE1 /* Launch Screen.storyboard in Resources */,";
-			strnew += lines[i].replace("$pbx_launch_screen_build_phase", value) + "\n";
+			strnew += lines[i].replace("$pbx_launch_screen_build_phase", value) + '\n';
 		} else if (lines[i].contains("$pbx_launch_screen_build_reference")) {
 			String value = "90DD2D9E24B36E8000717FE1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90DD2D9D24B36E8000717FE1 /* Launch Screen.storyboard */; };";
-			strnew += lines[i].replace("$pbx_launch_screen_build_reference", value) + "\n";
+			strnew += lines[i].replace("$pbx_launch_screen_build_reference", value) + '\n';
 #ifndef DISABLE_DEPRECATED
 		} else if (lines[i].contains("$pbx_launch_image_usage_setting")) {
-			strnew += lines[i].replace("$pbx_launch_image_usage_setting", "") + "\n";
+			strnew += lines[i].replace("$pbx_launch_image_usage_setting", "") + '\n';
 #endif
 		} else if (lines[i].contains("$launch_screen_image_mode")) {
 			int image_scale_mode = p_preset->get("storyboard/image_scale_mode");
@@ -638,7 +638,7 @@ void EditorExportPlatformAppleEmbedded::_fix_config_file(const Ref<EditorExportP
 				}
 			}
 
-			strnew += lines[i].replace("$launch_screen_image_mode", value) + "\n";
+			strnew += lines[i].replace("$launch_screen_image_mode", value) + '\n';
 		} else if (lines[i].contains("$launch_screen_background_color")) {
 			bool use_custom = p_preset->get("storyboard/use_custom_bg_color");
 			Color color = use_custom ? p_preset->get("storyboard/custom_bg_color") : get_project_setting(p_preset, "application/boot_splash/bg_color");
@@ -651,7 +651,7 @@ void EditorExportPlatformAppleEmbedded::_fix_config_file(const Ref<EditorExportP
 			value_dictionary["alpha"] = color.a;
 			String value = value_format.format(value_dictionary, "$_");
 
-			strnew += lines[i].replace("$launch_screen_background_color", value) + "\n";
+			strnew += lines[i].replace("$launch_screen_background_color", value) + '\n';
 		} else if (lines[i].contains("$pbx_locale_file_reference")) {
 			String locale_files;
 			Vector<String> translations = get_project_setting(p_preset, "internationalization/locale/translations");
@@ -692,7 +692,7 @@ void EditorExportPlatformAppleEmbedded::_fix_config_file(const Ref<EditorExportP
 			strnew += lines[i].replace("$pbx_locale_build_reference", locale_files);
 		} else if (lines[i].contains("$swift_runtime_migration")) {
 			String value = !p_config.use_swift_runtime ? "" : "LastSwiftMigration = 1250;";
-			strnew += lines[i].replace("$swift_runtime_migration", value) + "\n";
+			strnew += lines[i].replace("$swift_runtime_migration", value) + '\n';
 		} else if (lines[i].contains("$swift_runtime_build_settings")) {
 			String value = !p_config.use_swift_runtime ? "" : R"(
                      CLANG_ENABLE_MODULES = YES;
@@ -700,25 +700,25 @@ void EditorExportPlatformAppleEmbedded::_fix_config_file(const Ref<EditorExportP
                      SWIFT_VERSION = 5.0;
                      )";
 			value = value.replace("$binary", p_config.binary_name);
-			strnew += lines[i].replace("$swift_runtime_build_settings", value) + "\n";
+			strnew += lines[i].replace("$swift_runtime_build_settings", value) + '\n';
 		} else if (lines[i].contains("$swift_runtime_fileref")) {
 			String value = !p_config.use_swift_runtime ? "" : R"(
                      90B4C2AA2680BC560039117A /* dummy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dummy.h"; sourceTree = "<group>"; };
                      90B4C2B52680C7E90039117A /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "dummy.swift"; sourceTree = "<group>"; };
                      )";
-			strnew += lines[i].replace("$swift_runtime_fileref", value) + "\n";
+			strnew += lines[i].replace("$swift_runtime_fileref", value) + '\n';
 		} else if (lines[i].contains("$swift_runtime_binary_files")) {
 			String value = !p_config.use_swift_runtime ? "" : R"(
                      90B4C2AA2680BC560039117A /* dummy.h */,
                      90B4C2B52680C7E90039117A /* dummy.swift */,
                      )";
-			strnew += lines[i].replace("$swift_runtime_binary_files", value) + "\n";
+			strnew += lines[i].replace("$swift_runtime_binary_files", value) + '\n';
 		} else if (lines[i].contains("$swift_runtime_buildfile")) {
 			String value = !p_config.use_swift_runtime ? "" : "90B4C2B62680C7E90039117A /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B4C2B52680C7E90039117A /* dummy.swift */; };";
-			strnew += lines[i].replace("$swift_runtime_buildfile", value) + "\n";
+			strnew += lines[i].replace("$swift_runtime_buildfile", value) + '\n';
 		} else if (lines[i].contains("$swift_runtime_build_phase")) {
 			String value = !p_config.use_swift_runtime ? "" : "90B4C2B62680C7E90039117A /* dummy.swift */,";
-			strnew += lines[i].replace("$swift_runtime_build_phase", value) + "\n";
+			strnew += lines[i].replace("$swift_runtime_build_phase", value) + '\n';
 		} else if (lines[i].contains("$priv_collection")) {
 			bool section_opened = false;
 			for (uint64_t j = 0; j < std::size(data_collect_type_info); ++j) {
@@ -801,7 +801,7 @@ void EditorExportPlatformAppleEmbedded::_fix_config_file(const Ref<EditorExportP
 			}
 			strnew += "\t</array>\n";
 		} else {
-			strnew += lines[i] + "\n";
+			strnew += lines[i] + '\n';
 		}
 	}
 
@@ -928,7 +928,7 @@ struct CodesignData {
 Error EditorExportPlatformAppleEmbedded::_codesign(String p_file, void *p_userdata) {
 	if (p_file.ends_with(".dylib")) {
 		CodesignData *data = static_cast<CodesignData *>(p_userdata);
-		print_line(String("Signing ") + p_file);
+		print_line("Signing " + p_file);
 
 		String sign_id;
 		if (data->debug) {
@@ -1282,7 +1282,7 @@ Error EditorExportPlatformAppleEmbedded::_copy_asset(const Ref<EditorExportPrese
 
 	Ref<DirAccess> da = DirAccess::create_for_path(p_asset);
 	if (da.is_null()) {
-		ERR_FAIL_V_MSG(ERR_CANT_CREATE, "Can't open directory: " + p_asset + ".");
+		ERR_FAIL_V_MSG(ERR_CANT_CREATE, "Can't open directory: " + p_asset + '.');
 	}
 	bool file_exists = da->file_exists(p_asset);
 	bool dir_exists = da->dir_exists(p_asset);
@@ -1613,16 +1613,16 @@ Error EditorExportPlatformAppleEmbedded::_export_apple_embedded_plugins(const Re
 		}
 
 		// CPP Code
-		String definition_comment = "// Plugin: " + plugin.name + "\n";
+		String definition_comment = "// Plugin: " + plugin.name + '\n';
 		String initialization_method = plugin.initialization_method + "();\n";
 		String deinitialization_method = plugin.deinitialization_method + "();\n";
 
 		plugin_definition_cpp_code += definition_comment +
 				"extern void " + initialization_method +
-				"extern void " + deinitialization_method + "\n";
+				"extern void " + deinitialization_method + '\n';
 
-		plugin_initialization_cpp_code += "\t" + initialization_method;
-		plugin_deinitialization_cpp_code += "\t" + deinitialization_method;
+		plugin_initialization_cpp_code += '\t' + initialization_method;
+		plugin_deinitialization_cpp_code += '\t' + deinitialization_method;
 
 		if (plugin.use_swift_runtime) {
 			p_config_data.use_swift_runtime = true;
@@ -1639,7 +1639,7 @@ Error EditorExportPlatformAppleEmbedded::_export_apple_embedded_plugins(const Re
 				continue;
 			}
 
-			p_config_data.plist_content += key + value + "\n";
+			p_config_data.plist_content += key + value + '\n';
 		}
 	}
 
@@ -1711,7 +1711,7 @@ Error EditorExportPlatformAppleEmbedded::export_project(const Ref<EditorExportPr
 Error EditorExportPlatformAppleEmbedded::_export_project_helper(const Ref<EditorExportPreset> &p_preset, bool p_debug, const String &p_path, BitField<EditorExportPlatform::DebugFlags> p_flags, bool p_oneclick) {
 	ExportNotifier notifier(*this, p_preset, p_debug, p_path, p_flags);
 
-	const String dest_dir = p_path.get_base_dir() + "/";
+	const String dest_dir = p_path.get_base_dir() + '/';
 	const String binary_name = p_path.get_file().get_basename();
 	const String binary_dir = dest_dir + binary_name;
 
@@ -1840,7 +1840,7 @@ Error EditorExportPlatformAppleEmbedded::_export_project_helper(const Ref<Editor
 		return ERR_SKIP;
 	}
 
-	String library_to_use = "libgodot." + get_platform_name() + "." + String(p_debug ? "debug" : "release") + ".xcframework";
+	String library_to_use = "libgodot." + get_platform_name() + '.' + String(p_debug ? "debug" : "release") + ".xcframework";
 
 	print_line("Static framework: " + library_to_use);
 	String pkg_name;
@@ -1880,7 +1880,7 @@ Error EditorExportPlatformAppleEmbedded::_export_project_helper(const Ref<Editor
 		false
 	};
 
-	config_data.plist_content += p_preset->get("application/additional_plist_content").operator String() + "\n";
+	config_data.plist_content += p_preset->get("application/additional_plist_content").operator String() + '\n';
 
 	Vector<AppleEmbeddedExportAsset> assets;
 
@@ -2035,7 +2035,7 @@ Error EditorExportPlatformAppleEmbedded::_export_project_helper(const Ref<Editor
 		}
 
 		for (const String &lang : languages) {
-			String fname = binary_dir + "/" + lang + ".lproj";
+			String fname = binary_dir + '/' + lang + ".lproj";
 			tmp_app_path->make_dir_recursive(fname);
 			Ref<FileAccess> f = FileAccess::open(fname + "/InfoPlist.strings", FileAccess::WRITE);
 			f->store_line("/* Localized versions of Info.plist keys */");
@@ -2225,7 +2225,7 @@ Error EditorExportPlatformAppleEmbedded::_export_project_helper(const Ref<Editor
 bool EditorExportPlatformAppleEmbedded::has_valid_export_configuration(const Ref<EditorExportPreset> &p_preset, String &r_error, bool &r_missing_templates, bool p_debug) const {
 #if defined(MODULE_MONO_ENABLED) && !defined(MACOS_ENABLED)
 	// TODO: Remove this restriction when we don't rely on macOS tools to package up the native libraries anymore.
-	r_error += TTR("Exporting to an Apple Embedded platform when using C#/.NET is experimental and requires macOS.") + "\n";
+	r_error += TTR("Exporting to an Apple Embedded platform when using C#/.NET is experimental and requires macOS.") + '\n';
 	return false;
 #else
 
@@ -2234,7 +2234,7 @@ bool EditorExportPlatformAppleEmbedded::has_valid_export_configuration(const Ref
 
 #if defined(MODULE_MONO_ENABLED)
 	// Apple Embedded export is still a work in progress, keep a message as a warning.
-	err += TTR("Exporting to an Apple Embedded platform when using C#/.NET is experimental.") + "\n";
+	err += TTR("Exporting to an Apple Embedded platform when using C#/.NET is experimental.") + '\n';
 #endif
 	// Look for export templates (first official, and if defined custom templates).
 
@@ -2244,13 +2244,13 @@ bool EditorExportPlatformAppleEmbedded::has_valid_export_configuration(const Ref
 	if (p_preset->get("custom_template/debug") != "") {
 		dvalid = FileAccess::exists(p_preset->get("custom_template/debug"));
 		if (!dvalid) {
-			err += TTR("Custom debug template not found.") + "\n";
+			err += TTR("Custom debug template not found.") + '\n';
 		}
 	}
 	if (p_preset->get("custom_template/release") != "") {
 		rvalid = FileAccess::exists(p_preset->get("custom_template/release"));
 		if (!rvalid) {
-			err += TTR("Custom release template not found.") + "\n";
+			err += TTR("Custom release template not found.") + '\n';
 		}
 	}
 
@@ -2272,7 +2272,7 @@ bool EditorExportPlatformAppleEmbedded::has_valid_export_configuration(const Ref
 		Ref<PList> plist_parser;
 		plist_parser.instantiate();
 		if (!plist_parser->load_string(plist, plist_err)) {
-			err += TTR("Invalid additional PList content: ") + plist_err + "\n";
+			err += TTR("Invalid additional PList content: ") + plist_err + '\n';
 			valid = false;
 		}
 	}
@@ -2297,7 +2297,7 @@ bool EditorExportPlatformAppleEmbedded::has_valid_project_configuration(const Re
 		if (get_export_option_visibility(p_preset.ptr(), E.option.name)) {
 			String warn = get_export_option_warning(p_preset.ptr(), E.option.name);
 			if (!warn.is_empty()) {
-				err += warn + "\n";
+				err += warn + '\n';
 				if (E.required) {
 					valid = false;
 				}
@@ -2409,7 +2409,7 @@ void EditorExportPlatformAppleEmbedded::_check_for_changes_poll_thread(void *ud)
 		if (first) {
 			first = false;
 		} else {
-			device_types += "|";
+			device_types += '|';
 		}
 		device_types += d;
 	}
@@ -2466,7 +2466,7 @@ void EditorExportPlatformAppleEmbedded::_check_for_changes_poll_thread(void *ud)
 								Dictionary device_info = device_event["Device"];
 								Device nd;
 								nd.id = device_info["DeviceIdentifier"];
-								nd.name = device_info["DeviceName"].operator String() + " (ios_deploy, " + ((device_event["Interface"] == "WIFI") ? "network" : "wired") + ")";
+								nd.name = device_info["DeviceName"].operator String() + " (ios_deploy, " + ((device_event["Interface"] == "WIFI") ? "network" : "wired") + ')';
 								nd.wifi = device_event["Interface"] == "WIFI";
 								nd.use_ios_deploy = true;
 								ldevices.push_back(nd);
@@ -2509,7 +2509,7 @@ void EditorExportPlatformAppleEmbedded::_check_for_changes_poll_thread(void *ud)
 						if (conn_props["pairingState"] == "paired" && dev_props["developerModeStatus"] == "enabled") {
 							Device nd;
 							nd.id = device_info["identifier"];
-							nd.name = dev_props["name"].operator String() + " (devicectl, " + ((conn_props["transportType"] == "localNetwork") ? "network" : "wired") + ")";
+							nd.name = dev_props["name"].operator String() + " (devicectl, " + ((conn_props["transportType"] == "localNetwork") ? "network" : "wired") + ')';
 							nd.wifi = conn_props["transportType"] == "localNetwork";
 							ldevices.push_back(nd);
 						}
@@ -2737,7 +2737,7 @@ Error EditorExportPlatformAppleEmbedded::run(const Ref<EditorExportPreset> &p_pr
 		int port = EDITOR_GET("filesystem/file_server/port");
 		String passwd = EDITOR_GET("filesystem/file_server/password");
 		cmd_args_list.push_back("--remote-fs");
-		cmd_args_list.push_back(host + ":" + itos(port));
+		cmd_args_list.push_back(host + ':' + itos(port));
 		if (!passwd.is_empty()) {
 			cmd_args_list.push_back("--remote-fs-password");
 			cmd_args_list.push_back(passwd);
@@ -2747,7 +2747,7 @@ Error EditorExportPlatformAppleEmbedded::run(const Ref<EditorExportPreset> &p_pr
 	if (p_debug_flags.has_flag(DEBUG_FLAG_REMOTE_DEBUG)) {
 		cmd_args_list.push_back("--remote-debug");
 
-		cmd_args_list.push_back(get_debug_protocol() + host + ":" + String::num_int64(remote_port));
+		cmd_args_list.push_back(get_debug_protocol() + host + ':' + String::num_int64(remote_port));
 
 		List<String> breakpoints;
 		ScriptEditor::get_singleton()->get_breakpoints(&breakpoints);
@@ -2758,7 +2758,7 @@ Error EditorExportPlatformAppleEmbedded::run(const Ref<EditorExportPreset> &p_pr
 			for (const List<String>::Element *E = breakpoints.front(); E; E = E->next()) {
 				bpoints += E->get().replace(" ", "%20");
 				if (E->next()) {
-					bpoints += ",";
+					bpoints += ',';
 				}
 			}
 
@@ -2789,7 +2789,7 @@ Error EditorExportPlatformAppleEmbedded::run(const Ref<EditorExportPreset> &p_pr
 			args.push_back(EditorPaths::get_singleton()->get_temp_dir().path_join(id).path_join("export.xcarchive/Products/Applications/export.app"));
 			String app_args;
 			for (const String &E : cmd_args_list) {
-				app_args += E + " ";
+				app_args += E + ' ';
 			}
 			if (!app_args.is_empty()) {
 				args.push_back("--args");

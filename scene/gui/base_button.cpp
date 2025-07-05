@@ -126,10 +126,10 @@ void BaseButton::_notification(int p_what) {
 				}
 			}
 			if (shortcut_in_tooltip && shortcut.is_valid() && shortcut->has_valid_event()) {
-				String text = atr(shortcut->get_name()) + " (" + shortcut->get_as_text() + ")";
+				String text = atr(shortcut->get_name()) + " (" + shortcut->get_as_text() + ')';
 				String tooltip = get_tooltip_text();
 				if (!tooltip.is_empty() && shortcut->get_name().nocasecmp_to(tooltip) != 0) {
-					text += "\n" + atr(tooltip);
+					text += '\n' + atr(tooltip);
 				}
 				DisplayServer::get_singleton()->accessibility_update_set_tooltip(ae, text);
 			}
@@ -472,9 +472,9 @@ Control *BaseButton::make_custom_tooltip(const String &p_text) const {
 		return nullptr; // Use the default tooltip label.
 	}
 
-	String text = atr(shortcut->get_name()) + " (" + shortcut->get_as_text() + ")";
+	String text = atr(shortcut->get_name()) + " (" + shortcut->get_as_text() + ')';
 	if (!p_text.is_empty() && shortcut->get_name().nocasecmp_to(p_text) != 0) {
-		text += "\n" + atr(p_text);
+		text += '\n' + atr(p_text);
 	}
 
 	// Make a label similar to the default tooltip label.

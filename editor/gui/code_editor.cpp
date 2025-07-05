@@ -1300,7 +1300,7 @@ void CodeTextEditor::convert_case(CaseStyle p_case) {
 				new_line = text_editor->get_line(i).left(begin_col) + new_line;
 			}
 			if (i == end) {
-				new_line = new_line + text_editor->get_line(i).substr(end_col);
+				new_line += text_editor->get_line(i).substr(end_col);
 			}
 			text_editor->set_line(i, new_line);
 		}
@@ -1698,7 +1698,7 @@ void CodeTextEditor::_notification(int p_what) {
 			update_toggle_files_button();
 
 			zoom_button->set_tooltip_text(
-					TTR("Zoom factor") + "\n" +
+					TTR("Zoom factor") + '\n' +
 					// TRANSLATORS: The placeholders are keyboard shortcuts. The first one is in the form of "Ctrl+"/"Cmd+".
 					vformat(TTR("%sMouse wheel, %s/%s: Finetune\n%s: Reset"), keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL), ED_GET_SHORTCUT("script_editor/zoom_in")->get_as_text(), ED_GET_SHORTCUT("script_editor/zoom_out")->get_as_text(), ED_GET_SHORTCUT("script_editor/reset_zoom")->get_as_text()));
 

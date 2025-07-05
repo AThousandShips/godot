@@ -200,7 +200,7 @@ void ExportTemplateManager::_download_template(const String &p_url, bool p_skip_
 
 	Error err = download_templates->request(p_url);
 	if (err != OK) {
-		_set_current_progress_status(TTR("Error requesting URL:") + " " + p_url, true);
+		_set_current_progress_status(TTR("Error requesting URL:") + ' ' + p_url, true);
 		download_progress_hb->hide();
 		return;
 	}
@@ -232,7 +232,7 @@ void ExportTemplateManager::_download_template_completed(int p_status, int p_cod
 		} break;
 		default: {
 			if (p_code != 200) {
-				_set_current_progress_status(TTR("Request failed:") + " " + itos(p_code), true);
+				_set_current_progress_status(TTR("Request failed:") + ' ' + itos(p_code), true);
 			} else {
 				_set_current_progress_status(TTR("Download complete; extracting templates..."));
 				String path = download_templates->get_download_file();
@@ -244,7 +244,7 @@ void ExportTemplateManager::_download_template_completed(int p_status, int p_cod
 					Ref<DirAccess> da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 					Error err = da->remove(path);
 					if (err != OK) {
-						EditorNode::get_singleton()->add_io_error(TTR("Cannot remove temporary file:") + "\n" + path + "\n");
+						EditorNode::get_singleton()->add_io_error(TTR("Cannot remove temporary file:") + '\n' + path + '\n');
 					}
 				} else {
 					EditorNode::get_singleton()->add_io_error(vformat(TTR("Templates installation failed.\nThe problematic templates archives can be found at '%s'."), path));
@@ -385,9 +385,9 @@ bool ExportTemplateManager::_humanize_http_status(HTTPRequest *p_request, String
 			*r_total_bytes = p_request->get_body_size();
 
 			if (p_request->get_body_size() > 0) {
-				*r_status += " " + String::humanize_size(p_request->get_downloaded_bytes()) + "/" + String::humanize_size(p_request->get_body_size());
+				*r_status += ' ' + String::humanize_size(p_request->get_downloaded_bytes()) + '/' + String::humanize_size(p_request->get_body_size());
 			} else {
-				*r_status += " " + String::humanize_size(p_request->get_downloaded_bytes());
+				*r_status += ' ' + String::humanize_size(p_request->get_downloaded_bytes());
 			}
 			break;
 		case HTTPClient::STATUS_CONNECTION_ERROR:
@@ -499,7 +499,7 @@ bool ExportTemplateManager::_install_file_selected(const String &p_file, bool p_
 	String template_path = EditorPaths::get_singleton()->get_export_templates_dir().path_join(version);
 	Error err = d->make_dir_recursive(template_path);
 	if (err != OK) {
-		EditorNode::get_singleton()->show_warning(TTR("Error creating path for extracting templates:") + "\n" + template_path);
+		EditorNode::get_singleton()->show_warning(TTR("Error creating path for extracting templates:") + '\n' + template_path);
 		unzClose(pkg);
 		return false;
 	}
@@ -564,7 +564,7 @@ bool ExportTemplateManager::_install_file_selected(const String &p_file, bool p_
 		}
 
 		if (p) {
-			p->step(TTR("Importing:") + " " + file, fc);
+			p->step(TTR("Importing:") + ' ' + file, fc);
 		}
 
 		String to_write = template_path.path_join(file);
@@ -573,7 +573,7 @@ bool ExportTemplateManager::_install_file_selected(const String &p_file, bool p_
 		if (f.is_null()) {
 			ret = unzGoToNextFile(pkg);
 			fc++;
-			ERR_CONTINUE_MSG(true, "Can't open file from path '" + String(to_write) + "'.");
+			ERR_CONTINUE_MSG(true, "Can't open file from path '" + to_write + "'.");
 		}
 
 		f->store_buffer(uncomp_data.ptr(), uncomp_data.size());
@@ -800,7 +800,7 @@ String ExportTemplateManager::get_android_template_identifier(const Ref<EditorEx
 	if (p_preset.is_valid()) {
 		String android_source_zip = p_preset->get("gradle_build/android_source_template");
 		if (!android_source_zip.is_empty()) {
-			return android_source_zip + String(" [") + FileAccess::get_md5(android_source_zip) + String("]");
+			return android_source_zip + " [" + FileAccess::get_md5(android_source_zip) + ']';
 		}
 	}
 	return GODOT_VERSION_FULL_CONFIG;

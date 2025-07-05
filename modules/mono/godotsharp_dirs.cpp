@@ -175,7 +175,7 @@ private:
 #else
 		if (DirAccess::exists(packed_path)) {
 			// The dotnet publish data is packed in the pck/zip.
-			String data_dir_root = OS::get_singleton()->get_cache_path().path_join("data_" + appname_safe + "_" + platform + "_" + arch);
+			String data_dir_root = OS::get_singleton()->get_cache_path().path_join("data_" + appname_safe + '_' + platform + '_' + arch);
 			bool has_data = false;
 			if (!has_data) {
 				// 1. Try to access the data directly.
@@ -210,10 +210,10 @@ private:
 			api_assemblies_dir = data_dir_root;
 		} else {
 			// The dotnet publish data is in a directory next to the executable.
-			String data_dir_root = exe_dir.path_join("data_" + appname_safe + "_" + platform + "_" + arch);
+			String data_dir_root = exe_dir.path_join("data_" + appname_safe + '_' + platform + '_' + arch);
 #ifdef MACOS_ENABLED
 			if (!DirAccess::exists(data_dir_root)) {
-				data_dir_root = res_dir.path_join("data_" + appname_safe + "_" + platform + "_" + arch);
+				data_dir_root = res_dir.path_join("data_" + appname_safe + '_' + platform + '_' + arch);
 			}
 #endif
 			api_assemblies_dir = data_dir_root;

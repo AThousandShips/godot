@@ -2436,7 +2436,7 @@ bool CanvasItemEditor::_gui_input_select(const Ref<InputEvent> &p_event) {
 					CanvasItem *item = selection_results[i].item;
 
 					Ref<Texture2D> icon = EditorNode::get_singleton()->get_object_icon(item, "Node");
-					String node_path = "/" + root_name + "/" + String(root_path.rel_path_to(item->get_path()));
+					String node_path = '/' + root_name + '/' + String(root_path.rel_path_to(item->get_path()));
 
 					int locked = 0;
 					if (_is_node_locked(item)) {
@@ -2456,9 +2456,9 @@ bool CanvasItemEditor::_gui_input_select(const Ref<InputEvent> &p_event) {
 
 					String suffix;
 					if (locked == 1) {
-						suffix = " (" + TTR("Locked") + ")";
+						suffix = " (" + TTR("Locked") + ')';
 					} else if (locked == 2) {
-						suffix = " (" + TTR("Grouped") + ")";
+						suffix = " (" + TTR("Grouped") + ')';
 					}
 					selection_menu->add_item((String)item->get_name() + suffix);
 					selection_menu->set_item_icon(i, icon);
@@ -3962,15 +3962,15 @@ void CanvasItemEditor::_draw_message() {
 				if (drag_type == DRAG_MOVE) {
 					message = TTR("Moving:") + " (" + FORMAT(delta.x) + ", " + FORMAT(delta.y) + ") px";
 				} else if (drag_type == DRAG_MOVE_X) {
-					message = TTR("Moving:") + " " + FORMAT(delta.x) + " px";
+					message = TTR("Moving:") + ' ' + FORMAT(delta.x) + " px";
 				} else if (drag_type == DRAG_MOVE_Y) {
-					message = TTR("Moving:") + " " + FORMAT(delta.y) + " px";
+					message = TTR("Moving:") + ' ' + FORMAT(delta.y) + " px";
 				}
 			} break;
 
 			case DRAG_ROTATE: {
 				real_t delta = Math::rad_to_deg(current_transform.get_rotation() - original_transform.get_rotation());
-				message = TTR("Rotating:") + " " + FORMAT(delta) + String::utf8(" °");
+				message = TTR("Rotating:") + ' ' + FORMAT(delta) + String::utf8(" °");
 			} break;
 
 			case DRAG_SCALE_X:
@@ -3979,7 +3979,7 @@ void CanvasItemEditor::_draw_message() {
 				Vector2 original_scale = (Math::is_zero_approx(original_transform.get_scale().x) || Math::is_zero_approx(original_transform.get_scale().y)) ? Vector2(CMP_EPSILON, CMP_EPSILON) : original_transform.get_scale();
 				Vector2 delta = current_transform.get_scale() / original_scale;
 				if (drag_type == DRAG_SCALE_BOTH) {
-					message = TTR("Scaling:") + String::utf8(" ×(") + FORMAT(delta.x) + ", " + FORMAT(delta.y) + ")";
+					message = TTR("Scaling:") + String::utf8(" ×(") + FORMAT(delta.x) + ", " + FORMAT(delta.y) + ')';
 				} else if (drag_type == DRAG_SCALE_X) {
 					message = TTR("Scaling:") + String::utf8(" ×") + FORMAT(delta.x);
 				} else if (drag_type == DRAG_SCALE_Y) {
@@ -4158,8 +4158,8 @@ void CanvasItemEditor::_project_settings_changed() {
 void CanvasItemEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_TRANSLATION_CHANGED: {
-			select_button->set_tooltip_text(keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Drag: Rotate selected node around pivot.") + "\n" + TTR("Alt+Drag: Move selected node.") + "\n" + keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Alt+Drag: Scale selected node.") + "\n" + TTR("V: Set selected node's pivot position.") + "\n" + TTR("Alt+RMB: Show list of all nodes at position clicked, including locked.") + "\n" + TTR("(Available in all modes.)") + "\n" + TTR("RMB: Add node at position clicked."));
-			pivot_button->set_tooltip_text(TTR("Click to change object's pivot.") + "\n" + TTR("Shift: Set temporary pivot.") + "\n" + TTR("Click this button while holding Shift to put the temporary pivot in the center of the selected nodes."));
+			select_button->set_tooltip_text(keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Drag: Rotate selected node around pivot.") + '\n' + TTR("Alt+Drag: Move selected node.") + '\n' + keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Alt+Drag: Scale selected node.") + '\n' + TTR("V: Set selected node's pivot position.") + '\n' + TTR("Alt+RMB: Show list of all nodes at position clicked, including locked.") + '\n' + TTR("(Available in all modes.)") + '\n' + TTR("RMB: Add node at position clicked."));
+			pivot_button->set_tooltip_text(TTR("Click to change object's pivot.") + '\n' + TTR("Shift: Set temporary pivot.") + '\n' + TTR("Click this button while holding Shift to put the temporary pivot in the center of the selected nodes."));
 		} break;
 
 		case NOTIFICATION_READY: {
@@ -5990,7 +5990,7 @@ void CanvasItemEditorViewport::_create_texture_node(Node *p_parent, Node *p_chil
 		String new_name = p_parent->validate_child_name(p_child);
 		EditorDebuggerNode *ed = EditorDebuggerNode::get_singleton();
 		undo_redo->add_do_method(ed, "live_debug_create_node", EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent), p_child->get_class(), new_name);
-		undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent)) + "/" + new_name));
+		undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent)) + '/' + new_name));
 	}
 
 	if (Object::cast_to<TouchScreenButton>(p_child) || Object::cast_to<TextureButton>(p_child)) {
@@ -6060,7 +6060,7 @@ void CanvasItemEditorViewport::_create_audio_node(Node *p_parent, const String &
 		String new_name = p_parent->validate_child_name(child);
 		EditorDebuggerNode *ed = EditorDebuggerNode::get_singleton();
 		undo_redo->add_do_method(ed, "live_debug_create_node", EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent), child->get_class(), new_name);
-		undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent)) + "/" + new_name));
+		undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent)) + '/' + new_name));
 	}
 
 	// Compute the global position
@@ -6112,7 +6112,7 @@ bool CanvasItemEditorViewport::_create_instance(Node *p_parent, const String &p_
 	String new_name = p_parent->validate_child_name(instantiated_scene);
 	EditorDebuggerNode *ed = EditorDebuggerNode::get_singleton();
 	undo_redo->add_do_method(ed, "live_debug_instantiate_node", edited_scene->get_path_to(p_parent), p_path, new_name);
-	undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(edited_scene->get_path_to(p_parent)) + "/" + new_name));
+	undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(edited_scene->get_path_to(p_parent)) + '/' + new_name));
 
 	CanvasItem *instance_ci = Object::cast_to<CanvasItem>(instantiated_scene);
 	if (instance_ci) {
@@ -6282,7 +6282,7 @@ bool CanvasItemEditorViewport::can_drop_data(const Point2 &p_point, const Varian
 		int snap_step_decimals = Math::range_step_decimals(snap);
 #define FORMAT(value) (TS->format_number(String::num(value, snap_step_decimals)))
 		Vector2 preview_node_pos = preview_node->get_global_position();
-		canvas_item_editor->message = TTR("Instantiating: ") + "(" + FORMAT(preview_node_pos.x) + ", " + FORMAT(preview_node_pos.y) + ") px";
+		canvas_item_editor->message = TTR("Instantiating: ") + '(' + FORMAT(preview_node_pos.x) + ", " + FORMAT(preview_node_pos.y) + ") px";
 	}
 	canvas_item_editor->update_viewport();
 
@@ -6304,10 +6304,10 @@ bool CanvasItemEditorViewport::can_drop_data(const Point2 &p_point, const Varian
 	label->set_visible(instantiate_type & ~SCENE);
 
 	String desc = TTR("Drag and drop to add as sibling of selected node (except when root is selected).") +
-			"\n" + TTR("Hold Shift when dropping to add as child of selected node.") +
-			"\n" + TTR("Hold Alt when dropping to add as child of root node.");
+			'\n' + TTR("Hold Shift when dropping to add as child of selected node.") +
+			'\n' + TTR("Hold Alt when dropping to add as child of root node.");
 	if (instantiate_type & TEXTURE) {
-		desc += "\n" + TTR("Hold Alt + Shift when dropping to add as different node type.");
+		desc += '\n' + TTR("Hold Alt + Shift when dropping to add as different node type.");
 	}
 	label_desc->set_text(desc);
 	label_desc->show();

@@ -226,13 +226,13 @@ void EditorCommandPalette::get_actions_list(List<String> *p_list) const {
 }
 
 void EditorCommandPalette::remove_command(String p_key_name) {
-	ERR_FAIL_COND_MSG(!commands.has(p_key_name), "The Command '" + String(p_key_name) + "' doesn't exists. Unable to remove it.");
+	ERR_FAIL_COND_MSG(!commands.has(p_key_name), "The Command '" + p_key_name + "' doesn't exists. Unable to remove it.");
 
 	commands.erase(p_key_name);
 }
 
 void EditorCommandPalette::add_command(String p_command_name, String p_key_name, Callable p_action, Vector<Variant> arguments, const Ref<Shortcut> &p_shortcut) {
-	ERR_FAIL_COND_MSG(commands.has(p_key_name), "The Command '" + String(p_command_name) + "' already exists. Unable to add it.");
+	ERR_FAIL_COND_MSG(commands.has(p_key_name), "The Command '" + p_command_name + "' already exists. Unable to add it.");
 
 	const Variant **argptrs = (const Variant **)alloca(sizeof(Variant *) * arguments.size());
 	for (int i = 0; i < arguments.size(); i++) {
@@ -252,7 +252,7 @@ void EditorCommandPalette::add_command(String p_command_name, String p_key_name,
 }
 
 void EditorCommandPalette::_add_command(String p_command_name, String p_key_name, Callable p_binded_action, String p_shortcut_text) {
-	ERR_FAIL_COND_MSG(commands.has(p_key_name), "The Command '" + String(p_command_name) + "' already exists. Unable to add it.");
+	ERR_FAIL_COND_MSG(commands.has(p_key_name), "The Command '" + p_command_name + "' already exists. Unable to add it.");
 
 	Command command;
 	command.name = p_command_name;
@@ -311,8 +311,8 @@ Ref<Shortcut> EditorCommandPalette::add_shortcut_command(const String &p_command
 		ev->set_shortcut(p_shortcut);
 		add_command(p_command, p_key, callable_mp(EditorNode::get_singleton()->get_viewport(), &Viewport::push_input), varray(ev, false), p_shortcut);
 	} else {
-		const String key_name = String(p_key);
-		const String command_name = String(p_command);
+		const String key_name = p_key;
+		const String command_name = p_command;
 		Pair pair = Pair(command_name, p_shortcut);
 		unregistered_shortcuts[key_name] = pair;
 	}

@@ -265,14 +265,14 @@ void XRNode3D::_validate_property(PropertyInfo &p_property) const {
 		PackedStringArray names = xr_server->get_suggested_tracker_names();
 		String hint_string;
 		for (const String &name : names) {
-			hint_string += name + ",";
+			hint_string += name + ',';
 		}
 		p_property.hint_string = hint_string;
 	} else if (p_property.name == "pose") {
 		PackedStringArray names = xr_server->get_suggested_pose_names(tracker_name);
 		String hint_string;
 		for (const String &name : names) {
-			hint_string += name + ",";
+			hint_string += name + ',';
 		}
 		p_property.hint_string = hint_string;
 	}

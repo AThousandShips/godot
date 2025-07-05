@@ -68,7 +68,7 @@ String OpenXRAction::get_name_with_set() const {
 	String action_name = get_name();
 
 	if (action_set != nullptr) {
-		action_name = action_set->get_name() + "/" + action_name;
+		action_name = action_set->get_name() + '/' + action_name;
 	}
 
 	return action_name;

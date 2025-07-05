@@ -746,7 +746,7 @@ String String::_separate_compound_words() const {
 		const bool cond_d = (is_prev_upper || is_prev_lower) && is_curr_digit; // A2, a2
 
 		if (cond_a || cond_b || cond_c || cond_d) {
-			new_string += substr(start_index, i - start_index) + " ";
+			new_string += substr(start_index, i - start_index) + ' ';
 			start_index = i;
 		}
 
@@ -778,7 +778,7 @@ String String::capitalize() const {
 		if (slice.length() > 0) {
 			slice[0] = _find_upper(slice[0]);
 			if (i > 0) {
-				ret += " ";
+				ret += ' ';
 			}
 			ret += slice;
 		}
@@ -829,7 +829,7 @@ String String::get_with_code_lines() const {
 	String ret;
 	for (int i = 0; i < lines.size(); i++) {
 		if (i > 0) {
-			ret += "\n";
+			ret += '\n';
 		}
 		ret += vformat("%4d | %s", i + 1, lines[i]);
 	}
@@ -1673,7 +1673,7 @@ Vector<uint8_t> String::hex_decode() const {
 	} else if (c >= 'A' && c <= 'F') {                                                                                   \
 		m_output = c - 'A' + 10;                                                                                         \
 	} else {                                                                                                             \
-		ERR_FAIL_V_MSG(Vector<uint8_t>(), "Invalid hexadecimal character \"" + chr(c) + "\" at index " + m_index + "."); \
+		ERR_FAIL_V_MSG(Vector<uint8_t>(), "Invalid hexadecimal character \"" + chr(c) + "\" at index " + m_index + '.'); \
 	}
 
 	Vector<uint8_t> out;
@@ -4275,7 +4275,7 @@ String String::dedent() const {
 			if (has_text) {
 				new_string += substr(indent_stop, i - indent_stop);
 			}
-			new_string += "\n";
+			new_string += '\n';
 			has_text = false;
 			line_start = i + 1;
 			indent_stop = -1;
@@ -4458,7 +4458,7 @@ String String::simplify_path() const {
 
 	for (int i = 0; i < dirs.size(); i++) {
 		if (i > 0) {
-			s += "/";
+			s += '/';
 		}
 		s += dirs[i];
 	}
@@ -4485,7 +4485,7 @@ String String::humanize_size(uint64_t p_size) {
 	}
 
 	if (magnitude == 0) {
-		return String::num_uint64(p_size) + " " + RTR("B");
+		return String::num_uint64(p_size) + ' ' + RTR("B");
 	} else {
 		String suffix;
 		switch (magnitude) {
@@ -4511,7 +4511,7 @@ String String::humanize_size(uint64_t p_size) {
 
 		const double divisor = _div;
 		const int digits = _humanize_digits(p_size / _div);
-		return String::num(p_size / divisor).pad_decimals(digits) + " " + suffix;
+		return String::num(p_size / divisor).pad_decimals(digits) + ' ' + suffix;
 	}
 }
 
@@ -4532,7 +4532,7 @@ String String::validate_ascii_identifier() const {
 
 	String result;
 	if (is_digit(operator[](0))) {
-		result = "_" + *this;
+		result = '_' + *this;
 	} else {
 		result = *this;
 	}
@@ -4557,7 +4557,7 @@ String String::validate_unicode_identifier() const {
 	if (is_unicode_identifier_start(operator[](0))) {
 		result = *this;
 	} else {
-		result = "_" + *this;
+		result = '_' + *this;
 	}
 
 	int len = result.length();
@@ -4896,7 +4896,7 @@ String String::pad_decimals(int p_digits) const {
 		if (p_digits <= 0) {
 			return s;
 		}
-		s += ".";
+		s += '.';
 		c = s.length() - 1;
 	} else {
 		if (p_digits <= 0) {
@@ -5086,10 +5086,10 @@ String String::path_to(const String &p_path) const {
 	String src = replace_char('\\', '/');
 	String dst = p_path.replace_char('\\', '/');
 	if (!src.ends_with("/")) {
-		src += "/";
+		src += '/';
 	}
 	if (!dst.ends_with("/")) {
-		dst += "/";
+		dst += '/';
 	}
 
 	if (src.begins_with("res://") && dst.begins_with("res://")) {
@@ -5141,7 +5141,7 @@ String String::path_to(const String &p_path) const {
 	String dir = String("../").repeat(dirs_to_backtrack);
 
 	for (int i = common_parent + 1; i < dst_dirs.size(); i++) {
-		dir += dst_dirs[i] + "/";
+		dir += dst_dirs[i] + '/';
 	}
 
 	if (dir.length() == 0) {
@@ -5317,7 +5317,7 @@ String String::path_join(const String &p_file) const {
 	if (operator[](length() - 1) == '/' || (p_file.size() > 0 && p_file.operator[](0) == '/')) {
 		return *this + p_file;
 	}
-	return *this + "/" + p_file;
+	return *this + '/' + p_file;
 }
 
 String String::property_name_encode() const {
@@ -5326,7 +5326,7 @@ String String::property_name_encode() const {
 	const char32_t *cstr = get_data();
 	for (int i = 0; cstr[i]; i++) {
 		if (cstr[i] == '=' || cstr[i] == '"' || cstr[i] == ';' || cstr[i] == '[' || cstr[i] == ']' || cstr[i] < 33 || cstr[i] > 126) {
-			return "\"" + c_escape_multiline() + "\"";
+			return '"' + c_escape_multiline() + '"';
 		}
 	}
 	// Keep as is
@@ -5348,7 +5348,7 @@ String String::get_invalid_node_name_characters(bool p_allow_internal) {
 		}
 
 		if (c != invalid_node_name_characters) {
-			r += " ";
+			r += ' ';
 		}
 		r += String::chr(*c);
 		c++;
@@ -5658,7 +5658,7 @@ String String::sprintf(const Array &values, bool *error) const {
 							str += ", ";
 						}
 					}
-					str += ")";
+					str += ')';
 
 					formatted += str;
 					++value_index;

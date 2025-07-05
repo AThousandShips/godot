@@ -69,7 +69,7 @@ void EditorVisualProfiler::add_frame_metric(const Metric &p_metric) {
 		}
 
 		if (name[0] == '>') {
-			stack.push_back(full_name + "/");
+			stack.push_back(full_name + '/');
 		}
 
 		frame_metrics.write[last_metric].areas.write[i].fullpath_cache = full_name;
@@ -126,9 +126,9 @@ String EditorVisualProfiler::_get_time_as_text(float p_time) {
 	int dmode = display_mode->get_selected();
 
 	if (dmode == DISPLAY_FRAME_TIME) {
-		return TS->format_number(String::num(p_time, 2)) + " " + TTR("ms");
+		return TS->format_number(String::num(p_time, 2)) + ' ' + TTR("ms");
 	} else if (dmode == DISPLAY_FRAME_PERCENT) {
-		return TS->format_number(String::num(p_time * 100 / graph_limit, 2)) + " " + TS->percent_sign();
+		return TS->format_number(String::num(p_time * 100 / graph_limit, 2)) + ' ' + TS->percent_sign();
 	}
 
 	return "err";

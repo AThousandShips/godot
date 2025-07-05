@@ -186,14 +186,14 @@ void EditorDirDialog::_make_dir_confirm(const String &p_path, const String &p_ba
 	// Multiple level of directories can be created at once.
 	String base_dir = p_path.get_base_dir();
 	while (true) {
-		opened_paths.insert(base_dir + "/");
+		opened_paths.insert(base_dir + '/');
 		if (base_dir == "res://") {
 			break;
 		}
 		base_dir = base_dir.get_base_dir();
 	}
 
-	new_dir_path = p_path + "/";
+	new_dir_path = p_path + '/';
 }
 
 void EditorDirDialog::_bind_methods() {

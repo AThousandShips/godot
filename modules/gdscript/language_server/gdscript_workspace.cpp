@@ -76,14 +76,14 @@ void GDScriptWorkspace::apply_new_signal(Object *obj, String function, PackedStr
 		start_line = source.split("\n").size();
 	}
 
-	String function_body = "\n\n" + function_signature + "(";
+	String function_body = "\n\n" + function_signature + '(';
 	for (int i = 0; i < args.size(); ++i) {
 		function_body += args[i];
 		if (i < args.size() - 1) {
 			function_body += ", ";
 		}
 	}
-	function_body += ")";
+	function_body += ')';
 	if (EditorSettings::get_singleton()->get_setting("text_editor/completion/add_type_hints")) {
 		function_body += " -> void";
 	}
@@ -228,7 +228,7 @@ void GDScriptWorkspace::reload_all_workspace_scripts() {
 			HashMap<String, ExtendGDScriptParser *>::Iterator S = parse_results.find(path);
 			String err_msg = "Failed parse script " + path;
 			if (S) {
-				err_msg += "\n" + S->value->get_errors().front()->get().message;
+				err_msg += '\n' + S->value->get_errors().front()->get().message;
 			}
 			ERR_CONTINUE_MSG(err != OK, err_msg);
 		}
@@ -300,11 +300,11 @@ Error GDScriptWorkspace::initialize() {
 		class_symbol.name = class_name;
 		class_symbol.native_class = class_name;
 		class_symbol.kind = LSP::SymbolKind::Class;
-		class_symbol.detail = String("<Native> class ") + class_name;
+		class_symbol.detail = "<Native> class " + class_name;
 		if (!class_data.inherits.is_empty()) {
 			class_symbol.detail += " extends " + class_data.inherits;
 		}
-		class_symbol.documentation = HANDLE_DOC(class_data.brief_description) + "\n" + HANDLE_DOC(class_data.description);
+		class_symbol.documentation = HANDLE_DOC(class_data.brief_description) + '\n' + HANDLE_DOC(class_data.description);
 
 		for (int i = 0; i < class_data.constants.size(); i++) {
 			const DocData::ConstantDoc &const_data = class_data.constants[i];
@@ -312,7 +312,7 @@ Error GDScriptWorkspace::initialize() {
 			symbol.name = const_data.name;
 			symbol.native_class = class_name;
 			symbol.kind = LSP::SymbolKind::Constant;
-			symbol.detail = "const " + class_name + "." + const_data.name;
+			symbol.detail = "const " + class_name + '.' + const_data.name;
 			if (const_data.enumeration.length()) {
 				symbol.detail += ": " + const_data.enumeration;
 			}
@@ -327,7 +327,7 @@ Error GDScriptWorkspace::initialize() {
 			symbol.name = data.name;
 			symbol.native_class = class_name;
 			symbol.kind = LSP::SymbolKind::Property;
-			symbol.detail = "var " + class_name + "." + data.name;
+			symbol.detail = "var " + class_name + '.' + data.name;
 			if (data.enumeration.length()) {
 				symbol.detail += ": " + data.enumeration;
 			} else {
@@ -343,7 +343,7 @@ Error GDScriptWorkspace::initialize() {
 			symbol.name = data.name;
 			symbol.native_class = class_name;
 			symbol.kind = LSP::SymbolKind::Property;
-			symbol.detail = "<Theme> var " + class_name + "." + data.name + ": " + data.type;
+			symbol.detail = "<Theme> var " + class_name + '.' + data.name + ": " + data.type;
 			symbol.documentation = HANDLE_DOC(data.description);
 			class_symbol.children.push_back(symbol);
 		}
@@ -407,7 +407,7 @@ Error GDScriptWorkspace::initialize() {
 			if (return_type.is_empty()) {
 				return_type = "void";
 			}
-			symbol.detail = "func " + class_name + "." + data.name + "(" + params + ") -> " + return_type;
+			symbol.detail = "func " + class_name + '.' + data.name + '(' + params + ") -> " + return_type;
 			symbol.documentation = HANDLE_DOC(data.description);
 			class_symbol.children.push_back(symbol);
 		}

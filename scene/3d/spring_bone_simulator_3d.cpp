@@ -292,7 +292,7 @@ void SpringBoneSimulator3D::_get_property_list(List<PropertyInfo> *p_list) const
 	LocalVector<PropertyInfo> props;
 
 	for (int i = 0; i < settings.size(); i++) {
-		String path = "settings/" + itos(i) + "/";
+		String path = "settings/" + itos(i) + '/';
 		props.push_back(PropertyInfo(Variant::STRING, path + "root_bone_name", PROPERTY_HINT_ENUM_SUGGESTION, enum_hint));
 		props.push_back(PropertyInfo(Variant::INT, path + "root_bone", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR));
 		props.push_back(PropertyInfo(Variant::STRING, path + "end_bone_name", PROPERTY_HINT_ENUM_SUGGESTION, enum_hint));
@@ -318,7 +318,7 @@ void SpringBoneSimulator3D::_get_property_list(List<PropertyInfo> *p_list) const
 		props.push_back(PropertyInfo(Variant::VECTOR3, path + "gravity/direction"));
 		props.push_back(PropertyInfo(Variant::INT, path + "joint_count", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ARRAY, "Joints," + path + "joints/,static,const"));
 		for (int j = 0; j < settings[i]->joints.size(); j++) {
-			String joint_path = path + "joints/" + itos(j) + "/";
+			String joint_path = path + "joints/" + itos(j) + '/';
 			props.push_back(PropertyInfo(Variant::STRING, joint_path + "bone_name", PROPERTY_HINT_ENUM_SUGGESTION, enum_hint, PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_STORAGE));
 			props.push_back(PropertyInfo(Variant::INT, joint_path + "bone", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_READ_ONLY));
 			props.push_back(PropertyInfo(Variant::INT, joint_path + "rotation_axis", PROPERTY_HINT_ENUM, "X,Y,Z,All,Custom"));

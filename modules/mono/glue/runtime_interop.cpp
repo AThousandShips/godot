@@ -1503,7 +1503,7 @@ void godotsharp_str_to_var(const godot_string *p_str, godot_variant *r_ret) {
 	int line;
 	Error err = VariantParser::parse(&ss, ret, errs, line);
 	if (err != OK) {
-		String err_str = "Parse error at line " + itos(line) + ": " + errs + ".";
+		String err_str = "Parse error at line " + itos(line) + ": " + errs + '.';
 		ERR_PRINT(err_str);
 		ret = err_str;
 	}
@@ -1561,7 +1561,7 @@ void godotsharp_object_to_string(Object *p_ptr, godot_string *r_str) {
 #endif
 	// Can't call 'Object::to_string()' here, as that can end up calling 'ToString' again resulting in an endless circular loop.
 	memnew_placement(r_str,
-			String("<" + p_ptr->get_class() + "#" + itos(p_ptr->get_instance_id()) + ">"));
+			String('<' + p_ptr->get_class() + '#' + itos(p_ptr->get_instance_id()) + '>'));
 }
 
 #ifdef __cplusplus

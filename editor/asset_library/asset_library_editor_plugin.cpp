@@ -285,12 +285,12 @@ void EditorAssetLibraryItemDescription::configure(const String &p_title, int p_a
 	sha256 = p_sha256_hash;
 	item->configure(p_title, p_asset_id, p_category, p_category_id, p_author, p_author_id, p_cost);
 	description->clear();
-	description->add_text(TTR("Version:") + " " + p_version_string + "\n");
-	description->add_text(TTR("Contents:") + " ");
+	description->add_text(TTR("Version:") + ' ' + p_version_string + '\n');
+	description->add_text(TTR("Contents:") + ' ');
 	description->push_meta(p_browse_url);
 	description->add_text(TTR("View Files"));
 	description->pop();
-	description->add_text("\n" + TTR("Description:") + "\n\n");
+	description->add_text('\n' + TTR("Description:") + "\n\n");
 	description->append_text(p_description);
 	description->set_selection_enabled(true);
 	description->set_context_menu_enabled(true);
@@ -383,24 +383,24 @@ void EditorAssetLibraryItemDownload::_http_download_completed(int p_status, int 
 		} break;
 		case HTTPRequest::RESULT_CANT_CONNECT:
 		case HTTPRequest::RESULT_TLS_HANDSHAKE_ERROR: {
-			error_text = TTR("Can't connect to host:") + " " + host;
+			error_text = TTR("Can't connect to host:") + ' ' + host;
 			status->set_text(TTRC("Can't connect."));
 		} break;
 		case HTTPRequest::RESULT_NO_RESPONSE: {
-			error_text = TTR("No response from host:") + " " + host;
+			error_text = TTR("No response from host:") + ' ' + host;
 			status->set_text(TTRC("No response."));
 		} break;
 		case HTTPRequest::RESULT_CANT_RESOLVE: {
-			error_text = TTR("Can't resolve hostname:") + " " + host;
+			error_text = TTR("Can't resolve hostname:") + ' ' + host;
 			status->set_text(TTRC("Can't resolve."));
 		} break;
 		case HTTPRequest::RESULT_REQUEST_FAILED: {
-			error_text = TTR("Request failed, return code:") + " " + itos(p_code);
+			error_text = TTR("Request failed, return code:") + ' ' + itos(p_code);
 			status->set_text(TTRC("Request failed."));
 		} break;
 		case HTTPRequest::RESULT_DOWNLOAD_FILE_CANT_OPEN:
 		case HTTPRequest::RESULT_DOWNLOAD_FILE_WRITE_ERROR: {
-			error_text = TTR("Cannot save response to:") + " " + download->get_download_file();
+			error_text = TTR("Cannot save response to:") + ' ' + download->get_download_file();
 			status->set_text(TTRC("Write error."));
 		} break;
 		case HTTPRequest::RESULT_REDIRECT_LIMIT_REACHED: {
@@ -413,13 +413,13 @@ void EditorAssetLibraryItemDownload::_http_download_completed(int p_status, int 
 		} break;
 		default: {
 			if (p_code != 200) {
-				error_text = TTR("Request failed, return code:") + " " + itos(p_code);
-				status->set_text(TTR("Failed:") + " " + itos(p_code));
+				error_text = TTR("Request failed, return code:") + ' ' + itos(p_code);
+				status->set_text(TTR("Failed:") + ' ' + itos(p_code));
 			} else if (!sha256.is_empty()) {
 				String download_sha256 = FileAccess::get_sha256(download->get_download_file());
 				if (sha256 != download_sha256) {
-					error_text = TTR("Bad download hash, assuming file has been tampered with.") + "\n";
-					error_text += TTR("Expected:") + " " + sha256 + "\n" + TTR("Got:") + " " + download_sha256;
+					error_text = TTR("Bad download hash, assuming file has been tampered with.") + '\n';
+					error_text += TTR("Expected:") + ' ' + sha256 + '\n' + TTR("Got:") + ' ' + download_sha256;
 					status->set_text(TTRC("Failed SHA-256 hash check"));
 				}
 			}
@@ -431,7 +431,7 @@ void EditorAssetLibraryItemDownload::_http_download_completed(int p_status, int 
 	progress->set_indeterminate(false);
 
 	if (!error_text.is_empty()) {
-		download_error->set_text(TTR("Asset Download Error:") + "\n" + error_text);
+		download_error->set_text(TTR("Asset Download Error:") + '\n' + error_text);
 		download_error->popup_centered();
 		// Let the user retry the download.
 		retry_button->show();
@@ -1076,9 +1076,9 @@ void EditorAssetLibrary::_search(int p_page) {
 	if (templates_only) {
 		args += "?type=project&";
 	} else {
-		args += "?";
+		args += '?';
 	}
-	args += String() + "sort=" + sort_key[sort->get_selected()];
+	args += String("sort=") + sort_key[sort->get_selected()];
 
 	// We use the "branch" version, i.e. major.minor, as patch releases should be compatible
 	args += "&godot_version=" + String(GODOT_VERSION_BRANCH);
@@ -1086,7 +1086,7 @@ void EditorAssetLibrary::_search(int p_page) {
 	String support_list;
 	for (int i = 0; i < SUPPORT_MAX; i++) {
 		if (support->get_popup()->is_item_checked(i)) {
-			support_list += String(support_key[i]) + "+";
+			support_list += String(support_key[i]) + '+';
 		}
 	}
 	if (!support_list.is_empty()) {
@@ -1222,7 +1222,7 @@ void EditorAssetLibrary::_api_request(const String &p_request, RequestType p_req
 	}
 
 	requesting = p_request_type;
-	request->request(host + "/" + p_request + p_arguments);
+	request->request(host + '/' + p_request + p_arguments);
 }
 
 void EditorAssetLibrary::_http_request_completed(int p_status, int p_code, const PackedStringArray &headers, const PackedByteArray &p_data) {
@@ -1231,7 +1231,7 @@ void EditorAssetLibrary::_http_request_completed(int p_status, int p_code, const
 
 	switch (p_status) {
 		case HTTPRequest::RESULT_CANT_RESOLVE: {
-			error_label->set_text(TTR("Can't resolve hostname:") + " " + host);
+			error_label->set_text(TTR("Can't resolve hostname:") + ' ' + host);
 		} break;
 		case HTTPRequest::RESULT_BODY_SIZE_LIMIT_EXCEEDED:
 		case HTTPRequest::RESULT_CONNECTION_ERROR:
@@ -1240,13 +1240,13 @@ void EditorAssetLibrary::_http_request_completed(int p_status, int p_code, const
 		} break;
 		case HTTPRequest::RESULT_TLS_HANDSHAKE_ERROR:
 		case HTTPRequest::RESULT_CANT_CONNECT: {
-			error_label->set_text(TTR("Can't connect to host:") + " " + host);
+			error_label->set_text(TTR("Can't connect to host:") + ' ' + host);
 		} break;
 		case HTTPRequest::RESULT_NO_RESPONSE: {
-			error_label->set_text(TTR("No response from host:") + " " + host);
+			error_label->set_text(TTR("No response from host:") + ' ' + host);
 		} break;
 		case HTTPRequest::RESULT_REQUEST_FAILED: {
-			error_label->set_text(TTR("Request failed, return code:") + " " + itos(p_code));
+			error_label->set_text(TTR("Request failed, return code:") + ' ' + itos(p_code));
 		} break;
 		case HTTPRequest::RESULT_REDIRECT_LIMIT_REACHED: {
 			error_label->set_text(TTRC("Request failed, too many redirects"));
@@ -1254,7 +1254,7 @@ void EditorAssetLibrary::_http_request_completed(int p_status, int p_code, const
 		} break;
 		default: {
 			if (p_code != 200) {
-				error_label->set_text(TTR("Request failed, return code:") + " " + itos(p_code));
+				error_label->set_text(TTR("Request failed, return code:") + ' ' + itos(p_code));
 			} else {
 				error_abort = false;
 			}

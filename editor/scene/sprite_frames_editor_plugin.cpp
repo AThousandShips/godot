@@ -1114,7 +1114,7 @@ void SpriteFramesEditor::_animation_name_edited() {
 			return;
 		}
 		counter++;
-		name = new_name + "_" + itos(counter);
+		name = new_name + '_' + itos(counter);
 	}
 	edited->set_text(0, name);
 
@@ -1203,10 +1203,10 @@ void SpriteFramesEditor::_animation_duplicate() {
 	if (name_component.size() > 1 && name_component[1].is_valid_int() && name_component[1].to_int() >= 0) {
 		counter = name_component[1].to_int();
 	}
-	new_name = base_name + "_" + itos(counter);
+	new_name = base_name + '_' + itos(counter);
 	while (frames->has_animation(new_name)) {
 		counter++;
-		new_name = base_name + "_" + itos(counter);
+		new_name = base_name + '_' + itos(counter);
 	}
 
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
@@ -1559,7 +1559,7 @@ void SpriteFramesEditor::_update_library_impl() {
 		}
 
 		if (duration != 1.0f) {
-			name += String::utf8(" [× ") + String::num(duration, 2) + "]";
+			name += String::utf8(" [× ") + String::num(duration, 2) + ']';
 		}
 
 		frame_list->add_item(name, texture);
@@ -1572,7 +1572,7 @@ void SpriteFramesEditor::_update_library_impl() {
 			String prefix = U"┖╴";
 			Ref<AtlasTexture> at = texture;
 			while (at.is_valid() && at->get_atlas().is_valid()) {
-				tooltip += "\n" + prefix + at->get_atlas()->get_path();
+				tooltip += '\n' + prefix + at->get_atlas()->get_path();
 				prefix = "    " + prefix;
 				at = at->get_atlas();
 			}

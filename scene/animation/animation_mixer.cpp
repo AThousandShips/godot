@@ -133,7 +133,7 @@ void AnimationMixer::_animation_set_cache_update() {
 	// Update changed and add otherwise.
 	for (const AnimationLibraryData &lib : animation_libraries) {
 		for (const KeyValue<StringName, Ref<Animation>> &K : lib.library->animations) {
-			StringName key = lib.name == StringName() ? K.key : StringName(String(lib.name) + "/" + String(K.key));
+			StringName key = lib.name == StringName() ? K.key : StringName(String(lib.name) + '/' + K.key);
 			if (!animation_set.has(key)) {
 				AnimationData ad;
 				ad.animation = K.value;
@@ -187,7 +187,7 @@ void AnimationMixer::_animation_added(const StringName &p_name, const StringName
 }
 
 void AnimationMixer::_animation_removed(const StringName &p_name, const StringName &p_library) {
-	StringName name = p_library == StringName() ? p_name : StringName(String(p_library) + "/" + String(p_name));
+	StringName name = p_library == StringName() ? p_name : StringName(String(p_library) + '/' + p_name);
 
 	if (!animation_set.has(name)) {
 		return; // No need to update because not the one from the library being used.
@@ -199,8 +199,8 @@ void AnimationMixer::_animation_removed(const StringName &p_name, const StringNa
 }
 
 void AnimationMixer::_animation_renamed(const StringName &p_name, const StringName &p_to_name, const StringName &p_library) {
-	StringName from_name = p_library == StringName() ? p_name : StringName(String(p_library) + "/" + String(p_name));
-	StringName to_name = p_library == StringName() ? p_to_name : StringName(String(p_library) + "/" + String(p_to_name));
+	StringName from_name = p_library == StringName() ? p_name : StringName(String(p_library) + '/' + p_name);
+	StringName to_name = p_library == StringName() ? p_to_name : StringName(String(p_library) + '/' + p_to_name);
 
 	if (!animation_set.has(from_name)) {
 		return; // No need to update because not the one from the library being used.
@@ -281,14 +281,14 @@ StringName AnimationMixer::find_animation_library(const Ref<Animation> &p_animat
 Error AnimationMixer::add_animation_library(const StringName &p_name, const Ref<AnimationLibrary> &p_animation_library) {
 	ERR_FAIL_COND_V(p_animation_library.is_null(), ERR_INVALID_PARAMETER);
 #ifdef DEBUG_ENABLED
-	ERR_FAIL_COND_V_MSG(String(p_name).contains_char('/') || String(p_name).contains_char(':') || String(p_name).contains_char(',') || String(p_name).contains_char('['), ERR_INVALID_PARAMETER, "Invalid animation name: " + String(p_name) + ".");
+	ERR_FAIL_COND_V_MSG(String(p_name).contains_char('/') || String(p_name).contains_char(':') || String(p_name).contains_char(',') || String(p_name).contains_char('['), ERR_INVALID_PARAMETER, "Invalid animation name: " + p_name + '.');
 #endif
 
 	int insert_pos = 0;
 
 	for (const AnimationLibraryData &lib : animation_libraries) {
-		ERR_FAIL_COND_V_MSG(lib.name == p_name, ERR_ALREADY_EXISTS, "Can't add animation library twice with name: " + String(p_name));
-		ERR_FAIL_COND_V_MSG(lib.library == p_animation_library, ERR_ALREADY_EXISTS, "Can't add animation library twice (adding as '" + p_name.operator String() + "', exists as '" + lib.name.operator String() + "'.");
+		ERR_FAIL_COND_V_MSG(lib.name == p_name, ERR_ALREADY_EXISTS, "Can't add animation library twice with name: " + p_name);
+		ERR_FAIL_COND_V_MSG(lib.library == p_animation_library, ERR_ALREADY_EXISTS, "Can't add animation library twice (adding as '" + p_name + "', exists as '" + lib.name.operator String() + "'.");
 
 		if (lib.name.operator String() >= p_name.operator String()) {
 			break;
@@ -343,12 +343,12 @@ void AnimationMixer::rename_animation_library(const StringName &p_name, const St
 		return;
 	}
 #ifdef DEBUG_ENABLED
-	ERR_FAIL_COND_MSG(String(p_new_name).contains_char('/') || String(p_new_name).contains_char(':') || String(p_new_name).contains_char(',') || String(p_new_name).contains_char('['), "Invalid animation library name: " + String(p_new_name) + ".");
+	ERR_FAIL_COND_MSG(String(p_new_name).contains_char('/') || String(p_new_name).contains_char(':') || String(p_new_name).contains_char(',') || String(p_new_name).contains_char('['), "Invalid animation library name: " + p_new_name + '.');
 #endif
 
 	bool found = false;
 	for (AnimationLibraryData &lib : animation_libraries) {
-		ERR_FAIL_COND_MSG(lib.name == p_new_name, "Can't rename animation library to another existing name: " + String(p_new_name) + ".");
+		ERR_FAIL_COND_MSG(lib.name == p_new_name, "Can't rename animation library to another existing name: " + p_new_name + '.');
 		if (lib.name == p_name) {
 			found = true;
 			lib.name = p_new_name;
@@ -362,8 +362,8 @@ void AnimationMixer::rename_animation_library(const StringName &p_name, const St
 			lib.library->connect(SNAME("animation_renamed"), callable_mp(this, &AnimationMixer::_animation_renamed).bind(p_new_name));
 
 			for (const KeyValue<StringName, Ref<Animation>> &K : lib.library->animations) {
-				StringName old_name = p_name == StringName() ? K.key : StringName(String(p_name) + "/" + String(K.key));
-				StringName new_name = p_new_name == StringName() ? K.key : StringName(String(p_new_name) + "/" + String(K.key));
+				StringName old_name = p_name == StringName() ? K.key : StringName(String(p_name) + '/' + K.key);
+				StringName new_name = p_new_name == StringName() ? K.key : StringName(String(p_new_name) + '/' + K.key);
 				_rename_animation(old_name, new_name);
 			}
 		}
@@ -687,7 +687,7 @@ bool AnimationMixer::_update_caches() {
 				Node *child = parent->get_node_and_resource(path, resource, leftover_path);
 				if (!child) {
 					if (check_path) {
-						WARN_PRINT_ED(mixer_name + ": '" + String(E) + "', couldn't resolve track:  '" + String(path) + "'. This warning can be disabled in Project Settings.");
+						WARN_PRINT_ED(mixer_name + ": '" + E + "', couldn't resolve track:  '" + String(path) + "'. This warning can be disabled in Project Settings.");
 					}
 					continue;
 				}
@@ -697,7 +697,7 @@ bool AnimationMixer::_update_caches() {
 					case Animation::TYPE_VALUE: {
 						// If a value track without a key is cached first, the initial value cannot be determined.
 						// It is a corner case, but which may cause problems with blending.
-						ERR_CONTINUE_MSG(anim->track_get_key_count(i) == 0, mixer_name + ": '" + String(E) + "', Value Track:  '" + String(path) + "' must have at least one key to cache for blending.");
+						ERR_CONTINUE_MSG(anim->track_get_key_count(i) == 0, mixer_name + ": '" + E + "', Value Track:  '" + String(path) + "' must have at least one key to cache for blending.");
 
 						TrackCacheValue *track_value = memnew(TrackCacheValue);
 
@@ -756,7 +756,7 @@ bool AnimationMixer::_update_caches() {
 						Node3D *node_3d = Object::cast_to<Node3D>(child);
 
 						if (!node_3d) {
-							ERR_PRINT(mixer_name + ": '" + String(E) + "', transform track does not point to Node3D:  '" + String(path) + "'.");
+							ERR_PRINT(mixer_name + ": '" + E + "', transform track does not point to Node3D:  '" + String(path) + "'.");
 							continue;
 						}
 
@@ -822,20 +822,20 @@ bool AnimationMixer::_update_caches() {
 					case Animation::TYPE_BLEND_SHAPE: {
 #ifndef _3D_DISABLED
 						if (path.get_subname_count() != 1) {
-							ERR_PRINT(mixer_name + ": '" + String(E) + "', blend shape track does not contain a blend shape subname:  '" + String(path) + "'.");
+							ERR_PRINT(mixer_name + ": '" + E + "', blend shape track does not contain a blend shape subname:  '" + String(path) + "'.");
 							continue;
 						}
 						MeshInstance3D *mesh_3d = Object::cast_to<MeshInstance3D>(child);
 
 						if (!mesh_3d) {
-							ERR_PRINT(mixer_name + ": '" + String(E) + "', blend shape track does not point to MeshInstance3D:  '" + String(path) + "'.");
+							ERR_PRINT(mixer_name + ": '" + E + "', blend shape track does not point to MeshInstance3D:  '" + String(path) + "'.");
 							continue;
 						}
 
 						StringName blend_shape_name = path.get_subname(0);
 						int blend_shape_idx = mesh_3d->find_blend_shape_by_name(blend_shape_name);
 						if (blend_shape_idx == -1) {
-							ERR_PRINT(mixer_name + ": '" + String(E) + "', blend shape track points to a non-existing name:  '" + String(blend_shape_name) + "'.");
+							ERR_PRINT(mixer_name + ": '" + E + "', blend shape track points to a non-existing name:  '" + String(blend_shape_name) + "'.");
 							continue;
 						}
 
@@ -918,12 +918,12 @@ bool AnimationMixer::_update_caches() {
 				bool was_using_angle = track_value->is_using_angle;
 				if (track_src_type == Animation::TYPE_VALUE) {
 					if (track_value->init_value.is_string() && anim->value_track_get_update_mode(i) != Animation::UPDATE_DISCRETE) {
-						WARN_PRINT_ONCE_ED(mixer_name + ": '" + String(E) + "', Value Track: '" + String(path) + "' blends String types. This is an experimental algorithm.");
+						WARN_PRINT_ONCE_ED(mixer_name + ": '" + E + "', Value Track: '" + String(path) + "' blends String types. This is an experimental algorithm.");
 					}
 					track_value->is_using_angle = track_value->is_using_angle || anim->track_get_interpolation_type(i) == Animation::INTERPOLATION_LINEAR_ANGLE || anim->track_get_interpolation_type(i) == Animation::INTERPOLATION_CUBIC_ANGLE;
 				}
 				if (check_angle_interpolation && (was_using_angle != track_value->is_using_angle)) {
-					WARN_PRINT_ED(mixer_name + ": '" + String(E) + "', Value Track: '" + String(path) + "' has different interpolation types for rotation between some animations which may be blended together. Blending prioritizes angle interpolation, so the blending result uses the shortest path referenced to the initial (RESET animation) value.");
+					WARN_PRINT_ED(mixer_name + ": '" + E + "', Value Track: '" + String(path) + "' has different interpolation types for rotation between some animations which may be blended together. Blending prioritizes angle interpolation, so the blending result uses the shortest path referenced to the initial (RESET animation) value.");
 				}
 			}
 

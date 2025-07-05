@@ -49,7 +49,7 @@ String stringify_variants(const Variant &p_var);
 
 template <typename... Args>
 String stringify_variants(const Variant &p_var, Args... p_args) {
-	return p_var.operator String() + " " + stringify_variants(p_args...);
+	return p_var.operator String() + ' ' + stringify_variants(p_args...);
 }
 
 void add_print_handler(PrintHandlerList *p_handler);

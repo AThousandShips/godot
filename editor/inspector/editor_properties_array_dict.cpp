@@ -400,7 +400,7 @@ void EditorPropertyArray::update_property() {
 	}
 
 	if (preview_value) {
-		String ctr_str = array.get_construct_string().trim_prefix(array_type_name + "(").trim_suffix(")").remove_char('\n');
+		String ctr_str = array.get_construct_string().trim_prefix(array_type_name + '(').trim_suffix(")").remove_char('\n');
 		if (array_type == Variant::ARRAY && subtype != Variant::NIL) {
 			int type_end = ctr_str.find("](");
 			if (type_end > 0) {

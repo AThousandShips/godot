@@ -1307,7 +1307,7 @@ Polygon2DEditor::Polygon2DEditor() {
 	action_buttons[ACTION_REMOVE_INTERNAL]->set_tooltip_text(TTR("Remove Internal Vertex"));
 	Key key = (OS::get_singleton()->has_feature("macos") || OS::get_singleton()->has_feature("web_macos") || OS::get_singleton()->has_feature("web_ios")) ? Key::META : Key::CTRL;
 	// TRANSLATORS: %s is Control or Command key name.
-	action_buttons[ACTION_EDIT_POINT]->set_tooltip_text(TTR("Move Points") + "\n" + vformat(TTR("%s: Rotate"), find_keycode_name(key)) + "\n" + TTR("Shift: Move All") + "\n" + vformat(TTR("%s + Shift: Scale"), find_keycode_name(key)));
+	action_buttons[ACTION_EDIT_POINT]->set_tooltip_text(TTR("Move Points") + '\n' + vformat(TTR("%s: Rotate"), find_keycode_name(key)) + '\n' + TTR("Shift: Move All") + '\n' + vformat(TTR("%s + Shift: Scale"), find_keycode_name(key)));
 	action_buttons[ACTION_MOVE]->set_tooltip_text(TTR("Move Polygon"));
 	action_buttons[ACTION_ROTATE]->set_tooltip_text(TTR("Rotate Polygon"));
 	action_buttons[ACTION_SCALE]->set_tooltip_text(TTR("Scale Polygon"));

@@ -66,7 +66,7 @@ class SectionedInspectorFilter : public Object {
 
 		String name = p_name;
 		if (!section.is_empty()) {
-			name = section + "/" + name;
+			name = section + '/' + name;
 		}
 
 		bool valid;
@@ -81,7 +81,7 @@ class SectionedInspectorFilter : public Object {
 
 		String name = p_name;
 		if (!section.is_empty()) {
-			name = section + "/" + name;
+			name = section + '/' + name;
 		}
 
 		bool valid = false;
@@ -107,8 +107,8 @@ class SectionedInspectorFilter : public Object {
 				pi.name = "global/" + pi.name;
 			}
 
-			if (pi.name.begins_with(section + "/")) {
-				pi.name = pi.name.replace_first(section + "/", "");
+			if (pi.name.begins_with(section + '/')) {
+				pi.name = pi.name.replace_first(section + '/', "");
 				if (!allow_sub && pi.name.contains_char('/')) {
 					continue;
 				}
@@ -118,11 +118,11 @@ class SectionedInspectorFilter : public Object {
 	}
 
 	bool _property_can_revert(const StringName &p_name) const {
-		return edited->property_can_revert(section + "/" + p_name);
+		return edited->property_can_revert(section + '/' + p_name);
 	}
 
 	bool _property_get_revert(const StringName &p_name, Variant &r_property) const {
-		r_property = edited->property_get_revert(section + "/" + p_name);
+		r_property = edited->property_get_revert(section + '/' + p_name);
 		return true;
 	}
 
@@ -151,7 +151,7 @@ void SectionedInspector::_section_selected() {
 
 	selected_category = sections->get_selected()->get_metadata(0);
 	filter->set_section(selected_category, sections->get_selected()->get_first_child() == nullptr);
-	inspector->set_property_prefix(selected_category + "/");
+	inspector->set_property_prefix(selected_category + '/');
 	inspector->set_v_scroll(0);
 	emit_signal(SNAME("category_changed"), selected_category);
 }
@@ -176,7 +176,7 @@ String SectionedInspector::get_full_item_path(const String &p_item) {
 	String base = get_current_section();
 
 	if (!base.is_empty()) {
-		return base + "/" + p_item;
+		return base + '/' + p_item;
 	} else {
 		return p_item;
 	}
@@ -275,7 +275,7 @@ void SectionedInspector::update_category_list() {
 			parent->set_custom_font(0, get_theme_font(SNAME("bold"), EditorStringName(EditorFonts)));
 
 			if (i > 0) {
-				metasection += "/" + sectionarr[i];
+				metasection += '/' + sectionarr[i];
 			} else {
 				metasection = sectionarr[i];
 			}

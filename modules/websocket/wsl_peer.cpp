@@ -168,7 +168,7 @@ bool WSLPeer::_parse_client_request() {
 		String name = header[0].to_lower();
 		String value = header[1].strip_edges();
 		if (headers.has(name)) {
-			headers[name] += "," + value;
+			headers[name] += ',' + value;
 		} else {
 			headers[name] = value;
 		}
@@ -430,11 +430,11 @@ bool WSLPeer::_verify_server_response() {
 	HashMap<String, String> headers;
 	for (int i = 1; i < len; i++) {
 		Vector<String> header = psa[i].split(":", false, 1);
-		ERR_FAIL_COND_V_MSG(header.size() != 2, false, "Invalid header -> " + psa[i] + ".");
+		ERR_FAIL_COND_V_MSG(header.size() != 2, false, "Invalid header -> " + psa[i] + '.');
 		String name = header[0].to_lower();
 		String value = header[1].strip_edges();
 		if (headers.has(name)) {
-			headers[name] += "," + value;
+			headers[name] += ',' + value;
 		} else {
 			headers[name] = value;
 		}
@@ -531,7 +531,7 @@ Error WSLPeer::connect_to_url(const String &p_url, Ref<TLSOptions> p_options) {
 	String request = "GET " + path + " HTTP/1.1\r\n";
 	String port_string;
 	if ((port != 80 && !use_tls) || (port != 443 && use_tls)) {
-		port_string = ":" + itos(port);
+		port_string = ':' + itos(port);
 	}
 	request += "Host: " + host + port_string + "\r\n";
 	request += "Upgrade: websocket\r\n";
@@ -542,7 +542,7 @@ Error WSLPeer::connect_to_url(const String &p_url, Ref<TLSOptions> p_options) {
 		request += "Sec-WebSocket-Protocol: ";
 		for (int i = 0; i < supported_protocols.size(); i++) {
 			if (i != 0) {
-				request += ",";
+				request += ',';
 			}
 			request += supported_protocols[i];
 		}

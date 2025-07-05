@@ -1098,7 +1098,7 @@ Error OS_LinuxBSD::move_to_trash(const String &p_path) {
 		Error err = dir_access->make_dir_recursive(trash_path);
 
 		// Issue an error if trash can is not created properly.
-		ERR_FAIL_COND_V_MSG(err != OK, err, "Could not create the trash path \"" + trash_path + "\"");
+		ERR_FAIL_COND_V_MSG(err != OK, err, "Could not create the trash path \"" + trash_path + '"');
 		err = dir_access->make_dir_recursive(trash_path + "/files");
 		ERR_FAIL_COND_V_MSG(err != OK, err, "Could not create the trash path \"" + trash_path + "/files\"");
 		err = dir_access->make_dir_recursive(trash_path + "/info");
@@ -1126,18 +1126,18 @@ Error OS_LinuxBSD::move_to_trash(const String &p_path) {
 		// Added a limit to check for identically named files already on the trash can
 		// if there are too many it could make the editor unresponsive.
 		ERR_FAIL_COND_V_MSG(id_number > 99, FAILED, "Too many identically named resources already in the trash can.");
-		fn = file_name + "." + itos(id_number);
+		fn = file_name + '.' + itos(id_number);
 		dest_path = trash_path + "/files/" + fn;
 	}
 	file_name = fn;
 
-	String renamed_path = path.get_base_dir() + "/" + file_name;
+	String renamed_path = path.get_base_dir() + '/' + file_name;
 
 	// Generates the .trashinfo file
 	OS::DateTime dt = OS::get_singleton()->get_datetime(false);
 	String timestamp = vformat("%04d-%02d-%02dT%02d:%02d:", dt.year, (int)dt.month, dt.day, dt.hour, dt.minute);
 	timestamp = vformat("%s%02d", timestamp, dt.second); // vformat only supports up to 6 arguments.
-	String trash_info = "[Trash Info]\nPath=" + path.uri_encode() + "\nDeletionDate=" + timestamp + "\n";
+	String trash_info = "[Trash Info]\nPath=" + path.uri_encode() + "\nDeletionDate=" + timestamp + '\n';
 	{
 		Error err;
 		{
@@ -1149,7 +1149,7 @@ Error OS_LinuxBSD::move_to_trash(const String &p_path) {
 		// Rename our resource before moving it to the trash can.
 		Ref<DirAccess> dir_access = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 		err = dir_access->rename(path, renamed_path);
-		ERR_FAIL_COND_V_MSG(err != OK, err, "Can't rename file \"" + path + "\" to \"" + renamed_path + "\"");
+		ERR_FAIL_COND_V_MSG(err != OK, err, "Can't rename file \"" + path + "\" to \"" + renamed_path + '"');
 	}
 
 	// Move the given resource to the trash can.
@@ -1166,7 +1166,7 @@ Error OS_LinuxBSD::move_to_trash(const String &p_path) {
 			ERR_PRINT("move_to_trash: Could not move the resource \"" + path + "\" to the trash can \"" + trash_path + "/files\"");
 			Ref<DirAccess> dir_access = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 			err = dir_access->rename(renamed_path, path);
-			ERR_FAIL_COND_V_MSG(err != OK, err, "Could not rename \"" + renamed_path + "\" back to its original name: \"" + path + "\"");
+			ERR_FAIL_COND_V_MSG(err != OK, err, "Could not rename \"" + renamed_path + "\" back to its original name: \"" + path + '"');
 			return FAILED;
 		}
 	}

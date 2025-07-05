@@ -1738,7 +1738,7 @@ void RenderingDeviceDriverMetal::command_bind_push_constants(CommandBufferID p_c
 
 String RenderingDeviceDriverMetal::_pipeline_get_cache_path() const {
 	String path = OS::get_singleton()->get_user_data_dir() + "/metal/pipelines";
-	path += "." + context_device.name.validate_filename().replace_char(' ', '_').to_lower();
+	path += '.' + context_device.name.validate_filename().replace_char(' ', '_').to_lower();
 	if (Engine::get_singleton()->is_editor_hint()) {
 		path += ".editor";
 	}
@@ -2705,7 +2705,7 @@ uint64_t RenderingDeviceDriverMetal::limit_get(Limit p_limit) {
 			return limits.maxShaderVaryings;
 		default: {
 #ifdef DEV_ENABLED
-			WARN_PRINT("Returning maximum value for unknown limit " + itos(p_limit) + ".");
+			WARN_PRINT("Returning maximum value for unknown limit " + itos(p_limit) + '.');
 #endif
 			return safe_unbounded;
 		}

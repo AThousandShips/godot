@@ -413,7 +413,7 @@ Dictionary MobileVRInterface::get_system_info() {
 	Dictionary dict;
 
 	dict[SNAME("XRRuntimeName")] = String("Godot mobile VR interface");
-	dict[SNAME("XRRuntimeVersion")] = String("");
+	dict[SNAME("XRRuntimeVersion")] = String();
 
 	return dict;
 }

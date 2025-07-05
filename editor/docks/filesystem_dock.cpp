@@ -733,7 +733,7 @@ void FileSystemDock::_navigate_to_path(const String &p_path, bool p_select_in_fa
 		if (da->dir_exists(p_path)) {
 			is_directory = true;
 			if (!p_path.ends_with("/")) {
-				target_path += "/";
+				target_path += '/';
 			}
 		} else if (!da->file_exists(p_path)) {
 			ERR_FAIL_MSG(vformat("Cannot navigate to '%s' as it has not been found in the file system!", p_path));
@@ -746,7 +746,7 @@ void FileSystemDock::_navigate_to_path(const String &p_path, bool p_select_in_fa
 
 	String base_dir_path = target_path.get_base_dir();
 	if (base_dir_path != "res://") {
-		base_dir_path += "/";
+		base_dir_path += '/';
 	}
 
 	TreeItem **directory_ptr = folder_map.getptr(base_dir_path);
@@ -765,7 +765,7 @@ void FileSystemDock::_navigate_to_path(const String &p_path, bool p_select_in_fa
 	tree->deselect_all();
 	if (display_mode == DISPLAY_MODE_TREE_ONLY) {
 		// Either search for 'folder/' or '/file.ext'.
-		const String file_name = is_directory ? target_path.trim_suffix("/").get_file() + "/" : "/" + target_path.get_file();
+		const String file_name = is_directory ? target_path.trim_suffix("/").get_file() + '/' : '/' + target_path.get_file();
 		TreeItem *item = is_directory ? *directory_ptr : (*directory_ptr)->get_first_child();
 		while (item) {
 			if (item->get_metadata(0).operator String().ends_with(file_name)) {
@@ -1059,7 +1059,7 @@ void FileSystemDock::_update_file_list(bool p_keep_selection) {
 				String color_scan_dir = directory;
 				while (color_scan_dir != "res://" && inherited_folder_color == default_folder_color) {
 					if (!color_scan_dir.ends_with("/")) {
-						color_scan_dir += "/";
+						color_scan_dir += '/';
 					}
 
 					if (assigned_folder_colors.has(color_scan_dir)) {
@@ -1075,7 +1075,7 @@ void FileSystemDock::_update_file_list(bool p_keep_selection) {
 
 					String bd = directory.get_base_dir();
 					if (bd != "res://" && !bd.ends_with("/")) {
-						bd += "/";
+						bd += '/';
 					}
 
 					files->set_item_metadata(-1, bd);
@@ -1088,7 +1088,7 @@ void FileSystemDock::_update_file_list(bool p_keep_selection) {
 						reversed ? i >= 0 : i < efd->get_subdir_count();
 						reversed ? i-- : i++) {
 					String dname = efd->get_subdir(i)->get_name();
-					String dpath = directory.path_join(dname) + "/";
+					String dpath = directory.path_join(dname) + '/';
 					bool has_custom_color = assigned_folder_colors.has(dpath);
 
 					files->add_item(dname, folder_icon, true);
@@ -1139,7 +1139,7 @@ void FileSystemDock::_update_file_list(bool p_keep_selection) {
 			big_icon = file_thumbnail;
 		} else {
 			big_icon = file_thumbnail_broken;
-			tooltip += "\n" + TTR("Status: Import of file failed. Please fix file and reimport manually.");
+			tooltip += '\n' + TTR("Status: Import of file failed. Please fix file and reimport manually.");
 		}
 
 		// Add the item to the ItemList.
@@ -1456,8 +1456,8 @@ void FileSystemDock::_find_file_owners(EditorFileSystemDirectory *p_efsd, const 
 void FileSystemDock::_try_move_item(const FileOrFolder &p_item, const String &p_new_path,
 		HashMap<String, String> &p_file_renames, HashMap<String, String> &p_folder_renames) {
 	// Ensure folder paths end with "/".
-	String old_path = (p_item.is_file || p_item.path.ends_with("/")) ? p_item.path : (p_item.path + "/");
-	String new_path = (p_item.is_file || p_new_path.ends_with("/")) ? p_new_path : (p_new_path + "/");
+	String old_path = (p_item.is_file || p_item.path.ends_with("/")) ? p_item.path : (p_item.path + '/');
+	String new_path = (p_item.is_file || p_new_path.ends_with("/")) ? p_new_path : (p_new_path + '/');
 
 	if (new_path == old_path) {
 		return;
@@ -1466,7 +1466,7 @@ void FileSystemDock::_try_move_item(const FileOrFolder &p_item, const String &p_
 		return;
 	} else if (!p_item.is_file && new_path.begins_with(old_path)) {
 		// This check doesn't erroneously catch renaming to a longer name as folder paths always end with "/".
-		EditorNode::get_singleton()->add_io_error(TTR("Cannot move a folder into itself.") + "\n" + old_path + "\n");
+		EditorNode::get_singleton()->add_io_error(TTR("Cannot move a folder into itself.") + '\n' + old_path + '\n');
 		return;
 	}
 
@@ -1488,14 +1488,14 @@ void FileSystemDock::_try_move_item(const FileOrFolder &p_item, const String &p_
 		if (p_item.is_file && FileAccess::exists(old_path + ".import")) {
 			err = da->rename(old_path + ".import", new_path + ".import");
 			if (err != OK) {
-				EditorNode::get_singleton()->add_io_error(TTR("Error moving:") + "\n" + old_path + ".import\n");
+				EditorNode::get_singleton()->add_io_error(TTR("Error moving:") + '\n' + old_path + ".import\n");
 			}
 		}
 
 		if (p_item.is_file && FileAccess::exists(old_path + ".uid")) {
 			err = da->rename(old_path + ".uid", new_path + ".uid");
 			if (err != OK) {
-				EditorNode::get_singleton()->add_io_error(TTR("Error moving:") + "\n" + old_path + ".uid\n");
+				EditorNode::get_singleton()->add_io_error(TTR("Error moving:") + '\n' + old_path + ".uid\n");
 			}
 		}
 
@@ -1525,14 +1525,14 @@ void FileSystemDock::_try_move_item(const FileOrFolder &p_item, const String &p_
 			emit_signal(SNAME("folder_moved"), folder_changed_paths[i], p_folder_renames[folder_changed_paths[i]].substr(0, p_folder_renames[folder_changed_paths[i]].length() - 1));
 		}
 	} else {
-		EditorNode::get_singleton()->add_io_error(TTR("Error moving:") + "\n" + old_path + "\n");
+		EditorNode::get_singleton()->add_io_error(TTR("Error moving:") + '\n' + old_path + '\n');
 	}
 }
 
 void FileSystemDock::_try_duplicate_item(const FileOrFolder &p_item, const String &p_new_path) const {
 	// Ensure folder paths end with "/".
-	String old_path = (p_item.is_file || p_item.path.ends_with("/")) ? p_item.path : (p_item.path + "/");
-	String new_path = (p_item.is_file || p_new_path.ends_with("/")) ? p_new_path : (p_new_path + "/");
+	String old_path = (p_item.is_file || p_item.path.ends_with("/")) ? p_item.path : (p_item.path + '/');
+	String new_path = (p_item.is_file || p_new_path.ends_with("/")) ? p_new_path : (p_new_path + '/');
 
 	if (new_path == old_path) {
 		return;
@@ -1541,7 +1541,7 @@ void FileSystemDock::_try_duplicate_item(const FileOrFolder &p_item, const Strin
 		return;
 	} else if (!p_item.is_file && new_path.begins_with(old_path)) {
 		// This check doesn't erroneously catch renaming to a longer name as folder paths always end with "/".
-		EditorNode::get_singleton()->add_io_error(TTR("Cannot move a folder into itself.") + "\n" + old_path + "\n");
+		EditorNode::get_singleton()->add_io_error(TTR("Cannot move a folder into itself.") + '\n' + old_path + '\n');
 		return;
 	}
 
@@ -1553,12 +1553,12 @@ void FileSystemDock::_try_duplicate_item(const FileOrFolder &p_item, const Strin
 
 		Error err = EditorFileSystem::get_singleton()->copy_file(old_path, new_path);
 		if (err != OK) {
-			EditorNode::get_singleton()->add_io_error(TTR("Error duplicating:") + "\n" + old_path + ": " + error_names[err] + "\n");
+			EditorNode::get_singleton()->add_io_error(TTR("Error duplicating:") + '\n' + old_path + ": " + error_names[err] + '\n');
 		}
 	} else {
 		Error err = EditorFileSystem::get_singleton()->copy_directory(old_path, new_path);
 		if (err != OK) {
-			EditorNode::get_singleton()->add_io_error(TTR("Error duplicating directory:") + "\n" + old_path + "\n");
+			EditorNode::get_singleton()->add_io_error(TTR("Error duplicating directory:") + '\n' + old_path + '\n');
 		}
 	}
 }
@@ -1622,7 +1622,7 @@ void FileSystemDock::_update_dependencies_after_move(const HashMap<String, Strin
 				}
 			}
 		} else {
-			EditorNode::get_singleton()->add_io_error(TTR("Unable to update dependencies for:") + "\n" + E + "\n");
+			EditorNode::get_singleton()->add_io_error(TTR("Unable to update dependencies for:") + '\n' + E + '\n');
 		}
 	}
 
@@ -1655,7 +1655,7 @@ void FileSystemDock::_update_project_settings_after_move(const HashMap<String, S
 			if (p_renames.has(autoload)) {
 				ProjectSettings::get_singleton()->set_setting(E.name, p_renames[autoload]);
 			} else if (autoload.begins_with("*") && p_renames.has(autoload_singleton)) {
-				ProjectSettings::get_singleton()->set_setting(E.name, "*" + p_renames[autoload_singleton]);
+				ProjectSettings::get_singleton()->set_setting(E.name, '*' + p_renames[autoload_singleton]);
 			}
 		}
 	}
@@ -2346,7 +2346,7 @@ void FileSystemDock::_file_option(int p_option, const Vector<String> &p_selected
 				// Print full command line to help with troubleshooting.
 				String command_string = chosen_terminal_emulator;
 				for (const String &arg : terminal_emulator_args) {
-					command_string += " " + arg;
+					command_string += ' ' + arg;
 				}
 				print_line("Opening terminal emulator:", command_string);
 			}
@@ -2533,11 +2533,11 @@ void FileSystemDock::_file_option(int p_option, const Vector<String> &p_selected
 			if (to_duplicate.is_file) {
 				String name = to_duplicate.path.get_file();
 				make_dir_dialog->config(to_duplicate.path.get_base_dir(), callable_mp(this, &FileSystemDock::_duplicate_operation_confirm),
-						DirectoryCreateDialog::MODE_FILE, TTR("Duplicating file:") + " " + name, name);
+						DirectoryCreateDialog::MODE_FILE, TTR("Duplicating file:") + ' ' + name, name);
 			} else {
 				String name = to_duplicate.path.trim_suffix("/").get_file();
 				make_dir_dialog->config(to_duplicate.path.trim_suffix("/").get_base_dir(), callable_mp(this, &FileSystemDock::_duplicate_operation_confirm),
-						DirectoryCreateDialog::MODE_DIRECTORY, TTR("Duplicating folder:") + " " + name, name);
+						DirectoryCreateDialog::MODE_DIRECTORY, TTR("Duplicating folder:") + ' ' + name, name);
 			}
 			make_dir_dialog->popup_centered();
 		} break;
@@ -2995,7 +2995,7 @@ bool FileSystemDock::can_drop_data_fw(const Point2 &p_point, const Variant &p_da
 
 		// Attempting to move a folder into itself will fail later,
 		// rather than bring up a message don't try to do it in the first place.
-		to_dir = to_dir.ends_with("/") ? to_dir : (to_dir + "/");
+		to_dir = to_dir.ends_with("/") ? to_dir : (to_dir + '/');
 		Vector<String> fnames = drag_data["files"];
 		for (int i = 0; i < fnames.size(); ++i) {
 			if (fnames[i].ends_with("/") && to_dir.begins_with(fnames[i])) {
@@ -3979,7 +3979,7 @@ Color FileSystemDock::get_dir_icon_color(const String &p_dir_path, const Color &
 	String parent_dir = ProjectSettings::get_singleton()->localize_path(p_dir_path);
 	while (!parent_dir.is_empty() && parent_dir != "res://") {
 		if (!parent_dir.ends_with("/")) {
-			parent_dir += "/";
+			parent_dir += '/';
 		}
 
 		const String color_name = singleton->assigned_folder_colors.get(parent_dir, String());

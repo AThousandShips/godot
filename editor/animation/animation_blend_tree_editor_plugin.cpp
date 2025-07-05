@@ -195,7 +195,7 @@ void AnimationNodeBlendTreeEditor::update_graph() {
 			if (!(F.usage & PROPERTY_USAGE_EDITOR)) {
 				continue;
 			}
-			String base_path = AnimationTreeEditor::get_singleton()->get_base_path() + String(E) + "/" + F.name;
+			String base_path = AnimationTreeEditor::get_singleton()->get_base_path() + E + '/' + F.name;
 			EditorProperty *prop = EditorInspector::instantiate_property_editor(tree, F.type, base_path, F.hint, F.hint_string, F.usage);
 			Vector<String> path = F.name.split("/");
 			float ratio = 0.0f;
@@ -376,7 +376,7 @@ void AnimationNodeBlendTreeEditor::_add_node(int p_idx) {
 	String name = base_name;
 	while (blend_tree->has_node(name)) {
 		base++;
-		name = base_name + " " + itos(base);
+		name = base_name + ' ' + itos(base);
 	}
 
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
@@ -803,7 +803,7 @@ bool AnimationNodeBlendTreeEditor::_update_filters(const Ref<AnimationNode> &ano
 		for (int i = 0; i < path.get_name_count(); i++) {
 			String name = path.get_name(i);
 			if (!accum.is_empty()) {
-				accum += "/";
+				accum += '/';
 			}
 			accum += name;
 			if (!parenthood.has(accum)) {
@@ -849,10 +849,10 @@ bool AnimationNodeBlendTreeEditor::_update_filters(const Ref<AnimationNode> &ano
 					idx = skeleton->get_bone_parent(idx);
 				}
 
-				accum += ":";
+				accum += ':';
 				for (List<String>::Element *F = bone_path.front(); F; F = F->next()) {
 					if (F != bone_path.front()) {
-						accum += "/";
+						accum += '/';
 					}
 
 					accum += F->get();
@@ -899,7 +899,7 @@ bool AnimationNodeBlendTreeEditor::_update_filters(const Ref<AnimationNode> &ano
 						++F;
 					}
 				}
-				types_text += "]";
+				types_text += ']';
 				ti = filters->create_item(ti);
 				ti->set_cell_mode(0, TreeItem::CELL_MODE_CHECK);
 				ti->set_text(0, types_text);
@@ -1003,8 +1003,8 @@ void AnimationNodeBlendTreeEditor::_notification(int p_what) {
 						Ref<Animation> anim = tree->get_animation(an->get_animation());
 						if (anim.is_valid()) {
 							//StringName path = AnimationTreeEditor::get_singleton()->get_base_path() + E.input_node;
-							StringName length_path = AnimationTreeEditor::get_singleton()->get_base_path() + String(E.key) + "/current_length";
-							StringName time_path = AnimationTreeEditor::get_singleton()->get_base_path() + String(E.key) + "/current_position";
+							StringName length_path = AnimationTreeEditor::get_singleton()->get_base_path() + E.key + "/current_length";
+							StringName time_path = AnimationTreeEditor::get_singleton()->get_base_path() + E.key + "/current_position";
 							E.value->set_max(tree->get(length_path));
 							E.value->set_value(tree->get(time_path));
 						}
@@ -1087,7 +1087,7 @@ void AnimationNodeBlendTreeEditor::_node_renamed(const String &p_text, Ref<Anima
 	String name = base_name;
 	while (blend_tree->has_node(name)) {
 		base++;
-		name = base_name + " " + itos(base);
+		name = base_name + ' ' + itos(base);
 	}
 
 	String base_path = AnimationTreeEditor::get_singleton()->get_base_path();

@@ -365,13 +365,13 @@ void SkyRD::ReflectionData::update_reflection_data(int p_size, int p_mipmaps, bo
 			mm.size.width = mmw;
 			mm.size.height = mmh;
 			mm.view = RD::get_singleton()->texture_create_shared_from_slice(RD::TextureView(), downsampled_radiance_cubemap, 0, j, 1, RD::TEXTURE_SLICE_CUBEMAP);
-			RD::get_singleton()->set_resource_name(mm.view, "Downsampled Radiance Cubemap Mip " + itos(j) + " ");
+			RD::get_singleton()->set_resource_name(mm.view, "Downsampled Radiance Cubemap Mip " + itos(j) + ' ');
 			if (!render_buffers_can_be_storage) {
 				// we need a framebuffer for each side of our cubemap
 
 				for (int k = 0; k < 6; k++) {
 					mm.views[k] = RD::get_singleton()->texture_create_shared_from_slice(RD::TextureView(), downsampled_radiance_cubemap, k, j);
-					RD::get_singleton()->set_resource_name(mm.view, "Downsampled Radiance Cubemap Mip: " + itos(j) + " Face: " + itos(k) + " ");
+					RD::get_singleton()->set_resource_name(mm.view, "Downsampled Radiance Cubemap Mip: " + itos(j) + " Face: " + itos(k) + ' ');
 					Vector<RID> fbtex;
 					fbtex.push_back(mm.views[k]);
 					mm.framebuffers[k] = RD::get_singleton()->framebuffer_create(fbtex);
@@ -742,8 +742,8 @@ void SkyRD::init() {
 		sky_scene_state.last_frame_directional_light_count = sky_scene_state.max_directional_lights + 1;
 		sky_scene_state.directional_light_buffer = RD::get_singleton()->uniform_buffer_create(directional_light_buffer_size);
 
-		String defines = "\n#define MAX_DIRECTIONAL_LIGHT_DATA_STRUCTS " + itos(sky_scene_state.max_directional_lights) + "\n";
-		defines += "\n#define SAMPLERS_BINDING_FIRST_INDEX " + itos(SAMPLERS_BINDING_FIRST_INDEX) + "\n";
+		String defines = "\n#define MAX_DIRECTIONAL_LIGHT_DATA_STRUCTS " + itos(sky_scene_state.max_directional_lights) + '\n';
+		defines += "\n#define SAMPLERS_BINDING_FIRST_INDEX " + itos(SAMPLERS_BINDING_FIRST_INDEX) + '\n';
 
 		// Initialize sky
 		Vector<String> sky_modes;

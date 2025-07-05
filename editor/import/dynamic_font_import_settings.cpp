@@ -858,7 +858,7 @@ void DynamicFontImportSettingsDialog::open_settings(const String &p_path) {
 	if (err == OK) {
 		Vector<String> keys = config->get_section_keys("params");
 		for (const String &key : keys) {
-			print_verbose(String("    ") + key + " == " + String(config->get_value("params", key)));
+			print_verbose("    " + key + " == " + String(config->get_value("params", key)));
 			if (key == "preload") {
 				Array preload_configurations = config->get_value("params", key);
 				for (int i = 0; i < preload_configurations.size(); i++) {

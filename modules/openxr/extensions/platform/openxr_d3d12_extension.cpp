@@ -443,7 +443,7 @@ String OpenXRD3D12Extension::get_swapchain_format_name(int64_t p_swapchain_forma
 		ENUM_TO_STRING_CASE(DXGI_FORMAT_V408)
 		ENUM_TO_STRING_CASE(DXGI_FORMAT_A4B4G4R4_UNORM)
 		default: {
-			return String("Swapchain format ") + String::num_int64(int64_t(p_swapchain_format));
+			return "Swapchain format " + String::num_int64(int64_t(p_swapchain_format));
 		} break;
 	}
 }

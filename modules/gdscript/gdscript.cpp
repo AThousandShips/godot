@@ -90,7 +90,7 @@ void GDScriptNativeClass::_bind_methods() {
 
 Variant GDScriptNativeClass::_new() {
 	Object *o = instantiate();
-	ERR_FAIL_NULL_V_MSG(o, Variant(), "Class type: '" + String(name) + "' is not instantiable.");
+	ERR_FAIL_NULL_V_MSG(o, Variant(), "Class type: '" + name + "' is not instantiable.");
 
 	RefCounted *rc = Object::cast_to<RefCounted>(o);
 	if (rc) {
@@ -415,9 +415,9 @@ ScriptInstance *GDScript::instance_create(Object *p_this) {
 	if (top->native.is_valid()) {
 		if (!ClassDB::is_parent_class(p_this->get_class_name(), top->native->get_name())) {
 			if (EngineDebugger::is_active()) {
-				GDScriptLanguage::get_singleton()->debug_break_parse(_get_debug_path(), 1, "Script inherits from native type '" + String(top->native->get_name()) + "', so it can't be assigned to an object of type: '" + p_this->get_class() + "'");
+				GDScriptLanguage::get_singleton()->debug_break_parse(_get_debug_path(), 1, "Script inherits from native type '" + top->native->get_name() + "', so it can't be assigned to an object of type: '" + p_this->get_class() + '\'');
 			}
-			ERR_FAIL_V_MSG(nullptr, "Script inherits from native type '" + String(top->native->get_name()) + "', so it can't be assigned to an object of type '" + p_this->get_class() + "'" + ".");
+			ERR_FAIL_V_MSG(nullptr, "Script inherits from native type '" + top->native->get_name() + "', so it can't be assigned to an object of type '" + p_this->get_class() + "'.");
 		}
 	}
 
@@ -938,7 +938,7 @@ Variant GDScript::callp(const StringName &p_method, const Variant **p_args, int 
 		if (likely(top->valid)) {
 			HashMap<StringName, GDScriptFunction *>::Iterator E = top->member_functions.find(p_method);
 			if (E) {
-				ERR_FAIL_COND_V_MSG(!E->value->is_static(), Variant(), "Can't call non-static function '" + String(p_method) + "' in script.");
+				ERR_FAIL_COND_V_MSG(!E->value->is_static(), Variant(), "Can't call non-static function '" + p_method + "' in script.");
 
 				return E->value->call(nullptr, p_args, p_argcount, r_error);
 			}
@@ -3098,7 +3098,7 @@ void ResourceFormatLoaderGDScript::get_classes_used(const String &p_path, HashSe
 
 		int insert_idx = 0;
 		for (int i = 0; i < current.start_line - 1; i++) {
-			insert_idx = source.find("\n", insert_idx) + 1;
+			insert_idx = source.find_char('\n', insert_idx) + 1;
 		}
 		// Insert the "cursor" character, needed for the lookup to work.
 		const String source_with_cursor = source.insert(insert_idx + current.start_column, String::chr(0xFFFF));

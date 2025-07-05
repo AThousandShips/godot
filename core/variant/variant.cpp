@@ -1571,10 +1571,10 @@ String stringify_variant_clean(const Variant &p_variant, int recursion_count) {
 			s = s.c_escape().quote();
 		} break;
 		case Variant::STRING_NAME: {
-			s = "&" + s.c_escape().quote();
+			s = '&' + s.c_escape().quote();
 		} break;
 		case Variant::NODE_PATH: {
-			s = "^" + s.c_escape().quote();
+			s = '^' + s.c_escape().quote();
 		} break;
 		default: {
 		} break;
@@ -1593,7 +1593,7 @@ String stringify_vector(const T &vec, int recursion_count) {
 
 		str += stringify_variant_clean(vec[i], recursion_count);
 	}
-	str += "]";
+	str += ']';
 	return str;
 }
 
@@ -1733,10 +1733,10 @@ String Variant::stringify(int recursion_count) const {
 		}
 		case RID: {
 			const ::RID &s = *reinterpret_cast<const ::RID *>(_data._mem);
-			return "RID(" + itos(s.get_id()) + ")";
+			return "RID(" + itos(s.get_id()) + ')';
 		}
 		default: {
-			return "<" + get_type_name(type) + ">";
+			return '<' + get_type_name(type) + '>';
 		}
 	}
 }
@@ -3467,7 +3467,7 @@ void Variant::_variant_call_error(const String &p_method, Callable::CallError &e
 			ERR_PRINT(err.utf8().get_data());
 		} break;
 		case Callable::CallError::CALL_ERROR_TOO_MANY_ARGUMENTS: {
-			String err = "Too many arguments for method '" + p_method + "'";
+			String err = "Too many arguments for method '" + p_method + '\'';
 			ERR_PRINT(err.utf8().get_data());
 		} break;
 		default: {
@@ -3519,11 +3519,11 @@ String Variant::get_call_error_text(Object *p_base, const StringName &p_method, 
 		base_text = p_base->get_class();
 		Ref<Resource> script = p_base->get_script();
 		if (script.is_valid() && script->get_path().is_resource_file()) {
-			base_text += "(" + script->get_path().get_file() + ")";
+			base_text += '(' + script->get_path().get_file() + ')';
 		}
 		base_text += "::";
 	}
-	return "'" + base_text + String(p_method) + "': " + err_text;
+	return '\'' + base_text + p_method + "': " + err_text;
 }
 
 String Variant::get_callable_error_text(const Callable &p_callable, const Variant **p_argptrs, int p_argcount, const Callable::CallError &ce) {

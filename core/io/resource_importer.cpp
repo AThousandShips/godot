@@ -527,7 +527,7 @@ Ref<ResourceImporter> ResourceFormatImporter::get_importer_by_file(const String 
 }
 
 String ResourceFormatImporter::get_import_base_path(const String &p_for_file) const {
-	return ProjectSettings::get_singleton()->get_imported_files_path().path_join(p_for_file.get_file() + "-" + p_for_file.md5_text());
+	return ProjectSettings::get_singleton()->get_imported_files_path().path_join(p_for_file.get_file() + '-' + p_for_file.md5_text());
 }
 
 bool ResourceFormatImporter::are_import_settings_valid(const String &p_path) const {
@@ -557,7 +557,7 @@ String ResourceFormatImporter::get_import_settings_hash() const {
 
 	String hash;
 	for (int i = 0; i < sorted_importers.size(); i++) {
-		hash += ":" + sorted_importers[i]->get_importer_name() + ":" + sorted_importers[i]->get_import_settings_string();
+		hash += ':' + sorted_importers[i]->get_importer_name() + ':' + sorted_importers[i]->get_import_settings_string();
 	}
 	return hash.md5_text();
 }

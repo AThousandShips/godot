@@ -52,7 +52,7 @@
 void EditorResourcePicker::_update_resource() {
 	String resource_path;
 	if (edited_resource.is_valid() && edited_resource->get_path().is_resource_file()) {
-		resource_path = edited_resource->get_path() + "\n";
+		resource_path = edited_resource->get_path() + '\n';
 	}
 	String class_name = _get_resource_type(edited_resource);
 
@@ -77,15 +77,15 @@ void EditorResourcePicker::_update_resource() {
 			}
 
 			if (edited_resource->get_path().is_resource_file()) {
-				resource_path = edited_resource->get_path() + "\n";
+				resource_path = edited_resource->get_path() + '\n';
 			}
-			assign_button->set_tooltip_text(resource_path + TTR("Type:") + " " + class_name);
+			assign_button->set_tooltip_text(resource_path + TTR("Type:") + ' ' + class_name);
 
 			// Preview will override the above, so called at the end.
 			EditorResourcePreview::get_singleton()->queue_edited_resource_preview(edited_resource, this, "_update_resource_preview", edited_resource->get_instance_id());
 		}
 	} else if (edited_resource.is_valid()) {
-		assign_button->set_tooltip_text(resource_path + TTR("Type:") + " " + edited_resource->get_class());
+		assign_button->set_tooltip_text(resource_path + TTR("Type:") + ' ' + edited_resource->get_class());
 	}
 
 	assign_button->set_disabled(!editable && edited_resource.is_null());

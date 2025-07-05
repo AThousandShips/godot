@@ -204,7 +204,7 @@ void PropertySelector::_update_search() {
 
 			StringName base = base_type;
 			while (base) {
-				methods.push_back(MethodInfo("*" + String(base)));
+				methods.push_back(MethodInfo('*' + base));
 				ClassDB::get_method_list(base, &methods, true, true);
 				base = ClassDB::get_parent_class(base);
 			}
@@ -259,7 +259,7 @@ void PropertySelector::_update_search() {
 
 			String desc;
 			if (mi.name.contains_char(':')) {
-				desc = mi.name.get_slicec(':', 1) + " ";
+				desc = mi.name.get_slicec(':', 1) + ' ';
 				mi.name = mi.name.get_slicec(':', 0);
 			} else if (mi.return_val.type != Variant::NIL) {
 				desc = Variant::get_type_name(mi.return_val.type);
@@ -291,7 +291,7 @@ void PropertySelector::_update_search() {
 				desc += mi.arguments.is_empty() ? "..." : ", ...";
 			}
 
-			desc += ")";
+			desc += ')';
 
 			if (mi.flags & METHOD_FLAG_VARARG) {
 				desc += " vararg";
@@ -364,12 +364,12 @@ void PropertySelector::_item_selected() {
 	while (!class_type.is_empty()) {
 		if (properties) {
 			if (ClassDB::has_property(class_type, name, true)) {
-				help_bit->parse_symbol("property|" + class_type + "|" + name);
+				help_bit->parse_symbol("property|" + class_type + '|' + name);
 				break;
 			}
 		} else {
 			if (ClassDB::has_method(class_type, name, true)) {
-				help_bit->parse_symbol("method|" + class_type + "|" + name);
+				help_bit->parse_symbol("method|" + class_type + '|' + name);
 				break;
 			}
 		}
@@ -504,7 +504,7 @@ void PropertySelector::_create_subproperty(TreeItem *p_parent_item, const String
 
 	TreeItem *item = search_options->create_item(p_parent_item);
 	item->set_text(0, p_name);
-	item->set_metadata(0, String(p_parent_item->get_metadata(0)) + ":" + p_name);
+	item->set_metadata(0, String(p_parent_item->get_metadata(0)) + ':' + p_name);
 	item->set_icon(0, search_options->get_editor_theme_icon(Variant::get_type_name(p_type)));
 
 	_create_subproperties(item, p_type);

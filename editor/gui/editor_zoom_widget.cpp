@@ -46,7 +46,7 @@ void EditorZoomWidget::_update_zoom_label() {
 		// 2 decimal places if the zoom is below 10%, 1 decimal place if it's below 1000%.
 		zoom_text = TS->format_number(rtos(Math::snapped((zoom / MAX(1, EDSCALE)) * 100, (zoom >= 0.1) ? 0.1 : 0.01)));
 	}
-	zoom_text += " " + TS->percent_sign();
+	zoom_text += ' ' + TS->percent_sign();
 	zoom_reset->set_text(zoom_text);
 }
 

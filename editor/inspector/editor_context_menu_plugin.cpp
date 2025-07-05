@@ -196,7 +196,7 @@ void EditorContextMenuPluginManager::invoke_callback(const Callable &p_callback,
 	p_callback.callp(&argptr, 1, result, ce);
 
 	if (ce.error != Callable::CallError::CALL_OK) {
-		ERR_FAIL_MSG("Failed to execute context menu callback: " + Variant::get_callable_error_text(p_callback, &argptr, 1, ce) + ".");
+		ERR_FAIL_MSG("Failed to execute context menu callback: " + Variant::get_callable_error_text(p_callback, &argptr, 1, ce) + '.');
 	}
 }
 

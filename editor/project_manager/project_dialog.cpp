@@ -692,7 +692,7 @@ void ProjectDialog::ok_pressed() {
 						err_msg += "\nAnd " + itos(failed_files.size() - i) + " more files.";
 						break;
 					}
-					err_msg += failed_files[i] + "\n";
+					err_msg += failed_files[i] + '\n';
 				}
 
 				dialog_error->set_text(err_msg);
@@ -867,7 +867,7 @@ void ProjectDialog::show_dialog(bool p_reset_name) {
 			callable_mp((Control *)project_name, &Control::grab_focus).call_deferred();
 			callable_mp(project_name, &LineEdit::select_all).call_deferred();
 		} else if (mode == MODE_INSTALL) {
-			set_title(TTR("Install Project:") + " " + zip_title);
+			set_title(TTR("Install Project:") + ' ' + zip_title);
 			set_ok_button_text(TTRC("Install"));
 
 			project_name->set_text(zip_title);

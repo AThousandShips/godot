@@ -128,12 +128,12 @@ String EditorProfiler::_get_time_as_text(const Metric &m, float p_time, int p_ca
 	const int dmode = display_mode->get_selected();
 
 	if (dmode == DISPLAY_FRAME_TIME) {
-		return TS->format_number(rtos(p_time * 1000).pad_decimals(2)) + " " + TTR("ms");
+		return TS->format_number(rtos(p_time * 1000).pad_decimals(2)) + ' ' + TTR("ms");
 	} else if (dmode == DISPLAY_AVERAGE_TIME) {
 		if (p_calls == 0) {
-			return TS->format_number("0.00") + " " + TTR("ms");
+			return TS->format_number("0.00") + ' ' + TTR("ms");
 		} else {
-			return TS->format_number(rtos((p_time / p_calls) * 1000).pad_decimals(2)) + " " + TTR("ms");
+			return TS->format_number(rtos((p_time / p_calls) * 1000).pad_decimals(2)) + ' ' + TTR("ms");
 		}
 	} else if (dmode == DISPLAY_FRAME_PERCENT) {
 		return _get_percent_txt(p_time, m.frame_time);
@@ -377,7 +377,7 @@ void EditorProfiler::_update_frame() {
 			item->set_metadata(1, it.script);
 			item->set_metadata(2, it.line);
 			item->set_text_alignment(2, HORIZONTAL_ALIGNMENT_RIGHT);
-			item->set_tooltip_text(0, it.name + "\n" + it.script + ":" + itos(it.line));
+			item->set_tooltip_text(0, it.name + '\n' + it.script + ':' + itos(it.line));
 
 			float time = dtime == DISPLAY_SELF_TIME ? it.self : it.total;
 			if (dtime == DISPLAY_SELF_TIME && !display_internal_profiles->is_pressed()) {

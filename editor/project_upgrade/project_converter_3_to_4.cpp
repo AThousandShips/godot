@@ -44,15 +44,15 @@
 
 // Find "OS.set_property(x)", capturing x into $1.
 static String make_regex_gds_os_property_set(const String &name_set) {
-	return String("\\bOS\\.") + name_set + "\\s*\\((.*)\\)";
+	return "\\bOS\\." + name_set + "\\s*\\((.*)\\)";
 }
 // Find "OS.property = x", capturing x into $1 or $2.
 static String make_regex_gds_os_property_assign(const String &name) {
-	return String("\\bOS\\.") + name + "\\s*=\\s*([^#]+)";
+	return "\\bOS\\." + name + "\\s*=\\s*([^#]+)";
 }
 // Find "OS.property" OR "OS.get_property()" / "OS.is_property()".
 static String make_regex_gds_os_property_get(const String &name, const String &get) {
-	return String("\\bOS\\.(") + get + "_)?" + name + "(\\s*\\(\\s*\\))?";
+	return "\\bOS\\.(" + get + "_)?" + name + "(\\s*\\(\\s*\\))?";
 }
 
 class ProjectConverter3To4::RegExContainer {
@@ -248,11 +248,11 @@ public:
 		{
 			for (unsigned int current_index = 0; RenamesMap3To4::class_renames[current_index][0]; current_index++) {
 				const String class_name = RenamesMap3To4::class_renames[current_index][0];
-				class_tscn_regexes.push_back(memnew(RegEx(String("\\b") + class_name + ".tscn\\b")));
-				class_gd_regexes.push_back(memnew(RegEx(String("\\b") + class_name + ".gd\\b")));
-				class_shader_regexes.push_back(memnew(RegEx(String("\\b") + class_name + ".shader\\b")));
+				class_tscn_regexes.push_back(memnew(RegEx("\\b" + class_name + ".tscn\\b")));
+				class_gd_regexes.push_back(memnew(RegEx("\\b" + class_name + ".gd\\b")));
+				class_shader_regexes.push_back(memnew(RegEx("\\b" + class_name + ".shader\\b")));
 
-				class_regexes.push_back(memnew(RegEx(String("\\b") + class_name + "\\b")));
+				class_regexes.push_back(memnew(RegEx("\\b" + class_name + "\\b")));
 
 				class_temp_tscn_renames.push_back(class_name + ".tscn");
 				class_temp_gd_renames.push_back(class_name + ".gd");
@@ -348,7 +348,7 @@ bool ProjectConverter3To4::convert() {
 		Ref<FileAccess> file = FileAccess::open("project.godot", FileAccess::WRITE);
 		ERR_FAIL_COND_V_MSG(file.is_null(), false, "Unable to open \"project.godot\".");
 
-		file->store_string(converter_text + "\n" + project_godot_content);
+		file->store_string(converter_text + '\n' + project_godot_content);
 	}
 
 	Vector<String> collected_files = check_for_files();
@@ -674,7 +674,7 @@ bool ProjectConverter3To4::validate_conversion() {
 			converted_files++;
 
 			for (int k = 0; k < changed_elements.size(); k++) {
-				print_line(String("\t\t") + changed_elements[k]);
+				print_line("\t\t" + changed_elements[k]);
 			}
 		}
 	}
@@ -709,7 +709,7 @@ Vector<String> ProjectConverter3To4::check_for_files() {
 					continue;
 				}
 				if (dir->current_is_dir()) {
-					directories_to_check.append(current_dir.path_join(file_name) + "/");
+					directories_to_check.append(current_dir.path_join(file_name) + '/');
 				} else {
 					bool proper_extension = false;
 					if (file_name.ends_with(".gd") || file_name.ends_with(".shader") || file_name.ends_with(".gdshader") || file_name.ends_with(".tscn") || file_name.ends_with(".tres") || file_name.ends_with(".godot") || file_name.ends_with(".cs") || file_name.ends_with(".csproj") || file_name.ends_with(".import")) {
@@ -1544,7 +1544,7 @@ void ProjectConverter3To4::rename_classes(Vector<SourceLine> &source_lines, cons
 				if (line.contains(RenamesMap3To4::class_renames[current_index][0])) {
 					bool found_ignored_items = false;
 					// Renaming Spatial.tscn to TEMP_RENAMED_CLASS.tscn.
-					if (line.contains(String(RenamesMap3To4::class_renames[current_index][0]) + ".")) {
+					if (line.contains(String(RenamesMap3To4::class_renames[current_index][0]) + '.')) {
 						found_ignored_items = true;
 						line = reg_container.class_tscn_regexes[current_index]->sub(line, "TEMP_RENAMED_CLASS.tscn", true);
 						line = reg_container.class_gd_regexes[current_index]->sub(line, "TEMP_RENAMED_CLASS.gd", true);
@@ -1578,7 +1578,7 @@ Vector<String> ProjectConverter3To4::check_for_rename_classes(Vector<String> &li
 					String old_line = line;
 					bool found_ignored_items = false;
 					// Renaming Spatial.tscn to TEMP_RENAMED_CLASS.tscn.
-					if (line.contains(String(RenamesMap3To4::class_renames[current_index][0]) + ".")) {
+					if (line.contains(String(RenamesMap3To4::class_renames[current_index][0]) + '.')) {
 						found_ignored_items = true;
 						line = reg_container.class_tscn_regexes[current_index]->sub(line, "TEMP_RENAMED_CLASS.tscn", true);
 						line = reg_container.class_gd_regexes[current_index]->sub(line, "TEMP_RENAMED_CLASS.gd", true);
@@ -1866,7 +1866,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 				line_new += starting_space + base_obj + "move_and_slide()";
 
 				if (!line.begins_with(starting_space + "move_and_slide")) {
-					line = line_new + "\n" + line.substr(0, start) + "velocity" + line.substr(end + start);
+					line = line_new + '\n' + line.substr(0, start) + "velocity" + line.substr(end + start);
 				} else {
 					line = line_new + line.substr(end + start);
 				}
@@ -1922,7 +1922,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 				line_new += starting_space + base_obj + "move_and_slide()";
 
 				if (!line.begins_with(starting_space + "move_and_slide_with_snap")) {
-					line = line_new + "\n" + line.substr(0, start) + "velocity" + line.substr(end + start);
+					line = line_new + '\n' + line.substr(0, start) + "velocity" + line.substr(end + start);
 				} else {
 					line = line_new + line.substr(end + start);
 				}
@@ -1958,7 +1958,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		if (end > -1) {
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 			if (parts.size() == 5) {
-				line = line.substr(0, start) + "draw_line(" + parts[0] + ", " + parts[1] + ", " + parts[2] + ", " + parts[3] + ")" + line.substr(end + start);
+				line = line.substr(0, start) + "draw_line(" + parts[0] + ", " + parts[1] + ", " + parts[2] + ", " + parts[3] + ')' + line.substr(end + start);
 			}
 		}
 	}
@@ -1971,14 +1971,14 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		if (end > -1) {
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 
-			String start_string = line.substr(0, start) + "(";
+			String start_string = line.substr(0, start) + '(';
 			for (int i = 0; i < parts.size(); i++) {
 				start_string += parts[i].strip_edges().trim_prefix("var ");
 				if (i != parts.size() - 1) {
 					start_string += ", ";
 				}
 			}
-			line = start_string + ")" + line.substr(end + start);
+			line = start_string + ')' + line.substr(end + start);
 		}
 	}
 
@@ -1990,9 +1990,9 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 			if (parts.size() == 2) {
 				if (builtin) {
-					line = line.substr(0, start) + "await " + parts[0] + "." + parts[1].replace("\\\"", "").replace("\\'", "").remove_char(' ') + line.substr(end + start);
+					line = line.substr(0, start) + "await " + parts[0] + '.' + parts[1].replace("\\\"", "").replace("\\'", "").remove_char(' ') + line.substr(end + start);
 				} else {
-					line = line.substr(0, start) + "await " + parts[0] + "." + parts[1].remove_chars("\"' ") + line.substr(end + start);
+					line = line.substr(0, start) + "await " + parts[0] + '.' + parts[1].remove_chars("\"' ") + line.substr(end + start);
 				}
 			}
 		}
@@ -2004,7 +2004,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		int end = get_end_parenthesis(line.substr(start)) + 1;
 		if (end > -1) {
 			Vector<String> parts = parse_arguments(line.substr(start, end));
-			line = line.substr(0, start) + "JSON.new().stringify(" + connect_arguments(parts, 0) + ")" + line.substr(end + start);
+			line = line.substr(0, start) + "JSON.new().stringify(" + connect_arguments(parts, 0) + ')' + line.substr(end + start);
 		}
 	}
 
@@ -2015,7 +2015,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		if (end > -1) {
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 			if (parts.size() == 1) {
-				line = line.substr(0, start) + " * (" + parts[0] + ")" + line.substr(end + start);
+				line = line.substr(0, start) + " * (" + parts[0] + ')' + line.substr(end + start);
 			}
 		}
 	}
@@ -2030,7 +2030,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 				int start2 = line.find(object_exec + ".xform");
 				Vector<String> parts = parse_arguments(line.substr(start, end));
 				if (parts.size() == 1) {
-					line = line.substr(0, start2) + "(" + parts[0] + ") * " + object_exec + line.substr(end + start);
+					line = line.substr(0, start2) + '(' + parts[0] + ") * " + object_exec + line.substr(end + start);
 				}
 			}
 		}
@@ -2045,7 +2045,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 			if (parts.size() == 3) {
 				line = line.substr(0, start) + "connect(" + parts[0] + ", Callable(" + parts[1] + ", " + parts[2] + "))" + line.substr(end + start);
 			} else if (parts.size() >= 4) {
-				line = line.substr(0, start) + "connect(" + parts[0] + ", Callable(" + parts[1] + ", " + parts[2] + ").bind(" + parts[3].lstrip(" [").rstrip("] ") + ")" + connect_arguments(parts, 4) + ")" + line.substr(end + start);
+				line = line.substr(0, start) + "connect(" + parts[0] + ", Callable(" + parts[1] + ", " + parts[2] + ").bind(" + parts[3].lstrip(" [").rstrip("] ") + ')' + connect_arguments(parts, 4) + ')' + line.substr(end + start);
 			}
 		}
 	}
@@ -2079,9 +2079,9 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		if (end > -1) {
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 			if (parts.size() == 5) {
-				line = line.substr(0, start) + "tween_method(Callable(" + parts[0] + ", " + parts[1] + "), " + parts[2] + ", " + parts[3] + ", " + parts[4] + ")" + line.substr(end + start);
+				line = line.substr(0, start) + "tween_method(Callable(" + parts[0] + ", " + parts[1] + "), " + parts[2] + ", " + parts[3] + ", " + parts[4] + ')' + line.substr(end + start);
 			} else if (parts.size() >= 6) {
-				line = line.substr(0, start) + "tween_method(Callable(" + parts[0] + ", " + parts[1] + ").bind(" + connect_arguments(parts, 5).substr(1).lstrip(" [").rstrip("] ") + "), " + parts[2] + ", " + parts[3] + ", " + parts[4] + ")" + line.substr(end + start);
+				line = line.substr(0, start) + "tween_method(Callable(" + parts[0] + ", " + parts[1] + ").bind(" + connect_arguments(parts, 5).substr(1).lstrip(" [").rstrip("] ") + "), " + parts[2] + ", " + parts[3] + ", " + parts[4] + ')' + line.substr(end + start);
 			}
 		}
 	}
@@ -2110,7 +2110,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 				if (parts.size() == 2) {
 					line = line.substr(0, start) + "start(Callable(" + parts[0] + ", " + parts[1] + "))" + line.substr(end + start);
 				} else if (parts.size() >= 3) {
-					line = line.substr(0, start) + "start(Callable(" + parts[0] + ", " + parts[1] + ").bind(" + parts[2] + ")" + connect_arguments(parts, 3) + ")" + line.substr(end + start);
+					line = line.substr(0, start) + "start(Callable(" + parts[0] + ", " + parts[1] + ").bind(" + parts[2] + ')' + connect_arguments(parts, 3) + ')' + line.substr(end + start);
 				}
 			}
 		}
@@ -2123,7 +2123,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		int super_start = line.find(".(");
 		int super_end = line.rfind_char(')');
 		if (super_start > 0 && super_end > super_start) {
-			line = line.substr(0, super_start) + line.substr(super_end + 1) + "\n" + String("\t").repeat(indent + 1) + "super" + line.substr(super_start + 1, super_end - super_start);
+			line = line.substr(0, super_start) + line.substr(super_end + 1) + '\n' + String("\t").repeat(indent + 1) + "super" + line.substr(super_start + 1, super_end - super_start);
 		}
 	}
 
@@ -2134,7 +2134,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		if (end > -1) {
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 			if (parts.size() == 2) {
-				line = line.substr(0, start) + "create_from_image(" + parts[0] + ") " + "#," + parts[1] + line.substr(end + start);
+				line = line.substr(0, start) + "create_from_image(" + parts[0] + ") #," + parts[1] + line.substr(end + start);
 			}
 		}
 	}
@@ -2145,7 +2145,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		if (end > -1) {
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 			if (parts.size() > 2) {
-				line = line.substr(0, start) + "set_cell_item(Vector3(" + parts[0] + ", " + parts[1] + ", " + parts[2] + ")" + connect_arguments(parts, 3).lstrip(" ") + ")" + line.substr(end + start);
+				line = line.substr(0, start) + "set_cell_item(Vector3(" + parts[0] + ", " + parts[1] + ", " + parts[2] + ')' + connect_arguments(parts, 3).lstrip(" ") + ')' + line.substr(end + start);
 			}
 		}
 	}
@@ -2178,7 +2178,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		if (end > -1) {
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 			if (parts.size() == 2) {
-				line = line.substr(0, start) + "apply_impulse(" + parts[1] + ", " + parts[0] + ")" + line.substr(end + start);
+				line = line.substr(0, start) + "apply_impulse(" + parts[1] + ", " + parts[0] + ')' + line.substr(end + start);
 			}
 		}
 	}
@@ -2189,7 +2189,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		if (end > -1) {
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 			if (parts.size() == 2) {
-				line = line.substr(0, start) + "apply_force(" + parts[1] + ", " + parts[0] + ")" + line.substr(end + start);
+				line = line.substr(0, start) + "apply_force(" + parts[1] + ", " + parts[0] + ')' + line.substr(end + start);
 			}
 		}
 	}
@@ -2202,7 +2202,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 			if (parts.size() == 3) {
 				line = line.substr(0, start) + "map_to_local(Vector3i(" + parts[0] + ", " + parts[1] + ", " + parts[2] + "))" + line.substr(end + start);
 			} else if (parts.size() == 1) {
-				line = line.substr(0, start) + "map_to_local(" + parts[0] + ")" + line.substr(end + start);
+				line = line.substr(0, start) + "map_to_local(" + parts[0] + ')' + line.substr(end + start);
 			}
 		}
 	}
@@ -2215,7 +2215,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 			if (parts.size() == 1) {
 				String opposite = parts[0] == "true" ? "false" : "true";
-				line = line.substr(0, start) + "set_ignore_rotation(" + opposite + ")";
+				line = line.substr(0, start) + "set_ignore_rotation(" + opposite + ')';
 			}
 		}
 	}
@@ -2238,7 +2238,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		if (end > -1) {
 			Vector<String> parts = parse_arguments(line.substr(start, end));
 			if (parts.size() == 5) {
-				line = line.substr(0, start) + "draw_rect(" + parts[0] + ", " + parts[1] + ", " + parts[2] + ", " + parts[3] + ")" + line.substr(end + start) + "# " + parts[4] + ") TODOConverter3To4 Antialiasing argument is missing";
+				line = line.substr(0, start) + "draw_rect(" + parts[0] + ", " + parts[1] + ", " + parts[2] + ", " + parts[3] + ')' + line.substr(end + start) + "# " + parts[4] + ") TODOConverter3To4 Antialiasing argument is missing";
 			}
 		}
 	}
@@ -2396,7 +2396,7 @@ void ProjectConverter3To4::process_csharp_line(String &line, const RegExContaine
 			if (end > -1) {
 				Vector<String> parts = parse_arguments(line.substr(start, end));
 				if (parts.size() >= 3) {
-					line = line.substr(0, start) + "Connect(" + parts[0] + ", new Callable(" + parts[1] + ", " + parts[2] + ")" + connect_arguments(parts, 3) + ")" + line.substr(end + start);
+					line = line.substr(0, start) + "Connect(" + parts[0] + ", new Callable(" + parts[1] + ", " + parts[2] + ')' + connect_arguments(parts, 3) + ')' + line.substr(end + start);
 				}
 			}
 		}
@@ -2713,7 +2713,7 @@ void ProjectConverter3To4::rename_input_map_scancode(Vector<SourceLine> &source_
 					// Create new key, clearing old Special Key and setting new one.
 					key = (key & ~old_spkey) | (int)Key::SPECIAL;
 
-					line = line.replace(strings[0], String(",\"") + strings[1] + "scancode\":" + String::num_int64(key));
+					line = line.replace(strings[0], ",\"" + strings[1] + "scancode\":" + String::num_int64(key));
 				}
 			}
 		}
@@ -2742,7 +2742,7 @@ void ProjectConverter3To4::rename_joypad_buttons_and_axes(Vector<SourceLine> &so
 					line = line.replace(button_index_entry, ",\"axis\":5,\"axis_value\":1.0");
 				} else if (button_index_value < 22) { // There are no mappings for indexes greater than 22 in both Godot 3 & 4.
 					const String &pressure_and_pressed_properties = strings[2];
-					line = line.replace(button_index_entry, ",\"button_index\":" + String::num_int64(reg_container.joypad_button_mappings[button_index_value]) + "," + pressure_and_pressed_properties);
+					line = line.replace(button_index_entry, ",\"button_index\":" + String::num_int64(reg_container.joypad_button_mappings[button_index_value]) + ',' + pressure_and_pressed_properties);
 				}
 			}
 			// Remap axes. Only L2 and R2 need remapping.
@@ -2833,7 +2833,7 @@ Vector<String> ProjectConverter3To4::check_for_rename_input_map_scancode(Vector<
 }
 
 void ProjectConverter3To4::custom_rename(Vector<SourceLine> &source_lines, const String &from, const String &to) {
-	RegEx reg = RegEx(String("\\b") + from + "\\b");
+	RegEx reg = RegEx("\\b" + from + "\\b");
 	CRASH_COND(!reg.is_valid());
 	for (SourceLine &source_line : source_lines) {
 		if (source_line.is_comment) {
@@ -2850,7 +2850,7 @@ void ProjectConverter3To4::custom_rename(Vector<SourceLine> &source_lines, const
 Vector<String> ProjectConverter3To4::check_for_custom_rename(Vector<String> &lines, const String &from, const String &to) {
 	Vector<String> found_renames;
 
-	RegEx reg = RegEx(String("\\b") + from + "\\b");
+	RegEx reg = RegEx("\\b" + from + "\\b");
 	CRASH_COND(!reg.is_valid());
 
 	int current_line = 1;
@@ -2948,7 +2948,7 @@ String ProjectConverter3To4::collect_string_from_vector(Vector<SourceLine> &vect
 		string += vector[i].line;
 
 		if (i != vector.size() - 1) {
-			string += "\n";
+			string += '\n';
 		}
 	}
 	return string;

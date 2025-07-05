@@ -194,14 +194,14 @@ Variant GDScriptFunctionState::resume(const Variant &p_arg) {
 
 		if (!scripts_list.in_list()) {
 #ifdef DEBUG_ENABLED
-			ERR_FAIL_V_MSG(Variant(), "Resumed function '" + state.function_name + "()' after await, but script is gone. At script: " + state.script_path + ":" + itos(state.line));
+			ERR_FAIL_V_MSG(Variant(), "Resumed function '" + state.function_name + "()' after await, but script is gone. At script: " + state.script_path + ':' + itos(state.line));
 #else
 			return Variant();
 #endif
 		}
 		if (state.instance && !instances_list.in_list()) {
 #ifdef DEBUG_ENABLED
-			ERR_FAIL_V_MSG(Variant(), "Resumed function '" + state.function_name + "()' after await, but class instance is gone. At script: " + state.script_path + ":" + itos(state.line));
+			ERR_FAIL_V_MSG(Variant(), "Resumed function '" + state.function_name + "()' after await, but class instance is gone. At script: " + state.script_path + ':' + itos(state.line));
 #else
 			return Variant();
 #endif

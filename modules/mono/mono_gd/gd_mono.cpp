@@ -128,8 +128,8 @@ bool try_get_dotnet_root_from_command_line(String &r_dotnet_root) {
 	for (const String &sdk : sdks) {
 		// The format of the SDK lines is:
 		// 8.0.401 [/usr/share/dotnet/sdk]
-		String version_string = sdk.get_slice(" ", 0);
-		String path = sdk.get_slice(" ", 1);
+		String version_string = sdk.get_slicec(' ', 0);
+		String path = sdk.get_slicec(' ', 1);
 		path = path.substr(1, path.length() - 2);
 
 		godotsharp::SemVer version;
@@ -176,7 +176,7 @@ String find_hostfxr() {
 		}
 	}
 
-	ERR_PRINT(String() + ".NET: One of the dependent libraries is missing. " +
+	ERR_PRINT(String(".NET: One of the dependent libraries is missing. ") +
 			"Typically when the `hostfxr`, `hostpolicy` or `coreclr` dynamic " +
 			"libraries are not present in the expected locations.");
 
@@ -528,7 +528,7 @@ MonoAssembly *load_assembly_from_pck(MonoAssemblyName *p_assembly_name, char **p
 	String assembly_name;
 	if (culture && strcmp(culture, "")) {
 		assembly_name += culture;
-		assembly_name += "/";
+		assembly_name += '/';
 	}
 	assembly_name += name;
 	if (!assembly_name.ends_with(".dll")) {

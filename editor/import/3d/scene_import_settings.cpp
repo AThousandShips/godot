@@ -154,7 +154,7 @@ class SceneImportSettingsData : public Object {
 							(*settings)["rest_pose/selected_animation"] = String(anim_names.front()->get());
 						}
 						for (StringName anim_name : anim_names) {
-							hint_string += "," + anim_name; // Include preceding, as a catch-all.
+							hint_string += ',' + anim_name; // Include preceding, as a catch-all.
 						}
 					}
 				} break;

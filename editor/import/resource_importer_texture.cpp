@@ -942,7 +942,7 @@ Error ResourceImporterTexture::import(ResourceUID::ID p_source_id, const String 
 					image_compress_format = "s3tc";
 				}
 
-				_save_ctex(image, p_save_path + "." + image_compress_format + ".ctex", compress_mode, lossy, basisu_params, image_compress_mode, mipmaps,
+				_save_ctex(image, p_save_path + '.' + image_compress_format + ".ctex", compress_mode, lossy, basisu_params, image_compress_mode, mipmaps,
 						stream, detect_3d, detect_roughness, detect_normal, force_normal, srgb_friendly_pack, false, mipmap_limit, normal_image, roughness_channel);
 				r_platform_variants->push_back(image_compress_format);
 			}
@@ -958,7 +958,7 @@ Error ResourceImporterTexture::import(ResourceUID::ID p_source_id, const String 
 					image_compress_format = "etc2";
 				}
 
-				_save_ctex(image, p_save_path + "." + image_compress_format + ".ctex", compress_mode, lossy, basisu_params, image_compress_mode, mipmaps, stream, detect_3d,
+				_save_ctex(image, p_save_path + '.' + image_compress_format + ".ctex", compress_mode, lossy, basisu_params, image_compress_mode, mipmaps, stream, detect_3d,
 						detect_roughness, detect_normal, force_normal, srgb_friendly_pack, false, mipmap_limit, normal_image, roughness_channel);
 				r_platform_variants->push_back(image_compress_format);
 			}

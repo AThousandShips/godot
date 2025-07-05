@@ -223,7 +223,7 @@ bool OpenXRAPI::OpenXRSwapChainInfo::acquire(bool &p_should_render) {
 			print_line("OpenXR: failed to wait for swapchain image [", openxr_api->get_error_string(result), "]");
 			return false;
 		} else {
-			WARN_PRINT("OpenXR: couldn't to wait for swapchain but not a complete error [" + openxr_api->get_error_string(result) + "]");
+			WARN_PRINT("OpenXR: couldn't to wait for swapchain but not a complete error [" + openxr_api->get_error_string(result) + ']');
 
 			// Make sure to skip trying to acquire the swapchain image in the next frame
 			skip_acquire_swapchain = true;
@@ -329,7 +329,7 @@ String OpenXRAPI::get_swapchain_format_name(int64_t p_swapchain_format) const {
 		return graphics_extension->get_swapchain_format_name(p_swapchain_format);
 	}
 
-	return String("Swapchain format ") + String::num_int64(int64_t(p_swapchain_format));
+	return "Swapchain format " + String::num_int64(int64_t(p_swapchain_format));
 }
 
 void OpenXRAPI::set_object_name(XrObjectType p_object_type, uint64_t p_object_handle, const String &p_object_name) {
@@ -500,7 +500,7 @@ bool OpenXRAPI::interaction_profile_supports_io_path(const String &p_ip_path, co
 	const OpenXRInteractionProfileMetadata::IOPath *io_path = OpenXRInteractionProfileMetadata::get_singleton()->get_io_path(p_ip_path, p_io_path);
 
 	// If the io_path is not part of our metadata we've likely got a misspelled name or a bad action map, report
-	ERR_FAIL_NULL_V_MSG(io_path, false, "OpenXR: Unsupported io path " + String(p_ip_path) + String(p_io_path));
+	ERR_FAIL_NULL_V_MSG(io_path, false, "OpenXR: Unsupported io path " + p_ip_path + p_io_path);
 
 	if (io_path->openxr_extension_name == "") {
 		// no extension needed, core io paths are always "supported", they just won't be used if not really supported
@@ -509,7 +509,7 @@ bool OpenXRAPI::interaction_profile_supports_io_path(const String &p_ip_path, co
 
 	if (!is_extension_enabled(io_path->openxr_extension_name)) {
 		// It is very likely we have io paths for which the extension is not available so don't flood the logs with unnecessary spam.
-		print_verbose("OpenXR: IO path " + String(p_ip_path) + String(p_io_path) + " requires extension " + io_path->openxr_extension_name);
+		print_verbose("OpenXR: IO path " + p_ip_path + p_io_path + " requires extension " + io_path->openxr_extension_name);
 		return false;
 	}
 
@@ -573,7 +573,7 @@ bool OpenXRAPI::create_instance() {
 		if (!is_extension_supported(requested_extension.name)) {
 			if (requested_extension.enabled == nullptr) {
 				// Null means this is a mandatory extension so we fail.
-				ERR_FAIL_V_MSG(false, String("OpenXR: OpenXR Runtime does not support ") + requested_extension.name + String(" extension!"));
+				ERR_FAIL_V_MSG(false, "OpenXR: OpenXR Runtime does not support " + requested_extension.name + " extension!");
 			} else {
 				// Set this extension as not supported.
 				*requested_extension.enabled = false;
@@ -594,7 +594,7 @@ bool OpenXRAPI::create_instance() {
 
 	Vector<const char *> extension_ptrs;
 	for (int i = 0; i < enabled_extensions.size(); i++) {
-		print_verbose(String("OpenXR: Enabling extension ") + String(enabled_extensions[i].get_data()));
+		print_verbose("OpenXR: Enabling extension " + String(enabled_extensions[i].get_data()));
 		extension_ptrs.push_back(enabled_extensions[i].get_data());
 	}
 
@@ -821,12 +821,12 @@ bool OpenXRAPI::load_supported_view_configuration_views(XrViewConfigurationType 
 
 	for (const XrViewConfigurationView &view_configuration_view : view_configuration_views) {
 		print_verbose("OpenXR: Found supported view configuration view");
-		print_verbose(String(" - width: ") + itos(view_configuration_view.maxImageRectWidth));
-		print_verbose(String(" - height: ") + itos(view_configuration_view.maxImageRectHeight));
-		print_verbose(String(" - sample count: ") + itos(view_configuration_view.maxSwapchainSampleCount));
-		print_verbose(String(" - recommended render width: ") + itos(view_configuration_view.recommendedImageRectWidth));
-		print_verbose(String(" - recommended render height: ") + itos(view_configuration_view.recommendedImageRectHeight));
-		print_verbose(String(" - recommended render sample count: ") + itos(view_configuration_view.recommendedSwapchainSampleCount));
+		print_verbose(" - width: " + itos(view_configuration_view.maxImageRectWidth));
+		print_verbose(" - height: " + itos(view_configuration_view.maxImageRectHeight));
+		print_verbose(" - sample count: " + itos(view_configuration_view.maxSwapchainSampleCount));
+		print_verbose(" - recommended render width: " + itos(view_configuration_view.recommendedImageRectWidth));
+		print_verbose(" - recommended render height: " + itos(view_configuration_view.recommendedImageRectHeight));
+		print_verbose(" - recommended render sample count: " + itos(view_configuration_view.recommendedSwapchainSampleCount));
 	}
 
 	return true;
@@ -890,7 +890,7 @@ bool OpenXRAPI::create_session() {
 	// Check our environment blend mode. This needs to happen after we call `on_session_created()`
 	// on the extension wrappers, so they can emulate alpha blend mode.
 	if (!set_environment_blend_mode(environment_blend_mode)) {
-		print_verbose(String("OpenXR: ") + OpenXRUtil::get_environment_blend_mode_name(environment_blend_mode) + String(" isn't supported, defaulting to ") + OpenXRUtil::get_environment_blend_mode_name(supported_environment_blend_modes[0]));
+		print_verbose("OpenXR: " + OpenXRUtil::get_environment_blend_mode_name(environment_blend_mode) + " isn't supported, defaulting to " + OpenXRUtil::get_environment_blend_mode_name(supported_environment_blend_modes[0]));
 		set_environment_blend_mode(supported_environment_blend_modes[0]);
 	}
 
@@ -998,7 +998,7 @@ bool OpenXRAPI::setup_play_space() {
 		}
 	} else {
 		// Fallback on LOCAL, which all OpenXR runtimes are required to support.
-		print_verbose(String("OpenXR: ") + OpenXRUtil::get_reference_space_name(requested_reference_space) + String(" isn't supported, defaulting to LOCAL space."));
+		print_verbose("OpenXR: " + OpenXRUtil::get_reference_space_name(requested_reference_space) + " isn't supported, defaulting to LOCAL space.");
 		new_reference_space = XR_REFERENCE_SPACE_TYPE_LOCAL;
 	}
 
@@ -1170,7 +1170,7 @@ bool OpenXRAPI::load_supported_swapchain_formats() {
 	ERR_FAIL_COND_V_MSG(XR_FAILED(result), false, "OpenXR: Failed to enumerate swapchain formats");
 
 	for (int64_t swapchain_format : supported_swapchain_formats) {
-		print_verbose(String("OpenXR: Found supported swapchain format ") + get_swapchain_format_name(swapchain_format));
+		print_verbose("OpenXR: Found supported swapchain format " + get_swapchain_format_name(swapchain_format));
 	}
 
 	return true;
@@ -1200,7 +1200,7 @@ bool OpenXRAPI::obtain_swapchain_formats() {
 
 		ERR_FAIL_COND_V_MSG(color_swapchain_format == 0, false, "OpenXR: No usable color swap chain format available!");
 
-		print_verbose(String("Using color swap chain format:") + get_swapchain_format_name(color_swapchain_format));
+		print_verbose("Using color swap chain format:" + get_swapchain_format_name(color_swapchain_format));
 	}
 
 	{
@@ -1219,7 +1219,7 @@ bool OpenXRAPI::obtain_swapchain_formats() {
 
 		ERR_FAIL_COND_V_MSG(depth_swapchain_format == 0, false, "OpenXR: No usable depth swap chain format available!");
 
-		print_verbose(String("Using depth swap chain format:") + get_swapchain_format_name(depth_swapchain_format));
+		print_verbose("Using depth swap chain format:" + get_swapchain_format_name(depth_swapchain_format));
 	}
 
 	return true;
@@ -2016,7 +2016,7 @@ bool OpenXRAPI::poll_events() {
 				// TODO We get this event if we're about to loose our OpenXR instance.
 				// We should queue exiting Godot at this point.
 
-				print_verbose(String("OpenXR EVENT: instance loss pending at ") + itos(event->lossTime));
+				print_verbose("OpenXR EVENT: instance loss pending at " + itos(event->lossTime));
 				return false;
 			} break;
 			case XR_TYPE_EVENT_DATA_SESSION_STATE_CHANGED: {
@@ -2024,9 +2024,9 @@ bool OpenXRAPI::poll_events() {
 
 				session_state = event->state;
 				if (session_state >= XR_SESSION_STATE_MAX_ENUM) {
-					print_verbose(String("OpenXR EVENT: session state changed to UNKNOWN - ") + itos(session_state));
+					print_verbose("OpenXR EVENT: session state changed to UNKNOWN - " + itos(session_state));
 				} else {
-					print_verbose(String("OpenXR EVENT: session state changed to ") + OpenXRUtil::get_session_state_name(session_state));
+					print_verbose("OpenXR EVENT: session state changed to " + OpenXRUtil::get_session_state_name(session_state));
 
 					switch (session_state) {
 						case XR_SESSION_STATE_IDLE:
@@ -2061,7 +2061,7 @@ bool OpenXRAPI::poll_events() {
 			case XR_TYPE_EVENT_DATA_REFERENCE_SPACE_CHANGE_PENDING: {
 				XrEventDataReferenceSpaceChangePending *event = (XrEventDataReferenceSpaceChangePending *)&runtimeEvent;
 
-				print_verbose(String("OpenXR EVENT: reference space type ") + OpenXRUtil::get_reference_space_name(event->referenceSpaceType) + " change pending!");
+				print_verbose("OpenXR EVENT: reference space type " + OpenXRUtil::get_reference_space_name(event->referenceSpaceType) + " change pending!");
 				if (local_floor_emulation.enabled) {
 					local_floor_emulation.should_reset_floor_height = true;
 				}
@@ -2081,7 +2081,7 @@ bool OpenXRAPI::poll_events() {
 			} break;
 			default:
 				if (!handled) {
-					print_verbose(String("OpenXR Unhandled event type ") + OpenXRUtil::get_structure_type_name(runtimeEvent.type));
+					print_verbose("OpenXR Unhandled event type " + OpenXRUtil::get_structure_type_name(runtimeEvent.type));
 				}
 				break;
 		}
@@ -2206,7 +2206,7 @@ bool OpenXRAPI::process() {
 
 	if (frame_state.predictedDisplayPeriod > 500000000) {
 		// display period more then 0.5 seconds? must be wrong data
-		print_verbose(String("OpenXR resetting invalid display period ") + rtos(frame_state.predictedDisplayPeriod));
+		print_verbose("OpenXR resetting invalid display period " + rtos(frame_state.predictedDisplayPeriod));
 		frame_state.predictedDisplayPeriod = 0;
 	}
 
@@ -2314,7 +2314,7 @@ void OpenXRAPI::pre_render() {
 	}
 
 	// We should get our frame no from the rendering server, but this will do.
-	begin_debug_label_region(String("Session Frame ") + String::num_uint64(++render_state.frame));
+	begin_debug_label_region("Session Frame " + String::num_uint64(++render_state.frame));
 
 	// let's start our frame..
 	XrFrameBeginInfo frame_begin_info = {
@@ -2878,7 +2878,7 @@ bool OpenXRAPI::xr_result(XrResult result, const char *format, Array args) const
 	char resultString[XR_MAX_RESULT_STRING_SIZE];
 	xrResultToString(instance, result, resultString);
 
-	print_error(String("OpenXR ") + String(format).format(args) + String(" [") + String(resultString) + String("]"));
+	print_error("OpenXR " + String(format).format(args) + " [" + String(resultString) + ']');
 
 	return false;
 }
@@ -2910,7 +2910,7 @@ String OpenXRAPI::get_xr_path_name(const XrPath &p_path) {
 
 	XrResult result = xrPathToString(instance, p_path, XR_MAX_PATH_LENGTH, &size, path_name);
 	if (XR_FAILED(result)) {
-		ERR_FAIL_V_MSG(String(), "OpenXR: failed to get name for a path! [" + get_error_string(result) + "]");
+		ERR_FAIL_V_MSG(String(), "OpenXR: failed to get name for a path! [" + get_error_string(result) + ']');
 	}
 
 	return String(path_name);
@@ -3466,7 +3466,7 @@ bool OpenXRAPI::sync_action_sets(const Vector<RID> p_active_sets) {
 
 	XrResult result = xrSyncActions(session, &sync_info);
 	if (XR_FAILED(result)) {
-		ERR_FAIL_V_MSG(false, "OpenXR: failed to sync active action sets! [" + get_error_string(result) + "]");
+		ERR_FAIL_V_MSG(false, "OpenXR: failed to sync active action sets! [" + get_error_string(result) + ']');
 	}
 
 	if (interaction_profile_changed) {

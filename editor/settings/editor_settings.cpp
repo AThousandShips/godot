@@ -415,7 +415,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
 				continue;
 			}
 
-			lang_hint += ",";
+			lang_hint += ',';
 			lang_hint += locale;
 
 			int score = TranslationServer::get_singleton()->compare_locales(host_lang, locale);
@@ -448,7 +448,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
 
 	String ed_screen_hints = "Auto (Remembers last position):-5,Screen With Mouse Pointer:-4,Screen With Keyboard Focus:-3,Primary Screen:-2";
 	for (int i = 0; i < DisplayServer::get_singleton()->get_screen_count(); i++) {
-		ed_screen_hints += ",Screen " + itos(i + 1) + ":" + itos(i);
+		ed_screen_hints += ",Screen " + itos(i + 1) + ':' + itos(i);
 	}
 	EDITOR_SETTING(Variant::INT, PROPERTY_HINT_ENUM, "interface/editor/editor_screen", EditorSettings::InitialScreen::INITIAL_SCREEN_AUTO, ed_screen_hints)
 
@@ -468,7 +468,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
 
 	String project_manager_screen_hints = "Screen With Mouse Pointer:-4,Screen With Keyboard Focus:-3,Primary Screen:-2";
 	for (int i = 0; i < DisplayServer::get_singleton()->get_screen_count(); i++) {
-		project_manager_screen_hints += ",Screen " + itos(i + 1) + ":" + itos(i);
+		project_manager_screen_hints += ",Screen " + itos(i + 1) + ':' + itos(i);
 	}
 	EDITOR_SETTING(Variant::INT, PROPERTY_HINT_ENUM, "interface/editor/project_manager_screen", EditorSettings::InitialScreen::INITIAL_SCREEN_PRIMARY, project_manager_screen_hints)
 
@@ -1025,7 +1025,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
 	// Keep the enum values in sync with the `DisplayServer::SCREEN_` enum.
 	String screen_hints = "Same as Editor:-5,Previous Screen:-4,Next Screen:-3,Primary Screen:-2"; // Note: Main Window Screen:-1 is not used for the main window.
 	for (int i = 0; i < DisplayServer::get_singleton()->get_screen_count(); i++) {
-		screen_hints += ",Screen " + itos(i + 1) + ":" + itos(i);
+		screen_hints += ",Screen " + itos(i + 1) + ':' + itos(i);
 	}
 	_initial_set("run/window_placement/rect_custom_position", Vector2());
 	EDITOR_SETTING_BASIC(Variant::INT, PROPERTY_HINT_ENUM, "run/window_placement/screen", -5, screen_hints)
@@ -1431,7 +1431,7 @@ void EditorSettings::setup_network() {
 			selected = String(ip);
 		}
 		if (!hint.is_empty()) {
-			hint += ",";
+			hint += ',';
 		}
 		hint += String(ip);
 	}
@@ -1766,7 +1766,7 @@ void EditorSettings::list_text_editor_themes() {
 
 		custom_themes.sort();
 		for (const String &E : custom_themes) {
-			themes += "," + E;
+			themes += ',' + E;
 		}
 	}
 	add_property_hint(PropertyInfo(Variant::STRING, "text_editor/theme/color_theme", PROPERTY_HINT_ENUM, themes));
@@ -1948,7 +1948,7 @@ void EditorSettings::add_shortcut(const String &p_name, const Ref<Shortcut> &p_s
 
 bool EditorSettings::is_shortcut(const String &p_name, const Ref<InputEvent> &p_event) const {
 	HashMap<String, Ref<Shortcut>>::ConstIterator E = shortcuts.find(p_name);
-	ERR_FAIL_COND_V_MSG(!E, false, "Unknown Shortcut: " + p_name + ".");
+	ERR_FAIL_COND_V_MSG(!E, false, "Unknown Shortcut: " + p_name + '.');
 
 	return E->value->matches_event(p_event);
 }

@@ -245,7 +245,7 @@ void OpenXRBindingModifiersDialog::setup(Ref<OpenXRActionMap> p_action_map, Ref<
 		}
 
 		create_dialog->set_base_type("OpenXRActionBindingModifier");
-		set_title(TTR("Binding modifiers for:") + " " + action_name + ": " + path_name);
+		set_title(TTR("Binding modifiers for:") + ' ' + action_name + ": " + path_name);
 	} else if (interaction_profile.is_valid()) {
 		String profile_name = profile_path;
 
@@ -255,6 +255,6 @@ void OpenXRBindingModifiersDialog::setup(Ref<OpenXRActionMap> p_action_map, Ref<
 		}
 
 		create_dialog->set_base_type("OpenXRIPBindingModifier");
-		set_title(TTR("Binding modifiers for:") + " " + profile_name);
+		set_title(TTR("Binding modifiers for:") + ' ' + profile_name);
 	}
 }

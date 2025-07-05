@@ -852,7 +852,7 @@ Projection::operator String() const {
 	return "[X: " + columns[0].operator String() +
 			", Y: " + columns[1].operator String() +
 			", Z: " + columns[2].operator String() +
-			", W: " + columns[3].operator String() + "]";
+			", W: " + columns[3].operator String() + ']';
 }
 
 real_t Projection::get_aspect() const {

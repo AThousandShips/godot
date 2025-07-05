@@ -141,7 +141,7 @@ bool is_csharp_keyword(const String &p_name) {
 }
 
 String escape_csharp_keyword(const String &p_name) {
-	return is_csharp_keyword(p_name) ? "@" + p_name : p_name;
+	return is_csharp_keyword(p_name) ? '@' + p_name : p_name;
 }
 #endif
 

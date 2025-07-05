@@ -283,7 +283,7 @@ void Window::_validate_property(PropertyInfo &p_property) const {
 				continue;
 			}
 
-			hint_string += String(E) + ",";
+			hint_string += String(E) + ',';
 			unique_names.append(E);
 		}
 

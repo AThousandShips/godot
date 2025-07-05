@@ -86,7 +86,7 @@ void GraphEditArranger::arrange_nodes() {
 					if (!s.has(p_from->get_name())) {
 						s.insert(p_from->get_name());
 					}
-					String s_connection = String(p_from->get_name()) + " " + String(connection->to_node);
+					String s_connection = String(p_from->get_name()) + ' ' + connection->to_node;
 					StringName _connection(s_connection);
 					Pair<int, int> ports(connection->from_port, connection->to_port);
 					port_info.insert(_connection, ports);
@@ -396,7 +396,7 @@ void GraphEditArranger::_calculate_inner_shifts(Dictionary &r_inner_shifts, cons
 		StringName u = E;
 		StringName v = r_align[u];
 		while (u != v && (StringName)r_root[u] != v) {
-			String _connection = String(u) + " " + String(v);
+			String _connection = String(u) + ' ' + String(v);
 
 			GraphNode *gnode_from = Object::cast_to<GraphNode>(r_node_names[u]);
 			GraphNode *gnode_to = Object::cast_to<GraphNode>(r_node_names[v]);

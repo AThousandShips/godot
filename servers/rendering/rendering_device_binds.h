@@ -404,7 +404,7 @@ public:
 							"compute"
 						};
 
-						print_error("Error parsing shader '" + p_file + "', version '" + String(E.key) + "', stage '" + stage_str[i] + "':\n\n" + error);
+						print_error("Error parsing shader '" + p_file + "', version '" + E.key + "', stage '" + stage_str[i] + "':\n\n" + error);
 					}
 				}
 			}

@@ -45,7 +45,7 @@ void VoxelGIEditorPlugin::_bake() {
 				path = "res://" + voxel_gi->get_name() + "_data.res";
 			} else {
 				String ext = path.get_extension();
-				path = path.get_basename() + "." + voxel_gi->get_name() + "_data.res";
+				path = path.get_basename() + '.' + voxel_gi->get_name() + "_data.res";
 			}
 			probe_file->set_current_path(path);
 			probe_file->popup_file_dialog();
@@ -120,8 +120,8 @@ void VoxelGIEditorPlugin::_notification(int p_what) {
 			}
 
 			String text;
-			text += vformat(TTR("Subdivisions: %s"), vformat(U"%d × %d × %d", cell_size.x, cell_size.y, cell_size.z)) + "\n";
-			text += vformat(TTR("Cell size: %s"), vformat(U"%.3f × %.3f × %.3f", half_size.x / cell_size.x, half_size.y / cell_size.y, half_size.z / cell_size.z)) + "\n";
+			text += vformat(TTR("Subdivisions: %s"), vformat(U"%d × %d × %d", cell_size.x, cell_size.y, cell_size.z)) + '\n';
+			text += vformat(TTR("Cell size: %s"), vformat(U"%.3f × %.3f × %.3f", half_size.x / cell_size.x, half_size.y / cell_size.y, half_size.z / cell_size.z)) + '\n';
 			text += vformat(TTR("Video RAM size: %s MB (%s)"), String::num(size_mb, 2), size_quality);
 
 			// Only update the tooltip when needed to avoid constant redrawing.

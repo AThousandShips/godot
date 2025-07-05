@@ -275,7 +275,7 @@ void ShaderTextEditor::_load_theme_settings() {
 				for (const ShaderLanguage::ModeInfo &mode_info : render_modes) {
 					if (!mode_info.options.is_empty()) {
 						for (const StringName &option : mode_info.options) {
-							built_ins.push_back(String(mode_info.name) + "_" + String(option));
+							built_ins.push_back(String(mode_info.name) + '_' + option);
 						}
 					} else {
 						built_ins.push_back(String(mode_info.name));
@@ -289,7 +289,7 @@ void ShaderTextEditor::_load_theme_settings() {
 				for (const ShaderLanguage::ModeInfo &mode_info : stencil_modes) {
 					if (!mode_info.options.is_empty()) {
 						for (const StringName &option : mode_info.options) {
-							built_ins.push_back(String(mode_info.name) + "_" + String(option));
+							built_ins.push_back(String(mode_info.name) + '_' + option);
 						}
 					} else {
 						built_ins.push_back(String(mode_info.name));
@@ -310,7 +310,7 @@ void ShaderTextEditor::_load_theme_settings() {
 			for (const ShaderLanguage::ModeInfo &mode_info : shader_modes) {
 				if (!mode_info.options.is_empty()) {
 					for (const StringName &option : mode_info.options) {
-						built_ins.push_back(String(mode_info.name) + "_" + String(option));
+						built_ins.push_back(String(mode_info.name) + '_' + option);
 					}
 				} else {
 					built_ins.push_back(String(mode_info.name));
@@ -324,7 +324,7 @@ void ShaderTextEditor::_load_theme_settings() {
 			for (const ShaderLanguage::ModeInfo &mode_info : stencil_modes) {
 				if (!mode_info.options.is_empty()) {
 					for (const StringName &option : mode_info.options) {
-						built_ins.push_back(String(mode_info.name) + "_" + String(option));
+						built_ins.push_back(String(mode_info.name) + '_' + option);
 					}
 				} else {
 					built_ins.push_back(String(mode_info.name));
@@ -436,7 +436,7 @@ void ShaderTextEditor::_code_complete_script(const String &p_code, List<ScriptLa
 	String resource_path = (shader.is_valid() ? shader->get_path() : shader_inc->get_path());
 	complete_from_path = resource_path.get_base_dir();
 	if (!complete_from_path.ends_with("/")) {
-		complete_from_path += "/";
+		complete_from_path += '/';
 	}
 	preprocessor.preprocess(p_code, resource_path, code, nullptr, nullptr, nullptr, nullptr, &pp_options, &pp_defines, _complete_include_paths);
 	complete_from_path = String();
@@ -524,14 +524,14 @@ void ShaderTextEditor::_validate_script() {
 			// Error in the main file.
 			const String message = error_pp.replace("[", "[lb]");
 
-			err_text = vformat(TTR("Error at line %d:"), err_line) + " " + message;
+			err_text = vformat(TTR("Error at line %d:"), err_line) + ' ' + message;
 		} else {
 			// Error in an included file.
 			const String inc_file = err_positions.back()->get().file.get_file();
 			const int inc_line = err_positions.back()->get().line;
 			const String message = error_pp.replace("[", "[lb]");
 
-			err_text = vformat(TTR("Error at line %d in include %s:%d:"), err_line, inc_file, inc_line) + " " + message;
+			err_text = vformat(TTR("Error at line %d in include %s:%d:"), err_line, inc_file, inc_line) + ' ' + message;
 			set_error_count(err_positions.size() - 1);
 		}
 
@@ -598,7 +598,7 @@ void ShaderTextEditor::_validate_script() {
 				const int inc_line = include_positions[include_positions.size() - 1].line;
 				const String message = sl.get_error_text().replace("[", "[lb]");
 
-				err_text = vformat(TTR("Error at line %d in include %s:%d:"), err_line, inc_file, inc_line) + " " + message;
+				err_text = vformat(TTR("Error at line %d in include %s:%d:"), err_line, inc_file, inc_line) + ' ' + message;
 				set_error_count(include_positions.size() - 1);
 			} else {
 				// Error in the main file.
@@ -606,7 +606,7 @@ void ShaderTextEditor::_validate_script() {
 
 				const String message = sl.get_error_text().replace("[", "[lb]");
 
-				err_text = vformat(TTR("Error at line %d:"), err_line) + " " + message;
+				err_text = vformat(TTR("Error at line %d:"), err_line) + ' ' + message;
 				set_error_count(0);
 			}
 
@@ -643,8 +643,8 @@ void ShaderTextEditor::_update_warning_panel() {
 	for (const ShaderWarning &w : warnings) {
 		if (warning_count == 0) {
 			if (saved_treat_warning_as_errors) {
-				const String message = (w.get_message() + " " + TTR("Warnings should be fixed to prevent errors.")).replace("[", "[lb]");
-				const String error_text = vformat(TTR("Error at line %d:"), w.get_line()) + " " + message;
+				const String message = (w.get_message() + ' ' + TTR("Warnings should be fixed to prevent errors.")).replace("[", "[lb]");
+				const String error_text = vformat(TTR("Error at line %d:"), w.get_line()) + ' ' + message;
 
 				set_error(error_text);
 				set_error_pos(w.get_line() - 1, 0);
@@ -664,7 +664,7 @@ void ShaderTextEditor::_update_warning_panel() {
 			warnings_panel->add_text(vformat(TTR("Line %d (%s):"), line, w.get_name()));
 			warnings_panel->pop(); // Meta goto.
 		} else {
-			warnings_panel->add_text(w.get_name() + ":");
+			warnings_panel->add_text(w.get_name() + ':');
 		}
 		warnings_panel->pop(); // Color.
 		warnings_panel->pop(); // Cell.
@@ -1130,7 +1130,7 @@ void TextShaderEditor::_update_bookmark_list() {
 			line = line.substr(0, 50);
 		}
 
-		bookmarks_menu->add_item(String::num_int64(bookmark_list[i] + 1) + " - \"" + line + "\"");
+		bookmarks_menu->add_item(String::num_int64(bookmark_list[i] + 1) + " - \"" + line + '"');
 		bookmarks_menu->set_item_metadata(-1, bookmark_list[i]);
 	}
 }

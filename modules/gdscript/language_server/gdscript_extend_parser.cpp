@@ -154,7 +154,7 @@ void ExtendGDScriptParser::update_diagnostics() {
 	for (const GDScriptWarning &warning : parser_warnings) {
 		LSP::Diagnostic diagnostic;
 		diagnostic.severity = LSP::DiagnosticSeverity::Warning;
-		diagnostic.message = "(" + warning.get_name() + "): " + warning.get_message();
+		diagnostic.message = '(' + warning.get_name() + "): " + warning.get_message();
 		diagnostic.source = "gdscript";
 		diagnostic.code = warning.code;
 		LSP::Range range;
@@ -259,7 +259,7 @@ void ExtendGDScriptParser::parse_class_symbol(const GDScriptParser::ClassNode *p
 		}
 
 		if (!p_class->doc_data.tutorials.is_empty()) {
-			doc += "\n";
+			doc += '\n';
 			for (const Pair<String, String> &tutorial : p_class->doc_data.tutorials) {
 				if (tutorial.first.is_empty()) {
 					doc += vformat("\n@tutorial: %s", tutorial.second);
@@ -370,14 +370,14 @@ void ExtendGDScriptParser::parse_class_symbol(const GDScriptParser::ClassNode *p
 				symbol.documentation = m.signal->doc_data.description;
 				symbol.uri = uri;
 				symbol.script_path = path;
-				symbol.detail = "signal " + String(m.signal->identifier->name) + "(";
+				symbol.detail = "signal " + String(m.signal->identifier->name) + '(';
 				for (int j = 0; j < m.signal->parameters.size(); j++) {
 					if (j > 0) {
 						symbol.detail += ", ";
 					}
 					symbol.detail += m.signal->parameters[j]->identifier->name;
 				}
-				symbol.detail += ")";
+				symbol.detail += ')';
 
 				for (GDScriptParser::ParameterNode *param : m.signal->parameters) {
 					LSP::DocumentSymbol param_symbol;
@@ -424,14 +424,14 @@ void ExtendGDScriptParser::parse_class_symbol(const GDScriptParser::ClassNode *p
 				symbol.uri = uri;
 				symbol.script_path = path;
 
-				symbol.detail = "enum " + String(m.m_enum->identifier->name) + "{";
+				symbol.detail = "enum " + m.m_enum->identifier->name + '{';
 				for (int j = 0; j < m.m_enum->values.size(); j++) {
 					if (j > 0) {
 						symbol.detail += ", ";
 					}
 					symbol.detail += String(m.m_enum->values[j].identifier->name) + " = " + itos(m.m_enum->values[j].value);
 				}
-				symbol.detail += "}";
+				symbol.detail += '}';
 
 				for (GDScriptParser::EnumNode::Value value : m.m_enum->values) {
 					LSP::DocumentSymbol child;
@@ -480,9 +480,9 @@ void ExtendGDScriptParser::parse_function_symbol(const GDScriptParser::FunctionN
 	r_symbol.kind = (p_func->is_static || p_func->source_lambda != nullptr) ? LSP::SymbolKind::Function : LSP::SymbolKind::Method;
 	r_symbol.detail = "func";
 	if (is_named) {
-		r_symbol.detail += " " + String(p_func->identifier->name);
+		r_symbol.detail += ' ' + String(p_func->identifier->name);
 	}
-	r_symbol.detail += "(";
+	r_symbol.detail += '(';
 	r_symbol.deprecated = false;
 	r_symbol.range = range_of_node(p_func);
 	if (is_named) {
@@ -500,7 +500,7 @@ void ExtendGDScriptParser::parse_function_symbol(const GDScriptParser::FunctionN
 		if (i > 0) {
 			parameters += ", ";
 		}
-		parameters += String(parameter->identifier->name);
+		parameters += parameter->identifier->name;
 		if (parameter->get_datatype().is_hard_type()) {
 			parameters += ": " + parameter->get_datatype().to_string();
 		}
@@ -515,7 +515,7 @@ void ExtendGDScriptParser::parse_function_symbol(const GDScriptParser::FunctionN
 		const ParameterNode *rest_param = p_func->rest_parameter;
 		parameters += "..." + rest_param->identifier->name + ": " + rest_param->get_datatype().to_string();
 	}
-	r_symbol.detail += parameters + ")";
+	r_symbol.detail += parameters + ')';
 
 	const DataType return_type = p_func->get_datatype();
 	if (return_type.is_hard_type()) {
@@ -655,7 +655,7 @@ String ExtendGDScriptParser::get_text_for_completion(const LSP::Position &p_curs
 		}
 
 		if (i != len - 1) {
-			longthing += "\n";
+			longthing += '\n';
 		}
 	}
 
@@ -685,7 +685,7 @@ String ExtendGDScriptParser::get_text_for_lookup_symbol(const LSP::Position &p_c
 			longthing += first_part;
 			longthing += String::chr(0xFFFF); // Not unicode, represents the cursor.
 			if (p_func_required) {
-				longthing += "("; // Tell the parser this is a function call.
+				longthing += '('; // Tell the parser this is a function call.
 			}
 			longthing += last_part;
 		} else {
@@ -693,7 +693,7 @@ String ExtendGDScriptParser::get_text_for_lookup_symbol(const LSP::Position &p_c
 		}
 
 		if (i != len - 1) {
-			longthing += "\n";
+			longthing += '\n';
 		}
 	}
 
@@ -984,8 +984,8 @@ Dictionary ExtendGDScriptParser::dump_class_api(const GDScriptParser::ClassNode 
 				api["name"] = m.variable->identifier->name;
 				api["data_type"] = m.variable->get_datatype().to_string();
 				api["default_value"] = m.variable->initializer != nullptr ? m.variable->initializer->reduced_value : Variant();
-				api["setter"] = m.variable->setter ? ("@" + String(m.variable->identifier->name) + "_setter") : (m.variable->setter_pointer != nullptr ? String(m.variable->setter_pointer->name) : String());
-				api["getter"] = m.variable->getter ? ("@" + String(m.variable->identifier->name) + "_getter") : (m.variable->getter_pointer != nullptr ? String(m.variable->getter_pointer->name) : String());
+				api["setter"] = m.variable->setter ? ('@' + String(m.variable->identifier->name) + "_setter") : (m.variable->setter_pointer != nullptr ? String(m.variable->setter_pointer->name) : String());
+				api["getter"] = m.variable->getter ? ('@' + String(m.variable->identifier->name) + "_getter") : (m.variable->getter_pointer != nullptr ? String(m.variable->getter_pointer->name) : String());
 				api["export"] = m.variable->exported;
 				if (const LSP::DocumentSymbol *symbol = get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(m.variable->start_line))) {
 					api["signature"] = symbol->detail;

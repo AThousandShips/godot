@@ -652,7 +652,7 @@ void Area3D::_validate_property(PropertyInfo &p_property) const {
 		String options;
 		for (int i = 0; i < AudioServer::get_singleton()->get_bus_count(); i++) {
 			if (i > 0) {
-				options += ",";
+				options += ',';
 			}
 			String name = AudioServer::get_singleton()->get_bus_name(i);
 			options += name;

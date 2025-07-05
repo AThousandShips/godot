@@ -126,7 +126,7 @@ void ConvertTransformModifier3D::_get_property_list(List<PropertyInfo> *p_list) 
 	BoneConstraint3D::get_property_list(p_list);
 
 	for (int i = 0; i < settings.size(); i++) {
-		String path = "settings/" + itos(i) + "/";
+		String path = "settings/" + itos(i) + '/';
 
 		String hint_apply_range;
 		if (get_apply_transform_mode(i) == TRANSFORM_MODE_POSITION) {

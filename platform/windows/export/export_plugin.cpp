@@ -365,7 +365,7 @@ Error EditorExportPlatformWindows::export_project(const Ref<EditorExportPreset> 
 }
 
 String EditorExportPlatformWindows::get_template_file_name(const String &p_target, const String &p_arch) const {
-	return "windows_" + p_target + "_" + p_arch + ".exe";
+	return "windows_" + p_target + '_' + p_arch + ".exe";
 }
 
 List<String> EditorExportPlatformWindows::get_binary_extensions(const Ref<EditorExportPreset> &p_preset) const {
@@ -722,13 +722,13 @@ bool EditorExportPlatformWindows::has_valid_export_configuration(const Ref<Edito
 	if (!custom_debug.is_empty() && FileAccess::exists(custom_debug)) {
 		String exe_arch = _get_exe_arch(custom_debug);
 		if (arch != exe_arch) {
-			err += vformat(TTR("Mismatching custom debug export template executable architecture: found \"%s\", expected \"%s\"."), exe_arch, arch) + "\n";
+			err += vformat(TTR("Mismatching custom debug export template executable architecture: found \"%s\", expected \"%s\"."), exe_arch, arch) + '\n';
 		}
 	}
 	if (!custom_release.is_empty() && FileAccess::exists(custom_release)) {
 		String exe_arch = _get_exe_arch(custom_release);
 		if (arch != exe_arch) {
-			err += vformat(TTR("Mismatching custom release export template executable architecture: found \"%s\", expected \"%s\"."), exe_arch, arch) + "\n";
+			err += vformat(TTR("Mismatching custom release export template executable architecture: found \"%s\", expected \"%s\"."), exe_arch, arch) + '\n';
 		}
 	}
 
@@ -749,7 +749,7 @@ bool EditorExportPlatformWindows::has_valid_project_configuration(const Ref<Edit
 		if (get_export_option_visibility(p_preset.ptr(), E.option.name)) {
 			String warn = get_export_option_warning(p_preset.ptr(), E.option.name);
 			if (!warn.is_empty()) {
-				err += warn + "\n";
+				err += warn + '\n';
 				if (E.required) {
 					valid = false;
 				}
@@ -957,7 +957,7 @@ Error EditorExportPlatformWindows::run(const Ref<EditorExportPreset> &p_preset, 
 	if (!da->dir_exists(dest)) {
 		Error err = da->make_dir_recursive(dest);
 		if (err != OK) {
-			EditorNode::get_singleton()->show_warning(TTR("Could not create temp directory:") + "\n" + dest);
+			EditorNode::get_singleton()->show_warning(TTR("Could not create temp directory:") + '\n' + dest);
 			return err;
 		}
 	}
@@ -1001,7 +1001,7 @@ Error EditorExportPlatformWindows::run(const Ref<EditorExportPreset> &p_preset, 
 		Vector<String> cmd_args_list = gen_export_flags(p_debug_flags);
 		for (int i = 0; i < cmd_args_list.size(); i++) {
 			if (i != 0) {
-				cmd_args += " ";
+				cmd_args += ' ';
 			}
 			cmd_args += cmd_args_list[i];
 		}

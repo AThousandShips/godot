@@ -104,7 +104,7 @@ String GDScriptEditorTranslationParserPlugin::_parse_comment(int p_line, bool &r
 		if (multiline_comment.is_empty()) {
 			multiline_comment = stripped_comment;
 		} else {
-			multiline_comment = stripped_comment + "\n" + multiline_comment;
+			multiline_comment = stripped_comment + '\n' + multiline_comment;
 		}
 
 		if (stripped_comment.begins_with("TRANSLATORS:")) {

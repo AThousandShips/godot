@@ -139,7 +139,7 @@ String OpenXRMetalExtension::get_swapchain_format_name(int64_t p_swapchain_forma
 		ENUM_TO_STRING_CASE(MTLPixelFormatDepth32Float_Stencil8)
 		ENUM_TO_STRING_CASE(MTLPixelFormatDepth32Float)
 		default: {
-			return String("Swapchain format ") + String::num_int64(int64_t(p_swapchain_format));
+			return "Swapchain format " + String::num_int64(int64_t(p_swapchain_format));
 		} break;
 	}
 }

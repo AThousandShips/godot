@@ -575,7 +575,7 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 						} else if (retinfo.type == Variant::ARRAY && retinfo.hint == PROPERTY_HINT_ARRAY_TYPE) {
 							prop.type = retinfo.hint_string + "[]";
 						} else if (retinfo.type == Variant::DICTIONARY && retinfo.hint == PROPERTY_HINT_DICTIONARY_TYPE) {
-							prop.type = "Dictionary[" + retinfo.hint_string.replace(";", ", ") + "]";
+							prop.type = "Dictionary[" + retinfo.hint_string.replace(";", ", ") + ']';
 						} else if (retinfo.hint == PROPERTY_HINT_RESOURCE_TYPE) {
 							prop.type = retinfo.hint_string;
 						} else if (retinfo.type == Variant::NIL && retinfo.usage & PROPERTY_USAGE_NIL_IS_VARIANT) {
@@ -861,21 +861,21 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 
 			if (mi.flags & METHOD_FLAG_VARARG) {
 				if (!method.qualifiers.is_empty()) {
-					method.qualifiers += " ";
+					method.qualifiers += ' ';
 				}
 				method.qualifiers += "vararg";
 			}
 
 			if (mi.flags & METHOD_FLAG_CONST) {
 				if (!method.qualifiers.is_empty()) {
-					method.qualifiers += " ";
+					method.qualifiers += ' ';
 				}
 				method.qualifiers += "const";
 			}
 
 			if (mi.flags & METHOD_FLAG_STATIC) {
 				if (!method.qualifiers.is_empty()) {
-					method.qualifiers += " ";
+					method.qualifiers += ' ';
 				}
 				method.qualifiers += "static";
 			}
@@ -1032,7 +1032,7 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 		// methods, constants, or annotations.
 		for (int i = 0; i < ScriptServer::get_language_count(); i++) {
 			ScriptLanguage *lang = ScriptServer::get_language(i);
-			String cname = "@" + lang->get_name();
+			String cname = '@' + lang->get_name();
 			DocData::ClassDoc c;
 			c.name = cname;
 
@@ -1048,7 +1048,7 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 
 				if (mi.flags & METHOD_FLAG_VARARG) {
 					if (!md.qualifiers.is_empty()) {
-						md.qualifiers += " ";
+						md.qualifiers += ' ';
 					}
 					md.qualifiers += "vararg";
 				}
@@ -1093,7 +1093,7 @@ void DocTools::generate(BitField<GenerateFlags> p_flags) {
 
 				if (ai.flags & METHOD_FLAG_VARARG) {
 					if (!atd.qualifiers.is_empty()) {
-						atd.qualifiers += " ";
+						atd.qualifiers += ' ';
 					}
 					atd.qualifiers += "vararg";
 				}
@@ -1206,7 +1206,7 @@ static Error _parse_methods(Ref<XMLParser> &parser, Vector<DocData::MethodDoc> &
 				methods.push_back(method);
 
 			} else {
-				ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + parser->get_node_name() + ", expected " + element + ".");
+				ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + parser->get_node_name() + ", expected " + element + '.');
 			}
 
 		} else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == section) {
@@ -1351,7 +1351,7 @@ Error DocTools::_load(Ref<XMLParser> parser) {
 									c.tutorials.push_back(tutorial);
 								}
 							} else {
-								ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + name3 + ".");
+								ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + name3 + '.');
 							}
 						} else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == "tutorials") {
 							break; // End of <tutorials>.
@@ -1423,7 +1423,7 @@ Error DocTools::_load(Ref<XMLParser> parser) {
 								}
 								c.properties.push_back(prop2);
 							} else {
-								ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + name3 + ".");
+								ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + name3 + '.');
 							}
 
 						} else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == "members") {
@@ -1464,7 +1464,7 @@ Error DocTools::_load(Ref<XMLParser> parser) {
 								}
 								c.theme_properties.push_back(prop2);
 							} else {
-								ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + name3 + ".");
+								ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + name3 + '.');
 							}
 
 						} else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == "theme_items") {
@@ -1517,7 +1517,7 @@ Error DocTools::_load(Ref<XMLParser> parser) {
 								}
 								c.constants.push_back(constant2);
 							} else {
-								ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + name3 + ".");
+								ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + name3 + '.');
 							}
 
 						} else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == "constants") {
@@ -1526,7 +1526,7 @@ Error DocTools::_load(Ref<XMLParser> parser) {
 					}
 
 				} else {
-					ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + name2 + ".");
+					ERR_FAIL_V_MSG(ERR_FILE_CORRUPT, "Invalid tag in doc file: " + name2 + '.');
 				}
 
 			} else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == "class") {
@@ -1546,40 +1546,40 @@ static void _write_string(Ref<FileAccess> f, int p_tablevel, const String &p_str
 		return;
 	}
 	String tab = String("\t").repeat(p_tablevel);
-	f->store_string(tab + p_string + "\n");
+	f->store_string(tab + p_string + '\n');
 }
 
 static void _write_method_doc(Ref<FileAccess> f, const String &p_name, Vector<DocData::MethodDoc> &p_method_docs) {
 	if (!p_method_docs.is_empty()) {
-		_write_string(f, 1, "<" + p_name + "s>");
+		_write_string(f, 1, '<' + p_name + "s>");
 		for (int i = 0; i < p_method_docs.size(); i++) {
 			const DocData::MethodDoc &m = p_method_docs[i];
 
 			String additional_attributes;
 			if (!m.qualifiers.is_empty()) {
-				additional_attributes += " qualifiers=\"" + m.qualifiers.xml_escape(true) + "\"";
+				additional_attributes += " qualifiers=\"" + m.qualifiers.xml_escape(true) + '"';
 			}
 			if (m.is_deprecated) {
-				additional_attributes += " deprecated=\"" + m.deprecated_message.xml_escape(true) + "\"";
+				additional_attributes += " deprecated=\"" + m.deprecated_message.xml_escape(true) + '"';
 			}
 			if (m.is_experimental) {
-				additional_attributes += " experimental=\"" + m.experimental_message.xml_escape(true) + "\"";
+				additional_attributes += " experimental=\"" + m.experimental_message.xml_escape(true) + '"';
 			}
 			if (!m.keywords.is_empty()) {
-				additional_attributes += String(" keywords=\"") + m.keywords.xml_escape(true) + "\"";
+				additional_attributes += " keywords=\"" + m.keywords.xml_escape(true) + '"';
 			}
 
-			_write_string(f, 2, "<" + p_name + " name=\"" + m.name.xml_escape(true) + "\"" + additional_attributes + ">");
+			_write_string(f, 2, '<' + p_name + " name=\"" + m.name.xml_escape(true) + '"' + additional_attributes + '>');
 
 			if (!m.return_type.is_empty()) {
 				String enum_text;
 				if (!m.return_enum.is_empty()) {
-					enum_text = " enum=\"" + m.return_enum.xml_escape(true) + "\"";
+					enum_text = " enum=\"" + m.return_enum.xml_escape(true) + '"';
 					if (m.return_is_bitfield) {
 						enum_text += " is_bitfield=\"true\"";
 					}
 				}
-				_write_string(f, 3, "<return type=\"" + m.return_type.xml_escape(true) + "\"" + enum_text + " />");
+				_write_string(f, 3, "<return type=\"" + m.return_type.xml_escape(true) + '"' + enum_text + " />");
 			}
 			if (m.errors_returned.size() > 0) {
 				for (int j = 0; j < m.errors_returned.size(); j++) {
@@ -1592,16 +1592,16 @@ static void _write_method_doc(Ref<FileAccess> f, const String &p_name, Vector<Do
 
 				String enum_text;
 				if (!a.enumeration.is_empty()) {
-					enum_text = " enum=\"" + a.enumeration.xml_escape(true) + "\"";
+					enum_text = " enum=\"" + a.enumeration.xml_escape(true) + '"';
 					if (a.is_bitfield) {
 						enum_text += " is_bitfield=\"true\"";
 					}
 				}
 
 				if (!a.default_value.is_empty()) {
-					_write_string(f, 3, "<param index=\"" + itos(j) + "\" name=\"" + a.name.xml_escape(true) + "\" type=\"" + a.type.xml_escape(true) + "\"" + enum_text + " default=\"" + a.default_value.xml_escape(true) + "\" />");
+					_write_string(f, 3, "<param index=\"" + itos(j) + "\" name=\"" + a.name.xml_escape(true) + "\" type=\"" + a.type.xml_escape(true) + '"' + enum_text + " default=\"" + a.default_value.xml_escape(true) + "\" />");
 				} else {
-					_write_string(f, 3, "<param index=\"" + itos(j) + "\" name=\"" + a.name.xml_escape(true) + "\" type=\"" + a.type.xml_escape(true) + "\"" + enum_text + " />");
+					_write_string(f, 3, "<param index=\"" + itos(j) + "\" name=\"" + a.name.xml_escape(true) + "\" type=\"" + a.type.xml_escape(true) + '"' + enum_text + " />");
 				}
 			}
 
@@ -1609,7 +1609,7 @@ static void _write_method_doc(Ref<FileAccess> f, const String &p_name, Vector<Do
 			_write_string(f, 4, _translate_doc_string(m.description).strip_edges().xml_escape());
 			_write_string(f, 3, "</description>");
 
-			_write_string(f, 2, "</" + p_name + ">");
+			_write_string(f, 2, "</" + p_name + '>');
 		}
 
 		_write_string(f, 1, "</" + p_name + "s>");
@@ -1631,22 +1631,22 @@ Error DocTools::save_classes(const String &p_default_path, const HashMap<String,
 		String save_file = save_path.path_join(c.name.remove_char('\"').replace("/", "--") + ".xml");
 		Ref<FileAccess> f = FileAccess::open(save_file, FileAccess::WRITE, &err);
 
-		ERR_CONTINUE_MSG(err != OK, "Can't write doc file: " + save_file + ".");
+		ERR_CONTINUE_MSG(err != OK, "Can't write doc file: " + save_file + '.');
 
 		_write_string(f, 0, "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
 
-		String header = "<class name=\"" + c.name.xml_escape(true) + "\"";
+		String header = "<class name=\"" + c.name.xml_escape(true) + '"';
 		if (!c.inherits.is_empty()) {
-			header += " inherits=\"" + c.inherits.xml_escape(true) + "\"";
+			header += " inherits=\"" + c.inherits.xml_escape(true) + '"';
 			if (c.is_deprecated) {
-				header += " deprecated=\"" + c.deprecated_message.xml_escape(true) + "\"";
+				header += " deprecated=\"" + c.deprecated_message.xml_escape(true) + '"';
 			}
 			if (c.is_experimental) {
-				header += " experimental=\"" + c.experimental_message.xml_escape(true) + "\"";
+				header += " experimental=\"" + c.experimental_message.xml_escape(true) + '"';
 			}
 		}
 		if (!c.keywords.is_empty()) {
-			header += String(" keywords=\"") + c.keywords.xml_escape(true) + "\"";
+			header += " keywords=\"" + c.keywords.xml_escape(true) + '"';
 		}
 		// Reference the XML schema so editors can provide error checking.
 		String schema_path;
@@ -1672,8 +1672,8 @@ Error DocTools::save_classes(const String &p_default_path, const HashMap<String,
 		_write_string(f, 1, "<tutorials>");
 		for (int i = 0; i < c.tutorials.size(); i++) {
 			DocData::TutorialDoc tutorial = c.tutorials.get(i);
-			String title_attribute = (!tutorial.title.is_empty()) ? " title=\"" + _translate_doc_string(tutorial.title).xml_escape(true) + "\"" : "";
-			_write_string(f, 2, "<link" + title_attribute + ">" + tutorial.link.xml_escape() + "</link>");
+			String title_attribute = (!tutorial.title.is_empty()) ? " title=\"" + _translate_doc_string(tutorial.title).xml_escape(true) + '"' : "";
+			_write_string(f, 2, "<link" + title_attribute + '>' + tutorial.link.xml_escape() + "</link>");
 		}
 		_write_string(f, 1, "</tutorials>");
 
@@ -1687,30 +1687,30 @@ Error DocTools::save_classes(const String &p_default_path, const HashMap<String,
 			for (int i = 0; i < c.properties.size(); i++) {
 				String additional_attributes;
 				if (!c.properties[i].enumeration.is_empty()) {
-					additional_attributes += " enum=\"" + c.properties[i].enumeration.xml_escape(true) + "\"";
+					additional_attributes += " enum=\"" + c.properties[i].enumeration.xml_escape(true) + '"';
 					if (c.properties[i].is_bitfield) {
 						additional_attributes += " is_bitfield=\"true\"";
 					}
 				}
 				if (!c.properties[i].default_value.is_empty()) {
-					additional_attributes += " default=\"" + c.properties[i].default_value.xml_escape(true) + "\"";
+					additional_attributes += " default=\"" + c.properties[i].default_value.xml_escape(true) + '"';
 				}
 				if (c.properties[i].is_deprecated) {
-					additional_attributes += " deprecated=\"" + c.properties[i].deprecated_message.xml_escape(true) + "\"";
+					additional_attributes += " deprecated=\"" + c.properties[i].deprecated_message.xml_escape(true) + '"';
 				}
 				if (c.properties[i].is_experimental) {
-					additional_attributes += " experimental=\"" + c.properties[i].experimental_message.xml_escape(true) + "\"";
+					additional_attributes += " experimental=\"" + c.properties[i].experimental_message.xml_escape(true) + '"';
 				}
 				if (!c.properties[i].keywords.is_empty()) {
-					additional_attributes += String(" keywords=\"") + c.properties[i].keywords.xml_escape(true) + "\"";
+					additional_attributes += " keywords=\"" + c.properties[i].keywords.xml_escape(true) + '"';
 				}
 
 				const DocData::PropertyDoc &p = c.properties[i];
 
 				if (c.properties[i].overridden) {
-					_write_string(f, 2, "<member name=\"" + p.name.xml_escape(true) + "\" type=\"" + p.type.xml_escape(true) + "\" setter=\"" + p.setter.xml_escape(true) + "\" getter=\"" + p.getter.xml_escape(true) + "\" overrides=\"" + p.overrides.xml_escape(true) + "\"" + additional_attributes + " />");
+					_write_string(f, 2, "<member name=\"" + p.name.xml_escape(true) + "\" type=\"" + p.type.xml_escape(true) + "\" setter=\"" + p.setter.xml_escape(true) + "\" getter=\"" + p.getter.xml_escape(true) + "\" overrides=\"" + p.overrides.xml_escape(true) + '"' + additional_attributes + " />");
 				} else {
-					_write_string(f, 2, "<member name=\"" + p.name.xml_escape(true) + "\" type=\"" + p.type.xml_escape(true) + "\" setter=\"" + p.setter.xml_escape(true) + "\" getter=\"" + p.getter.xml_escape(true) + "\"" + additional_attributes + ">");
+					_write_string(f, 2, "<member name=\"" + p.name.xml_escape(true) + "\" type=\"" + p.type.xml_escape(true) + "\" setter=\"" + p.setter.xml_escape(true) + "\" getter=\"" + p.getter.xml_escape(true) + '"' + additional_attributes + '>');
 					_write_string(f, 3, _translate_doc_string(p.description).strip_edges().xml_escape());
 					_write_string(f, 2, "</member>");
 				}
@@ -1727,30 +1727,30 @@ Error DocTools::save_classes(const String &p_default_path, const HashMap<String,
 
 				String additional_attributes;
 				if (c.constants[i].is_deprecated) {
-					additional_attributes += " deprecated=\"" + c.constants[i].deprecated_message.xml_escape(true) + "\"";
+					additional_attributes += " deprecated=\"" + c.constants[i].deprecated_message.xml_escape(true) + '"';
 				}
 				if (c.constants[i].is_experimental) {
-					additional_attributes += " experimental=\"" + c.constants[i].experimental_message.xml_escape(true) + "\"";
+					additional_attributes += " experimental=\"" + c.constants[i].experimental_message.xml_escape(true) + '"';
 				}
 				if (!c.constants[i].keywords.is_empty()) {
-					additional_attributes += String(" keywords=\"") + c.constants[i].keywords.xml_escape(true) + "\"";
+					additional_attributes += " keywords=\"" + c.constants[i].keywords.xml_escape(true) + '"';
 				}
 
 				if (k.is_value_valid) {
 					if (!k.enumeration.is_empty()) {
 						if (k.is_bitfield) {
-							_write_string(f, 2, "<constant name=\"" + k.name.xml_escape(true) + "\" value=\"" + k.value.xml_escape(true) + "\" enum=\"" + k.enumeration.xml_escape(true) + "\" is_bitfield=\"true\"" + additional_attributes + ">");
+							_write_string(f, 2, "<constant name=\"" + k.name.xml_escape(true) + "\" value=\"" + k.value.xml_escape(true) + "\" enum=\"" + k.enumeration.xml_escape(true) + "\" is_bitfield=\"true\"" + additional_attributes + '>');
 						} else {
-							_write_string(f, 2, "<constant name=\"" + k.name.xml_escape(true) + "\" value=\"" + k.value.xml_escape(true) + "\" enum=\"" + k.enumeration.xml_escape(true) + "\"" + additional_attributes + ">");
+							_write_string(f, 2, "<constant name=\"" + k.name.xml_escape(true) + "\" value=\"" + k.value.xml_escape(true) + "\" enum=\"" + k.enumeration.xml_escape(true) + '"' + additional_attributes + '>');
 						}
 					} else {
-						_write_string(f, 2, "<constant name=\"" + k.name.xml_escape(true) + "\" value=\"" + k.value.xml_escape(true) + "\"" + additional_attributes + ">");
+						_write_string(f, 2, "<constant name=\"" + k.name.xml_escape(true) + "\" value=\"" + k.value.xml_escape(true) + '"' + additional_attributes + '>');
 					}
 				} else {
 					if (!k.enumeration.is_empty()) {
-						_write_string(f, 2, "<constant name=\"" + k.name.xml_escape(true) + "\" value=\"platform-dependent\" enum=\"" + k.enumeration.xml_escape(true) + "\"" + additional_attributes + ">");
+						_write_string(f, 2, "<constant name=\"" + k.name.xml_escape(true) + "\" value=\"platform-dependent\" enum=\"" + k.enumeration.xml_escape(true) + '"' + additional_attributes + '>');
 					} else {
-						_write_string(f, 2, "<constant name=\"" + k.name.xml_escape(true) + "\" value=\"platform-dependent\"" + additional_attributes + ">");
+						_write_string(f, 2, "<constant name=\"" + k.name.xml_escape(true) + "\" value=\"platform-dependent\"" + additional_attributes + '>');
 					}
 				}
 				_write_string(f, 3, _translate_doc_string(k.description).strip_edges().xml_escape());
@@ -1769,19 +1769,19 @@ Error DocTools::save_classes(const String &p_default_path, const HashMap<String,
 
 				String additional_attributes;
 				if (!ti.default_value.is_empty()) {
-					additional_attributes += String(" default=\"") + ti.default_value.xml_escape(true) + "\"";
+					additional_attributes += " default=\"" + ti.default_value.xml_escape(true) + '"';
 				}
 				if (ti.is_deprecated) {
-					additional_attributes += " deprecated=\"" + ti.deprecated_message.xml_escape(true) + "\"";
+					additional_attributes += " deprecated=\"" + ti.deprecated_message.xml_escape(true) + '"';
 				}
 				if (ti.is_experimental) {
-					additional_attributes += " experimental=\"" + ti.experimental_message.xml_escape(true) + "\"";
+					additional_attributes += " experimental=\"" + ti.experimental_message.xml_escape(true) + '"';
 				}
 				if (!ti.keywords.is_empty()) {
-					additional_attributes += String(" keywords=\"") + ti.keywords.xml_escape(true) + "\"";
+					additional_attributes += " keywords=\"" + ti.keywords.xml_escape(true) + '"';
 				}
 
-				_write_string(f, 2, "<theme_item name=\"" + ti.name.xml_escape(true) + "\" data_type=\"" + ti.data_type.xml_escape(true) + "\" type=\"" + ti.type.xml_escape(true) + "\"" + additional_attributes + ">");
+				_write_string(f, 2, "<theme_item name=\"" + ti.name.xml_escape(true) + "\" data_type=\"" + ti.data_type.xml_escape(true) + "\" type=\"" + ti.type.xml_escape(true) + '"' + additional_attributes + '>');
 
 				_write_string(f, 3, _translate_doc_string(ti.description).strip_edges().xml_escape());
 

@@ -393,7 +393,7 @@ String AudioStreamInteractive::_get_streams_hint() const {
 
 	for (int i = 0; i < clip_count; i++) {
 		if (i > 0) {
-			stream_name_cache += ",";
+			stream_name_cache += ',';
 		}
 		String n = String(clips[i].name).replace_char(',', ' ');
 
@@ -450,7 +450,7 @@ void AudioStreamInteractive::_validate_property(PropertyInfo &r_property) const 
 void AudioStreamInteractive::get_parameter_list(List<Parameter> *r_parameters) {
 	String clip_names;
 	for (int i = 0; i < clip_count; i++) {
-		clip_names += ",";
+		clip_names += ',';
 		clip_names += clips[i].name;
 	}
 	r_parameters->push_back(Parameter(PropertyInfo(Variant::STRING, "switch_to_clip", PROPERTY_HINT_ENUM, clip_names, PROPERTY_USAGE_EDITOR), ""));
@@ -987,7 +987,7 @@ void AudioStreamPlaybackInteractive::switch_to_clip_by_name(const StringName &p_
 			return;
 		}
 	}
-	ERR_FAIL_MSG("Clip not found: " + String(p_name));
+	ERR_FAIL_MSG("Clip not found: " + p_name);
 }
 
 void AudioStreamPlaybackInteractive::set_parameter(const StringName &p_name, const Variant &p_value) {

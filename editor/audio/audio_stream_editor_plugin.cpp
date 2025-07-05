@@ -207,7 +207,7 @@ void AudioStreamEditor::set_stream(const Ref<AudioStream> &p_stream) {
 	_player->set_stream(stream);
 	_current = 0;
 
-	String text = String::num(stream->get_length(), 2).pad_decimals(2) + "s";
+	String text = String::num(stream->get_length(), 2).pad_decimals(2) + 's';
 	_duration_label->set_text(text);
 
 	queue_redraw();

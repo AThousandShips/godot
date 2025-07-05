@@ -375,7 +375,7 @@ Variant ProjectSettings::get_setting_with_override_and_custom_features(const Str
 	}
 
 	if (!props.has(name)) {
-		WARN_PRINT("Property not found: " + String(name));
+		WARN_PRINT("Property not found: " + name);
 		return Variant();
 	}
 	return props[name].variant;
@@ -901,7 +901,7 @@ Error ProjectSettings::_load_settings_text(const String &p_path) {
 				if (section.is_empty()) {
 					set(assign, value);
 				} else {
-					set(section + "/" + assign, value);
+					set(section + '/' + assign, value);
 				}
 			}
 		} else if (!next_tag.name.is_empty()) {
@@ -1015,7 +1015,7 @@ Error ProjectSettings::_save_settings_binary(const String &p_file, const RBMap<S
 		for (const String &key : E.value) {
 			String k = key;
 			if (!E.key.is_empty()) {
-				k = E.key + "/" + k;
+				k = E.key + '/' + k;
 			}
 			Variant value;
 			if (p_custom.has(k)) {
@@ -1058,7 +1058,7 @@ Error ProjectSettings::_save_settings_text(const String &p_file, const RBMap<Str
 	file->store_line(";   param=value ; assign values to parameters");
 	file->store_line("");
 
-	file->store_string("config_version=" + itos(CONFIG_VERSION) + "\n");
+	file->store_string("config_version=" + itos(CONFIG_VERSION) + '\n');
 	if (!p_custom_features.is_empty()) {
 		file->store_string("custom_features=\"" + p_custom_features + "\"\n");
 	}
@@ -1070,12 +1070,12 @@ Error ProjectSettings::_save_settings_text(const String &p_file, const RBMap<Str
 		}
 
 		if (!E.key.is_empty()) {
-			file->store_string("[" + E.key + "]\n\n");
+			file->store_string('[' + E.key + "]\n\n");
 		}
 		for (const String &F : E.value) {
 			String key = F;
 			if (!E.key.is_empty()) {
-				key = E.key + "/" + key;
+				key = E.key + '/' + key;
 			}
 			Variant value;
 			if (p_custom.has(key)) {
@@ -1086,7 +1086,7 @@ Error ProjectSettings::_save_settings_text(const String &p_file, const RBMap<Str
 
 			String vstr;
 			VariantWriter::write_to_string(value, vstr);
-			file->store_string(F.property_name_encode() + "=" + vstr + "\n");
+			file->store_string(F.property_name_encode() + '=' + vstr + '\n');
 		}
 	}
 
@@ -1208,7 +1208,7 @@ Error ProjectSettings::save_custom(const String &p_path, const CustomMap &p_cust
 
 	for (int i = 0; i < p_custom_features.size(); i++) {
 		if (i > 0) {
-			save_features += ",";
+			save_features += ',';
 		}
 
 		String f = p_custom_features[i].strip_edges().remove_char('\"');

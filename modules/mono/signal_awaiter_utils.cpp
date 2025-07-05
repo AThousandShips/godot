@@ -70,11 +70,11 @@ String SignalAwaiterCallable::get_as_text() const {
 		String class_name = base->get_class();
 		Ref<Script> script = base->get_script();
 		if (script.is_valid() && script->get_path().is_resource_file()) {
-			class_name += "(" + script->get_path().get_file() + ")";
+			class_name += '(' + script->get_path().get_file() + ')';
 		}
-		return class_name + "::SignalAwaiterMiddleman::" + String(signal);
+		return class_name + "::SignalAwaiterMiddleman::" + signal;
 	} else {
-		return "null::SignalAwaiterMiddleman::" + String(signal);
+		return "null::SignalAwaiterMiddleman::" + signal;
 	}
 }
 
@@ -155,9 +155,9 @@ String EventSignalCallable::get_as_text() const {
 	String class_name = owner->get_class();
 	Ref<Script> script = owner->get_script();
 	if (script.is_valid() && script->get_path().is_resource_file()) {
-		class_name += "(" + script->get_path().get_file() + ")";
+		class_name += '(' + script->get_path().get_file() + ')';
 	}
-	return class_name + "::EventSignalMiddleman::" + String(event_signal_name);
+	return class_name + "::EventSignalMiddleman::" + event_signal_name;
 }
 
 CallableCustom::CompareEqualFunc EventSignalCallable::get_compare_equal_func() const {

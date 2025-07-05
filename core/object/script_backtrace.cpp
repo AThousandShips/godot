@@ -186,10 +186,10 @@ String ScriptBacktrace::format(int p_indent_all, int p_indent_frames) const {
 	String result = indent_all + language_name + " backtrace (most recent call first):";
 	for (int i = 0; i < (int)stack_frames.size(); i++) {
 		const StackFrame &stack_frame = stack_frames[i];
-		result += "\n" + indent_total + "[" + itos(i) + "] " + stack_frame.function;
+		result += '\n' + indent_total + '[' + itos(i) + "] " + stack_frame.function;
 
 		if (!stack_frame.file.is_empty()) {
-			result += " (" + stack_frame.file + ":" + itos(stack_frame.line) + ")";
+			result += " (" + stack_frame.file + ':' + itos(stack_frame.line) + ')';
 		}
 	}
 

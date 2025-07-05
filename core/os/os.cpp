@@ -375,7 +375,7 @@ Error OS::shell_show_in_file_manager(String p_path, bool p_open_folder) {
 		p_path = p_path.get_base_dir();
 	}
 
-	p_path = String("file://") + p_path;
+	p_path = "file://" + p_path;
 
 	return shell_open(p_path);
 }

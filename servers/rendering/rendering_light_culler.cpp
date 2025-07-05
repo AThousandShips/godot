@@ -215,7 +215,7 @@ void RenderingLightCuller::cull_regular_light(PagedArray<RendererSceneCull::Inst
 	uint32_t removed = r_instance_shadow_cull_result.size() - count_before;
 	if (removed) {
 		if (((data.debug_count) % 60) == 0) {
-			print_line("[" + itos(data.debug_count) + "] linear cull before " + itos(count_before) + " after " + itos(r_instance_shadow_cull_result.size()));
+			print_line('[' + itos(data.debug_count) + "] linear cull before " + itos(count_before) + " after " + itos(r_instance_shadow_cull_result.size()));
 		}
 	}
 #endif
@@ -683,7 +683,7 @@ void RenderingLightCuller::debug_print_LUT_as_table() {
 
 		sz += itos(entry.size()) + ", ";
 	}
-	sz += "}";
+	sz += '}';
 	print_line(sz);
 	print_line("\nCopy this to LUT_entries:\n");
 
@@ -699,7 +699,7 @@ void RenderingLightCuller::debug_print_LUT_as_table() {
 			if (p < s) {
 				sz += itos(entry[p]);
 			} else {
-				sz += "0"; // just a spacer
+				sz += '0'; // just a spacer
 			}
 
 			sz += ", ";
@@ -722,7 +722,7 @@ void RenderingLightCuller::debug_print_LUT() {
 
 		const LocalVector<uint8_t> &entry = _calculated_LUT[n];
 
-		sz = "\t" + string_LUT_entry(entry);
+		sz = '\t' + string_LUT_entry(entry);
 
 		print_line(sz);
 	}
@@ -748,7 +748,7 @@ String RenderingLightCuller::debug_string_LUT_entry(const LocalVector<uint8_t> &
 	for (uint32_t i = 0; i < p_entry.size(); i++) {
 		int pt_order = p_entry[i];
 		if (p_pair && ((i % 2) == 0)) {
-			string += itos(pt_order) + "-";
+			string += itos(pt_order) + '-';
 		} else {
 			string += itos(pt_order) + ", ";
 		}
@@ -829,7 +829,7 @@ void RenderingLightCuller::compact_LUT_entry(uint32_t p_entry_id) {
 			int a = entry[p * 2];
 			int b = entry[(p * 2) + 1];
 
-			string += "[" + itos(a) + "-" + itos(b) + "], ";
+			string += '[' + itos(a) + '-' + itos(b) + "], ";
 
 			int found_a = temp.find(a);
 			int found_b = temp.find(b);
@@ -837,14 +837,14 @@ void RenderingLightCuller::compact_LUT_entry(uint32_t p_entry_id) {
 			// Special case, if they are both already in the list, no need to add
 			// as this is a link from the tail to the head of the list.
 			if ((found_a != -1) && (found_b != -1)) {
-				string += "foundAB link " + itos(found_a) + ", " + itos(found_b) + " ";
+				string += "foundAB link " + itos(found_a) + ", " + itos(found_b) + ' ';
 				BFpairs |= bit;
 				goto found;
 			}
 
 			// Find a.
 			if (found_a != -1) {
-				string += "foundA " + itos(found_a) + " ";
+				string += "foundA " + itos(found_a) + ' ';
 				temp.insert(found_a + 1, b);
 				BFpairs |= bit;
 				goto found;
@@ -852,7 +852,7 @@ void RenderingLightCuller::compact_LUT_entry(uint32_t p_entry_id) {
 
 			// Find b.
 			if (found_b != -1) {
-				string += "foundB " + itos(found_b) + " ";
+				string += "foundB " + itos(found_b) + ' ';
 				temp.insert(found_b, a);
 				BFpairs |= bit;
 				goto found;

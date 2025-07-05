@@ -132,7 +132,7 @@ void AnimatedSprite2D::_validate_property(PropertyInfo &p_property) const {
 
 		for (const StringName &E : names) {
 			if (!is_first_element) {
-				p_property.hint_string += ",";
+				p_property.hint_string += ',';
 			} else {
 				is_first_element = false;
 			}
@@ -145,9 +145,9 @@ void AnimatedSprite2D::_validate_property(PropertyInfo &p_property) const {
 
 		if (!current_found) {
 			if (p_property.hint_string.is_empty()) {
-				p_property.hint_string = String(animation);
+				p_property.hint_string = animation;
 			} else {
-				p_property.hint_string = String(animation) + "," + p_property.hint_string;
+				p_property.hint_string = String(animation) + ',' + p_property.hint_string;
 			}
 		}
 		return;

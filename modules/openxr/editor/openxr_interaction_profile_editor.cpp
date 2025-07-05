@@ -199,7 +199,7 @@ void OpenXRInteractionProfileEditorBase::setup(Ref<OpenXRActionMap> p_action_map
 		profile_name = profile_def->display_name;
 
 		if (!profile_def->openxr_extension_name.is_empty()) {
-			profile_name += "*";
+			profile_name += '*';
 
 			tooltip = vformat(TTR("Note: This interaction profile requires extension %s support."), profile_def->openxr_extension_name);
 		}
@@ -245,7 +245,7 @@ void OpenXRInteractionProfileEditor::_add_io_path(VBoxContainer *p_container, co
 	if (p_io_path->openxr_extension_name.is_empty()) {
 		path_label->set_text(p_io_path->display_name);
 	} else {
-		path_label->set_text(p_io_path->display_name + "*");
+		path_label->set_text(p_io_path->display_name + '*');
 		p_container->set_tooltip_text(vformat(TTR("Note: This binding path requires extension %s support."), p_io_path->openxr_extension_name));
 	}
 	path_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);

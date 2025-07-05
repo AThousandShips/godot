@@ -150,8 +150,8 @@ void EditorScenePostImport::init(const String &p_source_file) {
 
 Variant EditorScenePostImportPlugin::get_option_value(const StringName &p_name) const {
 	ERR_FAIL_COND_V_MSG(current_options == nullptr && current_options_dict == nullptr, Variant(), "get_option_value called from a function where option values are not available.");
-	ERR_FAIL_COND_V_MSG(current_options && !current_options->has(p_name), Variant(), "get_option_value called with unexisting option argument: " + String(p_name));
-	ERR_FAIL_COND_V_MSG(current_options_dict && !current_options_dict->has(p_name), Variant(), "get_option_value called with unexisting option argument: " + String(p_name));
+	ERR_FAIL_COND_V_MSG(current_options && !current_options->has(p_name), Variant(), "get_option_value called with unexisting option argument: " + p_name);
+	ERR_FAIL_COND_V_MSG(current_options_dict && !current_options_dict->has(p_name), Variant(), "get_option_value called with unexisting option argument: " + p_name);
 	if (current_options && current_options->has(p_name)) {
 		return (*current_options)[p_name];
 	}
@@ -416,13 +416,13 @@ static bool _teststr(const String &p_what, const String &p_str) {
 		what = what.substr(0, what.length() - 1);
 	}
 
-	if (what.containsn("$" + p_str)) { // Blender and other stuff.
+	if (what.containsn('$' + p_str)) { // Blender and other stuff.
 		return true;
 	}
-	if (what.to_lower().ends_with("-" + p_str)) { //collada only supports "_" and "-" besides letters
+	if (what.to_lower().ends_with('-' + p_str)) { //collada only supports "_" and "-" besides letters
 		return true;
 	}
-	if (what.to_lower().ends_with("_" + p_str)) { //collada only supports "_" and "-" besides letters
+	if (what.to_lower().ends_with('_' + p_str)) { //collada only supports "_" and "-" besides letters
 		return true;
 	}
 	return false;
@@ -439,13 +439,13 @@ static String _fixstr(const String &p_what, const String &p_str) {
 
 	String end = p_what.substr(what.length());
 
-	if (what.containsn("$" + p_str)) { // Blender and other stuff.
-		return what.replace("$" + p_str, "") + end;
+	if (what.containsn('$' + p_str)) { // Blender and other stuff.
+		return what.replace('$' + p_str, "") + end;
 	}
-	if (what.to_lower().ends_with("-" + p_str)) { //collada only supports "_" and "-" besides letters
+	if (what.to_lower().ends_with('-' + p_str)) { //collada only supports "_" and "-" besides letters
 		return what.substr(0, what.length() - (p_str.length() + 1)) + end;
 	}
-	if (what.to_lower().ends_with("_" + p_str)) { //collada only supports "_" and "-" besides letters
+	if (what.to_lower().ends_with('_' + p_str)) { //collada only supports "_" and "-" besides letters
 		return what.substr(0, what.length() - (p_str.length() + 1)) + end;
 	}
 	return what;
@@ -2500,7 +2500,7 @@ void ResourceImporterScene::get_import_options(const String &p_path, List<Import
 
 	for (const String &E : script_extensions) {
 		if (!script_ext_hint.is_empty()) {
-			script_ext_hint += ",";
+			script_ext_hint += ',';
 		}
 		script_ext_hint += "*." + E;
 	}
@@ -3276,14 +3276,14 @@ Error ResourceImporterScene::import(ResourceUID::ID p_source_id, const String &p
 		}
 		Ref<Script> scr = ResourceLoader::load(post_import_script_path);
 		if (scr.is_null()) {
-			EditorNode::add_io_error(TTR("Couldn't load post-import script:") + " " + post_import_script_path);
+			EditorNode::add_io_error(TTR("Couldn't load post-import script:") + ' ' + post_import_script_path);
 		} else if (scr->get_instance_base_type() != "EditorScenePostImport") {
-			EditorNode::add_io_error(TTR("Script is not a subtype of EditorScenePostImport:") + " " + post_import_script_path);
+			EditorNode::add_io_error(TTR("Script is not a subtype of EditorScenePostImport:") + ' ' + post_import_script_path);
 		} else {
 			post_import_script.instantiate();
 			post_import_script->set_script(scr);
 			if (!post_import_script->get_script_instance()) {
-				EditorNode::add_io_error(TTR("Invalid/broken script for post-import (check console):") + " " + post_import_script_path);
+				EditorNode::add_io_error(TTR("Invalid/broken script for post-import (check console):") + ' ' + post_import_script_path);
 				post_import_script.unref();
 				return ERR_CANT_CREATE;
 			}
@@ -3308,7 +3308,7 @@ Error ResourceImporterScene::import(ResourceUID::ID p_source_id, const String &p
 		scene = post_import_script->post_import(scene);
 		if (!scene) {
 			EditorNode::add_io_error(
-					TTR("Error running post-import script:") + " " + post_import_script_path + "\n" +
+					TTR("Error running post-import script:") + ' ' + post_import_script_path + '\n' +
 					TTR("Did you return a Node-derived object in the `_post_import()` method?"));
 			return err;
 		}

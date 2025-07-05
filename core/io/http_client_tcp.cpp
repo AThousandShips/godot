@@ -163,7 +163,7 @@ Error HTTPClientTCP::request(Method p_method, const String &p_url, const Vector<
 		uri = vformat("http://%s:%d%s", conn_host, conn_port, p_url);
 	}
 
-	String request = String(_methods[p_method]) + " " + uri + " HTTP/1.1\r\n";
+	String request = String(_methods[p_method]) + ' ' + uri + " HTTP/1.1\r\n";
 	bool add_host = true;
 	bool add_clen = p_body_size > 0;
 	bool add_uagent = true;
@@ -188,7 +188,7 @@ Error HTTPClientTCP::request(Method p_method, const String &p_url, const Vector<
 			// Don't append the standard ports.
 			request += "Host: " + conn_host + "\r\n";
 		} else {
-			request += "Host: " + conn_host + ":" + itos(conn_port) + "\r\n";
+			request += "Host: " + conn_host + ':' + itos(conn_port) + "\r\n";
 		}
 	}
 	if (add_clen) {

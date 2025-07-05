@@ -1731,8 +1731,8 @@ RendererCanvasRenderRD::RendererCanvasRenderRD() {
 	{ //shader variants
 
 		String global_defines;
-		global_defines += "#define MAX_LIGHTS " + itos(MAX_LIGHTS_PER_RENDER) + "\n";
-		global_defines += "\n#define SAMPLERS_BINDING_FIRST_INDEX " + itos(SAMPLERS_BINDING_FIRST_INDEX) + "\n";
+		global_defines += "#define MAX_LIGHTS " + itos(MAX_LIGHTS_PER_RENDER) + '\n';
+		global_defines += "\n#define SAMPLERS_BINDING_FIRST_INDEX " + itos(SAMPLERS_BINDING_FIRST_INDEX) + '\n';
 
 		state.light_uniforms = memnew_arr(LightUniform, MAX_LIGHTS_PER_RENDER);
 		Vector<String> variants;

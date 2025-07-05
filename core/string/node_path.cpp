@@ -181,13 +181,13 @@ NodePath::operator String() const {
 
 	for (int i = 0; i < data->path.size(); i++) {
 		if (i > 0) {
-			ret += "/";
+			ret += '/';
 		}
 		ret += data->path[i].operator String();
 	}
 
 	for (int i = 0; i < data->subpath.size(); i++) {
-		ret += ":" + data->subpath[i].operator String();
+		ret += ':' + data->subpath[i].operator String();
 	}
 
 	return ret;
@@ -216,7 +216,7 @@ StringName NodePath::get_concatenated_names() const {
 		const StringName *sn = data->path.ptr();
 		for (int i = 0; i < pc; i++) {
 			if (i > 0) {
-				concatenated += "/";
+				concatenated += '/';
 			}
 			concatenated += sn[i].operator String();
 		}
@@ -234,7 +234,7 @@ StringName NodePath::get_concatenated_subnames() const {
 		const StringName *ssn = data->subpath.ptr();
 		for (int i = 0; i < spc; i++) {
 			if (i > 0) {
-				concatenated += ":";
+				concatenated += ':';
 			}
 			concatenated += ssn[i].operator String();
 		}
@@ -322,7 +322,7 @@ NodePath NodePath::get_as_property_path() const {
 		String initial_subname = data->path[0];
 
 		for (int i = 1; i < data->path.size(); i++) {
-			initial_subname += "/" + data->path[i];
+			initial_subname += '/' + data->path[i];
 		}
 		new_path.insert(0, initial_subname);
 

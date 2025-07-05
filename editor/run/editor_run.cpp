@@ -112,7 +112,7 @@ Error EditorRun::run(const String &p_scene, const String &p_write_movie, const V
 	WindowPlacement window_placement = get_window_placement();
 	if (window_placement.position != Point2i(INT_MAX, INT_MAX)) {
 		args.push_back("--position");
-		args.push_back(itos(window_placement.position.x) + "," + itos(window_placement.position.y));
+		args.push_back(itos(window_placement.position.x) + ',' + itos(window_placement.position.y));
 	}
 
 	if (window_placement.force_maximized) {
@@ -130,7 +130,7 @@ Error EditorRun::run(const String &p_scene, const String &p_write_movie, const V
 		for (const List<String>::Element *E = breakpoints.front(); E; E = E->next()) {
 			bpoints += E->get().replace(" ", "%20");
 			if (E->next()) {
-				bpoints += ",";
+				bpoints += ',';
 			}
 		}
 

@@ -356,8 +356,8 @@ void CreateDialog::_configure_search_option_item(TreeItem *r_item, const StringN
 		type_name = p_type;
 		text = p_type;
 	} else if (p_type_category == TypeCategory::PATH_TYPE) {
-		type_name = "\"" + p_type + "\"";
-		text = "\"" + p_type + "\"";
+		type_name = '"' + p_type + '"';
+		text = '"' + p_type + '"';
 	} else if (script_type) {
 		is_custom_type = true;
 		type_name = p_type;
@@ -368,7 +368,7 @@ void CreateDialog::_configure_search_option_item(TreeItem *r_item, const StringN
 		String tooltip = TTR("Script path: %s");
 		bool is_tool = ScriptServer::is_global_class_tool(p_type);
 		if (is_tool) {
-			tooltip = TTR("The script will run in the editor.") + "\n" + tooltip;
+			tooltip = TTR("The script will run in the editor.") + '\n' + tooltip;
 		}
 		r_item->add_button(0, get_editor_theme_icon(SNAME("Script")), 1, false, vformat(tooltip, ScriptServer::get_global_class_path(p_type)));
 		if (is_tool) {
@@ -585,7 +585,7 @@ void CreateDialog::select_type(const String &p_type, bool p_center_on_item) {
 	to_select->select(0);
 	search_options->scroll_to_item(to_select, p_center_on_item);
 
-	help_bit->parse_symbol("class|" + p_type + "|");
+	help_bit->parse_symbol("class|" + p_type + '|');
 
 	favorite->set_disabled(false);
 	favorite->set_pressed(favorite_list.has(p_type));

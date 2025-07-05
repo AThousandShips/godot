@@ -1920,7 +1920,7 @@ void GDScriptAnalyzer::resolve_function_signature(GDScriptParser::FunctionNode *
 
 			if (!valid) {
 				// Compute parent signature as a string to show in the error message.
-				String parent_signature = String(function_name) + "(";
+				String parent_signature = String(function_name) + '(';
 				int j = 0;
 				for (const GDScriptParser::DataType &par_type : parameters_types) {
 					if (j > 0) {
@@ -3290,14 +3290,14 @@ void GDScriptAnalyzer::reduce_call(GDScriptParser::CallNode *p_call, bool p_is_a
 								p_call->arguments[err.argument]);
 						break;
 					case Callable::CallError::CALL_ERROR_INVALID_METHOD: {
-						String signature = Variant::get_type_name(builtin_type) + "(";
+						String signature = Variant::get_type_name(builtin_type) + '(';
 						for (int i = 0; i < p_call->arguments.size(); i++) {
 							if (i > 0) {
 								signature += ", ";
 							}
 							signature += p_call->arguments[i]->get_datatype().to_string();
 						}
-						signature += ")";
+						signature += ')';
 						push_error(vformat(R"(No constructor of "%s" matches the signature "%s".)", Variant::get_type_name(builtin_type), signature), p_call->callee);
 					} break;
 					case Callable::CallError::CALL_ERROR_TOO_MANY_ARGUMENTS:
@@ -3402,14 +3402,14 @@ void GDScriptAnalyzer::reduce_call(GDScriptParser::CallNode *p_call, bool p_is_a
 				}
 
 				if (!match) {
-					String signature = Variant::get_type_name(builtin_type) + "(";
+					String signature = Variant::get_type_name(builtin_type) + '(';
 					for (int i = 0; i < p_call->arguments.size(); i++) {
 						if (i > 0) {
 							signature += ", ";
 						}
 						signature += p_call->arguments[i]->get_datatype().to_string();
 					}
-					signature += ")";
+					signature += ')';
 					push_error(vformat(R"(No constructor of "%s" matches the signature "%s".)", Variant::get_type_name(builtin_type), signature), p_call);
 				}
 			}
@@ -3744,7 +3744,7 @@ void GDScriptAnalyzer::reduce_call(GDScriptParser::CallNode *p_call, bool p_is_a
 			if (GLOBAL_GET_CACHED(bool, "debug/gdscript/warnings/renamed_in_godot_4_hint")) {
 				const char *renamed_function_name = check_for_renamed_identifier(p_call->function_name, p_call->type);
 				if (renamed_function_name) {
-					rename_hint = " " + vformat(R"(Did you mean to use "%s"?)", String(renamed_function_name) + "()");
+					rename_hint = ' ' + vformat(R"(Did you mean to use "%s"?)", String(renamed_function_name) + "()");
 				}
 			}
 			push_error(vformat(R"*(Function "%s()" not found in base %s.%s)*", p_call->function_name, base_name, rename_hint), p_call->is_super ? p_call : p_call->callee);
@@ -4091,7 +4091,7 @@ void GDScriptAnalyzer::reduce_identifier_from_base(GDScriptParser::IdentifierNod
 				if (GLOBAL_GET_CACHED(bool, "debug/gdscript/warnings/renamed_in_godot_4_hint")) {
 					const char *renamed_identifier_name = check_for_renamed_identifier(name, p_identifier->type);
 					if (renamed_identifier_name) {
-						rename_hint = " " + vformat(R"(Did you mean to use "%s"?)", renamed_identifier_name);
+						rename_hint = ' ' + vformat(R"(Did you mean to use "%s"?)", renamed_identifier_name);
 					}
 				}
 				push_error(vformat(R"(Cannot find member "%s" in base "%s".%s)", name, base.to_string(), rename_hint), p_identifier);
@@ -4135,7 +4135,7 @@ void GDScriptAnalyzer::reduce_identifier_from_base(GDScriptParser::IdentifierNod
 						if (GLOBAL_GET_CACHED(bool, "debug/gdscript/warnings/renamed_in_godot_4_hint")) {
 							const char *renamed_identifier_name = check_for_renamed_identifier(name, p_identifier->type);
 							if (renamed_identifier_name) {
-								rename_hint = " " + vformat(R"(Did you mean to use "%s"?)", renamed_identifier_name);
+								rename_hint = ' ' + vformat(R"(Did you mean to use "%s"?)", renamed_identifier_name);
 							}
 						}
 						push_error(vformat(R"(Cannot find member "%s" in base "%s".%s)", name, base.to_string(), rename_hint), p_identifier);
@@ -4651,7 +4651,7 @@ void GDScriptAnalyzer::reduce_identifier(GDScriptParser::IdentifierNode *p_ident
 	if (GLOBAL_GET_CACHED(bool, "debug/gdscript/warnings/renamed_in_godot_4_hint")) {
 		const char *renamed_identifier_name = check_for_renamed_identifier(name, p_identifier->type);
 		if (renamed_identifier_name) {
-			rename_hint = " " + vformat(R"(Did you mean to use "%s"?)", renamed_identifier_name);
+			rename_hint = ' ' + vformat(R"(Did you mean to use "%s"?)", renamed_identifier_name);
 		}
 	}
 	push_error(vformat(R"(Identifier "%s" not declared in the current scope.%s)", name, rename_hint), p_identifier);

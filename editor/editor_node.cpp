@@ -362,7 +362,7 @@ void EditorNode::_update_title() {
 		// Display the "modified" mark before anything else so that it can always be seen in the OS task bar.
 		title = vformat("(*) %s", title);
 	}
-	DisplayServer::get_singleton()->window_set_title(title + String(" - ") + GODOT_VERSION_NAME);
+	DisplayServer::get_singleton()->window_set_title(title + " - " + GODOT_VERSION_NAME);
 	if (project_title) {
 		project_title->set_text(title);
 	}
@@ -737,7 +737,7 @@ bool EditorNode::_is_project_data_missing() {
 		if (f.is_valid()) {
 			f->store_line("");
 		} else {
-			ERR_PRINT("Failed to create file " + project_data_gdignore_file_path.quote() + ".");
+			ERR_PRINT("Failed to create file " + project_data_gdignore_file_path.quote() + '.');
 		}
 	}
 
@@ -745,7 +745,7 @@ bool EditorNode::_is_project_data_missing() {
 	if (!da->file_exists(uid_cache)) {
 		Error err = ResourceUID::get_singleton()->save_to_cache();
 		if (err != OK) {
-			ERR_PRINT("Failed to create file " + uid_cache.quote() + ".");
+			ERR_PRINT("Failed to create file " + uid_cache.quote() + '.');
 		}
 	}
 
@@ -1674,7 +1674,7 @@ void EditorNode::save_resource_as(const Ref<Resource> &p_resource, const String 
 		} else {
 			if (!preferred.is_empty()) {
 				String resource_name_snake_case = p_resource->get_class().to_snake_case();
-				file->set_current_file("new_" + resource_name_snake_case + "." + preferred.front()->get().to_lower());
+				file->set_current_file("new_" + resource_name_snake_case + '.' + preferred.front()->get().to_lower());
 			} else {
 				file->set_current_file(String());
 			}
@@ -1684,12 +1684,12 @@ void EditorNode::save_resource_as(const Ref<Resource> &p_resource, const String 
 		if (!extensions.is_empty()) {
 			const String ext = p_resource->get_path().get_extension().to_lower();
 			if (extensions.find(ext) == nullptr) {
-				file->set_current_path(p_resource->get_path().replacen("." + ext, "." + extensions.front()->get()));
+				file->set_current_path(p_resource->get_path().replacen('.' + ext, '.' + extensions.front()->get()));
 			}
 		}
 	} else if (!preferred.is_empty()) {
 		const String resource_name_snake_case = p_resource->get_class().to_snake_case();
-		const String existing = "new_" + resource_name_snake_case + "." + preferred.front()->get().to_lower();
+		const String existing = "new_" + resource_name_snake_case + '.' + preferred.front()->get().to_lower();
 		file->set_current_path(existing);
 	}
 	file->set_title(TTR("Save Resource As..."));
@@ -1712,10 +1712,10 @@ void EditorNode::_dialog_display_save_error(String p_file, Error p_error) {
 	if (p_error) {
 		switch (p_error) {
 			case ERR_FILE_CANT_WRITE: {
-				show_accept(TTR("Can't open file for writing:") + " " + p_file.get_extension(), TTR("OK"));
+				show_accept(TTR("Can't open file for writing:") + ' ' + p_file.get_extension(), TTR("OK"));
 			} break;
 			case ERR_FILE_UNRECOGNIZED: {
-				show_accept(TTR("Requested file format unknown:") + " " + p_file.get_extension(), TTR("OK"));
+				show_accept(TTR("Requested file format unknown:") + ' ' + p_file.get_extension(), TTR("OK"));
 			} break;
 			default: {
 				show_accept(TTR("Error while saving."), TTR("OK"));
@@ -3111,18 +3111,18 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
 				String path = scene->get_scene_file_path();
 				String root_name = EditorNode::adjust_scene_name_casing(scene->get_name());
 				String ext = path.get_extension().to_lower();
-				path = path.get_base_dir().path_join(root_name + "." + ext);
+				path = path.get_base_dir().path_join(root_name + '.' + ext);
 
 				file->set_current_path(path);
 				if (extensions.size()) {
 					if (extensions.find(ext) == nullptr) {
-						file->set_current_path(path.replacen("." + ext, "." + extensions.front()->get()));
+						file->set_current_path(path.replacen('.' + ext, '.' + extensions.front()->get()));
 					}
 				}
 			} else if (extensions.size()) {
 				String root_name = scene->get_name();
 				root_name = EditorNode::adjust_scene_name_casing(root_name);
-				file->set_current_path(root_name + "." + extensions.front()->get().to_lower());
+				file->set_current_path(root_name + '.' + extensions.front()->get().to_lower());
 			}
 			file->set_title(TTR("Save Scene As..."));
 			file->popup_file_dialog();
@@ -3143,7 +3143,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
 
 		case PROJECT_PACK_AS_ZIP: {
 			String resource_path = ProjectSettings::get_singleton()->get_resource_path();
-			const String base_path = resource_path.substr(0, resource_path.rfind_char('/')) + "/";
+			const String base_path = resource_path.substr(0, resource_path.rfind_char('/')) + '/';
 
 			file_pack_zip->set_current_path(base_path);
 			file_pack_zip->set_current_file(ProjectZIPPacker::get_project_zip_safe_name());
@@ -3537,7 +3537,7 @@ void EditorNode::_request_screenshot() {
 
 void EditorNode::_screenshot(bool p_use_utc) {
 	String name = "editor_screenshot_" + Time::get_singleton()->get_datetime_string_from_system(p_use_utc).remove_char(':') + ".png";
-	String path = String("user://") + name;
+	String path = "user://" + name;
 
 	if (!EditorRun::request_screenshot(callable_mp(this, &EditorNode::_save_screenshot_with_embedded_process).bind(path))) {
 		_save_screenshot(path);
@@ -4413,9 +4413,9 @@ Error EditorNode::load_scene(const String &p_scene, bool p_ignore_broken_deps, b
 	dependency_errors.erase(lpath); // At least not self path.
 
 	for (KeyValue<String, HashSet<String>> &E : dependency_errors) {
-		String txt = vformat(TTR("Scene '%s' has broken dependencies:"), E.key) + "\n";
+		String txt = vformat(TTR("Scene '%s' has broken dependencies:"), E.key) + '\n';
 		for (const String &F : E.value) {
-			txt += "\t" + F + "\n";
+			txt += '\t' + F + '\n';
 		}
 		add_io_error(txt);
 	}
@@ -5025,7 +5025,7 @@ void EditorNode::notify_all_debug_sessions_exited() {
 void EditorNode::add_io_error(const String &p_error) {
 	DEV_ASSERT(Thread::get_caller_id() == Thread::get_main_id());
 	singleton->load_errors->add_image(singleton->theme->get_icon(SNAME("Error"), EditorStringName(EditorIcons)));
-	singleton->load_errors->add_text(p_error + "\n");
+	singleton->load_errors->add_text(p_error + '\n');
 	// When a progress dialog is displayed, we will wait for it ot close before displaying
 	// the io errors to prevent the io popup to set it's parent to the progress dialog.
 	if (singleton->progress_dialog->is_visible()) {
@@ -5038,7 +5038,7 @@ void EditorNode::add_io_error(const String &p_error) {
 void EditorNode::add_io_warning(const String &p_warning) {
 	DEV_ASSERT(Thread::get_caller_id() == Thread::get_main_id());
 	singleton->load_errors->add_image(singleton->theme->get_icon(SNAME("Warning"), EditorStringName(EditorIcons)));
-	singleton->load_errors->add_text(p_warning + "\n");
+	singleton->load_errors->add_text(p_warning + '\n');
 	// When a progress dialog is displayed, we will wait for it ot close before displaying
 	// the io errors to prevent the io popup to set it's parent to the progress dialog.
 	if (singleton->progress_dialog->is_visible()) {
@@ -5412,7 +5412,7 @@ String EditorNode::_get_system_info() const {
 	if (String(GODOT_VERSION_BUILD) != "official") {
 		String hash = String(GODOT_VERSION_HASH);
 		hash = hash.is_empty() ? String("unknown") : vformat("(%s)", hash.left(9));
-		godot_version += " " + hash;
+		godot_version += ' ' + hash;
 	}
 
 	String display_session_type;
@@ -5481,7 +5481,7 @@ String EditorNode::_get_system_info() const {
 	info.push_back(godot_version);
 	String distribution_display_session_type = distribution_name;
 	if (!distribution_version.is_empty()) {
-		distribution_display_session_type += " " + distribution_version;
+		distribution_display_session_type += ' ' + distribution_version;
 	}
 	if (!display_session_type.is_empty()) {
 		distribution_display_session_type += " on " + display_session_type;
@@ -5510,7 +5510,7 @@ String EditorNode::_get_system_info() const {
 
 	String graphics;
 	if (!device_type_string.is_empty()) {
-		graphics = device_type_string + " ";
+		graphics = device_type_string + ' ';
 	}
 	graphics += rendering_device_name;
 	if (video_adapter_driver_info.size() == 2) { // This vector is always either of length 0 or 2.
@@ -5662,7 +5662,7 @@ void EditorNode::show_warning(const String &p_text, const String &p_title) {
 		warning->reset_size();
 		EditorInterface::get_singleton()->popup_dialog_centered_clamped(warning, Size2i(), 0.0);
 	} else {
-		WARN_PRINT(p_title + " " + p_text);
+		WARN_PRINT(p_title + ' ' + p_text);
 	}
 }
 

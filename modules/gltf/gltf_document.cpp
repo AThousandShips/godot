@@ -554,7 +554,7 @@ String GLTFDocument::_gen_unique_bone_name(Ref<GLTFState> p_state, const GLTFSke
 		u_name = s_name;
 
 		if (index > 1) {
-			u_name += "_" + itos(index);
+			u_name += '_' + itos(index);
 		}
 		if (!p_state->skeletons[p_skel_i]->unique_names.has(u_name)) {
 			break;
@@ -753,7 +753,7 @@ Error GLTFDocument::_encode_buffer_glb(Ref<GLTFState> p_state, const String &p_p
 		Vector<uint8_t> buffer_data = p_state->buffers[i];
 		Dictionary gltf_buffer;
 		String filename = p_path.get_basename().get_file() + itos(i) + ".bin";
-		String path = p_path.get_base_dir() + "/" + filename;
+		String path = p_path.get_base_dir() + '/' + filename;
 		Error err;
 		Ref<FileAccess> file = FileAccess::open(path, FileAccess::WRITE, &err);
 		if (file.is_null()) {
@@ -785,7 +785,7 @@ Error GLTFDocument::_encode_buffer_bins(Ref<GLTFState> p_state, const String &p_
 		Vector<uint8_t> buffer_data = p_state->buffers[i];
 		Dictionary gltf_buffer;
 		String filename = p_path.get_basename().get_file() + itos(i) + ".bin";
-		String path = p_path.get_base_dir() + "/" + filename;
+		String path = p_path.get_base_dir() + '/' + filename;
 		Error err;
 		Ref<FileAccess> file = FileAccess::open(path, FileAccess::WRITE, &err);
 		if (file.is_null()) {
@@ -2690,7 +2690,7 @@ Vector<Variant> GLTFDocument::_decode_accessor_as_variant(Ref<GLTFState> p_state
 				ret.write[i] = p;
 			} break;
 			default: {
-				ERR_FAIL_V_MSG(ret, "glTF: Cannot decode accessor as Variant of type " + Variant::get_type_name(p_variant_type) + ".");
+				ERR_FAIL_V_MSG(ret, "glTF: Cannot decode accessor as Variant of type " + Variant::get_type_name(p_variant_type) + '.');
 			}
 		}
 	}
@@ -2791,7 +2791,7 @@ GLTFAccessorIndex GLTFDocument::_encode_accessor_as_variant(Ref<GLTFState> p_sta
 				}
 			} break;
 			default: {
-				ERR_FAIL_V_MSG(-1, "glTF: Cannot encode accessor from Variant of type " + Variant::get_type_name(p_variant_type) + ".");
+				ERR_FAIL_V_MSG(-1, "glTF: Cannot encode accessor from Variant of type " + Variant::get_type_name(p_variant_type) + '.');
 			}
 		}
 	}
@@ -3649,7 +3649,7 @@ Error GLTFDocument::_parse_meshes(Ref<GLTFState> p_state) {
 						if (k < target_names.size() && ((String)target_names[k]).size() != 0) {
 							bs_name = (String)target_names[k];
 						} else {
-							bs_name = String("morph_") + itos(k);
+							bs_name = "morph_" + itos(k);
 						}
 						import_mesh->add_blend_shape(bs_name);
 					}
@@ -3926,14 +3926,14 @@ Dictionary GLTFDocument::_serialize_image(Ref<GLTFState> p_state, Ref<Image> p_i
 		}
 		String image_file_name = p_image->get_name();
 		if (p_image_save_extension.is_valid()) {
-			image_file_name = image_file_name + p_image_save_extension->get_image_file_extension();
+			image_file_name += p_image_save_extension->get_image_file_extension();
 			Error err = p_image_save_extension->save_image_at_path(p_state, p_image, full_texture_dir.path_join(image_file_name), p_image_format, p_lossy_quality);
-			ERR_FAIL_COND_V_MSG(err != OK, image_dict, "glTF: Failed to save image in '" + p_image_format + "' format as a separate file, error " + itos(err) + ".");
+			ERR_FAIL_COND_V_MSG(err != OK, image_dict, "glTF: Failed to save image in '" + p_image_format + "' format as a separate file, error " + itos(err) + '.');
 		} else if (p_image_format == "PNG") {
-			image_file_name = image_file_name + ".png";
+			image_file_name += ".png";
 			p_image->save_png(full_texture_dir.path_join(image_file_name));
 		} else if (p_image_format == "JPEG") {
-			image_file_name = image_file_name + ".jpg";
+			image_file_name += ".jpg";
 			p_image->save_jpg(full_texture_dir.path_join(image_file_name), p_lossy_quality);
 		} else {
 			ERR_FAIL_V_MSG(image_dict, "glTF: Unknown image format '" + p_image_format + "'.");
@@ -4053,7 +4053,7 @@ void GLTFDocument::_parse_image_save_image(Ref<GLTFState> p_state, const Vector<
 				must_write = !FileAccess::exists(file_path);
 			} else {
 				// Texture data has to be written to the res:// folder and imported.
-				file_path = p_state->get_extract_path().path_join(p_state->get_extract_prefix() + "_" + p_image->get_name());
+				file_path = p_state->get_extract_path().path_join(p_state->get_extract_prefix() + '_' + p_image->get_name());
 				file_path += p_file_extension.is_empty() ? ".png" : p_file_extension;
 				if (FileAccess::exists(file_path + ".import")) {
 					Ref<ConfigFile> config;
@@ -4175,7 +4175,7 @@ Error GLTFDocument::_parse_images(Ref<GLTFState> p_state, const String &p_base_p
 			image_name = itos(i);
 		}
 		while (used_names.has(image_name)) {
-			image_name += "_" + itos(i);
+			image_name += '_' + itos(i);
 		}
 
 		String resource_uri;
@@ -7284,7 +7284,7 @@ void GLTFDocument::_import_animation(Ref<GLTFState> p_state, AnimationPlayer *p_
 
 			const String path = String(p_animation_player->get_parent()->get_path_to(sk));
 			const String bone = gltf_node->get_name();
-			transform_node_path = path + ":" + bone;
+			transform_node_path = path + ':' + bone;
 		} else {
 			transform_node_path = node_path;
 		}
@@ -7469,7 +7469,7 @@ void GLTFDocument::_import_animation(Ref<GLTFState> p_state, AnimationPlayer *p_
 			ERR_CONTINUE(mesh->get_mesh().is_null());
 			ERR_CONTINUE(mesh->get_mesh()->get_mesh().is_null());
 
-			const String blend_path = String(mesh_instance_node_path) + ":" + String(mesh->get_mesh()->get_blend_shape_name(i));
+			const String blend_path = String(mesh_instance_node_path) + ':' + String(mesh->get_mesh()->get_blend_shape_name(i));
 
 			const int track_idx = animation->get_track_count();
 			animation->add_track(Animation::TYPE_BLEND_SHAPE);
@@ -8263,7 +8263,7 @@ void GLTFDocument::_convert_animation(Ref<GLTFState> p_state, AnimationPlayer *p
 			HashMap<String, GLTFAnimation::Channel<Variant>> &pointer_tracks = gltf_animation->get_pointer_tracks();
 			Vector<PackedStringArray> split_json_pointers = obj_model_prop->get_json_pointers();
 			for (const PackedStringArray &split_json_pointer : split_json_pointers) {
-				String json_pointer_str = "/" + String("/").join(split_json_pointer);
+				String json_pointer_str = '/' + String("/").join(split_json_pointer);
 				p_state->object_model_properties[json_pointer_str] = obj_model_prop;
 				pointer_tracks[json_pointer_str] = channel;
 			}
@@ -8366,7 +8366,7 @@ Error GLTFDocument::_serialize_asset_header(Ref<GLTFState> p_state) {
 		asset["copyright"] = p_state->copyright;
 	}
 	String hash = String(GODOT_VERSION_HASH);
-	asset["generator"] = String(GODOT_VERSION_FULL_NAME) + String("@") + (hash.is_empty() ? String("unknown") : hash);
+	asset["generator"] = String(GODOT_VERSION_FULL_NAME) + '@' + (hash.is_empty() ? String("unknown") : hash);
 	p_state->json["asset"] = asset;
 	ERR_FAIL_COND_V(!asset.has("version"), Error::FAILED);
 	ERR_FAIL_COND_V(!p_state->json.has("asset"), Error::FAILED);

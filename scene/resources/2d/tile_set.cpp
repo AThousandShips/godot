@@ -4205,7 +4205,7 @@ void TileSet::_get_property_list(List<PropertyInfo> *p_list) const {
 	// Custom data.
 	String argt = "Any";
 	for (int i = 1; i < Variant::VARIANT_MAX; i++) {
-		argt += "," + Variant::get_type_name(Variant::Type(i));
+		argt += ',' + Variant::get_type_name(Variant::Type(i));
 	}
 	p_list->push_back(PropertyInfo(Variant::NIL, GNAME("Custom Data", ""), PROPERTY_HINT_NONE, "", PROPERTY_USAGE_GROUP));
 	for (int i = 0; i < custom_data_layers.size(); i++) {

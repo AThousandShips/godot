@@ -67,7 +67,7 @@ bool EditorExportPlatformIOS::has_valid_export_configuration(const Ref<EditorExp
 	if ((rendering_method == "forward_plus" || rendering_method == "mobile") && rendering_driver == "metal") {
 		float version = p_preset->get("application/min_ios_version").operator String().to_float();
 		if (version < 14.0) {
-			err += TTR("Metal renderer require iOS 14+.") + "\n";
+			err += TTR("Metal renderer require iOS 14+.") + '\n';
 		}
 	}
 
@@ -306,31 +306,31 @@ Error EditorExportPlatformIOS::_export_icons(const Ref<EditorExportPreset> &p_pr
 					return err;
 				}
 			}
-			sizes += String(info.actual_size_side) + "\n";
+			sizes += String(info.actual_size_side) + '\n';
 			if (first_icon) {
 				first_icon = false;
 			} else {
-				json_description += ",";
+				json_description += ',';
 			}
-			json_description += String("{");
+			json_description += '{';
 			if (color_mode != ICON_NORMAL) {
-				json_description += String("\"appearances\":[{");
-				json_description += String("\"appearance\":\"luminosity\",");
+				json_description += "\"appearances\":[{";
+				json_description += "\"appearance\":\"luminosity\",";
 				if (color_mode == ICON_DARK) {
-					json_description += String("\"value\":\"dark\"");
+					json_description += "\"value\":\"dark\"";
 				} else if (color_mode == ICON_TINTED) {
-					json_description += String("\"value\":\"tinted\"");
+					json_description += "\"value\":\"tinted\"";
 				}
-				json_description += String("}],");
+				json_description += "}],";
 			}
-			json_description += String("\"idiom\":") + "\"" + info.idiom + "\",";
-			json_description += String("\"platform\":\"" + get_platform_name() + "\",");
-			json_description += String("\"size\":") + "\"" + info.unscaled_size + "\",";
+			json_description += String("\"idiom\":\"") + info.idiom + "\",";
+			json_description += "\"platform\":\"" + get_platform_name() + "\",";
+			json_description += String("\"size\":\"") + info.unscaled_size + "\",";
 			if (String(info.scale) != "1x") {
-				json_description += String("\"scale\":") + "\"" + info.scale + "\",";
+				json_description += String("\"scale\":\"") + info.scale + "\",";
 			}
-			json_description += String("\"filename\":") + "\"" + exp_name + "\"";
-			json_description += String("}");
+			json_description += "\"filename\":\"" + exp_name + '"';
+			json_description += '}';
 		}
 	}
 	json_description += "],\"info\":{\"author\":\"xcode\",\"version\":1}}";

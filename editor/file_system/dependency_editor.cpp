@@ -58,7 +58,7 @@ void DependencyEditor::_load_pressed(Object *p_item, int p_cell, int p_button, M
 	TreeItem *ti = Object::cast_to<TreeItem>(p_item);
 	replacing = ti->get_text(1);
 
-	search->set_title(TTR("Search Replacement For:") + " " + replacing.get_file());
+	search->set_title(TTR("Search Replacement For:") + ' ' + replacing.get_file());
 
 	// Set directory to closest existing directory.
 	search->set_current_dir(replacing.get_base_dir());
@@ -226,7 +226,7 @@ void DependencyEditor::_update_list() {
 
 void DependencyEditor::edit(const String &p_path) {
 	editing = p_path;
-	set_title(TTR("Dependencies For:") + " " + p_path.get_file());
+	set_title(TTR("Dependencies For:") + ' ' + p_path.get_file());
 
 	_update_list();
 	popup_centered_ratio(0.4);
@@ -544,7 +544,7 @@ void DependencyRemoveDialog::show(const Vector<String> &p_folders, const Vector<
 	owners->clear();
 
 	for (int i = 0; i < p_folders.size(); ++i) {
-		String folder = p_folders[i].ends_with("/") ? p_folders[i] : (p_folders[i] + "/");
+		String folder = p_folders[i].ends_with("/") ? p_folders[i] : (p_folders[i] + '/');
 		_find_files_in_removed_folder(EditorFileSystem::get_singleton()->get_filesystem_path(folder), folder);
 		dirs_to_delete.push_back(folder);
 	}
@@ -604,7 +604,7 @@ void DependencyRemoveDialog::ok_pressed() {
 		print_verbose("Moving to trash: " + path);
 		Error err = OS::get_singleton()->move_to_trash(path);
 		if (err != OK) {
-			EditorNode::get_singleton()->add_io_error(TTR("Cannot remove:") + "\n" + file + "\n");
+			EditorNode::get_singleton()->add_io_error(TTR("Cannot remove:") + '\n' + file + '\n');
 		} else {
 			emit_signal(SNAME("file_removed"), file);
 		}
@@ -624,7 +624,7 @@ void DependencyRemoveDialog::ok_pressed() {
 			print_verbose("Moving to trash: " + path);
 			Error err = OS::get_singleton()->move_to_trash(path);
 			if (err != OK) {
-				EditorNode::get_singleton()->add_io_error(TTR("Cannot remove:") + "\n" + dirs_to_delete[i] + "\n");
+				EditorNode::get_singleton()->add_io_error(TTR("Cannot remove:") + '\n' + dirs_to_delete[i] + '\n');
 			} else {
 				emit_signal(SNAME("folder_removed"), dirs_to_delete[i]);
 			}
@@ -714,7 +714,7 @@ DependencyRemoveDialog::DependencyRemoveDialog() {
 
 void DependencyErrorDialog::show(const String &p_for_file, const Vector<String> &report) {
 	for_file = p_for_file;
-	set_title(TTR("Error loading:") + " " + p_for_file.get_file());
+	set_title(TTR("Error loading:") + ' ' + p_for_file.get_file());
 	files->clear();
 
 	TreeItem *root = files->create_item(nullptr);

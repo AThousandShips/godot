@@ -96,18 +96,18 @@ void ShaderRD::_add_stage(const char *p_code, StageType p_stage_type) {
 						line_count = lines.size();
 					} else {
 						// Add it in as is.
-						text += l + "\n";
+						text += l + '\n';
 					}
 				} else {
 					// Add it in as is.
-					text += l + "\n";
+					text += l + '\n';
 				}
 			} else {
 				// Add it in as is.
-				text += l + "\n";
+				text += l + '\n';
 			}
 		} else {
-			text += l + "\n";
+			text += l + '\n';
 		}
 
 		if (push_chunk) {
@@ -231,7 +231,7 @@ void ShaderRD::_build_variant_code(StringBuilder &builder, uint32_t p_variant, c
 					builder.append("#define MATERIAL_UNIFORMS_USED\n");
 				}
 				for (const KeyValue<StringName, CharString> &E : p_version->code_sections) {
-					builder.append(String("#define ") + String(E.key) + "_CODE_USED\n");
+					builder.append("#define " + E.key + "_CODE_USED\n");
 				}
 #if (defined(MACOS_ENABLED) || defined(APPLE_EMBEDDED_ENABLED))
 				if (RD::get_singleton()->get_device_capabilities().device_family == RDD::DEVICE_VULKAN) {
@@ -241,7 +241,7 @@ void ShaderRD::_build_variant_code(StringBuilder &builder, uint32_t p_variant, c
 				builder.append("#define NO_IMAGE_ATOMICS\n");
 #endif
 
-				builder.append(String("#define RENDER_DRIVER_") + OS::get_singleton()->get_current_rendering_driver_name().to_upper() + "\n");
+				builder.append("#define RENDER_DRIVER_" + OS::get_singleton()->get_current_rendering_driver_name().to_upper() + '\n');
 				builder.append("#define samplerExternalOES sampler2D\n");
 				builder.append("#define textureExternalOES texture2D\n");
 			} break;
@@ -311,7 +311,7 @@ void ShaderRD::_compile_variant(uint32_t p_variant, CompileData p_data) {
 	Vector<RD::ShaderStageSPIRVData> variant_stages = compile_stages(variant_stage_sources);
 	ERR_FAIL_COND(variant_stages.is_empty());
 
-	Vector<uint8_t> shader_data = RD::get_singleton()->shader_compile_binary_from_spirv(variant_stages, name + ":" + itos(variant));
+	Vector<uint8_t> shader_data = RD::get_singleton()->shader_compile_binary_from_spirv(variant_stages, name + ':' + itos(variant));
 	ERR_FAIL_COND(shader_data.is_empty());
 
 	{
@@ -413,11 +413,11 @@ String ShaderRD::_version_get_sha1(Version *p_version) const {
 	code_sections.sort_custom<StringName::AlphCompare>();
 
 	for (int i = 0; i < code_sections.size(); i++) {
-		hash_build.append(String("[code:") + String(code_sections[i]) + "]");
+		hash_build.append("[code:" + String(code_sections[i]) + ']');
 		hash_build.append(p_version->code_sections[code_sections[i]].get_data());
 	}
 	for (int i = 0; i < p_version->custom_defines.size(); i++) {
-		hash_build.append("[custom_defines:" + itos(i) + "]");
+		hash_build.append("[custom_defines:" + itos(i) + ']');
 		hash_build.append(p_version->custom_defines[i].get_data());
 	}
 
@@ -429,7 +429,7 @@ static const uint32_t cache_file_version = 4;
 
 String ShaderRD::_get_cache_file_relative_path(Version *p_version, int p_group, const String &p_api_name) {
 	String sha1 = _version_get_sha1(p_version);
-	return name.path_join(group_sha256[p_group]).path_join(sha1) + "." + p_api_name + ".cache";
+	return name.path_join(group_sha256[p_group]).path_join(sha1) + '.' + p_api_name + ".cache";
 }
 
 String ShaderRD::_get_cache_file_path(Version *p_version, int p_group, const String &p_api_name, bool p_user_dir) {
@@ -840,7 +840,7 @@ void ShaderRD::_initialize_cache() {
 		hash_build.append("[group_id]");
 		hash_build.append(itos(E.key));
 		for (uint32_t i = 0; i < E.value.size(); i++) {
-			hash_build.append("[variant_defines:" + itos(E.value[i]) + "]");
+			hash_build.append("[variant_defines:" + itos(E.value[i]) + ']');
 			hash_build.append(variant_defines[E.value[i]].text.get_data());
 		}
 

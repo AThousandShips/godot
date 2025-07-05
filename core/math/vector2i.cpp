@@ -66,7 +66,7 @@ double Vector2i::length() const {
 }
 
 Vector2i::operator String() const {
-	return "(" + itos(x) + ", " + itos(y) + ")";
+	return '(' + itos(x) + ", " + itos(y) + ')';
 }
 
 Vector2i::operator Vector2() const {

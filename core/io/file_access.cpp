@@ -100,7 +100,7 @@ Ref<FileAccess> FileAccess::create_temp(int p_mode_flags, const String &p_prefix
 		String datetime = Time::get_singleton()->get_datetime_string_from_system().remove_chars("-T:");
 		datetime += itos(Time::get_singleton()->get_ticks_usec());
 		String suffix = datetime + (suffix_i > 0 ? itos(suffix_i) : "");
-		path = TEMP_DIR.path_join((p_prefix.is_empty() ? "" : p_prefix + "-") + suffix + (extension.is_empty() ? "" : "." + extension));
+		path = TEMP_DIR.path_join((p_prefix.is_empty() ? "" : p_prefix + '-') + suffix + (extension.is_empty() ? "" : '.' + extension));
 		if (!DirAccess::exists(path)) {
 			break;
 		}
@@ -494,7 +494,7 @@ Vector<String> FileAccess::get_csv_line(const String &p_delim) const {
 		if (eof_reached()) {
 			break;
 		}
-		line += get_line() + "\n";
+		line += get_line() + '\n';
 		qc = 0;
 		for (int i = 0; i < line.length(); i++) {
 			if (line[i] == '"') {
@@ -794,7 +794,7 @@ bool FileAccess::store_csv_line(const Vector<String> &p_values, const String &p_
 		String value = p_values[i];
 
 		if (value.contains_char('"') || value.contains(p_delim) || value.contains_char('\n')) {
-			value = "\"" + value.replace("\"", "\"\"") + "\"";
+			value = '"' + value.replace("\"", "\"\"") + '"';
 		}
 		if (i < size - 1) {
 			value += p_delim;

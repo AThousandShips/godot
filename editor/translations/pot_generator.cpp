@@ -109,7 +109,7 @@ void POTGenerator::_write_to_pot(const String &p_file) {
 	Vector<String> files = GLOBAL_GET("internationalization/locale/translations_pot_files");
 	String extracted_files = "";
 	for (int i = 0; i < files.size(); i++) {
-		extracted_files += "# " + files[i].replace("\n", "\\n") + "\n";
+		extracted_files += "# " + files[i].replace("\n", "\\n") + '\n';
 	}
 	const String header =
 			"# LANGUAGE translation for " + project_name + " for the following files:\n" +
@@ -201,7 +201,7 @@ void POTGenerator::_write_msgid(Ref<FileAccess> r_file, const String &p_id, bool
 	}
 
 	for (int i = 0; i < lines.size() - 1; i++) {
-		r_file->store_line((lines[i] + "\n").json_escape().quote());
+		r_file->store_line((lines[i] + '\n').json_escape().quote());
 	}
 
 	if (!last_line.is_empty()) {

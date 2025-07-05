@@ -119,7 +119,7 @@ Error FileAccessUnix::open_internal(const String &p_path, int p_mode_flags) {
 	if (is_backup_save_enabled() && (p_mode_flags == WRITE)) {
 		save_path = path;
 		// Create a temporary file in the same directory as the target file.
-		path = path + "-XXXXXX";
+		path += "-XXXXXX";
 		CharString cs = path.utf8();
 		int fd = mkstemp(cs.ptrw());
 		if (fd == -1) {
@@ -393,7 +393,7 @@ BitField<FileAccess::UnixPermissionFlags> FileAccessUnix::_get_unix_permissions(
 	if (!err) {
 		return status.st_mode & 0xFFF; //only permissions
 	} else {
-		ERR_FAIL_V_MSG(0, "Failed to get unix permissions for: " + p_file + ".");
+		ERR_FAIL_V_MSG(0, "Failed to get unix permissions for: " + p_file + '.');
 	}
 }
 

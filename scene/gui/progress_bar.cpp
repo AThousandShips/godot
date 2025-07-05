@@ -169,7 +169,7 @@ void ProgressBar::_notification(int p_what) {
 				if (is_localizing_numeral_system()) {
 					txt = TS->format_number(txt) + TS->percent_sign();
 				} else {
-					txt += String("%");
+					txt += '%';
 				}
 
 				TextLine tl = TextLine(txt, theme_cache.font, theme_cache.font_size);

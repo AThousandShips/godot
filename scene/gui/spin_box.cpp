@@ -98,10 +98,10 @@ void SpinBox::_update_text(bool p_only_update_if_value_changed) {
 
 	if (!line_edit->is_editing()) {
 		if (!prefix.is_empty()) {
-			value = prefix + " " + value;
+			value = prefix + ' ' + value;
 		}
 		if (!suffix.is_empty()) {
-			value += " " + suffix;
+			value += ' ' + suffix;
 		}
 	}
 
@@ -140,7 +140,7 @@ void SpinBox::_text_submitted(const String &p_string) {
 	text = text.replace_char(';', ',');
 	text = TS->parse_number(text);
 	// Ignore the prefix and suffix in the expression.
-	text = text.trim_prefix(prefix + " ").trim_suffix(" " + suffix);
+	text = text.trim_prefix(prefix + ' ').trim_suffix(' ' + suffix);
 
 	Error err = expr->parse(text);
 
@@ -150,7 +150,7 @@ void SpinBox::_text_submitted(const String &p_string) {
 		// If the expression failed try without converting commas to dots - they might have been for parameter separation.
 		text = p_string;
 		text = TS->parse_number(text);
-		text = text.trim_prefix(prefix + " ").trim_suffix(" " + suffix);
+		text = text.trim_prefix(prefix + ' ').trim_suffix(' ' + suffix);
 
 		err = expr->parse(text);
 		if (err != OK) {

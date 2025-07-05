@@ -623,7 +623,7 @@ void AccessibilityDriverAccessKit::accessibility_update_set_name(const RID &p_id
 	_ensure_node(p_id, ae);
 
 	ae->name = p_name;
-	String full_name = ae->name + " " + ae->name_extra_info;
+	String full_name = ae->name + ' ' + ae->name_extra_info;
 	if (!full_name.is_empty()) {
 		accesskit_node_set_label(ae->node, full_name.utf8().ptr());
 	} else {
@@ -639,7 +639,7 @@ void AccessibilityDriverAccessKit::accessibility_update_set_extra_info(const RID
 	_ensure_node(p_id, ae);
 
 	ae->name_extra_info = p_name_extra_info;
-	String full_name = ae->name + " " + ae->name_extra_info;
+	String full_name = ae->name + ' ' + ae->name_extra_info;
 	if (!full_name.is_empty()) {
 		accesskit_node_set_label(ae->node, full_name.utf8().ptr());
 	} else {

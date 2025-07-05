@@ -75,7 +75,7 @@ void ShaderGLES3::_add_stage(const char *p_code, StageType p_stage_type) {
 			push_chunk = true;
 			chunk.code = l.replace_first("#CODE", String()).remove_char(':').strip_edges().to_upper();
 		} else {
-			text += l + "\n";
+			text += l + '\n';
 		}
 
 		if (push_chunk) {
@@ -167,14 +167,14 @@ void ShaderGLES3::_build_variant_code(StringBuilder &builder, uint32_t p_variant
 
 	for (int i = 0; i < specialization_count; i++) {
 		if (p_specialization & (uint64_t(1) << uint64_t(i))) {
-			builder.append("#define " + String(specializations[i].name) + "\n");
+			builder.append("#define " + String(specializations[i].name) + '\n');
 		}
 	}
 	if (p_version->uniforms.size()) {
 		builder.append("#define MATERIAL_UNIFORMS_USED\n");
 	}
 	for (const KeyValue<StringName, CharString> &E : p_version->code_sections) {
-		builder.append(String("#define ") + String(E.key) + "_CODE_USED\n");
+		builder.append("#define " + E.key + "_CODE_USED\n");
 	}
 
 	builder.append("\n"); //make sure defines begin at newline
@@ -520,11 +520,11 @@ String ShaderGLES3::_version_get_sha1(Version *p_version) const {
 	code_sections.sort_custom<StringName::AlphCompare>();
 
 	for (int i = 0; i < code_sections.size(); i++) {
-		hash_build.append(String("[code:") + String(code_sections[i]) + "]");
+		hash_build.append("[code:" + String(code_sections[i]) + ']');
 		hash_build.append(p_version->code_sections[code_sections[i]].get_data());
 	}
 	for (int i = 0; i < p_version->custom_defines.size(); i++) {
-		hash_build.append("[custom_defines:" + itos(i) + "]");
+		hash_build.append("[custom_defines:" + itos(i) + ']');
 		hash_build.append(p_version->custom_defines[i].get_data());
 	}
 	if (RasterizerGLES3::is_gles_over_gl()) {
@@ -777,7 +777,7 @@ void ShaderGLES3::initialize(const String &p_general_defines, int p_base_texture
 		hash_build.append("[general_defines]");
 		hash_build.append(general_defines.get_data());
 		for (int i = 0; i < variant_count; i++) {
-			hash_build.append("[variant_defines:" + itos(i) + "]");
+			hash_build.append("[variant_defines:" + itos(i) + ']');
 			hash_build.append(variant_defines[i]);
 		}
 

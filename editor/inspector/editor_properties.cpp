@@ -959,7 +959,7 @@ void EditorPropertyLayersGrid::_rename_operation_confirm() {
 		return;
 	}
 	names.set(renamed_layer_index, new_name);
-	tooltips.set(renamed_layer_index, new_name + "\n" + vformat(TTR("Bit %d, value %d"), renamed_layer_index, 1 << renamed_layer_index));
+	tooltips.set(renamed_layer_index, new_name + '\n' + vformat(TTR("Bit %d, value %d"), renamed_layer_index, 1 << renamed_layer_index));
 	emit_signal(SNAME("rename_confirmed"), renamed_layer_index, new_name);
 }
 
@@ -1338,7 +1338,7 @@ void EditorPropertyLayers::setup(LayerType p_layer_type) {
 		}
 
 		names.push_back(name);
-		tooltips.push_back(name + "\n" + vformat(TTR("Bit %d, value %d"), i, 1 << i));
+		tooltips.push_back(name + '\n' + vformat(TTR("Bit %d, value %d"), i, 1 << i));
 	}
 
 	grid->names = names;
@@ -3314,13 +3314,13 @@ void EditorPropertyResource::_resource_changed(const Ref<Resource> &p_resource) 
 
 void EditorPropertyResource::_sub_inspector_property_keyed(const String &p_property, const Variant &p_value, bool p_advance) {
 	// The second parameter could be null, causing the event to fire with less arguments, so use the pointer call which preserves it.
-	const Variant args[3] = { String(get_edited_property()) + ":" + p_property, p_value, p_advance };
+	const Variant args[3] = { String(get_edited_property()) + ':' + p_property, p_value, p_advance };
 	const Variant *argp[3] = { &args[0], &args[1], &args[2] };
 	emit_signalp(SNAME("property_keyed_with_value"), argp, 3);
 }
 
 void EditorPropertyResource::_sub_inspector_resource_selected(const Ref<Resource> &p_resource, const String &p_property) {
-	emit_signal(SNAME("resource_selected"), String(get_edited_property()) + ":" + p_property, p_resource);
+	emit_signal(SNAME("resource_selected"), String(get_edited_property()) + ':' + p_property, p_resource);
 }
 
 void EditorPropertyResource::_sub_inspector_object_id_selected(int p_id) {
@@ -3647,7 +3647,7 @@ static EditorPropertyRangeHint _parse_range_hint(PropertyHint p_hint, const Stri
 		} else if (slice == "degrees") {
 			degrees = true;
 		} else if (slice.begins_with("suffix:")) {
-			hint.suffix = " " + slice.replace_first("suffix:", "").strip_edges();
+			hint.suffix = ' ' + slice.replace_first("suffix:", "").strip_edges();
 		}
 	}
 

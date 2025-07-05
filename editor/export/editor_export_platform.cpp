@@ -113,7 +113,7 @@ bool EditorExportPlatform::fill_log_messages(RichTextLabel *p_log, Error p_err) 
 
 	int msg_count = get_message_count();
 
-	p_log->add_text(TTR("Project export for platform:") + " ");
+	p_log->add_text(TTR("Project export for platform:") + ' ');
 	p_log->add_image(get_logo(), 16 * EDSCALE, 16 * EDSCALE, Color(1.0, 1.0, 1.0), INLINE_ALIGNMENT_CENTER);
 	p_log->add_text(" ");
 	p_log->add_text(get_name());
@@ -402,7 +402,7 @@ Error EditorExportPlatform::_save_zip_file(void *p_userdata, const String &p_pat
 
 	zd->file_count += 1;
 
-	if (zd->ep->step(TTR("Storing File:") + " " + p_path, 2 + p_file * 100 / p_total, false)) {
+	if (zd->ep->step(TTR("Storing File:") + ' ' + p_path, 2 + p_file * 100 / p_total, false)) {
 		return ERR_SKIP;
 	}
 
@@ -433,7 +433,7 @@ String EditorExportPlatform::find_export_template(const String &template_file_na
 
 	// Not found
 	if (err) {
-		*err += TTR("No export template found at the expected path:") + "\n" + template_path + "\n";
+		*err += TTR("No export template found at the expected path:") + '\n' + template_path + '\n';
 	}
 	return String();
 }
@@ -521,7 +521,7 @@ void EditorExportPlatform::_edit_files_with_filter(Ref<DirAccess> &da, const Vec
 	da->list_dir_begin();
 	String cur_dir = da->get_current_dir().replace_char('\\', '/');
 	if (!cur_dir.ends_with("/")) {
-		cur_dir += "/";
+		cur_dir += '/';
 	}
 	String cur_dir_no_prefix = cur_dir.replace("res://", "");
 
@@ -905,7 +905,7 @@ String EditorExportPlatform::_export_customize(const String &p_path, LocalVector
 			// If modified, save it again. This is also used for TSCN -> SCN conversion on export.
 
 			String base_file = p_path.get_file().get_basename() + ".scn"; // use SCN for saving (binary) and repack (If conversting, TSCN PackedScene representation is inefficient, so repacking is also desired).
-			save_path = export_base_path.path_join("export-" + p_path.md5_text() + "-" + base_file);
+			save_path = export_base_path.path_join("export-" + p_path.md5_text() + '-' + base_file);
 
 			Ref<PackedScene> s;
 			s.instantiate();
@@ -940,7 +940,7 @@ String EditorExportPlatform::_export_customize(const String &p_path, LocalVector
 			// If modified, save it again. This is also used for TRES -> RES conversion on export.
 
 			String base_file = p_path.get_file().get_basename() + ".res"; // use RES for saving (binary)
-			save_path = export_base_path.path_join("export-" + p_path.md5_text() + "-" + base_file);
+			save_path = export_base_path.path_join("export-" + p_path.md5_text() + '-' + base_file);
 
 			Error err = ResourceSaver::save(res, save_path);
 			ERR_FAIL_COND_V_MSG(err != OK, p_path, "Unable to save export resource file to: " + save_path);
@@ -1653,7 +1653,7 @@ Error EditorExportPlatform::export_project_files(const Ref<EditorExportPreset> &
 Vector<uint8_t> EditorExportPlatform::_filter_extension_list_config_file(const String &p_config_path, const HashSet<String> &p_paths) {
 	Ref<FileAccess> f = FileAccess::open(p_config_path, FileAccess::READ);
 	if (f.is_null()) {
-		ERR_FAIL_V_MSG(Vector<uint8_t>(), "Can't open file from path '" + String(p_config_path) + "'.");
+		ERR_FAIL_V_MSG(Vector<uint8_t>(), "Can't open file from path '" + p_config_path + "'.");
 	}
 	Vector<uint8_t> data;
 	while (!f->eof_reached()) {
@@ -2257,7 +2257,7 @@ Vector<String> EditorExportPlatform::gen_export_flags(BitField<EditorExportPlatf
 		int port = EDITOR_GET("filesystem/file_server/port");
 		String passwd = EDITOR_GET("filesystem/file_server/password");
 		ret.push_back("--remote-fs");
-		ret.push_back(host + ":" + itos(port));
+		ret.push_back(host + ':' + itos(port));
 		if (!passwd.is_empty()) {
 			ret.push_back("--remote-fs-password");
 			ret.push_back(passwd);
@@ -2267,7 +2267,7 @@ Vector<String> EditorExportPlatform::gen_export_flags(BitField<EditorExportPlatf
 	if (p_flags.has_flag(DEBUG_FLAG_REMOTE_DEBUG)) {
 		ret.push_back("--remote-debug");
 
-		ret.push_back(get_debug_protocol() + host + ":" + String::num_int64(remote_port));
+		ret.push_back(get_debug_protocol() + host + ':' + String::num_int64(remote_port));
 
 		List<String> breakpoints;
 		ScriptEditor::get_singleton()->get_breakpoints(&breakpoints);
@@ -2278,7 +2278,7 @@ Vector<String> EditorExportPlatform::gen_export_flags(BitField<EditorExportPlatf
 			for (List<String>::Element *E = breakpoints.front(); E; E = E->next()) {
 				bpoints += E->get().replace(" ", "%20");
 				if (E->next()) {
-					bpoints += ",";
+					bpoints += ',';
 				}
 			}
 

@@ -88,7 +88,7 @@ void BoneConstraint3D::get_property_list(List<PropertyInfo> *p_list) const {
 	}
 
 	for (int i = 0; i < settings.size(); i++) {
-		String path = "settings/" + itos(i) + "/";
+		String path = "settings/" + itos(i) + '/';
 		p_list->push_back(PropertyInfo(Variant::FLOAT, path + "amount", PROPERTY_HINT_RANGE, "0,1,0.001"));
 		p_list->push_back(PropertyInfo(Variant::STRING, path + "apply_bone_name", PROPERTY_HINT_ENUM_SUGGESTION, enum_hint));
 		p_list->push_back(PropertyInfo(Variant::INT, path + "apply_bone", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR));

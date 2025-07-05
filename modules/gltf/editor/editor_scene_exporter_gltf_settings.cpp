@@ -33,7 +33,7 @@
 const uint32_t PROP_EDITOR_SCRIPT_VAR = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_SCRIPT_VARIABLE;
 
 bool EditorSceneExporterGLTFSettings::_set(const StringName &p_name, const Variant &p_value) {
-	String name_str = String(p_name);
+	String name_str = p_name;
 	if (name_str.contains_char('/')) {
 		return _set_extension_setting(name_str, p_value);
 	}
@@ -67,7 +67,7 @@ bool EditorSceneExporterGLTFSettings::_set(const StringName &p_name, const Varia
 }
 
 bool EditorSceneExporterGLTFSettings::_get(const StringName &p_name, Variant &r_ret) const {
-	String name_str = String(p_name);
+	String name_str = p_name;
 	if (name_str.contains_char('/')) {
 		return _get_extension_setting(name_str, r_ret);
 	}
@@ -195,7 +195,7 @@ void EditorSceneExporterGLTFSettings::generate_property_list(Ref<GLTFDocument> p
 		// If the extension allows saving in different image formats, add to the enum.
 		PackedStringArray saveable_image_formats = extension->get_saveable_image_formats();
 		for (int i = 0; i < saveable_image_formats.size(); i++) {
-			image_format_hint_string += "," + saveable_image_formats[i];
+			image_format_hint_string += ',' + saveable_image_formats[i];
 		}
 		// Look through the extension's properties and find the relevant ones.
 		List<PropertyInfo> ext_prop_list;
@@ -207,7 +207,7 @@ void EditorSceneExporterGLTFSettings::generate_property_list(Ref<GLTFDocument> p
 			// variables exposed to the editor (PROP_EDITOR_SCRIPT_VAR).
 			if ((prop.usage & PROP_EDITOR_SCRIPT_VAR) == PROP_EDITOR_SCRIPT_VAR) {
 				PropertyInfo ext_prop = prop;
-				ext_prop.name = config_prefix + "/" + prop.name;
+				ext_prop.name = config_prefix + '/' + prop.name;
 				_property_list.push_back(ext_prop);
 			}
 		}

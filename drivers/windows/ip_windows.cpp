@@ -118,7 +118,7 @@ void IPWindows::get_local_interfaces(HashMap<String, Interface_Info> *r_interfac
 			continue; // Will go back and alloc the right size.
 		}
 
-		ERR_FAIL_MSG("Call to GetAdaptersAddresses failed with error " + itos(err) + ".");
+		ERR_FAIL_MSG("Call to GetAdaptersAddresses failed with error " + itos(err) + '.');
 	}
 
 	IP_ADAPTER_ADDRESSES *adapter = addrs;

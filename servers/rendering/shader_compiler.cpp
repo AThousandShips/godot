@@ -192,15 +192,15 @@ static String get_constant_text(SL::DataType p_type, const Vector<SL::Scalar> &p
 		case SL::TYPE_BVEC2:
 		case SL::TYPE_BVEC3:
 		case SL::TYPE_BVEC4: {
-			String text = "bvec" + itos(p_type - SL::TYPE_BOOL + 1) + "(";
+			String text = "bvec" + itos(p_type - SL::TYPE_BOOL + 1) + '(';
 			for (int i = 0; i < p_values.size(); i++) {
 				if (i > 0) {
-					text += ",";
+					text += ',';
 				}
 
 				text += p_values[i].boolean ? "true" : "false";
 			}
-			text += ")";
+			text += ')';
 			return text;
 		}
 
@@ -209,32 +209,32 @@ static String get_constant_text(SL::DataType p_type, const Vector<SL::Scalar> &p
 		case SL::TYPE_IVEC2:
 		case SL::TYPE_IVEC3:
 		case SL::TYPE_IVEC4: {
-			String text = "ivec" + itos(p_type - SL::TYPE_INT + 1) + "(";
+			String text = "ivec" + itos(p_type - SL::TYPE_INT + 1) + '(';
 			for (int i = 0; i < p_values.size(); i++) {
 				if (i > 0) {
-					text += ",";
+					text += ',';
 				}
 
 				text += itos(p_values[i].sint);
 			}
-			text += ")";
+			text += ')';
 			return text;
 
 		} break;
 		case SL::TYPE_UINT:
-			return itos(p_values[0].uint) + "u";
+			return itos(p_values[0].uint) + 'u';
 		case SL::TYPE_UVEC2:
 		case SL::TYPE_UVEC3:
 		case SL::TYPE_UVEC4: {
-			String text = "uvec" + itos(p_type - SL::TYPE_UINT + 1) + "(";
+			String text = "uvec" + itos(p_type - SL::TYPE_UINT + 1) + '(';
 			for (int i = 0; i < p_values.size(); i++) {
 				if (i > 0) {
-					text += ",";
+					text += ',';
 				}
 
-				text += itos(p_values[i].uint) + "u";
+				text += itos(p_values[i].uint) + 'u';
 			}
-			text += ")";
+			text += ')';
 			return text;
 		} break;
 		case SL::TYPE_FLOAT:
@@ -242,30 +242,30 @@ static String get_constant_text(SL::DataType p_type, const Vector<SL::Scalar> &p
 		case SL::TYPE_VEC2:
 		case SL::TYPE_VEC3:
 		case SL::TYPE_VEC4: {
-			String text = "vec" + itos(p_type - SL::TYPE_FLOAT + 1) + "(";
+			String text = "vec" + itos(p_type - SL::TYPE_FLOAT + 1) + '(';
 			for (int i = 0; i < p_values.size(); i++) {
 				if (i > 0) {
-					text += ",";
+					text += ',';
 				}
 
 				text += f2sp0(p_values[i].real);
 			}
-			text += ")";
+			text += ')';
 			return text;
 
 		} break;
 		case SL::TYPE_MAT2:
 		case SL::TYPE_MAT3:
 		case SL::TYPE_MAT4: {
-			String text = "mat" + itos(p_type - SL::TYPE_MAT2 + 2) + "(";
+			String text = "mat" + itos(p_type - SL::TYPE_MAT2 + 2) + '(';
 			for (int i = 0; i < p_values.size(); i++) {
 				if (i > 0) {
-					text += ",";
+					text += ',';
 				}
 
 				text += f2sp0(p_values[i].real);
 			}
-			text += ")";
+			text += ')';
 			return text;
 
 		} break;
@@ -337,7 +337,7 @@ void ShaderCompiler::_dump_function_deps(const SL::ShaderNode *p_node, const Str
 
 		ERR_FAIL_NULL(fnode);
 
-		r_to_add += "\n";
+		r_to_add += '\n';
 
 		String header;
 		if (fnode->return_type == SL::TYPE_STRUCT) {
@@ -347,14 +347,14 @@ void ShaderCompiler::_dump_function_deps(const SL::ShaderNode *p_node, const Str
 		}
 
 		if (fnode->return_array_size > 0) {
-			header += "[";
+			header += '[';
 			header += itos(fnode->return_array_size);
-			header += "]";
+			header += ']';
 		}
 
-		header += " ";
+		header += ' ';
 		header += _mkid(fnode->rname);
-		header += "(";
+		header += '(';
 
 		for (int i = 0; i < fnode->arguments.size(); i++) {
 			if (i > 0) {
@@ -362,14 +362,14 @@ void ShaderCompiler::_dump_function_deps(const SL::ShaderNode *p_node, const Str
 			}
 			header += _constr(fnode->arguments[i].is_const);
 			if (fnode->arguments[i].type == SL::TYPE_STRUCT) {
-				header += _qualstr(fnode->arguments[i].qualifier) + _mkid(fnode->arguments[i].struct_name) + " " + _mkid(fnode->arguments[i].name);
+				header += _qualstr(fnode->arguments[i].qualifier) + _mkid(fnode->arguments[i].struct_name) + ' ' + _mkid(fnode->arguments[i].name);
 			} else {
-				header += _qualstr(fnode->arguments[i].qualifier) + _prestr(fnode->arguments[i].precision) + _typestr(fnode->arguments[i].type) + " " + _mkid(fnode->arguments[i].name);
+				header += _qualstr(fnode->arguments[i].qualifier) + _prestr(fnode->arguments[i].precision) + _typestr(fnode->arguments[i].type) + ' ' + _mkid(fnode->arguments[i].name);
 			}
 			if (fnode->arguments[i].array_size > 0) {
-				header += "[";
+				header += '[';
 				header += itos(fnode->arguments[i].array_size);
-				header += "]";
+				header += ']';
 			}
 		}
 
@@ -384,61 +384,61 @@ void ShaderCompiler::_dump_function_deps(const SL::ShaderNode *p_node, const Str
 static String _get_global_shader_uniform_from_type_and_index(const String &p_buffer, const String &p_index, ShaderLanguage::DataType p_type) {
 	switch (p_type) {
 		case ShaderLanguage::TYPE_BOOL: {
-			return "bool(floatBitsToUint(" + p_buffer + "[" + p_index + "].x))";
+			return "bool(floatBitsToUint(" + p_buffer + '[' + p_index + "].x))";
 		}
 		case ShaderLanguage::TYPE_BVEC2: {
-			return "bvec2(floatBitsToUint(" + p_buffer + "[" + p_index + "].xy))";
+			return "bvec2(floatBitsToUint(" + p_buffer + '[' + p_index + "].xy))";
 		}
 		case ShaderLanguage::TYPE_BVEC3: {
-			return "bvec3(floatBitsToUint(" + p_buffer + "[" + p_index + "].xyz))";
+			return "bvec3(floatBitsToUint(" + p_buffer + '[' + p_index + "].xyz))";
 		}
 		case ShaderLanguage::TYPE_BVEC4: {
-			return "bvec4(floatBitsToUint(" + p_buffer + "[" + p_index + "].xyzw))";
+			return "bvec4(floatBitsToUint(" + p_buffer + '[' + p_index + "].xyzw))";
 		}
 		case ShaderLanguage::TYPE_INT: {
-			return "floatBitsToInt(" + p_buffer + "[" + p_index + "].x)";
+			return "floatBitsToInt(" + p_buffer + '[' + p_index + "].x)";
 		}
 		case ShaderLanguage::TYPE_IVEC2: {
-			return "floatBitsToInt(" + p_buffer + "[" + p_index + "].xy)";
+			return "floatBitsToInt(" + p_buffer + '[' + p_index + "].xy)";
 		}
 		case ShaderLanguage::TYPE_IVEC3: {
-			return "floatBitsToInt(" + p_buffer + "[" + p_index + "].xyz)";
+			return "floatBitsToInt(" + p_buffer + '[' + p_index + "].xyz)";
 		}
 		case ShaderLanguage::TYPE_IVEC4: {
-			return "floatBitsToInt(" + p_buffer + "[" + p_index + "].xyzw)";
+			return "floatBitsToInt(" + p_buffer + '[' + p_index + "].xyzw)";
 		}
 		case ShaderLanguage::TYPE_UINT: {
-			return "floatBitsToUint(" + p_buffer + "[" + p_index + "].x)";
+			return "floatBitsToUint(" + p_buffer + '[' + p_index + "].x)";
 		}
 		case ShaderLanguage::TYPE_UVEC2: {
-			return "floatBitsToUint(" + p_buffer + "[" + p_index + "].xy)";
+			return "floatBitsToUint(" + p_buffer + '[' + p_index + "].xy)";
 		}
 		case ShaderLanguage::TYPE_UVEC3: {
-			return "floatBitsToUint(" + p_buffer + "[" + p_index + "].xyz)";
+			return "floatBitsToUint(" + p_buffer + '[' + p_index + "].xyz)";
 		}
 		case ShaderLanguage::TYPE_UVEC4: {
-			return "floatBitsToUint(" + p_buffer + "[" + p_index + "].xyzw)";
+			return "floatBitsToUint(" + p_buffer + '[' + p_index + "].xyzw)";
 		}
 		case ShaderLanguage::TYPE_FLOAT: {
-			return "(" + p_buffer + "[" + p_index + "].x)";
+			return '(' + p_buffer + '[' + p_index + "].x)";
 		}
 		case ShaderLanguage::TYPE_VEC2: {
-			return "(" + p_buffer + "[" + p_index + "].xy)";
+			return '(' + p_buffer + '[' + p_index + "].xy)";
 		}
 		case ShaderLanguage::TYPE_VEC3: {
-			return "(" + p_buffer + "[" + p_index + "].xyz)";
+			return '(' + p_buffer + '[' + p_index + "].xyz)";
 		}
 		case ShaderLanguage::TYPE_VEC4: {
-			return "(" + p_buffer + "[" + p_index + "].xyzw)";
+			return '(' + p_buffer + '[' + p_index + "].xyzw)";
 		}
 		case ShaderLanguage::TYPE_MAT2: {
-			return "mat2(" + p_buffer + "[" + p_index + "].xy," + p_buffer + "[" + p_index + "+1u].xy)";
+			return "mat2(" + p_buffer + '[' + p_index + "].xy," + p_buffer + '[' + p_index + "+1u].xy)";
 		}
 		case ShaderLanguage::TYPE_MAT3: {
-			return "mat3(" + p_buffer + "[" + p_index + "].xyz," + p_buffer + "[" + p_index + "+1u].xyz," + p_buffer + "[" + p_index + "+2u].xyz)";
+			return "mat3(" + p_buffer + '[' + p_index + "].xyz," + p_buffer + '[' + p_index + "+1u].xyz," + p_buffer + '[' + p_index + "+2u].xyz)";
 		}
 		case ShaderLanguage::TYPE_MAT4: {
-			return "mat4(" + p_buffer + "[" + p_index + "].xyzw," + p_buffer + "[" + p_index + "+1u].xyzw," + p_buffer + "[" + p_index + "+2u].xyzw," + p_buffer + "[" + p_index + "+3u].xyzw)";
+			return "mat4(" + p_buffer + '[' + p_index + "].xyzw," + p_buffer + '[' + p_index + "+1u].xyzw," + p_buffer + '[' + p_index + "+2u].xyzw," + p_buffer + '[' + p_index + "+3u].xyzw)";
 		}
 		default: {
 			ERR_FAIL_V("void");
@@ -494,7 +494,7 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 
 				struct_code += "struct ";
 				struct_code += _mkid(pnode->vstructs[i].name);
-				struct_code += " ";
+				struct_code += ' ';
 				struct_code += "{\n";
 				for (SL::MemberNode *m : st->members) {
 					if (m->datatype == SL::TYPE_STRUCT) {
@@ -503,16 +503,16 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 						struct_code += _prestr(m->precision);
 						struct_code += _typestr(m->datatype);
 					}
-					struct_code += " ";
+					struct_code += ' ';
 					struct_code += _mkid(m->name);
 					if (m->array_size > 0) {
-						struct_code += "[";
+						struct_code += '[';
 						struct_code += itos(m->array_size);
-						struct_code += "]";
+						struct_code += ']';
 					}
 					struct_code += ";\n";
 				}
-				struct_code += "}";
+				struct_code += '}';
 				struct_code += ";\n";
 
 				for (int j = 0; j < STAGE_MAX; j++) {
@@ -594,11 +594,11 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 					ucode += _typestr(uniform.type);
 				}
 
-				ucode += " " + _mkid(uniform_name);
+				ucode += ' ' + _mkid(uniform_name);
 				if (uniform.array_size > 0) {
-					ucode += "[";
+					ucode += '[';
 					ucode += itos(uniform.array_size);
-					ucode += "]";
+					ucode += ']';
 				}
 				ucode += ";\n";
 				if (SL::is_sampler_type(uniform.type)) {
@@ -702,13 +702,13 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 				String interp_mode = _interpstr(varying.interpolation);
 				vcode += _prestr(varying.precision, ShaderLanguage::is_float_type(varying.type));
 				vcode += _typestr(varying.type);
-				vcode += " " + _mkid(varying_name);
+				vcode += ' ' + _mkid(varying_name);
 				uint32_t inc = varying.get_size();
 
 				if (varying.array_size > 0) {
-					vcode += "[";
+					vcode += '[';
 					vcode += itos(varying.array_size);
-					vcode += "]";
+					vcode += ']';
 				}
 
 				vcode += ";\n";
@@ -726,11 +726,11 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 			if (var_frag_to_light.size() > 0) {
 				String gcode = "\n\nstruct {\n";
 				for (const Pair<StringName, SL::ShaderNode::Varying> &E : var_frag_to_light) {
-					gcode += "\t" + _prestr(E.second.precision) + _typestr(E.second.type) + " " + _mkid(E.first);
+					gcode += '\t' + _prestr(E.second.precision) + _typestr(E.second.type) + ' ' + _mkid(E.first);
 					if (E.second.array_size > 0) {
-						gcode += "[";
+						gcode += '[';
 						gcode += itos(E.second.array_size);
-						gcode += "]";
+						gcode += ']';
 					}
 					gcode += ";\n";
 				}
@@ -748,13 +748,13 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 				} else {
 					gcode += _typestr(cnode.type);
 				}
-				gcode += " " + _mkid(String(cnode.name));
+				gcode += ' ' + _mkid(String(cnode.name));
 				if (cnode.array_size > 0) {
-					gcode += "[";
+					gcode += '[';
 					gcode += itos(cnode.array_size);
-					gcode += "]";
+					gcode += ']';
 				}
-				gcode += "=";
+				gcode += '=';
 				gcode += _dump_node_code(cnode.initializer, p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
 				gcode += ";\n";
 				for (int j = 0; j < STAGE_MAX; j++) {
@@ -814,7 +814,7 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 				if ((*itr)->type == SL::Node::NODE_TYPE_CONTROL_FLOW || bnode->single_statement) {
 					code += scode; //use directly
 					if (bnode->use_comma_between_statements && i + 1 < bnode->statements.size()) {
-						code += ",";
+						code += ',';
 					}
 				} else {
 					code += _mktab(p_level) + scode + ";\n";
@@ -835,48 +835,48 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 			} else {
 				declaration += _prestr(vdnode->precision) + _typestr(vdnode->datatype);
 			}
-			declaration += " ";
+			declaration += ' ';
 			for (int i = 0; i < vdnode->declarations.size(); i++) {
 				bool is_array = vdnode->declarations[i].size > 0;
 				if (i > 0) {
-					declaration += ",";
+					declaration += ',';
 				}
 				declaration += _mkid(vdnode->declarations[i].name);
 				if (is_array) {
-					declaration += "[";
+					declaration += '[';
 					if (vdnode->declarations[i].size_expression != nullptr) {
 						declaration += _dump_node_code(vdnode->declarations[i].size_expression, p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
 					} else {
 						declaration += itos(vdnode->declarations[i].size);
 					}
-					declaration += "]";
+					declaration += ']';
 				}
 
 				if (!is_array || vdnode->declarations[i].single_expression) {
 					if (!vdnode->declarations[i].initializer.is_empty()) {
-						declaration += "=";
+						declaration += '=';
 						declaration += _dump_node_code(vdnode->declarations[i].initializer[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
 					}
 				} else {
 					int size = vdnode->declarations[i].initializer.size();
 					if (size > 0) {
-						declaration += "=";
+						declaration += '=';
 						if (vdnode->datatype == SL::TYPE_STRUCT) {
 							declaration += _mkid(vdnode->struct_name);
 						} else {
 							declaration += _typestr(vdnode->datatype);
 						}
-						declaration += "[";
+						declaration += '[';
 						declaration += itos(size);
-						declaration += "]";
-						declaration += "(";
+						declaration += ']';
+						declaration += '(';
 						for (int j = 0; j < size; j++) {
 							if (j > 0) {
-								declaration += ",";
+								declaration += ',';
 							}
 							declaration += _dump_node_code(vdnode->declarations[i].initializer[j], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
 						}
-						declaration += ")";
+						declaration += ')';
 					}
 				}
 			}
@@ -950,7 +950,7 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 							code = _get_global_shader_uniform_from_type_and_index(p_default_actions.global_buffer_array_variable, code, u.type);
 						} else if (u.scope == ShaderLanguage::ShaderNode::Uniform::SCOPE_INSTANCE) {
 							//instance variable, index it as such
-							code = "(" + p_default_actions.instance_uniform_index_variable + "+" + itos(u.instance_index) + "u)";
+							code = '(' + p_default_actions.instance_uniform_index_variable + '+' + itos(u.instance_index) + "u)";
 							code = _get_global_shader_uniform_from_type_and_index(p_default_actions.global_buffer_array_variable, code, u.type);
 						} else {
 							//regular uniform, index from UBO
@@ -984,17 +984,17 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 			} else {
 				code += _typestr(acnode->datatype);
 			}
-			code += "[";
+			code += '[';
 			code += itos(acnode->initializer.size());
-			code += "]";
-			code += "(";
+			code += ']';
+			code += '(';
 			for (int i = 0; i < sz; i++) {
 				code += _dump_node_code(acnode->initializer[i], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
 				if (i != sz - 1) {
 					code += ", ";
 				}
 			}
-			code += ")";
+			code += ')';
 		} break;
 		case SL::Node::NODE_TYPE_ARRAY: {
 			SL::ArrayNode *anode = (SL::ArrayNode *)p_node;
@@ -1050,7 +1050,7 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 							code = _get_global_shader_uniform_from_type_and_index(p_default_actions.global_buffer_array_variable, code, u.type);
 						} else if (u.scope == ShaderLanguage::ShaderNode::Uniform::SCOPE_INSTANCE) {
 							//instance variable, index it as such
-							code = "(" + p_default_actions.instance_uniform_index_variable + "+" + itos(u.instance_index) + "u)";
+							code = '(' + p_default_actions.instance_uniform_index_variable + '+' + itos(u.instance_index) + "u)";
 							code = _get_global_shader_uniform_from_type_and_index(p_default_actions.global_buffer_array_variable, code, u.type);
 						} else {
 							//regular uniform, index from UBO
@@ -1066,14 +1066,14 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 			}
 
 			if (anode->call_expression != nullptr) {
-				code += ".";
+				code += '.';
 				code += _dump_node_code(anode->call_expression, p_level, r_gen_code, p_actions, p_default_actions, p_assigning, false);
 			} else if (anode->index_expression != nullptr) {
-				code += "[";
+				code += '[';
 				code += _dump_node_code(anode->index_expression, p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-				code += "]";
+				code += ']';
 			} else if (anode->assign_expression != nullptr) {
-				code += "=";
+				code += '=';
 				code += _dump_node_code(anode->assign_expression, p_level, r_gen_code, p_actions, p_default_actions, true, false);
 			}
 
@@ -1098,19 +1098,19 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 				} else {
 					code += _typestr(cnode->datatype);
 				}
-				code += "[";
+				code += '[';
 				code += itos(cnode->array_size);
-				code += "]";
-				code += "(";
+				code += ']';
+				code += '(';
 				for (int i = 0; i < cnode->array_size; i++) {
 					if (i > 0) {
-						code += ",";
+						code += ',';
 					} else {
 						code += "";
 					}
 					code += _dump_node_code(cnode->array_declarations[0].initializer[i], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
 				}
-				code += ")";
+				code += ')';
 			}
 
 		} break;
@@ -1193,7 +1193,7 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 						}
 					}
 
-					code += "(";
+					code += '(';
 
 					// if color backbuffer, depth backbuffer or normal roughness texture is used,
 					// we will add logic to automatically switch between
@@ -1322,7 +1322,7 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 									data_type_name = ShaderLanguage::get_datatype_name(onode->arguments[i]->get_datatype());
 								}
 
-								code += data_type_name + "(" + node_code + ", " + sampler_name + ")";
+								code += data_type_name + '(' + node_code + ", " + sampler_name + ')';
 							} else if (actions.check_multiview_samplers && correct_texture_uniform && RS::get_singleton()->is_low_end()) {
 								// Texture function on low end hardware (i.e. OpenGL).
 								// We just need to know if the texture supports multiview.
@@ -1351,29 +1351,29 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 							code += node_code;
 						}
 					}
-					code += ")";
+					code += ')';
 					if (is_screen_texture && !texture_func_returns_data && actions.apply_luminance_multiplier) {
-						code = "(" + code + " * vec4(vec3(sc_luminance_multiplier()), 1.0))";
+						code = '(' + code + " * vec4(vec3(sc_luminance_multiplier()), 1.0))";
 					}
 					if (is_normal_roughness_texture && !texture_func_returns_data) {
-						code = "normal_roughness_compatibility(" + code + ")";
+						code = "normal_roughness_compatibility(" + code + ')';
 					}
 				} break;
 				case SL::OP_INDEX: {
 					code += _dump_node_code(onode->arguments[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-					code += "[";
+					code += '[';
 					code += _dump_node_code(onode->arguments[1], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-					code += "]";
+					code += ']';
 
 				} break;
 				case SL::OP_SELECT_IF: {
-					code += "(";
+					code += '(';
 					code += _dump_node_code(onode->arguments[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-					code += "?";
+					code += '?';
 					code += _dump_node_code(onode->arguments[1], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-					code += ":";
+					code += ':';
 					code += _dump_node_code(onode->arguments[2], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-					code += ")";
+					code += ')';
 
 				} break;
 				case SL::OP_EMPTY: {
@@ -1382,11 +1382,11 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 
 				default: {
 					if (p_use_scope) {
-						code += "(";
+						code += '(';
 					}
-					code += _dump_node_code(onode->arguments[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + " " + _opstr(onode->op) + " " + _dump_node_code(onode->arguments[1], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+					code += _dump_node_code(onode->arguments[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + ' ' + _opstr(onode->op) + ' ' + _dump_node_code(onode->arguments[1], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
 					if (p_use_scope) {
-						code += ")";
+						code += ')';
 					}
 					break;
 				}
@@ -1422,12 +1422,12 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 				String left = _dump_node_code(cfnode->blocks[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
 				String middle = _dump_node_code(cfnode->blocks[1], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
 				String right = _dump_node_code(cfnode->blocks[2], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-				code += _mktab(p_level) + "for (" + left + ";" + middle + ";" + right + ")\n";
+				code += _mktab(p_level) + "for (" + left + ';' + middle + ';' + right + ")\n";
 				code += _dump_node_code(cfnode->blocks[3], p_level + 1, r_gen_code, p_actions, p_default_actions, p_assigning);
 
 			} else if (cfnode->flow_op == SL::FLOW_OP_RETURN) {
 				if (cfnode->expressions.size()) {
-					code = "return " + _dump_node_code(cfnode->expressions[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + ";";
+					code = "return " + _dump_node_code(cfnode->expressions[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + ';';
 				} else {
 					code = "return;";
 				}
@@ -1453,16 +1453,16 @@ String ShaderCompiler::_dump_node_code(const SL::Node *p_node, int p_level, Gene
 			} else {
 				name = mnode->name;
 			}
-			code = _dump_node_code(mnode->owner, p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + "." + name;
+			code = _dump_node_code(mnode->owner, p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + '.' + name;
 			if (mnode->index_expression != nullptr) {
-				code += "[";
+				code += '[';
 				code += _dump_node_code(mnode->index_expression, p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-				code += "]";
+				code += ']';
 			} else if (mnode->assign_expression != nullptr) {
-				code += "=";
+				code += '=';
 				code += _dump_node_code(mnode->assign_expression, p_level, r_gen_code, p_actions, p_default_actions, true, false);
 			} else if (mnode->call_expression != nullptr) {
-				code += ".";
+				code += '.';
 				code += _dump_node_code(mnode->call_expression, p_level, r_gen_code, p_actions, p_default_actions, p_assigning, false);
 			}
 		} break;
@@ -1502,8 +1502,8 @@ Error ShaderCompiler::compile(RS::ShaderMode p_mode, const String &p_code, Ident
 			if (l.begins_with("@@>")) {
 				String inc_path = l.replace_first("@@>", "");
 
-				l = "#include \"" + inc_path + "\"";
-				includes[current].append("#include \"" + inc_path + "\""); // Restore the include directive
+				l = "#include \"" + inc_path + '"';
+				includes[current].append("#include \"" + inc_path + '"'); // Restore the include directive
 				include_stack.push_back(current);
 				current = inc_path;
 				includes[inc_path] = Vector<String>();

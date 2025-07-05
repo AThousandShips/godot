@@ -186,7 +186,7 @@ void TexturePreview::_update_metadata_label_text() {
 
 		if (mipmaps >= 1) {
 			metadata_label->set_text(
-					vformat(String::utf8("%d×%d %s\n") + TTR("%s Mipmaps") + "\n" + TTR("Memory: %s"),
+					vformat(String::utf8("%d×%d %s\n") + TTR("%s Mipmaps") + '\n' + TTR("Memory: %s"),
 							texture->get_width(),
 							texture->get_height(),
 							format_name,
@@ -196,7 +196,7 @@ void TexturePreview::_update_metadata_label_text() {
 			// "No Mipmaps" is easier to distinguish than "0 Mipmaps",
 			// especially since 0, 6, and 8 look quite close with the default code font.
 			metadata_label->set_text(
-					vformat(String::utf8("%d×%d %s\n") + TTR("No Mipmaps") + "\n" + TTR("Memory: %s"),
+					vformat(String::utf8("%d×%d %s\n") + TTR("No Mipmaps") + '\n' + TTR("Memory: %s"),
 							texture->get_width(),
 							texture->get_height(),
 							format_name,

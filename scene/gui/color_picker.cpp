@@ -64,13 +64,13 @@ static inline bool is_color_valid_hex(const Color &color) {
 
 static inline String color_to_string(const Color &color, bool show_alpha = true, bool force_value_format = false) {
 	if (!force_value_format && !is_color_overbright(color)) {
-		return "#" + color.to_html(show_alpha);
+		return '#' + color.to_html(show_alpha);
 	}
-	String t = "(" + String::num(color.r, 3) + ", " + String::num(color.g, 3) + ", " + String::num(color.b, 3);
+	String t = '(' + String::num(color.r, 3) + ", " + String::num(color.g, 3) + ", " + String::num(color.b, 3);
 	if (show_alpha) {
-		t += ", " + String::num(color.a, 3) + ")";
+		t += ", " + String::num(color.a, 3) + ')';
 	} else {
-		t += ")";
+		t += ')';
 	}
 	return t;
 }

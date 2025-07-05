@@ -89,7 +89,7 @@ void GDScriptDocGen::_doctype_from_gdtype(const GDType &p_gdtype, String &r_type
 				_doctype_from_gdtype(p_gdtype.get_container_element_type_or_variant(0), key, r_enum);
 				_doctype_from_gdtype(p_gdtype.get_container_element_type_or_variant(1), value, r_enum);
 				if (key != "Variant" || value != "Variant") {
-					r_type = "Dictionary[" + key + ", " + value + "]";
+					r_type = "Dictionary[" + key + ", " + value + ']';
 					return;
 				}
 			}
@@ -214,7 +214,7 @@ String GDScriptDocGen::_docvalue_from_variant(const Variant &p_variant, int p_re
 			} else if (p_recursion_level > MAX_RECURSION_LEVEL) {
 				result += "{...}";
 			} else {
-				result += "{";
+				result += '{';
 
 				LocalVector<Variant> keys = dict.get_key_list();
 				keys.sort_custom<StringLikeVariantOrder>();
@@ -227,11 +227,11 @@ String GDScriptDocGen::_docvalue_from_variant(const Variant &p_variant, int p_re
 					result += _docvalue_from_variant(key, p_recursion_level + 1) + ": " + _docvalue_from_variant(dict[key], p_recursion_level + 1);
 				}
 
-				result += "}";
+				result += '}';
 			}
 
 			if (dict.is_typed()) {
-				result += ")";
+				result += ')';
 			}
 
 			return result;
@@ -266,7 +266,7 @@ String GDScriptDocGen::_docvalue_from_variant(const Variant &p_variant, int p_re
 			} else if (p_recursion_level > MAX_RECURSION_LEVEL) {
 				result += "[...]";
 			} else {
-				result += "[";
+				result += '[';
 
 				for (int i = 0; i < array.size(); i++) {
 					if (i > 0) {
@@ -275,11 +275,11 @@ String GDScriptDocGen::_docvalue_from_variant(const Variant &p_variant, int p_re
 					result += _docvalue_from_variant(array[i], p_recursion_level + 1);
 				}
 
-				result += "]";
+				result += ']';
 			}
 
 			if (array.is_typed()) {
-				result += ")";
+				result += ')';
 			}
 
 			return result;
@@ -337,7 +337,7 @@ void GDScriptDocGen::_generate_docs(GDScript *p_script, const GDP::ClassNode *p_
 		// This is an inner or global outer class.
 		doc.name = p_script->local_name;
 		if (p_script->_owner) {
-			doc.name = p_script->_owner->doc.name + "." + doc.name;
+			doc.name = p_script->_owner->doc.name + '.' + doc.name;
 		}
 	}
 
@@ -414,7 +414,7 @@ void GDScriptDocGen::_generate_docs(GDScript *p_script, const GDP::ClassNode *p_
 
 				if (m_func->is_vararg()) {
 					if (!method_doc.qualifiers.is_empty()) {
-						method_doc.qualifiers += " ";
+						method_doc.qualifiers += ' ';
 					}
 					method_doc.qualifiers += "vararg";
 					method_doc.rest_argument.name = m_func->rest_parameter->identifier->name;
@@ -422,13 +422,13 @@ void GDScriptDocGen::_generate_docs(GDScript *p_script, const GDP::ClassNode *p_
 				}
 				if (m_func->is_abstract) {
 					if (!method_doc.qualifiers.is_empty()) {
-						method_doc.qualifiers += " ";
+						method_doc.qualifiers += ' ';
 					}
 					method_doc.qualifiers += "abstract";
 				}
 				if (m_func->is_static) {
 					if (!method_doc.qualifiers.is_empty()) {
-						method_doc.qualifiers += " ";
+						method_doc.qualifiers += ' ';
 					}
 					method_doc.qualifiers += "static";
 				}

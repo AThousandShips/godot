@@ -59,7 +59,7 @@ void ImageLoaderSVG::_replace_color_property(const HashMap<Color, Color> &p_colo
 		if (color_code != "none" && !color_code.begins_with("url(")) {
 			const Color color = Color(color_code); // Handles both HTML codes and named colors.
 			if (p_color_map.has(color)) {
-				r_string = r_string.left(pos) + "#" + p_color_map[color].to_html(false) + r_string.substr(end_pos);
+				r_string = r_string.left(pos) + '#' + p_color_map[color].to_html(false) + r_string.substr(end_pos);
 			}
 		}
 		// Search for other occurrences.

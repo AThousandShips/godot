@@ -723,7 +723,7 @@ void PopupMenu::_input_from_window_internal(const Ref<InputEvent> &p_event) {
 		}
 
 		if (String::chr(k->get_unicode()) != search_string) {
-			search_string += String::chr(k->get_unicode());
+			search_string += k->get_unicode();
 		}
 
 		for (int i = mouse_over + 1; i <= items.size(); i++) {

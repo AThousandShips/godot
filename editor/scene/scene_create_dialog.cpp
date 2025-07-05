@@ -100,7 +100,7 @@ void SceneCreateDialog::update_dialog() {
 
 	if (validation_panel->is_valid()) {
 		if (!scene_name.ends_with(".")) {
-			scene_name += ".";
+			scene_name += '.';
 		}
 		scene_name += scene_extension_picker->get_selected_metadata().operator String();
 	}
@@ -268,7 +268,7 @@ SceneCreateDialog::SceneCreateDialog() {
 		scene_extension_picker->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
 		hb->add_child(scene_extension_picker);
 		for (const String &E : extensions) {
-			scene_extension_picker->add_item("." + E);
+			scene_extension_picker->add_item('.' + E);
 			scene_extension_picker->set_item_metadata(-1, E);
 		}
 	}

@@ -42,7 +42,7 @@ void EditorTranslationPreviewButton::_update() {
 	}
 
 	const String name = TranslationServer::get_singleton()->get_locale_name(locale);
-	set_text(vformat(TTR("Previewing: %s"), name == locale ? locale : name + " [" + locale + "]"));
+	set_text(vformat(TTR("Previewing: %s"), name == locale ? locale : name + " [" + locale + ']'));
 	show();
 }
 

@@ -68,7 +68,7 @@ void CameraLinux::_update_devices() {
 				for (int i = 0; i < count; i++) {
 					struct dirent *device = devices[i];
 					if (strncmp(device->d_name, "video", 5) == 0) {
-						String device_name = String("/dev/") + String(device->d_name);
+						String device_name = "/dev/" + String(device->d_name);
 						if (!_has_device(device_name)) {
 							_add_device(device_name);
 						}

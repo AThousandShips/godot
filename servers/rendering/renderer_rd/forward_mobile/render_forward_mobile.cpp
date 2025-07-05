@@ -2693,7 +2693,7 @@ void RenderForwardMobile::_geometry_instance_add_surface_with_material(GeometryI
 			// Stencil materials which read from the stencil buffer must be in the alpha pass.
 			// This is critical to preserve compatibility once we'll have the compositor.
 			if (!(flags & GeometryInstanceSurfaceDataCache::FLAG_PASS_ALPHA)) {
-				String shader_path = p_material->shader_data->path.is_empty() ? "" : "(" + p_material->shader_data->path + ")";
+				String shader_path = p_material->shader_data->path.is_empty() ? "" : '(' + p_material->shader_data->path + ')';
 				ERR_PRINT_ED(vformat("Attempting to use a shader %s that reads stencil but is not in the alpha queue. Ensure the material uses alpha blending or has depth_draw disabled or depth_test disabled.", shader_path));
 			}
 		}
@@ -2754,8 +2754,8 @@ void RenderForwardMobile::_geometry_instance_add_surface_with_material(GeometryI
 
 	uint64_t format = RendererRD::MeshStorage::get_singleton()->mesh_surface_get_format(sdcache->surface);
 	if (p_material->shader_data->uses_tangent && !(format & RS::ARRAY_FORMAT_TANGENT)) {
-		String shader_path = p_material->shader_data->path.is_empty() ? "" : "(" + p_material->shader_data->path + ")";
-		String mesh_path = mesh_storage->mesh_get_path(p_mesh).is_empty() ? "" : "(" + mesh_storage->mesh_get_path(p_mesh) + ")";
+		String shader_path = p_material->shader_data->path.is_empty() ? "" : '(' + p_material->shader_data->path + ')';
+		String mesh_path = mesh_storage->mesh_get_path(p_mesh).is_empty() ? "" : '(' + mesh_storage->mesh_get_path(p_mesh) + ')';
 		WARN_PRINT_ED(vformat("Attempting to use a shader %s that requires tangents with a mesh %s that doesn't contain tangents. Ensure that meshes are imported with the 'ensure_tangents' option. If creating your own meshes, add an `ARRAY_TANGENT` array (when using ArrayMesh) or call `generate_tangents()` (when using SurfaceTool).", shader_path, mesh_path));
 	}
 
@@ -3330,7 +3330,7 @@ RenderForwardMobile::RenderForwardMobile() {
 		defines += "\n#define USE_RADIANCE_CUBEMAP_ARRAY \n";
 	}
 	// defines += "\n#define SDFGI_OCT_SIZE " + itos(gi.sdfgi_get_lightprobe_octahedron_size()) + "\n";
-	defines += "\n#define MAX_DIRECTIONAL_LIGHT_DATA_STRUCTS " + itos(MAX_DIRECTIONAL_LIGHTS) + "\n";
+	defines += "\n#define MAX_DIRECTIONAL_LIGHT_DATA_STRUCTS " + itos(MAX_DIRECTIONAL_LIGHTS) + '\n';
 
 	bool force_vertex_shading = GLOBAL_GET("rendering/shading/overrides/force_vertex_shading");
 	if (force_vertex_shading) {
@@ -3345,8 +3345,8 @@ RenderForwardMobile::RenderForwardMobile() {
 	{
 		//lightmaps
 		scene_state.max_lightmaps = MAX_LIGHTMAPS;
-		defines += "\n#define MAX_LIGHTMAP_TEXTURES " + itos(scene_state.max_lightmaps) + "\n";
-		defines += "\n#define MAX_LIGHTMAPS " + itos(scene_state.max_lightmaps) + "\n";
+		defines += "\n#define MAX_LIGHTMAP_TEXTURES " + itos(scene_state.max_lightmaps) + '\n';
+		defines += "\n#define MAX_LIGHTMAPS " + itos(scene_state.max_lightmaps) + '\n';
 
 		scene_state.lightmap_buffer = RD::get_singleton()->storage_buffer_create(sizeof(LightmapData) * scene_state.max_lightmaps);
 	}
@@ -3357,7 +3357,7 @@ RenderForwardMobile::RenderForwardMobile() {
 		scene_state.lightmap_capture_buffer = RD::get_singleton()->storage_buffer_create(sizeof(LightmapCaptureData) * scene_state.max_lightmap_captures);
 	}
 	{
-		defines += "\n#define MATERIAL_UNIFORM_SET " + itos(MATERIAL_UNIFORM_SET) + "\n";
+		defines += "\n#define MATERIAL_UNIFORM_SET " + itos(MATERIAL_UNIFORM_SET) + '\n';
 	}
 #ifdef REAL_T_IS_DOUBLE
 	{

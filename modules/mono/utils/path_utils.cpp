@@ -180,7 +180,7 @@ String join(const String &p_a, const String &p_b) {
 		return p_a + p_b;
 	}
 
-	return p_a + "/" + p_b;
+	return p_a + '/' + p_b;
 }
 
 String join(const String &p_a, const String &p_b, const String &p_c) {
@@ -255,7 +255,7 @@ String get_csharp_project_name() {
 
 	// Avoid reserved names that conflict with Godot assemblies.
 	if (reserved_assembly_names.has(name)) {
-		name += "_";
+		name += '_';
 	}
 
 	return name;

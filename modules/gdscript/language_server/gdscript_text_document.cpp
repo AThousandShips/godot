@@ -434,21 +434,21 @@ Variant GDScriptTextDocument::declaration(const Dictionary &p_params) {
 					id = "class_name:" + symbol->name;
 					break;
 				case LSP::SymbolKind::Constant:
-					id = "class_constant:" + symbol->native_class + ":" + symbol->name;
+					id = "class_constant:" + symbol->native_class + ':' + symbol->name;
 					break;
 				case LSP::SymbolKind::Property:
 				case LSP::SymbolKind::Variable:
-					id = "class_property:" + symbol->native_class + ":" + symbol->name;
+					id = "class_property:" + symbol->native_class + ':' + symbol->name;
 					break;
 				case LSP::SymbolKind::Enum:
-					id = "class_enum:" + symbol->native_class + ":" + symbol->name;
+					id = "class_enum:" + symbol->native_class + ':' + symbol->name;
 					break;
 				case LSP::SymbolKind::Method:
 				case LSP::SymbolKind::Function:
-					id = "class_method:" + symbol->native_class + ":" + symbol->name;
+					id = "class_method:" + symbol->native_class + ':' + symbol->name;
 					break;
 				default:
-					id = "class_global:" + symbol->native_class + ":" + symbol->name;
+					id = "class_global:" + symbol->native_class + ':' + symbol->name;
 					break;
 			}
 			callable_mp(this, &GDScriptTextDocument::show_native_symbol_in_editor).call_deferred(id);

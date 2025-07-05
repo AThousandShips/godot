@@ -92,7 +92,7 @@ void EditorPropertyRootMotion::_node_assign() {
 		for (int i = 0; i < path.get_name_count(); i++) {
 			String name = path.get_name(i);
 			if (!accum.is_empty()) {
-				accum += "/";
+				accum += '/';
 			}
 			accum += name;
 			if (!parenthood.has(accum)) {
@@ -149,7 +149,7 @@ void EditorPropertyRootMotion::_node_assign() {
 				joint_item->set_text(0, skeleton->get_bone_name(current_bone_idx));
 				joint_item->set_icon(0, bone_icon);
 				joint_item->set_selectable(0, true);
-				joint_item->set_metadata(0, accum + ":" + skeleton->get_bone_name(current_bone_idx));
+				joint_item->set_metadata(0, accum + ':' + skeleton->get_bone_name(current_bone_idx));
 				joint_item->set_collapsed(true);
 			}
 		}

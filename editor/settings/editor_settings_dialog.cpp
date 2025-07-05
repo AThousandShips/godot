@@ -405,7 +405,7 @@ TreeItem *EditorSettingsDialog::_create_shortcut_treeitem(TreeItem *p_parent, co
 			sc_text += ", " + secondary->as_text();
 
 			if (p_events.size() > 2) {
-				sc_text += " (+" + itos(p_events.size() - 2) + ")";
+				sc_text += " (+" + itos(p_events.size() - 2) + ')';
 			}
 		}
 		shortcut_item->set_auto_translate_mode(1, AUTO_TRANSLATE_MODE_DISABLED);

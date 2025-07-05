@@ -1118,7 +1118,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 
 					if (has_tracks_to_delete) {
 						if (!msg.is_empty()) {
-							msg += "\n";
+							msg += '\n';
 						}
 						msg += TTR("Some nodes are referenced by animation tracks.");
 						delete_tracks_checkbox->show();
@@ -1203,7 +1203,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 			if (extensions.size()) {
 				String root_name(tocopy->get_name());
 				root_name = EditorNode::adjust_scene_name_casing(root_name);
-				existing = root_name + "." + extensions.front()->get().to_lower();
+				existing = root_name + '.' + extensions.front()->get().to_lower();
 			}
 			new_scene_from_dialog->set_current_path(existing);
 
@@ -1455,7 +1455,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 					}
 
 					StringName name = node->get_name();
-					if (new_unique_names.has(name) || get_tree()->get_edited_scene_root()->get_node_or_null(UNIQUE_NODE_PREFIX + String(name)) != nullptr) {
+					if (new_unique_names.has(name) || get_tree()->get_edited_scene_root()->get_node_or_null(UNIQUE_NODE_PREFIX + name) != nullptr) {
 						cant_be_set_unique_names.push_back(name);
 					} else {
 						new_unique_nodes.push_back(node);
@@ -1474,9 +1474,9 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 
 				if (cant_be_set_unique_names.size()) {
 					String popup_text = TTR("Unique names already used by another node in the scene:");
-					popup_text += "\n";
+					popup_text += '\n';
 					for (const StringName &name : cant_be_set_unique_names) {
-						popup_text += "\n" + String(name);
+						popup_text += '\n' + name;
 					}
 					accept->set_text(popup_text);
 					accept->popup_centered();
@@ -1797,7 +1797,7 @@ void SceneTreeDock::_node_replace_owner(Node *p_base, Node *p_node, Node *p_root
 		EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 		switch (p_mode) {
 			case MODE_BIDI: {
-				bool disable_unique = p_node->is_unique_name_in_owner() && p_root->get_node_or_null(UNIQUE_NODE_PREFIX + String(p_node->get_name())) != nullptr;
+				bool disable_unique = p_node->is_unique_name_in_owner() && p_root->get_node_or_null(UNIQUE_NODE_PREFIX + p_node->get_name()) != nullptr;
 				if (disable_unique) {
 					// Will create a unique name conflict. Disable before setting owner.
 					undo_redo->add_do_method(p_node, "set_unique_name_in_owner", false);
@@ -1981,7 +1981,7 @@ void SceneTreeDock::fill_path_renames(Node *p_node, Node *p_new_parent, HashMap<
 
 bool SceneTreeDock::_update_node_path(Node *p_root_node, NodePath &r_node_path, HashMap<Node *, NodePath> *p_renames) const {
 	Node *target_node = p_root_node->get_node_or_null(r_node_path);
-	ERR_FAIL_NULL_V_MSG(target_node, false, "Found invalid node path '" + String(r_node_path) + "' on node '" + String(scene_root->get_path_to(p_root_node)) + "'");
+	ERR_FAIL_NULL_V_MSG(target_node, false, "Found invalid node path '" + String(r_node_path) + "' on node '" + String(scene_root->get_path_to(p_root_node)) + '\'');
 
 	// Try to find the target node in modified node paths.
 	HashMap<Node *, NodePath>::Iterator found_node_path = p_renames->find(target_node);
@@ -2463,7 +2463,7 @@ void SceneTreeDock::_do_reparent(Node *p_new_parent, int p_position_in_parent, V
 				NodePath fixed_node_path = NodePath(fixed_new_names, true);
 				path_renames[node] = fixed_node_path;
 			} else {
-				ERR_PRINT("Internal error. Can't find renamed path for node '" + String(node->get_path()) + "'");
+				ERR_PRINT("Internal error. Can't find renamed path for node '" + String(node->get_path()) + '\'');
 			}
 		}
 
@@ -3281,7 +3281,7 @@ void SceneTreeDock::perform_node_replace(Node *p_base, Node *p_node, Node *p_by_
 			undo_redo->add_do_property(p_base, propertyname, updated_variant);
 			undo_redo->add_undo_property(p_base, propertyname, old_variant);
 			if (!warn_message.is_empty()) {
-				String node_path = (String(edited_scene->get_name()) + "/" + String(edited_scene->get_path_to(p_base))).trim_suffix("/.");
+				String node_path = (String(edited_scene->get_name()) + '/' + String(edited_scene->get_path_to(p_base))).trim_suffix("/.");
 				WARN_PRINT(warn_message + vformat("Removing the node from variable \"%s\" on node \"%s\".", propertyname, node_path));
 			}
 		}
@@ -4051,7 +4051,7 @@ void SceneTreeDock::_filter_option_selected(int p_option) {
 	}
 
 	if (!filter_parameter.is_empty()) {
-		set_filter((get_filter() + " " + filter_parameter + ":").strip_edges());
+		set_filter((get_filter() + ' ' + filter_parameter + ':').strip_edges());
 		filter->set_caret_column(filter->get_text().length());
 		filter->grab_focus();
 	}
@@ -4138,7 +4138,7 @@ void SceneTreeDock::attach_script_to_selected(bool p_extend) {
 				if (ScriptServer::is_global_class(name) && EDITOR_GET("interface/editors/derive_script_globals_by_name").operator bool()) {
 					inherits = name;
 				} else if (l->can_inherit_from_file()) {
-					inherits = "\"" + existing->get_path() + "\"";
+					inherits = '"' + existing->get_path() + '"';
 				}
 				break;
 			}
@@ -4558,7 +4558,7 @@ void SceneTreeDock::_list_all_subresources(PopupMenu *p_menu) {
 			}
 
 			if (unique_resources[pair.first] > 1) {
-				display_text += " " + vformat(TTR("(used %d times)"), unique_resources[pair.first]);
+				display_text += ' ' + vformat(TTR("(used %d times)"), unique_resources[pair.first]);
 			}
 
 			p_menu->add_item(display_text);

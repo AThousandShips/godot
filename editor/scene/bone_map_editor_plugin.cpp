@@ -112,7 +112,7 @@ void BoneMapperItem::create_editor() {
 	skeleton_bone_selector->set_label(profile_bone_name);
 	skeleton_bone_selector->set_selectable(false);
 	skeleton_bone_selector->set_h_size_flags(SIZE_EXPAND_FILL);
-	skeleton_bone_selector->set_object_and_property(bone_map.ptr(), "bone_map/" + String(profile_bone_name));
+	skeleton_bone_selector->set_object_and_property(bone_map.ptr(), "bone_map/" + profile_bone_name);
 	skeleton_bone_selector->update_property();
 	skeleton_bone_selector->connect("property_changed", callable_mp(this, &BoneMapperItem::_value_changed));
 	hbox->add_child(skeleton_bone_selector);

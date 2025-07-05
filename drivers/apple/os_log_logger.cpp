@@ -112,7 +112,7 @@ void OsLogLogger::log_error(const char *p_function, const char *p_file, int p_li
 	String back_trace;
 	for (const Ref<ScriptBacktrace> &backtrace : p_script_backtraces) {
 		if (backtrace.is_valid() && !backtrace->is_empty()) {
-			back_trace += "\n";
+			back_trace += '\n';
 			back_trace += backtrace->format(strlen(error_type_indent(p_type)));
 		}
 	}

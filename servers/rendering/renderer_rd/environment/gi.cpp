@@ -448,7 +448,7 @@ void GI::SDFGI::create(RID p_env, const Vector3 &p_world_position, uint32_t p_re
 		tf_render.format = RD::DATA_FORMAT_R8_UNORM; //at least its easy to visualize
 
 		for (int i = 0; i < 8; i++) {
-			render_occlusion[i] = create_clear_texture(tf_render, String("SDFGI Render Occlusion ") + itos(i));
+			render_occlusion[i] = create_clear_texture(tf_render, "SDFGI Render Occlusion " + itos(i));
 		}
 
 		tf_render.format = RD::DATA_FORMAT_R32_UINT;
@@ -3412,7 +3412,7 @@ void GI::init(SkyRD *p_sky) {
 		voxel_gi_lights_uniform = RD::get_singleton()->uniform_buffer_create(voxel_gi_max_lights * sizeof(VoxelGILight));
 		voxel_gi_quality = RS::VoxelGIQuality(CLAMP(int(GLOBAL_GET("rendering/global_illumination/voxel_gi/quality")), 0, 1));
 
-		String defines = "\n#define MAX_LIGHTS " + itos(voxel_gi_max_lights) + "\n";
+		String defines = "\n#define MAX_LIGHTS " + itos(voxel_gi_max_lights) + '\n';
 
 		Vector<String> versions;
 		versions.push_back("\n#define MODE_COMPUTE_LIGHT\n");
@@ -3469,7 +3469,7 @@ void GI::init(SkyRD *p_sky) {
 		preprocess_modes.push_back("\n#define MODE_UPSCALE_JUMP_FLOOD\n");
 		preprocess_modes.push_back("\n#define MODE_OCCLUSION\n");
 		preprocess_modes.push_back("\n#define MODE_STORE\n");
-		String defines = "\n#define OCCLUSION_SIZE " + itos(SDFGI::CASCADE_SIZE / SDFGI::PROBE_DIVISOR) + "\n";
+		String defines = "\n#define OCCLUSION_SIZE " + itos(SDFGI::CASCADE_SIZE / SDFGI::PROBE_DIVISOR) + '\n';
 		sdfgi_shader.preprocess.initialize(preprocess_modes, defines);
 		sdfgi_shader.preprocess_shader = sdfgi_shader.preprocess.version_create();
 		for (int i = 0; i < SDFGIShader::PRE_PROCESS_MAX; i++) {
@@ -3479,7 +3479,7 @@ void GI::init(SkyRD *p_sky) {
 
 	{
 		//calculate tables
-		String defines = "\n#define OCT_SIZE " + itos(SDFGI::LIGHTPROBE_OCT_SIZE) + "\n";
+		String defines = "\n#define OCT_SIZE " + itos(SDFGI::LIGHTPROBE_OCT_SIZE) + '\n';
 
 		Vector<String> direct_light_modes;
 		direct_light_modes.push_back("\n#define MODE_PROCESS_STATIC\n");
@@ -3493,8 +3493,8 @@ void GI::init(SkyRD *p_sky) {
 
 	{
 		//calculate tables
-		String defines = "\n#define OCT_SIZE " + itos(SDFGI::LIGHTPROBE_OCT_SIZE) + "\n";
-		defines += "\n#define SH_SIZE " + itos(SDFGI::SH_SIZE) + "\n";
+		String defines = "\n#define OCT_SIZE " + itos(SDFGI::LIGHTPROBE_OCT_SIZE) + '\n';
+		defines += "\n#define SH_SIZE " + itos(SDFGI::SH_SIZE) + '\n';
 		if (p_sky->sky_use_cubemap_array) {
 			defines += "\n#define USE_CUBEMAP_ARRAY\n";
 		}
@@ -3540,7 +3540,7 @@ void GI::init(SkyRD *p_sky) {
 	//GK
 	{
 		//calculate tables
-		String defines = "\n#define SDFGI_OCT_SIZE " + itos(SDFGI::LIGHTPROBE_OCT_SIZE) + "\n";
+		String defines = "\n#define SDFGI_OCT_SIZE " + itos(SDFGI::LIGHTPROBE_OCT_SIZE) + '\n';
 
 		Vector<ShaderRD::VariantDefine> variants;
 		for (uint32_t vrs = 0; vrs < 2; vrs++) {
@@ -3597,7 +3597,7 @@ void GI::init(SkyRD *p_sky) {
 		sdfgi_ubo = RD::get_singleton()->uniform_buffer_create(sizeof(SDFGIData));
 	}
 	{
-		String defines = "\n#define OCT_SIZE " + itos(SDFGI::LIGHTPROBE_OCT_SIZE) + "\n";
+		String defines = "\n#define OCT_SIZE " + itos(SDFGI::LIGHTPROBE_OCT_SIZE) + '\n';
 		Vector<String> debug_modes;
 		debug_modes.push_back("");
 		sdfgi_shader.debug.initialize(debug_modes, defines);
@@ -3606,7 +3606,7 @@ void GI::init(SkyRD *p_sky) {
 		sdfgi_shader.debug_pipeline = RD::get_singleton()->compute_pipeline_create(sdfgi_shader.debug_shader_version);
 	}
 	{
-		String defines = "\n#define OCT_SIZE " + itos(SDFGI::LIGHTPROBE_OCT_SIZE) + "\n";
+		String defines = "\n#define OCT_SIZE " + itos(SDFGI::LIGHTPROBE_OCT_SIZE) + '\n';
 
 		Vector<String> versions;
 		versions.push_back("\n#define MODE_PROBES\n");

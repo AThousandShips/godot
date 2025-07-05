@@ -244,9 +244,9 @@ void OS_Windows::initialize_debugging() {
 static void _error_handler(void *p_self, const char *p_func, const char *p_file, int p_line, const char *p_error, const char *p_errorexp, bool p_editor_notify, ErrorHandlerType p_type) {
 	String err_str;
 	if (p_errorexp && p_errorexp[0]) {
-		err_str = String::utf8(p_errorexp) + "\n";
+		err_str = String::utf8(p_errorexp) + '\n';
 	} else {
-		err_str = String::utf8(p_file) + ":" + itos(p_line) + " - " + String::utf8(p_error) + "\n";
+		err_str = String::utf8(p_file) + ':' + itos(p_line) + " - " + String::utf8(p_error) + '\n';
 	}
 
 	OutputDebugStringW((LPCWSTR)err_str.utf16().ptr());
@@ -479,7 +479,7 @@ Error OS_Windows::open_dynamic_library(const String &p_path, void *&p_library_ha
 	if (p_data != nullptr && p_data->generate_temp_files) {
 		// Copy the file to the same directory as the original with a prefix in the name.
 		// This is so relative path to dependencies are satisfied.
-		load_path = path.get_base_dir().path_join("~" + path.get_file());
+		load_path = path.get_base_dir().path_join('~' + path.get_file());
 
 		// If there's a left-over copy (possibly from a crash) then delete it first.
 		if (FileAccess::exists(load_path)) {
@@ -926,7 +926,7 @@ String OS_Windows::_quote_command_line_argument(const String &p_text) const {
 	for (int i = 0; i < p_text.size(); i++) {
 		char32_t c = p_text[i];
 		if (c == ' ' || c == '&' || c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}' || c == '^' || c == '=' || c == ';' || c == '!' || c == '\'' || c == '+' || c == ',' || c == '`' || c == '~') {
-			return "\"" + p_text + "\"";
+			return '"' + p_text + '"';
 		}
 	}
 	return p_text;
@@ -1218,7 +1218,7 @@ Dictionary OS_Windows::execute_with_pipe(const String &p_path, const List<String
 	String path = p_path.is_absolute_path() ? fix_path(p_path) : p_path;
 	String command = _quote_command_line_argument(path);
 	for (const String &E : p_arguments) {
-		command += " " + _quote_command_line_argument(E);
+		command += ' ' + _quote_command_line_argument(E);
 	}
 
 	// Create pipes.
@@ -1324,7 +1324,7 @@ Error OS_Windows::execute(const String &p_path, const List<String> &p_arguments,
 	String path = p_path.is_absolute_path() ? fix_path(p_path) : p_path;
 	String command = _quote_command_line_argument(path);
 	for (const String &E : p_arguments) {
-		command += " " + _quote_command_line_argument(E);
+		command += ' ' + _quote_command_line_argument(E);
 	}
 
 	ProcessInfo pi;
@@ -1466,7 +1466,7 @@ Error OS_Windows::create_process(const String &p_path, const List<String> &p_arg
 	String path = p_path.is_absolute_path() ? fix_path(p_path) : p_path;
 	String command = _quote_command_line_argument(path);
 	for (const String &E : p_arguments) {
-		command += " " + _quote_command_line_argument(E);
+		command += ' ' + _quote_command_line_argument(E);
 	}
 
 	ProcessInfo pi;

@@ -38,7 +38,7 @@
 
 String make_unique_id(VisualShader::Type p_type, int p_id, const String &p_name) {
 	static const char *typepf[VisualShader::TYPE_MAX] = { "vtx", "frg", "lgt", "start", "process", "collide", "start_custom", "process_custom", "sky", "fog" };
-	return p_name + "_" + String(typepf[p_type]) + "_" + itos(p_id);
+	return p_name + '_' + String(typepf[p_type]) + '_' + itos(p_id);
 }
 
 bool VisualShaderNode::is_simple_decl() const {
@@ -566,7 +566,7 @@ void VisualShaderNodeCustom::update_properties() {
 	properties = "";
 	for (const KeyValue<int, int> &p : dp_selected_cache) {
 		if (p.value != 0) {
-			properties += itos(p.key) + "," + itos(p.value) + ";";
+			properties += itos(p.key) + ',' + itos(p.value) + ';';
 		}
 	}
 }
@@ -625,18 +625,18 @@ String VisualShaderNodeCustom::generate_code(Shader::Mode p_mode, VisualShader::
 	String _code;
 	GDVIRTUAL_CALL(_get_code, input_vars, output_vars, p_mode, p_type, _code);
 	if (_is_valid_code(_code)) {
-		String code = "	{\n";
+		String code = "\t{\n";
 		bool nend = _code.ends_with("\n");
-		_code = _code.insert(0, "		");
-		_code = _code.replace("\n", "\n		");
+		_code = _code.insert(0, "\t\t");
+		_code = _code.replace("\n", "\n\t\t");
 		code += _code;
 		if (!nend) {
-			code += "\n	}";
+			code += "\n\t}";
 		} else {
 			code.remove_at(code.size() - 1);
-			code += "}";
+			code += '}';
 		}
-		code += "\n";
+		code += '\n';
 		return code;
 	}
 	return String();
@@ -646,9 +646,9 @@ String VisualShaderNodeCustom::generate_global_per_node(Shader::Mode p_mode, int
 	String _code;
 	if (GDVIRTUAL_CALL(_get_global_code, p_mode, _code)) {
 		if (_is_valid_code(_code)) {
-			String code = "// " + get_caption() + "\n";
+			String code = "// " + get_caption() + '\n';
 			code += _code;
-			code += "\n";
+			code += '\n';
 			return code;
 		}
 	}
@@ -660,18 +660,18 @@ String VisualShaderNodeCustom::generate_global_per_func(Shader::Mode p_mode, Vis
 	if (GDVIRTUAL_CALL(_get_func_code, p_mode, p_type, _code)) {
 		if (_is_valid_code(_code)) {
 			bool nend = _code.ends_with("\n");
-			String code = "// " + get_caption() + "\n";
-			code += "	{\n";
-			_code = _code.insert(0, "	");
-			_code = _code.replace("\n", "\n		");
+			String code = "// " + get_caption() + '\n';
+			code += "\t{\n";
+			_code = _code.insert(0, "\t");
+			_code = _code.replace("\n", "\n\t");
 			code += _code;
 			if (!nend) {
-				code += "\n	}";
+				code += "\n\t}";
 			} else {
 				code.remove_at(code.size() - 1);
-				code += "}";
+				code += '}';
 			}
-			code += "\n";
+			code += '\n';
 			return code;
 		}
 	}
@@ -1489,7 +1489,7 @@ String VisualShader::generate_preview_shader(Type p_type, int p_node, int p_port
 	StringBuilder shader_code;
 	HashSet<StringName> classes;
 
-	global_code += String() + "shader_type canvas_item;\n";
+	global_code += "shader_type canvas_item;\n";
 
 	String global_expressions;
 	for (int i = 0, index = 0; i < TYPE_MAX; i++) {
@@ -1497,10 +1497,10 @@ String VisualShader::generate_preview_shader(Type p_type, int p_node, int p_port
 			Ref<VisualShaderNodeGlobalExpression> global_expression = E.value.node;
 			if (global_expression.is_valid()) {
 				String expr = "";
-				expr += "// " + global_expression->get_caption() + ":" + itos(index++) + "\n";
+				expr += "// " + global_expression->get_caption() + ':' + itos(index++) + '\n';
 				expr += global_expression->generate_global(get_mode(), Type(i), -1);
-				expr = expr.replace("\n", "\n	");
-				expr += "\n";
+				expr = expr.replace("\n", "\n\t");
+				expr += '\n';
 				global_expressions += expr;
 			}
 		}
@@ -1528,28 +1528,28 @@ String VisualShader::generate_preview_shader(Type p_type, int p_node, int p_port
 
 	switch (node->get_output_port_type(p_port)) {
 		case VisualShaderNode::PORT_TYPE_SCALAR: {
-			shader_code += "	COLOR.rgb = vec3(n_out" + itos(p_node) + "p" + itos(p_port) + ");\n";
+			shader_code += "\tCOLOR.rgb = vec3(n_out" + itos(p_node) + 'p' + itos(p_port) + ");\n";
 		} break;
 		case VisualShaderNode::PORT_TYPE_SCALAR_INT: {
-			shader_code += "	COLOR.rgb = vec3(float(n_out" + itos(p_node) + "p" + itos(p_port) + "));\n";
+			shader_code += "\tCOLOR.rgb = vec3(float(n_out" + itos(p_node) + 'p' + itos(p_port) + "));\n";
 		} break;
 		case VisualShaderNode::PORT_TYPE_SCALAR_UINT: {
-			shader_code += "	COLOR.rgb = vec3(float(n_out" + itos(p_node) + "p" + itos(p_port) + "));\n";
+			shader_code += "\tCOLOR.rgb = vec3(float(n_out" + itos(p_node) + 'p' + itos(p_port) + "));\n";
 		} break;
 		case VisualShaderNode::PORT_TYPE_BOOLEAN: {
-			shader_code += "	COLOR.rgb = vec3(n_out" + itos(p_node) + "p" + itos(p_port) + " ? 1.0 : 0.0);\n";
+			shader_code += "\tCOLOR.rgb = vec3(n_out" + itos(p_node) + 'p' + itos(p_port) + " ? 1.0 : 0.0);\n";
 		} break;
 		case VisualShaderNode::PORT_TYPE_VECTOR_2D: {
-			shader_code += "	COLOR.rgb = vec3(n_out" + itos(p_node) + "p" + itos(p_port) + ", 0.0);\n";
+			shader_code += "\tCOLOR.rgb = vec3(n_out" + itos(p_node) + 'p' + itos(p_port) + ", 0.0);\n";
 		} break;
 		case VisualShaderNode::PORT_TYPE_VECTOR_3D: {
-			shader_code += "	COLOR.rgb = n_out" + itos(p_node) + "p" + itos(p_port) + ";\n";
+			shader_code += "\tCOLOR.rgb = n_out" + itos(p_node) + 'p' + itos(p_port) + ";\n";
 		} break;
 		case VisualShaderNode::PORT_TYPE_VECTOR_4D: {
-			shader_code += "	COLOR = n_out" + itos(p_node) + "p" + itos(p_port) + ";\n";
+			shader_code += "\tCOLOR = n_out" + itos(p_node) + 'p' + itos(p_port) + ";\n";
 		} break;
 		default: {
-			shader_code += "	COLOR.rgb = vec3(0.0);\n";
+			shader_code += "\tCOLOR.rgb = vec3(0.0);\n";
 		} break;
 	}
 
@@ -1579,9 +1579,9 @@ String VisualShader::validate_port_name(const String &p_port_name, VisualShaderN
 
 		for (int i = 0; i < port_name.length(); i++) {
 			if (is_ascii_identifier_char(port_name[i])) {
-				valid_name += String::chr(port_name[i]);
+				valid_name += port_name[i];
 			} else if (port_name[i] == ' ') {
-				valid_name += "_";
+				valid_name += '_';
 			}
 		}
 
@@ -1623,9 +1623,9 @@ String VisualShader::validate_parameter_name(const String &p_name, const Ref<Vis
 
 		for (int i = 0; i < param_name.length(); i++) {
 			if (is_ascii_identifier_char(param_name[i])) {
-				valid_name += String::chr(param_name[i]);
+				valid_name += param_name[i];
 			} else if (param_name[i] == ' ') {
-				valid_name += "_";
+				valid_name += '_';
 			}
 		}
 
@@ -1938,7 +1938,7 @@ void VisualShader::_get_property_list(List<PropertyInfo> *p_list) const {
 		if (info.name == "depth_test") {
 			toggles.insert("depth_test_disabled");
 
-			const String begin = String(info.name);
+			const String begin = info.name;
 
 			for (int j = 0; j < info.options.size(); j++) {
 				if (info.options[j] == "disabled") {
@@ -1950,7 +1950,7 @@ void VisualShader::_get_property_list(List<PropertyInfo> *p_list) const {
 				if (!blend_mode_enums.has(begin)) {
 					blend_mode_enums[begin] = vformat("%s:%s", option, j);
 				} else {
-					blend_mode_enums[begin] += "," + vformat("%s:%s", option, j);
+					blend_mode_enums[begin] += ',' + vformat("%s:%s", option, j);
 				}
 			}
 
@@ -1958,7 +1958,7 @@ void VisualShader::_get_property_list(List<PropertyInfo> *p_list) const {
 		}
 
 		if (!info.options.is_empty()) {
-			const String begin = String(info.name);
+			const String begin = info.name;
 
 			for (int j = 0; j < info.options.size(); j++) {
 				const String option = String(info.options[j]).capitalize();
@@ -1966,7 +1966,7 @@ void VisualShader::_get_property_list(List<PropertyInfo> *p_list) const {
 				if (!blend_mode_enums.has(begin)) {
 					blend_mode_enums[begin] = option;
 				} else {
-					blend_mode_enums[begin] += "," + option;
+					blend_mode_enums[begin] += ',' + option;
 				}
 			}
 		} else {
@@ -1996,7 +1996,7 @@ void VisualShader::_get_property_list(List<PropertyInfo> *p_list) const {
 
 		for (const ShaderLanguage::ModeInfo &info : smodes) {
 			if (!info.options.is_empty()) {
-				const String begin = String(info.name);
+				const String begin = info.name;
 
 				for (int j = 0; j < info.options.size(); j++) {
 					const String option = String(info.options[j]).capitalize();
@@ -2004,7 +2004,7 @@ void VisualShader::_get_property_list(List<PropertyInfo> *p_list) const {
 					if (!stencil_enums.has(begin)) {
 						stencil_enums[begin] = option;
 					} else {
-						stencil_enums[begin] += "," + option;
+						stencil_enums[begin] += ',' + option;
 					}
 				}
 			} else {
@@ -2037,7 +2037,7 @@ void VisualShader::_get_property_list(List<PropertyInfo> *p_list) const {
 		for (const KeyValue<int, Node> &E : graph[i].nodes) {
 			String prop_name = "nodes/";
 			prop_name += type_string[i];
-			prop_name += "/" + itos(E.key);
+			prop_name += '/' + itos(E.key);
 
 			if (E.key != NODE_ID_OUTPUT) {
 				p_list->push_back(PropertyInfo(Variant::OBJECT, prop_name + "/node", PROPERTY_HINT_RESOURCE_TYPE, "VisualShaderNode", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_ALWAYS_DUPLICATE));
@@ -2061,8 +2061,8 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 	const Ref<VisualShaderNode> vsnode = graph[type].nodes[p_node].node;
 
 	if (vsnode->is_disabled()) {
-		r_code += "// " + vsnode->get_caption() + ":" + itos(p_node) + "\n";
-		r_code += "	// Node is disabled and code is not generated.\n";
+		r_code += "// " + vsnode->get_caption() + ':' + itos(p_node) + '\n';
+		r_code += "\t// Node is disabled and code is not generated.\n";
 		return OK;
 	}
 
@@ -2126,7 +2126,7 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 		return OK;
 	}
 
-	String node_name = "// " + vsnode->get_caption() + ":" + itos(p_node) + "\n";
+	String node_name = "// " + vsnode->get_caption() + ':' + itos(p_node) + '\n';
 	String node_code;
 	Vector<String> input_vars;
 
@@ -2151,7 +2151,7 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 			VisualShaderNode::PortType in_type = vsnode->get_input_port_type(i);
 			VisualShaderNode::PortType out_type = graph[type].nodes[from_node].node->get_output_port_type(from_port);
 
-			String src_var = "n_out" + itos(from_node) + "p" + itos(from_port);
+			String src_var = "n_out" + itos(from_node) + 'p' + itos(from_port);
 
 			if (in_type == VisualShaderNode::PORT_TYPE_SAMPLER && out_type == VisualShaderNode::PORT_TYPE_SAMPLER) {
 				Ref<VisualShaderNode> ref = graph[type].nodes[from_node].node;
@@ -2175,13 +2175,13 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 					case VisualShaderNode::PORT_TYPE_SCALAR: {
 						switch (out_type) {
 							case VisualShaderNode::PORT_TYPE_SCALAR_INT: {
-								inputs[i] = "float(" + src_var + ")";
+								inputs[i] = "float(" + src_var + ')';
 							} break;
 							case VisualShaderNode::PORT_TYPE_SCALAR_UINT: {
-								inputs[i] = "float(" + src_var + ")";
+								inputs[i] = "float(" + src_var + ')';
 							} break;
 							case VisualShaderNode::PORT_TYPE_BOOLEAN: {
-								inputs[i] = "(" + src_var + " ? 1.0 : 0.0)";
+								inputs[i] = '(' + src_var + " ? 1.0 : 0.0)";
 							} break;
 							case VisualShaderNode::PORT_TYPE_VECTOR_2D: {
 								inputs[i] = src_var + ".x";
@@ -2199,13 +2199,13 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 					case VisualShaderNode::PORT_TYPE_SCALAR_INT: {
 						switch (out_type) {
 							case VisualShaderNode::PORT_TYPE_SCALAR: {
-								inputs[i] = "int(" + src_var + ")";
+								inputs[i] = "int(" + src_var + ')';
 							} break;
 							case VisualShaderNode::PORT_TYPE_SCALAR_UINT: {
-								inputs[i] = "int(" + src_var + ")";
+								inputs[i] = "int(" + src_var + ')';
 							} break;
 							case VisualShaderNode::PORT_TYPE_BOOLEAN: {
-								inputs[i] = "(" + src_var + " ? 1 : 0)";
+								inputs[i] = '(' + src_var + " ? 1 : 0)";
 							} break;
 							case VisualShaderNode::PORT_TYPE_VECTOR_2D: {
 								inputs[i] = "int(" + src_var + ".x)";
@@ -2223,13 +2223,13 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 					case VisualShaderNode::PORT_TYPE_SCALAR_UINT: {
 						switch (out_type) {
 							case VisualShaderNode::PORT_TYPE_SCALAR: {
-								inputs[i] = "uint(" + src_var + ")";
+								inputs[i] = "uint(" + src_var + ')';
 							} break;
 							case VisualShaderNode::PORT_TYPE_SCALAR_INT: {
-								inputs[i] = "uint(" + src_var + ")";
+								inputs[i] = "uint(" + src_var + ')';
 							} break;
 							case VisualShaderNode::PORT_TYPE_BOOLEAN: {
-								inputs[i] = "(" + src_var + " ? 1u : 0u)";
+								inputs[i] = '(' + src_var + " ? 1u : 0u)";
 							} break;
 							case VisualShaderNode::PORT_TYPE_VECTOR_2D: {
 								inputs[i] = "uint(" + src_var + ".x)";
@@ -2271,7 +2271,7 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 					case VisualShaderNode::PORT_TYPE_VECTOR_2D: {
 						switch (out_type) {
 							case VisualShaderNode::PORT_TYPE_SCALAR: {
-								inputs[i] = "vec2(" + src_var + ")";
+								inputs[i] = "vec2(" + src_var + ')';
 							} break;
 							case VisualShaderNode::PORT_TYPE_SCALAR_INT: {
 								inputs[i] = "vec2(float(" + src_var + "))";
@@ -2294,7 +2294,7 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 					case VisualShaderNode::PORT_TYPE_VECTOR_3D: {
 						switch (out_type) {
 							case VisualShaderNode::PORT_TYPE_SCALAR: {
-								inputs[i] = "vec3(" + src_var + ")";
+								inputs[i] = "vec3(" + src_var + ')';
 							} break;
 							case VisualShaderNode::PORT_TYPE_SCALAR_INT: {
 								inputs[i] = "vec3(float(" + src_var + "))";
@@ -2318,7 +2318,7 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 					case VisualShaderNode::PORT_TYPE_VECTOR_4D: {
 						switch (out_type) {
 							case VisualShaderNode::PORT_TYPE_SCALAR: {
-								inputs[i] = "vec4(" + src_var + ")";
+								inputs[i] = "vec4(" + src_var + ')';
 							} break;
 							case VisualShaderNode::PORT_TYPE_SCALAR_INT: {
 								inputs[i] = "vec4(float(" + src_var + "))";
@@ -2351,40 +2351,40 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 			Variant defval = vsnode->get_input_port_default_value(i);
 			if (defval.get_type() == Variant::FLOAT) {
 				float val = defval;
-				inputs[i] = "n_in" + itos(p_node) + "p" + itos(i);
-				node_code += "	float " + inputs[i] + " = " + vformat("%.5f", val) + ";\n";
+				inputs[i] = "n_in" + itos(p_node) + 'p' + itos(i);
+				node_code += "\tfloat " + inputs[i] + " = " + vformat("%.5f", val) + ";\n";
 			} else if (defval.get_type() == Variant::INT) {
 				int val = defval;
-				inputs[i] = "n_in" + itos(p_node) + "p" + itos(i);
+				inputs[i] = "n_in" + itos(p_node) + 'p' + itos(i);
 				if (vsnode->get_input_port_type(i) == VisualShaderNode::PORT_TYPE_SCALAR_UINT) {
-					node_code += "	uint " + inputs[i] + " = " + itos(val) + "u;\n";
+					node_code += "\tuint " + inputs[i] + " = " + itos(val) + "u;\n";
 				} else {
-					node_code += "	int " + inputs[i] + " = " + itos(val) + ";\n";
+					node_code += "\tint " + inputs[i] + " = " + itos(val) + ";\n";
 				}
 			} else if (defval.get_type() == Variant::BOOL) {
 				bool val = defval;
-				inputs[i] = "n_in" + itos(p_node) + "p" + itos(i);
-				node_code += "	bool " + inputs[i] + " = " + (val ? "true" : "false") + ";\n";
+				inputs[i] = "n_in" + itos(p_node) + 'p' + itos(i);
+				node_code += "\tbool " + inputs[i] + " = " + (val ? "true" : "false") + ";\n";
 			} else if (defval.get_type() == Variant::VECTOR2) {
 				Vector2 val = defval;
-				inputs[i] = "n_in" + itos(p_node) + "p" + itos(i);
-				node_code += "	vec2 " + inputs[i] + " = " + vformat("vec2(%.5f, %.5f);\n", val.x, val.y);
+				inputs[i] = "n_in" + itos(p_node) + 'p' + itos(i);
+				node_code += "\tvec2 " + inputs[i] + " = " + vformat("vec2(%.5f, %.5f);\n", val.x, val.y);
 			} else if (defval.get_type() == Variant::VECTOR3) {
 				Vector3 val = defval;
-				inputs[i] = "n_in" + itos(p_node) + "p" + itos(i);
-				node_code += "	vec3 " + inputs[i] + " = " + vformat("vec3(%.5f, %.5f, %.5f);\n", val.x, val.y, val.z);
+				inputs[i] = "n_in" + itos(p_node) + 'p' + itos(i);
+				node_code += "\tvec3 " + inputs[i] + " = " + vformat("vec3(%.5f, %.5f, %.5f);\n", val.x, val.y, val.z);
 			} else if (defval.get_type() == Variant::VECTOR4) {
 				Vector4 val = defval;
-				inputs[i] = "n_in" + itos(p_node) + "p" + itos(i);
-				node_code += "	vec4 " + inputs[i] + " = " + vformat("vec4(%.5f, %.5f, %.5f, %.5f);\n", val.x, val.y, val.z, val.w);
+				inputs[i] = "n_in" + itos(p_node) + 'p' + itos(i);
+				node_code += "\tvec4 " + inputs[i] + " = " + vformat("vec4(%.5f, %.5f, %.5f, %.5f);\n", val.x, val.y, val.z, val.w);
 			} else if (defval.get_type() == Variant::QUATERNION) {
 				Quaternion val = defval;
-				inputs[i] = "n_in" + itos(p_node) + "p" + itos(i);
-				node_code += "	vec4 " + inputs[i] + " = " + vformat("vec4(%.5f, %.5f, %.5f, %.5f);\n", val.x, val.y, val.z, val.w);
+				inputs[i] = "n_in" + itos(p_node) + 'p' + itos(i);
+				node_code += "\tvec4 " + inputs[i] + " = " + vformat("vec4(%.5f, %.5f, %.5f, %.5f);\n", val.x, val.y, val.z, val.w);
 			} else if (defval.get_type() == Variant::TRANSFORM3D) {
 				Transform3D val = defval;
 				val.basis.transpose();
-				inputs[i] = "n_in" + itos(p_node) + "p" + itos(i);
+				inputs[i] = "n_in" + itos(p_node) + 'p' + itos(i);
 				Array values;
 				for (int j = 0; j < 3; j++) {
 					values.push_back(val.basis[j].x);
@@ -2395,7 +2395,7 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 				values.push_back(val.origin.y);
 				values.push_back(val.origin.z);
 				bool err = false;
-				node_code += "	mat4 " + inputs[i] + " = " + String("mat4(vec4(%.5f, %.5f, %.5f, 0.0), vec4(%.5f, %.5f, %.5f, 0.0), vec4(%.5f, %.5f, %.5f, 0.0), vec4(%.5f, %.5f, %.5f, 1.0));\n").sprintf(values, &err);
+				node_code += "\tmat4 " + inputs[i] + " = " + String("mat4(vec4(%.5f, %.5f, %.5f, 0.0), vec4(%.5f, %.5f, %.5f, 0.0), vec4(%.5f, %.5f, %.5f, 0.0), vec4(%.5f, %.5f, %.5f, 1.0));\n").sprintf(values, &err);
 			} else {
 				//will go empty, node is expected to know what it is doing at this point and handle it
 			}
@@ -2436,7 +2436,7 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 
 	if (vsnode->is_simple_decl()) { // less code to generate for some simple_decl nodes
 		for (int i = 0, j = 0; i < initial_output_count; i++, j++) {
-			String var_name = "n_out" + itos(p_node) + "p" + itos(j);
+			String var_name = "n_out" + itos(p_node) + 'p' + itos(j);
 			switch (vsnode->get_output_port_type(i)) {
 				case VisualShaderNode::PORT_TYPE_SCALAR:
 					outputs[i] = "float " + var_name;
@@ -2484,31 +2484,31 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 
 	} else {
 		for (int i = 0, j = 0; i < initial_output_count; i++, j++) {
-			outputs[i] = "n_out" + itos(p_node) + "p" + itos(j);
+			outputs[i] = "n_out" + itos(p_node) + 'p' + itos(j);
 			switch (vsnode->get_output_port_type(i)) {
 				case VisualShaderNode::PORT_TYPE_SCALAR:
-					r_code += "	float " + outputs[i] + ";\n";
+					r_code += "\tfloat " + outputs[i] + ";\n";
 					break;
 				case VisualShaderNode::PORT_TYPE_SCALAR_INT:
-					r_code += "	int " + outputs[i] + ";\n";
+					r_code += "\tint " + outputs[i] + ";\n";
 					break;
 				case VisualShaderNode::PORT_TYPE_SCALAR_UINT:
-					r_code += "	uint " + outputs[i] + ";\n";
+					r_code += "\tuint " + outputs[i] + ";\n";
 					break;
 				case VisualShaderNode::PORT_TYPE_VECTOR_2D:
-					r_code += "	vec2 " + outputs[i] + ";\n";
+					r_code += "\tvec2 " + outputs[i] + ";\n";
 					break;
 				case VisualShaderNode::PORT_TYPE_VECTOR_3D:
-					r_code += "	vec3 " + outputs[i] + ";\n";
+					r_code += "\tvec3 " + outputs[i] + ";\n";
 					break;
 				case VisualShaderNode::PORT_TYPE_VECTOR_4D:
-					r_code += "	vec4 " + outputs[i] + ";\n";
+					r_code += "\tvec4 " + outputs[i] + ";\n";
 					break;
 				case VisualShaderNode::PORT_TYPE_BOOLEAN:
-					r_code += "	bool " + outputs[i] + ";\n";
+					r_code += "\tbool " + outputs[i] + ";\n";
 					break;
 				case VisualShaderNode::PORT_TYPE_TRANSFORM:
-					r_code += "	mat4 " + outputs[i] + ";\n";
+					r_code += "\tmat4 " + outputs[i] + ";\n";
 					break;
 				default:
 					break;
@@ -2542,14 +2542,14 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 			switch (vsnode->get_output_port_type(i)) {
 				case VisualShaderNode::PORT_TYPE_VECTOR_2D: {
 					if (vsnode->is_output_port_connected(i + 1) || (p_for_preview && vsnode->get_output_port_for_preview() == (i + 1))) { // red-component
-						String r = "n_out" + itos(p_node) + "p" + itos(i + 1);
-						r_code += "	float " + r + " = n_out" + itos(p_node) + "p" + itos(i) + ".r;\n";
+						String r = "n_out" + itos(p_node) + 'p' + itos(i + 1);
+						r_code += "\tfloat " + r + " = n_out" + itos(p_node) + 'p' + itos(i) + ".r;\n";
 						outputs[i + 1] = r;
 					}
 
 					if (vsnode->is_output_port_connected(i + 2) || (p_for_preview && vsnode->get_output_port_for_preview() == (i + 2))) { // green-component
-						String g = "n_out" + itos(p_node) + "p" + itos(i + 2);
-						r_code += "	float " + g + " = n_out" + itos(p_node) + "p" + itos(i) + ".g;\n";
+						String g = "n_out" + itos(p_node) + 'p' + itos(i + 2);
+						r_code += "\tfloat " + g + " = n_out" + itos(p_node) + 'p' + itos(i) + ".g;\n";
 						outputs[i + 2] = g;
 					}
 
@@ -2557,20 +2557,20 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 				} break;
 				case VisualShaderNode::PORT_TYPE_VECTOR_3D: {
 					if (vsnode->is_output_port_connected(i + 1) || (p_for_preview && vsnode->get_output_port_for_preview() == (i + 1))) { // red-component
-						String r = "n_out" + itos(p_node) + "p" + itos(i + 1);
-						r_code += "	float " + r + " = n_out" + itos(p_node) + "p" + itos(i) + ".r;\n";
+						String r = "n_out" + itos(p_node) + 'p' + itos(i + 1);
+						r_code += "\tfloat " + r + " = n_out" + itos(p_node) + 'p' + itos(i) + ".r;\n";
 						outputs[i + 1] = r;
 					}
 
 					if (vsnode->is_output_port_connected(i + 2) || (p_for_preview && vsnode->get_output_port_for_preview() == (i + 2))) { // green-component
-						String g = "n_out" + itos(p_node) + "p" + itos(i + 2);
-						r_code += "	float " + g + " = n_out" + itos(p_node) + "p" + itos(i) + ".g;\n";
+						String g = "n_out" + itos(p_node) + 'p' + itos(i + 2);
+						r_code += "\tfloat " + g + " = n_out" + itos(p_node) + 'p' + itos(i) + ".g;\n";
 						outputs[i + 2] = g;
 					}
 
 					if (vsnode->is_output_port_connected(i + 3) || (p_for_preview && vsnode->get_output_port_for_preview() == (i + 3))) { // blue-component
-						String b = "n_out" + itos(p_node) + "p" + itos(i + 3);
-						r_code += "	float " + b + " = n_out" + itos(p_node) + "p" + itos(i) + ".b;\n";
+						String b = "n_out" + itos(p_node) + 'p' + itos(i + 3);
+						r_code += "\tfloat " + b + " = n_out" + itos(p_node) + 'p' + itos(i) + ".b;\n";
 						outputs[i + 3] = b;
 					}
 
@@ -2578,26 +2578,26 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 				} break;
 				case VisualShaderNode::PORT_TYPE_VECTOR_4D: {
 					if (vsnode->is_output_port_connected(i + 1) || (p_for_preview && vsnode->get_output_port_for_preview() == (i + 1))) { // red-component
-						String r = "n_out" + itos(p_node) + "p" + itos(i + 1);
-						r_code += "	float " + r + " = n_out" + itos(p_node) + "p" + itos(i) + ".r;\n";
+						String r = "n_out" + itos(p_node) + 'p' + itos(i + 1);
+						r_code += "\tfloat " + r + " = n_out" + itos(p_node) + 'p' + itos(i) + ".r;\n";
 						outputs[i + 1] = r;
 					}
 
 					if (vsnode->is_output_port_connected(i + 2) || (p_for_preview && vsnode->get_output_port_for_preview() == (i + 2))) { // green-component
-						String g = "n_out" + itos(p_node) + "p" + itos(i + 2);
-						r_code += "	float " + g + " = n_out" + itos(p_node) + "p" + itos(i) + ".g;\n";
+						String g = "n_out" + itos(p_node) + 'p' + itos(i + 2);
+						r_code += "\tfloat " + g + " = n_out" + itos(p_node) + 'p' + itos(i) + ".g;\n";
 						outputs[i + 2] = g;
 					}
 
 					if (vsnode->is_output_port_connected(i + 3) || (p_for_preview && vsnode->get_output_port_for_preview() == (i + 3))) { // blue-component
-						String b = "n_out" + itos(p_node) + "p" + itos(i + 3);
-						r_code += "	float " + b + " = n_out" + itos(p_node) + "p" + itos(i) + ".b;\n";
+						String b = "n_out" + itos(p_node) + 'p' + itos(i + 3);
+						r_code += "\tfloat " + b + " = n_out" + itos(p_node) + 'p' + itos(i) + ".b;\n";
 						outputs[i + 3] = b;
 					}
 
 					if (vsnode->is_output_port_connected(i + 4) || (p_for_preview && vsnode->get_output_port_for_preview() == (i + 4))) { // alpha-component
-						String a = "n_out" + itos(p_node) + "p" + itos(i + 4);
-						r_code += "	float " + a + " = n_out" + itos(p_node) + "p" + itos(i) + ".a;\n";
+						String a = "n_out" + itos(p_node) + 'p' + itos(i + 4);
+						r_code += "\tfloat " + a + " = n_out" + itos(p_node) + 'p' + itos(i) + ".a;\n";
 						outputs[i + 4] = a;
 					}
 
@@ -2647,7 +2647,7 @@ void VisualShader::_update_shader() const {
 	HashMap<int, int> insertion_pos;
 	static const char *shader_mode_str[Shader::MODE_MAX] = { "spatial", "canvas_item", "particles", "sky", "fog" };
 
-	global_code += String() + "shader_type " + shader_mode_str[shader_mode] + ";\n";
+	global_code += String("shader_type ") + shader_mode_str[shader_mode] + ";\n";
 
 	String render_mode;
 
@@ -2658,7 +2658,7 @@ void VisualShader::_update_shader() const {
 		// Add enum modes first.
 		for (int i = 0; i < rmodes.size(); i++) {
 			const ShaderLanguage::ModeInfo &info = rmodes[i];
-			const String temp = String(info.name);
+			const String temp = info.name;
 
 			// Special handling for depth_test.
 			if (temp == "depth_test") {
@@ -2669,9 +2669,9 @@ void VisualShader::_update_shader() const {
 						render_mode += ", ";
 					}
 					if (modes.has(temp) && modes[temp] < info.options.size()) {
-						render_mode += temp + "_" + info.options[modes[temp]];
+						render_mode += temp + '_' + info.options[modes[temp]];
 					} else {
-						render_mode += temp + "_" + info.options[0];
+						render_mode += temp + '_' + info.options[0];
 					}
 				}
 				continue;
@@ -2685,10 +2685,10 @@ void VisualShader::_update_shader() const {
 				// the same as the default. i.e. for depth_draw_opaque, the render mode has to be declared for it
 				// to work properly, no render mode is an invalid option.
 				if (modes.has(temp) && modes[temp] < info.options.size()) {
-					render_mode += temp + "_" + info.options[modes[temp]];
+					render_mode += temp + '_' + info.options[modes[temp]];
 				} else {
 					// Use the default.
-					render_mode += temp + "_" + info.options[0];
+					render_mode += temp + '_' + info.options[0];
 				}
 			} else if (flags.has(temp)) {
 				flag_names.push_back(temp);
@@ -2717,14 +2717,14 @@ void VisualShader::_update_shader() const {
 
 		// Add enum modes first.
 		for (const ShaderLanguage::ModeInfo &info : smodes) {
-			const String temp = String(info.name);
+			const String temp = info.name;
 
 			if (!info.options.is_empty()) {
 				if (stencil_modes.has(temp) && stencil_modes[temp] < info.options.size()) {
 					if (!stencil_mode.is_empty()) {
 						stencil_mode += ", ";
 					}
-					stencil_mode += temp + "_" + info.options[stencil_modes[temp]];
+					stencil_mode += temp + '_' + info.options[stencil_modes[temp]];
 				}
 			} else if (stencil_flags.has(temp)) {
 				flag_names.push_back(temp);
@@ -2765,10 +2765,10 @@ void VisualShader::_update_shader() const {
 			Ref<VisualShaderNodeGlobalExpression> global_expression = E.value.node;
 			if (global_expression.is_valid()) {
 				String expr = "";
-				expr += "// " + global_expression->get_caption() + ":" + itos(index++) + "\n";
+				expr += "// " + global_expression->get_caption() + ':' + itos(index++) + '\n';
 				expr += global_expression->generate_global(get_mode(), Type(i), -1);
-				expr = expr.replace("\n", "\n	");
-				expr += "\n";
+				expr = expr.replace("\n", "\n\t");
+				expr += '\n';
 				global_expressions += expr;
 			}
 			Ref<VisualShaderNodeParameterRef> parameter_ref = E.value.node;
@@ -2914,7 +2914,7 @@ void VisualShader::_update_shader() const {
 							default:
 								break;
 						}
-						varying_code += vformat("	var_%s = %s;\n", E.key, code2);
+						varying_code += vformat("\tvar_%s = %s;\n", E.key, code2);
 					}
 					is_empty_func = false;
 				}
@@ -2978,107 +2978,107 @@ void VisualShader::_update_shader() const {
 		bool has_collide = !code_map[TYPE_COLLIDE].is_empty();
 
 		shader_code += "void start() {\n";
-		shader_code += "	uint __seed = __hash(NUMBER + uint(1) + RANDOM_SEED);\n";
+		shader_code += "\tuint __seed = __hash(NUMBER + uint(1) + RANDOM_SEED);\n";
 		shader_code += "\n";
-		shader_code += "	{\n";
-		shader_code += code_map[TYPE_START].replace("\n	", "\n		");
-		shader_code += "	}\n";
+		shader_code += "\t{\n";
+		shader_code += code_map[TYPE_START].replace("\n\t", "\n\t\t");
+		shader_code += "\t}\n";
 		if (has_start_custom) {
-			shader_code += "	\n";
-			shader_code += "	{\n";
-			shader_code += code_map[TYPE_START_CUSTOM].replace("\n	", "\n		");
-			shader_code += "	}\n";
+			shader_code += "\t\n";
+			shader_code += "\t{\n";
+			shader_code += code_map[TYPE_START_CUSTOM].replace("\n\t", "\n\t\t");
+			shader_code += "\t}\n";
 		}
 		shader_code += "}\n\n";
 
 		if (has_process || has_process_custom || has_collide) {
 			shader_code += "void process() {\n";
-			shader_code += "	uint __seed = __hash(NUMBER + uint(1) + RANDOM_SEED);\n";
+			shader_code += "\tuint __seed = __hash(NUMBER + uint(1) + RANDOM_SEED);\n";
 			shader_code += "\n";
 			if (has_process || has_collide) {
-				shader_code += "	{\n";
+				shader_code += "\t{\n";
 			}
-			String tab = "	";
+			String tab = "\t";
 			if (has_collide) {
-				shader_code += "		if (COLLIDED) {\n\n";
-				shader_code += code_map[TYPE_COLLIDE].replace("\n	", "\n			");
+				shader_code += "\t\tif (COLLIDED) {\n\n";
+				shader_code += code_map[TYPE_COLLIDE].replace("\n\t", "\n\t\t\t");
 				if (has_process) {
-					shader_code += "		} else {\n\n";
-					tab += "	";
+					shader_code += "\t\t} else {\n\n";
+					tab += '\t';
 				}
 			}
 			if (has_process) {
-				shader_code += code_map[TYPE_PROCESS].replace("\n	", "\n	" + tab);
+				shader_code += code_map[TYPE_PROCESS].replace("\n\t", "\n\t" + tab);
 			}
 			if (has_collide) {
-				shader_code += "		}\n";
+				shader_code += "\t\t}\n";
 			}
 			if (has_process || has_collide) {
-				shader_code += "	}\n";
+				shader_code += "\t}\n";
 			}
 
 			if (has_process_custom) {
 				if (has_process || has_collide) {
-					shader_code += "	\n";
+					shader_code += "\t\n";
 				}
-				shader_code += "	{\n";
-				shader_code += code_map[TYPE_PROCESS_CUSTOM].replace("\n	", "\n		");
-				shader_code += "	}\n";
+				shader_code += "\t{\n";
+				shader_code += code_map[TYPE_PROCESS_CUSTOM].replace("\n\t", "\n\t\t");
+				shader_code += "\t}\n";
 			}
 
 			shader_code += "}\n\n";
 		}
 
 		global_compute_code += "float __rand_from_seed(inout uint seed) {\n";
-		global_compute_code += "	int k;\n";
-		global_compute_code += "	int s = int(seed);\n";
-		global_compute_code += "	if (s == 0)\n";
-		global_compute_code += "	s = 305420679;\n";
-		global_compute_code += "	k = s / 127773;\n";
-		global_compute_code += "	s = 16807 * (s - k * 127773) - 2836 * k;\n";
-		global_compute_code += "	if (s < 0)\n";
-		global_compute_code += "		s += 2147483647;\n";
-		global_compute_code += "	seed = uint(s);\n";
-		global_compute_code += "	return float(seed % uint(65536)) / 65535.0;\n";
+		global_compute_code += "\tint k;\n";
+		global_compute_code += "\tint s = int(seed);\n";
+		global_compute_code += "\tif (s == 0)\n";
+		global_compute_code += "\ts = 305420679;\n";
+		global_compute_code += "\tk = s / 127773;\n";
+		global_compute_code += "\ts = 16807 * (s - k * 127773) - 2836 * k;\n";
+		global_compute_code += "\tif (s < 0)\n";
+		global_compute_code += "\t\ts += 2147483647;\n";
+		global_compute_code += "\tseed = uint(s);\n";
+		global_compute_code += "\treturn float(seed % uint(65536)) / 65535.0;\n";
 		global_compute_code += "}\n\n";
 
 		global_compute_code += "float __rand_from_seed_m1_p1(inout uint seed) {\n";
-		global_compute_code += "	return __rand_from_seed(seed) * 2.0 - 1.0;\n";
+		global_compute_code += "\treturn __rand_from_seed(seed) * 2.0 - 1.0;\n";
 		global_compute_code += "}\n\n";
 
 		global_compute_code += "float __randf_range(inout uint seed, float from, float to) {\n";
-		global_compute_code += "	return __rand_from_seed(seed) * (to - from) + from;\n";
+		global_compute_code += "\treturn __rand_from_seed(seed) * (to - from) + from;\n";
 		global_compute_code += "}\n\n";
 
 		global_compute_code += "uint __hash(uint x) {\n";
-		global_compute_code += "	x = ((x >> uint(16)) ^ x) * uint(73244475);\n";
-		global_compute_code += "	x = ((x >> uint(16)) ^ x) * uint(73244475);\n";
-		global_compute_code += "	x = (x >> uint(16)) ^ x;\n";
-		global_compute_code += "	return x;\n";
+		global_compute_code += "\tx = ((x >> uint(16)) ^ x) * uint(73244475);\n";
+		global_compute_code += "\tx = ((x >> uint(16)) ^ x) * uint(73244475);\n";
+		global_compute_code += "\tx = (x >> uint(16)) ^ x;\n";
+		global_compute_code += "\treturn x;\n";
 		global_compute_code += "}\n\n";
 
 		global_compute_code += "mat3 __build_rotation_mat3(vec3 axis, float angle) {\n";
-		global_compute_code += "	axis = normalize(axis);\n";
-		global_compute_code += "	float s = sin(angle);\n";
-		global_compute_code += "	float c = cos(angle);\n";
-		global_compute_code += "	float oc = 1.0 - c;\n";
-		global_compute_code += "	return mat3(vec3(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s), vec3(oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s), vec3(oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c));\n";
+		global_compute_code += "\taxis = normalize(axis);\n";
+		global_compute_code += "\tfloat s = sin(angle);\n";
+		global_compute_code += "\tfloat c = cos(angle);\n";
+		global_compute_code += "\tfloat oc = 1.0 - c;\n";
+		global_compute_code += "\treturn mat3(vec3(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s), vec3(oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s), vec3(oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c));\n";
 		global_compute_code += "}\n\n";
 
 		global_compute_code += "mat4 __build_rotation_mat4(vec3 axis, float angle) {\n";
-		global_compute_code += "	axis = normalize(axis);\n";
-		global_compute_code += "	float s = sin(angle);\n";
-		global_compute_code += "	float c = cos(angle);\n";
-		global_compute_code += "	float oc = 1.0 - c;\n";
-		global_compute_code += "	return mat4(vec4(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s, 0), vec4(oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s, 0), vec4(oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c, 0), vec4(0, 0, 0, 1));\n";
+		global_compute_code += "\taxis = normalize(axis);\n";
+		global_compute_code += "\tfloat s = sin(angle);\n";
+		global_compute_code += "\tfloat c = cos(angle);\n";
+		global_compute_code += "\tfloat oc = 1.0 - c;\n";
+		global_compute_code += "\treturn mat4(vec4(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s, 0), vec4(oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s, 0), vec4(oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c, 0), vec4(0, 0, 0, 1));\n";
 		global_compute_code += "}\n\n";
 
 		global_compute_code += "vec2 __get_random_unit_vec2(inout uint seed) {\n";
-		global_compute_code += "	return normalize(vec2(__rand_from_seed_m1_p1(seed), __rand_from_seed_m1_p1(seed)));\n";
+		global_compute_code += "\treturn normalize(vec2(__rand_from_seed_m1_p1(seed), __rand_from_seed_m1_p1(seed)));\n";
 		global_compute_code += "}\n\n";
 
 		global_compute_code += "vec3 __get_random_unit_vec3(inout uint seed) {\n";
-		global_compute_code += "	return normalize(vec3(__rand_from_seed_m1_p1(seed), __rand_from_seed_m1_p1(seed), __rand_from_seed_m1_p1(seed)));\n";
+		global_compute_code += "\treturn normalize(vec3(__rand_from_seed_m1_p1(seed), __rand_from_seed_m1_p1(seed), __rand_from_seed_m1_p1(seed)));\n";
 		global_compute_code += "}\n\n";
 	}
 
@@ -3644,7 +3644,7 @@ String VisualShaderNodeInput::generate_code(Shader::Mode p_mode, VisualShader::T
 
 		while (preview_ports[idx].mode != Shader::MODE_MAX) {
 			if (preview_ports[idx].mode == shader_mode && preview_ports[idx].shader_type == shader_type && preview_ports[idx].name == input_name) {
-				code = "	" + p_output_vars[0] + " = " + preview_ports[idx].string + ";\n";
+				code = '\t' + p_output_vars[0] + " = " + preview_ports[idx].string + ";\n";
 				break;
 			}
 			idx++;
@@ -3653,28 +3653,28 @@ String VisualShaderNodeInput::generate_code(Shader::Mode p_mode, VisualShader::T
 		if (code.is_empty()) {
 			switch (get_output_port_type(0)) {
 				case PORT_TYPE_SCALAR: {
-					code = "	" + p_output_vars[0] + " = 0.0;\n";
+					code = '\t' + p_output_vars[0] + " = 0.0;\n";
 				} break;
 				case PORT_TYPE_SCALAR_INT: {
-					code = "	" + p_output_vars[0] + " = 0;\n";
+					code = '\t' + p_output_vars[0] + " = 0;\n";
 				} break;
 				case PORT_TYPE_SCALAR_UINT: {
-					code = "	" + p_output_vars[0] + " = 0u;\n";
+					code = '\t' + p_output_vars[0] + " = 0u;\n";
 				} break;
 				case PORT_TYPE_VECTOR_2D: {
-					code = "	" + p_output_vars[0] + " = vec2(0.0);\n";
+					code = '\t' + p_output_vars[0] + " = vec2(0.0);\n";
 				} break;
 				case PORT_TYPE_VECTOR_3D: {
-					code = "	" + p_output_vars[0] + " = vec3(0.0);\n";
+					code = '\t' + p_output_vars[0] + " = vec3(0.0);\n";
 				} break;
 				case PORT_TYPE_VECTOR_4D: {
-					code = "	" + p_output_vars[0] + " = vec4(0.0);\n";
+					code = '\t' + p_output_vars[0] + " = vec4(0.0);\n";
 				} break;
 				case PORT_TYPE_BOOLEAN: {
-					code = "	" + p_output_vars[0] + " = false;\n";
+					code = '\t' + p_output_vars[0] + " = false;\n";
 				} break;
 				case PORT_TYPE_TRANSFORM: {
-					code = "	" + p_output_vars[0] + " = mat4(1.0);\n";
+					code = '\t' + p_output_vars[0] + " = mat4(1.0);\n";
 				} break;
 				default:
 					break;
@@ -3690,14 +3690,14 @@ String VisualShaderNodeInput::generate_code(Shader::Mode p_mode, VisualShader::T
 
 		while (ports[idx].mode != Shader::MODE_MAX) {
 			if (ports[idx].mode == shader_mode && ports[idx].shader_type == shader_type && ports[idx].name == input_name) {
-				code = "	" + p_output_vars[0] + " = " + ports[idx].string + ";\n";
+				code = '\t' + p_output_vars[0] + " = " + ports[idx].string + ";\n";
 				break;
 			}
 			idx++;
 		}
 
 		if (code.is_empty()) {
-			code = "	" + p_output_vars[0] + " = 0.0;\n"; //default (none found) is scalar
+			code = '\t' + p_output_vars[0] + " = 0.0;\n"; //default (none found) is scalar
 		}
 
 		return code;
@@ -3803,7 +3803,7 @@ void VisualShaderNodeInput::_validate_property(PropertyInfo &p_property) const {
 		while (ports[idx].mode != Shader::MODE_MAX) {
 			if (ports[idx].mode == shader_mode && ports[idx].shader_type == shader_type) {
 				if (!port_list.is_empty()) {
-					port_list += ",";
+					port_list += ',';
 				}
 				port_list += ports[idx].name;
 			}
@@ -4072,12 +4072,12 @@ String VisualShaderNodeParameterRef::generate_code(Shader::Mode p_mode, VisualSh
 	switch (param_type) {
 		case PARAMETER_TYPE_FLOAT:
 			if (parameter_name == "[None]") {
-				return "	" + p_output_vars[0] + " = 0.0;\n";
+				return '\t' + p_output_vars[0] + " = 0.0;\n";
 			}
 			break;
 		case PARAMETER_TYPE_COLOR: {
-			String code = "	" + p_output_vars[0] + " = " + get_parameter_name() + ".rgb;\n";
-			code += "	" + p_output_vars[1] + " = " + get_parameter_name() + ".a;\n";
+			String code = '\t' + p_output_vars[0] + " = " + get_parameter_name() + ".rgb;\n";
+			code += '\t' + p_output_vars[1] + " = " + get_parameter_name() + ".a;\n";
 			return code;
 		} break;
 		case UNIFORM_TYPE_SAMPLER:
@@ -4086,7 +4086,7 @@ String VisualShaderNodeParameterRef::generate_code(Shader::Mode p_mode, VisualSh
 			break;
 	}
 
-	return "	" + p_output_vars[0] + " = " + get_parameter_name() + ";\n";
+	return '\t' + p_output_vars[0] + " = " + get_parameter_name() + ";\n";
 }
 
 void VisualShaderNodeParameterRef::_set_parameter_type(int p_type) {
@@ -4315,9 +4315,9 @@ String VisualShaderNodeOutput::generate_code(Shader::Mode p_mode, VisualShader::
 			if (!p_input_vars[count].is_empty()) {
 				String s = ports[idx].string;
 				if (s.contains_char(':')) {
-					shader_code += "	" + s.get_slicec(':', 0) + " = " + p_input_vars[count] + "." + s.get_slicec(':', 1) + ";\n";
+					shader_code += '\t' + s.get_slicec(':', 0) + " = " + p_input_vars[count] + '.' + s.get_slicec(':', 1) + ";\n";
 				} else {
-					shader_code += "	" + s + " = " + p_input_vars[count] + ";\n";
+					shader_code += '\t' + s + " = " + p_input_vars[count] + ";\n";
 				}
 			}
 			count++;
@@ -4762,7 +4762,7 @@ void VisualShaderNodeGroupBase::add_input_port(int p_id, int p_type, const Strin
 	ERR_FAIL_INDEX(p_type, int(PORT_TYPE_MAX));
 	ERR_FAIL_COND(!is_valid_port_name(p_name));
 
-	String str = itos(p_id) + "," + itos(p_type) + "," + p_name + ";";
+	String str = itos(p_id) + ',' + itos(p_type) + ',' + p_name + ';';
 	Vector<String> inputs_strings = inputs.split(";", false);
 	int index = 0;
 	if (p_id < inputs_strings.size()) {
@@ -4818,7 +4818,7 @@ void VisualShaderNodeGroupBase::remove_input_port(int p_id) {
 	inputs = inputs.substr(0, index);
 
 	for (int i = p_id; i < inputs_strings.size(); i++) {
-		inputs += inputs_strings[i].replace_first(inputs_strings[i].split(",")[0], itos(i)) + ";";
+		inputs += inputs_strings[i].replace_first(inputs_strings[i].split(",")[0], itos(i)) + ';';
 	}
 
 	_apply_port_changes();
@@ -4837,7 +4837,7 @@ void VisualShaderNodeGroupBase::add_output_port(int p_id, int p_type, const Stri
 	ERR_FAIL_INDEX(p_type, int(PORT_TYPE_MAX));
 	ERR_FAIL_COND(!is_valid_port_name(p_name));
 
-	String str = itos(p_id) + "," + itos(p_type) + "," + p_name + ";";
+	String str = itos(p_id) + ',' + itos(p_type) + ',' + p_name + ';';
 	Vector<String> outputs_strings = outputs.split(";", false);
 	int index = 0;
 	if (p_id < outputs_strings.size()) {
@@ -4893,7 +4893,7 @@ void VisualShaderNodeGroupBase::remove_output_port(int p_id) {
 	outputs = outputs.substr(0, index);
 
 	for (int i = p_id; i < outputs_strings.size(); i++) {
-		outputs += outputs_strings[i].replace_first(outputs_strings[i].split(",")[0], itos(i)) + ";";
+		outputs += outputs_strings[i].replace_first(outputs_strings[i].split(",")[0], itos(i)) + ';';
 	}
 
 	_apply_port_changes();
@@ -5205,7 +5205,7 @@ String VisualShaderNodeExpression::generate_code(Shader::Mode p_mode, VisualShad
 	String _expression = expression;
 
 	_expression = _expression.insert(0, "\n");
-	_expression = _expression.replace("\n", "\n		");
+	_expression = _expression.replace("\n", "\n\t\t");
 
 	Vector<Pair<String, String>> input_port_names;
 	for (int i = 0; i < get_input_port_count(); i++) {
@@ -5249,14 +5249,14 @@ String VisualShaderNodeExpression::generate_code(Shader::Mode p_mode, VisualShad
 			default:
 				continue;
 		}
-		output_initializer += "	" + p_output_vars[i] + " = " + tk + ";\n";
+		output_initializer += '\t' + p_output_vars[i] + " = " + tk + ";\n";
 	}
 
 	String code;
 	code += output_initializer;
-	code += "	{";
+	code += "\t{";
 	code += _expression;
-	code += "\n	}\n";
+	code += "\n\t}\n";
 
 	return code;
 }
@@ -5487,7 +5487,7 @@ String VisualShaderNodeVaryingSetter::generate_code(Shader::Mode p_mode, VisualS
 	if (varying_name == "[None]") {
 		return code;
 	}
-	code += vformat("	var_%s = %s;\n", varying_name, p_input_vars[0]);
+	code += vformat("\tvar_%s = %s;\n", varying_name, p_input_vars[0]);
 	return code;
 }
 
@@ -5561,9 +5561,9 @@ String VisualShaderNodeVaryingGetter::generate_code(Shader::Mode p_mode, VisualS
 			default:
 				break;
 		}
-		return vformat("	%s = %s;\n", p_output_vars[0], from);
+		return vformat("\t%s = %s;\n", p_output_vars[0], from);
 	}
-	return vformat("	%s = var_%s;\n", p_output_vars[0], from);
+	return vformat("\t%s = var_%s;\n", p_output_vars[0], from);
 }
 
 VisualShaderNodeVaryingGetter::VisualShaderNodeVaryingGetter() {

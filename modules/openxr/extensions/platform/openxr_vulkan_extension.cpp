@@ -733,7 +733,7 @@ String OpenXRVulkanExtension::get_swapchain_format_name(int64_t p_swapchain_form
 		ENUM_TO_STRING_CASE(VK_FORMAT_A4B4G4R4_UNORM_PACK16_EXT)
 		ENUM_TO_STRING_CASE(VK_FORMAT_MAX_ENUM)
 		default: {
-			return String("Swapchain format ") + String::num_int64(int64_t(p_swapchain_format));
+			return "Swapchain format " + String::num_int64(int64_t(p_swapchain_format));
 		} break;
 	}
 }

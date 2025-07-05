@@ -401,9 +401,9 @@ void incremental_optimize() {
 	int mem_leaves = _leaves.estimate_memory_use();
 
 	String sz;
-	sz += "mem_refs : " + itos(mem_refs) + " ";
-	sz += "mem_nodes : " + itos(mem_nodes) + " ";
-	sz += "mem_leaves : " + itos(mem_leaves) + " ";
+	sz += "mem_refs : " + itos(mem_refs) + ' ';
+	sz += "mem_nodes : " + itos(mem_nodes) + ' ';
+	sz += "mem_leaves : " + itos(mem_leaves) + ' ';
 	sz += ", num nodes : " + itos(_nodes.size());
 	print_line(sz);
 	*/

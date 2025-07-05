@@ -154,7 +154,7 @@ void AnimationNode::make_invalid(const String &p_reason) {
 	ERR_FAIL_NULL(process_state);
 	process_state->valid = false;
 	if (!process_state->invalid_reasons.is_empty()) {
-		process_state->invalid_reasons += "\n";
+		process_state->invalid_reasons += '\n';
 	}
 	process_state->invalid_reasons += String::utf8("•  ") + p_reason;
 }
@@ -301,11 +301,11 @@ AnimationNode::NodeTimeInfo AnimationNode::_blend_node(Ref<AnimationNode> p_node
 	// This is the slowest part of processing, but as strings process in powers of 2, and the paths always exist, it will not result in that many allocations.
 	if (p_new_parent) {
 		new_parent = p_new_parent;
-		new_path = String(node_state.base_path) + String(p_subpath) + "/";
+		new_path = String(node_state.base_path) + p_subpath + '/';
 	} else {
 		ERR_FAIL_NULL_V(node_state.parent, NodeTimeInfo());
 		new_parent = node_state.parent;
-		new_path = String(new_parent->node_state.base_path) + String(p_subpath) + "/";
+		new_path = String(new_parent->node_state.base_path) + p_subpath + '/';
 	}
 
 	// This process, which depends on p_sync is needed to process sync correctly in the case of
@@ -751,7 +751,7 @@ void AnimationTree::_animation_node_renamed(const ObjectID &p_oid, const String 
 
 void AnimationTree::_animation_node_removed(const ObjectID &p_oid, const StringName &p_node) {
 	ERR_FAIL_COND(!property_reference_map.has(p_oid));
-	String base_path = String(property_reference_map[p_oid]) + String(p_node);
+	String base_path = String(property_reference_map[p_oid]) + p_node;
 	for (const PropertyInfo &E : properties) {
 		if (E.name.begins_with(base_path)) {
 			property_map.erase(E.name);
@@ -806,7 +806,7 @@ void AnimationTree::_update_properties_for_node(const String &p_base_path, Ref<A
 	p_node->get_child_nodes(&children);
 
 	for (const AnimationNode::ChildNode &E : children) {
-		_update_properties_for_node(p_base_path + E.name + "/", E.node);
+		_update_properties_for_node(p_base_path + E.name + '/', E.node);
 	}
 }
 

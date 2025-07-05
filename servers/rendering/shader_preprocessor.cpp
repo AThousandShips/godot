@@ -705,7 +705,7 @@ void ShaderPreprocessor::process_include(Tokenizer *p_tokenizer) {
 	}
 
 	if (!ResourceLoader::exists(path)) {
-		set_error(RTR("Shader include file does not exist:") + " " + path, line);
+		set_error(RTR("Shader include file does not exist:") + ' ' + path, line);
 		return;
 	}
 
@@ -763,9 +763,9 @@ void ShaderPreprocessor::process_include(Tokenizer *p_tokenizer) {
 
 	String result;
 	processor.preprocess(state, included, result);
-	add_to_output("@@>" + real_path + "\n"); // Add token for enter include path
+	add_to_output("@@>" + real_path + '\n'); // Add token for enter include path
 	add_to_output(result);
-	add_to_output("\n@@<" + real_path + "\n"); // Add token for exit include path.
+	add_to_output("\n@@<" + real_path + '\n'); // Add token for exit include path.
 
 	// Reset to last include if there are no errors. We want to use this as context.
 	if (state->error.is_empty()) {
@@ -1107,11 +1107,11 @@ bool ShaderPreprocessor::expand_macros_once(const String &p_line, int p_line_num
 
 			concatenate_macro_body(body);
 
-			result = result.substr(0, index) + " " + body + " " + result.substr(args_end + 1);
+			result = result.substr(0, index) + ' ' + body + ' ' + result.substr(args_end + 1);
 		} else {
 			concatenate_macro_body(body);
 
-			result = result.substr(0, index) + " " + body + " " + result.substr(index + key.length());
+			result = result.substr(0, index) + ' ' + body + ' ' + result.substr(index + key.length());
 		}
 
 		r_expanded = result;

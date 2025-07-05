@@ -82,7 +82,7 @@ void PluginConfigDialog::_create_script_for_plugin(const String &p_plugin_path, 
 	String ext = language->get_extension();
 	String script_name = script_edit->get_text().is_empty() ? _get_subfolder() : script_edit->get_text();
 	if (script_name.get_extension() != ext) {
-		script_name += "." + ext;
+		script_name += '.' + ext;
 	}
 	String script_path = p_plugin_path.path_join(script_name);
 	p_config_file->set_value("plugin", "script", script_name);

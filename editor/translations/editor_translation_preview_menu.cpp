@@ -51,7 +51,7 @@ void EditorTranslationPreviewMenu::_prepare() {
 	}
 	for (const String &locale : locales) {
 		const String name = TranslationServer::get_singleton()->get_locale_name(locale);
-		add_radio_check_item(name == locale ? name : name + " [" + locale + "]");
+		add_radio_check_item(name == locale ? name : name + " [" + locale + ']');
 		set_item_auto_translate_mode(-1, AUTO_TRANSLATE_MODE_DISABLED);
 		set_item_metadata(-1, locale);
 		if (locale == current_preview_locale) {

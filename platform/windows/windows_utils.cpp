@@ -161,7 +161,7 @@ Error WindowsUtils::copy_and_rename_pdb(const String &p_dll_path) {
 		return ERR_SKIP;
 	}
 
-	String new_pdb_base_name = p_dll_path.get_file().get_basename() + "_";
+	String new_pdb_base_name = p_dll_path.get_file().get_basename() + '_';
 
 	// Checking the available space for the updated string
 	// and trying to shorten it if there is not much space.

@@ -219,7 +219,7 @@ void CallQueue::_call_function(const Callable &p_callable, const Variant *p_args
 	Variant ret;
 	p_callable.callp(argptrs, p_argcount, ret, ce);
 	if (p_show_error && ce.error != Callable::CallError::CALL_OK) {
-		ERR_PRINT("Error calling deferred method: " + Variant::get_callable_error_text(p_callable, argptrs, p_argcount, ce) + ".");
+		ERR_PRINT("Error calling deferred method: " + Variant::get_callable_error_text(p_callable, argptrs, p_argcount, ce) + '.');
 	}
 }
 

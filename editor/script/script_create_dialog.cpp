@@ -189,7 +189,7 @@ String ScriptCreateDialog::_adjust_file_path(const String &p_base_path) const {
 	String file_name = p_base_path.get_file().get_basename();
 	file_name = EditorNode::adjust_script_name_casing(file_name, language->preferred_file_name_casing());
 	String extension = language->get_extension();
-	return base_dir.path_join(file_name + "." + extension);
+	return base_dir.path_join(file_name + '.' + extension);
 }
 
 void ScriptCreateDialog::config(const String &p_base_name, const String &p_base_path, bool p_built_in_enabled, bool p_load_enabled) {
@@ -339,7 +339,7 @@ void ScriptCreateDialog::_template_changed(int p_template) {
 	// Update template label information.
 	String template_info = U"•  ";
 	template_info += TTR("Template:");
-	template_info += " " + sinfo.name;
+	template_info += ' ' + sinfo.name;
 	if (!sinfo.description.is_empty()) {
 		template_info += " - " + sinfo.description;
 	}
@@ -372,7 +372,7 @@ void ScriptCreateDialog::_create_new() {
 		// If base is a custom type, replace with script path instead.
 		const EditorData::CustomType *type = EditorNode::get_editor_data().get_custom_type_by_name(parent_class);
 		ERR_FAIL_NULL(type);
-		parent_class = "\"" + type->script->get_path() + "\"";
+		parent_class = '"' + type->script->get_path() + '"';
 	}
 
 	String class_name = file_path->get_text().get_file().get_basename();
@@ -477,7 +477,7 @@ void ScriptCreateDialog::_browse_path(bool browse_parent, bool p_save) {
 void ScriptCreateDialog::_file_selected(const String &p_file) {
 	String path = ProjectSettings::get_singleton()->localize_path(p_file);
 	if (is_browsing_parent) {
-		parent_name->set_text("\"" + path + "\"");
+		parent_name->set_text('"' + path + '"');
 		_parent_name_changed(parent_name->get_text());
 	} else {
 		file_path->set_text(path);
@@ -813,7 +813,7 @@ ScriptLanguage::ScriptTemplate ScriptCreateDialog::_parse_template(const ScriptL
 				if (space_count) {
 					script_template.content += String(" ").repeat(space_count);
 				}
-				script_template.content += line.substr(i) + "\n";
+				script_template.content += line.substr(i) + '\n';
 			}
 		}
 	}

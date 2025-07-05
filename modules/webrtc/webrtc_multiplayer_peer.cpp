@@ -394,7 +394,7 @@ Error WebRTCMultiplayerPeer::put_packet(const uint8_t *p_buffer, int p_buffer_si
 
 	if (target_peer > 0) {
 		HashMap<int, Ref<ConnectedPeer>>::Iterator E = peer_map.find(target_peer);
-		ERR_FAIL_COND_V_MSG(!E, ERR_INVALID_PARAMETER, "Invalid target peer: " + itos(target_peer) + ".");
+		ERR_FAIL_COND_V_MSG(!E, ERR_INVALID_PARAMETER, "Invalid target peer: " + itos(target_peer) + '.');
 
 		ERR_FAIL_COND_V_MSG(E->value->channels.size() <= ch, ERR_INVALID_PARAMETER, vformat("Unable to send packet on channel %d, max channels: %d", ch, E->value->channels.size()));
 		ERR_FAIL_COND_V(E->value->channels.get(ch).is_null(), ERR_BUG);

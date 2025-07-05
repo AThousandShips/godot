@@ -584,7 +584,7 @@ void Input::joy_connection_changed(int p_idx, bool p_connected, const String &p_
 		if (p_guid.is_empty()) {
 			int uidlen = MIN(p_name.length(), 16);
 			for (int i = 0; i < uidlen; i++) {
-				uidname = uidname + _hex_str(p_name[i]);
+				uidname += _hex_str(p_name[i]);
 			}
 		}
 		js.uid = uidname;

@@ -176,7 +176,7 @@ Node *SceneState::instantiate(GenEditState p_edit_state) const {
 			NODE_FROM_ID(nparent, n.parent);
 #ifdef DEBUG_ENABLED
 			if (!nparent && (n.parent & FLAG_ID_IS_PATH)) {
-				WARN_PRINT(String("Parent path '" + String(node_paths[n.parent & FLAG_MASK]) + "' for node '" + String(snames[n.name]) + "' has vanished when instantiating: '" + get_path() + "'.").ascii().get_data());
+				WARN_PRINT(String("Parent path '" + String(node_paths[n.parent & FLAG_MASK]) + "' for node '" + snames[n.name] + "' has vanished when instantiating: '" + get_path() + "'.").ascii().get_data());
 				old_parent_path = String(node_paths[n.parent & FLAG_MASK]).trim_prefix("./").replace_char('/', '@');
 				nparent = ret_nodes[0];
 			}
@@ -251,7 +251,7 @@ Node *SceneState::instantiate(GenEditState p_edit_state) const {
 				node = parent->_get_child_by_name(snames[n.name]);
 #ifdef DEBUG_ENABLED
 				if (!node) {
-					WARN_PRINT(String("Node '" + String(ret_nodes[0]->get_path_to(parent)) + "/" + String(snames[n.name]) + "' was modified from inside an instance, but it has vanished.").ascii().get_data());
+					WARN_PRINT(String("Node '" + String(ret_nodes[0]->get_path_to(parent)) + '/' + snames[n.name] + "' was modified from inside an instance, but it has vanished.").ascii().get_data());
 				}
 #endif
 			}
@@ -490,7 +490,7 @@ Node *SceneState::instantiate(GenEditState p_edit_state) const {
 			}
 
 			if (!old_parent_path.is_empty()) {
-				node->set_name(old_parent_path + "#" + node->get_name());
+				node->set_name(old_parent_path + '#' + node->get_name());
 			}
 
 			if (n.owner >= 0) {

@@ -1140,7 +1140,7 @@ void RenderingDeviceGraph::_run_label_command_change(RDD::CommandBufferID p_comm
 		}
 
 		// Add the level to the name.
-		label_name += " (L" + itos(p_new_level) + ")";
+		label_name += " (L" + itos(p_new_level) + ')';
 
 		if (p_sorted_commands != nullptr && p_sorted_commands_count > 0) {
 			// Analyze the commands in the level that have the same label to detect what type of operations are performed.
@@ -1201,7 +1201,7 @@ void RenderingDeviceGraph::_run_label_command_change(RDD::CommandBufferID p_comm
 				label_name += draw_commands ? "Draw" : "";
 				label_name += plus_after_draw ? "+" : "";
 				label_name += custom_commands ? "Custom" : "";
-				label_name += ")";
+				label_name += ')';
 			}
 		}
 

@@ -2147,7 +2147,7 @@ void Tree::update_item_cell(TreeItem *p_item, int p_col) const {
 
 	if (!p_item->cells[p_col].suffix.is_empty()) {
 		if (!valtext.is_empty()) {
-			valtext += " ";
+			valtext += ' ';
 		}
 		valtext += p_item->cells[p_col].suffix;
 	}
@@ -2583,7 +2583,7 @@ int Tree::draw_item(const Point2i &p_pos, const Point2 &p_draw_ofs, const Size2 
 						Variant ret;
 						p_item->cells[i].custom_draw_callback.callp(argptrs, 2, ret, ce);
 						if (ce.error != Callable::CallError::CALL_OK) {
-							ERR_PRINT("Error calling custom draw method: " + Variant::get_callable_error_text(p_item->cells[i].custom_draw_callback, argptrs, 2, ce) + ".");
+							ERR_PRINT("Error calling custom draw method: " + Variant::get_callable_error_text(p_item->cells[i].custom_draw_callback, argptrs, 2, ce) + '.');
 						}
 					}
 

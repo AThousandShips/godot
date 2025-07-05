@@ -445,10 +445,10 @@ Error ResourceLoaderText::load() {
 #ifdef TOOLS_ENABLED
 				// Silence a warning that can happen during the initial filesystem scan due to cache being regenerated.
 				if (ResourceLoader::get_resource_uid(path) != uid) {
-					WARN_PRINT(String(res_path + ":" + itos(lines) + " - ext_resource, invalid UID: " + uidt + " - using text path instead: " + path).utf8().get_data());
+					WARN_PRINT(String(res_path + ':' + itos(lines) + " - ext_resource, invalid UID: " + uidt + " - using text path instead: " + path).utf8().get_data());
 				}
 #else
-				WARN_PRINT(String(res_path + ":" + itos(lines) + " - ext_resource, invalid UID: " + uidt + " - using text path instead: " + path).utf8().get_data());
+				WARN_PRINT(String(res_path + ':' + itos(lines) + " - ext_resource, invalid UID: " + uidt + " - using text path instead: " + path).utf8().get_data());
 #endif
 			}
 		}
@@ -972,7 +972,7 @@ Error ResourceLoaderText::rename_dependencies(Ref<FileAccess> p_f, const String 
 
 				String uid_text = "";
 				if (res_uid != ResourceUID::INVALID_ID) {
-					uid_text = " uid=\"" + ResourceUID::get_singleton()->id_to_text(res_uid) + "\"";
+					uid_text = " uid=\"" + ResourceUID::get_singleton()->id_to_text(res_uid) + '"';
 				}
 
 				if (is_scene) {
@@ -1018,11 +1018,11 @@ Error ResourceLoaderText::rename_dependencies(Ref<FileAccess> p_f, const String 
 				path = base_path.path_to_file(path);
 			}
 
-			String s = "[ext_resource type=\"" + type + "\"";
+			String s = "[ext_resource type=\"" + type + '"';
 
 			ResourceUID::ID uid = ResourceSaver::get_resource_id_for_path(path);
 			if (uid != ResourceUID::INVALID_ID) {
-				s += " uid=\"" + ResourceUID::get_singleton()->id_to_text(uid) + "\"";
+				s += " uid=\"" + ResourceUID::get_singleton()->id_to_text(uid) + '"';
 			}
 			s += " path=\"" + path + "\" id=\"" + id + "\"]";
 			fw->store_line(s); // Bundled.
@@ -1610,7 +1610,7 @@ void ResourceFormatSaverTextInstance::_find_resources(const Variant &p_variant, 
 
 				// Use a numeric ID as a base, because they are sorted in natural order before saving.
 				// This increases the chances of thread loading to fetch them first.
-				String id = itos(external_resources.size() + 1) + "_" + Resource::generate_scene_unique_id();
+				String id = itos(external_resources.size() + 1) + '_' + Resource::generate_scene_unique_id();
 				external_resources[res] = id;
 				return;
 			}
@@ -1736,7 +1736,7 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 			Ref<PackedScene> instance = packed_scene->get_state()->get_node_instance(i);
 			if (instance.is_valid() && !external_resources.has(instance)) {
 				int index = external_resources.size() + 1;
-				external_resources[instance] = itos(index) + "_" + Resource::generate_scene_unique_id(); // Keep the order for improved thread loading performance.
+				external_resources[instance] = itos(index) + '_' + Resource::generate_scene_unique_id(); // Keep the order for improved thread loading performance.
 			}
 		}
 	}
@@ -1747,21 +1747,21 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 			title += "type=\"" + _resource_get_class(p_resource) + "\" ";
 			Ref<Script> script = p_resource->get_script();
 			if (script.is_valid() && script->get_global_name()) {
-				title += "script_class=\"" + String(script->get_global_name()) + "\" ";
+				title += "script_class=\"" + script->get_global_name() + "\" ";
 			}
 		}
 
 		int load_steps = saved_resources.size() + external_resources.size();
 
 		if (load_steps > 1) {
-			title += "load_steps=" + itos(load_steps) + " ";
+			title += "load_steps=" + itos(load_steps) + ' ';
 		}
 		title += "format=" + itos(use_compat ? ResourceLoaderText::FORMAT_VERSION_COMPAT : ResourceLoaderText::FORMAT_VERSION) + "";
 
 		ResourceUID::ID uid = ResourceSaver::get_resource_id_for_path(local_path, true);
 
 		if (uid != ResourceUID::INVALID_ID) {
-			title += " uid=\"" + ResourceUID::get_singleton()->id_to_text(uid) + "\"";
+			title += " uid=\"" + ResourceUID::get_singleton()->id_to_text(uid) + '"';
 		}
 
 		f->store_string(title);
@@ -1828,11 +1828,11 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 	for (int i = 0; i < sorted_er.size(); i++) {
 		String p = sorted_er[i].resource->get_path();
 
-		String s = "[ext_resource type=\"" + sorted_er[i].resource->get_save_class() + "\"";
+		String s = "[ext_resource type=\"" + sorted_er[i].resource->get_save_class() + '"';
 
 		ResourceUID::ID uid = ResourceSaver::get_resource_id_for_path(p, false);
 		if (uid != ResourceUID::INVALID_ID) {
-			s += " uid=\"" + ResourceUID::get_singleton()->id_to_text(uid) + "\"";
+			s += " uid=\"" + ResourceUID::get_singleton()->id_to_text(uid) + '"';
 		}
 		s += " path=\"" + p + "\" id=\"" + sorted_er[i].id + "\"]\n";
 		f->store_string(s); // Bundled.
@@ -1873,7 +1873,7 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 			if (res->get_scene_unique_id().is_empty()) {
 				String new_id;
 				while (true) {
-					new_id = _resource_get_class(res) + "_" + Resource::generate_scene_unique_id();
+					new_id = _resource_get_class(res) + '_' + Resource::generate_scene_unique_id();
 
 					if (!used_unique_ids.has(new_id)) {
 						break;
@@ -1944,7 +1944,7 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 
 				String vars;
 				VariantWriter::write_to_string(value, vars, _write_resources, this, use_compat);
-				f->store_string(name.property_name_encode() + " = " + vars + "\n");
+				f->store_string(name.property_name_encode() + " = " + vars + '\n');
 			}
 		}
 
@@ -1968,18 +1968,18 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 			Vector<String> deferred_node_paths = state->get_node_deferred_nodepath_properties(i);
 
 			String header = "[node";
-			header += " name=\"" + String(name).c_escape() + "\"";
+			header += " name=\"" + String(name).c_escape() + '"';
 			if (type != StringName()) {
-				header += " type=\"" + String(type) + "\"";
+				header += " type=\"" + type + '"';
 			}
 			if (path != NodePath()) {
-				header += " parent=\"" + String(path.simplified()).c_escape() + "\"";
+				header += " parent=\"" + String(path.simplified()).c_escape() + '"';
 			}
 			if (owner != NodePath() && owner != NodePath(".")) {
-				header += " owner=\"" + String(owner.simplified()).c_escape() + "\"";
+				header += " owner=\"" + String(owner.simplified()).c_escape() + '"';
 			}
 			if (index >= 0) {
-				header += " index=\"" + itos(index) + "\"";
+				header += " index=\"" + itos(index) + '"';
 			}
 
 			if (deferred_node_paths.size()) {
@@ -1993,12 +1993,12 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 				groups.sort_custom<StringName::AlphCompare>();
 				String sgroups = " groups=[";
 				for (int j = 0; j < groups.size(); j++) {
-					sgroups += "\"" + String(groups[j]).c_escape() + "\"";
+					sgroups += '"' + String(groups[j]).c_escape() + '"';
 					if (j < groups.size() - 1) {
 						sgroups += ", ";
 					}
 				}
-				sgroups += "]";
+				sgroups += ']';
 				header += sgroups;
 			}
 
@@ -2024,7 +2024,7 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 				String vars;
 				VariantWriter::write_to_string(state->get_node_property_value(i, j), vars, _write_resources, this, use_compat);
 
-				f->store_string(String(state->get_node_property_name(i, j)).property_name_encode() + " = " + vars + "\n");
+				f->store_string(String(state->get_node_property_name(i, j)).property_name_encode() + " = " + vars + '\n');
 			}
 
 			if (i < state->get_node_count() - 1) {
@@ -2038,10 +2038,10 @@ Error ResourceFormatSaverTextInstance::save(const String &p_path, const Ref<Reso
 			}
 
 			String connstr = "[connection";
-			connstr += " signal=\"" + String(state->get_connection_signal(i)).c_escape() + "\"";
-			connstr += " from=\"" + String(state->get_connection_source(i).simplified()).c_escape() + "\"";
-			connstr += " to=\"" + String(state->get_connection_target(i).simplified()).c_escape() + "\"";
-			connstr += " method=\"" + String(state->get_connection_method(i)).c_escape() + "\"";
+			connstr += " signal=\"" + String(state->get_connection_signal(i)).c_escape() + '"';
+			connstr += " from=\"" + String(state->get_connection_source(i).simplified()).c_escape() + '"';
+			connstr += " to=\"" + String(state->get_connection_target(i).simplified()).c_escape() + '"';
+			connstr += " method=\"" + String(state->get_connection_method(i)).c_escape() + '"';
 			int flags = state->get_connection_flags(i);
 			if (flags != Object::CONNECT_PERSIST) {
 				connstr += " flags=" + itos(flags);

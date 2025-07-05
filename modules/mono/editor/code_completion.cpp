@@ -43,7 +43,7 @@ namespace gdmono {
 // Almost everything here is taken from functions used by GDScript for code completion, adapted for C#.
 
 _FORCE_INLINE_ String quoted(const String &p_str) {
-	return "\"" + p_str + "\"";
+	return '"' + p_str + '"';
 }
 
 void _add_nodes_suggestions(const Node *p_base, const Node *p_node, PackedStringArray &r_suggestions) {
@@ -127,7 +127,7 @@ PackedStringArray get_code_completion(CompletionKind p_kind, const String &p_scr
 
 				for (const KeyValue<StringName, ProjectSettings::AutoloadInfo> &E : autoloads) {
 					const ProjectSettings::AutoloadInfo &info = E.value;
-					suggestions.push_back(quoted("/root/" + String(info.name)));
+					suggestions.push_back(quoted("/root/" + info.name));
 				}
 			}
 

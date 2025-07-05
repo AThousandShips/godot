@@ -228,7 +228,7 @@ void EditorFileServer::poll() {
 
 	int idx = 0;
 	for (KeyValue<String, uint64_t> K : files_to_send) {
-		pr.step(TTR("Sending file:") + " " + K.key.get_file(), 5 + idx * 100 / files_to_send.size(), false);
+		pr.step(TTR("Sending file:") + ' ' + K.key.get_file(), 5 + idx * 100 / files_to_send.size(), false);
 		idx++;
 
 		if (K.value == 0 || !FileAccess::exists("res://" + K.key)) { // File was removed

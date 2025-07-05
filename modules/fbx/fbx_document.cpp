@@ -504,7 +504,7 @@ Error FBXDocument::_parse_meshes(Ref<FBXState> p_state) {
 					if (fbx_channel->name.length > 0) {
 						bs_name = _as_string(fbx_channel->name);
 					} else {
-						bs_name = String("morph_") + itos(blend_channels.size());
+						bs_name = "morph_" + itos(blend_channels.size());
 					}
 					import_mesh->add_blend_shape(bs_name);
 					blend_weights.push_back(float(fbx_channel->weight));
@@ -971,7 +971,7 @@ GLTFImageIndex FBXDocument::_parse_image_save_image(Ref<FBXState> p_state, const
 			bool must_import = true;
 			Vector<uint8_t> img_data = p_image->get_data();
 			Dictionary generator_parameters;
-			String file_path = p_state->get_base_path().path_join(p_state->filename.get_basename() + "_" + p_image->get_name());
+			String file_path = p_state->get_base_path().path_join(p_state->filename.get_basename() + '_' + p_image->get_name());
 			file_path += p_file_extension.is_empty() ? ".png" : p_file_extension;
 			if (FileAccess::exists(file_path + ".import")) {
 				Ref<ConfigFile> config;
@@ -1800,7 +1800,7 @@ void FBXDocument::_import_animation(Ref<FBXState> p_state, AnimationPlayer *p_an
 
 			const String path = String(p_animation_player->get_parent()->get_path_to(sk));
 			const String bone = fbx_node->get_name();
-			transform_node_path = path + ":" + bone;
+			transform_node_path = path + ':' + bone;
 		} else {
 			transform_node_path = node_path;
 		}
@@ -1947,7 +1947,7 @@ void FBXDocument::_import_animation(Ref<FBXState> p_state, AnimationPlayer *p_an
 			weights.times = blend_track["times"];
 			weights.values = blend_track["values"];
 
-			const String blend_path = String(mesh_instance_node_path) + ":" + String(mesh->get_mesh()->get_blend_shape_name(i));
+			const String blend_path = String(mesh_instance_node_path) + ':' + mesh->get_mesh()->get_blend_shape_name(i);
 			const int track_idx = animation->get_track_count();
 			animation->add_track(Animation::TYPE_BLEND_SHAPE);
 			animation->track_set_path(track_idx, blend_path);

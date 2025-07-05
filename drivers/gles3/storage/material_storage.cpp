@@ -861,7 +861,7 @@ void MaterialData::update_textures(const HashMap<StringName, Variant> &p_paramet
 			GlobalShaderUniforms::Variable *v = material_storage->global_shader_uniforms.variables.getptr(uniform_name);
 			if (v) {
 				if (v->buffer_index >= 0) {
-					WARN_PRINT("Shader uses global parameter texture '" + String(uniform_name) + "', but it changed type and is no longer a texture!.");
+					WARN_PRINT("Shader uses global parameter texture '" + uniform_name + "', but it changed type and is no longer a texture!.");
 
 				} else {
 					HashMap<StringName, uint64_t>::Iterator E = used_global_textures.find(uniform_name);
@@ -884,7 +884,7 @@ void MaterialData::update_textures(const HashMap<StringName, Variant> &p_paramet
 				}
 
 			} else {
-				WARN_PRINT("Shader uses global parameter texture '" + String(uniform_name) + "', but it was removed at some point. Material will not display correctly.");
+				WARN_PRINT("Shader uses global parameter texture '" + uniform_name + "', but it was removed at some point. Material will not display correctly.");
 			}
 		} else {
 			HashMap<StringName, Variant>::ConstIterator V = p_parameters.find(uniform_name);

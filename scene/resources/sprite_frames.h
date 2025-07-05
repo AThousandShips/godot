@@ -80,7 +80,7 @@ public:
 
 	_FORCE_INLINE_ Ref<Texture2D> get_frame_texture(const StringName &p_anim, int p_idx) const {
 		HashMap<StringName, Anim>::ConstIterator E = animations.find(p_anim);
-		ERR_FAIL_COND_V_MSG(!E, Ref<Texture2D>(), "Animation '" + String(p_anim) + "' doesn't exist.");
+		ERR_FAIL_COND_V_MSG(!E, Ref<Texture2D>(), "Animation '" + p_anim + "' doesn't exist.");
 		ERR_FAIL_COND_V(p_idx < 0, Ref<Texture2D>());
 		if (p_idx >= E->value.frames.size()) {
 			return Ref<Texture2D>();
@@ -91,7 +91,7 @@ public:
 
 	_FORCE_INLINE_ float get_frame_duration(const StringName &p_anim, int p_idx) const {
 		HashMap<StringName, Anim>::ConstIterator E = animations.find(p_anim);
-		ERR_FAIL_COND_V_MSG(!E, 1.0, "Animation '" + String(p_anim) + "' doesn't exist.");
+		ERR_FAIL_COND_V_MSG(!E, 1.0, "Animation '" + p_anim + "' doesn't exist.");
 		ERR_FAIL_COND_V(p_idx < 0, 1.0);
 		if (p_idx >= E->value.frames.size()) {
 			return 1.0;

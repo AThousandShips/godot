@@ -93,7 +93,7 @@ class ShaderGlobalsEditorInterface : public Object {
 			gv["value"] = p_value;
 		}
 
-		String path = "shader_globals/" + String(p_name);
+		String path = "shader_globals/" + p_name;
 		undo_redo->add_do_property(ProjectSettings::get_singleton(), path, gv);
 		undo_redo->add_undo_property(ProjectSettings::get_singleton(), path, GLOBAL_GET(path));
 		undo_redo->add_do_method(this, "_var_changed");

@@ -314,7 +314,7 @@ void EditorAudioBus::_name_changed(const String &p_new_name) {
 		}
 
 		attempts++;
-		attempt = p_new_name + " " + itos(attempts);
+		attempt = p_new_name + ' ' + itos(attempts);
 	}
 
 	EditorUndoRedoManager *ur = EditorUndoRedoManager::get_singleton();

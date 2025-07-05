@@ -92,7 +92,7 @@ Error RenderingShaderContainerMetal::compile_metal_source(const char *p_source, 
 	}
 	Error r_error;
 	Ref<FileAccess> source_file = FileAccess::create_temp(FileAccess::ModeFlags::READ_WRITE,
-			name + "_" + itos(p_stage_data.hash.short_sha()),
+			name + '_' + itos(p_stage_data.hash.short_sha()),
 			"metal", false, &r_error);
 	ERR_FAIL_COND_V_MSG(r_error != OK, r_error, "Unable to create temporary source file.");
 	if (!source_file->store_buffer((const uint8_t *)p_source, strlen(p_source))) {
@@ -100,7 +100,7 @@ Error RenderingShaderContainerMetal::compile_metal_source(const char *p_source, 
 	}
 	source_file->flush();
 	Ref<FileAccess> result_file = FileAccess::create_temp(FileAccess::ModeFlags::READ_WRITE,
-			name + "_" + itos(p_stage_data.hash.short_sha()),
+			name + '_' + itos(p_stage_data.hash.short_sha()),
 			"metallib", false, &r_error);
 
 	ERR_FAIL_COND_V_MSG(r_error != OK, r_error, "Unable to create temporary target file");

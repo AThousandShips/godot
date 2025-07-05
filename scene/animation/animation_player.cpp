@@ -116,7 +116,7 @@ void AnimationPlayer::_validate_property(PropertyInfo &p_property) const {
 		String hint;
 		for (List<String>::Element *E = names.front(); E; E = E->next()) {
 			if (E != names.front()) {
-				hint += ",";
+				hint += ',';
 			}
 			hint += E->get();
 		}
@@ -133,7 +133,7 @@ void AnimationPlayer::_get_property_list(List<PropertyInfo> *p_list) const {
 	for (const KeyValue<StringName, AnimationData> &E : animation_set) {
 		AHashMap<StringName, StringName>::ConstIterator F = animation_next_set.find(E.key);
 		if (F && F->value != StringName()) {
-			anim_names.push_back(PropertyInfo(Variant::STRING, "next/" + String(E.key), PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL));
+			anim_names.push_back(PropertyInfo(Variant::STRING, "next/" + E.key, PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL));
 		}
 	}
 
@@ -885,7 +885,7 @@ void AnimationPlayer::get_argument_options(const StringName &p_function, int p_i
 void AnimationPlayer::_animation_removed(const StringName &p_name, const StringName &p_library) {
 	AnimationMixer::_animation_removed(p_name, p_library);
 
-	StringName name = p_library == StringName() ? p_name : StringName(String(p_library) + "/" + String(p_name));
+	StringName name = p_library == StringName() ? p_name : StringName(String(p_library) + '/' + p_name);
 
 	if (!animation_set.has(name)) {
 		return; // No need to update because not the one from the library being used.

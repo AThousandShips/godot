@@ -156,7 +156,7 @@ void ProjectSettingsEditor::_setting_selected(const String &p_path) {
 		return;
 	}
 
-	property_box->set_text(general_settings_inspector->get_current_section() + "/" + p_path);
+	property_box->set_text(general_settings_inspector->get_current_section() + '/' + p_path);
 
 	_update_property_box(); // set_text doesn't trigger text_changed
 }
@@ -222,7 +222,7 @@ void ProjectSettingsEditor::_feature_selected(int p_index) {
 		property_box->set_caret_column(len);
 		property_box->grab_focus();
 	} else {
-		property_box->set_text(property + "." + feature_box->get_item_text(p_index));
+		property_box->set_text(property + '.' + feature_box->get_item_text(p_index));
 	};
 	_update_property_box();
 }

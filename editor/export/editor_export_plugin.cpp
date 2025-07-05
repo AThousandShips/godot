@@ -92,7 +92,7 @@ Vector<String> EditorExportPlugin::get_apple_embedded_platform_embedded_framewor
 }
 
 void EditorExportPlugin::add_apple_embedded_platform_plist_content(const String &p_plist_content) {
-	apple_embedded_platform_plist_content += p_plist_content + "\n";
+	apple_embedded_platform_plist_content += p_plist_content + '\n';
 }
 
 String EditorExportPlugin::get_apple_embedded_platform_plist_content() const {
@@ -151,7 +151,7 @@ String EditorExportPlugin::_has_valid_export_configuration(const Ref<EditorExpor
 	String warning;
 	if (!supports_platform(p_export_platform)) {
 		warning += vformat(TTR("Plugin \"%s\" is not supported on \"%s\""), get_name(), p_export_platform->get_name());
-		warning += "\n";
+		warning += '\n';
 		return warning;
 	}
 
@@ -161,7 +161,7 @@ String EditorExportPlugin::_has_valid_export_configuration(const Ref<EditorExpor
 	for (const EditorExportPlatform::ExportOption &E : options) {
 		String option_warning = _get_export_option_warning(p_export_platform, E.option.name);
 		if (!option_warning.is_empty()) {
-			warning += option_warning + "\n";
+			warning += option_warning + '\n';
 		}
 	}
 

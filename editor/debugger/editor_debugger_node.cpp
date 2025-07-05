@@ -440,7 +440,7 @@ void EditorDebuggerNode::_update_errors() {
 			debugger_button->remove_theme_color_override(SceneStringName(font_color));
 			debugger_button->set_button_icon(Ref<Texture2D>());
 		} else {
-			debugger_button->set_text(TTR("Debugger") + " (" + itos(error_count + warning_count) + ")");
+			debugger_button->set_text(TTR("Debugger") + " (" + itos(error_count + warning_count) + ')');
 			if (error_count >= 1 && warning_count >= 1) {
 				debugger_button->set_button_icon(get_editor_theme_icon(SNAME("ErrorWarning")));
 				// Use error color to represent the highest level of severity reported.

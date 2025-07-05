@@ -320,30 +320,30 @@ void AudioStreamPlaybackOggVorbis::seek(double p_time) {
 
 			err = vorbis_synthesis(&block, packet);
 			if (err != OV_ENOTAUDIO) {
-				ERR_FAIL_COND_MSG(err != 0, "Error during vorbis synthesis " + itos(err) + ".");
+				ERR_FAIL_COND_MSG(err != 0, "Error during vorbis synthesis " + itos(err) + '.');
 
 				err = vorbis_synthesis_blockin(&dsp_state, &block);
-				ERR_FAIL_COND_MSG(err != 0, "Error during vorbis block processing " + itos(err) + ".");
+				ERR_FAIL_COND_MSG(err != 0, "Error during vorbis block processing " + itos(err) + '.');
 
 				int samples_out = vorbis_synthesis_pcmout(&dsp_state, nullptr);
 
 				if (granule_pos < 0) {
 					// We don't know where we are yet, so just keep on decoding.
 					err = vorbis_synthesis_read(&dsp_state, samples_out);
-					ERR_FAIL_COND_MSG(err != 0, "Error during vorbis read updating " + itos(err) + ".");
+					ERR_FAIL_COND_MSG(err != 0, "Error during vorbis read updating " + itos(err) + '.');
 				} else if (granule_pos + samples_out >= desired_sample) {
 					// Our sample is in this block. Skip the beginning of the block up to the sample, then
 					// return.
 					int skip_samples = (int)(desired_sample - granule_pos);
 					err = vorbis_synthesis_read(&dsp_state, skip_samples);
-					ERR_FAIL_COND_MSG(err != 0, "Error during vorbis read updating " + itos(err) + ".");
+					ERR_FAIL_COND_MSG(err != 0, "Error during vorbis read updating " + itos(err) + '.');
 					have_samples_left = skip_samples < samples_out;
 					have_packets_left = !packet->e_o_s;
 					return;
 				} else {
 					// Our sample is not in this block. Skip it.
 					err = vorbis_synthesis_read(&dsp_state, samples_out);
-					ERR_FAIL_COND_MSG(err != 0, "Error during vorbis read updating " + itos(err) + ".");
+					ERR_FAIL_COND_MSG(err != 0, "Error during vorbis read updating " + itos(err) + '.');
 					granule_pos += samples_out;
 				}
 			}

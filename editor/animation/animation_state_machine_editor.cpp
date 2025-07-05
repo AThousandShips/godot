@@ -112,7 +112,7 @@ String AnimationNodeStateMachineEditor::_get_root_playback_path(String &r_node_d
 		node_directory_path.reverse();
 		r_node_directory = String("/").join(node_directory_path);
 		if (node_directory_path.size()) {
-			r_node_directory += "/";
+			r_node_directory += '/';
 		}
 		base_path = !edited_path.size() ? Animation::PARAMETERS_BASE_PATH + "playback" : Animation::PARAMETERS_BASE_PATH + base_path + "/playback";
 	} else {
@@ -168,10 +168,10 @@ void AnimationNodeStateMachineEditor::_state_machine_gui_input(const Ref<InputEv
 			if (node_rects[i].play.has_point(mb->get_position())) { //edit name
 				if (play_mode->get_selected() == 1 || !playback->is_playing()) {
 					// Start
-					playback->start(node_directory + String(node_rects[i].node_name));
+					playback->start(node_directory + node_rects[i].node_name);
 				} else {
 					// Travel
-					playback->travel(node_directory + String(node_rects[i].node_name));
+					playback->travel(node_directory + node_rects[i].node_name);
 				}
 				state_machine_draw->queue_redraw();
 				return;
@@ -553,8 +553,8 @@ void AnimationNodeStateMachineEditor::_state_machine_gui_input(const Ref<InputEv
 			}
 
 			if (closest >= 0) {
-				String from = String(transition_lines[closest].from_node);
-				String to = String(transition_lines[closest].to_node);
+				String from = transition_lines[closest].from_node;
+				String to = transition_lines[closest].to_node;
 				String tooltip = from + " -> " + to;
 				state_machine_draw->set_tooltip_text(tooltip);
 			} else {
@@ -672,7 +672,7 @@ bool AnimationNodeStateMachineEditor::_create_submenu(PopupMenu *p_menu, Ref<Ani
 		if (p_nodesm->can_edit_node(E)) {
 			Ref<AnimationNodeStateMachine> ansm = p_nodesm->get_node(E);
 
-			String path = String(p_path) + "/" + E;
+			String path = String(p_path) + '/' + E;
 
 			if (ansm == state_machine) {
 				end_menu->add_item(E, nodes_to_connect.size());
@@ -757,7 +757,7 @@ void AnimationNodeStateMachineEditor::_add_menu_type(int p_index) {
 	String name = base_name;
 	while (state_machine->has_node(name)) {
 		base++;
-		name = base_name + " " + itos(base);
+		name = base_name + ' ' + itos(base);
 	}
 
 	updating = true;
@@ -784,7 +784,7 @@ void AnimationNodeStateMachineEditor::_add_animation_type(int p_index) {
 	String name = base_name;
 	while (state_machine->has_node(name)) {
 		base++;
-		name = base_name + " " + itos(base);
+		name = base_name + ' ' + itos(base);
 	}
 
 	updating = true;
@@ -1106,7 +1106,7 @@ void AnimationNodeStateMachineEditor::_state_machine_draw() {
 			}
 		}
 
-		StringName fullpath = AnimationTreeEditor::get_singleton()->get_base_path() + String(tl.advance_condition_name);
+		StringName fullpath = AnimationTreeEditor::get_singleton()->get_base_path() + tl.advance_condition_name;
 		if (tl.advance_condition_name != StringName() && bool(tree->get(fullpath))) {
 			tl.advance_condition_state = true;
 			tl.auto_advance = true;
@@ -1446,7 +1446,7 @@ void AnimationNodeStateMachineEditor::_notification(int p_what) {
 					break;
 				}
 
-				bool acstate = transition_lines[i].advance_condition_name != StringName() && bool(tree->get(AnimationTreeEditor::get_singleton()->get_base_path() + String(transition_lines[i].advance_condition_name)));
+				bool acstate = transition_lines[i].advance_condition_name != StringName() && bool(tree->get(AnimationTreeEditor::get_singleton()->get_base_path() + transition_lines[i].advance_condition_name));
 
 				if (transition_lines[i].advance_condition_state != acstate) {
 					state_machine_draw->queue_redraw();
@@ -1521,7 +1521,7 @@ void AnimationNodeStateMachineEditor::_notification(int p_what) {
 					while (anodesm.is_valid()) {
 						current_node_playback = tree->get(AnimationTreeEditor::get_singleton()->get_base_path() + next + "/playback");
 						StringName cnode = current_node_playback->get_current_node();
-						next += "/" + cnode;
+						next += '/' + cnode;
 						if (!anodesm->has_node(cnode)) {
 							break;
 						}
@@ -1573,7 +1573,7 @@ void AnimationNodeStateMachineEditor::_name_edited(const String &p_text) {
 			return;
 		}
 		base++;
-		name = base_name + " " + itos(base);
+		name = base_name + ' ' + itos(base);
 	}
 
 	updating = true;
@@ -1949,7 +1949,7 @@ void EditorAnimationMultiTransitionEdit::_get_property_list(List<PropertyInfo> *
 
 		PropertyInfo prop_transition_path;
 		prop_transition_path.type = Variant::STRING;
-		prop_transition_path.name = itos(i) + "/" + "transition_path";
+		prop_transition_path.name = itos(i) + "/transition_path";
 		p_list->push_back(prop_transition_path);
 
 		for (const PropertyInfo &pi : plist) {
@@ -1962,7 +1962,7 @@ void EditorAnimationMultiTransitionEdit::_get_property_list(List<PropertyInfo> *
 			}
 
 			PropertyInfo prop = pi;
-			prop.name = itos(i) + "/" + prop.name;
+			prop.name = itos(i) + '/' + prop.name;
 
 			p_list->push_back(prop);
 		}

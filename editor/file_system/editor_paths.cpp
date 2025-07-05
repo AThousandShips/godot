@@ -271,7 +271,7 @@ EditorPaths::EditorPaths() {
 			if (f.is_valid()) {
 				f->store_line("");
 			} else {
-				ERR_PRINT("Failed to create file " + project_data_gdignore_file_path.quote() + ".");
+				ERR_PRINT("Failed to create file " + project_data_gdignore_file_path.quote() + '.');
 			}
 		}
 

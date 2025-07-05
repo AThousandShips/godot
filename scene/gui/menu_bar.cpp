@@ -247,7 +247,7 @@ void MenuBar::bind_global_menu() {
 	for (int i = 0; i < menu_cache.size(); i++) {
 		RID submenu_rid = popups[i]->bind_global_menu();
 		if (!popups[i]->is_system_menu()) {
-			int index = nmenu->add_submenu_item(main_menu, menu_cache[i].name, submenu_rid, global_menu_tag + "#" + itos(i), global_start_idx + i);
+			int index = nmenu->add_submenu_item(main_menu, menu_cache[i].name, submenu_rid, global_menu_tag + '#' + itos(i), global_start_idx + i);
 			menu_cache.write[i].submenu_rid = submenu_rid;
 			nmenu->set_item_hidden(main_menu, index, menu_cache[i].hidden);
 			nmenu->set_item_disabled(main_menu, index, menu_cache[i].disabled);
@@ -616,7 +616,7 @@ void MenuBar::add_child_notify(Node *p_child) {
 
 		RID submenu_rid = pm->bind_global_menu();
 		if (!pm->is_system_menu()) {
-			nmenu->add_submenu_item(main_menu, atr(menu.name), submenu_rid, global_menu_tag + "#" + itos(menu_cache.size() - 1), _find_global_start_index() + menu_cache.size() - 1);
+			nmenu->add_submenu_item(main_menu, atr(menu.name), submenu_rid, global_menu_tag + '#' + itos(menu_cache.size() - 1), _find_global_start_index() + menu_cache.size() - 1);
 			menu_cache.write[menu_cache.size() - 1].submenu_rid = submenu_rid;
 		}
 	}
@@ -659,7 +659,7 @@ void MenuBar::move_child_notify(Node *p_child) {
 				}
 			}
 			if (new_idx != -1) {
-				nmenu->add_submenu_item(main_menu, atr(menu.name), menu.submenu_rid, global_menu_tag + "#" + itos(new_idx), global_start + new_idx);
+				nmenu->add_submenu_item(main_menu, atr(menu.name), menu.submenu_rid, global_menu_tag + '#' + itos(new_idx), global_start + new_idx);
 			}
 		}
 	}

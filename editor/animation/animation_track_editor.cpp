@@ -604,7 +604,7 @@ void AnimationTrackKeyEdit::_get_property_list(List<PropertyInfo> *p_list) const
 			String vtypes;
 			for (int i = 0; i < Variant::VARIANT_MAX; i++) {
 				if (i > 0) {
-					vtypes += ",";
+					vtypes += ',';
 				}
 				vtypes += Variant::get_type_name(Variant::Type(i));
 			}
@@ -648,7 +648,7 @@ void AnimationTrackKeyEdit::_get_property_list(List<PropertyInfo> *p_list) const
 					ap->get_animation_list(&anims);
 					for (const StringName &E : anims) {
 						if (!animations.is_empty()) {
-							animations += ",";
+							animations += ',';
 						}
 
 						animations += String(E);
@@ -657,7 +657,7 @@ void AnimationTrackKeyEdit::_get_property_list(List<PropertyInfo> *p_list) const
 			}
 
 			if (!animations.is_empty()) {
-				animations += ",";
+				animations += ',';
 			}
 			animations += "[stop]";
 
@@ -1217,7 +1217,7 @@ void AnimationMultiTrackKeyEdit::_get_property_list(List<PropertyInfo> *p_list) 
 				String vtypes;
 				for (int i = 0; i < Variant::VARIANT_MAX; i++) {
 					if (i > 0) {
-						vtypes += ",";
+						vtypes += ',';
 					}
 					vtypes += Variant::get_type_name(Variant::Type(i));
 				}
@@ -1254,7 +1254,7 @@ void AnimationMultiTrackKeyEdit::_get_property_list(List<PropertyInfo> *p_list) 
 						ap->get_animation_list(&anims);
 						for (const StringName &anim : anims) {
 							if (!animations.is_empty()) {
-								animations += ",";
+								animations += ',';
 							}
 
 							animations += String(anim);
@@ -1263,7 +1263,7 @@ void AnimationMultiTrackKeyEdit::_get_property_list(List<PropertyInfo> *p_list) 
 				}
 
 				if (!animations.is_empty()) {
-					animations += ",";
+					animations += ',';
 				}
 				animations += "[stop]";
 
@@ -2183,7 +2183,7 @@ void AnimationTrackEdit::_notification(int p_what) {
 					draw_texture_rect(icon, icon_rect);
 					icon_cache = icon;
 
-					text = String() + node->get_name() + ":" + anim_path.get_concatenated_subnames();
+					text = String(node->get_name()) + ':' + anim_path.get_concatenated_subnames();
 					ofs += h_separation;
 					ofs += icon_size.x;
 
@@ -2586,7 +2586,7 @@ void AnimationTrackEdit::draw_key(int p_index, float p_pixels_sec, int p_x, bool
 		if (d.has("method")) {
 			text += String(d["method"]);
 		}
-		text += "(";
+		text += '(';
 		Vector<Variant> args;
 		if (d.has("args")) {
 			args = d["args"];
@@ -2597,7 +2597,7 @@ void AnimationTrackEdit::draw_key(int p_index, float p_pixels_sec, int p_x, bool
 			}
 			text += args[i].get_construct_string();
 		}
-		text += ")";
+		text += ')';
 
 		int limit = ((p_selected && editor->is_moving_selection()) || editor->is_function_name_pressed()) ? 0 : MAX(0, p_clip_right - p_x - icon_to_draw->get_width() * 2);
 
@@ -2875,33 +2875,33 @@ String AnimationTrackEdit::get_tooltip(const Point2 &p_pos) const {
 		}
 
 		if (key_idx != -1) {
-			String text = TTR("Time (s):") + " " + TS->format_number(rtos(Math::snapped(animation->track_get_key_time(track, key_idx), SECOND_DECIMAL))) + "\n";
+			String text = TTR("Time (s):") + ' ' + TS->format_number(rtos(Math::snapped(animation->track_get_key_time(track, key_idx), SECOND_DECIMAL))) + '\n';
 			switch (animation->track_get_type(track)) {
 				case Animation::TYPE_POSITION_3D: {
 					Vector3 t = animation->track_get_key_value(track, key_idx);
-					text += TTR("Position:") + " " + String(t) + "\n";
+					text += TTR("Position:") + ' ' + String(t) + '\n';
 				} break;
 				case Animation::TYPE_ROTATION_3D: {
 					Quaternion t = animation->track_get_key_value(track, key_idx);
-					text += TTR("Rotation:") + " " + String(t) + "\n";
+					text += TTR("Rotation:") + ' ' + String(t) + '\n';
 				} break;
 				case Animation::TYPE_SCALE_3D: {
 					Vector3 t = animation->track_get_key_value(track, key_idx);
-					text += TTR("Scale:") + " " + String(t) + "\n";
+					text += TTR("Scale:") + ' ' + String(t) + '\n';
 				} break;
 				case Animation::TYPE_BLEND_SHAPE: {
 					float t = animation->track_get_key_value(track, key_idx);
-					text += TTR("Blend Shape:") + " " + itos(t) + "\n";
+					text += TTR("Blend Shape:") + ' ' + itos(t) + '\n';
 				} break;
 				case Animation::TYPE_VALUE: {
 					const Variant &v = animation->track_get_key_value(track, key_idx);
-					text += TTR("Type:") + " " + Variant::get_type_name(v.get_type()) + "\n";
+					text += TTR("Type:") + ' ' + Variant::get_type_name(v.get_type()) + '\n';
 					Variant::Type valid_type = Variant::NIL;
-					text += TTR("Value:") + " " + String(v);
+					text += TTR("Value:") + ' ' + String(v);
 					if (!_is_value_key_valid(v, valid_type)) {
-						text += " " + vformat(TTR("(Invalid, expected type: %s)"), Variant::get_type_name(valid_type));
+						text += ' ' + vformat(TTR("(Invalid, expected type: %s)"), Variant::get_type_name(valid_type));
 					}
-					text += "\n" + TTR("Easing:") + " " + rtos(animation->track_get_key_transition(track, key_idx));
+					text += '\n' + TTR("Easing:") + ' ' + rtos(animation->track_get_key_transition(track, key_idx));
 
 				} break;
 				case Animation::TYPE_METHOD: {
@@ -2909,7 +2909,7 @@ String AnimationTrackEdit::get_tooltip(const Point2 &p_pos) const {
 					if (d.has("method")) {
 						text += String(d["method"]);
 					}
-					text += "(";
+					text += '(';
 					Vector<Variant> args;
 					if (d.has("args")) {
 						args = d["args"];
@@ -2925,11 +2925,11 @@ String AnimationTrackEdit::get_tooltip(const Point2 &p_pos) const {
 				} break;
 				case Animation::TYPE_BEZIER: {
 					float h = animation->bezier_track_get_key_value(track, key_idx);
-					text += TTR("Value:") + " " + rtos(h) + "\n";
+					text += TTR("Value:") + ' ' + rtos(h) + '\n';
 					Vector2 ih = animation->bezier_track_get_key_in_handle(track, key_idx);
-					text += TTR("In-Handle:") + " " + String(ih) + "\n";
+					text += TTR("In-Handle:") + ' ' + String(ih) + '\n';
 					Vector2 oh = animation->bezier_track_get_key_out_handle(track, key_idx);
-					text += TTR("Out-Handle:") + " " + String(oh) + "\n";
+					text += TTR("Out-Handle:") + ' ' + String(oh) + '\n';
 					int hm = animation->bezier_track_get_key_handle_mode(track, key_idx);
 					switch (hm) {
 						case Animation::HANDLE_MODE_FREE: {
@@ -2959,15 +2959,15 @@ String AnimationTrackEdit::get_tooltip(const Point2 &p_pos) const {
 						}
 					}
 
-					text += TTR("Stream:") + " " + stream_name + "\n";
+					text += TTR("Stream:") + ' ' + stream_name + '\n';
 					float so = animation->audio_track_get_key_start_offset(track, key_idx);
-					text += TTR("Start (s):") + " " + rtos(so) + "\n";
+					text += TTR("Start (s):") + ' ' + rtos(so) + '\n';
 					float eo = animation->audio_track_get_key_end_offset(track, key_idx);
-					text += TTR("End (s):") + " " + rtos(eo) + "\n";
+					text += TTR("End (s):") + ' ' + rtos(eo) + '\n';
 				} break;
 				case Animation::TYPE_ANIMATION: {
 					String name = animation->animation_track_get_key_animation(track, key_idx);
-					text += TTR("Animation Clip:") + " " + name + "\n";
+					text += TTR("Animation Clip:") + ' ' + name + '\n';
 				} break;
 			}
 			return text;
@@ -4371,7 +4371,7 @@ void AnimationTrackEditor::insert_transform_key(Node3D *p_node, const String &p_
 	// Let's build a node path.
 	String path = String(root->get_path_to(p_node, true));
 	if (!p_sub.is_empty()) {
-		path += ":" + p_sub;
+		path += ':' + p_sub;
 	}
 
 	NodePath np = path;
@@ -4411,7 +4411,7 @@ bool AnimationTrackEditor::has_track(Node3D *p_node, const String &p_sub, const 
 	// Let's build a node path.
 	String path = String(root->get_path_to(p_node, true));
 	if (!p_sub.is_empty()) {
-		path += ":" + p_sub;
+		path += ':' + p_sub;
 	}
 
 	int track_id = animation->find_track(path, p_type);
@@ -4478,10 +4478,10 @@ void AnimationTrackEditor::insert_node_value_key(Node *p_node, const String &p_p
 	for (int i = 1; i < history->get_path_size(); i++) {
 		String prop = history->get_path_property(i);
 		ERR_FAIL_COND(prop.is_empty());
-		path += ":" + prop;
+		path += ':' + prop;
 	}
 
-	path += ":" + p_property;
+	path += ':' + p_property;
 
 	NodePath np = path;
 
@@ -5608,7 +5608,7 @@ void AnimationTrackEditor::_fetch_value_track_options(const NodePath &p_path, An
 }
 
 void AnimationTrackEditor::_new_track_property_selected(const String &p_name) {
-	String full_path = String(adding_track_path) + ":" + p_name;
+	String full_path = String(adding_track_path) + ':' + p_name;
 
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 
@@ -5649,7 +5649,7 @@ void AnimationTrackEditor::_new_track_property_selected(const String &p_name) {
 		if (is_blend_shape) {
 			PackedStringArray split = p_name.split("/");
 			if (!split.is_empty()) {
-				full_path = String(adding_track_path) + ":" + split[split.size() - 1];
+				full_path = String(adding_track_path) + ':' + split[split.size() - 1];
 			}
 		}
 		undo_redo->create_action(TTR("Add Track"));
@@ -5848,7 +5848,7 @@ void AnimationTrackEditor::_add_method_key(const String &p_method) {
 		}
 	}
 
-	EditorNode::get_singleton()->show_warning(TTR("Method not found in object:") + " " + p_method);
+	EditorNode::get_singleton()->show_warning(TTR("Method not found in object:") + ' ' + p_method);
 }
 
 void AnimationTrackEditor::_key_selected(int p_key, bool p_single, int p_track) {
@@ -6703,7 +6703,7 @@ void AnimationTrackEditor::_edit_menu_pressed(int p_option) {
 					text = node->get_name();
 					Vector<StringName> sn = path.get_subnames();
 					for (int j = 0; j < sn.size(); j++) {
-						text += ".";
+						text += '.';
 						text += sn[j];
 					}
 
@@ -8927,8 +8927,8 @@ String AnimationMarkerEdit::get_tooltip(const Point2 &p_pos) const {
 
 		if (key_idx != -1) {
 			String name = names[key_idx];
-			String text = TTR("Time (s):") + " " + TS->format_number(rtos(Math::snapped(animation->get_marker_time(name), 0.0001))) + "\n";
-			text += TTR("Marker:") + " " + name + "\n";
+			String text = TTR("Time (s):") + ' ' + TS->format_number(rtos(Math::snapped(animation->get_marker_time(name), 0.0001))) + '\n';
+			text += TTR("Marker:") + ' ' + name + '\n';
 			return text;
 		}
 	}

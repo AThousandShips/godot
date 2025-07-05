@@ -358,13 +358,13 @@ Color Color::html(const String &p_rgba) {
 		b = _parse_col8(p_rgba, current_pos + 4) / 255.0f;
 		a = _parse_col8(p_rgba, current_pos + 6) / 255.0f;
 	} else {
-		ERR_FAIL_V_MSG(Color(), "Invalid color code: " + p_rgba + ".");
+		ERR_FAIL_V_MSG(Color(), "Invalid color code: " + p_rgba + '.');
 	}
 
-	ERR_FAIL_COND_V_MSG(r < 0.0f, Color(), "Invalid color code: " + p_rgba + ".");
-	ERR_FAIL_COND_V_MSG(g < 0.0f, Color(), "Invalid color code: " + p_rgba + ".");
-	ERR_FAIL_COND_V_MSG(b < 0.0f, Color(), "Invalid color code: " + p_rgba + ".");
-	ERR_FAIL_COND_V_MSG(a < 0.0f, Color(), "Invalid color code: " + p_rgba + ".");
+	ERR_FAIL_COND_V_MSG(r < 0.0f, Color(), "Invalid color code: " + p_rgba + '.');
+	ERR_FAIL_COND_V_MSG(g < 0.0f, Color(), "Invalid color code: " + p_rgba + '.');
+	ERR_FAIL_COND_V_MSG(b < 0.0f, Color(), "Invalid color code: " + p_rgba + '.');
+	ERR_FAIL_COND_V_MSG(a < 0.0f, Color(), "Invalid color code: " + p_rgba + '.');
 
 	return Color(r, g, b, a);
 }
@@ -396,7 +396,7 @@ bool Color::html_is_valid(const String &p_color) {
 Color Color::named(const String &p_name) {
 	int idx = find_named_color(p_name);
 	if (idx == -1) {
-		ERR_FAIL_V_MSG(Color(), "Invalid color name: " + p_name + ".");
+		ERR_FAIL_V_MSG(Color(), "Invalid color name: " + p_name + '.');
 	}
 	return named_colors[idx].color;
 }
@@ -480,7 +480,7 @@ Color Color::from_rgba8(int64_t p_r8, int64_t p_g8, int64_t p_b8, int64_t p_a8) 
 }
 
 Color::operator String() const {
-	return "(" + String::num(r, 4) + ", " + String::num(g, 4) + ", " + String::num(b, 4) + ", " + String::num(a, 4) + ")";
+	return '(' + String::num(r, 4) + ", " + String::num(g, 4) + ", " + String::num(b, 4) + ", " + String::num(a, 4) + ')';
 }
 
 Color Color::from_ok_hsl(float p_h, float p_s, float p_l, float p_alpha) {

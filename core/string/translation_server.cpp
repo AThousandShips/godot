@@ -122,13 +122,13 @@ void TranslationServer::init_locale_info() {
 TranslationServer::Locale::operator String() const {
 	String out = language;
 	if (!script.is_empty()) {
-		out = out + "_" + script;
+		out += '_' + script;
 	}
 	if (!country.is_empty()) {
-		out = out + "_" + country;
+		out += '_' + country;
 	}
 	if (!variant.is_empty()) {
-		out = out + "_" + variant;
+		out += '_' + variant;
 	}
 	return out;
 }
@@ -229,7 +229,7 @@ int TranslationServer::compare_locales(const String &p_locale_a, const String &p
 		return 10;
 	}
 
-	const String cache_key = p_locale_a + "|" + p_locale_b;
+	const String cache_key = p_locale_a + '|' + p_locale_b;
 	const int *cached_result = locale_compare_cache.getptr(cache_key);
 	if (cached_result) {
 		return *cached_result;
@@ -301,10 +301,10 @@ String TranslationServer::get_locale_name(const String &p_locale) const {
 
 	String name = get_language_name(lang_name);
 	if (!script_name.is_empty()) {
-		name = name + " (" + get_script_name(script_name) + ")";
+		name += " (" + get_script_name(script_name) + ')';
 	}
 	if (!country_name.is_empty()) {
-		name = name + ", " + get_country_name(country_name);
+		name += ", " + get_country_name(country_name);
 	}
 	return name;
 }

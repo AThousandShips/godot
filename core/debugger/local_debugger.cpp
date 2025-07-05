@@ -95,16 +95,16 @@ struct LocalDebugger::ScriptsProfiler {
 		double total_time = p_accumulated ? script_time : frame_time;
 
 		if (!p_accumulated) {
-			print_line("FRAME: total: " + rtos(total_time) + " script: " + rtos(script_time) + "/" + itos(script_time * 100 / total_time) + " %");
+			print_line("FRAME: total: " + rtos(total_time) + " script: " + rtos(script_time) + '/' + itos(script_time * 100 / total_time) + " %");
 		} else {
 			print_line("ACCUMULATED: total: " + rtos(total_time));
 		}
 
 		for (int i = 0; i < ofs; i++) {
-			print_line(itos(i) + ":" + pinfo[i].signature);
+			print_line(itos(i) + ':' + pinfo[i].signature);
 			double tt = USEC_TO_SEC(pinfo[i].total_time);
 			double st = USEC_TO_SEC(pinfo[i].self_time);
-			print_line("\ttotal: " + rtos(tt) + "/" + itos(tt * 100 / total_time) + " % \tself: " + rtos(st) + "/" + itos(st * 100 / total_time) + " % tcalls: " + itos(pinfo[i].call_count));
+			print_line("\ttotal: " + rtos(tt) + '/' + itos(tt * 100 / total_time) + " % \tself: " + rtos(st) + '/' + itos(st * 100 / total_time) + " % tcalls: " + itos(pinfo[i].call_count));
 		}
 	}
 
@@ -126,8 +126,8 @@ void LocalDebugger::debug(bool p_can_continue, bool p_is_error_breakpoint) {
 		target_function = "";
 	}
 
-	print_line("\nDebugger Break, Reason: '" + script_lang->debug_get_error() + "'");
-	print_line("*Frame " + itos(0) + " - " + script_lang->debug_get_stack_level_source(0) + ":" + itos(script_lang->debug_get_stack_level_line(0)) + " in function '" + script_lang->debug_get_stack_level_function(0) + "'");
+	print_line("\nDebugger Break, Reason: '" + script_lang->debug_get_error() + '\'');
+	print_line("*Frame " + itos(0) + " - " + script_lang->debug_get_stack_level_source(0) + ':' + itos(script_lang->debug_get_stack_level_line(0)) + " in function '" + script_lang->debug_get_stack_level_function(0) + '\'');
 	print_line("Enter \"help\" for assistance.");
 	int current_frame = 0;
 	int total_frames = script_lang->debug_get_stack_level_count();
@@ -139,34 +139,34 @@ void LocalDebugger::debug(bool p_can_continue, bool p_is_error_breakpoint) {
 		String variable_prefix = options["variable_prefix"];
 
 		if (line.is_empty() && !feof(stdin)) {
-			print_line("\nDebugger Break, Reason: '" + script_lang->debug_get_error() + "'");
-			print_line("*Frame " + itos(current_frame) + " - " + script_lang->debug_get_stack_level_source(current_frame) + ":" + itos(script_lang->debug_get_stack_level_line(current_frame)) + " in function '" + script_lang->debug_get_stack_level_function(current_frame) + "'");
+			print_line("\nDebugger Break, Reason: '" + script_lang->debug_get_error() + '\'');
+			print_line("*Frame " + itos(current_frame) + " - " + script_lang->debug_get_stack_level_source(current_frame) + ':' + itos(script_lang->debug_get_stack_level_line(current_frame)) + " in function '" + script_lang->debug_get_stack_level_function(current_frame) + '\'');
 			print_line("Enter \"help\" for assistance.");
 		} else if (line == "c" || line == "continue") {
 			break;
 		} else if (line == "bt" || line == "breakpoint") {
 			for (int i = 0; i < total_frames; i++) {
 				String cfi = (current_frame == i) ? "*" : " "; //current frame indicator
-				print_line(cfi + "Frame " + itos(i) + " - " + script_lang->debug_get_stack_level_source(i) + ":" + itos(script_lang->debug_get_stack_level_line(i)) + " in function '" + script_lang->debug_get_stack_level_function(i) + "'");
+				print_line(cfi + "Frame " + itos(i) + " - " + script_lang->debug_get_stack_level_source(i) + ':' + itos(script_lang->debug_get_stack_level_line(i)) + " in function '" + script_lang->debug_get_stack_level_function(i) + '\'');
 			}
 
 		} else if (line.begins_with("fr") || line.begins_with("frame")) {
 			if (line.get_slice_count(" ") == 1) {
-				print_line("*Frame " + itos(current_frame) + " - " + script_lang->debug_get_stack_level_source(current_frame) + ":" + itos(script_lang->debug_get_stack_level_line(current_frame)) + " in function '" + script_lang->debug_get_stack_level_function(current_frame) + "'");
+				print_line("*Frame " + itos(current_frame) + " - " + script_lang->debug_get_stack_level_source(current_frame) + ':' + itos(script_lang->debug_get_stack_level_line(current_frame)) + " in function '" + script_lang->debug_get_stack_level_function(current_frame) + '\'');
 			} else {
 				int frame = line.get_slicec(' ', 1).to_int();
 				if (frame < 0 || frame >= total_frames) {
 					print_line("Error: Invalid frame.");
 				} else {
 					current_frame = frame;
-					print_line("*Frame " + itos(frame) + " - " + script_lang->debug_get_stack_level_source(frame) + ":" + itos(script_lang->debug_get_stack_level_line(frame)) + " in function '" + script_lang->debug_get_stack_level_function(frame) + "'");
+					print_line("*Frame " + itos(frame) + " - " + script_lang->debug_get_stack_level_source(frame) + ':' + itos(script_lang->debug_get_stack_level_line(frame)) + " in function '" + script_lang->debug_get_stack_level_function(frame) + '\'');
 				}
 			}
 
 		} else if (line.begins_with("set")) {
 			if (line.get_slice_count(" ") == 1) {
 				for (const KeyValue<String, String> &E : options) {
-					print_line("\t" + E.key + "=" + E.value);
+					print_line('\t' + E.key + '=' + E.value);
 				}
 
 			} else {
@@ -249,7 +249,7 @@ void LocalDebugger::debug(bool p_can_continue, bool p_is_error_breakpoint) {
 
 				print_line("Breakpoint(s): " + itos(breakpoints.size()));
 				for (const KeyValue<int, HashSet<StringName>> &E : breakpoints) {
-					print_line("\t" + String(*E.value.begin()) + ":" + itos(E.key));
+					print_line('\t' + String(*E.value.begin()) + ':' + itos(E.key));
 				}
 
 			} else {
@@ -264,7 +264,7 @@ void LocalDebugger::debug(bool p_can_continue, bool p_is_error_breakpoint) {
 
 				script_debugger->insert_breakpoint(linenr, source);
 
-				print_line("Added breakpoint at " + source + ":" + itos(linenr));
+				print_line("Added breakpoint at " + source + ':' + itos(linenr));
 			}
 
 		} else if (line == "q" || line == "quit" ||
@@ -294,7 +294,7 @@ void LocalDebugger::debug(bool p_can_continue, bool p_is_error_breakpoint) {
 
 				script_debugger->remove_breakpoint(linenr, source);
 
-				print_line("Removed breakpoint at " + source + ":" + itos(linenr));
+				print_line("Removed breakpoint at " + source + ':' + itos(linenr));
 			}
 
 		} else if (line == "h" || line == "help") {
@@ -329,7 +329,7 @@ void LocalDebugger::print_variables(const List<String> &names, const List<Varian
 		if (variable_prefix.is_empty()) {
 			print_line(E + ": " + String(V->get()));
 		} else {
-			print_line(E + ":");
+			print_line(E + ':');
 			value_lines = value.split("\n");
 			for (int i = 0; i < value_lines.size(); ++i) {
 				print_line(variable_prefix + value_lines[i]);

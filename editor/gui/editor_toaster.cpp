@@ -163,7 +163,7 @@ void EditorToaster::_error_handler_impl(const String &p_file, int p_line, const 
 
 	if (p_editor_notify || (show_all_setting == 0 && in_dev) || show_all_setting == 1) {
 		String err_str = !p_errorexp.is_empty() ? p_errorexp : p_error;
-		String tooltip_str = p_file + ":" + itos(p_line);
+		String tooltip_str = p_file + ':' + itos(p_line);
 
 		if (!p_editor_notify) {
 			if (p_type == ERR_HANDLER_WARNING) {

@@ -2610,7 +2610,7 @@ void GraphEdit::_zoom_plus() {
 
 void GraphEdit::_update_zoom_label() {
 	int zoom_percent = static_cast<int>(Math::round(zoom * 100));
-	String zoom_text = itos(zoom_percent) + "%";
+	String zoom_text = itos(zoom_percent) + '%';
 	zoom_label->set_text(zoom_text);
 }
 

@@ -256,7 +256,7 @@ void Skeleton3D::_update_bone_names() const {
 	String names;
 	for (uint32_t i = 0; i < bones.size(); i++) {
 		if (i > 0) {
-			names += ",";
+			names += ',';
 		}
 		names += bones[i].name;
 	}
@@ -374,13 +374,13 @@ void Skeleton3D::_notification(int p_what) {
 							}
 
 							if (!found) {
-								ERR_PRINT("Skin bind #" + itos(i) + " contains named bind '" + String(bind_name) + "' but Skeleton3D has no bone by that name.");
+								ERR_PRINT("Skin bind #" + itos(i) + " contains named bind '" + bind_name + "' but Skeleton3D has no bone by that name.");
 								E->skin_bone_indices_ptrs[i] = 0;
 							}
 						} else if (skin->get_bind_bone(i) >= 0) {
 							int bind_index = skin->get_bind_bone(i);
 							if (bind_index >= len) {
-								ERR_PRINT("Skin bind #" + itos(i) + " contains bone index bind: " + itos(bind_index) + " , which is greater than the skeleton bone count: " + itos(len) + ".");
+								ERR_PRINT("Skin bind #" + itos(i) + " contains bone index bind: " + itos(bind_index) + " , which is greater than the skeleton bone count: " + itos(len) + '.');
 								E->skin_bone_indices_ptrs[i] = 0;
 							} else {
 								E->skin_bone_indices_ptrs[i] = bind_index;

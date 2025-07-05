@@ -95,7 +95,7 @@ void EditorAutoloadSettings::_notification(int p_what) {
 bool EditorAutoloadSettings::_autoload_name_is_valid(const String &p_name, String *r_error) {
 	if (!p_name.is_valid_unicode_identifier()) {
 		if (r_error) {
-			*r_error = TTR("Invalid name.") + " " + TTR("Must be a valid Unicode identifier.");
+			*r_error = TTR("Invalid name.") + ' ' + TTR("Must be a valid Unicode identifier.");
 		}
 
 		return false;
@@ -103,7 +103,7 @@ bool EditorAutoloadSettings::_autoload_name_is_valid(const String &p_name, Strin
 
 	if (ClassDB::class_exists(p_name)) {
 		if (r_error) {
-			*r_error = TTR("Invalid name.") + " " + TTR("Must not collide with an existing engine class name.");
+			*r_error = TTR("Invalid name.") + ' ' + TTR("Must not collide with an existing engine class name.");
 		}
 
 		return false;
@@ -111,7 +111,7 @@ bool EditorAutoloadSettings::_autoload_name_is_valid(const String &p_name, Strin
 
 	if (ScriptServer::is_global_class(p_name)) {
 		if (r_error) {
-			*r_error = TTR("Invalid name.") + "\n" + TTR("Must not collide with an existing global script class name.");
+			*r_error = TTR("Invalid name.") + '\n' + TTR("Must not collide with an existing global script class name.");
 		}
 
 		return false;
@@ -119,7 +119,7 @@ bool EditorAutoloadSettings::_autoload_name_is_valid(const String &p_name, Strin
 
 	if (Variant::get_type_by_name(p_name) < Variant::VARIANT_MAX) {
 		if (r_error) {
-			*r_error = TTR("Invalid name.") + " " + TTR("Must not collide with an existing built-in type name.");
+			*r_error = TTR("Invalid name.") + ' ' + TTR("Must not collide with an existing built-in type name.");
 		}
 
 		return false;
@@ -128,7 +128,7 @@ bool EditorAutoloadSettings::_autoload_name_is_valid(const String &p_name, Strin
 	for (int i = 0; i < CoreConstants::get_global_constant_count(); i++) {
 		if (CoreConstants::get_global_constant_name(i) == p_name) {
 			if (r_error) {
-				*r_error = TTR("Invalid name.") + " " + TTR("Must not collide with an existing global constant name.");
+				*r_error = TTR("Invalid name.") + ' ' + TTR("Must not collide with an existing global constant name.");
 			}
 
 			return false;
@@ -139,7 +139,7 @@ bool EditorAutoloadSettings::_autoload_name_is_valid(const String &p_name, Strin
 		for (const String &keyword : ScriptServer::get_language(i)->get_reserved_words()) {
 			if (keyword == p_name) {
 				if (r_error) {
-					*r_error = TTR("Invalid name.") + " " + TTR("Keyword cannot be used as an Autoload name.");
+					*r_error = TTR("Invalid name.") + ' ' + TTR("Keyword cannot be used as an Autoload name.");
 				}
 
 				return false;
@@ -251,7 +251,7 @@ void EditorAutoloadSettings::_autoload_edited() {
 
 		// Singleton autoloads are represented with a leading "*" in their path.
 		if (checked) {
-			scr_path = "*" + scr_path;
+			scr_path = '*' + scr_path;
 		}
 
 		undo_redo->create_action(TTR("Toggle Autoload Globals"));
@@ -781,17 +781,17 @@ bool EditorAutoloadSettings::autoload_add(const String &p_name, const String &p_
 
 	String error;
 	if (!_autoload_name_is_valid(name, &error)) {
-		EditorNode::get_singleton()->show_warning(TTR("Can't add Autoload:") + "\n" + error);
+		EditorNode::get_singleton()->show_warning(TTR("Can't add Autoload:") + '\n' + error);
 		return false;
 	}
 
 	if (!FileAccess::exists(p_path)) {
-		EditorNode::get_singleton()->show_warning(TTR("Can't add Autoload:") + "\n" + vformat(TTR("%s is an invalid path. File does not exist."), p_path));
+		EditorNode::get_singleton()->show_warning(TTR("Can't add Autoload:") + '\n' + vformat(TTR("%s is an invalid path. File does not exist."), p_path));
 		return false;
 	}
 
 	if (!p_path.begins_with("res://")) {
-		EditorNode::get_singleton()->show_warning(TTR("Can't add Autoload:") + "\n" + vformat(TTR("%s is an invalid path. Not in resource path (res://)."), p_path));
+		EditorNode::get_singleton()->show_warning(TTR("Can't add Autoload:") + '\n' + vformat(TTR("%s is an invalid path. Not in resource path (res://)."), p_path));
 		return false;
 	}
 
@@ -801,7 +801,7 @@ bool EditorAutoloadSettings::autoload_add(const String &p_name, const String &p_
 
 	undo_redo->create_action(TTR("Add Autoload"));
 	// Singleton autoloads are represented with a leading "*" in their path.
-	undo_redo->add_do_property(ProjectSettings::get_singleton(), name, "*" + p_path);
+	undo_redo->add_do_property(ProjectSettings::get_singleton(), name, '*' + p_path);
 
 	if (ProjectSettings::get_singleton()->has_setting(name)) {
 		undo_redo->add_undo_property(ProjectSettings::get_singleton(), name, GLOBAL_GET(name));

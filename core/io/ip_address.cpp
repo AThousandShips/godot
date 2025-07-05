@@ -45,15 +45,15 @@ IPAddress::operator String() const {
 
 	if (is_ipv4()) {
 		// IPv4 address mapped to IPv6
-		return itos(field8[12]) + "." + itos(field8[13]) + "." + itos(field8[14]) + "." + itos(field8[15]);
+		return itos(field8[12]) + '.' + itos(field8[13]) + '.' + itos(field8[14]) + '.' + itos(field8[15]);
 	}
 	String ret;
 	for (int i = 0; i < 8; i++) {
 		if (i > 0) {
-			ret = ret + ":";
+			ret += ':';
 		}
 		uint16_t num = (field8[i * 2] << 8) + field8[i * 2 + 1];
-		ret = ret + String::num_int64(num, 16);
+		ret += String::num_int64(num, 16);
 	}
 
 	return ret;
@@ -77,7 +77,7 @@ static void _parse_hex(const String &p_string, int p_start, uint8_t *p_dst) {
 		} else if (c == ':') {
 			break;
 		} else {
-			ERR_FAIL_MSG("Invalid character in IPv6 address: " + p_string + ".");
+			ERR_FAIL_MSG("Invalid character in IPv6 address: " + p_string + '.');
 		}
 		ret = ret << 4;
 		ret += n;
@@ -117,7 +117,7 @@ void IPAddress::_parse_ipv6(const String &p_string) {
 				++parts_count;
 			}
 		} else {
-			ERR_FAIL_MSG("Invalid character in IPv6 address: " + p_string + ".");
+			ERR_FAIL_MSG("Invalid character in IPv6 address: " + p_string + '.');
 		}
 	}
 
@@ -152,7 +152,7 @@ void IPAddress::_parse_ipv4(const String &p_string, int p_start, uint8_t *p_ret)
 	}
 
 	int slices = ip.get_slice_count(".");
-	ERR_FAIL_COND_MSG(slices != 4, "Invalid IP address string: " + ip + ".");
+	ERR_FAIL_COND_MSG(slices != 4, "Invalid IP address string: " + ip + '.');
 	for (int i = 0; i < 4; i++) {
 		p_ret[i] = ip.get_slicec('.', i).to_int();
 	}

@@ -261,7 +261,7 @@ bool CodeSignCodeResources::add_nested_file(const String &p_root, const String &
 			}
 		}
 		if (req_string.is_empty()) {
-			req_string = "cdhash H\"" + String::hex_encode_buffer(hash.ptr(), hash.size()) + "\"";
+			req_string = "cdhash H\"" + String::hex_encode_buffer(hash.ptr(), hash.size()) + '"';
 		}
 		print_verbose(vformat("CodeSign/CodeResources: Nested object %s (cputype: %d) cdhash:%s designated rq:%s", f.name, mh.get_cputype(), f.hash, req_string));
 		if (f.requirements != req_string) {
@@ -472,7 +472,7 @@ _FORCE_INLINE_ void CodeSignRequirements::_parse_key(uint32_t &r_pos, String &r_
 	const uint32_t key_size = _R(r_pos);
 	ERR_FAIL_COND_MSG(r_pos + key_size > p_rq_size, "CodeSign/Requirements: Out of bounds.");
 	r_pos += 4 + key_size + PAD(key_size, 4);
-	r_out += "[" + String::utf8((const char *)blob.ptr() + r_pos + 4, key_size) + "]";
+	r_out += '[' + String::utf8((const char *)blob.ptr() + r_pos + 4, key_size) + ']';
 #undef _R
 }
 
@@ -482,11 +482,11 @@ _FORCE_INLINE_ void CodeSignRequirements::_parse_oid_key(uint32_t &r_pos, String
 	uint32_t key_size = _R(r_pos);
 	ERR_FAIL_COND_MSG(r_pos + key_size > p_rq_size, "CodeSign/Requirements: Out of bounds.");
 	r_out += "[field.";
-	r_out += itos(blob[r_pos + 4] / 40) + ".";
+	r_out += itos(blob[r_pos + 4] / 40) + '.';
 	r_out += itos(blob[r_pos + 4] % 40);
 	uint32_t spos = r_pos + 5;
 	while (spos < r_pos + 4 + key_size) {
-		r_out += ".";
+		r_out += '.';
 		if (blob[spos] <= 127) {
 			r_out += itos(blob[spos]);
 			spos += 1;
@@ -502,7 +502,7 @@ _FORCE_INLINE_ void CodeSignRequirements::_parse_oid_key(uint32_t &r_pos, String
 			spos += 1;
 		}
 	}
-	r_out += "]";
+	r_out += ']';
 	r_pos += 4 + key_size + PAD(key_size, 4);
 #undef _R
 }
@@ -512,7 +512,7 @@ _FORCE_INLINE_ void CodeSignRequirements::_parse_hash_string(uint32_t &r_pos, St
 	ERR_FAIL_COND_MSG(r_pos >= p_rq_size, "CodeSign/Requirements: Out of bounds.");
 	uint32_t tag_size = _R(r_pos);
 	ERR_FAIL_COND_MSG(r_pos + tag_size > p_rq_size, "CodeSign/Requirements: Out of bounds.");
-	r_out += "H\"" + String::hex_encode_buffer(blob.ptr() + r_pos + 4, tag_size) + "\"";
+	r_out += "H\"" + String::hex_encode_buffer(blob.ptr() + r_pos + 4, tag_size) + '"';
 	r_pos += 4 + tag_size + PAD(tag_size, 4);
 #undef _R
 }
@@ -523,7 +523,7 @@ _FORCE_INLINE_ void CodeSignRequirements::_parse_value(uint32_t &r_pos, String &
 	const uint32_t key_size = _R(r_pos);
 	ERR_FAIL_COND_MSG(r_pos + key_size > p_rq_size, "CodeSign/Requirements: Out of bounds.");
 	r_pos += 4 + key_size + PAD(key_size, 4);
-	r_out += "\"" + String::utf8((const char *)blob.ptr() + r_pos + 4, key_size) + "\"";
+	r_out += '"' + String::utf8((const char *)blob.ptr() + r_pos + 4, key_size) + '"';
 #undef _R
 }
 
@@ -566,7 +566,7 @@ _FORCE_INLINE_ bool CodeSignRequirements::_parse_match(uint32_t &r_pos, String &
 		case 0x00000004: {
 			r_out += "= ";
 			_parse_value(r_pos, r_out, p_rq_size);
-			r_out += "*";
+			r_out += '*';
 		} break;
 		case 0x00000005: {
 			r_out += "< ";
@@ -683,7 +683,7 @@ Vector<String> CodeSignRequirements::parse_requirements() const {
 				} break;
 				case 0x00000004: {
 					_parse_certificate_slot(pos, token, rq_offset + rq_size);
-					token += " ";
+					token += ' ';
 					_parse_hash_string(pos, token, rq_offset + rq_size);
 				} break;
 				case 0x00000005: {
@@ -708,13 +708,13 @@ Vector<String> CodeSignRequirements::parse_requirements() const {
 				case 0x0000000A: {
 					token = "info";
 					_parse_key(pos, token, rq_offset + rq_size);
-					token += " ";
+					token += ' ';
 					ERR_FAIL_COND_V_MSG(!_parse_match(pos, token, rq_offset + rq_size), list, "CodeSign/Requirements: Unsupported match suffix.");
 				} break;
 				case 0x0000000B: {
 					_parse_certificate_slot(pos, token, rq_offset + rq_size);
 					_parse_key(pos, token, rq_offset + rq_size);
-					token += " ";
+					token += ' ';
 					ERR_FAIL_COND_V_MSG(!_parse_match(pos, token, rq_offset + rq_size), list, "CodeSign/Requirements: Unsupported match suffix.");
 				} break;
 				case 0x0000000C: {
@@ -727,7 +727,7 @@ Vector<String> CodeSignRequirements::parse_requirements() const {
 				case 0x0000000E: {
 					_parse_certificate_slot(pos, token, rq_offset + rq_size);
 					_parse_oid_key(pos, token, rq_offset + rq_size);
-					token += " ";
+					token += ' ';
 					ERR_FAIL_COND_V_MSG(!_parse_match(pos, token, rq_offset + rq_size), list, "CodeSign/Requirements: Unsupported match suffix.");
 				} break;
 				case 0x0000000F: {
@@ -744,13 +744,13 @@ Vector<String> CodeSignRequirements::parse_requirements() const {
 		for (List<String>::Element *E = tokens.back(); E; E = E->prev()) {
 			if (E->get() == "and") {
 				ERR_FAIL_COND_V_MSG(!E->next() || !E->next()->next(), list, "CodeSign/Requirements: Invalid token sequence.");
-				String token = "(" + E->next()->get() + " and " + E->next()->next()->get() + ")";
+				String token = '(' + E->next()->get() + " and " + E->next()->next()->get() + ')';
 				tokens.erase(E->next()->next());
 				tokens.erase(E->next());
 				E->get() = token;
 			} else if (E->get() == "or") {
 				ERR_FAIL_COND_V_MSG(!E->next() || !E->next()->next(), list, "CodeSign/Requirements: Invalid token sequence.");
-				String token = "(" + E->next()->get() + " or " + E->next()->next()->get() + ")";
+				String token = '(' + E->next()->get() + " or " + E->next()->next()->get() + ')';
 				tokens.erase(E->next()->next());
 				tokens.erase(E->next());
 				E->get() = token;

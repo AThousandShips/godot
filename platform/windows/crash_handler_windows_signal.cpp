@@ -170,7 +170,7 @@ extern void CrashHandlerException(int signal) {
 	data.offset = image_mem_base - image_file_base;
 
 	if (FileAccess::exists(_execpath + ".debugsymbols")) {
-		_execpath = _execpath + ".debugsymbols";
+		_execpath += ".debugsymbols";
 	}
 	_execpath = _execpath.replace_char('/', '\\');
 

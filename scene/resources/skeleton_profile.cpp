@@ -147,7 +147,7 @@ void SkeletonProfile::_validate_property(PropertyInfo &p_property) const {
 		String hint = "";
 		for (int i = 0; i < bones.size(); i++) {
 			if (i > 0) {
-				hint += ",";
+				hint += ',';
 			}
 			hint += String(bones[i].bone_name);
 		}
@@ -161,16 +161,16 @@ void SkeletonProfile::_get_property_list(List<PropertyInfo> *p_list) const {
 	}
 	String group_names = "";
 	for (int i = 0; i < groups.size(); i++) {
-		String path = "groups/" + itos(i) + "/";
+		String path = "groups/" + itos(i) + '/';
 		p_list->push_back(PropertyInfo(Variant::STRING_NAME, path + "group_name"));
 		p_list->push_back(PropertyInfo(Variant::OBJECT, path + "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"));
 		if (i > 0) {
-			group_names = group_names + ",";
+			group_names += ',';
 		}
-		group_names = group_names + groups[i].group_name;
+		group_names += groups[i].group_name;
 	}
 	for (int i = 0; i < bones.size(); i++) {
-		String path = "bones/" + itos(i) + "/";
+		String path = "bones/" + itos(i) + '/';
 		int bone_tail_usage = (get_tail_direction(i) != TAIL_DIRECTION_SPECIFIC_CHILD) ? PROPERTY_USAGE_NONE : PROPERTY_USAGE_DEFAULT;
 
 		p_list->push_back(PropertyInfo(Variant::STRING_NAME, path + "bone_name"));

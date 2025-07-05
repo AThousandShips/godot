@@ -73,7 +73,7 @@ void PropertyListHelper::_call_setter(const MethodBind *p_setter, int p_index, c
 
 Variant PropertyListHelper::_call_getter(const Property *p_property, int p_index) const {
 	if (!p_property->getter) {
-		return object->get(prefix + itos(p_index) + "/" + p_property->info.name);
+		return object->get(prefix + itos(p_index) + '/' + p_property->info.name);
 	}
 
 	Callable::CallError ce;

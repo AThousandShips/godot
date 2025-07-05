@@ -1284,13 +1284,13 @@ struct DocumentSymbol {
 	_FORCE_INLINE_ MarkupContent render() const {
 		MarkupContent markdown;
 		if (detail.length()) {
-			markdown.value = "\t" + detail + "\n\n";
+			markdown.value = '\t' + detail + "\n\n";
 		}
 		if (documentation.length()) {
 			markdown.value += marked_documentation(documentation) + "\n\n";
 		}
 		if (script_path.length()) {
-			markdown.value += "Defined in [" + script_path + "](" + uri + ")";
+			markdown.value += "Defined in [" + script_path + "](" + uri + ')';
 		}
 		return markdown;
 	}
@@ -1954,7 +1954,7 @@ static String marked_documentation(const String &p_bbcode) {
 			in_code_block = true;
 			line = "\n";
 		} else if (in_code_block) {
-			line = "\t" + line.substr(code_block_indent);
+			line = '\t' + line.substr(code_block_indent);
 		}
 
 		if (in_code_block && line.contains("[/codeblock]")) {
@@ -1983,7 +1983,7 @@ static String marked_documentation(const String &p_bbcode) {
 		if (!in_code_block && i < lines.size() - 1) {
 			line += "\n\n";
 		} else if (i < lines.size() - 1) {
-			line += "\n";
+			line += '\n';
 		}
 		markdown += line;
 	}

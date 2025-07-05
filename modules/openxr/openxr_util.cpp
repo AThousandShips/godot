@@ -70,9 +70,9 @@ String OpenXRUtil::make_xr_version_string(XrVersion p_version) {
 	String version;
 
 	version += String::num_int64(XR_VERSION_MAJOR(p_version));
-	version += String(".");
+	version += '.';
 	version += String::num_int64(XR_VERSION_MINOR(p_version));
-	version += String(".");
+	version += '.';
 	version += String::num_int64(XR_VERSION_PATCH(p_version));
 
 	return version;

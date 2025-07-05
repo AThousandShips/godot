@@ -1334,7 +1334,7 @@ Collada::Node *Collada::_parse_visual_instance_geometry(XMLParser &p_parser) {
 				NodeGeometry::Material mat;
 				mat.target = target;
 				geom->material_map[symbol] = mat;
-				COLLADA_PRINT("uses material: '" + target + "' on primitive'" + symbol + "'");
+				COLLADA_PRINT("uses material: '" + target + "' on primitive'" + symbol + '\'');
 			} else if (p_parser.get_node_name() == "skeleton") {
 				p_parser.read();
 				String uri = _uri_to_id(p_parser.get_node_data());
@@ -1535,7 +1535,7 @@ Collada::Node *Collada::_parse_visual_scene_node(XMLParser &p_parser) {
 				xf.data = matrix;
 				String mtx;
 				for (int i = 0; i < matrix.size(); i++) {
-					mtx += " " + rtos(matrix[i]);
+					mtx += ' ' + rtos(matrix[i]);
 				}
 
 				xform_list.push_back(xf);
@@ -1597,7 +1597,7 @@ Collada::Node *Collada::_parse_visual_scene_node(XMLParser &p_parser) {
 	if (node->children.size() == 1) {
 		if (node->children[0]->noname && !node->noname) {
 			node->children[0]->name = node->name;
-			node->name = node->name + "-base";
+			node->name += "-base";
 		}
 	}
 

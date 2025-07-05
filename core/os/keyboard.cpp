@@ -363,11 +363,11 @@ String keycode_get_string(Key p_code) {
 	String codestr;
 	if ((p_code & KeyModifierMask::SHIFT) != Key::NONE) {
 		codestr += find_keycode_name(Key::SHIFT);
-		codestr += "+";
+		codestr += '+';
 	}
 	if ((p_code & KeyModifierMask::ALT) != Key::NONE) {
 		codestr += find_keycode_name(Key::ALT);
-		codestr += "+";
+		codestr += '+';
 	}
 	if ((p_code & KeyModifierMask::CMD_OR_CTRL) != Key::NONE) {
 		if (OS::get_singleton()->has_feature("macos") || OS::get_singleton()->has_feature("web_macos") || OS::get_singleton()->has_feature("web_ios")) {
@@ -375,15 +375,15 @@ String keycode_get_string(Key p_code) {
 		} else {
 			codestr += find_keycode_name(Key::CTRL);
 		}
-		codestr += "+";
+		codestr += '+';
 	}
 	if ((p_code & KeyModifierMask::CTRL) != Key::NONE) {
 		codestr += find_keycode_name(Key::CTRL);
-		codestr += "+";
+		codestr += '+';
 	}
 	if ((p_code & KeyModifierMask::META) != Key::NONE) {
 		codestr += find_keycode_name(Key::META);
-		codestr += "+";
+		codestr += '+';
 	}
 
 	p_code &= KeyModifierMask::CODE_MASK;

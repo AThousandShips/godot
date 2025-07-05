@@ -78,18 +78,18 @@ String HTTPClient::query_string_from_dict(const Dictionary &p_dict) {
 				// Repeat the key with every values
 				Array values = value;
 				for (int j = 0; j < values.size(); ++j) {
-					query += "&" + encoded_key + "=" + String(values[j]).uri_encode();
+					query += '&' + encoded_key + '=' + String(values[j]).uri_encode();
 				}
 				break;
 			}
 			case Variant::NIL: {
 				// Add the key with no value
-				query += "&" + encoded_key;
+				query += '&' + encoded_key;
 				break;
 			}
 			default: {
 				// Add the key-value pair
-				query += "&" + encoded_key + "=" + String(value).uri_encode();
+				query += '&' + encoded_key + '=' + String(value).uri_encode();
 			}
 		}
 	}

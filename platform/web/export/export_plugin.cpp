@@ -119,7 +119,7 @@ void EditorExportPlatformWeb::_replace_strings(const HashMap<String, String> &p_
 		for (const KeyValue<String, String> &E : p_replaces) {
 			current_line = current_line.replace(E.key, E.value);
 		}
-		out += current_line + "\n";
+		out += current_line + '\n';
 	}
 	CharString cs = out.utf8();
 	r_template.resize(cs.length());
@@ -169,7 +169,7 @@ void EditorExportPlatformWeb::_fix_html(Vector<uint8_t> &p_html, const Ref<Edito
 	replaces["$GODOT_PROJECT_NAME"] = get_project_setting(p_preset, "application/config/name");
 	replaces["$GODOT_HEAD_INCLUDE"] = head_include + custom_head_include;
 	replaces["$GODOT_CONFIG"] = str_config;
-	replaces["$GODOT_SPLASH_COLOR"] = "#" + Color(get_project_setting(p_preset, "application/boot_splash/bg_color")).to_html(false);
+	replaces["$GODOT_SPLASH_COLOR"] = '#' + Color(get_project_setting(p_preset, "application/boot_splash/bg_color")).to_html(false);
 
 	LocalVector<String> godot_splash_classes;
 	godot_splash_classes.push_back("show-image--" + String(get_project_setting(p_preset, "application/boot_splash/show_image")));
@@ -232,7 +232,7 @@ Error EditorExportPlatformWeb::_build_pwa(const Ref<EditorExportPreset> &p_prese
 	bool extensions = (bool)p_preset->get("variant/extensions_support");
 	bool ensure_crossorigin_isolation_headers = (bool)p_preset->get("progressive_web_app/ensure_cross_origin_isolation_headers");
 	HashMap<String, String> replaces;
-	replaces["___GODOT_VERSION___"] = String::num_int64(OS::get_singleton()->get_unix_time()) + "|" + String::num_int64(OS::get_singleton()->get_ticks_usec());
+	replaces["___GODOT_VERSION___"] = String::num_int64(OS::get_singleton()->get_unix_time()) + '|' + String::num_int64(OS::get_singleton()->get_ticks_usec());
 	replaces["___GODOT_NAME___"] = proj_name.substr(0, 16);
 	replaces["___GODOT_OFFLINE_PAGE___"] = name + ".offline.html";
 	replaces["___GODOT_ENSURE_CROSSORIGIN_ISOLATION_HEADERS___"] = ensure_crossorigin_isolation_headers ? "true" : "false";
@@ -306,7 +306,7 @@ Error EditorExportPlatformWeb::_build_pwa(const Ref<EditorExportPreset> &p_prese
 	manifest["start_url"] = "./" + name + ".html";
 	manifest["display"] = String::utf8(modes[display]);
 	manifest["orientation"] = String::utf8(orientations[orientation]);
-	manifest["background_color"] = "#" + p_preset->get("progressive_web_app/background_color").operator Color().to_html(false);
+	manifest["background_color"] = '#' + p_preset->get("progressive_web_app/background_color").operator Color().to_html(false);
 
 	Array icons_arr;
 	const String icon144_path = p_preset->get("progressive_web_app/icon_144x144");
@@ -414,8 +414,8 @@ Ref<Texture2D> EditorExportPlatformWeb::get_logo() const {
 bool EditorExportPlatformWeb::has_valid_export_configuration(const Ref<EditorExportPreset> &p_preset, String &r_error, bool &r_missing_templates, bool p_debug) const {
 #ifdef MODULE_MONO_ENABLED
 	// Don't check for additional errors, as this particular error cannot be resolved.
-	r_error += TTR("Exporting to Web is currently not supported in Godot 4 when using C#/.NET. Use Godot 3 to target Web with C#/Mono instead.") + "\n";
-	r_error += TTR("If this project does not use C#, use a non-C# editor build to export the project.") + "\n";
+	r_error += TTR("Exporting to Web is currently not supported in Godot 4 when using C#/.NET. Use Godot 3 to target Web with C#/Mono instead.") + '\n';
+	r_error += TTR("If this project does not use C#, use a non-C# editor build to export the project.") + '\n';
 	return false;
 #else
 
@@ -431,13 +431,13 @@ bool EditorExportPlatformWeb::has_valid_export_configuration(const Ref<EditorExp
 	if (p_preset->get("custom_template/debug") != "") {
 		dvalid = FileAccess::exists(p_preset->get("custom_template/debug"));
 		if (!dvalid) {
-			err += TTR("Custom debug template not found.") + "\n";
+			err += TTR("Custom debug template not found.") + '\n';
 		}
 	}
 	if (p_preset->get("custom_template/release") != "") {
 		rvalid = FileAccess::exists(p_preset->get("custom_template/release"));
 		if (!rvalid) {
-			err += TTR("Custom release template not found.") + "\n";
+			err += TTR("Custom release template not found.") + '\n';
 		}
 	}
 
@@ -875,7 +875,7 @@ Error EditorExportPlatformWeb::_export_project(const Ref<EditorExportPreset> &p_
 }
 
 Error EditorExportPlatformWeb::_launch_browser(const String &p_bind_host, const uint16_t p_bind_port, const bool p_use_tls) {
-	OS::get_singleton()->shell_open(String((p_use_tls ? "https://" : "http://") + p_bind_host + ":" + itos(p_bind_port) + "/tmp_js_export.html"));
+	OS::get_singleton()->shell_open(String((p_use_tls ? "https://" : "http://") + p_bind_host + ':' + itos(p_bind_port) + "/tmp_js_export.html"));
 	// FIXME: Find out how to clean up export files after running the successfully
 	// exported game. Might not be trivial.
 	return OK;

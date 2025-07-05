@@ -1864,7 +1864,7 @@ void ArrayMesh::add_blend_shape(const StringName &p_name) {
 	if (blend_shapes.has(shape_name)) {
 		int count = 2;
 		do {
-			shape_name = String(p_name) + " " + itos(count);
+			shape_name = String(p_name) + ' ' + itos(count);
 			count++;
 		} while (blend_shapes.has(shape_name));
 	}
@@ -1893,7 +1893,7 @@ void ArrayMesh::set_blend_shape_name(int p_index, const StringName &p_name) {
 	if (found != -1 && found != p_index) {
 		int count = 2;
 		do {
-			shape_name = String(p_name) + " " + itos(count);
+			shape_name = String(p_name) + ' ' + itos(count);
 			count++;
 		} while (blend_shapes.has(shape_name));
 	}

@@ -518,7 +518,7 @@ Error OS_MacOS::shell_show_in_file_manager(String p_path, bool p_open_folder) {
 	}
 
 	if (!p_path.begins_with("file://")) {
-		p_path = String("file://") + p_path;
+		p_path = "file://" + p_path;
 	}
 
 	NSString *string = [NSString stringWithUTF8String:p_path.utf8().get_data()];

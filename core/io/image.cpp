@@ -2215,7 +2215,7 @@ void Image::initialize_data(int p_width, int p_height, bool p_use_mipmaps, Forma
 	int64_t size = _get_dst_image_size(p_width, p_height, p_format, mm, p_use_mipmaps ? -1 : 0);
 
 	if (unlikely(p_data.size() != size)) {
-		String description_mipmaps = get_format_name(p_format) + " ";
+		String description_mipmaps = get_format_name(p_format) + ' ';
 		if (p_use_mipmaps) {
 			const int num_mipmaps = get_image_required_mipmaps(p_width, p_height, p_format);
 			if (num_mipmaps != 1) {

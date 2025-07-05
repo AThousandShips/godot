@@ -183,7 +183,7 @@ void LocalizationEditor::_translation_res_option_add(const PackedStringArray &p_
 	ERR_FAIL_COND(!remaps.has(key));
 	PackedStringArray r = remaps[key];
 	for (int i = 0; i < p_paths.size(); i++) {
-		r.push_back(p_paths[i] + ":" + "en");
+		r.push_back(p_paths[i] + ":en");
 	}
 	remaps[key] = r;
 
@@ -246,7 +246,7 @@ void LocalizationEditor::_translation_res_option_changed() {
 
 	ERR_FAIL_COND(!remaps.has(key));
 	PackedStringArray r = remaps[key];
-	r.set(idx, path + ":" + locale);
+	r.set(idx, path + ':' + locale);
 	remaps[key] = r;
 
 	updating_translations = true;
@@ -450,11 +450,11 @@ void LocalizationEditor::_filesystem_files_moved(const String &p_old_file, const
 			if (res_path == p_old_file) {
 				String locale_name = remapped_files[j].substr(splitter_pos + 1);
 				// Replace the element at that index.
-				remapped_files.insert(j, p_new_file + ":" + locale_name);
+				remapped_files.insert(j, p_new_file + ':' + locale_name);
 				remapped_files.remove_at(j + 1);
 				remaps_changed = true;
 				remapped_files_updated = true;
-				print_verbose(vformat("Changed remap value \"%s\" to \"%s\" of key \"%s\" due to a moved file.", res_path + ":" + locale_name, remapped_files[j], remap_key));
+				print_verbose(vformat("Changed remap value \"%s\" to \"%s\" of key \"%s\" due to a moved file.", res_path + ':' + locale_name, remapped_files[j], remap_key));
 			}
 		}
 

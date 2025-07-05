@@ -303,7 +303,7 @@ void ScriptTextEditor::_warning_clicked(const Variant &p_line) {
 			} else {
 				annotation_indent = String(" ").repeat(text_editor->get_indent_size() * indent);
 			}
-			text_editor->insert_line_at(line, annotation_indent + "@warning_ignore(" + code.quote(quote_style) + ")");
+			text_editor->insert_line_at(line, annotation_indent + "@warning_ignore(" + code.quote(quote_style) + ')');
 		}
 
 		_validate_script();
@@ -411,7 +411,7 @@ Array ScriptTextEditor::_inline_object_parse(const String &p_text, int p_line) {
 
 	while (i_start != -1) {
 		// Ignore words that just have "Color" in them.
-		if (i_start == 0 || !("_" + p_text.substr(i_start - 1, 1)).is_valid_ascii_identifier()) {
+		if (i_start == 0 || !('_' + p_text.substr(i_start - 1, 1)).is_valid_ascii_identifier()) {
 			int i_par_start = p_text.find_char('(', i_start + 5);
 			if (i_par_start != -1) {
 				int i_par_end = p_text.find_char(')', i_start + 5);
@@ -538,7 +538,7 @@ String ScriptTextEditor::_picker_color_stringify(const Color &p_color, COLOR_MOD
 	Vector<String> str_params;
 	switch (p_mode) {
 		case ScriptTextEditor::MODE_STRING: {
-			str_params.push_back("\"" + p_color.to_html() + "\"");
+			str_params.push_back('"' + p_color.to_html() + '"');
 		} break;
 		case ScriptTextEditor::MODE_HEX: {
 			str_params.push_back("0x" + p_color.to_html());
@@ -581,7 +581,7 @@ String ScriptTextEditor::_picker_color_stringify(const Color &p_color, COLOR_MOD
 		default: {
 		} break;
 	}
-	result = "Color" + fname + "(" + String(", ").join(str_params) + ")";
+	result = "Color" + fname + '(' + String(", ").join(str_params) + ')';
 	return result;
 }
 
@@ -822,7 +822,7 @@ void ScriptTextEditor::_validate_script() {
 			const int line = errors.front()->get().line;
 			const int column = errors.front()->get().column;
 			const String message = errors.front()->get().message.replace("[", "[lb]");
-			const String error_text = vformat(TTR("Error at ([hint=Line %d, column %d]%d, %d[/hint]):"), line, column, line, column) + " " + message;
+			const String error_text = vformat(TTR("Error at ([hint=Line %d, column %d]%d, %d[/hint]):"), line, column, line, column) + ' ' + message;
 			code_editor->set_error(error_text);
 			code_editor->set_error_pos(line - 1, column - 1);
 		}
@@ -863,8 +863,8 @@ void ScriptTextEditor::_update_warnings() {
 			warnings_panel->push_table(1);
 			for (const Connection &connection : missing_connections) {
 				String base_path = base->get_name();
-				String source_path = base == connection.signal.get_object() ? base_path : base_path + "/" + String(base->get_path_to(Object::cast_to<Node>(connection.signal.get_object())));
-				String target_path = base == connection.callable.get_object() ? base_path : base_path + "/" + String(base->get_path_to(Object::cast_to<Node>(connection.callable.get_object())));
+				String source_path = base == connection.signal.get_object() ? base_path : base_path + '/' + String(base->get_path_to(Object::cast_to<Node>(connection.signal.get_object())));
+				String target_path = base == connection.callable.get_object() ? base_path : base_path + '/' + String(base->get_path_to(Object::cast_to<Node>(connection.callable.get_object())));
 
 				warnings_panel->push_cell();
 				warnings_panel->push_color(warnings_panel->get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
@@ -1022,7 +1022,7 @@ void ScriptTextEditor::_update_bookmark_list() {
 			line = line.substr(0, 50);
 		}
 
-		bookmarks_menu->add_item(String::num_int64(bookmark_list[i] + 1) + " - `" + line + "`");
+		bookmarks_menu->add_item(String::num_int64(bookmark_list[i] + 1) + " - `" + line + '`');
 		bookmarks_menu->set_item_metadata(-1, bookmark_list[i]);
 	}
 }
@@ -1177,7 +1177,7 @@ void ScriptTextEditor::_update_breakpoint_list() {
 			line = line.substr(0, 50);
 		}
 
-		breakpoints_menu->add_item(String::num_int64(breakpoint_list[i] + 1) + " - `" + line + "`");
+		breakpoints_menu->add_item(String::num_int64(breakpoint_list[i] + 1) + " - `" + line + '`');
 		breakpoints_menu->set_item_metadata(-1, breakpoint_list[i]);
 	}
 }
@@ -1239,7 +1239,7 @@ void ScriptTextEditor::_lookup_symbol(const String &p_symbol, int p_row, int p_c
 						}
 						cname = ClassDB::get_parent_class(cname);
 					}
-					emit_signal(SNAME("go_to_help"), "class_constant:" + result.class_name + ":" + result.class_member);
+					emit_signal(SNAME("go_to_help"), "class_constant:" + result.class_name + ':' + result.class_member);
 				} break;
 				case ScriptLanguage::LOOKUP_RESULT_CLASS_PROPERTY: {
 					StringName cname = result.class_name;
@@ -1250,7 +1250,7 @@ void ScriptTextEditor::_lookup_symbol(const String &p_symbol, int p_row, int p_c
 						}
 						cname = ClassDB::get_parent_class(cname);
 					}
-					emit_signal(SNAME("go_to_help"), "class_property:" + result.class_name + ":" + result.class_member);
+					emit_signal(SNAME("go_to_help"), "class_property:" + result.class_name + ':' + result.class_member);
 				} break;
 				case ScriptLanguage::LOOKUP_RESULT_CLASS_METHOD: {
 					StringName cname = result.class_name;
@@ -1261,7 +1261,7 @@ void ScriptTextEditor::_lookup_symbol(const String &p_symbol, int p_row, int p_c
 						}
 						cname = ClassDB::get_parent_class(cname);
 					}
-					emit_signal(SNAME("go_to_help"), "class_method:" + result.class_name + ":" + result.class_member);
+					emit_signal(SNAME("go_to_help"), "class_method:" + result.class_name + ':' + result.class_member);
 				} break;
 				case ScriptLanguage::LOOKUP_RESULT_CLASS_SIGNAL: {
 					StringName cname = result.class_name;
@@ -1272,7 +1272,7 @@ void ScriptTextEditor::_lookup_symbol(const String &p_symbol, int p_row, int p_c
 						}
 						cname = ClassDB::get_parent_class(cname);
 					}
-					emit_signal(SNAME("go_to_help"), "class_signal:" + result.class_name + ":" + result.class_member);
+					emit_signal(SNAME("go_to_help"), "class_signal:" + result.class_name + ':' + result.class_member);
 				} break;
 				case ScriptLanguage::LOOKUP_RESULT_CLASS_ENUM: {
 					StringName cname = result.class_name;
@@ -1283,13 +1283,13 @@ void ScriptTextEditor::_lookup_symbol(const String &p_symbol, int p_row, int p_c
 						}
 						cname = ClassDB::get_parent_class(cname);
 					}
-					emit_signal(SNAME("go_to_help"), "class_enum:" + result.class_name + ":" + result.class_member);
+					emit_signal(SNAME("go_to_help"), "class_enum:" + result.class_name + ':' + result.class_member);
 				} break;
 				case ScriptLanguage::LOOKUP_RESULT_CLASS_ANNOTATION: {
-					emit_signal(SNAME("go_to_help"), "class_annotation:" + result.class_name + ":" + result.class_member);
+					emit_signal(SNAME("go_to_help"), "class_annotation:" + result.class_name + ':' + result.class_member);
 				} break;
 				case ScriptLanguage::LOOKUP_RESULT_CLASS_TBD_GLOBALSCOPE: { // Deprecated.
-					emit_signal(SNAME("go_to_help"), "class_global:" + result.class_name + ":" + result.class_member);
+					emit_signal(SNAME("go_to_help"), "class_global:" + result.class_name + ':' + result.class_member);
 				} break;
 				case ScriptLanguage::LOOKUP_RESULT_SCRIPT_LOCATION:
 				case ScriptLanguage::LOOKUP_RESULT_LOCAL_CONSTANT:
@@ -1369,7 +1369,7 @@ void ScriptTextEditor::_show_symbol_tooltip(const String &p_symbol, int p_row, i
 	if (lc_error == OK) {
 		switch (result.type) {
 			case ScriptLanguage::LOOKUP_RESULT_CLASS: {
-				doc_symbol = "class|" + result.class_name + "|";
+				doc_symbol = "class|" + result.class_name + '|';
 			} break;
 			case ScriptLanguage::LOOKUP_RESULT_CLASS_CONSTANT: {
 				StringName cname = result.class_name;
@@ -1380,7 +1380,7 @@ void ScriptTextEditor::_show_symbol_tooltip(const String &p_symbol, int p_row, i
 					}
 					cname = ClassDB::get_parent_class(cname);
 				}
-				doc_symbol = "constant|" + result.class_name + "|" + result.class_member;
+				doc_symbol = "constant|" + result.class_name + '|' + result.class_member;
 			} break;
 			case ScriptLanguage::LOOKUP_RESULT_CLASS_PROPERTY: {
 				StringName cname = result.class_name;
@@ -1391,7 +1391,7 @@ void ScriptTextEditor::_show_symbol_tooltip(const String &p_symbol, int p_row, i
 					}
 					cname = ClassDB::get_parent_class(cname);
 				}
-				doc_symbol = "property|" + result.class_name + "|" + result.class_member;
+				doc_symbol = "property|" + result.class_name + '|' + result.class_member;
 			} break;
 			case ScriptLanguage::LOOKUP_RESULT_CLASS_METHOD: {
 				StringName cname = result.class_name;
@@ -1402,7 +1402,7 @@ void ScriptTextEditor::_show_symbol_tooltip(const String &p_symbol, int p_row, i
 					}
 					cname = ClassDB::get_parent_class(cname);
 				}
-				doc_symbol = "method|" + result.class_name + "|" + result.class_member;
+				doc_symbol = "method|" + result.class_name + '|' + result.class_member;
 			} break;
 			case ScriptLanguage::LOOKUP_RESULT_CLASS_SIGNAL: {
 				StringName cname = result.class_name;
@@ -1413,7 +1413,7 @@ void ScriptTextEditor::_show_symbol_tooltip(const String &p_symbol, int p_row, i
 					}
 					cname = ClassDB::get_parent_class(cname);
 				}
-				doc_symbol = "signal|" + result.class_name + "|" + result.class_member;
+				doc_symbol = "signal|" + result.class_name + '|' + result.class_member;
 			} break;
 			case ScriptLanguage::LOOKUP_RESULT_CLASS_ENUM: {
 				StringName cname = result.class_name;
@@ -1424,10 +1424,10 @@ void ScriptTextEditor::_show_symbol_tooltip(const String &p_symbol, int p_row, i
 					}
 					cname = ClassDB::get_parent_class(cname);
 				}
-				doc_symbol = "enum|" + result.class_name + "|" + result.class_member;
+				doc_symbol = "enum|" + result.class_name + '|' + result.class_member;
 			} break;
 			case ScriptLanguage::LOOKUP_RESULT_CLASS_ANNOTATION: {
-				doc_symbol = "annotation|" + result.class_name + "|" + result.class_member;
+				doc_symbol = "annotation|" + result.class_name + '|' + result.class_member;
 			} break;
 			case ScriptLanguage::LOOKUP_RESULT_LOCAL_CONSTANT:
 			case ScriptLanguage::LOOKUP_RESULT_LOCAL_VARIABLE: {
@@ -1442,7 +1442,7 @@ void ScriptTextEditor::_show_symbol_tooltip(const String &p_symbol, int p_row, i
 				item_data["enumeration"] = result.enumeration;
 				item_data["is_bitfield"] = result.is_bitfield;
 				item_data["value"] = result.value;
-				doc_symbol = item_type + "||" + p_symbol + "|" + JSON::stringify(item_data);
+				doc_symbol = item_type + "||" + p_symbol + '|' + JSON::stringify(item_data);
 			} break;
 			case ScriptLanguage::LOOKUP_RESULT_SCRIPT_LOCATION:
 			case ScriptLanguage::LOOKUP_RESULT_CLASS_TBD_GLOBALSCOPE: // Deprecated.
@@ -1679,7 +1679,7 @@ void ScriptTextEditor::_gutter_clicked(int p_line, int p_gutter) {
 			emit_signal(SNAME("go_to_method"), base_script, method);
 		} else if (base_class_split[0] == "builtin") {
 			// Open method documentation.
-			emit_signal(SNAME("go_to_help"), "class_method:" + base_class_split[1] + ":" + method);
+			emit_signal(SNAME("go_to_help"), "class_method:" + base_class_split[1] + ':' + method);
 		}
 	}
 }
@@ -2517,9 +2517,9 @@ void ScriptTextEditor::_color_changed(const Color &p_color) {
 	String new_args;
 	const int decimals = 3;
 	if (p_color.a == 1.0f) {
-		new_args = String("(" + String::num(p_color.r, decimals) + ", " + String::num(p_color.g, decimals) + ", " + String::num(p_color.b, decimals) + ")");
+		new_args = '(' + String::num(p_color.r, decimals) + ", " + String::num(p_color.g, decimals) + ", " + String::num(p_color.b, decimals) + ')';
 	} else {
-		new_args = String("(" + String::num(p_color.r, decimals) + ", " + String::num(p_color.g, decimals) + ", " + String::num(p_color.b, decimals) + ", " + String::num(p_color.a, decimals) + ")");
+		new_args = '(' + String::num(p_color.r, decimals) + ", " + String::num(p_color.g, decimals) + ", " + String::num(p_color.b, decimals) + ", " + String::num(p_color.a, decimals) + ')';
 	}
 
 	String line = code_editor->get_text_editor()->get_line(color_position.x);

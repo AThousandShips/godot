@@ -2469,10 +2469,10 @@ ScriptInstance *CSharpScript::instance_create(Object *p_this) {
 	if (!ClassDB::is_parent_class(p_this->get_class_name(), native_name)) {
 		if (EngineDebugger::is_active()) {
 			CSharpLanguage::get_singleton()->debug_break_parse(get_path(), 0,
-					"Script inherits from native type '" + String(native_name) +
-							"', so it can't be assigned to an object of type: '" + p_this->get_class() + "'");
+					"Script inherits from native type '" + native_name +
+							"', so it can't be assigned to an object of type: '" + p_this->get_class() + '\'');
 		}
-		ERR_FAIL_V_MSG(nullptr, "Script inherits from native type '" + String(native_name) + "', so it can't be assigned to an object of type: '" + p_this->get_class() + "'.");
+		ERR_FAIL_V_MSG(nullptr, "Script inherits from native type '" + native_name + "', so it can't be assigned to an object of type: '" + p_this->get_class() + "'.");
 	}
 
 	Callable::CallError unchecked_error;

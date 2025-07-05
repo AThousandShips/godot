@@ -988,7 +988,7 @@ void VariantUtilityFunctions::printt(const Variant **p_args, int p_arg_count, Ca
 	String s;
 	for (int i = 0; i < p_arg_count; i++) {
 		if (i) {
-			s += "\t";
+			s += '\t';
 		}
 		s += p_args[i]->operator String();
 	}
@@ -1001,7 +1001,7 @@ void VariantUtilityFunctions::prints(const Variant **p_args, int p_arg_count, Ca
 	String s;
 	for (int i = 0; i < p_arg_count; i++) {
 		if (i) {
-			s += " ";
+			s += ' ';
 		}
 		s += p_args[i]->operator String();
 	}

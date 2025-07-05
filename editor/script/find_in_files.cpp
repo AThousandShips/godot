@@ -279,7 +279,7 @@ void FindInFiles::_scan_dir(const String &path, PackedStringArray &out_folders, 
 void FindInFiles::_scan_file(const String &fpath) {
 	Ref<FileAccess> f = FileAccess::open(fpath, FileAccess::READ);
 	if (f.is_null()) {
-		print_verbose(String("Cannot open file ") + fpath);
+		print_verbose("Cannot open file " + fpath);
 		return;
 	}
 
@@ -301,7 +301,7 @@ void FindInFiles::_scan_file(const String &fpath) {
 }
 
 bool FindInFiles::_is_file_matched(const HashSet<String> &p_wildcards, const String &p_file_path, bool p_case_sensitive) const {
-	const String file_path = "/" + p_file_path.replace_char('\\', '/') + "/";
+	const String file_path = '/' + p_file_path.replace_char('\\', '/') + '/';
 
 	for (const String &wildcard : p_wildcards) {
 		if (p_case_sensitive && file_path.match(wildcard)) {
@@ -660,7 +660,7 @@ String FindInFilesDialog::validate_filter_wildcard(const String &p_expression) c
 
 	if (ret.begins_with(".")) {
 		// To match extension.
-		ret = "*" + ret;
+		ret = '*' + ret;
 	}
 
 	if (!ret.begins_with("*")) {

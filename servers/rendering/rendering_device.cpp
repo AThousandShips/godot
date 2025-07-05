@@ -976,7 +976,7 @@ RID RenderingDevice::texture_create(const TextureFormat &p_format, const Texture
 		bool cpu_readable = (format.usage_bits & RDD::TEXTURE_USAGE_CPU_READ_BIT);
 		BitField<RDD::TextureUsageBits> supported_usage = driver->texture_get_usages_supported_by_format(format.format, cpu_readable);
 
-		String format_text = "'" + String(FORMAT_NAMES[format.format]) + "'";
+		String format_text = '\'' + String(FORMAT_NAMES[format.format]) + '\'';
 
 		if ((format.usage_bits & TEXTURE_USAGE_SAMPLING_BIT) && !supported_usage.has_flag(TEXTURE_USAGE_SAMPLING_BIT)) {
 			ERR_FAIL_V_MSG(RID(), "Format " + format_text + " does not support usage as sampling texture.");
@@ -3337,7 +3337,7 @@ String RenderingDevice::_shader_uniform_debug(RID p_shader, int p_set) {
 		for (int j = 0; j < shader->uniform_sets[i].size(); j++) {
 			const ShaderUniform &ui = shader->uniform_sets[i][j];
 			if (!ret.is_empty()) {
-				ret += "\n";
+				ret += '\n';
 			}
 			ret += "Set: " + itos(i) + " Binding: " + itos(ui.binding) + " Type: " + SHADER_UNIFORM_NAMES[ui.type] + " Writable: " + (ui.writable ? "Y" : "N") + " Length: " + itos(ui.length);
 		}
@@ -4711,7 +4711,7 @@ void RenderingDevice::draw_list_set_push_constant(DrawListID p_list, const void 
 
 #ifdef DEBUG_ENABLED
 	ERR_FAIL_COND_MSG(p_data_size != draw_list.validation.pipeline_push_constant_size,
-			"This render pipeline requires (" + itos(draw_list.validation.pipeline_push_constant_size) + ") bytes of push constant data, supplied: (" + itos(p_data_size) + ")");
+			"This render pipeline requires (" + itos(draw_list.validation.pipeline_push_constant_size) + ") bytes of push constant data, supplied: (" + itos(p_data_size) + ')');
 #endif
 
 	draw_graph.add_draw_list_set_push_constant(draw_list.state.pipeline_shader_driver_id, p_data, p_data_size);
@@ -5233,7 +5233,7 @@ void RenderingDevice::compute_list_set_push_constant(ComputeListID p_list, const
 
 #ifdef DEBUG_ENABLED
 	ERR_FAIL_COND_MSG(p_data_size != compute_list.validation.pipeline_push_constant_size,
-			"This compute pipeline requires (" + itos(compute_list.validation.pipeline_push_constant_size) + ") bytes of push constant data, supplied: (" + itos(p_data_size) + ")");
+			"This compute pipeline requires (" + itos(compute_list.validation.pipeline_push_constant_size) + ") bytes of push constant data, supplied: (" + itos(p_data_size) + ')');
 #endif
 
 	draw_graph.add_compute_list_set_push_constant(compute_list.state.pipeline_shader_driver_id, p_data, p_data_size);
@@ -5258,11 +5258,11 @@ void RenderingDevice::compute_list_dispatch(ComputeListID p_list, uint32_t p_x_g
 	ERR_FAIL_COND_MSG(p_z_groups == 0, "Dispatch amount of Z compute groups (" + itos(p_z_groups) + ") is zero.");
 	ERR_FAIL_COND_MSG(p_y_groups == 0, "Dispatch amount of Y compute groups (" + itos(p_y_groups) + ") is zero.");
 	ERR_FAIL_COND_MSG(p_x_groups > driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_X),
-			"Dispatch amount of X compute groups (" + itos(p_x_groups) + ") is larger than device limit (" + itos(driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_X)) + ")");
+			"Dispatch amount of X compute groups (" + itos(p_x_groups) + ") is larger than device limit (" + itos(driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_X)) + ')');
 	ERR_FAIL_COND_MSG(p_y_groups > driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Y),
-			"Dispatch amount of Y compute groups (" + itos(p_y_groups) + ") is larger than device limit (" + itos(driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Y)) + ")");
+			"Dispatch amount of Y compute groups (" + itos(p_y_groups) + ") is larger than device limit (" + itos(driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Y)) + ')');
 	ERR_FAIL_COND_MSG(p_z_groups > driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Z),
-			"Dispatch amount of Z compute groups (" + itos(p_z_groups) + ") is larger than device limit (" + itos(driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Z)) + ")");
+			"Dispatch amount of Z compute groups (" + itos(p_z_groups) + ") is larger than device limit (" + itos(driver->limit_get(LIMIT_MAX_COMPUTE_WORKGROUP_COUNT_Z)) + ')');
 #endif
 
 #ifdef DEBUG_ENABLED
@@ -6142,7 +6142,7 @@ void RenderingDevice::_free_internal(RID p_id) {
 		compute_pipeline_owner.free(p_id);
 	} else {
 #ifdef DEV_ENABLED
-		ERR_PRINT("Attempted to free invalid ID: " + itos(p_id.get_id()) + " " + resource_name);
+		ERR_PRINT("Attempted to free invalid ID: " + itos(p_id.get_id()) + ' ' + resource_name);
 #else
 		ERR_PRINT("Attempted to free invalid ID: " + itos(p_id.get_id()));
 #endif
@@ -6667,7 +6667,7 @@ Error RenderingDevice::initialize(RenderingContextDriver *p_context, DisplayServ
 		String vendor = _get_device_vendor_name(device_option);
 		String type = _get_device_type_name(device_option);
 		bool present_supported = main_surface != 0 ? context->device_supports_present(i, main_surface) : false;
-		print_verbose("  #" + itos(i) + ": " + vendor + " " + name + " - " + (present_supported ? "Supported" : "Unsupported") + ", " + type);
+		print_verbose("  #" + itos(i) + ": " + vendor + ' ' + name + " - " + (present_supported ? "Supported" : "Unsupported") + ", " + type);
 		if (detect_device && (present_supported || main_surface == 0)) {
 			// If a window was specified, present must be supported by the device to be available as an option.
 			// Assign a score for each type of device and prefer the device with the higher score.
@@ -6961,7 +6961,7 @@ void RenderingDevice::_free_rids(T &p_owner, const char *p_type) {
 		for (const RID &rid : owned) {
 #ifdef DEV_ENABLED
 			if (resource_names.has(rid)) {
-				print_line(String(" - ") + resource_names[rid]);
+				print_line(" - " + resource_names[rid]);
 			}
 #endif
 			free(rid);
@@ -7174,7 +7174,7 @@ void RenderingDevice::finalize() {
 				if (texture_is_shared(texture_rid)) {
 #ifdef DEV_ENABLED
 					if (resource_names.has(texture_rid)) {
-						print_line(String(" - ") + resource_names[texture_rid]);
+						print_line(" - " + resource_names[texture_rid]);
 					}
 #endif
 					free(texture_rid);
@@ -7186,7 +7186,7 @@ void RenderingDevice::finalize() {
 			for (const RID &texture_rid : owned_non_shared) {
 #ifdef DEV_ENABLED
 				if (resource_names.has(texture_rid)) {
-					print_line(String(" - ") + resource_names[texture_rid]);
+					print_line(" - " + resource_names[texture_rid]);
 				}
 #endif
 				free(texture_rid);

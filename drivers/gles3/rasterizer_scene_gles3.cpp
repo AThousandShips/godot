@@ -246,7 +246,7 @@ void RasterizerSceneGLES3::_geometry_instance_add_surface_with_material(Geometry
 			// Stencil materials which read from the stencil buffer must be in the alpha pass.
 			// This is critical to preserve compatibility once we'll have the compositor.
 			if (!(flags & GeometryInstanceSurface::FLAG_PASS_ALPHA)) {
-				String shader_path = p_material->shader_data->path.is_empty() ? "" : "(" + p_material->shader_data->path + ")";
+				String shader_path = p_material->shader_data->path.is_empty() ? "" : '(' + p_material->shader_data->path + ')';
 				ERR_PRINT_ED(vformat("Attempting to use a shader %s that reads stencil but is not in the alpha queue. Ensure the material uses alpha blending or has depth_draw disabled or depth_test disabled.", shader_path));
 			}
 		}
@@ -307,8 +307,8 @@ void RasterizerSceneGLES3::_geometry_instance_add_surface_with_material(Geometry
 
 	GLES3::Mesh::Surface *s = reinterpret_cast<GLES3::Mesh::Surface *>(sdcache->surface);
 	if (p_material->shader_data->uses_tangent && !(s->format & RS::ARRAY_FORMAT_TANGENT)) {
-		String shader_path = p_material->shader_data->path.is_empty() ? "" : "(" + p_material->shader_data->path + ")";
-		String mesh_path = mesh_storage->mesh_get_path(p_mesh).is_empty() ? "" : "(" + mesh_storage->mesh_get_path(p_mesh) + ")";
+		String shader_path = p_material->shader_data->path.is_empty() ? "" : '(' + p_material->shader_data->path + ')';
+		String mesh_path = mesh_storage->mesh_get_path(p_mesh).is_empty() ? "" : '(' + mesh_storage->mesh_get_path(p_mesh) + ')';
 		WARN_PRINT_ED(vformat("Attempting to use a shader %s that requires tangents with a mesh %s that doesn't contain tangents. Ensure that meshes are imported with the 'ensure_tangents' option. If creating your own meshes, add an `ARRAY_TANGENT` array (when using ArrayMesh) or call `generate_tangents()` (when using SurfaceTool).", shader_path, mesh_path));
 	}
 }
@@ -4301,8 +4301,8 @@ RasterizerSceneGLES3::RasterizerSceneGLES3() {
 	{
 		String global_defines;
 		global_defines += "#define MAX_GLOBAL_SHADER_UNIFORMS 256\n"; // TODO: this is arbitrary for now
-		global_defines += "\n#define MAX_LIGHT_DATA_STRUCTS " + itos(config->max_renderable_lights) + "\n";
-		global_defines += "\n#define MAX_DIRECTIONAL_LIGHT_DATA_STRUCTS " + itos(MAX_DIRECTIONAL_LIGHTS) + "\n";
+		global_defines += "\n#define MAX_LIGHT_DATA_STRUCTS " + itos(config->max_renderable_lights) + '\n';
+		global_defines += "\n#define MAX_DIRECTIONAL_LIGHT_DATA_STRUCTS " + itos(MAX_DIRECTIONAL_LIGHTS) + '\n';
 		global_defines += "\n#define MAX_FORWARD_LIGHTS " + itos(config->max_lights_per_object) + "u\n";
 		global_defines += "\n#define MAX_ROUGHNESS_LOD " + itos(sky_globals.roughness_layers - 1) + ".0\n";
 		if (config->force_vertex_shading) {
@@ -4369,7 +4369,7 @@ void fragment() {
 
 		String global_defines;
 		global_defines += "#define MAX_GLOBAL_SHADER_UNIFORMS 256\n"; // TODO: this is arbitrary for now
-		global_defines += "\n#define MAX_DIRECTIONAL_LIGHT_DATA_STRUCTS " + itos(sky_globals.max_directional_lights) + "\n";
+		global_defines += "\n#define MAX_DIRECTIONAL_LIGHT_DATA_STRUCTS " + itos(sky_globals.max_directional_lights) + '\n';
 		material_storage->shaders.sky_shader.initialize(global_defines);
 		sky_globals.shader_default_version = material_storage->shaders.sky_shader.version_create();
 	}

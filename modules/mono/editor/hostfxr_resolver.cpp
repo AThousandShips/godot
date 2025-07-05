@@ -294,7 +294,7 @@ bool get_dotnet_root_from_env(String &r_dotnet_root) {
 
 	if (!arch_for_env.is_empty()) {
 		// DOTNET_ROOT_<arch>
-		if (get_file_path_from_env(dotnet_root_env + "_" + arch_for_env.to_upper(), r_dotnet_root)) {
+		if (get_file_path_from_env(dotnet_root_env + '_' + arch_for_env.to_upper(), r_dotnet_root)) {
 			return true;
 		}
 	}
@@ -316,7 +316,7 @@ bool godotsharp::hostfxr_resolver::try_get_path_from_dotnet_root(const String &p
 	String fxr_dir = Path::join(p_dotnet_root, "host", "fxr");
 	if (!DirAccess::exists(fxr_dir)) {
 		if (OS::get_singleton()->is_stdout_verbose()) {
-			ERR_PRINT("The host fxr folder does not exist: " + fxr_dir + ".");
+			ERR_PRINT("The host fxr folder does not exist: " + fxr_dir + '.');
 		}
 		return false;
 	}

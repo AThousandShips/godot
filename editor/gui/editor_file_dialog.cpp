@@ -181,7 +181,7 @@ void EditorFileDialog::_native_dialog_cb(bool p_ok, const Vector<String> &p_file
 				int idx = p_filter;
 				String flt = filters[idx].get_slicec(';', 0);
 				String ext = flt.get_slicec(',', 0).strip_edges().get_extension();
-				f += "." + ext;
+				f += '.' + ext;
 			}
 			emit_signal(SNAME("file_selected"), f);
 		} else if ((mode == FILE_MODE_OPEN_ANY || mode == FILE_MODE_OPEN_FILE) && dir_access->file_exists(f)) {
@@ -672,7 +672,7 @@ void EditorFileDialog::_action_pressed() {
 			int idx = filter->get_selected();
 			String flt = filters[idx].get_slicec(';', 0);
 			String ext = flt.get_slicec(',', 0).strip_edges().get_extension();
-			f += "." + ext;
+			f += '.' + ext;
 		}
 
 		if (file_name.begins_with(".")) { // Could still happen if typed manually.
@@ -965,9 +965,9 @@ void EditorFileDialog::update_file_name() {
 		String base_name = file_str.get_basename();
 		Vector<String> filter_substr = filter_str.split(";");
 		if (filter_substr.size() >= 2) {
-			file_str = base_name + "." + filter_substr[0].strip_edges().get_extension().to_lower();
+			file_str = base_name + '.' + filter_substr[0].strip_edges().get_extension().to_lower();
 		} else {
-			file_str = base_name + "." + filter_str.strip_edges().get_extension().to_lower();
+			file_str = base_name + '.' + filter_str.strip_edges().get_extension().to_lower();
 		}
 		file->set_text(file_str);
 	}
@@ -1048,7 +1048,7 @@ void EditorFileDialog::update_file_list() {
 					dirs.push_back(file_info.name);
 				}
 			} else if (!dir_access->current_is_hidden()) {
-				String full_path = cdir == "res://" ? file_info.name : dir_access->get_current_dir() + "/" + file_info.name;
+				String full_path = cdir == "res://" ? file_info.name : dir_access->get_current_dir() + '/' + file_info.name;
 				if (dir_access->current_is_dir()) {
 					if (Engine::get_singleton()->is_project_manager_hint() || !EditorFileSystem::_should_skip_directory(full_path)) {
 						dirs.push_back(file_info.name);
@@ -1192,7 +1192,7 @@ void EditorFileDialog::update_file_list() {
 	fav_down->set_disabled(true);
 	get_ok_button()->set_disabled(_is_open_should_be_disabled());
 	for (int i = 0; i < favorites->get_item_count(); i++) {
-		if (favorites->get_item_metadata(i) == cdir || favorites->get_item_metadata(i) == cdir + "/") {
+		if (favorites->get_item_metadata(i) == cdir || favorites->get_item_metadata(i) == cdir + '/') {
 			favorites->select(i);
 			favorite->set_pressed(true);
 			if (i > 0) {
@@ -1251,13 +1251,13 @@ void EditorFileDialog::update_filters() {
 		for (int i = 0; i < filters.size(); i++) {
 			String flt = filters[i].get_slicec(';', 0).strip_edges();
 			if (!all_filters_full.is_empty() && !flt.is_empty()) {
-				all_filters_full += ",";
+				all_filters_full += ',';
 			}
 			all_filters_full += flt;
 
 			String mime = filters[i].get_slicec(';', 2).strip_edges();
 			if (!all_mime_full.is_empty() && !mime.is_empty()) {
-				all_mime_full += ",";
+				all_mime_full += ',';
 			}
 			all_mime_full += mime;
 		}
@@ -1276,8 +1276,8 @@ void EditorFileDialog::update_filters() {
 			native_all_name += ", ...";
 		}
 
-		filter->add_item(atr(ETR("All Recognized")) + " (" + all_filters + ")");
-		processed_filters.push_back(all_filters_full + ";" + atr(ETR("All Recognized")) + " (" + native_all_name + ")" + ";" + all_mime_full);
+		filter->add_item(atr(ETR("All Recognized")) + " (" + all_filters + ')');
+		processed_filters.push_back(all_filters_full + ';' + atr(ETR("All Recognized")) + " (" + native_all_name + ");" + all_mime_full);
 	}
 	for (int i = 0; i < filters.size(); i++) {
 		String flt = filters[i].get_slicec(';', 0).strip_edges();
@@ -1292,10 +1292,10 @@ void EditorFileDialog::update_filters() {
 		}
 		native_name += mime;
 		if (!desc.is_empty()) {
-			filter->add_item(atr(desc) + " (" + flt + ")");
-			processed_filters.push_back(flt + ";" + atr(desc) + " (" + native_name + ");" + mime);
+			filter->add_item(atr(desc) + " (" + flt + ')');
+			processed_filters.push_back(flt + ';' + atr(desc) + " (" + native_name + ");" + mime);
 		} else {
-			filter->add_item("(" + flt + ")");
+			filter->add_item('(' + flt + ')');
 			processed_filters.push_back(flt + ";(" + native_name + ");" + mime);
 		}
 	}
@@ -1791,7 +1791,7 @@ void EditorFileDialog::_update_favorites() {
 			favorited_paths.append(favorited[i]);
 			favorited_names.append(name);
 		} else {
-			if (name == current || name == current + "/") {
+			if (name == current || name == current + '/') {
 				current_favorite = favorited_paths.size();
 			}
 			name = name.trim_suffix("/");
@@ -1829,7 +1829,7 @@ void EditorFileDialog::_favorite_pressed() {
 
 	String cd = get_current_dir();
 	if (!cd.ends_with("/")) {
-		cd += "/";
+		cd += '/';
 	}
 
 	Vector<String> favorited = EditorSettings::get_singleton()->get_favorites();

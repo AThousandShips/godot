@@ -1357,7 +1357,7 @@ void FontFile::_get_property_list(List<PropertyInfo> *p_list) const {
 		p_list->push_back(PropertyInfo(Variant::BOOL, "script_support_override/" + scr_over[i], PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE));
 	}
 	for (int i = 0; i < cache.size(); i++) {
-		String prefix = "cache/" + itos(i) + "/";
+		String prefix = "cache/" + itos(i) + '/';
 		TypedArray<Vector2i> sizes = get_size_cache_list(i);
 		p_list->push_back(PropertyInfo(Variant::DICTIONARY, prefix + "variation_coordinates", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE));
 		p_list->push_back(PropertyInfo(Variant::INT, prefix + "face_index", PROPERTY_HINT_RANGE, "0,32767,1", PROPERTY_USAGE_STORAGE));
@@ -1371,7 +1371,7 @@ void FontFile::_get_property_list(List<PropertyInfo> *p_list) const {
 
 		for (int j = 0; j < sizes.size(); j++) {
 			Vector2i sz = sizes[j];
-			String prefix_sz = prefix + itos(sz.x) + "/" + itos(sz.y) + "/";
+			String prefix_sz = prefix + itos(sz.x) + '/' + itos(sz.y) + '/';
 			if (sz.y == 0) {
 				p_list->push_back(PropertyInfo(Variant::FLOAT, prefix_sz + "ascent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE));
 				p_list->push_back(PropertyInfo(Variant::FLOAT, prefix_sz + "descent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE));
@@ -1400,7 +1400,7 @@ void FontFile::_get_property_list(List<PropertyInfo> *p_list) const {
 				TypedArray<Vector2i> kerning_map = get_kerning_list(i, sz.x);
 				for (int k = 0; k < kerning_map.size(); k++) {
 					const Vector2i &gl_pair = kerning_map[k];
-					p_list->push_back(PropertyInfo(Variant::VECTOR2, prefix_sz + "kerning_overrides/" + itos(gl_pair.x) + "/" + itos(gl_pair.y), PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE));
+					p_list->push_back(PropertyInfo(Variant::VECTOR2, prefix_sz + "kerning_overrides/" + itos(gl_pair.x) + '/' + itos(gl_pair.y), PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE));
 				}
 			}
 		}

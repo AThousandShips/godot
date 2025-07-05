@@ -360,7 +360,7 @@ void InspectorDock::_prepare_history() {
 		}
 
 		if (i == editor_history->get_history_pos() && current) {
-			text += " " + TTR("(Current)");
+			text += ' ' + TTR("(Current)");
 		}
 		history_menu->get_popup()->add_icon_item(icon, text, i);
 	}

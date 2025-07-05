@@ -215,7 +215,7 @@ void FileDialog::_native_dialog_cb_with_options(bool p_ok, const Vector<String> 
 				int idx = p_filter;
 				String flt = filters[idx].get_slicec(';', 0);
 				String ext = flt.get_slicec(',', 0).strip_edges().get_extension();
-				f += "." + ext;
+				f += '.' + ext;
 			}
 			emit_signal(SNAME("file_selected"), f);
 		} else if ((mode == FILE_MODE_OPEN_ANY || mode == FILE_MODE_OPEN_FILE) && dir_access->file_exists(f)) {
@@ -688,9 +688,9 @@ void FileDialog::update_file_name() {
 		String base_name = file_str.get_basename();
 		Vector<String> filter_substr = filter_str.split(";");
 		if (filter_substr.size() >= 2) {
-			file_str = base_name + "." + filter_substr[0].strip_edges().get_extension().to_lower();
+			file_str = base_name + '.' + filter_substr[0].strip_edges().get_extension().to_lower();
 		} else {
-			file_str = base_name + "." + filter_str.strip_edges().get_extension().to_lower();
+			file_str = base_name + '.' + filter_str.strip_edges().get_extension().to_lower();
 		}
 		filename_edit->set_text(file_str);
 	}
@@ -986,7 +986,7 @@ void FileDialog::update_file_list() {
 	const int fav_count = favorite_list->get_item_count();
 	for (int i = 0; i < fav_count; i++) {
 		const String fav_dir = favorite_list->get_item_metadata(i);
-		if (fav_dir != base_dir && fav_dir != base_dir + "/") {
+		if (fav_dir != base_dir && fav_dir != base_dir + '/') {
 			continue;
 		}
 		favorite_list->select(i);
@@ -1053,13 +1053,13 @@ void FileDialog::update_filters() {
 		for (int i = 0; i < filters.size(); i++) {
 			String flt = filters[i].get_slicec(';', 0).strip_edges();
 			if (!all_filters_full.is_empty() && !flt.is_empty()) {
-				all_filters_full += ",";
+				all_filters_full += ',';
 			}
 			all_filters_full += flt;
 
 			String mime = filters[i].get_slicec(';', 2).strip_edges();
 			if (!all_mime_full.is_empty() && !mime.is_empty()) {
-				all_mime_full += ",";
+				all_mime_full += ',';
 			}
 			all_mime_full += mime;
 		}
@@ -1078,8 +1078,8 @@ void FileDialog::update_filters() {
 			native_all_name += ", ...";
 		}
 
-		filter->add_item(atr(ETR("All Recognized")) + " (" + all_filters + ")");
-		processed_filters.push_back(all_filters_full + ";" + atr(ETR("All Recognized")) + " (" + native_all_name + ")" + ";" + all_mime_full);
+		filter->add_item(atr(ETR("All Recognized")) + " (" + all_filters + ')');
+		processed_filters.push_back(all_filters_full + ';' + atr(ETR("All Recognized")) + " (" + native_all_name + ");" + all_mime_full);
 	}
 	for (int i = 0; i < filters.size(); i++) {
 		String flt = filters[i].get_slicec(';', 0).strip_edges();
@@ -1094,10 +1094,10 @@ void FileDialog::update_filters() {
 		}
 		native_name += mime;
 		if (!desc.is_empty()) {
-			filter->add_item(atr(desc) + " (" + flt + ")");
-			processed_filters.push_back(flt + ";" + atr(desc) + " (" + native_name + ");" + mime);
+			filter->add_item(atr(desc) + " (" + flt + ')');
+			processed_filters.push_back(flt + ';' + atr(desc) + " (" + native_name + ");" + mime);
 		} else {
-			filter->add_item("(" + flt + ")");
+			filter->add_item('(' + flt + ')');
 			processed_filters.push_back(flt + ";(" + native_name + ");" + mime);
 		}
 	}
@@ -1499,7 +1499,7 @@ void FileDialog::_favorite_selected(int p_item) {
 void FileDialog::_favorite_pressed() {
 	String directory = get_current_dir();
 	if (!directory.ends_with("/")) {
-		directory += "/";
+		directory += '/';
 	}
 
 	bool found = false;
@@ -1590,7 +1590,7 @@ void FileDialog::_update_favorite_list() {
 		if (name == "res://" || name == "user://") {
 			name = "/";
 		} else {
-			if (current_favorite == -1 && name == current + "/") {
+			if (current_favorite == -1 && name == current + '/') {
 				current_favorite = favorited_names.size();
 			}
 			name = name.trim_suffix("/");
@@ -1631,7 +1631,7 @@ void FileDialog::_recent_selected(int p_item) {
 void FileDialog::_save_to_recent() {
 	String directory = get_current_dir();
 	if (!directory.ends_with("/")) {
-		directory += "/";
+		directory += '/';
 	}
 
 	int count = 0;

@@ -934,7 +934,7 @@ String vformat(const String &p_text, const VarArgs... p_args) {
 	bool error = false;
 	String fmt = p_text.sprintf(args_array, &error);
 
-	ERR_FAIL_COND_V_MSG(error, String(), String("Formatting error in string \"") + p_text + "\": " + fmt + ".");
+	ERR_FAIL_COND_V_MSG(error, String(), String("Formatting error in string \"") + p_text + "\": " + fmt + '.');
 
 	return fmt;
 }

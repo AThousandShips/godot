@@ -13,7 +13,7 @@ String _debug_aabb_to_string(const BVHABB_CLASS &aabb) const {
 	real_t vol = 0.0;
 
 	for (int i = 0; i < POINT::AXIS_COUNT; ++i) {
-		sz += "(";
+		sz += '(';
 		sz += itos(aabb.min[i]);
 		sz += " ~ ";
 		sz += itos(-aabb.neg_max[i]);
@@ -34,21 +34,21 @@ void _debug_recursive_print_tree_node(uint32_t p_node_id, int depth = 0) const {
 
 	if (tnode.is_leaf()) {
 		sz += " L";
-		sz += itos(tnode.height) + " ";
+		sz += itos(tnode.height) + ' ';
 		const TLeaf &leaf = _node_get_leaf(tnode);
 
-		sz += "[";
+		sz += '[';
 		for (int n = 0; n < leaf.num_items; n++) {
 			if (n) {
 				sz += ", ";
 			}
-			sz += "r";
+			sz += 'r';
 			sz += itos(leaf.get_item_ref_id(n));
 		}
 		sz += "]  ";
 	} else {
 		sz += " N";
-		sz += itos(tnode.height) + " ";
+		sz += itos(tnode.height) + ' ';
 	}
 
 	sz += _debug_aabb_to_string(tnode.aabb);

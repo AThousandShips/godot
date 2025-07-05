@@ -398,7 +398,7 @@ void AnimationLibraryEditor::_load_files(const PackedStringArray &p_paths) {
 				int attempt = 1;
 				while (bool(mixer->has_animation_library(name)) || name_list.find(name)) {
 					attempt++;
-					name = path.get_file().get_basename() + " " + itos(attempt);
+					name = path.get_file().get_basename() + ' ' + itos(attempt);
 				}
 				name_list.push_back(name);
 
@@ -444,7 +444,7 @@ void AnimationLibraryEditor::_load_files(const PackedStringArray &p_paths) {
 				int attempt = 1;
 				while (al->has_animation(name) || name_list.find(name)) {
 					attempt++;
-					name = path.get_file().get_basename() + " " + itos(attempt);
+					name = path.get_file().get_basename() + ' ' + itos(attempt);
 				}
 				name_list.push_back(name);
 
@@ -591,7 +591,7 @@ void AnimationLibraryEditor::_button_pressed(TreeItem *p_item, int p_column, int
 				int attempt = 1;
 				while (al->has_animation(name)) {
 					attempt++;
-					name = base_name + " (" + itos(attempt) + ")";
+					name = base_name + " (" + itos(attempt) + ')';
 				}
 
 				EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
@@ -957,14 +957,14 @@ String AnimationLibraryEditor::_get_mixer_signature() const {
 
 	// Add libraries and their animations to signature
 	for (const StringName &lib_name : libs) {
-		signature += "::" + String(lib_name);
+		signature += "::" + lib_name;
 		Ref<AnimationLibrary> lib = mixer->get_animation_library(lib_name);
 		if (lib.is_valid()) {
 			List<StringName> anims;
 			lib->get_animation_list(&anims);
 			anims.sort_custom<StringName::AlphCompare>();
 			for (const StringName &anim_name : anims) {
-				signature += "," + String(anim_name);
+				signature += ',' + anim_name;
 			}
 		}
 	}

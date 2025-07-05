@@ -81,7 +81,7 @@ void AimModifier3D::_get_property_list(List<PropertyInfo> *p_list) const {
 	BoneConstraint3D::get_property_list(p_list);
 
 	for (int i = 0; i < settings.size(); i++) {
-		String path = "settings/" + itos(i) + "/";
+		String path = "settings/" + itos(i) + '/';
 		int rotation_usage = is_using_euler(i) ? PROPERTY_USAGE_DEFAULT : PROPERTY_USAGE_NONE;
 
 		p_list->push_back(PropertyInfo(Variant::INT, path + "forward_axis", PROPERTY_HINT_ENUM, "+X,-X,+Y,-Y,+Z,-Z"));

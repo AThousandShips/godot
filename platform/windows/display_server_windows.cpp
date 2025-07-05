@@ -776,7 +776,7 @@ Error DisplayServerWindows::_file_dialog_with_options_show(const String &p_title
 			}
 		}
 		clean_app_name = clean_app_name.substr(0, 120 - version.length()).trim_suffix(".");
-		appname = "Godot." + clean_app_name + "." + version;
+		appname = "Godot." + clean_app_name + '.' + version;
 	}
 
 	FileDialogData *fd = memnew(FileDialogData);
@@ -3899,7 +3899,7 @@ void DisplayServerWindows::set_native_icon(const String &p_filename) {
 	ERR_FAIL_COND_MSG(big_icon_index == -1, "No valid icons found!");
 
 	if (small_icon_index == -1) {
-		WARN_PRINT("No small icon found, reusing " + itos(big_icon_width) + "x" + itos(big_icon_width) + " @" + itos(big_icon_cc) + " icon!");
+		WARN_PRINT("No small icon found, reusing " + itos(big_icon_width) + 'x' + itos(big_icon_width) + " @" + itos(big_icon_cc) + " icon!");
 		small_icon_index = big_icon_index;
 		small_icon_cc = big_icon_cc;
 	}
@@ -3912,7 +3912,7 @@ void DisplayServerWindows::set_native_icon(const String &p_filename) {
 	f->seek(pos);
 	f->get_buffer((uint8_t *)&data_big.write[0], bytecount_big);
 	HICON icon_big = CreateIconFromResource((PBYTE)&data_big.write[0], bytecount_big, TRUE, 0x00030000);
-	ERR_FAIL_NULL_MSG(icon_big, "Could not create " + itos(big_icon_width) + "x" + itos(big_icon_width) + " @" + itos(big_icon_cc) + " icon, error: " + format_error_message(GetLastError()) + ".");
+	ERR_FAIL_NULL_MSG(icon_big, "Could not create " + itos(big_icon_width) + 'x' + itos(big_icon_width) + " @" + itos(big_icon_cc) + " icon, error: " + format_error_message(GetLastError()) + '.');
 
 	// Read the small icon.
 	DWORD bytecount_small = icon_dir->idEntries[small_icon_index].dwBytesInRes;
@@ -3922,7 +3922,7 @@ void DisplayServerWindows::set_native_icon(const String &p_filename) {
 	f->seek(pos);
 	f->get_buffer((uint8_t *)&data_small.write[0], bytecount_small);
 	HICON icon_small = CreateIconFromResource((PBYTE)&data_small.write[0], bytecount_small, TRUE, 0x00030000);
-	ERR_FAIL_NULL_MSG(icon_small, "Could not create 16x16 @" + itos(small_icon_cc) + " icon, error: " + format_error_message(GetLastError()) + ".");
+	ERR_FAIL_NULL_MSG(icon_small, "Could not create 16x16 @" + itos(small_icon_cc) + " icon, error: " + format_error_message(GetLastError()) + '.');
 
 	// Online tradition says to be sure last error is cleared and set the small icon first.
 	int err = 0;
@@ -3930,11 +3930,11 @@ void DisplayServerWindows::set_native_icon(const String &p_filename) {
 
 	SendMessage(windows[MAIN_WINDOW_ID].hWnd, WM_SETICON, ICON_SMALL, (LPARAM)icon_small);
 	err = GetLastError();
-	ERR_FAIL_COND_MSG(err, "Error setting ICON_SMALL: " + format_error_message(err) + ".");
+	ERR_FAIL_COND_MSG(err, "Error setting ICON_SMALL: " + format_error_message(err) + '.');
 
 	SendMessage(windows[MAIN_WINDOW_ID].hWnd, WM_SETICON, ICON_BIG, (LPARAM)icon_big);
 	err = GetLastError();
-	ERR_FAIL_COND_MSG(err, "Error setting ICON_BIG: " + format_error_message(err) + ".");
+	ERR_FAIL_COND_MSG(err, "Error setting ICON_BIG: " + format_error_message(err) + '.');
 
 	memdelete(icon_dir);
 }
@@ -6537,7 +6537,7 @@ DisplayServer::WindowID DisplayServerWindows::_create_window(WindowMode p_mode, 
 					}
 				}
 				clean_app_name = clean_app_name.substr(0, 120 - version.length()).trim_suffix(".");
-				appname = "Godot." + clean_app_name + "." + version;
+				appname = "Godot." + clean_app_name + '.' + version;
 			}
 			InitPropVariantFromString((PCWSTR)appname.utf16().get_data(), &val);
 			prop_store->SetValue(PKEY_AppUserModel_ID, val);
@@ -6729,7 +6729,7 @@ void DisplayServerWindows::tablet_set_current_driver(const String &p_driver) {
 		_update_tablet_ctx(tablet_driver, driver);
 		tablet_driver = driver;
 	} else {
-		ERR_PRINT("Unknown tablet driver " + p_driver + ".");
+		ERR_PRINT("Unknown tablet driver " + p_driver + '.');
 	}
 }
 
@@ -7120,7 +7120,7 @@ DisplayServerWindows::DisplayServerWindows(const String &p_rendering_driver, Win
 			}
 		}
 		clean_app_name = clean_app_name.substr(0, 120 - version.length()).trim_suffix(".");
-		appname = "Godot." + clean_app_name + "." + version;
+		appname = "Godot." + clean_app_name + '.' + version;
 
 #ifndef TOOLS_ENABLED
 		// Set for exported projects only.

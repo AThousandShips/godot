@@ -471,7 +471,7 @@ void AnimationPlayerEditor::_animation_new() {
 			current_library_name = player->find_animation_library(current_animation);
 		}
 	}
-	String attempt_prefix = (current_library_name == "") ? "" : current_library_name + "/";
+	String attempt_prefix = (current_library_name == "") ? "" : current_library_name + '/';
 	while (true) {
 		String attempt = base;
 		if (count > 1) {
@@ -627,7 +627,7 @@ void AnimationPlayerEditor::_animation_name_edited() {
 			// Extract library prefix if present.
 			String new_library_prefix = "";
 			if (current.contains_char('/')) {
-				new_library_prefix = current.get_slicec('/', 0) + "/";
+				new_library_prefix = current.get_slicec('/', 0) + '/';
 				current = current.get_slicec('/', 1);
 			}
 
@@ -693,7 +693,7 @@ void AnimationPlayerEditor::_animation_name_edited() {
 			undo_redo->commit_action();
 
 			if (library_name != "") {
-				library_name = library_name + "/";
+				library_name += '/';
 			}
 
 			if (is_dummy) {
@@ -745,7 +745,7 @@ void AnimationPlayerEditor::_animation_name_edited() {
 			undo_redo->commit_action();
 
 			if (library_name != "") {
-				library_name = library_name + "/";
+				library_name += '/';
 			}
 
 			if (is_dummy) {
@@ -1029,7 +1029,7 @@ void AnimationPlayerEditor::_update_player() {
 		for (const StringName &E : animlist) {
 			String path = K;
 			if (path != "") {
-				path += "/";
+				path += '/';
 			}
 			path += E;
 			animation->add_item(path);
@@ -1475,7 +1475,7 @@ void AnimationPlayerEditor::_current_animation_changed(const String &p_name) {
 			for (const StringName &E : animlist) {
 				String path = K;
 				if (path != "") {
-					path += "/";
+					path += '/';
 				}
 				path += E;
 				if (p_name == path) {

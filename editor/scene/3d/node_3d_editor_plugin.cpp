@@ -1207,7 +1207,7 @@ void Node3DEditorViewport::_update_name() {
 
 	if (auto_orthogonal) {
 		// TRANSLATORS: This will be appended to the view name when Auto Orthogonal is enabled.
-		name += " " + TTR("[auto]");
+		name += ' ' + TTR("[auto]");
 	}
 
 	view_display_menu->set_text(name);
@@ -1634,7 +1634,7 @@ void Node3DEditorViewport::_list_select(Ref<InputEventMouseButton> b) {
 
 			Ref<Texture2D> icon = EditorNode::get_singleton()->get_object_icon(spat, "Node");
 
-			String node_path = "/" + root_name + "/" + String(root_path.rel_path_to(spat->get_path()));
+			String node_path = '/' + root_name + '/' + String(root_path.rel_path_to(spat->get_path()));
 
 			int locked = 0;
 			if (_is_node_locked(spat)) {
@@ -1654,9 +1654,9 @@ void Node3DEditorViewport::_list_select(Ref<InputEventMouseButton> b) {
 
 			String suffix;
 			if (locked == 1) {
-				suffix = " (" + TTR("Locked") + ")";
+				suffix = " (" + TTR("Locked") + ')';
 			} else if (locked == 2) {
-				suffix = " (" + TTR("Grouped") + ")";
+				suffix = " (" + TTR("Grouped") + ')';
 			}
 			selection_menu->add_item((String)spat->get_name() + suffix);
 			selection_menu->set_item_icon(i, icon);
@@ -3191,13 +3191,13 @@ void Node3DEditorViewport::_notification(int p_what) {
 				text += vformat(TTR("X: %s\n"), rtos(current_camera->get_position().x).pad_decimals(1));
 				text += vformat(TTR("Y: %s\n"), rtos(current_camera->get_position().y).pad_decimals(1));
 				text += vformat(TTR("Z: %s\n"), rtos(current_camera->get_position().z).pad_decimals(1));
-				text += "\n";
+				text += '\n';
 				text += vformat(
 						TTR("Size: %s (%.1fMP)\n"),
 						viewport_size,
 						viewport->get_size().x * viewport->get_size().y * 0.000001);
 
-				text += "\n";
+				text += '\n';
 				text += vformat(TTR("Objects: %d\n"), viewport->get_render_info(Viewport::RENDER_INFO_TYPE_VISIBLE, Viewport::RENDER_INFO_OBJECTS_IN_FRAME));
 				text += vformat(TTR("Primitives: %d\n"), viewport->get_render_info(Viewport::RENDER_INFO_TYPE_VISIBLE, Viewport::RENDER_INFO_PRIMITIVES_IN_FRAME));
 				text += vformat(TTR("Draw Calls: %d"), viewport->get_render_info(Viewport::RENDER_INFO_TYPE_VISIBLE, Viewport::RENDER_INFO_DRAW_CALLS_IN_FRAME));
@@ -3300,7 +3300,7 @@ void Node3DEditorViewport::_notification(int p_what) {
 						double snap = EDITOR_GET("interface/inspector/default_float_step");
 						int snap_step_decimals = Math::range_step_decimals(snap);
 						set_message(TTR("Translating:") + " (" + String::num(selected_node->get_global_position().x, snap_step_decimals) + ", " +
-								String::num(selected_node->get_global_position().y, snap_step_decimals) + ", " + String::num(selected_node->get_global_position().z, snap_step_decimals) + ")");
+								String::num(selected_node->get_global_position().y, snap_step_decimals) + ", " + String::num(selected_node->get_global_position().z, snap_step_decimals) + ')');
 					}
 
 					selected_node->set_global_position(spatial_editor->snap_point(_get_instance_position(_edit.mouse_pos, selected_node)));
@@ -3322,7 +3322,7 @@ void Node3DEditorViewport::_notification(int p_what) {
 				double snap = EDITOR_GET("interface/inspector/default_float_step");
 				int snap_step_decimals = Math::range_step_decimals(snap);
 				set_message(TTR("Instantiating:") + " (" + String::num(preview_node_pos.x, snap_step_decimals) + ", " +
-						String::num(preview_node_pos.y, snap_step_decimals) + ", " + String::num(preview_node_pos.z, snap_step_decimals) + ")");
+						String::num(preview_node_pos.y, snap_step_decimals) + ", " + String::num(preview_node_pos.z, snap_step_decimals) + ')');
 				Transform3D preview_gl_transform = Transform3D(Basis(), preview_node_pos);
 				preview_node->set_global_transform(preview_gl_transform);
 				if (!preview_node->is_visible()) {
@@ -4880,7 +4880,7 @@ bool Node3DEditorViewport::_create_instance(Node *p_parent, const String &p_path
 	String new_name = p_parent->validate_child_name(instantiated_scene);
 	EditorDebuggerNode *ed = EditorDebuggerNode::get_singleton();
 	undo_redo->add_do_method(ed, "live_debug_instantiate_node", EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent), p_path, new_name);
-	undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent)) + "/" + new_name));
+	undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent)) + '/' + new_name));
 
 	Node3D *node3d = Object::cast_to<Node3D>(instantiated_scene);
 	if (node3d) {
@@ -4927,7 +4927,7 @@ bool Node3DEditorViewport::_create_audio_node(Node *p_parent, const String &p_pa
 	const String new_name = p_parent->validate_child_name(audio_player);
 	EditorDebuggerNode *ed = EditorDebuggerNode::get_singleton();
 	undo_redo->add_do_method(ed, "live_debug_create_node", EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent), audio_player->get_class(), new_name);
-	undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent)) + "/" + new_name));
+	undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent)) + '/' + new_name));
 
 	Transform3D parent_tf;
 	Node3D *parent_node3d = Object::cast_to<Node3D>(p_parent);
@@ -5332,7 +5332,7 @@ void Node3DEditorViewport::update_transform(bool p_shift) {
 			// This might not be necessary anymore after issue #288 is solved (in 4.0?).
 			// TRANSLATORS: Refers to changing the scale of a node in the 3D editor.
 			set_message(TTR("Scaling:") + " (" + String::num(motion_snapped.x, snap_step_decimals) + ", " +
-					String::num(motion_snapped.y, snap_step_decimals) + ", " + String::num(motion_snapped.z, snap_step_decimals) + ")");
+					String::num(motion_snapped.y, snap_step_decimals) + ", " + String::num(motion_snapped.z, snap_step_decimals) + ')');
 			if (local_coords) {
 				// TODO: needed?
 				motion = _edit.original.basis.inverse().xform(motion);
@@ -5403,7 +5403,7 @@ void Node3DEditorViewport::update_transform(bool p_shift) {
 			motion_snapped.snapf(snap);
 			// TRANSLATORS: Refers to changing the position of a node in the 3D editor.
 			set_message(TTR("Translating:") + " (" + String::num(motion_snapped.x, snap_step_decimals) + ", " +
-					String::num(motion_snapped.y, snap_step_decimals) + ", " + String::num(motion_snapped.z, snap_step_decimals) + ")");
+					String::num(motion_snapped.y, snap_step_decimals) + ", " + String::num(motion_snapped.z, snap_step_decimals) + ')');
 			if (local_coords) {
 				motion = spatial_editor->get_gizmo_transform().basis.inverse().xform(motion);
 			}
@@ -8375,10 +8375,10 @@ void Node3DEditor::_update_theme() {
 void Node3DEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_TRANSLATION_CHANGED: {
-			tool_button[TOOL_MODE_SELECT]->set_tooltip_text(keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Drag: Rotate selected node around pivot.") + "\n" + TTR("Alt+RMB: Show list of all nodes at position clicked, including locked.") + "\n" + TTR("(Available in all modes.)"));
-			tool_button[TOOL_MODE_MOVE]->set_tooltip_text(keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Drag: Use snap.") + "\n" + TTR("Alt+RMB: Show list of all nodes at position clicked, including locked."));
-			tool_button[TOOL_MODE_ROTATE]->set_tooltip_text(keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Drag: Use snap.") + "\n" + TTR("Alt+RMB: Show list of all nodes at position clicked, including locked."));
-			tool_button[TOOL_MODE_SCALE]->set_tooltip_text(keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Drag: Use snap.") + "\n" + TTR("Alt+RMB: Show list of all nodes at position clicked, including locked."));
+			tool_button[TOOL_MODE_SELECT]->set_tooltip_text(keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Drag: Rotate selected node around pivot.") + '\n' + TTR("Alt+RMB: Show list of all nodes at position clicked, including locked.") + '\n' + TTR("(Available in all modes.)"));
+			tool_button[TOOL_MODE_MOVE]->set_tooltip_text(keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Drag: Use snap.") + '\n' + TTR("Alt+RMB: Show list of all nodes at position clicked, including locked."));
+			tool_button[TOOL_MODE_ROTATE]->set_tooltip_text(keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Drag: Use snap.") + '\n' + TTR("Alt+RMB: Show list of all nodes at position clicked, including locked."));
+			tool_button[TOOL_MODE_SCALE]->set_tooltip_text(keycode_get_string((Key)KeyModifierMask::CMD_OR_CTRL) + TTR("Drag: Use snap.") + '\n' + TTR("Alt+RMB: Show list of all nodes at position clicked, including locked."));
 			_update_gizmos_menu();
 		} break;
 

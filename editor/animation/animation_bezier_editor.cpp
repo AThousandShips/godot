@@ -662,8 +662,8 @@ void AnimationBezierTrackEdit::_notification(int p_what) {
 							ep.point_rect.size = bezier_icon->get_size();
 							if (is_selected) {
 								draw_texture(selected_icon, ep.point_rect.position);
-								draw_string(font, ep.point_rect.position + Vector2(8, -font->get_height(font_size) - 8), TTR("Time:") + " " + TS->format_number(rtos(Math::snapped(offset, 0.0001))), HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, accent);
-								draw_string(font, ep.point_rect.position + Vector2(8, -8), TTR("Value:") + " " + TS->format_number(rtos(Math::snapped(value, 0.001))), HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, accent);
+								draw_string(font, ep.point_rect.position + Vector2(8, -font->get_height(font_size) - 8), TTR("Time:") + ' ' + TS->format_number(rtos(Math::snapped(offset, 0.0001))), HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, accent);
+								draw_string(font, ep.point_rect.position + Vector2(8, -8), TTR("Value:") + ' ' + TS->format_number(rtos(Math::snapped(value, 0.001))), HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, accent);
 							} else {
 								Color track_color = Color(1, 1, 1, 1);
 								if (i != selected_track) {

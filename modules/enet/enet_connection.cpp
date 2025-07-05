@@ -239,7 +239,7 @@ double ENetConnection::pop_statistic(HostStatistic p_stat) {
 			ptr = &(host->totalReceivedPackets);
 			break;
 	}
-	ERR_FAIL_NULL_V_MSG(ptr, 0, "Invalid statistic: " + itos(p_stat) + ".");
+	ERR_FAIL_NULL_V_MSG(ptr, 0, "Invalid statistic: " + itos(p_stat) + '.');
 	uint32_t ret = *ptr;
 	*ptr = 0;
 	return ret;

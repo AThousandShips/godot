@@ -155,7 +155,7 @@ void EditorAtlasPacker::chart_pack(Vector<Chart> &charts, int &r_width, int &r_h
 
 		String row;
 		for (int j = 0; j < top_heights.size(); j++) {
-			row += "(" + itos(top_heights[j]) + "-" + itos(bottom_heights[j]) + "),";
+			row += '(' + itos(top_heights[j]) + '-' + itos(bottom_heights[j]) + "),";
 		}
 
 		PlottedBitmap plotted_bitmap;

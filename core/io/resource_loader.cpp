@@ -69,7 +69,7 @@ bool ResourceFormatLoader::recognize_path(const String &p_path, const String &p_
 	}
 
 	for (const String &E : extensions) {
-		const String ext = !E.begins_with(".") ? "." + E : E;
+		const String ext = !E.begins_with(".") ? '.' + E : E;
 		if (p_path.right(ext.length()).nocasecmp_to(ext) == 0) {
 			return true;
 		}
@@ -1511,7 +1511,7 @@ Vector<String> ResourceLoader::list_directory(const String &p_directory) {
 		bool recognized = false;
 		if (dir->current_is_dir()) {
 			if (d != "." && d != "..") {
-				d += "/";
+				d += '/';
 				recognized = true;
 			}
 		} else {

@@ -74,7 +74,7 @@ void MultiplayerSpawner::_get_property_list(List<PropertyInfo> *p_list) const {
 	String ext_hint;
 	for (const String &E : exts) {
 		if (!ext_hint.is_empty()) {
-			ext_hint += ",";
+			ext_hint += ',';
 		}
 		ext_hint += "*." + E;
 	}

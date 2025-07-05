@@ -428,7 +428,7 @@ Vector<uint8_t> save_dds_buffer(const Ref<Image> &p_img) {
 
 			ERR_FAIL_COND_V_MSG(data.size() != expected_size, Vector<uint8_t>(),
 					"Image data size mismatch for mipmap level " + itos(mip_i) +
-							". Expected size: " + itos(expected_size) + ", actual size: " + itos(data.size()) + ".");
+							". Expected size: " + itos(expected_size) + ", actual size: " + itos(data.size()) + '.');
 
 			if (mip_image->get_format() == Image::FORMAT_RGBA4444) {
 				// RGBA4 to BGRA4
@@ -477,7 +477,7 @@ Vector<uint8_t> save_dds_buffer(const Ref<Image> &p_img) {
 
 			ERR_FAIL_COND_V_MSG(size != expected_size, Vector<uint8_t>(),
 					"Image data size mismatch for mipmap level " + itos(mip_i) +
-							". Expected size: " + itos(expected_size) + ", actual size: " + itos(size) + ".");
+							". Expected size: " + itos(expected_size) + ", actual size: " + itos(size) + '.');
 
 			stream_buffer->put_data(image->ptr() + ofs, size);
 		}

@@ -1064,7 +1064,7 @@ Animation::TrackType Animation::get_cache_type(TrackType p_type) {
 void Animation::_track_update_hash(int p_track) {
 	NodePath track_path = tracks[p_track]->path;
 	TrackType track_cache_type = get_cache_type(tracks[p_track]->type);
-	tracks[p_track]->thash = StringName(String(track_path.get_concatenated_names()) + String(track_path.get_concatenated_subnames()) + itos(track_cache_type)).hash();
+	tracks[p_track]->thash = StringName(String(track_path.get_concatenated_names()) + track_path.get_concatenated_subnames() + itos(track_cache_type)).hash();
 }
 
 Animation::TypeHash Animation::track_get_type_hash(int p_track) const {
@@ -5052,7 +5052,7 @@ void Animation::compress(uint32_t p_page_size, uint32_t p_fps, float p_split_tol
 				rollback = true;
 			}
 
-			print_animc("\tCurrent Page Size: " + itos(current_page_size) + "/" + itos(p_page_size) + " Rollback? " + String(rollback ? "YES!" : "no"));
+			print_animc("\tCurrent Page Size: " + itos(current_page_size) + '/' + itos(p_page_size) + " Rollback? " + String(rollback ? "YES!" : "no"));
 
 			if (rollback) {
 				// Not valid any longer, so rollback and commit page
@@ -5092,7 +5092,7 @@ void Animation::compress(uint32_t p_page_size, uint32_t p_fps, float p_split_tol
 				// If valid, then the end frame is the next invalid one (in case more frames exist), or the current frame in case no more frames exist.
 				uint32_t page_end_frame = (rollback || best_frame == FRAME_MAX) ? current_frame : best_invalid_frame;
 
-				print_animc("\tEnd Frame: " + itos(page_end_frame) + ", " + rtos(page_end_frame * frame_len) + "s");
+				print_animc("\tEnd Frame: " + itos(page_end_frame) + ", " + rtos(page_end_frame * frame_len) + 's');
 
 				// Add finalizer frames and commit pending tracks
 				uint32_t finalizer_local_frame = page_end_frame - base_page_frame;
@@ -5125,7 +5125,7 @@ void Animation::compress(uint32_t p_page_size, uint32_t p_fps, float p_split_tol
 					print_animc("\tTrack " + itos(i) + " time packets: " + itos(time_tracks[i].packets.size()) + " Packet data: " + itos(data_tracks[i].data.size()));
 				}
 
-				print_animc("\tTotal page Size: " + itos(total_page_size) + "/" + itos(p_page_size));
+				print_animc("\tTotal page Size: " + itos(total_page_size) + '/' + itos(p_page_size));
 
 				// Create Page
 				Vector<uint8_t> page_data;
@@ -5261,7 +5261,7 @@ void Animation::compress(uint32_t p_page_size, uint32_t p_fps, float p_split_tol
 		new_size += page.data.size();
 	}
 
-	print_line("Original size: " + itos(orig_size) + " - Compressed size: " + itos(new_size) + " " + String::num(float(new_size) / float(orig_size) * 100, 2) + "% pages: " + itos(compression.pages.size()));
+	print_line("Original size: " + itos(orig_size) + " - Compressed size: " + itos(new_size) + ' ' + String::num(float(new_size) / float(orig_size) * 100, 2) + "% pages: " + itos(compression.pages.size()));
 #endif
 }
 

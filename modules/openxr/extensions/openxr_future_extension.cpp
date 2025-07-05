@@ -168,7 +168,7 @@ void OpenXRFutureExtension::on_session_destroyed() {
 		};
 		XrResult result = xrCancelFutureEXT_ptr(openxr_api->get_instance(), &cancel_info);
 		if (XR_FAILED(result)) {
-			WARN_PRINT("OpenXR: Failed to cancel future [" + openxr_api->get_error_string(result) + "]");
+			WARN_PRINT("OpenXR: Failed to cancel future [" + openxr_api->get_error_string(result) + ']');
 		}
 
 		// Make sure we mark our future result as cancelled
@@ -209,7 +209,7 @@ void OpenXRFutureExtension::cancel_future(XrFutureEXT p_future) {
 	};
 	XrResult result = xrCancelFutureEXT_ptr(openxr_api->get_instance(), &cancel_info);
 	if (XR_FAILED(result)) {
-		WARN_PRINT("OpenXR: Failed to cancel future [" + openxr_api->get_error_string(result) + "]");
+		WARN_PRINT("OpenXR: Failed to cancel future [" + openxr_api->get_error_string(result) + ']');
 	}
 
 	// Make sure we mark our future result as cancelled
@@ -246,7 +246,7 @@ void OpenXRFutureExtension::on_process() {
 		};
 		XrResult result = xrPollFutureEXT_ptr(openxr_api->get_instance(), &poll_info, &poll_result);
 		if (XR_FAILED(result)) {
-			ERR_PRINT("OpenXR: Failed to obtain future status [" + openxr_api->get_error_string(result) + "]");
+			ERR_PRINT("OpenXR: Failed to obtain future status [" + openxr_api->get_error_string(result) + ']');
 			// Maybe remove this depending on the error?
 			continue;
 		}

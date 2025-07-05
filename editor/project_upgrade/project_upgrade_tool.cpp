@@ -108,7 +108,7 @@ void ProjectUpgradeTool::finish_upgrade() {
 
 		int step = 0;
 		for (const String &file_path : paths) {
-			ep.step(TTR("Re-saving scene:") + " " + file_path, step++);
+			ep.step(TTR("Re-saving scene:") + ' ' + file_path, step++);
 			EditorNode::get_singleton()->load_scene(file_path);
 			EditorNode::get_singleton()->trigger_menu_option(EditorNode::SCENE_SAVE_SCENE, true);
 			EditorNode::get_singleton()->trigger_menu_option(EditorNode::SCENE_CLOSE, true);
@@ -122,7 +122,7 @@ void ProjectUpgradeTool::finish_upgrade() {
 
 		int step = 0;
 		for (const String &file_path : paths) {
-			ep.step(TTR("Re-saving resource:") + " " + file_path, step++);
+			ep.step(TTR("Re-saving resource:") + ' ' + file_path, step++);
 			Ref<Resource> res = ResourceLoader::load(file_path, "", ResourceFormatLoader::CACHE_MODE_REPLACE);
 			if (res.is_valid()) {
 				ResourceSaver::save(res);

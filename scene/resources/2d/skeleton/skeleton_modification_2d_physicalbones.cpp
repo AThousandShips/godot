@@ -94,7 +94,7 @@ void SkeletonModification2DPhysicalBones::_get_property_list(List<PropertyInfo> 
 #endif //TOOLS_ENABLED
 
 	for (int i = 0; i < physical_bone_chain.size(); i++) {
-		String base_string = "joint_" + itos(i) + "_";
+		String base_string = "joint_" + itos(i) + '_';
 
 		p_list->push_back(PropertyInfo(Variant::NODE_PATH, base_string + "nodepath", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "PhysicalBone2D", PROPERTY_USAGE_DEFAULT));
 	}
@@ -121,7 +121,7 @@ void SkeletonModification2DPhysicalBones::_execute(float p_delta) {
 
 		PhysicalBone2D *physical_bone = ObjectDB::get_instance<PhysicalBone2D>(bone_data.physical_bone_node_cache);
 		if (!physical_bone) {
-			ERR_PRINT_ONCE("PhysicalBone2D not found at index " + itos(i) + "!");
+			ERR_PRINT_ONCE("PhysicalBone2D not found at index " + itos(i) + '!');
 			return;
 		}
 		if (physical_bone->get_bone2d_index() < 0 || physical_bone->get_bone2d_index() > stack->skeleton->get_bone_count()) {

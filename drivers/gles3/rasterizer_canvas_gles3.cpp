@@ -2602,10 +2602,10 @@ void RasterizerCanvasGLES3::_allocate_instance_data_buffer() {
 	GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_ARRAY_BUFFER, new_buffers[0], data.max_instance_buffer_size, nullptr, GL_STREAM_DRAW, "2D Batch UBO[" + itos(state.current_data_buffer_index) + "][0]");
 	// Light uniform buffer.
 	glBindBuffer(GL_UNIFORM_BUFFER, new_buffers[1]);
-	GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_UNIFORM_BUFFER, new_buffers[1], sizeof(LightUniform) * data.max_lights_per_render, nullptr, GL_STREAM_DRAW, "2D Lights UBO[" + itos(state.current_data_buffer_index) + "]");
+	GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_UNIFORM_BUFFER, new_buffers[1], sizeof(LightUniform) * data.max_lights_per_render, nullptr, GL_STREAM_DRAW, "2D Lights UBO[" + itos(state.current_data_buffer_index) + ']');
 	// State buffer.
 	glBindBuffer(GL_UNIFORM_BUFFER, new_buffers[2]);
-	GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_UNIFORM_BUFFER, new_buffers[2], sizeof(StateBuffer), nullptr, GL_STREAM_DRAW, "2D State UBO[" + itos(state.current_data_buffer_index) + "]");
+	GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_UNIFORM_BUFFER, new_buffers[2], sizeof(StateBuffer), nullptr, GL_STREAM_DRAW, "2D State UBO[" + itos(state.current_data_buffer_index) + ']');
 
 	state.current_data_buffer_index = (state.current_data_buffer_index + 1);
 	DataBuffer db;
@@ -2630,7 +2630,7 @@ void RasterizerCanvasGLES3::_allocate_instance_buffer() {
 	glGenBuffers(1, &new_buffer);
 
 	glBindBuffer(GL_ARRAY_BUFFER, new_buffer);
-	GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_ARRAY_BUFFER, new_buffer, data.max_instance_buffer_size, nullptr, GL_STREAM_DRAW, "Batch UBO[" + itos(state.current_data_buffer_index) + "][" + itos(state.canvas_instance_data_buffers[state.current_data_buffer_index].instance_buffers.size()) + "]");
+	GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_ARRAY_BUFFER, new_buffer, data.max_instance_buffer_size, nullptr, GL_STREAM_DRAW, "Batch UBO[" + itos(state.current_data_buffer_index) + "][" + itos(state.canvas_instance_data_buffers[state.current_data_buffer_index].instance_buffers.size()) + ']');
 
 	state.canvas_instance_data_buffers[state.current_data_buffer_index].instance_buffers.push_back(new_buffer);
 
@@ -2828,7 +2828,7 @@ RasterizerCanvasGLES3::RasterizerCanvasGLES3() {
 
 	String global_defines;
 	global_defines += "#define MAX_GLOBAL_SHADER_UNIFORMS 256\n"; // TODO: this is arbitrary for now
-	global_defines += "#define MAX_LIGHTS " + itos(data.max_lights_per_render) + "\n";
+	global_defines += "#define MAX_LIGHTS " + itos(data.max_lights_per_render) + '\n';
 
 	GLES3::MaterialStorage::get_singleton()->shaders.canvas_shader.initialize(global_defines, 1);
 	data.canvas_shader_default_version = GLES3::MaterialStorage::get_singleton()->shaders.canvas_shader.version_create();

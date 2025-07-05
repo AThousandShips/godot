@@ -311,15 +311,15 @@ void VisualShaderGraphPlugin::set_input_port_default_value(VisualShader::Type p_
 		} break;
 		case Variant::VECTOR2: {
 			Vector2 v = p_value;
-			button->set_text(String::num(v.x, 3) + "," + String::num(v.y, 3));
+			button->set_text(String::num(v.x, 3) + ',' + String::num(v.y, 3));
 		} break;
 		case Variant::VECTOR3: {
 			Vector3 v = p_value;
-			button->set_text(String::num(v.x, 3) + "," + String::num(v.y, 3) + "," + String::num(v.z, 3));
+			button->set_text(String::num(v.x, 3) + ',' + String::num(v.y, 3) + ',' + String::num(v.z, 3));
 		} break;
 		case Variant::VECTOR4: {
 			Vector4 v = p_value;
-			button->set_text(String::num(v.x, 3) + "," + String::num(v.y, 3) + "," + String::num(v.z, 3) + "," + String::num(v.w, 3));
+			button->set_text(String::num(v.x, 3) + ',' + String::num(v.y, 3) + ',' + String::num(v.z, 3) + ',' + String::num(v.w, 3));
 		} break;
 		default: {
 		}
@@ -878,7 +878,7 @@ void VisualShaderGraphPlugin::add_node(VisualShader::Type p_type, int p_id, bool
 				Label *label = memnew(Label);
 				label->set_focus_mode(Control::FOCUS_ACCESSIBILITY);
 				label->set_auto_translate_mode(Node::AUTO_TRANSLATE_MODE_DISABLED); // TODO: Implement proper translation switch.
-				label->set_text(prop_name + ":");
+				label->set_text(prop_name + ':');
 				hbox->add_child(label);
 			}
 
@@ -979,12 +979,12 @@ void VisualShaderGraphPlugin::add_node(VisualShader::Type p_type, int p_id, bool
 			for (int i = 0; i < MAX(vsnode->get_input_port_count(), vsnode->get_output_port_count()); i++) {
 				if (i < vsnode->get_input_port_count()) {
 					if (input_port_name == vsnode->get_input_port_name(i)) {
-						input_port_name = "_" + input_port_name;
+						input_port_name = '_' + input_port_name;
 					}
 				}
 				if (i < vsnode->get_output_port_count()) {
 					if (output_port_name == vsnode->get_output_port_name(i)) {
-						output_port_name = "_" + output_port_name;
+						output_port_name = '_' + output_port_name;
 					}
 				}
 			}
@@ -1145,7 +1145,7 @@ void VisualShaderGraphPlugin::add_node(VisualShader::Type p_type, int p_id, bool
 
 					Button *remove_btn = memnew(Button);
 					remove_btn->set_button_icon(EditorNode::get_singleton()->get_editor_theme()->get_icon(SNAME("Remove"), EditorStringName(EditorIcons)));
-					remove_btn->set_tooltip_text(TTR("Remove") + " " + name_left);
+					remove_btn->set_tooltip_text(TTR("Remove") + ' ' + name_left);
 					remove_btn->connect(SceneStringName(pressed), callable_mp(editor, &VisualShaderEditor::_remove_input_port).bind(p_id, j), CONNECT_DEFERRED);
 					hb->add_child(remove_btn);
 				} else {
@@ -1175,7 +1175,7 @@ void VisualShaderGraphPlugin::add_node(VisualShader::Type p_type, int p_id, bool
 				if (is_group) {
 					Button *remove_btn = memnew(Button);
 					remove_btn->set_button_icon(EditorNode::get_singleton()->get_editor_theme()->get_icon(SNAME("Remove"), EditorStringName(EditorIcons)));
-					remove_btn->set_tooltip_text(TTR("Remove") + " " + name_left);
+					remove_btn->set_tooltip_text(TTR("Remove") + ' ' + name_left);
 					remove_btn->connect(SceneStringName(pressed), callable_mp(editor, &VisualShaderEditor::_remove_output_port).bind(p_id, i), CONNECT_DEFERRED);
 					hb->add_child(remove_btn);
 
@@ -1367,7 +1367,7 @@ void VisualShaderGraphPlugin::add_node(VisualShader::Type p_type, int p_id, bool
 
 	String error = vsnode->get_warning(mode, p_type);
 	if (has_relative_parameter_instances) {
-		error += "\n" + TTR("The 2D preview cannot correctly show the result retrieved from instance parameter.");
+		error += '\n' + TTR("The 2D preview cannot correctly show the result retrieved from instance parameter.");
 	}
 	if (!error.is_empty()) {
 		Label *error_label = memnew(Label);
@@ -1698,7 +1698,7 @@ Dictionary VisualShaderEditor::get_custom_node_data(Ref<VisualShaderNodeCustom> 
 	if (p_custom_node->has_method("_get_subcategory")) {
 		String subcategory = (String)p_custom_node->call("_get_subcategory");
 		if (!subcategory.is_empty()) {
-			category += "/" + subcategory;
+			category += '/' + subcategory;
 		}
 	}
 	dict["category"] = category;
@@ -2176,7 +2176,7 @@ void VisualShaderEditor::_update_nodes() {
 				dict["type"] = String();
 
 				String key;
-				key = String(dict["category"]) + "/" + String(dict["name"]);
+				key = String(dict["category"]) + '/' + String(dict["name"]);
 
 				added[key] = dict;
 			}
@@ -2201,7 +2201,7 @@ void VisualShaderEditor::_update_nodes() {
 				dict["script"] = Ref<Script>();
 
 				String key;
-				key = String(dict["category"]) + "/" + String(dict["name"]);
+				key = String(dict["category"]) + '/' + String(dict["name"]);
 
 				added[key] = dict;
 			}
@@ -2686,7 +2686,7 @@ String VisualShaderEditor::_get_cache_id_string() const {
 
 String VisualShaderEditor::_get_cache_key(const String &p_prop_name) const {
 	const int type = get_current_shader_type();
-	return "type" + itos(type) + ":" + p_prop_name;
+	return "type" + itos(type) + ':' + p_prop_name;
 }
 
 void VisualShaderEditor::_add_input_port(int p_node, int p_port, int p_port_type, const String &p_name) {
@@ -5983,7 +5983,7 @@ void VisualShaderEditor::_varying_validate() {
 
 	if (varying_type->get_selected() == 6 && varying_mode->get_selected() == VisualShader::VaryingMode::VARYING_MODE_VERTEX_TO_FRAG_LIGHT) {
 		if (has_error) {
-			error += "\n";
+			error += '\n';
 		}
 		error += vformat(TTR("Boolean type cannot be used with `%s` varying mode."), "Vertex -> [Fragment, Light]");
 		has_error = true;
@@ -6359,7 +6359,7 @@ void VisualShaderEditor::_update_preview() {
 			preview_text->set_line_background_color(err_line - 1, error_line_color);
 			error_panel->show();
 
-			error_label->set_text("error(" + file + ":" + itos(err_line) + "): " + error_pp);
+			error_label->set_text("error(" + file + ':' + itos(err_line) + "): " + error_pp);
 			shader_error = true;
 			return;
 		}
@@ -6374,7 +6374,7 @@ void VisualShaderEditor::_update_preview() {
 		if (include_positions.size() > 1) {
 			// Error is in an include.
 			err_line = include_positions[0].line;
-			err_text = "error(" + itos(err_line) + ") in include " + include_positions[include_positions.size() - 1].file + ":" + itos(include_positions[include_positions.size() - 1].line) + ": " + sl.get_error_text();
+			err_text = "error(" + itos(err_line) + ") in include " + include_positions[include_positions.size() - 1].file + ':' + itos(include_positions[include_positions.size() - 1].line) + ": " + sl.get_error_text();
 		} else {
 			err_line = sl.get_error_line();
 			err_text = "error(" + itos(err_line) + "): " + sl.get_error_text();
@@ -8059,9 +8059,9 @@ public:
 			prop_name->set_focus_mode(Control::FOCUS_ACCESSIBILITY);
 			String prop_name_str = p_names[i];
 			if (p_overrided_names.has(p_names[i])) {
-				prop_name_str = p_overrided_names[p_names[i]] + ":";
+				prop_name_str = p_overrided_names[p_names[i]] + ':';
 			} else {
-				prop_name_str = prop_name_str.capitalize() + ":";
+				prop_name_str = prop_name_str.capitalize() + ':';
 			}
 			prop_name->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED); // TODO: Implement proper translation switch.
 			prop_name->set_text(prop_name_str);

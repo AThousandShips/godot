@@ -164,7 +164,7 @@ void OpenXRIPBinding::set_paths(const PackedStringArray p_paths) { // Deprecated
 	binding_path = "";
 	for (const String &path : p_paths) {
 		if (!binding_path.is_empty()) {
-			binding_path += ",";
+			binding_path += ',';
 		}
 		binding_path += path;
 	}

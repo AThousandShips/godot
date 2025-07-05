@@ -265,7 +265,7 @@ Quaternion Quaternion::spherical_cubic_interpolate_in_time(const Quaternion &p_b
 }
 
 Quaternion::operator String() const {
-	return "(" + String::num_real(x, false) + ", " + String::num_real(y, false) + ", " + String::num_real(z, false) + ", " + String::num_real(w, false) + ")";
+	return '(' + String::num_real(x, false) + ", " + String::num_real(y, false) + ", " + String::num_real(z, false) + ", " + String::num_real(w, false) + ')';
 }
 
 Vector3 Quaternion::get_axis() const {

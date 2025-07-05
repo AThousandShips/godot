@@ -215,7 +215,7 @@ Vector<Vector<String>> get_extractable_message_list() {
 				// If we reached last line and it's not a content line, break, otherwise let processing that last loop.
 				if (is_eof && l.is_empty()) {
 					if (status == STATUS_READING_ID || status == STATUS_READING_CONTEXT || status == STATUS_READING_PLURAL) {
-						ERR_FAIL_V_MSG(Vector<Vector<String>>(), "Unexpected EOF while reading POT file at: " + path + ":" + itos(line));
+						ERR_FAIL_V_MSG(Vector<Vector<String>>(), "Unexpected EOF while reading POT file at: " + path + ':' + itos(line));
 					} else {
 						break;
 					}
@@ -223,7 +223,7 @@ Vector<Vector<String>> get_extractable_message_list() {
 
 				if (l.begins_with("msgctxt")) {
 					ERR_FAIL_COND_V_MSG(status != STATUS_READING_STRING && status != STATUS_READING_PLURAL, Vector<Vector<String>>(),
-							"Unexpected 'msgctxt', was expecting 'msgid_plural' or 'msgstr' before 'msgctxt' while parsing: " + path + ":" + itos(line));
+							"Unexpected 'msgctxt', was expecting 'msgid_plural' or 'msgstr' before 'msgctxt' while parsing: " + path + ':' + itos(line));
 
 					// In POT files, "msgctxt" appears before "msgid". If we encounter a "msgctxt", we add what we have read
 					// and set "entered_context" to true to prevent adding twice.
@@ -242,12 +242,12 @@ Vector<Vector<String>> get_extractable_message_list() {
 
 				if (l.begins_with("msgid_plural")) {
 					if (status != STATUS_READING_ID) {
-						ERR_FAIL_V_MSG(Vector<Vector<String>>(), "Unexpected 'msgid_plural', was expecting 'msgid' before 'msgid_plural' while parsing: " + path + ":" + itos(line));
+						ERR_FAIL_V_MSG(Vector<Vector<String>>(), "Unexpected 'msgid_plural', was expecting 'msgid' before 'msgid_plural' while parsing: " + path + ':' + itos(line));
 					}
 					l = l.substr(12).strip_edges();
 					status = STATUS_READING_PLURAL;
 				} else if (l.begins_with("msgid")) {
-					ERR_FAIL_COND_V_MSG(status == STATUS_READING_ID, Vector<Vector<String>>(), "Unexpected 'msgid', was expecting 'msgstr' while parsing: " + path + ":" + itos(line));
+					ERR_FAIL_COND_V_MSG(status == STATUS_READING_ID, Vector<Vector<String>>(), "Unexpected 'msgid', was expecting 'msgstr' while parsing: " + path + ':' + itos(line));
 
 					if (!msg_id.is_empty() && !entered_context) {
 						Vector<String> msgs;
@@ -270,11 +270,11 @@ Vector<Vector<String>> get_extractable_message_list() {
 
 				if (l.begins_with("msgstr[")) {
 					ERR_FAIL_COND_V_MSG(status != STATUS_READING_PLURAL, Vector<Vector<String>>(),
-							"Unexpected 'msgstr[]', was expecting 'msgid_plural' before 'msgstr[]' while parsing: " + path + ":" + itos(line));
+							"Unexpected 'msgstr[]', was expecting 'msgid_plural' before 'msgstr[]' while parsing: " + path + ':' + itos(line));
 					l = l.substr(9).strip_edges();
 				} else if (l.begins_with("msgstr")) {
 					ERR_FAIL_COND_V_MSG(status != STATUS_READING_ID, Vector<Vector<String>>(),
-							"Unexpected 'msgstr', was expecting 'msgid' before 'msgstr' while parsing: " + path + ":" + itos(line));
+							"Unexpected 'msgstr', was expecting 'msgid' before 'msgstr' while parsing: " + path + ':' + itos(line));
 					l = l.substr(6).strip_edges();
 					status = STATUS_READING_STRING;
 				}
@@ -284,7 +284,7 @@ Vector<Vector<String>> get_extractable_message_list() {
 					continue; // Nothing to read or comment.
 				}
 
-				ERR_FAIL_COND_V_MSG(!l.begins_with("\"") || status == STATUS_NONE, Vector<Vector<String>>(), "Invalid line '" + l + "' while parsing: " + path + ":" + itos(line));
+				ERR_FAIL_COND_V_MSG(!l.begins_with("\"") || status == STATUS_NONE, Vector<Vector<String>>(), "Invalid line '" + l + "' while parsing: " + path + ':' + itos(line));
 
 				l = l.substr(1);
 				// Find final quote, ignoring escaped ones (\").
@@ -306,7 +306,7 @@ Vector<Vector<String>> get_extractable_message_list() {
 					escape_next = false;
 				}
 
-				ERR_FAIL_COND_V_MSG(end_pos == -1, Vector<Vector<String>>(), "Expected '\"' at end of message while parsing: " + path + ":" + itos(line));
+				ERR_FAIL_COND_V_MSG(end_pos == -1, Vector<Vector<String>>(), "Expected '\"' at end of message while parsing: " + path + ':' + itos(line));
 
 				l = l.substr(0, end_pos);
 				l = l.c_unescape();

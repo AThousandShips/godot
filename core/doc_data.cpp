@@ -60,7 +60,7 @@ void DocData::return_doc_from_retinfo(DocData::MethodDoc &p_method, const Proper
 		if (p_method.return_type.is_empty()) {
 			p_method.return_type = "void*";
 		} else {
-			p_method.return_type += "*";
+			p_method.return_type += '*';
 		}
 	} else if (p_retinfo.type == Variant::INT && p_retinfo.usage & (PROPERTY_USAGE_CLASS_IS_ENUM | PROPERTY_USAGE_CLASS_IS_BITFIELD)) {
 		p_method.return_enum = p_retinfo.class_name;
@@ -74,7 +74,7 @@ void DocData::return_doc_from_retinfo(DocData::MethodDoc &p_method, const Proper
 	} else if (p_retinfo.type == Variant::ARRAY && p_retinfo.hint == PROPERTY_HINT_ARRAY_TYPE) {
 		p_method.return_type = p_retinfo.hint_string + "[]";
 	} else if (p_retinfo.type == Variant::DICTIONARY && p_retinfo.hint == PROPERTY_HINT_DICTIONARY_TYPE) {
-		p_method.return_type = "Dictionary[" + p_retinfo.hint_string.replace(";", ", ") + "]";
+		p_method.return_type = "Dictionary[" + p_retinfo.hint_string.replace(";", ", ") + ']';
 	} else if (p_retinfo.hint == PROPERTY_HINT_RESOURCE_TYPE) {
 		p_method.return_type = p_retinfo.hint_string;
 	} else if (p_retinfo.type == Variant::NIL && p_retinfo.usage & PROPERTY_USAGE_NIL_IS_VARIANT) {
@@ -94,7 +94,7 @@ void DocData::argument_doc_from_arginfo(DocData::ArgumentDoc &p_argument, const 
 		if (p_argument.type.is_empty()) {
 			p_argument.type = "void*";
 		} else {
-			p_argument.type += "*";
+			p_argument.type += '*';
 		}
 	} else if (p_arginfo.type == Variant::INT && p_arginfo.usage & (PROPERTY_USAGE_CLASS_IS_ENUM | PROPERTY_USAGE_CLASS_IS_BITFIELD)) {
 		p_argument.enumeration = p_arginfo.class_name;
@@ -108,7 +108,7 @@ void DocData::argument_doc_from_arginfo(DocData::ArgumentDoc &p_argument, const 
 	} else if (p_arginfo.type == Variant::ARRAY && p_arginfo.hint == PROPERTY_HINT_ARRAY_TYPE) {
 		p_argument.type = p_arginfo.hint_string + "[]";
 	} else if (p_arginfo.type == Variant::DICTIONARY && p_arginfo.hint == PROPERTY_HINT_DICTIONARY_TYPE) {
-		p_argument.type = "Dictionary[" + p_arginfo.hint_string.replace(";", ", ") + "]";
+		p_argument.type = "Dictionary[" + p_arginfo.hint_string.replace(";", ", ") + ']';
 	} else if (p_arginfo.hint == PROPERTY_HINT_RESOURCE_TYPE) {
 		p_argument.type = p_arginfo.hint_string;
 	} else if (p_arginfo.type == Variant::NIL) {
@@ -129,28 +129,28 @@ void DocData::method_doc_from_methodinfo(DocData::MethodDoc &p_method, const Met
 
 	if (p_methodinfo.flags & METHOD_FLAG_VIRTUAL_REQUIRED) {
 		if (!p_method.qualifiers.is_empty()) {
-			p_method.qualifiers += " ";
+			p_method.qualifiers += ' ';
 		}
 		p_method.qualifiers += "required";
 	}
 
 	if (p_methodinfo.flags & METHOD_FLAG_CONST) {
 		if (!p_method.qualifiers.is_empty()) {
-			p_method.qualifiers += " ";
+			p_method.qualifiers += ' ';
 		}
 		p_method.qualifiers += "const";
 	}
 
 	if (p_methodinfo.flags & METHOD_FLAG_VARARG) {
 		if (!p_method.qualifiers.is_empty()) {
-			p_method.qualifiers += " ";
+			p_method.qualifiers += ' ';
 		}
 		p_method.qualifiers += "vararg";
 	}
 
 	if (p_methodinfo.flags & METHOD_FLAG_STATIC) {
 		if (!p_method.qualifiers.is_empty()) {
-			p_method.qualifiers += " ";
+			p_method.qualifiers += ' ';
 		}
 		p_method.qualifiers += "static";
 	}

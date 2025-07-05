@@ -590,7 +590,7 @@ void EditorDockManager::save_docks_to_config(Ref<ConfigFile> p_layout, const Str
 		for (int j = 0; j < dock_slot[i]->get_tab_count(); j++) {
 			String name = dock_slot[i]->get_tab_control(j)->get_name();
 			if (!names.is_empty()) {
-				names += ",";
+				names += ',';
 			}
 			names += name;
 		}
@@ -638,7 +638,7 @@ void EditorDockManager::save_docks_to_config(Ref<ConfigFile> p_layout, const Str
 		if (names.is_empty()) {
 			names = name;
 		} else {
-			names += "," + name;
+			names += ',' + name;
 		}
 		p_layout->set_value(p_section, config_key, names);
 	}
@@ -669,7 +669,7 @@ void EditorDockManager::save_docks_to_config(Ref<ConfigFile> p_layout, const Str
 		if (names.is_empty()) {
 			names = name;
 		} else {
-			names += "," + name;
+			names += ',' + name;
 		}
 		p_layout->set_value(p_section, config_key, names);
 	}

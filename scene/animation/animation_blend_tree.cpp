@@ -83,7 +83,7 @@ void AnimationNodeAnimation::_validate_property(PropertyInfo &p_property) const 
 		String anims;
 		for (int i = 0; i < names.size(); i++) {
 			if (i > 0) {
-				anims += ",";
+				anims += ',';
 			}
 			anims += String(names[i]);
 		}
@@ -1125,7 +1125,7 @@ void AnimationNodeTransition::get_parameter_list(List<PropertyInfo> *r_list) con
 	String anims;
 	for (int i = 0; i < get_input_count(); i++) {
 		if (i > 0) {
-			anims += ",";
+			anims += ',';
 		}
 		anims += inputs[i].name;
 	}
@@ -1311,7 +1311,7 @@ AnimationNode::NodeTimeInfo AnimationNodeTransition::_process(const AnimationMix
 				set_parameter(current_state, cur_transition_request);
 			}
 		} else {
-			ERR_PRINT("No such input: '" + cur_transition_request + "'");
+			ERR_PRINT("No such input: '" + cur_transition_request + '\'');
 		}
 		cur_transition_request = String();
 		set_parameter(transition_request, cur_transition_request);

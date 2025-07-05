@@ -382,7 +382,7 @@ void VersionControlEditorPlugin::_refresh_stage_area() {
 	unstaged_files->queue_redraw();
 
 	int total_changes = status_files.size();
-	String commit_tab_title = TTR("Commit") + (total_changes > 0 ? " (" + itos(total_changes) + ")" : "");
+	String commit_tab_title = TTR("Commit") + (total_changes > 0 ? " (" + itos(total_changes) + ')' : "");
 	version_commit_dock->set_name(commit_tab_title);
 }
 
@@ -417,7 +417,7 @@ void VersionControlEditorPlugin::_discard_all() {
 }
 
 void VersionControlEditorPlugin::_add_new_item(Tree *p_tree, const String &p_file_path, EditorVCSInterface::ChangeType p_change) {
-	String change_text = p_file_path + " (" + change_type_to_strings[p_change] + ")";
+	String change_text = p_file_path + " (" + change_type_to_strings[p_change] + ')';
 
 	TreeItem *new_item = p_tree->create_item();
 	new_item->set_text(0, change_text);
@@ -576,14 +576,14 @@ void VersionControlEditorPlugin::_display_diff(int p_idx) {
 
 		diff->push_font(EditorNode::get_singleton()->get_editor_theme()->get_font(SNAME("doc_bold"), EditorStringName(EditorFonts)));
 		diff->push_color(EditorNode::get_singleton()->get_editor_theme()->get_color(SNAME("accent_color"), EditorStringName(Editor)));
-		diff->add_text(TTR("Commit:") + " " + commit_id);
+		diff->add_text(TTR("Commit:") + ' ' + commit_id);
 		diff->add_newline();
-		diff->add_text(TTR("Author:") + " " + commit_author);
+		diff->add_text(TTR("Author:") + ' ' + commit_author);
 		diff->add_newline();
-		diff->add_text(TTR("Date:") + " " + commit_date_string);
+		diff->add_text(TTR("Date:") + ' ' + commit_date_string);
 		diff->add_newline();
 		if (!commit_subtitle.is_empty()) {
-			diff->add_text(TTR("Subtitle:") + " " + commit_subtitle);
+			diff->add_text(TTR("Subtitle:") + ' ' + commit_subtitle);
 			diff->add_newline();
 		}
 		diff->add_newline();
@@ -594,7 +594,7 @@ void VersionControlEditorPlugin::_display_diff(int p_idx) {
 	for (const EditorVCSInterface::DiffFile &diff_file : diff_content) {
 		diff->push_font(EditorNode::get_singleton()->get_editor_theme()->get_font(SNAME("doc_bold"), EditorStringName(EditorFonts)));
 		diff->push_color(EditorNode::get_singleton()->get_editor_theme()->get_color(SNAME("accent_color"), EditorStringName(Editor)));
-		diff->add_text(TTR("File:") + " " + diff_file.new_file);
+		diff->add_text(TTR("File:") + ' ' + diff_file.new_file);
 		diff->pop();
 		diff->pop();
 
@@ -606,7 +606,7 @@ void VersionControlEditorPlugin::_display_diff(int p_idx) {
 			String new_lines = String::num_int64(hunk.new_lines);
 
 			diff->add_newline();
-			diff->append_text("[center]@@ " + old_start + "," + old_lines + " " + new_start + "," + new_lines + " @@[/center]");
+			diff->append_text("[center]@@ " + old_start + ',' + old_lines + ' ' + new_start + ',' + new_lines + " @@[/center]");
 			diff->add_newline();
 
 			switch (diff_view) {
@@ -785,7 +785,7 @@ void VersionControlEditorPlugin::_display_diff_unified_view(List<EditorVCSInterf
 
 		diff->push_cell();
 		diff->push_color(color);
-		diff->add_text(diff_line.status != "" ? diff_line.status + "|" : " |");
+		diff->add_text(diff_line.status != "" ? diff_line.status + '|' : " |");
 		diff->pop();
 		diff->pop();
 

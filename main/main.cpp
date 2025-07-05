@@ -315,7 +315,7 @@ static String unescape_cmdline(const String &p_str) {
 static String get_full_version_string() {
 	String hash = String(GODOT_VERSION_HASH);
 	if (!hash.is_empty()) {
-		hash = "." + hash.left(9);
+		hash = '.' + hash.left(9);
 	}
 	return String(GODOT_VERSION_FULL_BUILD) + hash;
 }
@@ -2381,7 +2381,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 	// And Compatibility next, or first if Vulkan is disabled.
 #ifdef GLES3_ENABLED
 	if (!renderer_hints.is_empty()) {
-		renderer_hints += ",";
+		renderer_hints += ',';
 	}
 	renderer_hints += "gl_compatibility";
 	if (default_renderer_mobile.is_empty()) {
@@ -3521,7 +3521,7 @@ Error Main::setup2(bool p_show_boot_logo) {
 			}
 			if (!text_driver_options.is_empty() && !text_driver_options.contains_char(',')) {
 				// Not the first option; add a comma before it as a separator for the property hint.
-				text_driver_options += ",";
+				text_driver_options += ',';
 			}
 			text_driver_options += driver_name;
 		}
@@ -4526,7 +4526,7 @@ int Main::start() {
 					scene = scenedata->instantiate();
 				}
 
-				ERR_FAIL_NULL_V_MSG(scene, EXIT_FAILURE, "Failed loading scene: " + local_game_path + ".");
+				ERR_FAIL_NULL_V_MSG(scene, EXIT_FAILURE, "Failed loading scene: " + local_game_path + '.');
 				sml->add_current_scene(scene);
 
 #ifdef MACOS_ENABLED

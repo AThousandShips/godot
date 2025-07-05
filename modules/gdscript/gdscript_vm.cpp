@@ -75,7 +75,7 @@ static String _get_var_type(const Variant *p_var) {
 			} else {
 				basestr = bobj->get_class();
 				if (bobj->get_script_instance()) {
-					basestr += " (" + GDScript::debug_get_script_name(bobj->get_script_instance()->get_script()) + ")";
+					basestr += " (" + GDScript::debug_get_script_name(bobj->get_script_instance()->get_script()) + ')';
 				}
 			}
 		}
@@ -85,14 +85,14 @@ static String _get_var_type(const Variant *p_var) {
 			basestr = "Array";
 			const Array *p_array = VariantInternal::get_array(p_var);
 			if (p_array->is_typed()) {
-				basestr += "[" + _get_element_type((Variant::Type)p_array->get_typed_builtin(), p_array->get_typed_class_name(), p_array->get_typed_script()) + "]";
+				basestr += '[' + _get_element_type((Variant::Type)p_array->get_typed_builtin(), p_array->get_typed_class_name(), p_array->get_typed_script()) + ']';
 			}
 		} else if (p_var->get_type() == Variant::DICTIONARY) {
 			basestr = "Dictionary";
 			const Dictionary *p_dictionary = VariantInternal::get_dictionary(p_var);
 			if (p_dictionary->is_typed()) {
-				basestr += "[" + _get_element_type((Variant::Type)p_dictionary->get_typed_key_builtin(), p_dictionary->get_typed_key_class_name(), p_dictionary->get_typed_key_script()) +
-						", " + _get_element_type((Variant::Type)p_dictionary->get_typed_value_builtin(), p_dictionary->get_typed_value_class_name(), p_dictionary->get_typed_value_script()) + "]";
+				basestr += '[' + _get_element_type((Variant::Type)p_dictionary->get_typed_key_builtin(), p_dictionary->get_typed_key_class_name(), p_dictionary->get_typed_key_script()) +
+						", " + _get_element_type((Variant::Type)p_dictionary->get_typed_value_builtin(), p_dictionary->get_typed_value_class_name(), p_dictionary->get_typed_value_script()) + ']';
 			}
 		} else {
 			basestr = Variant::get_type_name(p_var->get_type());
@@ -158,7 +158,7 @@ String GDScriptFunction::_get_call_error(const String &p_where, const Variant **
 			if (p_ret.get_type() == Variant::STRING && !p_ret.operator String().is_empty()) {
 				return "Invalid call " + p_where + ": " + p_ret.operator String();
 			}
-			return "Invalid call. Nonexistent " + p_where + ".";
+			return "Invalid call. Nonexistent " + p_where + '.';
 		case Callable::CallError::CALL_ERROR_INVALID_ARGUMENT:
 			ERR_FAIL_INDEX_V_MSG(p_err.argument, p_argcount, "Bug: Invalid call error argument index.", "Bug: Invalid call error argument index.");
 			ERR_FAIL_NULL_V_MSG(p_argptrs[p_err.argument], "Bug: Argument is null pointer.", "Bug: Argument is null pointer.");
@@ -174,7 +174,7 @@ String GDScriptFunction::_get_call_error(const String &p_where, const Variant **
 				return "Invalid type in " + p_where + ". The dictionary of argument " + itos(p_err.argument + 1) + " (" + _get_var_type(p_argptrs[p_err.argument]) + ") does not have the same element type as the expected typed dictionary argument.";
 			}
 #endif // DEBUG_ENABLED
-			return "Invalid type in " + p_where + ". Cannot convert argument " + itos(p_err.argument + 1) + " from " + Variant::get_type_name(p_argptrs[p_err.argument]->get_type()) + " to " + Variant::get_type_name(Variant::Type(p_err.expected)) + ".";
+			return "Invalid type in " + p_where + ". Cannot convert argument " + itos(p_err.argument + 1) + " from " + Variant::get_type_name(p_argptrs[p_err.argument]->get_type()) + " to " + Variant::get_type_name(Variant::Type(p_err.expected)) + '.';
 		case Callable::CallError::CALL_ERROR_TOO_MANY_ARGUMENTS:
 		case Callable::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS:
 			return "Invalid call to " + p_where + ". Expected " + itos(p_err.expected) + " argument(s).";
@@ -183,7 +183,7 @@ String GDScriptFunction::_get_call_error(const String &p_where, const Variant **
 		case Callable::CallError::CALL_ERROR_METHOD_NOT_CONST:
 			return "Attempt to call " + p_where + " on a const instance.";
 	}
-	return "Bug: Invalid call error code " + itos(p_err.error) + ".";
+	return "Bug: Invalid call error code " + itos(p_err.error) + '.';
 }
 
 String GDScriptFunction::_get_callable_call_error(const String &p_where, const Callable &p_callable, const Variant **p_argptrs, int p_argcount, const Variant &p_ret, const Callable::CallError &p_err) const {
@@ -518,7 +518,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 		}
 		String err_func = name;
 		if (p_instance && ObjectDB::get_instance(p_instance->owner_id) != nullptr && p_instance->script->is_valid() && p_instance->script->local_name != StringName()) {
-			err_func = p_instance->script->local_name.operator String() + "." + err_func;
+			err_func = p_instance->script->local_name.operator String() + '.' + err_func;
 		}
 		int err_line = _initial_line;
 		const char *err_text = "Stack overflow. Check for infinite recursion in your script.";
@@ -1001,9 +1001,9 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 							err_text = vformat(R"(Cannot set value into property "%s" (on base "%s") because it is read-only.)", v, _get_var_type(dst));
 						} else {
 							if (!v.is_empty()) {
-								v = "'" + v + "'";
+								v = '\'' + v + '\'';
 							} else {
-								v = "of type '" + _get_var_type(index) + "'";
+								v = "of type '" + _get_var_type(index) + '\'';
 							}
 							err_text = "Invalid assignment of property or key " + v + " with value of type '" + _get_var_type(value) + "' on a base object of type '" + _get_var_type(dst) + "'.";
 							if (err_code == Variant::VariantSetError::SET_INDEXED_ERR) {
@@ -1039,9 +1039,9 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 					} else {
 						String v = index->operator String();
 						if (!v.is_empty()) {
-							v = "'" + v + "'";
+							v = '\'' + v + '\'';
 						} else {
-							v = "of type '" + _get_var_type(index) + "'";
+							v = "of type '" + _get_var_type(index) + '\'';
 						}
 						err_text = "Invalid assignment of property or key " + v + " with value of type '" + _get_var_type(value) + "' on a base object of type '" + _get_var_type(dst) + "'.";
 					}
@@ -1075,9 +1075,9 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 					} else {
 						String v = index->operator String();
 						if (!v.is_empty()) {
-							v = "'" + v + "'";
+							v = '\'' + v + '\'';
 						} else {
-							v = "of type '" + _get_var_type(index) + "'";
+							v = "of type '" + _get_var_type(index) + '\'';
 						}
 						err_text = "Out of bounds set index " + v + " (on base: '" + _get_var_type(dst) + "')";
 					}
@@ -1108,9 +1108,9 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 				if (!valid) {
 					String v = index->operator String();
 					if (!v.is_empty()) {
-						v = "'" + v + "'";
+						v = '\'' + v + '\'';
 					} else {
-						v = "of type '" + _get_var_type(index) + "'";
+						v = "of type '" + _get_var_type(index) + '\'';
 					}
 					err_text = "Invalid access to property or key " + v + " on a base object of type '" + _get_var_type(src) + "'.";
 					if (err_code == Variant::VariantGetError::GET_INDEXED_ERR) {
@@ -1147,9 +1147,9 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 				if (!valid) {
 					String v = key->operator String();
 					if (!v.is_empty()) {
-						v = "'" + v + "'";
+						v = '\'' + v + '\'';
 					} else {
-						v = "of type '" + _get_var_type(key) + "'";
+						v = "of type '" + _get_var_type(key) + '\'';
 					}
 					err_text = "Invalid access to property or key " + v + " on a base object of type '" + _get_var_type(src) + "'.";
 					OPCODE_BREAK;
@@ -1180,9 +1180,9 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 				if (oob) {
 					String v = index->operator String();
 					if (!v.is_empty()) {
-						v = "'" + v + "'";
+						v = '\'' + v + '\'';
 					} else {
-						v = "of type '" + _get_var_type(index) + "'";
+						v = "of type '" + _get_var_type(index) + '\'';
 					}
 					err_text = "Out of bounds get index " + v + " (on base: '" + _get_var_type(src) + "')";
 					OPCODE_BREAK;
@@ -1305,7 +1305,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 					err_text = "Internal error setting property: " + String(*index);
 					OPCODE_BREAK;
 				} else if (!valid) {
-					err_text = "Error setting property '" + String(*index) + "' with value of type " + Variant::get_type_name(src->get_type()) + ".";
+					err_text = "Error setting property '" + String(*index) + "' with value of type " + Variant::get_type_name(src->get_type()) + '.';
 					OPCODE_BREAK;
 				}
 #endif
@@ -1739,7 +1739,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 
 #ifdef DEBUG_ENABLED
 				if (err.error != Callable::CallError::CALL_OK) {
-					err_text = _get_call_error("'" + Variant::get_type_name(t) + "' constructor", (const Variant **)argptrs, argc, *dst, err);
+					err_text = _get_call_error('\'' + Variant::get_type_name(t) + "' constructor", (const Variant **)argptrs, argc, *dst, err);
 					OPCODE_BREAK;
 				}
 #endif
@@ -2084,7 +2084,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 							}
 						}
 					}
-					err_text = _get_call_error("function '" + methodstr + "' in base '" + basestr + "'", (const Variant **)argptrs, argc, temp_ret, err);
+					err_text = _get_call_error("function '" + methodstr + "' in base '" + basestr + '\'', (const Variant **)argptrs, argc, temp_ret, err);
 					OPCODE_BREAK;
 				}
 #endif
@@ -2117,7 +2117,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 
 #ifdef DEBUG_ENABLED
 				if (err.error != Callable::CallError::CALL_OK) {
-					err_text = _get_call_error("static function '" + methodname->operator String() + "' in type '" + Variant::get_type_name(builtin_type) + "'", argptrs, argc, *ret, err);
+					err_text = _get_call_error("static function '" + methodname->operator String() + "' in type '" + Variant::get_type_name(builtin_type) + '\'', argptrs, argc, *ret, err);
 					OPCODE_BREAK;
 				}
 #endif
@@ -2161,7 +2161,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 #endif
 
 				if (err.error != Callable::CallError::CALL_OK) {
-					err_text = _get_call_error("static function '" + method->get_name().operator String() + "' in type '" + method->get_instance_class().operator String() + "'", argptrs, argc, *ret, err);
+					err_text = _get_call_error("static function '" + method->get_name().operator String() + "' in type '" + method->get_instance_class().operator String() + '\'', argptrs, argc, *ret, err);
 					OPCODE_BREAK;
 				}
 
@@ -2516,7 +2516,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 
 				if (err.error != Callable::CallError::CALL_OK) {
 					String methodstr = *methodname;
-					err_text = _get_call_error("function '" + methodstr + "'", (const Variant **)argptrs, argc, *dst, err);
+					err_text = _get_call_error("function '" + methodstr + '\'', (const Variant **)argptrs, argc, *dst, err);
 
 					OPCODE_BREAK;
 				}
@@ -3938,7 +3938,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 		}
 		String err_func = name;
 		if (instance_valid_with_script && p_instance->script->local_name != StringName()) {
-			err_func = p_instance->script->local_name.operator String() + "." + err_func;
+			err_func = p_instance->script->local_name.operator String() + '.' + err_func;
 		}
 		int err_line = line;
 		if (err_text.is_empty()) {

@@ -468,7 +468,7 @@ Error RenderingContextDriverVulkan::_initialize_instance_extensions() {
 
 #ifdef DEV_ENABLED
 	for (uint32_t i = 0; i < instance_extension_count; i++) {
-		print_verbose(String("VULKAN: Found instance extension ") + String::utf8(instance_extensions[i].extensionName) + String("."));
+		print_verbose("VULKAN: Found instance extension " + String::utf8(instance_extensions[i].extensionName) + '.');
 	}
 #endif
 
@@ -484,9 +484,9 @@ Error RenderingContextDriverVulkan::_initialize_instance_extensions() {
 	for (KeyValue<CharString, bool> &requested_extension : requested_instance_extensions) {
 		if (!enabled_instance_extension_names.has(requested_extension.key)) {
 			if (requested_extension.value) {
-				ERR_FAIL_V_MSG(ERR_BUG, String("Required extension ") + String::utf8(requested_extension.key) + String(" not found."));
+				ERR_FAIL_V_MSG(ERR_BUG, String("Required extension ") + String::utf8(requested_extension.key) + " not found.");
 			} else {
-				print_verbose(String("Optional extension ") + String::utf8(requested_extension.key) + String(" not found."));
+				print_verbose("Optional extension " + String::utf8(requested_extension.key) + " not found.");
 			}
 		}
 	}
@@ -591,12 +591,12 @@ VKAPI_ATTR VkBool32 VKAPI_CALL RenderingContextDriverVulkan::_debug_messenger_ca
 		objects_string = "\n\tObjects - " + String::num_int64(p_callback_data->objectCount);
 		for (uint32_t object = 0; object < p_callback_data->objectCount; ++object) {
 			objects_string +=
-					"\n\t\tObject[" + String::num_int64(object) + "]" +
-					" - " + string_VkObjectType(p_callback_data->pObjects[object].objectType) +
+					"\n\t\tObject[" + String::num_int64(object) + "] - " +
+					string_VkObjectType(p_callback_data->pObjects[object].objectType) +
 					", Handle " + String::num_int64(p_callback_data->pObjects[object].objectHandle);
 
 			if (p_callback_data->pObjects[object].pObjectName != nullptr && strlen(p_callback_data->pObjects[object].pObjectName) > 0) {
-				objects_string += ", Name \"" + String(p_callback_data->pObjects[object].pObjectName) + "\"";
+				objects_string += ", Name \"" + String(p_callback_data->pObjects[object].pObjectName) + '"';
 			}
 		}
 	}
@@ -606,8 +606,8 @@ VKAPI_ATTR VkBool32 VKAPI_CALL RenderingContextDriverVulkan::_debug_messenger_ca
 		labels_string = "\n\tCommand Buffer Labels - " + String::num_int64(p_callback_data->cmdBufLabelCount);
 		for (uint32_t cmd_buf_label = 0; cmd_buf_label < p_callback_data->cmdBufLabelCount; ++cmd_buf_label) {
 			labels_string +=
-					"\n\t\tLabel[" + String::num_int64(cmd_buf_label) + "]" +
-					" - " + p_callback_data->pCmdBufLabels[cmd_buf_label].pLabelName +
+					"\n\t\tLabel[" + String::num_int64(cmd_buf_label) + "] - " +
+					p_callback_data->pCmdBufLabels[cmd_buf_label].pLabelName +
 					"{ ";
 
 			for (int color_idx = 0; color_idx < 4; ++color_idx) {
@@ -650,7 +650,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL RenderingContextDriverVulkan::_debug_messenger_ca
 }
 
 VKAPI_ATTR VkBool32 VKAPI_CALL RenderingContextDriverVulkan::_debug_report_callback(VkDebugReportFlagsEXT p_flags, VkDebugReportObjectTypeEXT p_object_type, uint64_t p_object, size_t p_location, int32_t p_message_code, const char *p_layer_prefix, const char *p_message, void *p_user_data) {
-	String debug_message = String("Vulkan Debug Report: object - ") + String::num_int64(p_object) + "\n" + p_message;
+	String debug_message = "Vulkan Debug Report: object - " + String::num_int64(p_object) + '\n' + p_message;
 
 	switch (p_flags) {
 		case VK_DEBUG_REPORT_DEBUG_BIT_EXT:

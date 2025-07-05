@@ -104,8 +104,8 @@ const Vector<String> classes_with_csharp_differences = {
 
 static const char32_t nbsp_chr = 160;
 static const String nbsp = String::chr(nbsp_chr);
-static const String nbsp_equal_nbsp = nbsp + "=" + nbsp;
-static const String colon_nbsp = ":" + nbsp;
+static const String nbsp_equal_nbsp = nbsp + '=' + nbsp;
+static const String colon_nbsp = ':' + nbsp;
 
 const Vector<String> packed_array_types = {
 	"PackedByteArray",
@@ -275,7 +275,7 @@ void EditorHelp::_class_desc_select(const String &p_select) {
 			}
 		}
 
-		emit_signal(SNAME("go_to_help"), "class_enum:" + enum_class_name + ":" + enum_name);
+		emit_signal(SNAME("go_to_help"), "class_enum:" + enum_class_name + ':' + enum_name);
 	} else if (p_select.begins_with("#")) { // Class.
 		emit_signal(SNAME("go_to_help"), "class_name:" + p_select.substr(1));
 	} else if (p_select.begins_with("@")) { // Member.
@@ -353,7 +353,7 @@ void EditorHelp::_class_desc_select(const String &p_select) {
 
 			if (link.contains_char('.')) {
 				const int class_end = link.rfind_char('.');
-				emit_signal(SNAME("go_to_help"), topic + ":" + link.left(class_end) + ":" + link.substr(class_end + 1));
+				emit_signal(SNAME("go_to_help"), topic + ':' + link.left(class_end) + ':' + link.substr(class_end + 1));
 			}
 		}
 	} else if (p_select.begins_with("http:") || p_select.begins_with("https:")) {
@@ -429,7 +429,7 @@ static void _add_type_to_rt(const String &p_type, const String &p_enum, bool p_i
 			p_rt->add_text("Dictionary");
 			p_rt->pop(); // meta
 			p_rt->add_text("[");
-			p_rt->push_meta("#" + link_t.get_slice(", ", 0), RichTextLabel::META_UNDERLINE_ON_HOVER); // class
+			p_rt->push_meta('#' + link_t.get_slice(", ", 0), RichTextLabel::META_UNDERLINE_ON_HOVER); // class
 			p_rt->add_text(_contextualize_class_specifier(display_t.get_slice(", ", 0), p_class));
 			p_rt->pop(); // meta
 			p_rt->add_text(", ");
@@ -446,9 +446,9 @@ static void _add_type_to_rt(const String &p_type, const String &p_enum, bool p_i
 		}
 
 		if (is_enum_type) {
-			p_rt->push_meta("$" + link_t, RichTextLabel::META_UNDERLINE_ON_HOVER); // enum
+			p_rt->push_meta('$' + link_t, RichTextLabel::META_UNDERLINE_ON_HOVER); // enum
 		} else {
-			p_rt->push_meta("#" + link_t, RichTextLabel::META_UNDERLINE_ON_HOVER); // class
+			p_rt->push_meta('#' + link_t, RichTextLabel::META_UNDERLINE_ON_HOVER); // class
 		}
 	}
 	p_rt->add_text(display_t);
@@ -973,7 +973,7 @@ void EditorHelp::_update_doc() {
 
 	_push_title_font();
 
-	class_desc->add_text(TTR("Class:") + " ");
+	class_desc->add_text(TTR("Class:") + ' ');
 	_add_type_icon(edited_class, theme_cache.doc_title_font_size, "Object");
 	class_desc->add_text(nbsp);
 
@@ -1002,7 +1002,7 @@ void EditorHelp::_update_doc() {
 		_push_normal_font();
 		class_desc->push_color(theme_cache.title_color);
 
-		class_desc->add_text(TTR("Inherits:") + " ");
+		class_desc->add_text(TTR("Inherits:") + ' ');
 
 		String inherits = cd.inherits;
 		while (!inherits.is_empty()) {
@@ -1028,7 +1028,7 @@ void EditorHelp::_update_doc() {
 
 		_push_normal_font();
 		class_desc->push_color(theme_cache.title_color);
-		class_desc->add_text(TTR("Inherited by:") + " ");
+		class_desc->add_text(TTR("Inherited by:") + ' ');
 
 		for (RBSet<String, NaturalNoCaseComparator>::Element *itr = doc->inheriting[cd.name].front(); itr; itr = itr->next()) {
 			if (itr->prev()) {
@@ -1164,7 +1164,7 @@ void EditorHelp::_update_doc() {
 
 			class_desc->add_newline();
 			_add_bulletpoint();
-			class_desc->append_text("[url=" + link + "]" + link_text + "[/url]");
+			class_desc->append_text("[url=" + link + ']' + link_text + "[/url]");
 		}
 
 		class_desc->pop(); // color
@@ -1287,12 +1287,12 @@ void EditorHelp::_update_doc() {
 					class_desc->add_text("[");
 					const String link = vformat("[url=@member %s.%s]%s[/url]", prop.overrides, prop.name, prop.overrides);
 					class_desc->append_text(vformat(TTR("overrides %s:"), link));
-					class_desc->add_text(" " + _fix_constant(prop.default_value) + "]");
+					class_desc->add_text(' ' + _fix_constant(prop.default_value) + ']');
 					class_desc->pop(); // color
 					overridden_property_exists = true;
 				} else {
 					class_desc->push_color(theme_cache.symbol_color);
-					class_desc->add_text("[" + TTR("default:") + " ");
+					class_desc->add_text('[' + TTR("default:") + ' ');
 					class_desc->pop(); // color
 
 					class_desc->push_color(theme_cache.value_color);
@@ -1316,7 +1316,7 @@ void EditorHelp::_update_doc() {
 				has_prev_text = true;
 
 				class_desc->push_color(theme_cache.symbol_color);
-				class_desc->add_text("[" + TTR("property:") + " ");
+				class_desc->add_text('[' + TTR("property:") + ' ');
 				class_desc->pop(); // color
 
 				if (!prop.setter.is_empty()) {
@@ -1466,7 +1466,7 @@ void EditorHelp::_update_doc() {
 			// Theme item default value.
 			if (!theme_item.default_value.is_empty()) {
 				class_desc->push_color(theme_cache.symbol_color);
-				class_desc->add_text(" [" + TTR("default:") + " ");
+				class_desc->add_text(" [" + TTR("default:") + ' ');
 				class_desc->pop(); // color
 
 				class_desc->push_color(theme_cache.value_color);
@@ -2169,7 +2169,7 @@ void EditorHelp::_update_doc() {
 
 			if (!prop.default_value.is_empty()) {
 				class_desc->push_color(theme_cache.symbol_color);
-				class_desc->add_text(" [" + TTR("default:") + " ");
+				class_desc->add_text(" [" + TTR("default:") + ' ');
 				class_desc->pop(); // color
 
 				class_desc->push_color(theme_cache.value_color);
@@ -2183,7 +2183,7 @@ void EditorHelp::_update_doc() {
 
 			if (cd.is_script_doc && (!prop.setter.is_empty() || !prop.getter.is_empty())) {
 				class_desc->push_color(theme_cache.symbol_color);
-				class_desc->add_text(" [" + TTR("property:") + " ");
+				class_desc->add_text(" [" + TTR("property:") + ' ');
 				class_desc->pop(); // color
 
 				if (!prop.setter.is_empty()) {
@@ -2614,7 +2614,7 @@ static void _add_text_to_rt(const String &p_bbcode, RichTextLabel *p_rt, const C
 			p_rt->push_font(doc_code_font);
 			p_rt->push_font_size(doc_code_font_size);
 			p_rt->push_color(target_color);
-			p_rt->push_meta("@" + link_tag + " " + link_target, underline_mode);
+			p_rt->push_meta('@' + link_tag + ' ' + link_target, underline_mode);
 
 			if (link_tag == "member" &&
 					((!link_target.contains_char('.') && (p_class == "ProjectSettings" || p_class == "EditorSettings")) ||
@@ -2622,7 +2622,7 @@ static void _add_text_to_rt(const String &p_bbcode, RichTextLabel *p_rt, const C
 				// Special formatting for both ProjectSettings and EditorSettings.
 				String prefix;
 				if (link_target.begins_with("EditorSettings.")) {
-					prefix = "(" + TTR("Editor") + ") ";
+					prefix = '(' + TTR("Editor") + ") ";
 				}
 
 				const String setting_name = link_target.trim_prefix("ProjectSettings.").trim_prefix("EditorSettings.");
@@ -2675,7 +2675,7 @@ static void _add_text_to_rt(const String &p_bbcode, RichTextLabel *p_rt, const C
 			p_rt->push_font(doc_code_font);
 			p_rt->push_font_size(doc_code_font_size);
 			p_rt->push_color(type_color);
-			p_rt->push_meta("#" + tag, RichTextLabel::META_UNDERLINE_ON_HOVER);
+			p_rt->push_meta('#' + tag, RichTextLabel::META_UNDERLINE_ON_HOVER);
 
 			p_rt->add_text(tag);
 
@@ -2796,7 +2796,7 @@ static void _add_text_to_rt(const String &p_bbcode, RichTextLabel *p_rt, const C
 			p_rt->set_cell_row_background_color(code_bg_color, Color(code_bg_color, 0.99));
 			p_rt->set_cell_padding(Rect2(0, 10 * EDSCALE, 0, 10 * EDSCALE));
 			p_rt->set_cell_size_override(Vector2(1, 1), Vector2(10, 10) * EDSCALE);
-			p_rt->push_meta("^" + codeblock_copy_text, RichTextLabel::META_UNDERLINE_ON_HOVER);
+			p_rt->push_meta('^' + codeblock_copy_text, RichTextLabel::META_UNDERLINE_ON_HOVER);
 			p_rt->add_image(p_owner_node->get_editor_theme_icon(SNAME("ActionCopy")), 24 * EDSCALE, 24 * EDSCALE, Color(link_property_color, 0.3), INLINE_ALIGNMENT_BOTTOM_TO, Rect2(), Variant(), false, TTR("Click to copy."));
 			p_rt->pop(); // meta
 			p_rt->pop(); // cell
@@ -3669,7 +3669,7 @@ EditorHelpBit::HelpData EditorHelpBit::_get_property_help_data(const StringName 
 				// Classes can use enums from other classes, so check from which it came.
 				const DocData::ClassDoc *enum_class = EditorHelp::get_doc(enum_class_name);
 				if (enum_class) {
-					const String enum_prefix = EditorPropertyNameProcessor::get_singleton()->process_name(enum_name, EditorPropertyNameProcessor::STYLE_CAPITALIZED) + " ";
+					const String enum_prefix = EditorPropertyNameProcessor::get_singleton()->process_name(enum_name, EditorPropertyNameProcessor::STYLE_CAPITALIZED) + ' ';
 					for (DocData::ConstantDoc constant : enum_class->constants) {
 						// Don't display `_MAX` enum value descriptions, as these are never exposed in the inspector.
 						if (constant.enumeration == enum_name && !constant.name.ends_with("_MAX")) {
@@ -3950,7 +3950,7 @@ void EditorHelpBit::_update_labels() {
 				title->push_meta(symbol_doc_link, RichTextLabel::META_UNDERLINE_ON_HOVER);
 			}
 			if (use_class_prefix && !symbol_class_name.is_empty() && symbol_hint != SYMBOL_HINT_INHERITANCE) {
-				title->add_text(symbol_class_name + ".");
+				title->add_text(symbol_class_name + '.');
 			}
 			title->add_text(symbol_name);
 			if (!symbol_doc_link.is_empty()) {
@@ -4229,7 +4229,7 @@ void EditorHelpBit::_meta_clicked(const String &p_select) {
 			}
 		}
 
-		_go_to_help("class_enum:" + enum_class_name + ":" + enum_name);
+		_go_to_help("class_enum:" + enum_class_name + ':' + enum_name);
 	} else if (p_select.begins_with("#")) { // Class.
 		_go_to_help("class_name:" + p_select.substr(1));
 	} else if (p_select.begins_with("@")) { // Member.
@@ -4275,9 +4275,9 @@ void EditorHelpBit::_meta_clicked(const String &p_select) {
 
 		if (link.contains_char('.')) {
 			const int class_end = link.rfind_char('.');
-			_go_to_help(topic + ":" + link.left(class_end) + ":" + link.substr(class_end + 1));
+			_go_to_help(topic + ':' + link.left(class_end) + ':' + link.substr(class_end + 1));
 		} else {
-			_go_to_help(topic + ":" + symbol_class_name + ":" + link);
+			_go_to_help(topic + ':' + symbol_class_name + ':' + link);
 		}
 	} else if (p_select.begins_with("open-file:")) {
 		String path = ProjectSettings::get_singleton()->globalize_path(p_select.trim_prefix("open-file:"));
@@ -4450,7 +4450,7 @@ void EditorHelpBit::parse_symbol(const String &p_symbol, const String &p_prologu
 			}
 		}
 	} else {
-		ERR_FAIL_MSG("Invalid doc id: Unknown item type " + item_type.quote() + ".");
+		ERR_FAIL_MSG("Invalid doc id: Unknown item type " + item_type.quote() + '.');
 	}
 
 	// Do not add links for custom or undocumented symbols.
@@ -4462,7 +4462,7 @@ void EditorHelpBit::parse_symbol(const String &p_symbol, const String &p_prologu
 		if (help_data.description.is_empty()) {
 			help_data.description = p_prologue;
 		} else {
-			help_data.description = p_prologue + "\n" + help_data.description;
+			help_data.description = p_prologue + '\n' + help_data.description;
 		}
 	}
 

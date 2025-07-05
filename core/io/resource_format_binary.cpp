@@ -2347,7 +2347,7 @@ Error ResourceFormatSaverBinaryInstance::save(const String &p_path, const Ref<Re
 				String new_id;
 
 				while (true) {
-					new_id = _resource_get_class(r) + "_" + Resource::generate_scene_unique_id();
+					new_id = _resource_get_class(r) + '_' + Resource::generate_scene_unique_id();
 					if (!used_unique_ids.has(new_id)) {
 						break;
 					}

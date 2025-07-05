@@ -877,7 +877,7 @@ bool LightStorage::reflection_probe_instance_begin_render(RID p_instance, RID p_
 				mipmap_size = MAX(mipmap_size >> 1, 1);
 			}
 
-			GLES3::Utilities::get_singleton()->texture_allocated_data(color, data_size, String("Reflection probe atlas (") + String::num_int64(i) + String(", color)"));
+			GLES3::Utilities::get_singleton()->texture_allocated_data(color, data_size, "Reflection probe atlas (" + String::num_int64(i) + ", color)");
 
 			// Create a radiance map for this atlas entry
 			GLuint radiance = 0;
@@ -907,7 +907,7 @@ bool LightStorage::reflection_probe_instance_begin_render(RID p_instance, RID p_
 			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAX_LEVEL, atlas->mipmap_count - 1);
 
 			// Same data size as our color buffer
-			GLES3::Utilities::get_singleton()->texture_allocated_data(radiance, data_size, String("Reflection probe atlas (") + String::num_int64(i) + String(", radiance)"));
+			GLES3::Utilities::get_singleton()->texture_allocated_data(radiance, data_size, "Reflection probe atlas (" + String::num_int64(i) + ", radiance)");
 
 			// Create our framebuffers so we can draw to all sides
 			for (int side = 0; side < 6; side++) {

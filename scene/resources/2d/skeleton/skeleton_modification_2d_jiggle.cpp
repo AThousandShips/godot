@@ -114,7 +114,7 @@ void SkeletonModification2DJiggle::_get_property_list(List<PropertyInfo> *p_list
 	}
 
 	for (int i = 0; i < jiggle_data_chain.size(); i++) {
-		String base_string = "joint_data/" + itos(i) + "/";
+		String base_string = "joint_data/" + itos(i) + '/';
 
 		p_list->push_back(PropertyInfo(Variant::INT, base_string + "bone_index", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 		p_list->push_back(PropertyInfo(Variant::NODE_PATH, base_string + "bone2d_node", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Bone2D", PROPERTY_USAGE_DEFAULT));

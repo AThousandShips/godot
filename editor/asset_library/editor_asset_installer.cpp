@@ -343,13 +343,13 @@ TreeItem *EditorAssetInstaller::_create_dir_item(Tree *p_tree, TreeItem *p_paren
 		_fix_conflicted_indeterminate_state(ti->get_tree()->get_root(), 0);
 
 		Dictionary meta;
-		meta["asset_path"] = p_path + "/";
+		meta["asset_path"] = p_path + '/';
 		meta["is_dir"] = true;
 		meta["is_conflict"] = false;
 		ti->set_metadata(0, meta);
 	}
 
-	ti->set_text(0, p_path.get_file() + "/");
+	ti->set_text(0, p_path.get_file() + '/');
 	ti->set_icon(0, get_theme_icon(SNAME("folder"), SNAME("FileDialog")));
 
 	p_item_map[p_path] = ti;
@@ -568,10 +568,10 @@ void EditorAssetInstaller::_install_asset() {
 		String msg = vformat(TTR("The following files failed extraction from asset \"%s\":"), asset_name) + "\n\n";
 		for (int i = 0; i < failed_files.size(); i++) {
 			if (i > 10) {
-				msg += "\n" + vformat(TTR("(and %s more files)"), itos(failed_files.size() - i));
+				msg += '\n' + vformat(TTR("(and %s more files)"), itos(failed_files.size() - i));
 				break;
 			}
-			msg += "\n" + failed_files[i];
+			msg += '\n' + failed_files[i];
 		}
 		if (EditorNode::get_singleton() != nullptr) {
 			EditorNode::get_singleton()->show_warning(msg);

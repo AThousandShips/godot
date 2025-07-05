@@ -138,7 +138,7 @@ String EditorExportPreset::_get_property_warning(const StringName &p_name) const
 
 	String warning = platform->get_export_option_warning(this, p_name);
 	if (!warning.is_empty()) {
-		warning += "\n";
+		warning += '\n';
 	}
 
 	// Get property warning from editor export plugins.
@@ -151,7 +151,7 @@ String EditorExportPreset::_get_property_warning(const StringName &p_name) const
 		export_plugins.write[i]->set_export_preset(Ref<EditorExportPreset>(this));
 		String plugin_warning = export_plugins[i]->_get_export_option_warning(platform, p_name);
 		if (!plugin_warning.is_empty()) {
-			warning += plugin_warning + "\n";
+			warning += plugin_warning + '\n';
 		}
 	}
 
@@ -559,11 +559,11 @@ String EditorExportPreset::get_version(const StringName &p_preset_string, bool p
 			if (p_windows_version) {
 				// Modify version number to match Windows constraints (version numbers must have 4 components).
 				if (result_split.size() == 1) {
-					result = result + ".0.0.0";
+					result += ".0.0.0";
 				} else if (result_split.size() == 2) {
-					result = result + ".0.0";
+					result += ".0.0";
 				} else if (result_split.size() == 3) {
-					result = result + ".0";
+					result += ".0";
 				} else {
 					result = vformat("%s.%s.%s.%s", result_split[0], result_split[1], result_split[2], result_split[3]);
 				}

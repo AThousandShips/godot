@@ -137,11 +137,11 @@ Dictionary Engine::get_version_info() const {
 
 	dict["timestamp"] = GODOT_VERSION_TIMESTAMP;
 
-	String stringver = String(dict["major"]) + "." + String(dict["minor"]);
+	String stringver = String(dict["major"]) + '.' + String(dict["minor"]);
 	if ((int)dict["patch"] != 0) {
-		stringver += "." + String(dict["patch"]);
+		stringver += '.' + String(dict["patch"]);
 	}
-	stringver += "-" + String(dict["status"]) + " (" + String(dict["build"]) + ")";
+	stringver += '-' + String(dict["status"]) + " (" + String(dict["build"]) + ')';
 	dict["string"] = stringver;
 
 	return dict;

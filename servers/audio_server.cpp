@@ -976,7 +976,7 @@ void AudioServer::set_bus_name(int p_bus, const String &p_name) {
 		}
 
 		attempts++;
-		attempt = p_name + " " + itos(attempts);
+		attempt = p_name + ' ' + itos(attempts);
 	}
 	bus_map.erase(old_name);
 	buses[p_bus]->name = attempt;

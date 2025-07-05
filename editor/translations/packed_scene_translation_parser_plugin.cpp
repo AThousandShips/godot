@@ -162,7 +162,7 @@ Error PackedSceneEditorTranslationParserPlugin::parse_file(const String &p_path,
 					}
 				}
 			} else if (property_value.get_type() == Variant::STRING) {
-				String str_value = String(property_value);
+				String str_value = property_value;
 				// Prevent reading text containing only spaces.
 				if (!str_value.strip_edges().is_empty()) {
 					r_translations->push_back({ str_value });

@@ -69,7 +69,7 @@ void ResourcePreloaderEditor::_files_load_request(const Vector<String> &p_paths)
 		int counter = 1;
 		while (preloader->has_resource(name)) {
 			counter++;
-			name = basename + " " + itos(counter);
+			name = basename + ' ' + itos(counter);
 		}
 
 		EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
@@ -161,7 +161,7 @@ void ResourcePreloaderEditor::_paste_pressed() {
 	int counter = 1;
 	while (preloader->has_resource(name)) {
 		counter++;
-		name = basename + " " + itos(counter);
+		name = basename + ' ' + itos(counter);
 	}
 
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
@@ -202,7 +202,7 @@ void ResourcePreloaderEditor::_update_library() {
 
 		String type = r->get_class();
 		ti->set_icon(0, EditorNode::get_singleton()->get_class_icon(type, "Object"));
-		ti->set_tooltip_text(0, TTR("Instance:") + " " + r->get_path() + "\n" + TTR("Type:") + " " + type);
+		ti->set_tooltip_text(0, TTR("Instance:") + ' ' + r->get_path() + '\n' + TTR("Type:") + ' ' + type);
 
 		ti->set_text(1, r->get_path());
 		ti->set_editable(1, false);
@@ -320,7 +320,7 @@ void ResourcePreloaderEditor::drop_data_fw(const Point2 &p_point, const Variant 
 			int counter = 0;
 			while (preloader->has_resource(name)) {
 				counter++;
-				name = basename + "_" + itos(counter);
+				name = basename + '_' + itos(counter);
 			}
 
 			EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();

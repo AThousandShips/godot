@@ -129,13 +129,13 @@ String ConfigFile::encode_to_text() const {
 			sb.append("\n");
 		}
 		if (!E.key.is_empty()) {
-			sb.append("[" + E.key + "]\n\n");
+			sb.append('[' + E.key + "]\n\n");
 		}
 
 		for (const KeyValue<String, Variant> &F : E.value) {
 			String vstr;
 			VariantWriter::write_to_string(F.value, vstr);
-			sb.append(F.key.property_name_encode() + "=" + vstr + "\n");
+			sb.append(F.key.property_name_encode() + '=' + vstr + '\n');
 		}
 	}
 	return sb.as_string();
@@ -196,13 +196,13 @@ Error ConfigFile::_internal_save(Ref<FileAccess> file) {
 			file->store_string("\n");
 		}
 		if (!E.key.is_empty()) {
-			file->store_string("[" + E.key.replace("]", "\\]") + "]\n\n");
+			file->store_string('[' + E.key.replace("]", "\\]") + "]\n\n");
 		}
 
 		for (const KeyValue<String, Variant> &F : E.value) {
 			String vstr;
 			VariantWriter::write_to_string(F.value, vstr);
-			file->store_string(F.key.property_name_encode() + "=" + vstr + "\n");
+			file->store_string(F.key.property_name_encode() + '=' + vstr + '\n');
 		}
 	}
 

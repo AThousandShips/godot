@@ -101,7 +101,7 @@ GDScriptTokenizer::Token GDScriptTokenizerBuffer::_binary_to_token(const uint8_t
 
 	token.literal = token.get_name();
 	if (token.type == Token::CONST_NAN) {
-		token.literal = String("NAN"); // Special case since name and notation are different.
+		token.literal = "NAN"; // Special case since name and notation are different.
 	}
 
 	switch (token.type) {

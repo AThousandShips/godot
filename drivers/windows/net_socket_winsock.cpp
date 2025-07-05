@@ -142,7 +142,7 @@ NetSocketWinSock::NetError NetSocketWinSock::_get_socket_error() const {
 	if (err == WSAEMSGSIZE || err == WSAENOBUFS) {
 		return ERR_NET_BUFFER_TOO_SMALL;
 	}
-	print_verbose("Socket error: " + itos(err) + ".");
+	print_verbose("Socket error: " + itos(err) + '.');
 	return ERR_NET_OTHER;
 }
 
@@ -284,7 +284,7 @@ Error NetSocketWinSock::bind(IPAddress p_addr, uint16_t p_port) {
 
 	if (::bind(_sock, (struct sockaddr *)&addr, addr_size) != 0) {
 		NetError err = _get_socket_error();
-		print_verbose("Failed to bind socket. Error: " + itos(err) + ".");
+		print_verbose("Failed to bind socket. Error: " + itos(err) + '.');
 		close();
 		return ERR_UNAVAILABLE;
 	}

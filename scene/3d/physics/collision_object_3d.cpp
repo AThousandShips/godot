@@ -706,7 +706,7 @@ uint32_t CollisionObject3D::shape_find_owner(int p_shape_index) const {
 	}
 
 	//in theory it should be unreachable
-	ERR_FAIL_V_MSG(UINT32_MAX, "Can't find owner for shape index " + itos(p_shape_index) + ".");
+	ERR_FAIL_V_MSG(UINT32_MAX, "Can't find owner for shape index " + itos(p_shape_index) + '.');
 }
 
 CollisionObject3D::CollisionObject3D(RID p_rid, bool p_area) {

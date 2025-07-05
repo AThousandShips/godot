@@ -72,7 +72,7 @@ struct DirAccessWindowsPrivate {
 String DirAccessWindows::fix_path(const String &p_path) const {
 	String r_path = DirAccess::fix_path(p_path.trim_prefix(R"(\\?\)").replace_char('\\', '/'));
 	if (r_path.ends_with(":")) {
-		r_path += "/";
+		r_path += '/';
 	}
 	if (r_path.is_relative_path()) {
 		r_path = current_dir.trim_prefix(R"(\\?\)").replace_char('\\', '/').path_join(r_path);
@@ -145,7 +145,7 @@ String DirAccessWindows::get_drive(int p_drive) {
 		return "";
 	}
 
-	return String::chr(drives[p_drive]) + ":";
+	return String::chr(drives[p_drive]) + ':';
 }
 
 Error DirAccessWindows::change_dir(String p_dir) {
@@ -346,7 +346,7 @@ String DirAccessWindows::get_filesystem_type() const {
 
 	int unit_end = path.find_char(':');
 	ERR_FAIL_COND_V(unit_end == -1, String());
-	String unit = path.substr(0, unit_end + 1) + "\\";
+	String unit = path.substr(0, unit_end + 1) + '\\';
 
 	WCHAR szVolumeName[100];
 	WCHAR szFileSystemName[10];

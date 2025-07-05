@@ -356,7 +356,7 @@ Error GDExtensionLibraryLoader::parse_gdextension_file(const String &p_path) {
 	library_path = find_extension_library(p_path, config, [](const String &p_feature) { return OS::get_singleton()->has_feature(p_feature); });
 
 	if (library_path.is_empty()) {
-		const String os_arch = OS::get_singleton()->get_name().to_lower() + "." + Engine::get_singleton()->get_architecture_name();
+		const String os_arch = OS::get_singleton()->get_name().to_lower() + '.' + Engine::get_singleton()->get_architecture_name();
 		ERR_PRINT(vformat("No GDExtension library found for current OS and architecture (%s) in configuration file: %s", os_arch, p_path));
 		return ERR_FILE_NOT_FOUND;
 	}

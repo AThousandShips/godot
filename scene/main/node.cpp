@@ -1418,7 +1418,7 @@ void Node::set_name(const StringName &p_name) {
 	ERR_FAIL_COND_MSG(data.tree && !Thread::is_main_thread(), "Changing the name to nodes inside the SceneTree is only allowed from the main thread. Use `set_name.call_deferred(new_name)`.");
 	const StringName old_name = data.name;
 	{
-		const String input_name_str = String(p_name);
+		const String input_name_str = p_name;
 		ERR_FAIL_COND(input_name_str.is_empty());
 		const String validated_node_name_string = input_name_str.validate_node_name();
 		if (input_name_str == validated_node_name_string) {
@@ -1570,7 +1570,7 @@ String increase_numeric_string(const String &s) {
 	}
 
 	if (carry) {
-		res = "1" + res;
+		res = '1' + res;
 	}
 
 	return res;
@@ -1594,7 +1594,7 @@ void Node::_generate_serial_child_name(const Node *p_child, StringName &name) co
 	for (int i = name_string.length() - 1; i >= 0; i--) {
 		char32_t n = name_string[i];
 		if (is_digit(n)) {
-			nums = String::chr(name_string[i]) + nums;
+			nums = name_string[i] + nums;
 		} else {
 			break;
 		}
@@ -2302,7 +2302,7 @@ NodePath Node::get_path_to(const Node *p_node, bool p_use_unique_path) const {
 	visited.clear();
 
 	Vector<StringName> path;
-	StringName up = String("..");
+	StringName up = "..";
 
 	if (p_use_unique_path) {
 		n = p_node;
@@ -2310,7 +2310,7 @@ NodePath Node::get_path_to(const Node *p_node, bool p_use_unique_path) const {
 		bool is_detected = false;
 		while (n != common_parent) {
 			if (n->is_unique_name_in_owner() && n->get_owner() == get_owner()) {
-				path.push_back(UNIQUE_NODE_PREFIX + String(n->get_name()));
+				path.push_back(UNIQUE_NODE_PREFIX + n->get_name());
 				is_detected = true;
 				break;
 			}
@@ -2483,7 +2483,7 @@ void Node::print_tree() {
 String Node::_get_tree_string_pretty(const String &p_prefix, bool p_last) {
 	String new_prefix = p_last ? String::utf8(" ┖╴") : String::utf8(" ┠╴");
 	_update_children_cache();
-	String return_tree = p_prefix + new_prefix + String(get_name()) + "\n";
+	String return_tree = p_prefix + new_prefix + get_name() + '\n';
 	for (uint32_t i = 0; i < data.children_cache.size(); i++) {
 		new_prefix = p_last ? String::utf8("   ") : String::utf8(" ┃ ");
 		return_tree += data.children_cache[i]->_get_tree_string_pretty(p_prefix + new_prefix, i == data.children_cache.size() - 1);
@@ -2497,7 +2497,7 @@ String Node::get_tree_string_pretty() {
 
 String Node::_get_tree_string(const Node *p_node) {
 	_update_children_cache();
-	String return_tree = String(p_node->get_path_to(this)) + "\n";
+	String return_tree = String(p_node->get_path_to(this)) + '\n';
 	for (uint32_t i = 0; i < data.children_cache.size(); i++) {
 		return_tree += data.children_cache[i]->_get_tree_string(p_node);
 	}
@@ -2730,7 +2730,7 @@ String Node::to_string() {
 			return ret;
 		}
 	}
-	return (get_name() ? String(get_name()) + ":" : "") + Object::to_string();
+	return (get_name() ? String(get_name()) + ':' : "") + Object::to_string();
 }
 
 void Node::set_scene_instance_state(const Ref<SceneState> &p_state) {
@@ -3345,7 +3345,7 @@ static void _print_orphan_nodes_routine(Object *p_obj) {
 	if (p == n) {
 		path = n->get_name();
 	} else {
-		path = String(p->get_name()) + "/" + String(p->get_path_to(n));
+		path = String(p->get_name()) + '/' + String(p->get_path_to(n));
 	}
 
 	String source;
@@ -3373,7 +3373,7 @@ void Node::print_orphan_nodes() {
 	ObjectDB::debug_objects(_print_orphan_nodes_routine);
 
 	for (const KeyValue<ObjectID, List<String>> &E : _print_orphan_nodes_map) {
-		print_line(itos(E.key) + " - Stray Node: " + E.value.get(0) + " (Type: " + E.value.get(1) + ") (Source:" + E.value.get(2) + ")");
+		print_line(itos(E.key) + " - Stray Node: " + E.value.get(0) + " (Type: " + E.value.get(1) + ") (Source:" + E.value.get(2) + ')');
 	}
 
 	// Flush it after use.
@@ -3431,7 +3431,7 @@ static void _add_nodes_to_options(const Node *p_base, const Node *p_node, List<S
 		return;
 	}
 	if (p_node->is_unique_name_in_owner() && p_node->get_owner() == p_base) {
-		String n = "%" + p_node->get_name();
+		String n = '%' + p_node->get_name();
 		r_options->push_back(n.quote());
 	}
 	String n = String(p_base->get_path_to(p_node));
@@ -3643,7 +3643,7 @@ void Node::call_thread_safep(const StringName &p_method, const Variant **p_args,
 		Callable::CallError ce;
 		callp(p_method, p_args, p_argcount, ce);
 		if (p_show_error && ce.error != Callable::CallError::CALL_OK) {
-			ERR_FAIL_MSG("Error calling method from 'call_threadp': " + Variant::get_call_error_text(this, p_method, p_args, p_argcount, ce) + ".");
+			ERR_FAIL_MSG("Error calling method from 'call_threadp': " + Variant::get_call_error_text(this, p_method, p_args, p_argcount, ce) + '.');
 		}
 	} else {
 		call_deferred_thread_groupp(p_method, p_args, p_argcount, p_show_error);

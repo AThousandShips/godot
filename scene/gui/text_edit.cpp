@@ -4182,7 +4182,7 @@ void TextEdit::insert_line_at(int p_line, const String &p_text) {
 	begin_complex_operation();
 
 	int new_line, new_column;
-	_insert_text(p_line, 0, p_text + "\n", &new_line, &new_column);
+	_insert_text(p_line, 0, p_text + '\n', &new_line, &new_column);
 	_offset_carets_after(p_line, 0, new_line, new_column);
 
 	end_complex_operation();
@@ -9130,7 +9130,7 @@ void TextEdit::_base_insert_text(int p_line, int p_char, const String &p_text, i
 
 	/* STEP 2: Add spaces if the char is greater than the end of the line. */
 	while (p_char > text[p_line].length()) {
-		text.set(p_line, text[p_line] + String::chr(' '), structured_text_parser(st_parser, st_args, text[p_line] + String::chr(' ')));
+		text.set(p_line, text[p_line] + ' ', structured_text_parser(st_parser, st_args, text[p_line] + ' '));
 	}
 
 	/* STEP 3: Separate dest string in pre and post text. */

@@ -126,9 +126,9 @@ Error RDShaderFile::parse_versions_from_text(const String &p_text, const String 
 					base_error = "Version text must be quoted using \"\", instead found '" + define + "'.";
 					break;
 				}
-				define = "\n" + define.substr(1, define.length() - 2).c_unescape() + "\n"; // Add newline before and after just in case.
+				define = '\n' + define.substr(1, define.length() - 2).c_unescape() + '\n'; // Add newline before and after just in case.
 
-				version_texts[version] = define + "\n" + p_defines;
+				version_texts[version] = define + '\n' + p_defines;
 			}
 		} else {
 			if (stage == RD::SHADER_STAGE_MAX && !line.strip_edges().is_empty()) {
@@ -149,11 +149,11 @@ Error RDShaderFile::parse_versions_from_text(const String &p_text, const String 
 
 						String include_code = ShaderIncludeDB::get_built_in_include_file(include);
 						if (!include_code.is_empty()) {
-							stage_code[stage] += "\n" + include_code + "\n";
+							stage_code[stage] += '\n' + include_code + '\n';
 						} else {
 							String include_text = p_include_func(include, p_include_func_userdata);
 							if (!include_text.is_empty()) {
-								stage_code[stage] += "\n" + include_text + "\n";
+								stage_code[stage] += '\n' + include_text + '\n';
 							} else {
 								base_error = "#include failed for file '" + include + "'.";
 							}
@@ -162,7 +162,7 @@ Error RDShaderFile::parse_versions_from_text(const String &p_text, const String 
 						base_error = "#include used, but no include function provided.";
 					}
 				} else {
-					stage_code[stage] += line + "\n";
+					stage_code[stage] += line + '\n';
 				}
 			}
 		}
@@ -199,10 +199,10 @@ Error RDShaderFile::parse_versions_from_text(const String &p_text, const String 
 				error = "Shader compilation is not supported because glslang was not enabled.";
 #endif
 				if (!error.is_empty()) {
-					error += String() + "\n\nStage '" + stage_str[i] + "' source code: \n\n";
+					error += String("\n\nStage '") + stage_str[i] + "' source code: \n\n";
 					Vector<String> sclines = code.split("\n");
 					for (int j = 0; j < sclines.size(); j++) {
-						error += itos(j + 1) + "\t\t" + sclines[j] + "\n";
+						error += itos(j + 1) + "\t\t" + sclines[j] + '\n';
 					}
 					errors_found = true;
 				}

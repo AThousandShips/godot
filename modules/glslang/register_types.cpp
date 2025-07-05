@@ -78,7 +78,7 @@ Vector<uint8_t> compile_glslang_shader(RenderingDeviceCommons::ShaderStage p_sta
 		if (r_error) {
 			(*r_error) = "Failed parse:\n";
 			(*r_error) += shader.getInfoLog();
-			(*r_error) += "\n";
+			(*r_error) += '\n';
 			(*r_error) += shader.getInfoDebugLog();
 		}
 		return ret;
@@ -92,7 +92,7 @@ Vector<uint8_t> compile_glslang_shader(RenderingDeviceCommons::ShaderStage p_sta
 		if (r_error) {
 			(*r_error) = "Failed link:\n";
 			(*r_error) += program.getInfoLog();
-			(*r_error) += "\n";
+			(*r_error) += '\n';
 			(*r_error) += program.getInfoDebugLog();
 		}
 

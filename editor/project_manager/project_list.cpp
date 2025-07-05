@@ -99,7 +99,7 @@ void ProjectListItemControl::_notification(int p_what) {
 			ERR_FAIL_COND(ae.is_null());
 
 			DisplayServer::get_singleton()->accessibility_update_set_role(ae, DisplayServer::AccessibilityRole::ROLE_LIST_BOX_OPTION);
-			DisplayServer::get_singleton()->accessibility_update_set_name(ae, TTR("Project") + " " + project_title->get_text());
+			DisplayServer::get_singleton()->accessibility_update_set_name(ae, TTR("Project") + ' ' + project_title->get_text());
 			DisplayServer::get_singleton()->accessibility_update_set_value(ae, project_title->get_text());
 
 			DisplayServer::get_singleton()->accessibility_update_add_action(ae, DisplayServer::AccessibilityAction::ACTION_CLICK, callable_mp(this, &ProjectListItemControl::_accessibility_action_open));
@@ -249,7 +249,7 @@ void ProjectListItemControl::set_unsupported_features(PackedStringArray p_featur
 				}
 				if (GODOT_VERSION_MAJOR != project_version_major || GODOT_VERSION_MINOR <= project_version_minor) {
 					// Don't show a warning if the project was last edited in a previous minor version.
-					tooltip_text += TTR("This project was last edited in a different Godot version: ") + p_features[i] + "\n";
+					tooltip_text += TTR("This project was last edited in a different Godot version: ") + p_features[i] + '\n';
 				}
 				p_features.remove_at(i);
 				i--;
@@ -257,7 +257,7 @@ void ProjectListItemControl::set_unsupported_features(PackedStringArray p_featur
 		}
 		if (p_features.size() > 0) {
 			String unsupported_features_str = String(", ").join(p_features);
-			tooltip_text += TTR("This project uses features unsupported by the current build:") + "\n" + unsupported_features_str;
+			tooltip_text += TTR("This project uses features unsupported by the current build:") + '\n' + unsupported_features_str;
 		}
 		if (tooltip_text.is_empty()) {
 			return;
@@ -702,7 +702,7 @@ void ProjectList::_load_project_icon(int p_index) {
 	if (!item.icon.is_empty()) {
 		Ref<Image> img;
 		img.instantiate();
-		Error err = img->load(item.icon.replace_first("res://", item.path + "/"));
+		Error err = img->load(item.icon.replace_first("res://", item.path + '/'));
 		if (err == OK) {
 			img->resize(default_icon->get_width(), default_icon->get_height(), Image::INTERPOLATE_LANCZOS);
 			icon = ImageTexture::create_from_image(img);
@@ -1299,7 +1299,7 @@ void ProjectList::add_search_tag(const String &p_tag) {
 	} else if (_search_term.is_empty() || _search_term.ends_with(" ")) {
 		_search_term += tag_string;
 	} else {
-		_search_term += " " + tag_string;
+		_search_term += ' ' + tag_string;
 	}
 	ProjectManager::get_singleton()->get_search_box()->set_text(_search_term);
 

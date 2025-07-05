@@ -171,7 +171,7 @@ SceneTree::Group *SceneTree::add_to_group(const StringName &p_group, Node *p_nod
 		E = group_map.insert(p_group, Group());
 	}
 
-	ERR_FAIL_COND_V_MSG(E->value.nodes.has(p_node), &E->value, "Already in group: " + p_group + ".");
+	ERR_FAIL_COND_V_MSG(E->value.nodes.has(p_node), &E->value, "Already in group: " + p_group + '.');
 	E->value.nodes.push_back(p_node);
 	E->value.changed = true;
 	return &E->value;
@@ -1796,10 +1796,10 @@ void SceneTree::set_multiplayer(Ref<MultiplayerAPI> p_multiplayer, const NodePat
 	if (p_root_path.is_empty()) {
 		ERR_FAIL_COND(p_multiplayer.is_null());
 		if (multiplayer.is_valid()) {
-			multiplayer->object_configuration_remove(nullptr, NodePath("/" + root->get_name()));
+			multiplayer->object_configuration_remove(nullptr, NodePath('/' + root->get_name()));
 		}
 		multiplayer = p_multiplayer;
-		multiplayer->object_configuration_add(nullptr, NodePath("/" + root->get_name()));
+		multiplayer->object_configuration_add(nullptr, NodePath('/' + root->get_name()));
 	} else {
 		if (custom_multiplayers.has(p_root_path)) {
 			custom_multiplayers[p_root_path]->object_configuration_remove(nullptr, p_root_path);
@@ -2133,7 +2133,7 @@ SceneTree::SceneTree() {
 		String ext_hint;
 		for (const String &E : exts) {
 			if (!ext_hint.is_empty()) {
-				ext_hint += ",";
+				ext_hint += ',';
 			}
 			ext_hint += "*." + E;
 		}

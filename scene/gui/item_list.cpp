@@ -1124,7 +1124,7 @@ void ItemList::gui_input(const Ref<InputEvent> &p_event) {
 				}
 
 				if (String::chr(k->get_unicode()) != search_string) {
-					search_string += String::chr(k->get_unicode());
+					search_string += k->get_unicode();
 				}
 
 				for (int i = current + 1; i <= items.size(); i++) {

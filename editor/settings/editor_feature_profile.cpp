@@ -193,7 +193,7 @@ Error EditorFeatureProfile::save_to_file(const String &p_path) {
 
 	for (KeyValue<StringName, HashSet<StringName>> &E : disabled_properties) {
 		for (const StringName &F : E.value) {
-			dis_props.push_back(String(E.key) + ":" + String(F));
+			dis_props.push_back(String(E.key) + ':' + F);
 		}
 	}
 
@@ -400,7 +400,7 @@ void EditorFeatureProfileManager::_update_profile_list(const String &p_select_pr
 		}
 
 		if (name == current_profile) {
-			name += " " + TTR("(current)");
+			name += ' ' + TTR("(current)");
 		}
 		profile_list->add_item(name);
 		int index = profile_list->get_item_count() - 1;
@@ -515,11 +515,11 @@ void EditorFeatureProfileManager::_fill_classes_from(TreeItem *p_parent, const S
 	if (disabled) {
 		class_item->set_custom_color(0, class_list->get_theme_color(SNAME("font_disabled_color"), EditorStringName(Editor)));
 	} else if (disabled_editor && disabled_properties) {
-		text += " " + TTR("(Editor Disabled, Properties Disabled)");
+		text += ' ' + TTR("(Editor Disabled, Properties Disabled)");
 	} else if (disabled_properties) {
-		text += " " + TTR("(Properties Disabled)");
+		text += ' ' + TTR("(Properties Disabled)");
 	} else if (disabled_editor) {
-		text += " " + TTR("(Editor Disabled)");
+		text += ' ' + TTR("(Editor Disabled)");
 	}
 	class_item->set_text(0, text);
 	class_item->set_editable(0, true);
@@ -565,7 +565,7 @@ void EditorFeatureProfileManager::_class_list_item_selected() {
 
 	Variant md = item->get_metadata(0);
 	if (md.is_string()) {
-		description_bit->parse_symbol("class|" + md.operator String() + "|");
+		description_bit->parse_symbol("class|" + md.operator String() + '|');
 	} else if (md.get_type() == Variant::INT) {
 		String feature_description = EditorFeatureProfile::get_feature_description(EditorFeatureProfile::Feature((int)md));
 		description_bit->set_custom_text(TTR(item->get_text(0)), String(), TTRGET(feature_description));

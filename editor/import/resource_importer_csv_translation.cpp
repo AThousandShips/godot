@@ -141,7 +141,7 @@ Error ResourceImporterCSVTranslation::import(ResourceUID::ID p_source_id, const 
 			xlt = cxl;
 		}
 
-		String save_path = p_source_file.get_basename() + "." + translations[i]->get_locale() + ".translation";
+		String save_path = p_source_file.get_basename() + '.' + translations[i]->get_locale() + ".translation";
 		ResourceUID::ID save_id = hash64_murmur3_64(translations[i]->get_locale().hash64(), p_source_id) & 0x7FFFFFFFFFFFFFFF;
 		bool uid_already_exists = ResourceUID::get_singleton()->has_id(save_id);
 		if (uid_already_exists) {

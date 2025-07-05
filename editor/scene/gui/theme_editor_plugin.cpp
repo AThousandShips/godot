@@ -2532,7 +2532,7 @@ HBoxContainer *ThemeTypeEditor::_create_property_control(Theme::DataType p_data_
 	item_name->set_clip_text(true);
 	item_name->set_text(p_item_name);
 	// `|` separators used in `EditorHelpBit`.
-	item_name->set_tooltip_text("theme_item|" + edited_type + "|" + p_item_name);
+	item_name->set_tooltip_text("theme_item|" + edited_type + '|' + p_item_name);
 	item_name->set_mouse_filter(Control::MOUSE_FILTER_STOP);
 	item_name_container->add_child(item_name);
 
@@ -3706,7 +3706,7 @@ void ThemeEditor::edit(const Ref<Theme> &p_theme) {
 	}
 
 	if (theme.is_valid()) {
-		theme_name->set_text(TTR("Theme:") + " " + theme->get_path().get_file());
+		theme_name->set_text(TTR("Theme:") + ' ' + theme->get_path().get_file());
 	}
 }
 

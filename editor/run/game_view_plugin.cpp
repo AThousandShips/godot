@@ -655,13 +655,13 @@ void GameView::_update_ui() {
 			state_label->set_text(vformat(TTR("Game embedding not available for the Display Server: '%s'.\nDisplay Server can be modified in the Project Settings (Display > Display Server > Driver)."), GLOBAL_GET("display/display_server/driver")));
 			break;
 		case EMBED_NOT_AVAILABLE_MINIMIZED:
-			state_label->set_text(TTR("Game embedding not available when the game starts minimized.") + "\n" + TTR("Consider overriding the window mode project setting with the editor feature tag to Windowed to use game embedding while leaving the exported project intact."));
+			state_label->set_text(TTR("Game embedding not available when the game starts minimized.") + '\n' + TTR("Consider overriding the window mode project setting with the editor feature tag to Windowed to use game embedding while leaving the exported project intact."));
 			break;
 		case EMBED_NOT_AVAILABLE_MAXIMIZED:
-			state_label->set_text(TTR("Game embedding not available when the game starts maximized.") + "\n" + TTR("Consider overriding the window mode project setting with the editor feature tag to Windowed to use game embedding while leaving the exported project intact."));
+			state_label->set_text(TTR("Game embedding not available when the game starts maximized.") + '\n' + TTR("Consider overriding the window mode project setting with the editor feature tag to Windowed to use game embedding while leaving the exported project intact."));
 			break;
 		case EMBED_NOT_AVAILABLE_FULLSCREEN:
-			state_label->set_text(TTR("Game embedding not available when the game starts in fullscreen.") + "\n" + TTR("Consider overriding the window mode project setting with the editor feature tag to Windowed to use game embedding while leaving the exported project intact."));
+			state_label->set_text(TTR("Game embedding not available when the game starts in fullscreen.") + '\n' + TTR("Consider overriding the window mode project setting with the editor feature tag to Windowed to use game embedding while leaving the exported project intact."));
 			break;
 		case EMBED_NOT_AVAILABLE_SINGLE_WINDOW_MODE:
 			state_label->set_text(TTRC("Game embedding not available in single window mode."));
@@ -986,9 +986,9 @@ void GameView::_update_arguments_for_instance(int p_idx, List<String> &r_argumen
 	}
 
 	N = r_arguments.insert_after(N, "--position");
-	N = r_arguments.insert_after(N, itos(rect.position.x) + "," + itos(rect.position.y));
+	N = r_arguments.insert_after(N, itos(rect.position.x) + ',' + itos(rect.position.y));
 	N = r_arguments.insert_after(N, "--resolution");
-	r_arguments.insert_after(N, itos(rect.size.x) + "x" + itos(rect.size.y));
+	r_arguments.insert_after(N, itos(rect.size.x) + 'x' + itos(rect.size.y));
 }
 
 void GameView::_window_close_request() {

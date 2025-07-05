@@ -57,7 +57,7 @@ void EditorPerformanceProfiler::Monitor::update_value(float p_value) {
 			tooltip = label;
 		} break;
 		default: {
-			tooltip += " " + item->get_text(0);
+			tooltip += ' ' + item->get_text(0);
 		} break;
 	}
 	item->set_text(1, label);
@@ -86,7 +86,7 @@ String EditorPerformanceProfiler::_create_label(float p_value, Performance::Moni
 			return String::humanize_size(p_value);
 		}
 		case Performance::MONITOR_TYPE_TIME: {
-			return TS->format_number(rtos(p_value * 1000).pad_decimals(2)) + " " + TTR("ms");
+			return TS->format_number(rtos(p_value * 1000).pad_decimals(2)) + ' ' + TTR("ms");
 		}
 		default: {
 			return TS->format_number(rtos(p_value));

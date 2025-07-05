@@ -185,7 +185,7 @@ Error rename_and_store_file_in_gradle_project(void *p_userdata, const String &p_
 		return err;
 	}
 
-	const String dst_path = export_data->assets_directory + String("/") + simplified_path.trim_prefix("res://");
+	const String dst_path = export_data->assets_directory + '/' + simplified_path.trim_prefix("res://");
 	print_verbose("Saving project files from " + simplified_path + " into " + dst_path);
 	err = store_file_at_path(dst_path, enc_data);
 
@@ -311,7 +311,7 @@ String _get_activity_tag(const Ref<EditorExportPlatform> &p_export_platform, con
 			const String contents = export_plugins[i]->get_android_manifest_activity_element_contents(p_export_platform, p_debug);
 			if (!contents.is_empty()) {
 				manifest_activity_text += contents;
-				manifest_activity_text += "\n";
+				manifest_activity_text += '\n';
 			}
 		}
 	}
@@ -354,7 +354,7 @@ String _get_application_tag(const Ref<EditorExportPlatform> &p_export_platform, 
 			const String contents = export_plugins[i]->get_android_manifest_application_element_contents(p_export_platform, p_debug);
 			if (!contents.is_empty()) {
 				manifest_application_text += contents;
-				manifest_application_text += "\n";
+				manifest_application_text += '\n';
 			}
 		}
 	}

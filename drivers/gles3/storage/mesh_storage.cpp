@@ -175,18 +175,18 @@ void MeshStorage::mesh_add_surface(RID p_mesh, const RS::SurfaceData &p_surface)
 		}
 
 		int expected_size = stride * p_surface.vertex_count;
-		ERR_FAIL_COND_MSG(expected_size != p_surface.vertex_data.size(), "Size of vertex data provided (" + itos(p_surface.vertex_data.size()) + ") does not match expected (" + itos(expected_size) + ")");
+		ERR_FAIL_COND_MSG(expected_size != p_surface.vertex_data.size(), "Size of vertex data provided (" + itos(p_surface.vertex_data.size()) + ") does not match expected (" + itos(expected_size) + ')');
 
 		int bs_expected_size = expected_size * mesh->blend_shape_count;
 
-		ERR_FAIL_COND_MSG(bs_expected_size != p_surface.blend_shape_data.size(), "Size of blend shape data provided (" + itos(p_surface.blend_shape_data.size()) + ") does not match expected (" + itos(bs_expected_size) + ")");
+		ERR_FAIL_COND_MSG(bs_expected_size != p_surface.blend_shape_data.size(), "Size of blend shape data provided (" + itos(p_surface.blend_shape_data.size()) + ") does not match expected (" + itos(bs_expected_size) + ')');
 
 		int expected_attrib_size = attrib_stride * p_surface.vertex_count;
-		ERR_FAIL_COND_MSG(expected_attrib_size != p_surface.attribute_data.size(), "Size of attribute data provided (" + itos(p_surface.attribute_data.size()) + ") does not match expected (" + itos(expected_attrib_size) + ")");
+		ERR_FAIL_COND_MSG(expected_attrib_size != p_surface.attribute_data.size(), "Size of attribute data provided (" + itos(p_surface.attribute_data.size()) + ") does not match expected (" + itos(expected_attrib_size) + ')');
 
 		if ((p_surface.format & RS::ARRAY_FORMAT_WEIGHTS) && (p_surface.format & RS::ARRAY_FORMAT_BONES)) {
 			expected_size = skin_stride * p_surface.vertex_count;
-			ERR_FAIL_COND_MSG(expected_size != p_surface.skin_data.size(), "Size of skin data provided (" + itos(p_surface.skin_data.size()) + ") does not match expected (" + itos(expected_size) + ")");
+			ERR_FAIL_COND_MSG(expected_size != p_surface.skin_data.size(), "Size of skin data provided (" + itos(p_surface.skin_data.size()) + ") does not match expected (" + itos(expected_size) + ')');
 		}
 	}
 
@@ -196,7 +196,7 @@ void MeshStorage::mesh_add_surface(RID p_mesh, const RS::SurfaceData &p_surface)
 	RS::SurfaceData new_surface = p_surface;
 #ifdef DISABLE_DEPRECATED
 
-	ERR_FAIL_COND_MSG(surface_version != RS::ARRAY_FLAG_FORMAT_CURRENT_VERSION, "Surface version provided (" + itos(int(surface_version >> RS::ARRAY_FLAG_FORMAT_VERSION_SHIFT)) + ") does not match current version (" + itos(RS::ARRAY_FLAG_FORMAT_CURRENT_VERSION >> RS::ARRAY_FLAG_FORMAT_VERSION_SHIFT) + ")");
+	ERR_FAIL_COND_MSG(surface_version != RS::ARRAY_FLAG_FORMAT_CURRENT_VERSION, "Surface version provided (" + itos(int(surface_version >> RS::ARRAY_FLAG_FORMAT_VERSION_SHIFT)) + ") does not match current version (" + itos(RS::ARRAY_FLAG_FORMAT_CURRENT_VERSION >> RS::ARRAY_FLAG_FORMAT_VERSION_SHIFT) + ')');
 
 #else
 
@@ -275,7 +275,7 @@ void MeshStorage::mesh_add_surface(RID p_mesh, const RS::SurfaceData &p_surface)
 			for (int i = 0; i < new_surface.lods.size(); i++) {
 				glGenBuffers(1, &s->lods[i].index_buffer);
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s->lods[i].index_buffer);
-				GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_ELEMENT_ARRAY_BUFFER, s->lods[i].index_buffer, new_surface.lods[i].index_data.size(), new_surface.lods[i].index_data.ptr(), GL_STATIC_DRAW, "Mesh index buffer LOD[" + itos(i) + "]");
+				GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_ELEMENT_ARRAY_BUFFER, s->lods[i].index_buffer, new_surface.lods[i].index_data.size(), new_surface.lods[i].index_data.ptr(), GL_STATIC_DRAW, "Mesh index buffer LOD[" + itos(i) + ']');
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //unbind
 				s->lods[i].edge_length = new_surface.lods[i].edge_length;
 				s->lods[i].index_count = new_surface.lods[i].index_data.size() / (is_index_16 ? 2 : 4);
@@ -1198,7 +1198,7 @@ void MeshStorage::_mesh_instance_add_surface(MeshInstance *mi, Mesh *mesh, uint3
 			glGenBuffers(2, s.vertex_buffers);
 			for (uint32_t i = 0; i < 2; i++) {
 				glBindBuffer(GL_ARRAY_BUFFER, s.vertex_buffers[i]);
-				GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_ARRAY_BUFFER, s.vertex_buffers[i], buffer_size, nullptr, GL_DYNAMIC_DRAW, "MeshInstance process buffer[" + itos(i) + "]");
+				GLES3::Utilities::get_singleton()->buffer_allocate_data(GL_ARRAY_BUFFER, s.vertex_buffers[i], buffer_size, nullptr, GL_DYNAMIC_DRAW, "MeshInstance process buffer[" + itos(i) + ']');
 			}
 		}
 		glBindBuffer(GL_ARRAY_BUFFER, 0); //unbind

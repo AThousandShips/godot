@@ -169,7 +169,7 @@ void SceneTreeEditor::_cell_button_pressed(Object *p_item, int p_column, int p_i
 		const String bullet_point = U"•  ";
 		String all_warnings;
 		for (const String &w : warnings) {
-			all_warnings += "\n" + bullet_point + w;
+			all_warnings += '\n' + bullet_point + w;
 		}
 
 		// Limit the line width while keeping some padding.
@@ -449,7 +449,7 @@ void SceneTreeEditor::_update_node(Node *p_node, TreeItem *p_item, bool p_part_o
 		if (marked.has(p_node)) {
 			String node_name = p_node->get_name();
 			if (connecting_signal) {
-				node_name += " " + TTR("(Connecting From)");
+				node_name += ' ' + TTR("(Connecting From)");
 			}
 			p_item->set_text(0, node_name);
 			_set_item_custom_color(p_item, accent);
@@ -461,7 +461,7 @@ void SceneTreeEditor::_update_node(Node *p_node, TreeItem *p_item, bool p_part_o
 	} else if (marked.has(p_node)) {
 		String node_name = p_node->get_name();
 		if (connecting_signal) {
-			node_name += " " + TTR("(Connecting From)");
+			node_name += ' ' + TTR("(Connecting From)");
 		}
 		p_item->set_text(0, node_name);
 		p_item->set_selectable(0, marked_selectable);
@@ -514,7 +514,7 @@ void SceneTreeEditor::_update_node(Node *p_node, TreeItem *p_item, bool p_part_o
 			const bool disabled = p_node->get_owner() != EditorNode::get_singleton()->get_edited_scene();
 			String button_text = vformat(TTR("This node can be accessed from anywhere within the scene it belongs to by using the '%s' prefix in the node path."), UNIQUE_NODE_PREFIX);
 			if (!disabled) {
-				button_text += "\n" + TTR("Click to disable this.");
+				button_text += '\n' + TTR("Click to disable this.");
 			}
 			p_item->add_button(0, get_editor_theme_icon(SNAME("SceneUniqueName")), BUTTON_UNIQUE, disabled, button_text);
 		}
@@ -527,21 +527,21 @@ void SceneTreeEditor::_update_node(Node *p_node, TreeItem *p_item, bool p_part_o
 			Array arr = { num_connections };
 			msg_temp += TTRN("Node has one connection.", "Node has {num} connections.", num_connections).format(arr, "{num}");
 			if (num_groups >= 1) {
-				msg_temp += "\n";
+				msg_temp += '\n';
 			}
 		}
 		if (num_groups >= 1) {
-			msg_temp += TTRN("Node is in this group:", "Node is in the following groups:", num_groups) + "\n";
+			msg_temp += TTRN("Node is in this group:", "Node is in the following groups:", num_groups) + '\n';
 
 			List<GroupInfo> groups;
 			p_node->get_groups(&groups);
 			for (const GroupInfo &E : groups) {
 				if (E.persistent) {
-					msg_temp += String::utf8("•  ") + String(E.name) + "\n";
+					msg_temp += String::utf8("•  ") + E.name + '\n';
 				}
 			}
 		} else {
-			msg_temp += "\n";
+			msg_temp += '\n';
 		}
 
 		Ref<Texture2D> icon_temp;
@@ -582,18 +582,18 @@ void SceneTreeEditor::_update_node(Node *p_node, TreeItem *p_item, bool p_part_o
 			// Can't set tooltip after adding button, need to do it before.
 			if (scr->is_tool()) {
 				if (Engine::get_singleton()->is_recovery_mode_hint()) {
-					additional_notes += "\n" + TTR("This script can run in the editor.\nIt is currently disabled due to recovery mode.");
+					additional_notes += '\n' + TTR("This script can run in the editor.\nIt is currently disabled due to recovery mode.");
 					button_color = get_theme_color(SNAME("warning_color"), EditorStringName(Editor));
 				} else {
-					additional_notes += "\n" + TTR("This script is currently running in the editor.");
+					additional_notes += '\n' + TTR("This script is currently running in the editor.");
 					button_color = get_theme_color(SNAME("accent_color"), EditorStringName(Editor));
 				}
 			}
 			if (EditorNode::get_singleton()->get_object_custom_type_base(p_node) == scr) {
-				additional_notes += "\n" + TTR("This script is a custom type.");
+				additional_notes += '\n' + TTR("This script is a custom type.");
 				button_color.a = 0.5;
 			}
-			p_item->add_button(0, get_editor_theme_icon(SNAME("Script")), BUTTON_SCRIPT, false, TTR("Open Script:") + " " + scr->get_path() + additional_notes);
+			p_item->add_button(0, get_editor_theme_icon(SNAME("Script")), BUTTON_SCRIPT, false, TTR("Open Script:") + ' ' + scr->get_path() + additional_notes);
 			p_item->set_button_color(0, p_item->get_button_count(0) - 1, button_color);
 		}
 
@@ -669,25 +669,25 @@ void SceneTreeEditor::_update_node_tooltip(Node *p_node, TreeItem *p_item) {
 		if (p_item->get_button_by_id(0, BUTTON_SUBSCENE) == -1) {
 			p_item->add_button(0, get_editor_theme_icon(SNAME("InstanceOptions")), BUTTON_SUBSCENE, false, TTR("Open in Editor"));
 		}
-		tooltip += String("\n" + TTR("Inherits:") + " " + p_node->get_scene_inherited_state()->get_path());
+		tooltip += '\n' + TTR("Inherits:") + ' ' + p_node->get_scene_inherited_state()->get_path();
 	} else if (p_node != get_scene_node() && !p_node->get_scene_file_path().is_empty() && can_open_instance) {
 		if (p_item->get_button_by_id(0, BUTTON_SUBSCENE) == -1) {
 			p_item->add_button(0, get_editor_theme_icon(SNAME("InstanceOptions")), BUTTON_SUBSCENE, false, TTR("Open in Editor"));
 		}
-		tooltip += String("\n" + TTR("Instance:") + " " + p_node->get_scene_file_path());
+		tooltip += '\n' + TTR("Instance:") + ' ' + p_node->get_scene_file_path();
 	}
 
 	StringName custom_type = EditorNode::get_singleton()->get_object_custom_type_name(p_node);
-	tooltip += "\n" + TTR("Type:") + " " + (custom_type != StringName() ? String(custom_type) : p_node->get_class());
+	tooltip += '\n' + TTR("Type:") + ' ' + (custom_type != StringName() ? String(custom_type) : p_node->get_class());
 
 	if (!p_node->get_editor_description().is_empty()) {
 		const PackedInt32Array boundaries = TS->string_get_word_breaks(p_node->get_editor_description(), "", 80);
-		tooltip += "\n";
+		tooltip += '\n';
 
 		for (int i = 0; i < boundaries.size(); i += 2) {
 			const int start = boundaries[i];
 			const int end = boundaries[i + 1];
-			tooltip += "\n" + p_node->get_editor_description().substr(start, end - start + 1).rstrip("\n");
+			tooltip += '\n' + p_node->get_editor_description().substr(start, end - start + 1).rstrip("\n");
 		}
 	}
 
@@ -1504,7 +1504,7 @@ void SceneTreeEditor::rename_node(Node *p_node, const String &p_name, TreeItem *
 
 	// If p_name only has "%" at the beginning and no other invalid characters, do not error.
 	if (new_name != substr_name) {
-		String text = TTR("Invalid node name, the following characters are not allowed:") + "\n" + String::get_invalid_node_name_characters();
+		String text = TTR("Invalid node name, the following characters are not allowed:") + '\n' + String::get_invalid_node_name_characters();
 		if (error->is_visible()) {
 			if (!error->get_meta("invalid_character", false)) {
 				error->set_text(error->get_text() + "\n\n" + text);
@@ -1552,7 +1552,7 @@ void SceneTreeEditor::rename_node(Node *p_node, const String &p_name, TreeItem *
 
 	// We previously made sure name is not the same as current name
 	// so that it won't complain about already used unique name when not changing name.
-	if ((check_for_unique_name_token || p_node->is_unique_name_in_owner()) && get_tree()->get_edited_scene_root()->get_node_or_null("%" + new_name)) {
+	if ((check_for_unique_name_token || p_node->is_unique_name_in_owner()) && get_tree()->get_edited_scene_root()->get_node_or_null('%' + new_name)) {
 		check_for_unique_name_token = false;
 		String text = vformat(TTR("A node with the unique name %s already exists in this scene."), new_name);
 		if (error->is_visible()) {

@@ -322,7 +322,7 @@ Error AudioDriverWASAPI::audio_device_init(AudioDeviceWASAPI *p_device, bool p_i
 		audioProps.eCategory = AudioCategory_GameEffects;
 
 		hr = ((IAudioClient3 *)p_device->audio_client)->SetClientProperties(&audioProps);
-		ERR_FAIL_COND_V_MSG(hr != S_OK, ERR_CANT_OPEN, "WASAPI: SetClientProperties failed with error 0x" + String::num_uint64(hr, 16) + ".");
+		ERR_FAIL_COND_V_MSG(hr != S_OK, ERR_CANT_OPEN, "WASAPI: SetClientProperties failed with error 0x" + String::num_uint64(hr, 16) + '.');
 	}
 
 	hr = p_device->audio_client->GetMixFormat(&pwfex);
@@ -395,14 +395,14 @@ Error AudioDriverWASAPI::audio_device_init(AudioDeviceWASAPI *p_device, bool p_i
 			// In case we're trying to re-initialize the device, prevent throwing this error on the console,
 			// otherwise if there is currently no device available this will spam the console.
 			if (hr != S_OK) {
-				print_verbose("WASAPI: Initialize failed with error 0x" + String::num_uint64(hr, 16) + ".");
+				print_verbose("WASAPI: Initialize failed with error 0x" + String::num_uint64(hr, 16) + '.');
 				CoTaskMemFree(pwfex);
 				return ERR_CANT_OPEN;
 			}
 		} else {
 			if (unlikely(hr != S_OK)) {
 				CoTaskMemFree(pwfex);
-				ERR_FAIL_V_MSG(ERR_CANT_OPEN, "WASAPI: Initialize failed with error 0x" + String::num_uint64(hr, 16) + ".");
+				ERR_FAIL_V_MSG(ERR_CANT_OPEN, "WASAPI: Initialize failed with error 0x" + String::num_uint64(hr, 16) + '.');
 			}
 		}
 

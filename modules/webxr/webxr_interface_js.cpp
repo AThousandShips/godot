@@ -392,7 +392,7 @@ Dictionary WebXRInterfaceJS::get_system_info() {
 
 	// TODO get actual information from WebXR to return here
 	dict[SNAME("XRRuntimeName")] = String("WebXR");
-	dict[SNAME("XRRuntimeVersion")] = String("");
+	dict[SNAME("XRRuntimeVersion")] = String();
 
 	return dict;
 }

@@ -166,7 +166,7 @@ void ProjectExportDialog::_add_preset(int p_platform) {
 		}
 
 		attempt++;
-		preset_name = EditorExport::get_singleton()->get_export_platform(p_platform)->get_name() + " " + itos(attempt);
+		preset_name = EditorExport::get_singleton()->get_export_platform(p_platform)->get_name() + ' ' + itos(attempt);
 	}
 
 	preset->set_name(preset_name);
@@ -206,7 +206,7 @@ void ProjectExportDialog::_update_presets() {
 
 		String preset_name = preset->get_name();
 		if (preset->is_runnable()) {
-			preset_name += " (" + TTR("Runnable") + ")";
+			preset_name += " (" + TTR("Runnable") + ')';
 		}
 		preset->update_files();
 		presets->add_item(preset_name, preset->get_platform()->get_logo());
@@ -323,7 +323,7 @@ void ProjectExportDialog::_edit_preset(int p_index) {
 			error = "";
 			for (int i = 0; i < items.size(); i++) {
 				if (i > 0) {
-					error += "\n";
+					error += '\n';
 				}
 				error += " - " + items[i];
 			}
@@ -347,7 +347,7 @@ void ProjectExportDialog::_edit_preset(int p_index) {
 			error = "";
 			for (int i = 0; i < items.size(); i++) {
 				if (i > 0) {
-					error += "\n";
+					error += '\n';
 				}
 				error += " - " + items[i];
 			}
@@ -1018,7 +1018,7 @@ void ProjectExportDialog::_setup_item_for_file_mode(TreeItem *p_item, EditorExpo
 bool ProjectExportDialog::_fill_tree(EditorFileSystemDirectory *p_dir, TreeItem *p_item, Ref<EditorExportPreset> &current, EditorExportPreset::ExportFilter p_export_filter) {
 	p_item->set_cell_mode(0, TreeItem::CELL_MODE_CHECK);
 	p_item->set_icon(0, presets->get_theme_icon(SNAME("folder"), SNAME("FileDialog")));
-	p_item->set_text(0, p_dir->get_name() + "/");
+	p_item->set_text(0, p_dir->get_name() + '/');
 	p_item->set_editable(0, true);
 	p_item->set_metadata(0, p_dir->get_path());
 
@@ -1080,7 +1080,7 @@ void ProjectExportDialog::_propagate_file_export_mode(TreeItem *p_item, EditorEx
 	} else {
 		String text = file_mode_popup->get_item_text(file_mode_popup->get_item_index(file_export_mode));
 		if (is_inherited) {
-			text += " " + TTR("(Inherited)");
+			text += ' ' + TTR("(Inherited)");
 		}
 		p_item->set_text(1, text);
 	}
@@ -1317,7 +1317,7 @@ void ProjectExportDialog::_export_project() {
 		export_project->set_current_path(current->get_export_path());
 	} else {
 		if (extension_list.size() >= 1) {
-			export_project->set_current_file(default_filename + "." + extension_list.front()->get());
+			export_project->set_current_file(default_filename + '.' + extension_list.front()->get());
 		} else {
 			export_project->set_current_file(default_filename);
 		}
@@ -1384,7 +1384,7 @@ void ProjectExportDialog::_export_all(bool p_debug) {
 
 	{ // Scope for the editor progress, we must free it before showing the dialog at the end.
 		String export_target = p_debug ? TTR("Debug") : TTR("Release");
-		EditorProgress ep("exportall", TTR("Exporting All") + " " + export_target, EditorExport::get_singleton()->get_export_preset_count(), true);
+		EditorProgress ep("exportall", TTR("Exporting All") + ' ' + export_target, EditorExport::get_singleton()->get_export_preset_count(), true);
 
 		result_dialog_log->clear();
 		for (int i = 0; i < EditorExport::get_singleton()->get_export_preset_count(); i++) {
@@ -1589,7 +1589,7 @@ ProjectExportDialog::ProjectExportDialog() {
 		}
 		strippable.sort();
 
-		String message = TTR("\"Strip Visuals\" will replace the following resources with placeholders:") + " ";
+		String message = TTR("\"Strip Visuals\" will replace the following resources with placeholders:") + ' ';
 		message += String(", ").join(strippable);
 		server_strip_message->set_text(message);
 	}
@@ -1821,7 +1821,7 @@ ProjectExportDialog::ProjectExportDialog() {
 	export_templates_error->add_child(export_error2);
 	export_error2->set_text_overrun_behavior(TextServer::OVERRUN_TRIM_WORD_ELLIPSIS);
 	export_error2->add_theme_color_override(SceneStringName(font_color), EditorNode::get_singleton()->get_editor_theme()->get_color(SNAME("error_color"), EditorStringName(Editor)));
-	export_error2->set_text(String::utf8("•  ") + TTR("Export templates for this platform are missing:") + " ");
+	export_error2->set_text(String::utf8("•  ") + TTR("Export templates for this platform are missing:") + ' ');
 
 	result_dialog = memnew(AcceptDialog);
 	result_dialog->set_title(TTR("Project Export"));

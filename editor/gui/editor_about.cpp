@@ -321,8 +321,8 @@ EditorAbout::EditorAbout() {
 		TreeItem *ti = _tpl_tree->create_item(tpl_ti_tp);
 		String component_name = String::utf8(component.name);
 		ti->set_text(0, component_name);
-		String text = component_name + "\n";
-		long_text += "- " + component_name + "\n";
+		String text = component_name + '\n';
+		long_text += "- " + component_name + '\n';
 		for (int part_index = 0; part_index < component.part_count; part_index++) {
 			const ComponentCopyrightPart &part = component.parts[part_index];
 			text += "\n    Files:";
@@ -335,9 +335,9 @@ EditorAbout::EditorAbout() {
 			}
 			text += copyright;
 			long_text += copyright;
-			String license = "\n    License: " + String::utf8(part.license) + "\n";
+			String license = "\n    License: " + String::utf8(part.license) + '\n';
 			text += license;
-			long_text += license + "\n";
+			long_text += license + '\n';
 		}
 		ti->set_metadata(0, text);
 	}

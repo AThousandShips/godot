@@ -142,7 +142,7 @@ Node *SceneRPCInterface::_process_get_node(int p_from, const uint8_t *p_packet, 
 		node = root_node->get_node(np);
 
 		if (!node) {
-			ERR_PRINT("Failed to get path from RPC: " + String(np) + ".");
+			ERR_PRINT("Failed to get path from RPC: " + String(np) + '.');
 		}
 		return node;
 	} else {
@@ -245,7 +245,7 @@ void SceneRPCInterface::_process_rpc(Node *p_node, const uint16_t p_rpc_method_i
 		} break;
 	}
 
-	ERR_FAIL_COND_MSG(!can_call, "RPC '" + String(config.name) + "' is not allowed on node " + String(p_node->get_path()) + " from: " + itos(p_from) + ". Mode is " + itos((int)config.rpc_mode) + ", authority is " + itos(p_node->get_multiplayer_authority()) + ".");
+	ERR_FAIL_COND_MSG(!can_call, "RPC '" + config.name + "' is not allowed on node " + String(p_node->get_path()) + " from: " + itos(p_from) + ". Mode is " + itos((int)config.rpc_mode) + ", authority is " + itos(p_node->get_multiplayer_authority()) + '.');
 
 	int argc = 0;
 
@@ -298,9 +298,9 @@ void SceneRPCInterface::_send_rpc(Node *p_node, int p_to, uint16_t p_rpc_id, con
 	ERR_FAIL_COND_MSG(p_argcount > 255, "Too many arguments (>255).");
 
 	if (p_to != 0 && !multiplayer->get_connected_peers().has(Math::abs(p_to))) {
-		ERR_FAIL_COND_MSG(p_to == multiplayer->get_unique_id(), "Attempt to call RPC on yourself! Peer unique ID: " + itos(multiplayer->get_unique_id()) + ".");
+		ERR_FAIL_COND_MSG(p_to == multiplayer->get_unique_id(), "Attempt to call RPC on yourself! Peer unique ID: " + itos(multiplayer->get_unique_id()) + '.');
 
-		ERR_FAIL_MSG("Attempt to call RPC with unknown peer ID: " + itos(p_to) + ".");
+		ERR_FAIL_MSG("Attempt to call RPC with unknown peer ID: " + itos(p_to) + '.');
 	}
 
 	// See if all peers have cached path (if so, call can be fast) while building the RPC target list.
@@ -494,7 +494,7 @@ Error SceneRPCInterface::rpcp(Object *p_obj, int p_peer_id, const StringName &p_
 
 		if (ce.error != Callable::CallError::CALL_OK) {
 			String error = Variant::get_call_error_text(node, p_method, p_arg, p_argcount, ce);
-			error = "rpc() aborted in local call:  - " + error + ".";
+			error = "rpc() aborted in local call:  - " + error + '.';
 			ERR_PRINT(error);
 			return FAILED;
 		}
@@ -510,7 +510,7 @@ Error SceneRPCInterface::rpcp(Object *p_obj, int p_peer_id, const StringName &p_
 
 		if (ce.error != Callable::CallError::CALL_OK) {
 			String error = Variant::get_call_error_text(node, p_method, p_arg, p_argcount, ce);
-			error = "rpc() aborted in script local call:  - " + error + ".";
+			error = "rpc() aborted in script local call:  - " + error + '.';
 			ERR_PRINT(error);
 			return FAILED;
 		}

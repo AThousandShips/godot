@@ -67,13 +67,13 @@ void EditorLocaleDialog::ok_pressed() {
 	locale = lang_code->get_text();
 
 	if (!script_code->get_text().is_empty()) {
-		locale += "_" + script_code->get_text();
+		locale += '_' + script_code->get_text();
 	}
 	if (!country_code->get_text().is_empty()) {
-		locale += "_" + country_code->get_text();
+		locale += '_' + country_code->get_text();
 	}
 	if (!variant_code->get_text().is_empty()) {
-		locale += "_" + variant_code->get_text();
+		locale += '_' + variant_code->get_text();
 	}
 
 	emit_signal(SNAME("locale_selected"), TranslationServer::get_singleton()->standardize_locale(locale));

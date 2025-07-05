@@ -137,7 +137,7 @@ void EditorPropertyBindingPath::setup(const String &p_interaction_profile_path, 
 
 		for (const OpenXRInteractionProfileMetadata::IOPath &io_path : profile_def->io_paths) {
 			if (io_path.top_level_path == top_level_path && p_include_action_types.has(io_path.action_type)) {
-				options->add_item(top_level_name + "/" + io_path.display_name);
+				options->add_item(top_level_name + '/' + io_path.display_name);
 				options->set_item_metadata(-1, io_path.openxr_path);
 			}
 		}

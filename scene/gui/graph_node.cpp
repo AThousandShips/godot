@@ -135,7 +135,7 @@ void GraphNode::_get_property_list(List<PropertyInfo> *p_list) const {
 			continue;
 		}
 
-		String base = "slot/" + itos(idx) + "/";
+		String base = "slot/" + itos(idx) + '/';
 
 		p_list->push_back(PropertyInfo(Variant::BOOL, base + "left_enabled"));
 		p_list->push_back(PropertyInfo(Variant::INT, base + "left_type"));
@@ -562,18 +562,18 @@ void GraphNode::_notification(int p_what) {
 				name += ", " + vformat(ETR("slot %d of %d"), selected_slot + 1, slot_count);
 				if (slot.enable_left) {
 					if (type_info.has(slot.type_left)) {
-						name += "," + vformat(ETR("input port, type: %s"), type_info[slot.type_left]);
+						name += ',' + vformat(ETR("input port, type: %s"), type_info[slot.type_left]);
 					} else {
-						name += "," + vformat(ETR("input port, type: %d"), slot.type_left);
+						name += ',' + vformat(ETR("input port, type: %d"), slot.type_left);
 					}
 					if (graph) {
 						for (int i = 0; i < left_port_cache.size(); i++) {
 							if (left_port_cache[i].slot_index == selected_slot) {
 								String cd = graph->get_connections_description(get_name(), i);
 								if (cd.is_empty()) {
-									name += " " + ETR("no connections");
+									name += ' ' + ETR("no connections");
 								} else {
-									name += " " + cd;
+									name += ' ' + cd;
 								}
 								break;
 							}
@@ -582,18 +582,18 @@ void GraphNode::_notification(int p_what) {
 				}
 				if (slot.enable_left) {
 					if (type_info.has(slot.type_right)) {
-						name += "," + vformat(ETR("output port, type: %s"), type_info[slot.type_right]);
+						name += ',' + vformat(ETR("output port, type: %s"), type_info[slot.type_right]);
 					} else {
-						name += "," + vformat(ETR("output port, type: %d"), slot.type_right);
+						name += ',' + vformat(ETR("output port, type: %d"), slot.type_right);
 					}
 					if (graph) {
 						for (int i = 0; i < right_port_cache.size(); i++) {
 							if (right_port_cache[i].slot_index == selected_slot) {
 								String cd = graph->get_connections_description(get_name(), i);
 								if (cd.is_empty()) {
-									name += " " + ETR("no connections");
+									name += ' ' + ETR("no connections");
 								} else {
-									name += " " + cd;
+									name += ' ' + cd;
 								}
 								break;
 							}

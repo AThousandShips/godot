@@ -149,7 +149,7 @@ void ScriptEditorDebugger::update_tabs() {
 		errors_tab->set_name(TTR("Errors"));
 		tabs->set_tab_icon(tabs->get_tab_idx_from_control(errors_tab), Ref<Texture2D>());
 	} else {
-		errors_tab->set_name(TTR("Errors") + " (" + itos(error_count + warning_count) + ")");
+		errors_tab->set_name(TTR("Errors") + " (" + itos(error_count + warning_count) + ')');
 		if (error_count >= 1 && warning_count >= 1) {
 			tabs->set_tab_icon(tabs->get_tab_idx_from_control(errors_tab), get_editor_theme_icon(SNAME("ErrorWarning")));
 		} else if (error_count >= 1) {
@@ -468,7 +468,7 @@ void ScriptEditorDebugger::_msg_servers_memory_usage(uint64_t p_thread_id, const
 		it->set_icon(0, get_editor_theme_icon(type));
 	}
 
-	vmem_total->set_tooltip_text(TTR("Bytes:") + " " + itos(total));
+	vmem_total->set_tooltip_text(TTR("Bytes:") + ' ' + itos(total));
 	vmem_total->set_text(String::humanize_size(total));
 }
 
@@ -497,7 +497,7 @@ void ScriptEditorDebugger::_msg_stack_dump(uint64_t p_thread_id, const Array &p_
 		stack_dump_info.push_back(d);
 		s->set_metadata(0, d);
 
-		String line = itos(i) + " - " + String(d["file"]) + ":" + itos(d["line"]) + " - at function: " + String(d["function"]);
+		String line = itos(i) + " - " + String(d["file"]) + ':' + itos(d["line"]) + " - at function: " + String(d["function"]);
 		s->set_text(0, line);
 
 		if (i == 0) {
@@ -644,7 +644,7 @@ void ScriptEditorDebugger::_msg_error(uint64_t p_thread_id, const Array &p_data)
 	error_title += oe.error_descr.is_empty() ? oe.error : oe.error_descr;
 	error->set_text(1, error_title);
 	error->set_autowrap_mode(1, TextServer::AUTOWRAP_WORD_SMART);
-	tooltip += " " + error_title + "\n";
+	tooltip += ' ' + error_title + '\n';
 
 	// Find the language of the error's source file.
 	String source_language_name = "C++"; // Default value is the old hard-coded one.
@@ -661,10 +661,10 @@ void ScriptEditorDebugger::_msg_error(uint64_t p_thread_id, const Array &p_data)
 		// Add item for C++ error condition.
 		TreeItem *cpp_cond = error_tree->create_item(error);
 		// TRANSLATORS: %s is the name of a language, e.g. C++.
-		cpp_cond->set_text(0, "<" + vformat(TTR("%s Error"), source_language_name) + ">");
+		cpp_cond->set_text(0, '<' + vformat(TTR("%s Error"), source_language_name) + '>');
 		cpp_cond->set_text(1, oe.error);
 		cpp_cond->set_text_alignment(0, HORIZONTAL_ALIGNMENT_LEFT);
-		tooltip += vformat(TTR("%s Error:"), source_language_name) + " " + oe.error + "\n";
+		tooltip += vformat(TTR("%s Error:"), source_language_name) + ' ' + oe.error + '\n';
 		if (source_is_project_file) {
 			cpp_cond->set_metadata(0, source_meta);
 		}
@@ -673,7 +673,7 @@ void ScriptEditorDebugger::_msg_error(uint64_t p_thread_id, const Array &p_data)
 	v.resize(100);
 
 	// Source of the error.
-	String source_txt = (source_is_project_file ? oe.source_file.get_file() : oe.source_file) + ":" + itos(oe.source_line);
+	String source_txt = (source_is_project_file ? oe.source_file.get_file() : oe.source_file) + ':' + itos(oe.source_line);
 	if (!oe.source_func.is_empty()) {
 		source_txt += " @ " + oe.source_func;
 		if (!oe.source_func.ends_with(")")) {
@@ -683,10 +683,10 @@ void ScriptEditorDebugger::_msg_error(uint64_t p_thread_id, const Array &p_data)
 
 	TreeItem *cpp_source = error_tree->create_item(error);
 	// TRANSLATORS: %s is the name of a language, e.g. C++.
-	cpp_source->set_text(0, "<" + vformat(TTR("%s Source"), source_language_name) + ">");
+	cpp_source->set_text(0, '<' + vformat(TTR("%s Source"), source_language_name) + '>');
 	cpp_source->set_text(1, source_txt);
 	cpp_source->set_text_alignment(0, HORIZONTAL_ALIGNMENT_LEFT);
-	tooltip += vformat(TTR("%s Source:"), source_language_name) + " " + source_txt + "\n";
+	tooltip += vformat(TTR("%s Source:"), source_language_name) + ' ' + source_txt + '\n';
 
 	// Set metadata to highlight error line in scripts.
 	if (source_is_project_file) {
@@ -705,17 +705,17 @@ void ScriptEditorDebugger::_msg_error(uint64_t p_thread_id, const Array &p_data)
 		stack_trace->set_metadata(0, meta);
 
 		if (i == 0) {
-			stack_trace->set_text(0, "<" + TTR("Stack Trace") + ">");
+			stack_trace->set_text(0, '<' + TTR("Stack Trace") + '>');
 			stack_trace->set_text_alignment(0, HORIZONTAL_ALIGNMENT_LEFT);
 			if (!source_is_project_file) {
 				// Only override metadata if the source is not inside the project.
 				error->set_metadata(0, meta);
 			}
-			tooltip += TTR("Stack Trace:") + "\n";
+			tooltip += TTR("Stack Trace:") + '\n';
 		}
 
 		String frame_txt = _format_frame_text(&infos[i]);
-		tooltip += frame_txt + "\n";
+		tooltip += frame_txt + '\n';
 		stack_trace->set_text(1, frame_txt);
 	}
 
@@ -1178,7 +1178,7 @@ void ScriptEditorDebugger::_breakpoint_tree_clicked() {
 }
 
 String ScriptEditorDebugger::_format_frame_text(const ScriptLanguage::StackInfo *info) {
-	String text = info->file.get_file() + ":" + itos(info->line) + " @ " + info->func;
+	String text = info->file.get_file() + ':' + itos(info->line) + " @ " + info->func;
 	if (!text.ends_with(")")) {
 		text += "()";
 	}
@@ -1530,7 +1530,7 @@ void ScriptEditorDebugger::_live_edit_set() {
 
 	while (ti) {
 		String lp = ti->get_text(0);
-		path = "/" + lp + path;
+		path = '/' + lp + path;
 		ti = ti->get_parent();
 	}
 
@@ -1786,7 +1786,7 @@ void ScriptEditorDebugger::_breakpoints_item_rmb_selected(const Vector2 &p_pos, 
 		breakpoints_menu->add_icon_item(get_editor_theme_icon(SNAME("Remove")), TTR("Delete Breakpoint"), ACTION_DELETE_BREAKPOINT);
 		file = selected->get_parent()->get_text(0);
 	}
-	breakpoints_menu->add_icon_item(get_editor_theme_icon(SNAME("Remove")), TTR("Delete All Breakpoints in:") + " " + file, ACTION_DELETE_BREAKPOINTS_IN_FILE);
+	breakpoints_menu->add_icon_item(get_editor_theme_icon(SNAME("Remove")), TTR("Delete All Breakpoints in:") + ' ' + file, ACTION_DELETE_BREAKPOINTS_IN_FILE);
 	breakpoints_menu->add_icon_item(get_editor_theme_icon(SNAME("Remove")), TTR("Delete All Breakpoints"), ACTION_DELETE_ALL_BREAKPOINTS);
 
 	breakpoints_menu->set_position(get_screen_position() + get_local_mouse_position());
@@ -1832,10 +1832,10 @@ void ScriptEditorDebugger::_item_menu_id_pressed(int p_option) {
 			String text = ti->get_text(0) + "   ";
 			int rpad_len = text.length();
 
-			text = type + text + ti->get_text(1) + "\n";
+			text = type + text + ti->get_text(1) + '\n';
 			TreeItem *ci = ti->get_first_child();
 			while (ci) {
-				text += "  " + ci->get_text(0).rpad(rpad_len) + ci->get_text(1) + "\n";
+				text += "  " + ci->get_text(0).rpad(rpad_len) + ci->get_text(1) + '\n';
 				ci = ci->get_next();
 			}
 
@@ -1851,7 +1851,7 @@ void ScriptEditorDebugger::_item_menu_id_pressed(int p_option) {
 			// Find the child with the "C++ Source".
 			// It's not at a fixed position as "C++ Error" may come first.
 			TreeItem *ci = ti->get_first_child();
-			const String cpp_source = "<" + TTR("C++ Source") + ">";
+			const String cpp_source = '<' + TTR("C++ Source") + '>';
 			while (ci) {
 				if (ci->get_text(0) == cpp_source) {
 					break;
@@ -2254,7 +2254,7 @@ Instead, use the monitors tab to obtain more precise VRAM usage.
 			vmem_hb->add_child(space);
 		}
 
-		vmem_hb->add_child(memnew(Label(TTR("Total:") + " ")));
+		vmem_hb->add_child(memnew(Label(TTR("Total:") + ' ')));
 		vmem_total = memnew(LineEdit);
 		vmem_total->set_editable(false);
 		vmem_total->set_accessibility_name(TTRC("Video RAM Total"));

@@ -200,7 +200,7 @@ Array TTS_Linux::get_voices() const {
 		Dictionary voice_d;
 		voice_d["name"] = E.key;
 		voice_d["id"] = E.key;
-		voice_d["language"] = E.value.language + "_" + E.value.variant;
+		voice_d["language"] = E.value.language + '_' + E.value.variant;
 		list.push_back(voice_d);
 	}
 

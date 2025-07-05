@@ -95,7 +95,7 @@ String RenderingContextDriver::get_driver_and_device_memory_report() const {
 			  "DEBUG_ENABLED for this functionality to work.";
 	report += "\nDevice memory may be unavailable if the API does not support it"
 			  "(e.g. VK_EXT_device_memory_report is unsupported).";
-	report += "\n";
+	report += '\n';
 
 	report += "\nTotal Driver Memory:";
 	report += String::num_real(double(get_driver_total_memory()) / (1024.0 * 1024.0));
@@ -114,15 +114,15 @@ String RenderingContextDriver::get_driver_and_device_memory_report() const {
 			  "Device memory in MB; Device Allocation Count";
 
 	for (uint32_t i = 0u; i < num_tracked_obj_types; ++i) {
-		report += "\n";
+		report += '\n';
 		report += get_tracked_object_name(i);
-		report += ";";
+		report += ';';
 		report += String::num_real(double(get_driver_memory_by_object_type(i)) / (1024.0 * 1024.0));
-		report += ";";
+		report += ';';
 		report += String::num_uint64(get_driver_allocs_by_object_type(i));
-		report += ";";
+		report += ';';
 		report += String::num_real(double(get_device_memory_by_object_type(i)) / (1024.0 * 1024.0));
-		report += ";";
+		report += ';';
 		report += String::num_uint64(get_device_allocs_by_object_type(i));
 	}
 

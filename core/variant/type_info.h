@@ -188,7 +188,7 @@ inline String enum_qualified_name_to_class_info_name(const String &p_qualified_n
 		return String(".").join(parts);
 	}
 	// Contains namespace. We only want the class and enum names.
-	return parts[parts.size() - 2] + "." + parts[parts.size() - 1];
+	return parts[parts.size() - 2] + '.' + parts[parts.size() - 1];
 }
 } // namespace Internal
 } // namespace GodotTypeInfo

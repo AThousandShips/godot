@@ -271,7 +271,7 @@ void SceneTreeFTI::_create_depth_lists() {
 		bool log_nodes_moved_on_frame = (data.traversal_mode == TM_DEBUG) && !data.frame_start && data.periodic_debug_log;
 		if (log_nodes_moved_on_frame) {
 			if (source_list.size()) {
-				print_line(String("\n") + itos(source_list.size()) + " nodes moved during frame:");
+				print_line('\n' + itos(source_list.size()) + " nodes moved during frame:");
 			} else {
 				print_line("0 nodes moved during frame.");
 			}
@@ -298,7 +298,7 @@ void SceneTreeFTI::_create_depth_lists() {
 
 #ifdef DEBUG_ENABLED
 			if (log_nodes_moved_on_frame) {
-				print_line("\t" + s->get_name());
+				print_line('\t' + s->get_name());
 			}
 #endif
 
@@ -541,7 +541,7 @@ void SceneTreeFTI::_update_dirty_nodes(Node *p_node, uint32_t p_current_half_fra
 		if (data.periodic_debug_log && !data.use_optimized_traversal_method && !data.frame_start) {
 			String sz;
 			for (int n = 0; n < p_depth; n++) {
-				sz += "\t";
+				sz += '\t';
 			}
 			print_line(sz + p_node->get_name() + (dirty ? " DIRTY" : "") + (s->get_transform() == Transform3D() ? "\t[IDENTITY]" : ""));
 		}
@@ -634,7 +634,7 @@ void SceneTreeFTI::frame_update(Node *p_root, bool p_frame_start) {
 
 #ifdef GODOT_SCENE_TREE_FTI_PRINT_TREE
 	if (data.periodic_debug_log) {
-		print_line(String("\nScene: ") + (data.frame_start ? "start" : "end") + "\n");
+		print_line(String("\nScene: ") + (data.frame_start ? "start" : "end") + '\n');
 	}
 #endif
 #endif

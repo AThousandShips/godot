@@ -112,7 +112,7 @@ void PostImportPluginSkeletonRenamer::_internal_process(InternalImportCategory p
 							String current_bone_name = anim->track_get_path(i).get_subname(0);
 							const HashMap<String, String>::ConstIterator new_bone_name = p_rename_map.find(current_bone_name);
 							if (new_bone_name) {
-								String new_track_path = track_path + ":" + new_bone_name->value;
+								String new_track_path = track_path + ':' + new_bone_name->value;
 								anim->track_set_path(i, new_track_path);
 							}
 						}
@@ -222,15 +222,15 @@ void PostImportPluginSkeletonRenamer::internal_process(InternalImportCategory p_
 							if (track_skeleton && track_skeleton == skeleton) {
 								if (node == orig_node) {
 									if (anim->track_get_path(i).get_subname_count() > 0) {
-										anim->track_set_path(i, UNIQUE_NODE_PREFIX + unique_name + String(":") + anim->track_get_path(i).get_concatenated_subnames());
+										anim->track_set_path(i, UNIQUE_NODE_PREFIX + unique_name + ':' + anim->track_get_path(i).get_concatenated_subnames());
 									} else {
 										anim->track_set_path(i, UNIQUE_NODE_PREFIX + unique_name);
 									}
 								} else {
 									if (anim->track_get_path(i).get_subname_count() > 0) {
-										anim->track_set_path(i, UNIQUE_NODE_PREFIX + unique_name + "/" + String(node->get_path_to(orig_node)) + String(":") + anim->track_get_path(i).get_concatenated_subnames());
+										anim->track_set_path(i, UNIQUE_NODE_PREFIX + unique_name + '/' + String(node->get_path_to(orig_node)) + ':' + anim->track_get_path(i).get_concatenated_subnames());
 									} else {
-										anim->track_set_path(i, UNIQUE_NODE_PREFIX + unique_name + "/" + String(node->get_path_to(orig_node)));
+										anim->track_set_path(i, UNIQUE_NODE_PREFIX + unique_name + '/' + String(node->get_path_to(orig_node)));
 									}
 								}
 								break;

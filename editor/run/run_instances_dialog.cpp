@@ -215,7 +215,7 @@ void RunInstancesDialog::get_argument_list_for_instance(int p_idx, List<String> 
 		if (override_args) {
 			raw_custom_args = instances_data[p_idx].get_launch_arguments();
 		} else {
-			raw_custom_args = main_args_edit->get_text() + " " + instances_data[p_idx].get_launch_arguments();
+			raw_custom_args = main_args_edit->get_text() + ' ' + instances_data[p_idx].get_launch_arguments();
 		}
 	} else {
 		raw_custom_args = main_args_edit->get_text();
@@ -274,7 +274,7 @@ void RunInstancesDialog::apply_custom_features(int p_instance_idx) {
 		if (instance.overrides_features()) {
 			raw_text = instance.get_feature_tags();
 		} else {
-			raw_text = main_features_edit->get_text() + "," + instance.get_feature_tags();
+			raw_text = main_features_edit->get_text() + ',' + instance.get_feature_tags();
 		}
 	} else {
 		raw_text = main_features_edit->get_text();

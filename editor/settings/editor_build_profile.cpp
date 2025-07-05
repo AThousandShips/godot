@@ -870,7 +870,7 @@ void EditorBuildProfileManager::_detect_from_project() {
 		for (int i = 0; i < E.value.classes.size(); i++) {
 			String c = E.value.classes[i];
 			if (i > 0) {
-				l += ",";
+				l += ',';
 			}
 			l += c;
 			used_classes.insert(c);
@@ -879,7 +879,7 @@ void EditorBuildProfileManager::_detect_from_project() {
 		for (int i = 0; i < E.value.build_deps.size(); i++) {
 			String c = E.value.build_deps[i];
 			if (i > 0) {
-				l += ",";
+				l += ',';
 			}
 			l += c;
 			used_build_deps.push_back(c);
@@ -1127,7 +1127,7 @@ void EditorBuildProfileManager::_class_list_item_selected() {
 
 	Variant md = item->get_metadata(0);
 	if (md.is_string()) {
-		description_bit->parse_symbol("class|" + md.operator String() + "|");
+		description_bit->parse_symbol("class|" + md.operator String() + '|');
 	} else if (md.get_type() == Variant::INT) {
 		String build_option_description = EditorBuildProfile::get_build_option_description(EditorBuildProfile::BuildOption((int)md));
 		description_bit->set_custom_text(TTR(item->get_text(0)), String(), TTRGET(build_option_description));

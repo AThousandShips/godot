@@ -969,7 +969,7 @@ void TileSetAtlasSourceEditor::_update_atlas_view() {
 	} else {
 		if (tools_button_group->get_pressed_button() == tool_setup_atlas_source_button) {
 			help_label->set_visible(true);
-			help_label->set_text(TTR("Hold Ctrl to create multiple tiles.") + "\n" + TTR("Hold Shift to create big tiles."));
+			help_label->set_text(TTR("Hold Ctrl to create multiple tiles.") + '\n' + TTR("Hold Shift to create big tiles."));
 		} else if (tools_button_group->get_pressed_button() == tool_select_button) {
 			help_label->set_visible(true);
 			help_label->set_text(TTRC("Hold Shift to select multiple regions."));
