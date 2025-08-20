@@ -159,7 +159,7 @@
 			<return type="bool" />
 			<param index="0" name="method" type="Callable" />
 			<description>
-				Calls the given [Callable] on each element in the array and returns [code]true[/code] if the [Callable] returns [code]true[/code] for [i]all[/i] elements in the array. If the [Callable] returns [code]false[/code] for one array element or more, this method returns [code]false[/code].
+				Calls the given [Callable] on each element in the array and returns [code]true[/code] if the [Callable] returns [code]true[/code] for [i]all[/i] elements in the array. If the [Callable] returns [code]false[/code] for one or more array element, this method returns [code]false[/code].
 				The [param method] should take one [Variant] parameter (the current array element) and return a [bool].
 				[codeblocks]
 				[gdscript]
@@ -392,7 +392,7 @@
 					# Same as above, but using a lambda function.
 					print([1, 4, 5, 8].filter(func(number): return number % 2 == 0))
 				[/codeblock]
-				See also [method any], [method all], [method map] and [method reduce].
+				See also [method any], [method all], [method map], and [method reduce].
 			</description>
 		</method>
 		<method name="find" qualifiers="const">
@@ -557,7 +557,7 @@
 					# Same as above, but using a lambda function.
 					print([1, 2, 3].map(func(element): return element * 2))
 				[/codeblock]
-				See also [method filter], [method reduce], [method any] and [method all].
+				See also [method filter], [method reduce], [method any], and [method all].
 			</description>
 		</method>
 		<method name="max" qualifiers="const">

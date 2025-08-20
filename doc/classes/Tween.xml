@@ -333,7 +333,7 @@
 				tween.TweenCallback(Callable.From(Shoot)).SetDelay(1.0f);
 				[/csharp]
 				[/codeblocks]
-				[b]Example:[/b] Turning a sprite red and then blue, with 2 second delay:
+				[b]Example:[/b] Turning a sprite red and then blue, with a 2 second delay:
 				[codeblocks]
 				[gdscript]
 				var tween = get_tree().create_tween()

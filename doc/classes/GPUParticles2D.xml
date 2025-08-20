@@ -36,7 +36,7 @@
 			<param index="3" name="custom" type="Color" />
 			<param index="4" name="flags" type="int" />
 			<description>
-				Emits a single particle. Whether [param xform], [param velocity], [param color] and [param custom] are applied depends on the value of [param flags]. See [enum EmitFlags].
+				Emits a single particle. Whether [param xform], [param velocity], [param color], and [param custom] are applied depends on the value of [param flags]. See [enum EmitFlags].
 				The default ParticleProcessMaterial will overwrite [param color] and use the contents of [param custom] as [code](rotation, age, animation, lifetime)[/code].
 				[b]Note:[/b] [method emit_particle] is only supported on the Forward+ and Mobile rendering methods, not Compatibility.
 			</description>
@@ -87,7 +87,7 @@
 			The particle system's frame rate is fixed to a value. For example, changing the value to 2 will make the particles render at 2 frames per second. Note this does not slow down the simulation of the particle system itself.
 		</member>
 		<member name="fract_delta" type="bool" setter="set_fractional_delta" getter="get_fractional_delta" default="true">
-			If [code]true[/code], results in fractional delta calculation which has a smoother particles display effect.
+			If [code]true[/code], results in fractional delta calculation which has a smoother particle display effect.
 		</member>
 		<member name="interp_to_end" type="float" setter="set_interp_to_end" getter="get_interp_to_end" default="0.0">
 			Causes all the particles in this node to interpolate towards the end of their lifetime.

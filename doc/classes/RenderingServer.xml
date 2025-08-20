@@ -487,7 +487,7 @@
 			<param index="1" name="clip" type="bool" />
 			<description>
 				If [param clip] is [code]true[/code], makes the canvas item specified by the [param item] RID not draw anything outside of its rect's coordinates. This clipping is fast, but works only with axis-aligned rectangles. This means that rotation is ignored by the clipping rectangle. For more advanced clipping shapes, use [method canvas_item_set_canvas_group_mode] instead.
-				[b]Note:[/b] The equivalent node functionality is found in [member Label.clip_text], [RichTextLabel] (always enabled) and more.
+				[b]Note:[/b] The equivalent node functionality is found in [member Label.clip_text], [RichTextLabel] (always enabled), and more.
 			</description>
 		</method>
 		<method name="canvas_item_set_copy_to_backbuffer">
@@ -594,7 +594,7 @@
 			<param index="0" name="item" type="RID" />
 			<param index="1" name="parent" type="RID" />
 			<description>
-				Sets a parent [CanvasItem] to the [CanvasItem]. The item will inherit transform, modulation and visibility from its parent, like [CanvasItem] nodes in the scene tree.
+				Sets a parent [CanvasItem] to the [CanvasItem]. The item will inherit transform, modulation, and visibility from its parent, like [CanvasItem] nodes in the scene tree.
 			</description>
 		</method>
 		<method name="canvas_item_set_self_modulate">
@@ -670,7 +670,7 @@
 			<param index="0" name="item" type="RID" />
 			<param index="1" name="z_index" type="int" />
 			<description>
-				Sets the [CanvasItem]'s Z index, i.e. its draw order (lower indexes are drawn first).
+				Sets the [CanvasItem]'s Z index, i.e. its draw order (lower indices are drawn first).
 			</description>
 		</method>
 		<method name="canvas_item_transform_physics_interpolation">
@@ -1028,7 +1028,7 @@
 			<param index="1" name="channel" type="int" enum="RenderingServer.CanvasTextureChannel" />
 			<param index="2" name="texture" type="RID" />
 			<description>
-				Sets the [param channel]'s [param texture] for the canvas texture specified by the [param canvas_texture] RID. Equivalent to [member CanvasTexture.diffuse_texture], [member CanvasTexture.normal_texture] and [member CanvasTexture.specular_texture].
+				Sets the [param channel]'s [param texture] for the canvas texture specified by the [param canvas_texture] RID. Equivalent to [member CanvasTexture.diffuse_texture], [member CanvasTexture.normal_texture], and [member CanvasTexture.specular_texture].
 			</description>
 		</method>
 		<method name="canvas_texture_set_shading_parameters">
@@ -1151,7 +1151,7 @@
 			<param index="2" name="begin" type="float" />
 			<param index="3" name="length" type="float" />
 			<description>
-				Sets the distance fade parameters in the decal specified by the [param decal] RID. Equivalent to [member Decal.distance_fade_enabled], [member Decal.distance_fade_begin] and [member Decal.distance_fade_length].
+				Sets the distance fade parameters in the decal specified by the [param decal] RID. Equivalent to [member Decal.distance_fade_enabled], [member Decal.distance_fade_begin], and [member Decal.distance_fade_length].
 			</description>
 		</method>
 		<method name="decal_set_emission_energy">
@@ -1617,7 +1617,7 @@
 		<method name="get_frame_setup_time_cpu" qualifiers="const">
 			<return type="float" />
 			<description>
-				Returns the time taken to setup rendering on the CPU in milliseconds. This value is shared across all viewports and does [i]not[/i] require [method viewport_set_measure_render_time] to be enabled on a viewport to be queried. See also [method viewport_get_measured_render_time_cpu].
+				Returns the time taken to set up rendering on the CPU in milliseconds. This value is shared across all viewports and does [i]not[/i] require [method viewport_set_measure_render_time] to be enabled on a viewport to be queried. See also [method viewport_get_measured_render_time_cpu].
 			</description>
 		</method>
 		<method name="get_rendering_device" qualifiers="const">
@@ -1847,7 +1847,7 @@
 			<return type="Dictionary[]" />
 			<param index="0" name="instance" type="RID" />
 			<description>
-				Returns a dictionary of per-instance shader uniform names of the per-instance shader uniform from the specified 3D geometry instance. The returned dictionary is in PropertyInfo format, with the keys [code]name[/code], [code]class_name[/code], [code]type[/code], [code]hint[/code], [code]hint_string[/code] and [code]usage[/code]. Equivalent to [method GeometryInstance3D.get_instance_shader_parameter].
+				Returns a dictionary of per-instance shader uniform names of the per-instance shader uniform from the specified 3D geometry instance. The returned dictionary is in PropertyInfo format, with the keys [code]name[/code], [code]class_name[/code], [code]type[/code], [code]hint[/code], [code]hint_string[/code], and [code]usage[/code]. Equivalent to [method GeometryInstance3D.get_instance_shader_parameter].
 			</description>
 		</method>
 		<method name="instance_geometry_set_cast_shadows_setting">
@@ -1938,7 +1938,7 @@
 			<param index="0" name="instance" type="RID" />
 			<param index="1" name="base" type="RID" />
 			<description>
-				Sets the base of the instance. A base can be any of the 3D objects that are created in the RenderingServer that can be displayed. For example, any of the light types, mesh, multimesh, particle system, reflection probe, decal, lightmap, voxel GI and visibility notifiers are all types that can be set as the base of an instance in order to be displayed in the scenario.
+				Sets the base of the instance. A base can be any of the 3D objects that are created in the RenderingServer that can be displayed. For example, any of the light types, mesh, multimesh, particle system, reflection probe, decal, lightmap, voxel GI, and visibility notifiers are all types that can be set as the base of an instance in order to be displayed in the scenario.
 			</description>
 		</method>
 		<method name="instance_set_blend_shape_weight">
@@ -2296,7 +2296,7 @@
 			<param index="1" name="longitudes" type="int" />
 			<param index="2" name="radius" type="float" />
 			<description>
-				Returns a mesh of a sphere with the given number of horizontal subdivisions, vertical subdivisions and radius. See also [method get_test_cube].
+				Returns a mesh of a sphere with the given number of horizontal subdivisions, vertical subdivisions, and radius. See also [method get_test_cube].
 			</description>
 		</method>
 		<method name="material_create">
@@ -2864,7 +2864,7 @@
 			<param index="0" name="particles_collision" type="RID" />
 			<param index="1" name="curve" type="float" />
 			<description>
-				Sets the attenuation [param curve] for the 3D GPU particles attractor specified by the [param particles_collision] RID. Only used for attractors, not colliders. Equivalent to [member GPUParticlesAttractor3D.attenuation].
+				Sets the attenuation [param curve] for the 3D GPU particle attractor specified by the [param particles_collision] RID. Only used for attractors, not colliders. Equivalent to [member GPUParticlesAttractor3D.attenuation].
 			</description>
 		</method>
 		<method name="particles_collision_set_attractor_directionality">
@@ -2872,7 +2872,7 @@
 			<param index="0" name="particles_collision" type="RID" />
 			<param index="1" name="amount" type="float" />
 			<description>
-				Sets the directionality [param amount] for the 3D GPU particles attractor specified by the [param particles_collision] RID. Only used for attractors, not colliders. Equivalent to [member GPUParticlesAttractor3D.directionality].
+				Sets the directionality [param amount] for the 3D GPU particle attractor specified by the [param particles_collision] RID. Only used for attractors, not colliders. Equivalent to [member GPUParticlesAttractor3D.directionality].
 			</description>
 		</method>
 		<method name="particles_collision_set_attractor_strength">
@@ -2880,7 +2880,7 @@
 			<param index="0" name="particles_collision" type="RID" />
 			<param index="1" name="strength" type="float" />
 			<description>
-				Sets the [param strength] for the 3D GPU particles attractor specified by the [param particles_collision] RID. Only used for attractors, not colliders. Equivalent to [member GPUParticlesAttractor3D.strength].
+				Sets the [param strength] for the 3D GPU particle attractor specified by the [param particles_collision] RID. Only used for attractors, not colliders. Equivalent to [member GPUParticlesAttractor3D.strength].
 			</description>
 		</method>
 		<method name="particles_collision_set_box_extents">
@@ -2888,7 +2888,7 @@
 			<param index="0" name="particles_collision" type="RID" />
 			<param index="1" name="extents" type="Vector3" />
 			<description>
-				Sets the [param extents] for the 3D GPU particles collision by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollisionBox3D.size], [member GPUParticlesCollisionSDF3D.size], [member GPUParticlesCollisionHeightField3D.size], [member GPUParticlesAttractorBox3D.size] or [member GPUParticlesAttractorVectorField3D.size] depending on the [param particles_collision] type.
+				Sets the [param extents] for the 3D GPU particles collision by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollisionBox3D.size], [member GPUParticlesCollisionSDF3D.size], [member GPUParticlesCollisionHeightField3D.size], [member GPUParticlesAttractorBox3D.size], or [member GPUParticlesAttractorVectorField3D.size] depending on the [param particles_collision] type.
 			</description>
 		</method>
 		<method name="particles_collision_set_collision_type">
@@ -2896,7 +2896,7 @@
 			<param index="0" name="particles_collision" type="RID" />
 			<param index="1" name="type" type="int" enum="RenderingServer.ParticlesCollisionType" />
 			<description>
-				Sets the collision or attractor shape [param type] for the 3D GPU particles collision or attractor specified by the [param particles_collision] RID.
+				Sets the collision or attractor shape [param type] for the 3D GPU particle collision or attractor specified by the [param particles_collision] RID.
 			</description>
 		</method>
 		<method name="particles_collision_set_cull_mask">
@@ -2904,7 +2904,7 @@
 			<param index="0" name="particles_collision" type="RID" />
 			<param index="1" name="mask" type="int" />
 			<description>
-				Sets the cull [param mask] for the 3D GPU particles collision or attractor specified by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollision3D.cull_mask] or [member GPUParticlesAttractor3D.cull_mask] depending on the [param particles_collision] type.
+				Sets the cull [param mask] for the 3D GPU particle collision or attractor specified by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollision3D.cull_mask] or [member GPUParticlesAttractor3D.cull_mask] depending on the [param particles_collision] type.
 			</description>
 		</method>
 		<method name="particles_collision_set_field_texture">
@@ -2912,7 +2912,7 @@
 			<param index="0" name="particles_collision" type="RID" />
 			<param index="1" name="texture" type="RID" />
 			<description>
-				Sets the signed distance field [param texture] for the 3D GPU particles collision specified by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollisionSDF3D.texture] or [member GPUParticlesAttractorVectorField3D.texture] depending on the [param particles_collision] type.
+				Sets the signed distance field [param texture] for the 3D GPU particle collision specified by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollisionSDF3D.texture] or [member GPUParticlesAttractorVectorField3D.texture] depending on the [param particles_collision] type.
 			</description>
 		</method>
 		<method name="particles_collision_set_height_field_mask">
@@ -2920,7 +2920,7 @@
 			<param index="0" name="particles_collision" type="RID" />
 			<param index="1" name="mask" type="int" />
 			<description>
-				Sets the heightfield [param mask] for the 3D GPU particles heightfield collision specified by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollisionHeightField3D.heightfield_mask].
+				Sets the heightfield [param mask] for the 3D GPU particle heightfield collision specified by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollisionHeightField3D.heightfield_mask].
 			</description>
 		</method>
 		<method name="particles_collision_set_height_field_resolution">
@@ -2928,7 +2928,7 @@
 			<param index="0" name="particles_collision" type="RID" />
 			<param index="1" name="resolution" type="int" enum="RenderingServer.ParticlesCollisionHeightfieldResolution" />
 			<description>
-				Sets the heightmap [param resolution] for the 3D GPU particles heightfield collision specified by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollisionHeightField3D.resolution].
+				Sets the heightmap [param resolution] for the 3D GPU particle heightfield collision specified by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollisionHeightField3D.resolution].
 			</description>
 		</method>
 		<method name="particles_collision_set_sphere_radius">
@@ -2936,7 +2936,7 @@
 			<param index="0" name="particles_collision" type="RID" />
 			<param index="1" name="radius" type="float" />
 			<description>
-				Sets the [param radius] for the 3D GPU particles sphere collision or attractor specified by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollisionSphere3D.radius] or [member GPUParticlesAttractorSphere3D.radius] depending on the [param particles_collision] type.
+				Sets the [param radius] for the 3D GPU particle sphere collision or attractor specified by the [param particles_collision] RID. Equivalent to [member GPUParticlesCollisionSphere3D.radius] or [member GPUParticlesAttractorSphere3D.radius] depending on the [param particles_collision] type.
 			</description>
 		</method>
 		<method name="particles_create">
@@ -3415,7 +3415,7 @@
 			<param index="1" name="amount" type="float" />
 			<param index="2" name="limit" type="float" />
 			<description>
-				Sets the screen-space roughness limiter parameters, such as whether it should be enabled and its thresholds. Equivalent to [member ProjectSettings.rendering/anti_aliasing/screen_space_roughness_limiter/enabled], [member ProjectSettings.rendering/anti_aliasing/screen_space_roughness_limiter/amount] and [member ProjectSettings.rendering/anti_aliasing/screen_space_roughness_limiter/limit].
+				Sets the screen-space roughness limiter parameters, such as whether it should be enabled and its thresholds. Equivalent to [member ProjectSettings.rendering/anti_aliasing/screen_space_roughness_limiter/enabled], [member ProjectSettings.rendering/anti_aliasing/screen_space_roughness_limiter/amount], and [member ProjectSettings.rendering/anti_aliasing/screen_space_roughness_limiter/limit].
 			</description>
 		</method>
 		<method name="set_boot_image">
@@ -3590,7 +3590,7 @@
 			<param index="0" name="sky" type="RID" />
 			<param index="1" name="material" type="RID" />
 			<description>
-				Sets the material that the sky uses to render the background, ambient and reflection maps.
+				Sets the material that the sky uses to render the background, ambient, and reflection maps.
 			</description>
 		</method>
 		<method name="sky_set_mode">
@@ -3696,7 +3696,7 @@
 			<param index="2" name="layer" type="int" />
 			<description>
 				Updates the texture specified by the [param texture] [RID] with the data in [param image]. A [param layer] must also be specified, which should be [code]0[/code] when updating a single-layer texture ([Texture2D]).
-				[b]Note:[/b] The [param image] must have the same width, height and format as the current [param texture] data. Otherwise, an error will be printed and the original texture won't be modified. If you need to use different width, height or format, use [method texture_replace] instead.
+				[b]Note:[/b] The [param image] must have the same width, height, and format as the current [param texture] data. Otherwise, an error will be printed and the original texture won't be modified. If you need to use different width, height, or format, use [method texture_replace] instead.
 			</description>
 		</method>
 		<method name="texture_3d_create">
@@ -3732,7 +3732,7 @@
 			<param index="1" name="data" type="Image[]" />
 			<description>
 				Updates the texture specified by the [param texture] [RID]'s data with the data in [param data]. All the texture's layers must be replaced at once.
-				[b]Note:[/b] The [param texture] must have the same width, height, depth and format as the current texture data. Otherwise, an error will be printed and the original texture won't be modified. If you need to use different width, height, depth or format, use [method texture_replace] instead.
+				[b]Note:[/b] The [param texture] must have the same width, height, depth, and format as the current texture data. Otherwise, an error will be printed and the original texture won't be modified. If you need to use different width, height, depth, or format, use [method texture_replace] instead.
 			</description>
 		</method>
 		<method name="texture_create_from_native_handle">
@@ -4567,10 +4567,10 @@
 			Array is a vertex color array.
 		</constant>
 		<constant name="ARRAY_TEX_UV" value="4" enum="ArrayType">
-			Array is a UV coordinates array.
+			Array is a UV coordinate array.
 		</constant>
 		<constant name="ARRAY_TEX_UV2" value="5" enum="ArrayType">
-			Array is a UV coordinates array for the second set of UV coordinates.
+			Array is a UV coordinate array for the second set of UV coordinates.
 		</constant>
 		<constant name="ARRAY_CUSTOM0" value="6" enum="ArrayType">
 			Array is a custom data array for the first set of custom data.
@@ -4639,10 +4639,10 @@
 			Flag used to mark a vertex color array.
 		</constant>
 		<constant name="ARRAY_FORMAT_TEX_UV" value="16" enum="ArrayFormat" is_bitfield="true">
-			Flag used to mark a UV coordinates array.
+			Flag used to mark a UV coordinate array.
 		</constant>
 		<constant name="ARRAY_FORMAT_TEX_UV2" value="32" enum="ArrayFormat" is_bitfield="true">
-			Flag used to mark a UV coordinates array for the second UV coordinates.
+			Flag used to mark a UV coordinate array for the second UV coordinates.
 		</constant>
 		<constant name="ARRAY_FORMAT_CUSTOM0" value="64" enum="ArrayFormat" is_bitfield="true">
 			Flag used to mark an array of custom per-vertex data for the first set of custom data.
@@ -4660,7 +4660,7 @@
 			Flag used to mark a bone information array.
 		</constant>
 		<constant name="ARRAY_FORMAT_WEIGHTS" value="2048" enum="ArrayFormat" is_bitfield="true">
-			Flag used to mark a weights array.
+			Flag used to mark a weight array.
 		</constant>
 		<constant name="ARRAY_FORMAT_INDEX" value="4096" enum="ArrayFormat" is_bitfield="true">
 			Flag used to mark an index array.
@@ -4987,7 +4987,7 @@
 		<constant name="PARTICLES_EMIT_FLAG_CUSTOM" value="16">
 		</constant>
 		<constant name="PARTICLES_DRAW_ORDER_INDEX" value="0" enum="ParticlesDrawOrder">
-			Draw particles in the order that they appear in the particles array.
+			Draw particles in the order that they appear in the particle array.
 		</constant>
 		<constant name="PARTICLES_DRAW_ORDER_LIFETIME" value="1" enum="ParticlesDrawOrder">
 			Sort particles based on their lifetime. In other words, the particle with the highest lifetime is drawn at the front.
@@ -5651,7 +5651,7 @@
 			Represents the size of the [enum InstanceType] enum.
 		</constant>
 		<constant name="INSTANCE_GEOMETRY_MASK" value="14" enum="InstanceType">
-			A combination of the flags of geometry instances (mesh, multimesh, immediate and particles).
+			A combination of the flags of geometry instances (mesh, multimesh, immediate, and particles).
 		</constant>
 		<constant name="INSTANCE_FLAG_USE_BAKED_LIGHT" value="0" enum="InstanceFlags">
 			Allows the instance to be used in baked lighting.

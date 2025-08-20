@@ -247,7 +247,7 @@
 		<method name="_should_update_export_options" qualifiers="virtual">
 			<return type="bool" />
 			<description>
-				Returns [code]true[/code] if export options list is changed and presets should be updated.
+				Returns [code]true[/code] if the export option list is changed and presets should be updated.
 			</description>
 		</method>
 		<method name="get_config_error" qualifiers="const">

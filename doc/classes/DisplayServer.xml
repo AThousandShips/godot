@@ -77,7 +77,7 @@
 		<method name="accessibility_screen_reader_active" qualifiers="const">
 			<return type="int" />
 			<description>
-				Returns [code]1[/code] if a screen reader, Braille display or other assistive app is active, [code]0[/code] otherwise. Returns [code]-1[/code] if status is unknown.
+				Returns [code]1[/code] if a screen reader, Braille display, or other assistive app is active, [code]0[/code] otherwise. Returns [code]-1[/code] if status is unknown.
 				[b]Note:[/b] This method is implemented on Linux, macOS, and Windows.
 				[b]Note:[/b] Accessibility debugging tools, such as Accessibility Insights for Windows, macOS Accessibility Inspector, or AT-SPI Browser do not count as assistive apps and will not affect this value. To test your app with these tools, set [member ProjectSettings.accessibility/general/accessibility_support] to [code]1[/code].
 			</description>
@@ -1612,7 +1612,7 @@
 			<param index="0" name="keycode" type="int" enum="Key" />
 			<description>
 				Converts a physical (US QWERTY) [param keycode] to one in the active keyboard layout.
-				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS and Windows.
+				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS, and Windows.
 			</description>
 		</method>
 		<method name="keyboard_get_label_from_physical" qualifiers="const">
@@ -1620,14 +1620,14 @@
 			<param index="0" name="keycode" type="int" enum="Key" />
 			<description>
 				Converts a physical (US QWERTY) [param keycode] to localized label printed on the key in the active keyboard layout.
-				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS and Windows.
+				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS, and Windows.
 			</description>
 		</method>
 		<method name="keyboard_get_layout_count" qualifiers="const">
 			<return type="int" />
 			<description>
 				Returns the number of keyboard layouts.
-				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS and Windows.
+				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS, and Windows.
 			</description>
 		</method>
 		<method name="keyboard_get_layout_language" qualifiers="const">
@@ -1635,7 +1635,7 @@
 			<param index="0" name="index" type="int" />
 			<description>
 				Returns the ISO-639/BCP-47 language code of the keyboard layout at position [param index].
-				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS and Windows.
+				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS, and Windows.
 			</description>
 		</method>
 		<method name="keyboard_get_layout_name" qualifiers="const">
@@ -1643,7 +1643,7 @@
 			<param index="0" name="index" type="int" />
 			<description>
 				Returns the localized name of the keyboard layout at position [param index].
-				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS and Windows.
+				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS, and Windows.
 			</description>
 		</method>
 		<method name="keyboard_set_current_layout">
@@ -1651,7 +1651,7 @@
 			<param index="0" name="index" type="int" />
 			<description>
 				Sets the active keyboard layout.
-				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS and Windows.
+				[b]Note:[/b] This method is implemented on Linux (X11/Wayland), macOS, and Windows.
 			</description>
 		</method>
 		<method name="mouse_get_button_state" qualifiers="const">
@@ -1682,7 +1682,7 @@
 		<method name="process_events">
 			<return type="void" />
 			<description>
-				Perform window manager processing, including input flushing. See also [method force_process_and_drop_events], [method Input.flush_buffered_events] and [member Input.use_accumulated_input].
+				Perform window manager processing, including input flushing. See also [method force_process_and_drop_events], [method Input.flush_buffered_events], and [member Input.use_accumulated_input].
 			</description>
 		</method>
 		<method name="register_additional_output">
@@ -2013,7 +2013,7 @@
 			<param index="0" name="event" type="int" enum="DisplayServer.TTSUtteranceEvent" />
 			<param index="1" name="callable" type="Callable" />
 			<description>
-				Adds a callback, which is called when the utterance has started, finished, canceled or reached a text boundary.
+				Adds a callback, which is called when the utterance has started, finished, canceled, or reached a text boundary.
 				- [constant TTS_UTTERANCE_STARTED], [constant TTS_UTTERANCE_ENDED], and [constant TTS_UTTERANCE_CANCELED] callable's method should take one [int] parameter, the utterance ID.
 				- [constant TTS_UTTERANCE_BOUNDARY] callable's method should take two [int] parameters, the index of the character and the utterance ID.
 				[b]Note:[/b] The granularity of the boundary callbacks is engine dependent.
@@ -2186,14 +2186,14 @@
 			<return type="Vector3i" />
 			<param index="0" name="window_id" type="int" default="0" />
 			<description>
-				Returns left margins ([code]x[/code]), right margins ([code]y[/code]) and height ([code]z[/code]) of the title that are safe to use (contains no buttons or other elements) when [constant WINDOW_FLAG_EXTEND_TO_TITLE] flag is set.
+				Returns left margins ([code]x[/code]), right margins ([code]y[/code]), and height ([code]z[/code]) of the title that are safe to use (contains no buttons or other elements) when [constant WINDOW_FLAG_EXTEND_TO_TITLE] flag is set.
 			</description>
 		</method>
 		<method name="window_get_size" qualifiers="const">
 			<return type="Vector2i" />
 			<param index="0" name="window_id" type="int" default="0" />
 			<description>
-				Returns the size of the window specified by [param window_id] (in pixels), excluding the borders drawn by the operating system. This is also called the "client area". See also [method window_get_size_with_decorations], [method window_set_size] and [method window_get_position].
+				Returns the size of the window specified by [param window_id] (in pixels), excluding the borders drawn by the operating system. This is also called the "client area". See also [method window_get_size_with_decorations], [method window_set_size], and [method window_get_position].
 			</description>
 		</method>
 		<method name="window_get_size_with_decorations" qualifiers="const">
@@ -2395,7 +2395,7 @@
 				[/csharp]
 				[/codeblocks]
 				[b]Note:[/b] On Windows, the portion of a window that lies outside the region is not drawn, while on Linux (X11) and macOS it is.
-				[b]Note:[/b] This method is implemented on Linux (X11), macOS and Windows.
+				[b]Note:[/b] This method is implemented on Linux (X11), macOS, and Windows.
 			</description>
 		</method>
 		<method name="window_set_popup_safe_rect">

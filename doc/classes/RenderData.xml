@@ -31,7 +31,7 @@
 		<method name="get_render_scene_data" qualifiers="const">
 			<return type="RenderSceneData" />
 			<description>
-				Returns the [RenderSceneData] object managing this frames scene data.
+				Returns the [RenderSceneData] object managing this frame's scene data.
 			</description>
 		</method>
 	</methods>

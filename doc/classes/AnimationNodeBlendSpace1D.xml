@@ -18,7 +18,7 @@
 			<param index="1" name="pos" type="float" />
 			<param index="2" name="at_index" type="int" default="-1" />
 			<description>
-				Adds a new point that represents a [param node] on the virtual axis at a given position set by [param pos]. You can insert it at a specific index using the [param at_index] argument. If you use the default value for [param at_index], the point is inserted at the end of the blend points array.
+				Adds a new point that represents a [param node] on the virtual axis at a given position set by [param pos]. You can insert it at a specific index using the [param at_index] argument. If you use the default value for [param at_index], the point is inserted at the end of the blend point array.
 			</description>
 		</method>
 		<method name="get_blend_point_count" qualifiers="const">

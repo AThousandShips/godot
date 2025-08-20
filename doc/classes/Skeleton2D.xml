@@ -74,7 +74,7 @@
 	<signals>
 		<signal name="bone_setup_changed">
 			<description>
-				Emitted when the [Bone2D] setup attached to this skeletons changes. This is primarily used internally within the skeleton.
+				Emitted when the [Bone2D] setup attached to this skeleton changes. This is primarily used internally within the skeleton.
 			</description>
 		</signal>
 	</signals>

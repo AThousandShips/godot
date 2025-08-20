@@ -18,7 +18,7 @@
 			<param index="0" name="control" type="Control" />
 			<description>
 				Adds a [Control] that will be placed next to the container's title, obscuring the clickable area. Prime usage is adding [Button] nodes, but it can be any [Control].
-				The control will be added as a child of this container and removed from previous parent if necessary. The controls will be placed aligned to the right, with the first added control being the leftmost one.
+				The control will be added as a child of this container and removed from the previous parent if necessary. The controls will be placed aligned to the right, with the first added control being the leftmost one.
 			</description>
 		</method>
 		<method name="expand">

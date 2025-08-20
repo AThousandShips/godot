@@ -160,7 +160,7 @@
 			<param index="2" name="glyph" type="int" />
 			<description>
 				Returns glyph advance (offset of the next glyph).
-				[b]Note:[/b] Advance for glyphs outlines is the same as the base glyph advance and is not saved.
+				[b]Note:[/b] Advance for glyph outlines is the same as the base glyph advance and is not saved.
 			</description>
 		</method>
 		<method name="get_glyph_index" qualifiers="const">
@@ -296,7 +296,7 @@
 			<return type="Transform2D" />
 			<param index="0" name="cache_index" type="int" />
 			<description>
-				Returns 2D transform, applied to the font outlines, can be used for slanting, flipping and rotating glyphs.
+				Returns 2D transform, applied to the font outlines, can be used for slanting, flipping, and rotating glyphs.
 			</description>
 		</method>
 		<method name="get_variation_coordinates" qualifiers="const">
@@ -318,7 +318,7 @@
 			<return type="int" enum="Error" />
 			<param index="0" name="path" type="String" />
 			<description>
-				Loads a TrueType (.ttf), OpenType (.otf), WOFF (.woff), WOFF2 (.woff2) or Type 1 (.pfb, .pfm) dynamic font from file [param path].
+				Loads a TrueType (.ttf), OpenType (.otf), WOFF (.woff), WOFF2 (.woff2), or Type 1 (.pfb, .pfm) dynamic font from file [param path].
 				[b]Warning:[/b] This method should only be used in the editor or in cases when you need to load external fonts at run-time, such as fonts located at the [code]user://[/code] directory.
 			</description>
 		</method>
@@ -485,7 +485,7 @@
 			<param index="3" name="advance" type="Vector2" />
 			<description>
 				Sets glyph advance (offset of the next glyph).
-				[b]Note:[/b] Advance for glyphs outlines is the same as the base glyph advance and is not saved.
+				[b]Note:[/b] Advance for glyph outlines is the same as the base glyph advance and is not saved.
 			</description>
 		</method>
 		<method name="set_glyph_offset">

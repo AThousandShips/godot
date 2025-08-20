@@ -156,13 +156,13 @@
 			Number of orphan nodes, i.e. nodes which are not parented to a node of the scene tree. [i]Lower is better.[/i]
 		</constant>
 		<constant name="RENDER_TOTAL_OBJECTS_IN_FRAME" value="11" enum="Monitor">
-			The total number of objects in the last rendered frame. This metric doesn't include culled objects (either via hiding nodes, frustum culling or occlusion culling). [i]Lower is better.[/i]
+			The total number of objects in the last rendered frame. This metric doesn't include culled objects (either via hiding nodes, frustum culling, or occlusion culling). [i]Lower is better.[/i]
 		</constant>
 		<constant name="RENDER_TOTAL_PRIMITIVES_IN_FRAME" value="12" enum="Monitor">
-			The total number of vertices or indices rendered in the last rendered frame. This metric doesn't include primitives from culled objects (either via hiding nodes, frustum culling or occlusion culling). Due to the depth prepass and shadow passes, the number of primitives is always higher than the actual number of vertices in the scene (typically double or triple the original vertex count). [i]Lower is better.[/i]
+			The total number of vertices or indices rendered in the last rendered frame. This metric doesn't include primitives from culled objects (either via hiding nodes, frustum culling, or occlusion culling). Due to the depth prepass and shadow passes, the number of primitives is always higher than the actual number of vertices in the scene (typically double or triple the original vertex count). [i]Lower is better.[/i]
 		</constant>
 		<constant name="RENDER_TOTAL_DRAW_CALLS_IN_FRAME" value="13" enum="Monitor">
-			The total number of draw calls performed in the last rendered frame. This metric doesn't include culled objects (either via hiding nodes, frustum culling or occlusion culling), since they do not result in draw calls. [i]Lower is better.[/i]
+			The total number of draw calls performed in the last rendered frame. This metric doesn't include culled objects (either via hiding nodes, frustum culling, or occlusion culling), since they do not result in draw calls. [i]Lower is better.[/i]
 		</constant>
 		<constant name="RENDER_VIDEO_MEM_USED" value="14" enum="Monitor">
 			The amount of video memory used (texture and vertex memory combined, in bytes). Since this metric also includes miscellaneous allocations, this value is always greater than the sum of [constant RENDER_TEXTURE_MEM_USED] and [constant RENDER_BUFFER_MEM_USED]. [i]Lower is better.[/i]

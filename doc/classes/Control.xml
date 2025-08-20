@@ -394,7 +394,7 @@
 			<return type="float" />
 			<param index="0" name="side" type="int" enum="Side" />
 			<description>
-				Returns the anchor for the specified [enum Side]. A getter method for [member anchor_bottom], [member anchor_left], [member anchor_right] and [member anchor_top].
+				Returns the anchor for the specified [enum Side]. A getter method for [member anchor_bottom], [member anchor_left], [member anchor_right], and [member anchor_top].
 			</description>
 		</method>
 		<method name="get_begin" qualifiers="const">
@@ -432,7 +432,7 @@
 			<return type="NodePath" />
 			<param index="0" name="side" type="int" enum="Side" />
 			<description>
-				Returns the focus neighbor for the specified [enum Side]. A getter method for [member focus_neighbor_bottom], [member focus_neighbor_left], [member focus_neighbor_right] and [member focus_neighbor_top].
+				Returns the focus neighbor for the specified [enum Side]. A getter method for [member focus_neighbor_bottom], [member focus_neighbor_left], [member focus_neighbor_right], and [member focus_neighbor_top].
 				[b]Note:[/b] To find the next [Control] on the specific [enum Side], even if a neighbor is not assigned, use [method find_valid_focus_neighbor].
 			</description>
 		</method>
@@ -478,7 +478,7 @@
 		<method name="get_rect" qualifiers="const">
 			<return type="Rect2" />
 			<description>
-				Returns the position and size of the control in the coordinate system of the containing node. See [member position], [member scale] and [member size].
+				Returns the position and size of the control in the coordinate system of the containing node. See [member position], [member scale], and [member size].
 				[b]Note:[/b] If [member rotation] is not the default rotation, the resulting size is not meaningful.
 				[b]Note:[/b] Setting [member Viewport.gui_snap_controls_to_pixels] to [code]true[/code] can lead to rounding inaccuracies between the displayed control and the returned [Rect2].
 			</description>
@@ -805,7 +805,7 @@
 			<param index="2" name="keep_offset" type="bool" default="false" />
 			<param index="3" name="push_opposite_anchor" type="bool" default="true" />
 			<description>
-				Sets the anchor for the specified [enum Side] to [param anchor]. A setter method for [member anchor_bottom], [member anchor_left], [member anchor_right] and [member anchor_top].
+				Sets the anchor for the specified [enum Side] to [param anchor]. A setter method for [member anchor_bottom], [member anchor_left], [member anchor_right], and [member anchor_top].
 				If [param keep_offset] is [code]true[/code], offsets aren't updated after this operation.
 				If [param push_opposite_anchor] is [code]true[/code] and the opposite anchor overlaps this anchor, the opposite one will have its value overridden. For example, when setting left anchor to 1 and the right anchor has value of 0.5, the right anchor will also get value of 1. If [param push_opposite_anchor] was [code]false[/code], the left anchor would get value 0.5.
 			</description>
@@ -904,7 +904,7 @@
 			<param index="0" name="side" type="int" enum="Side" />
 			<param index="1" name="neighbor" type="NodePath" />
 			<description>
-				Sets the focus neighbor for the specified [enum Side] to the [Control] at [param neighbor] node path. A setter method for [member focus_neighbor_bottom], [member focus_neighbor_left], [member focus_neighbor_right] and [member focus_neighbor_top].
+				Sets the focus neighbor for the specified [enum Side] to the [Control] at [param neighbor] node path. A setter method for [member focus_neighbor_bottom], [member focus_neighbor_left], [member focus_neighbor_right], and [member focus_neighbor_top].
 			</description>
 		</method>
 		<method name="set_global_position">
@@ -921,7 +921,7 @@
 			<param index="0" name="side" type="int" enum="Side" />
 			<param index="1" name="offset" type="float" />
 			<description>
-				Sets the offset for the specified [enum Side] to [param offset]. A setter method for [member offset_bottom], [member offset_left], [member offset_right] and [member offset_top].
+				Sets the offset for the specified [enum Side] to [param offset]. A setter method for [member offset_bottom], [member offset_left], [member offset_right], and [member offset_top].
 			</description>
 		</method>
 		<method name="set_offsets_preset">
@@ -964,7 +964,7 @@
 			<param index="0" name="position" type="Vector2" />
 			<description>
 				Moves the mouse cursor to [param position], relative to [member position] of this [Control].
-				[b]Note:[/b] [method warp_mouse] is only supported on Windows, macOS and Linux. It has no effect on Android, iOS and Web.
+				[b]Note:[/b] [method warp_mouse] is only supported on Windows, macOS, and Linux. It has no effect on Android, iOS, and Web.
 			</description>
 		</method>
 	</methods>
@@ -1012,7 +1012,7 @@
 			The minimum size of the node's bounding rectangle. If you set it to a value greater than [code](0, 0)[/code], the node's bounding rectangle will always have at least this size. Note that [Control] nodes have their internal minimum size returned by [method get_minimum_size]. It depends on the control's contents, like text, textures, or style boxes. The actual minimum size is the maximum value of this property and the internal minimum size (see [method get_combined_minimum_size]).
 		</member>
 		<member name="focus_behavior_recursive" type="int" setter="set_focus_behavior_recursive" getter="get_focus_behavior_recursive" enum="Control.FocusBehaviorRecursive" default="0">
-			Determines which controls can be focused together with [member focus_mode]. See [method get_focus_mode_with_override]. Since the default behavior is [constant FOCUS_BEHAVIOR_INHERITED], this can be used to prevent all children controls from getting focused.
+			Determines which controls can be focused together with [member focus_mode]. See [method get_focus_mode_with_override]. Since the default behavior is [constant FOCUS_BEHAVIOR_INHERITED], this can be used to prevent all child controls from getting focused.
 		</member>
 		<member name="focus_mode" type="int" setter="set_focus_mode" getter="get_focus_mode" enum="Control.FocusMode" default="0">
 			Determines which controls can be focused. Only one control can be focused at a time, and the focused control will receive keyboard, gamepad, and mouse events in [method _gui_input]. Use [method get_focus_mode_with_override] to determine if a control can grab focus, since [member focus_behavior_recursive] also affects it. See also [method grab_focus].
@@ -1054,7 +1054,7 @@
 			[b]Note:[/b] Numbers within the text are not automatically converted, it can be done manually, using [method TextServer.format_number].
 		</member>
 		<member name="mouse_behavior_recursive" type="int" setter="set_mouse_behavior_recursive" getter="get_mouse_behavior_recursive" enum="Control.MouseBehaviorRecursive" default="0">
-			Determines which controls can receive mouse input together with [member mouse_filter]. See [method get_mouse_filter_with_override]. Since the default behavior is [constant MOUSE_BEHAVIOR_INHERITED], this can be used to prevent all children controls from receiving mouse input.
+			Determines which controls can receive mouse input together with [member mouse_filter]. See [method get_mouse_filter_with_override]. Since the default behavior is [constant MOUSE_BEHAVIOR_INHERITED], this can be used to prevent all child controls from receiving mouse input.
 		</member>
 		<member name="mouse_default_cursor_shape" type="int" setter="set_default_cursor_shape" getter="get_default_cursor_shape" enum="Control.CursorShape" default="0">
 			The default cursor shape for this control. Useful for Godot plugins and applications or games that use the system's mouse cursors.
@@ -1126,7 +1126,7 @@
 		<member name="theme_type_variation" type="StringName" setter="set_theme_type_variation" getter="get_theme_type_variation" default="&amp;&quot;&quot;">
 			The name of a theme type variation used by this [Control] to look up its own theme items. When empty, the class name of the node is used (e.g. [code skip-lint]Button[/code] for the [Button] control), as well as the class names of all parent classes (in order of inheritance).
 			When set, this property gives the highest priority to the type of the specified name. This type can in turn extend another type, forming a dependency chain. See [method Theme.set_type_variation]. If the theme item cannot be found using this type or its base types, lookup falls back on the class names.
-			[b]Note:[/b] To look up [Control]'s own items use various [code]get_theme_*[/code] methods without specifying [code]theme_type[/code].
+			[b]Note:[/b] To look up a [Control]'s own items, use various [code]get_theme_*[/code] methods without specifying [code]theme_type[/code].
 			[b]Note:[/b] Theme items are looked for in the tree order, from branch to root, where each [Control] node is checked for its [member theme] property. The earliest match against any type/class name is returned. The project-level Theme and the default Theme are checked last.
 		</member>
 		<member name="tooltip_auto_translate_mode" type="int" setter="set_tooltip_auto_translate_mode" getter="get_tooltip_auto_translate_mode" enum="Node.AutoTranslateMode" default="0">
@@ -1280,7 +1280,7 @@
 			- One of the node's theme property overrides is changed.
 			- The node enters the scene tree.
 			[b]Note:[/b] As an optimization, this notification won't be sent from changes that occur while this node is outside of the scene tree. Instead, all of the theme item updates can be applied at once when the node enters the scene tree.
-			[b]Note:[/b] This notification is received alongside [constant Node.NOTIFICATION_ENTER_TREE], so if you are instantiating a scene, the child nodes will not be initialized yet. You can use it to setup theming for this node, child nodes created from script, or if you want to access child nodes added in the editor, make sure the node is ready using [method Node.is_node_ready].
+			[b]Note:[/b] This notification is received alongside [constant Node.NOTIFICATION_ENTER_TREE], so if you are instantiating a scene, the child nodes will not be initialized yet. You can use it to set up theming for this node, child nodes created from script, or if you want to access child nodes added in the editor, make sure the node is ready using [method Node.is_node_ready].
 			[codeblock]
 			func _notification(what):
 				if what == NOTIFICATION_THEME_CHANGED:
@@ -1451,10 +1451,10 @@
 			The control will grow in both directions equally to make up if its minimum size is changed to be greater than its current size.
 		</constant>
 		<constant name="ANCHOR_BEGIN" value="0" enum="Anchor">
-			Snaps one of the 4 anchor's sides to the origin of the node's [code]Rect[/code], in the top left. Use it with one of the [code]anchor_*[/code] member variables, like [member anchor_left]. To change all 4 anchors at once, use [method set_anchors_preset].
+			Snaps one of the 4 anchors' sides to the origin of the node's [code]Rect[/code], in the top left. Use it with one of the [code]anchor_*[/code] member variables, like [member anchor_left]. To change all 4 anchors at once, use [method set_anchors_preset].
 		</constant>
 		<constant name="ANCHOR_END" value="1" enum="Anchor">
-			Snaps one of the 4 anchor's sides to the end of the node's [code]Rect[/code], in the bottom right. Use it with one of the [code]anchor_*[/code] member variables, like [member anchor_left]. To change all 4 anchors at once, use [method set_anchors_preset].
+			Snaps one of the 4 anchors' sides to the end of the node's [code]Rect[/code], in the bottom right. Use it with one of the [code]anchor_*[/code] member variables, like [member anchor_left]. To change all 4 anchors at once, use [method set_anchors_preset].
 		</constant>
 		<constant name="LAYOUT_DIRECTION_INHERITED" value="0" enum="LayoutDirection">
 			Automatic layout direction, determined from the parent control layout direction.

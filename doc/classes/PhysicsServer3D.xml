@@ -1564,10 +1564,10 @@
 			Defines, how fast the swing- and twist-speed-difference on both sides gets synced.
 		</constant>
 		<constant name="G6DOF_JOINT_LINEAR_LOWER_LIMIT" value="0" enum="G6DOFJointAxisParam">
-			The minimum difference between the pivot points' axes.
+			The minimum difference between the pivot point's axes.
 		</constant>
 		<constant name="G6DOF_JOINT_LINEAR_UPPER_LIMIT" value="1" enum="G6DOFJointAxisParam">
-			The maximum difference between the pivot points' axes.
+			The maximum difference between the pivot point's axes.
 		</constant>
 		<constant name="G6DOF_JOINT_LINEAR_LIMIT_SOFTNESS" value="2" enum="G6DOFJointAxisParam">
 			A factor that gets applied to the movement across the axes. The lower, the slower the movement.

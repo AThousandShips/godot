@@ -24,10 +24,10 @@
 			Unique application identifier in a reverse-DNS format, can only contain alphanumeric characters ([code]A-Z[/code], [code]a-z[/code], and [code]0-9[/code]), hyphens ([code]-[/code]), and periods ([code].[/code]).
 		</member>
 		<member name="application/code_sign_identity_debug" type="String" setter="" getter="">
-			The "Full Name", "Common Name" or SHA-1 hash of the signing identity used for debug export.
+			The "Full Name", "Common Name", or SHA-1 hash of the signing identity used for debug export.
 		</member>
 		<member name="application/code_sign_identity_release" type="String" setter="" getter="">
-			The "Full Name", "Common Name" or SHA-1 hash of the signing identity used for release export.
+			The "Full Name", "Common Name", or SHA-1 hash of the signing identity used for release export.
 		</member>
 		<member name="application/delete_old_export_files_unconditionally" type="bool" setter="" getter="">
 			If [code]true[/code], existing "project name" and "project name.xcodeproj" in the export destination directory will be unconditionally deleted during export.
@@ -84,7 +84,7 @@
 		</member>
 		<member name="capabilities/performance_a12" type="bool" setter="" getter="">
 			Requires the graphics performance and features of the A12 Bionic and later chips (devices supporting all Vulkan renderer features).
-			Enabling this option limits supported devices to: iPhone XS, iPhone XR, iPad Mini (5th gen.), iPad Air (3rd gen.), iPad (8th gen) and newer.
+			Enabling this option limits supported devices to: iPhone XS, iPhone XR, iPad Mini (5th gen.), iPad Air (3rd gen.), iPad (8th gen), and newer.
 		</member>
 		<member name="capabilities/performance_gaming_tier" type="bool" setter="" getter="">
 			Requires the graphics performance and features of the A17 Pro and later chips.

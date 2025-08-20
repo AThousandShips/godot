@@ -165,7 +165,7 @@
 		<method name="update">
 			<return type="void" />
 			<description>
-				Updates the internal state of the grid according to the parameters to prepare it to search the path. Needs to be called if parameters like [member region], [member cell_size] or [member offset] are changed. [method is_dirty] will return [code]true[/code] if this is the case and this needs to be called.
+				Updates the internal state of the grid according to the parameters to prepare it to search the path. Needs to be called if parameters like [member region], [member cell_size], or [member offset] are changed. [method is_dirty] will return [code]true[/code] if this is the case and this needs to be called.
 				[b]Note:[/b] All point data (solidity and weight scale) will be cleared.
 			</description>
 		</method>
@@ -258,10 +258,10 @@
 			Rectangular cell shape.
 		</constant>
 		<constant name="CELL_SHAPE_ISOMETRIC_RIGHT" value="1" enum="CellShape">
-			Diamond cell shape (for isometric look). Cell coordinates layout where the horizontal axis goes up-right, and the vertical one goes down-right.
+			Diamond cell shape (for isometric look). Cell coordinate layout where the horizontal axis goes up-right, and the vertical one goes down-right.
 		</constant>
 		<constant name="CELL_SHAPE_ISOMETRIC_DOWN" value="2" enum="CellShape">
-			Diamond cell shape (for isometric look). Cell coordinates layout where the horizontal axis goes down-right, and the vertical one goes down-left.
+			Diamond cell shape (for isometric look). Cell coordinate layout where the horizontal axis goes down-right, and the vertical one goes down-left.
 		</constant>
 		<constant name="CELL_SHAPE_MAX" value="3" enum="CellShape">
 			Represents the size of the [enum CellShape] enum.

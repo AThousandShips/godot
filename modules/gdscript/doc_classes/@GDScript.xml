@@ -624,7 +624,7 @@
 		<annotation name="@export_multiline">
 			<return type="void" />
 			<description>
-				Export a [String], [Array][lb][String][rb], [PackedStringArray], [Dictionary] or [Array][lb][Dictionary][rb] property with a large [TextEdit] widget instead of a [LineEdit]. This adds support for multiline content and makes it easier to edit large amount of text stored in the property.
+				Export a [String], [Array][lb][String][rb], [PackedStringArray], [Dictionary], or [Array][lb][Dictionary][rb] property with a large [TextEdit] widget instead of a [LineEdit]. This adds support for multiline content and makes it easier to edit large amount of text stored in the property.
 				See also [constant PROPERTY_HINT_MULTILINE_TEXT].
 				[codeblock]
 				@export_multiline var character_biography
@@ -794,7 +794,7 @@
 				If [param sync] is set as [code]"call_remote"[/code], the function will only be executed on the remote peer, but not locally. To run this function locally too, set [param sync] to [code]"call_local"[/code]. When configuring functions as RPCs with [method Node.rpc_config], this is equivalent to setting [code]call_local[/code] to [code]true[/code].
 				The [param transfer_mode] accepted values are [code]"unreliable"[/code], [code]"unreliable_ordered"[/code], or [code]"reliable"[/code]. It sets the transfer mode of the underlying [MultiplayerPeer]. See [member MultiplayerPeer.transfer_mode].
 				The [param transfer_channel] defines the channel of the underlying [MultiplayerPeer]. See [member MultiplayerPeer.transfer_channel].
-				The order of [param mode], [param sync] and [param transfer_mode] does not matter, but values related to the same argument must not be used more than once. [param transfer_channel] always has to be the 4th argument (you must specify 3 preceding arguments).
+				The order of [param mode], [param sync], and [param transfer_mode] does not matter, but values related to the same argument must not be used more than once. [param transfer_channel] always has to be the 4th argument (you must specify 3 preceding arguments).
 				[codeblock]
 				@rpc
 				func fn(): pass

@@ -20,7 +20,7 @@
 			[b]Note:[/b] This property is only used and visible in the editor if [member particles_animation] is [code]true[/code].
 		</member>
 		<member name="particles_anim_loop" type="bool" setter="set_particles_anim_loop" getter="get_particles_anim_loop">
-			If [code]true[/code], the particles animation will loop.
+			If [code]true[/code], the particle animation will loop.
 			[b]Note:[/b] This property is only used and visible in the editor if [member particles_animation] is [code]true[/code].
 		</member>
 		<member name="particles_anim_v_frames" type="int" setter="set_particles_anim_v_frames" getter="get_particles_anim_v_frames">

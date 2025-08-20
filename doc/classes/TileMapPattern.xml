@@ -21,7 +21,7 @@
 			<return type="Vector2i" />
 			<param index="0" name="coords" type="Vector2i" />
 			<description>
-				Returns the tile atlas coordinates ID of the cell at [param coords].
+				Returns the tile atlas coordinate ID of the cell at [param coords].
 			</description>
 		</method>
 		<method name="get_cell_source_id" qualifiers="const">

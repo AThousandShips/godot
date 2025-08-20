@@ -16,7 +16,7 @@
 			The culling mode to use.
 		</member>
 		<member name="polygon" type="PackedVector2Array" setter="set_polygon" getter="get_polygon" default="PackedVector2Array()">
-			A [Vector2] array with the index for polygon's vertices positions.
+			A [Vector2] array with the index for the polygon's vertex positions.
 		</member>
 	</members>
 	<constants>

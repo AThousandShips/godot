@@ -196,7 +196,7 @@
 			<param index="2" name="ret_gltf_texture" type="GLTFTexture" />
 			<description>
 				Part of the import process. This method is run after [method _parse_image_data] and before [method _generate_scene_node].
-				Runs when parsing the texture JSON from the glTF textures array. This can be used to set the source image index to use as the texture.
+				Runs when parsing the texture JSON from the glTF texture array. This can be used to set the source image index to use as the texture.
 			</description>
 		</method>
 		<method name="_save_image_at_path" qualifiers="virtual">

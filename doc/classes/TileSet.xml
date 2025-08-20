@@ -6,7 +6,7 @@
 	<description>
 		A TileSet is a library of tiles for a [TileMapLayer]. A TileSet handles a list of [TileSetSource], each of them storing a set of tiles.
 		Tiles can either be from a [TileSetAtlasSource], which renders tiles out of a texture with support for physics, navigation, etc., or from a [TileSetScenesCollectionSource], which exposes scene-based tiles.
-		Tiles are referenced by using three IDs: their source ID, their atlas coordinates ID, and their alternative tile ID.
+		Tiles are referenced by using three IDs: their source ID, their atlas coordinate ID, and their alternative tile ID.
 		A TileSet can be configured so that its tiles expose more or fewer properties. To do so, the TileSet resources use property layers, which you can add or remove depending on your needs.
 		For example, adding a physics layer allows giving collision shapes to your tiles. Each layer has dedicated properties (physics layer and mask), so you may add several TileSet physics layers for each type of collision you need.
 		See the functions to add new layers for more information.
@@ -104,7 +104,7 @@
 			<param index="1" name="coords_from" type="Vector2i" />
 			<param index="2" name="alternative_from" type="int" />
 			<description>
-				Returns the alternative-level proxy for the given identifiers. The returned array contains the three proxie's target identifiers (source ID, atlas coords ID and alternative tile ID).
+				Returns the alternative-level proxy for the given identifiers. The returned array contains the three proxies' target identifiers (source ID, atlas coord ID, and alternative tile ID).
 				If the TileSet has no proxy for the given identifiers, returns an empty Array.
 			</description>
 		</method>
@@ -113,7 +113,7 @@
 			<param index="0" name="source_from" type="int" />
 			<param index="1" name="coords_from" type="Vector2i" />
 			<description>
-				Returns the coordinate-level proxy for the given identifiers. The returned array contains the two target identifiers of the proxy (source ID and atlas coordinates ID).
+				Returns the coordinate-level proxy for the given identifiers. The returned array contains the two target identifiers of the proxy (source ID and atlas coordinate ID).
 				If the TileSet has no proxy for the given identifiers, returns an empty Array.
 			</description>
 		</method>
@@ -346,7 +346,7 @@
 			<param index="1" name="coords_from" type="Vector2i" />
 			<param index="2" name="alternative_from" type="int" />
 			<description>
-				According to the configured proxies, maps the provided identifiers to a new set of identifiers. The source ID, atlas coordinates ID and alternative tile ID are returned as a 3 elements Array.
+				According to the configured proxies, maps the provided identifiers to a new set of identifiers. The source ID, atlas coordinate ID, and alternative tile ID are returned as a 3 element Array.
 				This function first look for matching alternative-level proxies, then coordinates-level proxies, then source-level proxies.
 				If no proxy corresponding to provided identifiers are found, returns the same values the ones used as arguments.
 			</description>
@@ -599,7 +599,7 @@
 			<param index="0" name="source_from" type="int" />
 			<param index="1" name="source_to" type="int" />
 			<description>
-				Creates a source-level proxy for the given source ID. A proxy will map set of tile identifiers to another set of identifiers. Both the atlas coordinates ID and the alternative tile ID are kept the same when using source-level proxies.
+				Creates a source-level proxy for the given source ID. A proxy will map set of tile identifiers to another set of identifiers. Both the atlas coordinate ID and the alternative tile ID are kept the same when using source-level proxies.
 				Proxied tiles can be automatically replaced in TileMapLayer nodes using the editor.
 			</description>
 		</method>
@@ -632,10 +632,10 @@
 	</methods>
 	<members>
 		<member name="tile_layout" type="int" setter="set_tile_layout" getter="get_tile_layout" enum="TileSet.TileLayout" default="0">
-			For all half-offset shapes (Isometric, Hexagonal and Half-Offset square), changes the way tiles are indexed in the [TileMapLayer] grid.
+			For all half-offset shapes (Isometric, Hexagonal, and Half-Offset square), changes the way tiles are indexed in the [TileMapLayer] grid.
 		</member>
 		<member name="tile_offset_axis" type="int" setter="set_tile_offset_axis" getter="get_tile_offset_axis" enum="TileSet.TileOffsetAxis" default="0">
-			For all half-offset shapes (Isometric, Hexagonal and Half-Offset square), determines the offset axis.
+			For all half-offset shapes (Isometric, Hexagonal, and Half-Offset square), determines the offset axis.
 		</member>
 		<member name="tile_shape" type="int" setter="set_tile_shape" getter="get_tile_shape" enum="TileSet.TileShape" default="0">
 			The tile shape.
@@ -662,22 +662,22 @@
 			Hexagonal tile shape.
 		</constant>
 		<constant name="TILE_LAYOUT_STACKED" value="0" enum="TileLayout">
-			Tile coordinates layout where both axis stay consistent with their respective local horizontal and vertical axis.
+			Tile coordinate layout where both axis stay consistent with their respective local horizontal and vertical axis.
 		</constant>
 		<constant name="TILE_LAYOUT_STACKED_OFFSET" value="1" enum="TileLayout">
 			Same as [constant TILE_LAYOUT_STACKED], but the first half-offset is negative instead of positive.
 		</constant>
 		<constant name="TILE_LAYOUT_STAIRS_RIGHT" value="2" enum="TileLayout">
-			Tile coordinates layout where the horizontal axis stay horizontal, and the vertical one goes down-right.
+			Tile coordinate layout where the horizontal axis stay horizontal, and the vertical one goes down-right.
 		</constant>
 		<constant name="TILE_LAYOUT_STAIRS_DOWN" value="3" enum="TileLayout">
-			Tile coordinates layout where the vertical axis stay vertical, and the horizontal one goes down-right.
+			Tile coordinate layout where the vertical axis stay vertical, and the horizontal one goes down-right.
 		</constant>
 		<constant name="TILE_LAYOUT_DIAMOND_RIGHT" value="4" enum="TileLayout">
-			Tile coordinates layout where the horizontal axis goes up-right, and the vertical one goes down-right.
+			Tile coordinate layout where the horizontal axis goes up-right, and the vertical one goes down-right.
 		</constant>
 		<constant name="TILE_LAYOUT_DIAMOND_DOWN" value="5" enum="TileLayout">
-			Tile coordinates layout where the horizontal axis goes down-right, and the vertical one goes down-left.
+			Tile coordinate layout where the horizontal axis goes down-right, and the vertical one goes down-left.
 		</constant>
 		<constant name="TILE_OFFSET_AXIS_HORIZONTAL" value="0" enum="TileOffsetAxis">
 			Horizontal half-offset.

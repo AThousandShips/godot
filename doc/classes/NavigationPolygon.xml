@@ -4,7 +4,7 @@
 		A 2D navigation mesh that describes a traversable surface for pathfinding.
 	</brief_description>
 	<description>
-		A navigation mesh can be created either by baking it with the help of the [NavigationServer2D], or by adding vertices and convex polygon indices arrays manually.
+		A navigation mesh can be created either by baking it with the help of the [NavigationServer2D], or by adding vertices and convex polygon index arrays manually.
 		To bake a navigation mesh at least one outline needs to be added that defines the outer bounds of the baked area.
 		[codeblocks]
 		[gdscript]

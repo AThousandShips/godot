@@ -30,7 +30,7 @@
 			<param index="2" name="c" type="float" />
 			<param index="3" name="d" type="float" />
 			<description>
-				Creates a plane from the four parameters. The three components of the resulting plane's [member normal] are [param a], [param b] and [param c], and the plane has a distance of [param d] from the origin.
+				Creates a plane from the four parameters. The three components of the resulting plane's [member normal] are [param a], [param b], and [param c], and the plane has a distance of [param d] from the origin.
 			</description>
 		</constructor>
 		<constructor name="Plane">
@@ -96,7 +96,7 @@
 			<param index="0" name="b" type="Plane" />
 			<param index="1" name="c" type="Plane" />
 			<description>
-				Returns the intersection point of the three planes [param b], [param c] and this plane. If no intersection is found, [code]null[/code] is returned.
+				Returns the intersection point of the three planes [param b], [param c], and this plane. If no intersection is found, [code]null[/code] is returned.
 			</description>
 		</method>
 		<method name="intersects_ray" qualifiers="const">

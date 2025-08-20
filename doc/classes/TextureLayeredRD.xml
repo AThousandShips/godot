@@ -4,7 +4,7 @@
 		Abstract base class for layered texture RD types.
 	</brief_description>
 	<description>
-		Base class for [Texture2DArrayRD], [TextureCubemapRD] and [TextureCubemapArrayRD]. Cannot be used directly, but contains all the functions necessary for accessing the derived resource types.
+		Base class for [Texture2DArrayRD], [TextureCubemapRD], and [TextureCubemapArrayRD]. Cannot be used directly, but contains all the functions necessary for accessing the derived resource types.
 	</description>
 	<tutorials>
 	</tutorials>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="TextureButton" inherits="BaseButton" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
-		Texture-based button. Supports Pressed, Hover, Disabled and Focused states.
+		Texture-based button. Supports Pressed, Hover, Disabled, and Focused states.
 	</brief_description>
 	<description>
 		[TextureButton] has the same functionality as [Button], except it uses sprites instead of Godot's [Theme] resource. It is faster to create, but it doesn't support localization like more complex [Control]s.

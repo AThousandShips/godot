@@ -157,7 +157,7 @@
 			<param index="2" name="transform" type="Transform3D" default="Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)" />
 			<param index="3" name="skeleton" type="SkinReference" default="null" />
 			<description>
-				Adds a mesh to the gizmo with the specified [param material], local [param transform] and [param skeleton]. Call this method during [method _redraw].
+				Adds a mesh to the gizmo with the specified [param material], local [param transform], and [param skeleton]. Call this method during [method _redraw].
 			</description>
 		</method>
 		<method name="add_unscaled_billboard">
@@ -172,7 +172,7 @@
 		<method name="clear">
 			<return type="void" />
 			<description>
-				Removes everything in the gizmo including meshes, collisions and handles.
+				Removes everything in the gizmo including meshes, collisions, and handles.
 			</description>
 		</method>
 		<method name="get_node_3d" qualifiers="const">

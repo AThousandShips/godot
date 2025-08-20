@@ -167,7 +167,7 @@
 			The culling mask that describes which [member VisualInstance3D.layers] are rendered by this camera. By default, all 20 user-visible layers are rendered.
 			[b]Note:[/b] Since the [member cull_mask] allows for 32 layers to be stored in total, there are an additional 12 layers that are only used internally by the engine and aren't exposed in the editor. Setting [member cull_mask] using a script allows you to toggle those reserved layers, which can be useful for editor plugins.
 			To adjust [member cull_mask] more easily using a script, use [method get_cull_mask_value] and [method set_cull_mask_value].
-			[b]Note:[/b] [VoxelGI], SDFGI and [LightmapGI] will always take all layers into account to determine what contributes to global illumination. If this is an issue, set [member GeometryInstance3D.gi_mode] to [constant GeometryInstance3D.GI_MODE_DISABLED] for meshes and [member Light3D.light_bake_mode] to [constant Light3D.BAKE_DISABLED] for lights to exclude them from global illumination.
+			[b]Note:[/b] [VoxelGI], SDFGI, and [LightmapGI] will always take all layers into account to determine what contributes to global illumination. If this is an issue, set [member GeometryInstance3D.gi_mode] to [constant GeometryInstance3D.GI_MODE_DISABLED] for meshes and [member Light3D.light_bake_mode] to [constant Light3D.BAKE_DISABLED] for lights to exclude them from global illumination.
 		</member>
 		<member name="current" type="bool" setter="set_current" getter="is_current" default="false">
 			If [code]true[/code], the ancestor [Viewport] is currently using this camera.
@@ -184,7 +184,7 @@
 			The distance to the far culling boundary for this camera relative to its local Z axis. Higher values allow the camera to see further away, while decreasing [member far] can improve performance if it results in objects being partially or fully culled.
 		</member>
 		<member name="fov" type="float" setter="set_fov" getter="get_fov" default="75.0">
-			The camera's field of view angle (in degrees). Only applicable in perspective mode. Since [member keep_aspect] locks one axis, [member fov] sets the other axis' field of view angle.
+			The camera's field of view angle (in degrees). Only applicable in perspective mode. Since [member keep_aspect] locks one axis, [member fov] sets the other axis's field of view angle.
 			For reference, the default vertical field of view value ([code]75.0[/code]) is equivalent to a horizontal FOV of:
 			- ~91.31 degrees in a 4:3 viewport
 			- ~101.67 degrees in a 16:10 viewport

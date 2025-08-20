@@ -169,7 +169,7 @@
 		<method name="get_selected_items">
 			<return type="PackedInt32Array" />
 			<description>
-				Returns an array with the indexes of the selected items.
+				Returns an array with the indices of the selected items.
 			</description>
 		</method>
 		<method name="get_v_scroll_bar">

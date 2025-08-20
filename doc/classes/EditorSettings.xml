@@ -161,7 +161,7 @@
 			<param index="1" name="key" type="String" />
 			<param index="2" name="data" type="Variant" />
 			<description>
-				Sets project-specific metadata with the [param section], [param key] and [param data] specified. This metadata is stored outside the project folder and therefore won't be checked into version control. See also [method get_project_metadata].
+				Sets project-specific metadata with the [param section], [param key], and [param data] specified. This metadata is stored outside the project folder and therefore won't be checked into version control. See also [method get_project_metadata].
 			</description>
 		</method>
 		<method name="set_recent_dirs">
@@ -325,9 +325,9 @@
 		</member>
 		<member name="editors/3d/freelook/freelook_navigation_scheme" type="int" setter="" getter="">
 			The navigation scheme to use when freelook is enabled in the 3D editor. Some of the navigation schemes below may be more convenient when designing specific levels in the 3D editor.
-			- [b]Default:[/b] The "Freelook Forward", "Freelook Backward", "Freelook Up" and "Freelook Down" keys will move relative to the camera, taking its pitch angle into account for the movement.
+			- [b]Default:[/b] The "Freelook Forward", "Freelook Backward", "Freelook Up", and "Freelook Down" keys will move relative to the camera, taking its pitch angle into account for the movement.
 			- [b]Partially Axis-Locked:[/b] The "Freelook Forward" and "Freelook Backward" keys will move relative to the camera, taking its pitch angle into account for the movement. The "Freelook Up" and "Freelook Down" keys will move in an "absolute" manner, [i]not[/i] taking the camera's pitch angle into account for the movement.
-			- [b]Fully Axis-Locked:[/b] The "Freelook Forward", "Freelook Backward", "Freelook Up" and "Freelook Down" keys will move in an "absolute" manner, [i]not[/i] taking the camera's pitch angle into account for the movement.
+			- [b]Fully Axis-Locked:[/b] The "Freelook Forward", "Freelook Backward", "Freelook Up", and "Freelook Down" keys will move in an "absolute" manner, [i]not[/i] taking the camera's pitch angle into account for the movement.
 			See also [member editors/3d/navigation/navigation_scheme].
 		</member>
 		<member name="editors/3d/freelook/freelook_sensitivity" type="float" setter="" getter="">
@@ -365,7 +365,7 @@
 		</member>
 		<member name="editors/3d/navigation/emulate_3_button_mouse" type="bool" setter="" getter="">
 			If [code]true[/code], enables 3-button mouse emulation mode. This is useful on laptops when using a trackpad.
-			When 3-button mouse emulation mode is enabled, the pan, zoom and orbit modifiers can always be used in the 3D editor viewport, even when not holding down any mouse button.
+			When 3-button mouse emulation mode is enabled, the pan, zoom, and orbit modifiers can always be used in the 3D editor viewport, even when not holding down any mouse button.
 		</member>
 		<member name="editors/3d/navigation/emulate_numpad" type="bool" setter="" getter="">
 			If [code]true[/code], allows using the top row [kbd]0[/kbd]-[kbd]9[/kbd] keys to function as their equivalent numpad keys for 3D editor navigation. This should be enabled on keyboards that have no numeric keypad available.
@@ -583,7 +583,7 @@
 			If [code]true[/code], allows panning by holding down [kbd]Space[/kbd] in the 2D editor viewport (in addition to panning with the middle or right mouse buttons). If [code]false[/code], the left mouse button must be held down while holding down [kbd]Space[/kbd] to pan in the 2D editor viewport.
 		</member>
 		<member name="editors/panning/sub_editors_panning_scheme" type="int" setter="" getter="">
-			Controls whether the mouse wheel scroll zooms or pans in subeditors. The list of affected subeditors is: animation blend tree editor, [Polygon2D] editor, tileset editor, texture region editor and visual shader editor. See also [member editors/panning/2d_editor_panning_scheme] and [member editors/panning/animation_editors_panning_scheme].
+			Controls whether the mouse wheel scroll zooms or pans in subeditors. The list of affected subeditors is: animation blend tree editor, [Polygon2D] editor, tileset editor, texture region editor, and visual shader editor. See also [member editors/panning/2d_editor_panning_scheme] and [member editors/panning/animation_editors_panning_scheme].
 		</member>
 		<member name="editors/panning/warped_mouse_panning" type="bool" setter="" getter="">
 			If [code]true[/code], warps the mouse around the 2D viewport while panning in the 2D editor. This makes it possible to pan over a large area without having to exit panning and adjust the mouse cursor.
@@ -1054,7 +1054,7 @@
 			If [code]false[/code], when panels are made floating their position and size will match the ones when they are attached (excluding window border) to the editor window.
 		</member>
 		<member name="interface/multi_window/restore_windows_on_load" type="bool" setter="" getter="">
-			If [code]true[/code], the floating panel position, size, and screen will be saved on editor exit. On next launch the panels that were floating will be made floating in the saved positions, sizes and screens, if possible.
+			If [code]true[/code], the floating panel position, size, and screen will be saved on editor exit. On next launch the panels that were floating will be made floating in the saved positions, sizes, and screens, if possible.
 		</member>
 		<member name="interface/scene_tabs/display_close_button" type="int" setter="" getter="">
 			Controls when the Close (X) button is displayed on scene tabs at the top of the editor.
@@ -1482,7 +1482,7 @@
 			The script editor's bookmark icon color (displayed in the gutter).
 		</member>
 		<member name="text_editor/theme/highlighting/brace_mismatch_color" type="Color" setter="" getter="">
-			The script editor's brace mismatch color. Used when the caret is currently on a mismatched brace, parenthesis or bracket character.
+			The script editor's brace mismatch color. Used when the caret is currently on a mismatched brace, parenthesis, or bracket character.
 		</member>
 		<member name="text_editor/theme/highlighting/breakpoint_color" type="Color" setter="" getter="">
 			The script editor's breakpoint icon color (displayed in the gutter).

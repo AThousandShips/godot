@@ -115,7 +115,7 @@
 			func _popup_menu(paths):
 				var canvas_item = Engine.get_main_loop().root.get_node(paths[0]); # Replace 0 with the desired index.
 			[/codeblock]
-			The paths array is empty if there weren't any nodes under cursor. The option callback will receive a typed array of [CanvasItem] nodes.
+			The path array is empty if there weren't any nodes under the cursor. The option callback will receive a typed array of [CanvasItem] nodes.
 		</constant>
 	</constants>
 </class>

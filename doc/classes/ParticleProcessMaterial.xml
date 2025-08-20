@@ -339,7 +339,7 @@
 			Each particle's initial direction range from [code]+spread[/code] to [code]-spread[/code] degrees.
 		</member>
 		<member name="sub_emitter_amount_at_collision" type="int" setter="set_sub_emitter_amount_at_collision" getter="get_sub_emitter_amount_at_collision">
-			The amount of particles to spawn from the subemitter node when a collision occurs. When combined with [constant COLLISION_HIDE_ON_CONTACT] on the main particles material, this can be used to achieve effects such as raindrops hitting the ground.
+			The number of particles to spawn from the subemitter node when a collision occurs. When combined with [constant COLLISION_HIDE_ON_CONTACT] on the main particle material, this can be used to achieve effects such as raindrops hitting the ground.
 			[b]Note:[/b] This value shouldn't exceed [member GPUParticles2D.amount] or [member GPUParticles3D.amount] defined on the [i]subemitter node[/i] (not the main node), relative to the subemitter's particle lifetime. If the number of particles is exceeded, no new particles will spawn from the subemitter until enough particles have expired.
 		</member>
 		<member name="sub_emitter_amount_at_end" type="int" setter="set_sub_emitter_amount_at_end" getter="get_sub_emitter_amount_at_end">
@@ -510,13 +510,13 @@
 			Represents the size of the [enum EmissionShape] enum.
 		</constant>
 		<constant name="PARAM_TURB_VEL_INFLUENCE" value="13" enum="Parameter">
-			Use with [method set_param_min] and [method set_param_max] to set the turbulence minimum und maximum influence on each particles velocity.
+			Use with [method set_param_min] and [method set_param_max] to set the turbulence minimum und maximum influence on each particle's velocity.
 		</constant>
 		<constant name="PARAM_TURB_INIT_DISPLACEMENT" value="14" enum="Parameter">
-			Use with [method set_param_min] and [method set_param_max] to set the turbulence minimum and maximum displacement of the particles spawn position.
+			Use with [method set_param_min] and [method set_param_max] to set the turbulence minimum and maximum displacement of the particles' spawn position.
 		</constant>
 		<constant name="PARAM_TURB_INFLUENCE_OVER_LIFE" value="12" enum="Parameter">
-			Use with [method set_param_texture] to set the turbulence influence over the particles life time.
+			Use with [method set_param_texture] to set the turbulence influence over the particles' life time.
 		</constant>
 		<constant name="SUB_EMITTER_DISABLED" value="0" enum="SubEmitterMode">
 		</constant>

@@ -72,7 +72,7 @@
 		<method name="get_interfaces" qualifiers="const">
 			<return type="Dictionary[]" />
 			<description>
-				Returns a list of available interfaces the ID and name of each interface.
+				Returns a list of available interfaces, containing the ID and name of each interface.
 			</description>
 		</method>
 		<method name="get_reference_frame" qualifiers="const">

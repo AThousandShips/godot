@@ -5,7 +5,7 @@
 	</brief_description>
 	<description>
 		A multiline text editor. It also has limited facilities for editing code, such as syntax highlighting support. For more advanced facilities for editing code, see [CodeEdit].
-		While entering text, it is possible to insert special characters using Unicode, OEM or Windows alt codes:
+		While entering text, it is possible to insert special characters using Unicode, OEM, or Windows alt codes:
 		- To enter Unicode codepoints, hold [kbd]Alt[/kbd] and type the codepoint on the numpad. For example, to enter the character [code]á[/code] (U+00E1), hold [kbd]Alt[/kbd] and type [kbd]+E1[/kbd] on the numpad (the leading zeroes can be omitted).
 		- To enter OEM codepoints, hold [kbd]Alt[/kbd] and type the code on the numpad. For example, to enter the character [code]á[/code] (OEM 160), hold [kbd]Alt[/kbd] and type [code]160[/code] on the numpad.
 		- To enter Windows codepoints, hold [kbd]Alt[/kbd] and type the code on the numpad. For example, to enter the character [code]á[/code] (Windows 0225), hold [kbd]Alt[/kbd] and type [kbd]0[/kbd], [kbd]2[/kbd], [kbd]2[/kbd], [kbd]5[/kbd] on the numpad. The leading zero here must [b]not[/b] be omitted, as this is how Windows codepoints are distinguished from OEM codepoints.
@@ -127,7 +127,7 @@
 		<method name="begin_multicaret_edit">
 			<return type="void" />
 			<description>
-				Starts an edit for multiple carets. The edit must be ended with [method end_multicaret_edit]. Multicaret edits can be used to edit text at multiple carets and delay merging the carets until the end, so the caret indexes aren't affected immediately. [method begin_multicaret_edit] and [method end_multicaret_edit] can be nested, and the merge will happen at the last [method end_multicaret_edit].
+				Starts an edit for multiple carets. The edit must be ended with [method end_multicaret_edit]. Multicaret edits can be used to edit text at multiple carets and delay merging the carets until the end, so the caret indices aren't affected immediately. [method begin_multicaret_edit] and [method end_multicaret_edit] can be nested, and the merge will happen at the last [method end_multicaret_edit].
 				[codeblock]
 				begin_complex_operation()
 				begin_multicaret_edit()
@@ -248,7 +248,7 @@
 		<method name="get_caret_index_edit_order" deprecated="Carets no longer need to be edited in any specific order. If the carets need to be sorted, use [method get_sorted_carets] instead.">
 			<return type="PackedInt32Array" />
 			<description>
-				Returns a list of caret indexes in their edit order, this done from bottom to top. Edit order refers to the way actions such as [method insert_text_at_caret] are applied.
+				Returns a list of caret indices in their edit order, this done from bottom to top. Edit order refers to the way actions such as [method insert_text_at_caret] are applied.
 			</description>
 		</method>
 		<method name="get_caret_line" qualifiers="const">
@@ -532,7 +532,7 @@
 			<param index="1" name="wrap_index" type="int" />
 			<param index="2" name="visible_amount" type="int" />
 			<description>
-				Similar to [method get_next_visible_line_offset_from], but takes into account the line wrap indexes. In the returned vector, [code]x[/code] is the line, [code]y[/code] is the wrap index.
+				Similar to [method get_next_visible_line_offset_from], but takes into account the line wrap indices. In the returned vector, [code]x[/code] is the line, [code]y[/code] is the wrap index.
 			</description>
 		</method>
 		<method name="get_next_visible_line_offset_from" qualifiers="const">
@@ -675,7 +675,7 @@
 		<method name="get_tab_size" qualifiers="const">
 			<return type="int" />
 			<description>
-				Returns the [TextEdit]'s' tab size.
+				Returns the [TextEdit]'s tab size.
 			</description>
 		</method>
 		<method name="get_total_gutter_width" qualifiers="const">

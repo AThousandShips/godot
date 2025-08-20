@@ -4,7 +4,7 @@
 		Base class for texture types which contain the data of multiple [ImageTexture]s. Each image is of the same size and format.
 	</brief_description>
 	<description>
-		Base class for [Texture2DArray], [Cubemap] and [CubemapArray]. Cannot be used directly, but contains all the functions necessary for accessing the derived resource types. See also [Texture3D].
+		Base class for [Texture2DArray], [Cubemap], and [CubemapArray]. Cannot be used directly, but contains all the functions necessary for accessing the derived resource types. See also [Texture3D].
 	</description>
 	<tutorials>
 	</tutorials>
@@ -13,7 +13,7 @@
 			<return type="int" enum="Error" />
 			<param index="0" name="images" type="Image[]" />
 			<description>
-				Creates an [ImageTextureLayered] from an array of [Image]s. See [method Image.create] for the expected data format. The first image decides the width, height, image format and mipmapping setting. The other images [i]must[/i] have the same width, height, image format and mipmapping setting.
+				Creates an [ImageTextureLayered] from an array of [Image]s. See [method Image.create] for the expected data format. The first image decides the width, height, image format, and mipmapping setting. The other images [i]must[/i] have the same width, height, image format, and mipmapping setting.
 				Each [Image] represents one [code]layer[/code].
 				[codeblock]
 				# Fill in an array of Images with different colors.

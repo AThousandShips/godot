@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="PackedDataContainer" inherits="Resource" deprecated="Use [method @GlobalScope.var_to_bytes] or [method FileAccess.store_var] instead. To enable data compression, use [method PackedByteArray.compress] or [method FileAccess.open_compressed]." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
-		Efficiently packs and serializes [Array] or [Dictionary].
+		Efficiently packs and serializes an [Array] or a [Dictionary].
 	</brief_description>
 	<description>
 		[PackedDataContainer] can be used to efficiently store data from untyped containers. The data is packed into raw bytes and can be saved to file. Only [Array] and [Dictionary] can be stored this way.
@@ -34,7 +34,7 @@
 			<returns_error number="30"/>
 			<param index="0" name="value" type="Variant" />
 			<description>
-				Packs the given container into a binary representation. The [param value] must be either [Array] or [Dictionary], any other type will result in invalid data error.
+				Packs the given container into a binary representation. The [param value] must be either an [Array] or a [Dictionary], any other type will result in invalid data error.
 				[b]Note:[/b] Subsequent calls to this method will overwrite the existing data.
 			</description>
 		</method>

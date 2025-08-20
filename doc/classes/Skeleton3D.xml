@@ -4,7 +4,7 @@
 		A node containing a bone hierarchy, used to create a 3D skeletal animation.
 	</brief_description>
 	<description>
-		[Skeleton3D] provides an interface for managing a hierarchy of bones, including pose, rest and animation (see [Animation]). It can also use ragdoll physics.
+		[Skeleton3D] provides an interface for managing a hierarchy of bones, including pose, rest, and animation (see [Animation]). It can also use ragdoll physics.
 		The overall transform of a bone with respect to the skeleton is determined by bone pose. Bone rest defines the initial transform of the bone pose.
 		Note that "global pose" below refers to the overall transform of the bone with respect to skeleton, so it is not the actual global/world transform of the bone.
 	</description>
@@ -69,7 +69,7 @@
 			<return type="PackedInt32Array" />
 			<param index="0" name="bone_idx" type="int" />
 			<description>
-				Returns an array containing the bone indexes of all the child node of the passed in bone, [param bone_idx].
+				Returns an array containing the bone indices of all the child nodes of the passed in bone, [param bone_idx].
 			</description>
 		</method>
 		<method name="get_bone_count" qualifiers="const">
@@ -183,7 +183,7 @@
 		<method name="get_parentless_bones" qualifiers="const">
 			<return type="PackedInt32Array" />
 			<description>
-				Returns an array with all of the bones that are parentless. Another way to look at this is that it returns the indexes of all the bones that are not dependent or modified by other bones in the Skeleton.
+				Returns an array with all of the bones that are parentless. Another way to look at this is that it returns the indices of all the bones that are not dependent or modified by other bones in the Skeleton.
 			</description>
 		</method>
 		<method name="get_version" qualifiers="const">

@@ -191,7 +191,7 @@
 			The number of additional [OptionButton]s and [CheckBox]es in the dialog.
 		</member>
 		<member name="recent_list_enabled" type="bool" setter="set_customization_flag_enabled" getter="is_customization_flag_enabled" default="true">
-			If [code]true[/code], shows the recent directories list on the left side of the dialog.
+			If [code]true[/code], shows the recent directory list on the left side of the dialog.
 		</member>
 		<member name="root_subfolder" type="String" setter="set_root_subfolder" getter="get_root_subfolder" default="&quot;&quot;">
 			If non-empty, the given sub-folder will be "root" of this [FileDialog], i.e. user won't be able to go to its parent directory.
@@ -289,7 +289,7 @@
 			Equivalent to [member favorites_enabled].
 		</constant>
 		<constant name="CUSTOMIZATION_RECENT" value="5" enum="Customization">
-			If enabled, shows the recent directories list on the left side of the dialog.
+			If enabled, shows the recent directory list on the left side of the dialog.
 			Equivalent to [member recent_list_enabled].
 		</constant>
 		<constant name="CUSTOMIZATION_LAYOUT" value="6" enum="Customization">

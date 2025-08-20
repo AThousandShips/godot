@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="RenderSceneBuffersConfiguration" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
-		Configuration object used to setup a [RenderSceneBuffers] object.
+		Configuration object used to set up a [RenderSceneBuffers] object.
 	</brief_description>
 	<description>
 		This configuration object is created and populated by the render engine on a viewport change and used to (re)configure a [RenderSceneBuffers] object.

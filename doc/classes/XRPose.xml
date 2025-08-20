@@ -5,7 +5,7 @@
 	</brief_description>
 	<description>
 		XR runtimes often identify multiple locations on devices such as controllers that are spatially tracked.
-		Orientation, location, linear velocity and angular velocity are all provided for each pose by the XR runtime. This object contains this state of a pose.
+		Orientation, location, linear velocity, and angular velocity are all provided for each pose by the XR runtime. This object contains this state of a pose.
 	</description>
 	<tutorials>
 		<link title="XR documentation index">$DOCS_URL/tutorials/xr/index.html</link>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="VisualShaderNodeVectorBase" inherits="VisualShaderNode" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
-		A base type for the nodes that perform vector operations within the visual shader graph.
+		A base type for nodes that perform vector operations within the visual shader graph.
 	</brief_description>
 	<description>
 		This is an abstract class. See the derived types for descriptions of the possible operations.

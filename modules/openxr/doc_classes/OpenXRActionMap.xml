@@ -28,7 +28,7 @@
 		<method name="create_default_action_sets">
 			<return type="void" />
 			<description>
-				Setup this action set with our default actions.
+				Sets up this action set with our default actions.
 			</description>
 		</method>
 		<method name="find_action_set" qualifiers="const">

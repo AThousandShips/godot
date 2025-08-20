@@ -15,7 +15,7 @@
 			<param index="0" name="transform" type="Transform3D" />
 			<param index="1" name="rotation_mode" type="int" enum="PathFollow3D.RotationMode" />
 			<description>
-				Correct the [param transform]. [param rotation_mode] implicitly specifies how posture (forward, up and sideway direction) is calculated.
+				Corrects the [param transform]. [param rotation_mode] implicitly specifies how posture (forward, up, and sideways directions) is calculated.
 			</description>
 		</method>
 	</methods>
@@ -59,7 +59,7 @@
 			Allows the PathFollow3D to rotate in the Y axis only.
 		</constant>
 		<constant name="ROTATION_XY" value="2" enum="RotationMode">
-			Allows the PathFollow3D to rotate in both the X, and Y axes.
+			Allows the PathFollow3D to rotate in both the X and Y axes.
 		</constant>
 		<constant name="ROTATION_XYZ" value="3" enum="RotationMode">
 			Allows the PathFollow3D to rotate in any axis.

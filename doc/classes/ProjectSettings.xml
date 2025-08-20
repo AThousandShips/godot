@@ -4,7 +4,7 @@
 		Stores globally-accessible variables.
 	</brief_description>
 	<description>
-		Stores variables that can be accessed from everywhere. Use [method get_setting], [method set_setting] or [method has_setting] to access them. Variables stored in [code]project.godot[/code] are also loaded into [ProjectSettings], making this object very useful for reading custom game configuration options.
+		Stores variables that can be accessed from everywhere. Use [method get_setting], [method set_setting], or [method has_setting] to access them. Variables stored in [code]project.godot[/code] are also loaded into [ProjectSettings], making this object very useful for reading custom game configuration options.
 		When naming a Project Settings property, use the full path to the setting including the category. For example, [code]"application/config/name"[/code] for the project name. Category and property names can be viewed in the Project Settings dialog.
 		[b]Feature tags:[/b] Project settings can be overridden for specific platforms and configurations (debug, release, ...) using [url=$DOCS_URL/tutorials/export/feature_tags.html]feature tags[/url].
 		[b]Overriding:[/b] Any project setting can be overridden by creating a file named [code]override.cfg[/code] in the project's root directory. This can also be used in exported projects by placing this file in the same directory as the project binary. Overriding will still take the base project settings' [url=$DOCS_URL/tutorials/export/feature_tags.html]feature tags[/url] in account. Therefore, make sure to [i]also[/i] override the setting with the desired feature tags if you want them to override base project settings on all platforms and configurations.
@@ -318,7 +318,7 @@
 			[b]Note:[/b] Changing this value will also change the user data folder's path if [member application/config/use_custom_user_dir] is [code]false[/code]. After renaming the project, you will no longer be able to access existing data in [code]user://[/code] unless you rename the old folder to match the new project name. See [url=$DOCS_URL/tutorials/io/data_paths.html]Data paths[/url] in the documentation for more information.
 		</member>
 		<member name="application/config/name_localized" type="Dictionary" setter="" getter="" default="{}">
-			Translations of the project's name. This setting is used by OS tools to translate application name on Android, iOS and macOS.
+			Translations of the project's name. This setting is used by OS tools to translate application name on Android, iOS, and macOS.
 		</member>
 		<member name="application/config/project_settings_override" type="String" setter="" getter="" default="&quot;&quot;">
 			Specifies a file to override project settings. For example: [code]user://custom_settings.cfg[/code]. See "Overriding" in the [ProjectSettings] class description at the top for more information.
@@ -415,13 +415,13 @@
 		</member>
 		<member name="audio/driver/driver" type="String" setter="" getter="">
 			Specifies the audio driver to use. This setting is platform-dependent as each platform supports different audio drivers. If left empty, the default audio driver will be used.
-			The [code]Dummy[/code] audio driver disables all audio playback and recording, which is useful for non-game applications as it reduces CPU usage. It also prevents the engine from appearing as an application playing audio in the OS' audio mixer.
+			The [code]Dummy[/code] audio driver disables all audio playback and recording, which is useful for non-game applications as it reduces CPU usage. It also prevents the engine from appearing as an application playing audio in the OS's audio mixer.
 			To query the value that is being used at run-time (which may be overridden by command-line arguments or headless mode), use [method AudioServer.get_driver_name].
 			[b]Note:[/b] The driver in use can be overridden at runtime via the [code]--audio-driver[/code] [url=$DOCS_URL/tutorials/editor/command_line_tutorial.html]command line argument[/url].
 		</member>
 		<member name="audio/driver/enable_input" type="bool" setter="" getter="" default="false">
 			If [code]true[/code], microphone input will be allowed. This requires appropriate permissions to be set when exporting to Android or iOS.
-			[b]Note:[/b] If the operating system blocks access to audio input devices (due to the user's privacy settings), audio capture will only return silence. On Windows, make sure that apps are allowed to access the microphone in the OS' privacy settings.
+			[b]Note:[/b] If the operating system blocks access to audio input devices (due to the user's privacy settings), audio capture will only return silence. On Windows, make sure that apps are allowed to access the microphone in the OS's privacy settings.
 		</member>
 		<member name="audio/driver/mix_rate" type="int" setter="" getter="" default="44100">
 			Target mixing rate used for audio (in Hz). In general, it's better to not touch this and leave it to the host operating system.
@@ -727,58 +727,58 @@
 			When set to [code]true[/code], produces a warning when a varying is never used.
 		</member>
 		<member name="debug/shapes/avoidance/2d/agents_radius_color" type="Color" setter="" getter="" default="Color(1, 1, 0, 0.25)">
-			Color of the avoidance agents radius, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the avoidance agents' radius, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/2d/enable_agents_radius" type="bool" setter="" getter="" default="true">
-			If enabled, displays avoidance agents radius when "Visible Avoidance" is enabled in the Debug menu.
+			If enabled, displays avoidance agents' radius when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/2d/enable_obstacles_radius" type="bool" setter="" getter="" default="true">
-			If enabled, displays avoidance obstacles radius when "Visible Avoidance" is enabled in the Debug menu.
+			If enabled, displays avoidance obstacles' radius when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/2d/enable_obstacles_static" type="bool" setter="" getter="" default="true">
 			If enabled, displays static avoidance obstacles when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/2d/obstacles_radius_color" type="Color" setter="" getter="" default="Color(1, 0.5, 0, 0.25)">
-			Color of the avoidance obstacles radius, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the avoidance obstacles' radius, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/2d/obstacles_static_edge_pushin_color" type="Color" setter="" getter="" default="Color(1, 0, 0, 1)">
-			Color of the static avoidance obstacles edges when their vertices are winded in order to push agents in, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the static avoidance obstacles' edges when their vertices are wound in order to push agents in, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/2d/obstacles_static_edge_pushout_color" type="Color" setter="" getter="" default="Color(1, 1, 0, 1)">
-			Color of the static avoidance obstacles edges when their vertices are winded in order to push agents out, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the static avoidance obstacles' edges when their vertices are wound in order to push agents out, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/2d/obstacles_static_face_pushin_color" type="Color" setter="" getter="" default="Color(1, 0, 0, 0)">
-			Color of the static avoidance obstacles faces when their vertices are winded in order to push agents in, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the static avoidance obstacles' faces when their vertices are wound in order to push agents in, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/2d/obstacles_static_face_pushout_color" type="Color" setter="" getter="" default="Color(1, 1, 0, 0.5)">
-			Color of the static avoidance obstacles faces when their vertices are winded in order to push agents out, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the static avoidance obstacles' faces when their vertices are wound in order to push agents out, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/3d/agents_radius_color" type="Color" setter="" getter="" default="Color(1, 1, 0, 0.25)">
-			Color of the avoidance agents radius, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the avoidance agents' radius, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/3d/enable_agents_radius" type="bool" setter="" getter="" default="true">
-			If enabled, displays avoidance agents radius when "Visible Avoidance" is enabled in the Debug menu.
+			If enabled, displays avoidance agents' radius when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/3d/enable_obstacles_radius" type="bool" setter="" getter="" default="true">
-			If enabled, displays avoidance obstacles radius when "Visible Avoidance" is enabled in the Debug menu.
+			If enabled, displays avoidance obstacles' radius when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/3d/enable_obstacles_static" type="bool" setter="" getter="" default="true">
 			If enabled, displays static avoidance obstacles when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/3d/obstacles_radius_color" type="Color" setter="" getter="" default="Color(1, 0.5, 0, 0.25)">
-			Color of the avoidance obstacles radius, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the avoidance obstacles' radius, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/3d/obstacles_static_edge_pushin_color" type="Color" setter="" getter="" default="Color(1, 0, 0, 1)">
-			Color of the static avoidance obstacles edges when their vertices are winded in order to push agents in, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the static avoidance obstacles' edges when their vertices are wound in order to push agents in, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/3d/obstacles_static_edge_pushout_color" type="Color" setter="" getter="" default="Color(1, 1, 0, 1)">
-			Color of the static avoidance obstacles edges when their vertices are winded in order to push agents out, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the static avoidance obstacles edges when their vertices are wound in order to push agents out, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/3d/obstacles_static_face_pushin_color" type="Color" setter="" getter="" default="Color(1, 0, 0, 0)">
-			Color of the static avoidance obstacles faces when their vertices are winded in order to push agents in, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the static avoidance obstacles' faces when their vertices are wound in order to push agents in, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/avoidance/3d/obstacles_static_face_pushout_color" type="Color" setter="" getter="" default="Color(1, 1, 0, 0.5)">
-			Color of the static avoidance obstacles faces when their vertices are winded in order to push agents out, visible when "Visible Avoidance" is enabled in the Debug menu.
+			Color of the static avoidance obstacles' faces when their vertices are wound in order to push agents out, visible when "Visible Avoidance" is enabled in the Debug menu.
 		</member>
 		<member name="debug/shapes/collision/contact_color" type="Color" setter="" getter="" default="Color(1, 0.2, 0.1, 0.8)">
 			Color of the contact points between collision shapes, visible when "Visible Collision Shapes" is enabled in the Debug menu.
@@ -925,7 +925,7 @@
 			Position offset for tooltips, relative to the mouse cursor's hotspot.
 		</member>
 		<member name="display/window/dpi/allow_hidpi" type="bool" setter="" getter="" default="true">
-			If [code]true[/code], allows HiDPI display on Windows, macOS, Android, iOS and Web. If [code]false[/code], the platform's low-DPI fallback will be used on HiDPI displays, which causes the window to be displayed in a blurry or pixelated manner (and can cause various window management bugs). Therefore, it is recommended to make your project scale to [url=$DOCS_URL/tutorials/rendering/multiple_resolutions.html]multiple resolutions[/url] instead of disabling this setting.
+			If [code]true[/code], allows HiDPI display on Windows, macOS, Android, iOS, and Web. If [code]false[/code], the platform's low-DPI fallback will be used on HiDPI displays, which causes the window to be displayed in a blurry or pixelated manner (and can cause various window management bugs). Therefore, it is recommended to make your project scale to [url=$DOCS_URL/tutorials/rendering/multiple_resolutions.html]multiple resolutions[/url] instead of disabling this setting.
 			[b]Note:[/b] This setting has no effect on Linux as DPI-awareness fallbacks are not supported there.
 		</member>
 		<member name="display/window/energy_saving/keep_screen_on" type="bool" setter="" getter="" default="true">
@@ -1019,17 +1019,17 @@
 			[b]Note:[/b] This setting has no effect on Android as transparency is controlled only via [member display/window/per_pixel_transparency/allowed].
 		</member>
 		<member name="display/window/size/viewport_height" type="int" setter="" getter="" default="648">
-			Sets the game's main viewport height. On desktop platforms, this is also the initial window height, represented by an indigo-colored rectangle in the 2D editor. Stretch mode settings also use this as a reference when using the [code]canvas_items[/code] or [code]viewport[/code] stretch modes. See also [member display/window/size/viewport_width], [member display/window/size/window_width_override] and [member display/window/size/window_height_override].
+			Sets the game's main viewport height. On desktop platforms, this is also the initial window height, represented by an indigo-colored rectangle in the 2D editor. Stretch mode settings also use this as a reference when using the [code]canvas_items[/code] or [code]viewport[/code] stretch modes. See also [member display/window/size/viewport_width], [member display/window/size/window_width_override], and [member display/window/size/window_height_override].
 		</member>
 		<member name="display/window/size/viewport_width" type="int" setter="" getter="" default="1152">
-			Sets the game's main viewport width. On desktop platforms, this is also the initial window width, represented by an indigo-colored rectangle in the 2D editor. Stretch mode settings also use this as a reference when using the [code]canvas_items[/code] or [code]viewport[/code] stretch modes. See also [member display/window/size/viewport_height], [member display/window/size/window_width_override] and [member display/window/size/window_height_override].
+			Sets the game's main viewport width. On desktop platforms, this is also the initial window width, represented by an indigo-colored rectangle in the 2D editor. Stretch mode settings also use this as a reference when using the [code]canvas_items[/code] or [code]viewport[/code] stretch modes. See also [member display/window/size/viewport_height], [member display/window/size/window_width_override], and [member display/window/size/window_height_override].
 		</member>
 		<member name="display/window/size/window_height_override" type="int" setter="" getter="" default="0">
-			On desktop platforms, overrides the game's initial window height. See also [member display/window/size/window_width_override], [member display/window/size/viewport_width] and [member display/window/size/viewport_height].
+			On desktop platforms, overrides the game's initial window height. See also [member display/window/size/window_width_override], [member display/window/size/viewport_width], and [member display/window/size/viewport_height].
 			[b]Note:[/b] By default, or when set to [code]0[/code], the initial window height is the [member display/window/size/viewport_height]. This setting is ignored on iOS, Android, and Web.
 		</member>
 		<member name="display/window/size/window_width_override" type="int" setter="" getter="" default="0">
-			On desktop platforms, overrides the game's initial window width. See also [member display/window/size/window_height_override], [member display/window/size/viewport_width] and [member display/window/size/viewport_height].
+			On desktop platforms, overrides the game's initial window width. See also [member display/window/size/window_height_override], [member display/window/size/viewport_width], and [member display/window/size/viewport_height].
 			[b]Note:[/b] By default, or when set to [code]0[/code], the initial window width is the [member display/window/size/viewport_width]. This setting is ignored on iOS, Android, and Web.
 		</member>
 		<member name="display/window/stretch/aspect" type="String" setter="" getter="" default="&quot;keep&quot;">
@@ -1070,7 +1070,7 @@
 		</member>
 		<member name="dotnet/project/solution_directory" type="String" setter="" getter="" default="&quot;&quot;">
 			Directory that contains the [code].sln[/code] file. By default, the [code].sln[/code] files is in the root of the project directory, next to the [code]project.godot[/code] and [code].csproj[/code] files.
-			Changing this value allows setting up a multi-project scenario where there are multiple [code].csproj[/code]. Keep in mind that the Godot project is considered one of the C# projects in the workspace and it's root directory should contain the [code]project.godot[/code] and [code].csproj[/code] next to each other.
+			Changing this value allows setting up a multi-project scenario where there are multiple [code].csproj[/code]. Keep in mind that the Godot project is considered one of the C# projects in the workspace and its root directory should contain the [code]project.godot[/code] and [code].csproj[/code] next to each other.
 		</member>
 		<member name="editor/export/convert_text_resources_to_binary" type="bool" setter="" getter="" default="true">
 			If [code]true[/code], text resource ([code]tres[/code]) and text scene ([code]tscn[/code]) files are converted to their corresponding binary format on export. This decreases file sizes and speeds up loading slightly.
@@ -1086,7 +1086,7 @@
 			If [code]true[/code] importing of resources is run on multiple threads.
 		</member>
 		<member name="editor/movie_writer/disable_vsync" type="bool" setter="" getter="" default="false">
-			If [code]true[/code], requests V-Sync to be disabled when writing a movie (similar to setting [member display/window/vsync/vsync_mode] to [b]Disabled[/b]). This can speed up video writing if the hardware is fast enough to render, encode and save the video at a framerate higher than the monitor's refresh rate.
+			If [code]true[/code], requests V-Sync to be disabled when writing a movie (similar to setting [member display/window/vsync/vsync_mode] to [b]Disabled[/b]). This can speed up video writing if the hardware is fast enough to render, encode, and save the video at a framerate higher than the monitor's refresh rate.
 			[b]Note:[/b] [member editor/movie_writer/disable_vsync] has no effect if the operating system or graphics driver forces V-Sync with no way for applications to disable it.
 		</member>
 		<member name="editor/movie_writer/fps" type="int" setter="" getter="" default="60">
@@ -2611,7 +2611,7 @@
 			This is mainly used as a fail-safe, to prevent the simulation from exploding, as fast-moving objects colliding with complex physics structures can otherwise cause them to go out of control. Fast-moving objects can also cause a lot of stress on the collision detection system, which can slow down the simulation considerably.
 		</member>
 		<member name="physics/jolt_physics_3d/limits/temporary_memory_buffer_size" type="int" setter="" getter="" default="32">
-			The amount of memory to pre-allocate for the stack allocator used within Jolt, in MiB. This allocator is used within the physics step to store things that are only needed during it, like which bodies are in contact, how they form islands and the data needed to solve the contacts.
+			The amount of memory to pre-allocate for the stack allocator used within Jolt, in MiB. This allocator is used within the physics step to store things that are only needed during it, like which bodies are in contact, how they form islands, and the data needed to solve the contacts.
 		</member>
 		<member name="physics/jolt_physics_3d/limits/world_boundary_shape_size" type="float" setter="" getter="" default="2000.0">
 			The size of [WorldBoundaryShape3D] boundaries, for all three dimensions. The plane is effectively centered within a box of this size, and anything outside of the box will not collide with it. This is necessary as [WorldBoundaryShape3D] is not unbounded when using Jolt, in order to prevent precision issues.
@@ -2620,15 +2620,15 @@
 		</member>
 		<member name="physics/jolt_physics_3d/motion_queries/recovery_amount" type="float" setter="" getter="" default="0.4">
 			Fraction of the total penetration to depenetrate per iteration during motion queries.
-			[b]Note:[/b] This affects methods [method CharacterBody3D.move_and_slide], [method PhysicsBody3D.move_and_collide], [method PhysicsBody3D.test_move] and [method PhysicsServer3D.body_test_motion].
+			[b]Note:[/b] This affects methods [method CharacterBody3D.move_and_slide], [method PhysicsBody3D.move_and_collide], [method PhysicsBody3D.test_move], and [method PhysicsServer3D.body_test_motion].
 		</member>
 		<member name="physics/jolt_physics_3d/motion_queries/recovery_iterations" type="int" setter="" getter="" default="4">
 			The number of iterations to run when depenetrating during motion queries.
-			[b]Note:[/b] This affects methods [method CharacterBody3D.move_and_slide], [method PhysicsBody3D.move_and_collide], [method PhysicsBody3D.test_move] and [method PhysicsServer3D.body_test_motion].
+			[b]Note:[/b] This affects methods [method CharacterBody3D.move_and_slide], [method PhysicsBody3D.move_and_collide], [method PhysicsBody3D.test_move], and [method PhysicsServer3D.body_test_motion].
 		</member>
 		<member name="physics/jolt_physics_3d/motion_queries/use_enhanced_internal_edge_removal" type="bool" setter="" getter="" default="true">
 			If [code]true[/code], enables Jolt's enhanced internal edge removal during motion queries. This can help alleviate ghost collisions, but only with edges within a single body, meaning edges between separate bodies can still cause ghost collisions.
-			[b]Note:[/b] This affects methods [method CharacterBody3D.move_and_slide], [method PhysicsBody3D.move_and_collide], [method PhysicsBody3D.test_move] and [method PhysicsServer3D.body_test_motion].
+			[b]Note:[/b] This affects methods [method CharacterBody3D.move_and_slide], [method PhysicsBody3D.move_and_collide], [method PhysicsBody3D.test_move], and [method PhysicsServer3D.body_test_motion].
 		</member>
 		<member name="physics/jolt_physics_3d/queries/enable_ray_cast_face_index" type="bool" setter="" getter="" default="false">
 			If [code]true[/code], populates the [code]face_index[/code] field in the results of [method PhysicsDirectSpaceState3D.intersect_ray], also accessed through [method RayCast3D.get_collision_face_index]. If [code]false[/code], the [code]face_index[/code] field will be left at its default value of [code]-1[/code].
@@ -2636,7 +2636,7 @@
 		</member>
 		<member name="physics/jolt_physics_3d/queries/use_enhanced_internal_edge_removal" type="bool" setter="" getter="" default="false">
 			If [code]true[/code], enables Jolt's enhanced internal edge removal during shape queries. This can help alleviate ghost collisions when using shape queries for things like character movement, but only with edges within a single body, meaning edges between separate bodies can still cause ghost collisions.
-			[b]Note:[/b] This affects methods [method PhysicsDirectSpaceState3D.cast_motion], [method PhysicsDirectSpaceState3D.collide_shape], [method PhysicsDirectSpaceState3D.get_rest_info] and [method PhysicsDirectSpaceState3D.intersect_shape].
+			[b]Note:[/b] This affects methods [method PhysicsDirectSpaceState3D.cast_motion], [method PhysicsDirectSpaceState3D.collide_shape], [method PhysicsDirectSpaceState3D.get_rest_info], and [method PhysicsDirectSpaceState3D.intersect_shape].
 			[b]Note:[/b] Enabling this setting can cause certain shapes to be culled from the results entirely, but you will get at least one intersection per body.
 		</member>
 		<member name="physics/jolt_physics_3d/simulation/allow_sleep" type="bool" setter="" getter="" default="true">
@@ -2920,7 +2920,7 @@
 			[b]Note:[/b] This setting is implemented only on Windows.
 		</member>
 		<member name="rendering/gl_compatibility/item_buffer_size" type="int" setter="" getter="" default="16384">
-			Maximum number of canvas items commands that can be drawn in a single viewport update. If more render commands are issued they will be ignored. Decreasing this limit may improve performance on bandwidth limited devices. Increase this limit if you find that not all objects are being drawn in a frame.
+			Maximum number of canvas item commands that can be drawn in a single viewport update. If more render commands are issued they will be ignored. Decreasing this limit may improve performance on bandwidth limited devices. Increase this limit if you find that not all objects are being drawn in a frame.
 		</member>
 		<member name="rendering/gl_compatibility/nvidia_disable_threaded_optimization" type="bool" setter="" getter="" default="true">
 			If [code]true[/code], disables the threaded optimization feature from the NVIDIA drivers, which are known to cause stuttering in most OpenGL applications.
@@ -3319,11 +3319,11 @@
 			Specify the compression level for Basis Universal Zstandard supercompression, ranging from [code]1[/code] to [code]22[/code].
 		</member>
 		<member name="rendering/textures/canvas_textures/default_texture_filter" type="int" setter="" getter="" default="1">
-			The default texture filtering mode to use for [CanvasItem]s built-in texture. In shaders, this texture is accessed as [code]TEXTURE[/code].
+			The default texture filtering mode to use for [CanvasItem]s' built-in texture. In shaders, this texture is accessed as [code]TEXTURE[/code].
 			[b]Note:[/b] For pixel art aesthetics, see also [member rendering/2d/snap/snap_2d_vertices_to_pixel] and [member rendering/2d/snap/snap_2d_transforms_to_pixel].
 		</member>
 		<member name="rendering/textures/canvas_textures/default_texture_repeat" type="int" setter="" getter="" default="0">
-			The default texture repeating mode to use for [CanvasItem]s built-in texture. In shaders, this texture is accessed as [code]TEXTURE[/code].
+			The default texture repeating mode to use for [CanvasItem]s' built-in texture. In shaders, this texture is accessed as [code]TEXTURE[/code].
 		</member>
 		<member name="rendering/textures/decals/filter" type="int" setter="" getter="" default="3">
 			The filtering quality to use for [Decal] nodes. When using one of the anisotropic filtering modes, the anisotropic filtering level is controlled by [member rendering/textures/default_filters/anisotropic_filtering_level].
@@ -3417,7 +3417,7 @@
 			Action map configuration to load by default.
 		</member>
 		<member name="xr/openxr/enabled" type="bool" setter="" getter="" default="false">
-			If [code]true[/code], Godot will setup and initialize OpenXR on startup.
+			If [code]true[/code], Godot will set up and initialize OpenXR on startup.
 		</member>
 		<member name="xr/openxr/environment_blend_mode" type="int" setter="" getter="" default="&quot;0&quot;">
 			Specify how OpenXR should blend in the environment. This is specific to certain AR and passthrough devices where camera images are blended in by the XR compositor.

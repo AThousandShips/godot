@@ -72,7 +72,7 @@
 		<method name="get_indices" qualifiers="const">
 			<return type="PackedInt32Array" />
 			<description>
-				Returns the parsed source geometry data indices array.
+				Returns the parsed source geometry data index array.
 			</description>
 		</method>
 		<method name="get_projected_obstructions" qualifiers="const">
@@ -88,7 +88,7 @@
 		<method name="get_vertices" qualifiers="const">
 			<return type="PackedFloat32Array" />
 			<description>
-				Returns the parsed source geometry data vertices array.
+				Returns the parsed source geometry data vertex array.
 			</description>
 		</method>
 		<method name="has_data">

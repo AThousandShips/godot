@@ -35,14 +35,14 @@
 			<return type="void" />
 			<param index="0" name="obstruction_outlines" type="PackedVector2Array[]" />
 			<description>
-				Appends another array of [param obstruction_outlines] at the end of the existing obstruction outlines array.
+				Appends another array of [param obstruction_outlines] at the end of the existing obstruction outline array.
 			</description>
 		</method>
 		<method name="append_traversable_outlines">
 			<return type="void" />
 			<param index="0" name="traversable_outlines" type="PackedVector2Array[]" />
 			<description>
-				Appends another array of [param traversable_outlines] at the end of the existing traversable outlines array.
+				Appends another array of [param traversable_outlines] at the end of the existing traversable outline array.
 			</description>
 		</method>
 		<method name="clear">
@@ -66,7 +66,7 @@
 		<method name="get_obstruction_outlines" qualifiers="const">
 			<return type="PackedVector2Array[]" />
 			<description>
-				Returns all the obstructed area outlines arrays.
+				Returns all the obstructed area outline arrays.
 			</description>
 		</method>
 		<method name="get_projected_obstructions" qualifiers="const">
@@ -80,7 +80,7 @@
 		<method name="get_traversable_outlines" qualifiers="const">
 			<return type="PackedVector2Array[]" />
 			<description>
-				Returns all the traversable area outlines arrays.
+				Returns all the traversable area outline arrays.
 			</description>
 		</method>
 		<method name="has_data">
@@ -100,7 +100,7 @@
 			<return type="void" />
 			<param index="0" name="obstruction_outlines" type="PackedVector2Array[]" />
 			<description>
-				Sets all the obstructed area outlines arrays.
+				Sets all the obstructed area outline arrays.
 			</description>
 		</method>
 		<method name="set_projected_obstructions">
@@ -120,7 +120,7 @@
 			<return type="void" />
 			<param index="0" name="traversable_outlines" type="PackedVector2Array[]" />
 			<description>
-				Sets all the traversable area outlines arrays.
+				Sets all the traversable area outline arrays.
 			</description>
 		</method>
 	</methods>

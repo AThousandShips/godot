@@ -4,7 +4,7 @@
 		Sprite frame library for AnimatedSprite2D and AnimatedSprite3D.
 	</brief_description>
 	<description>
-		Sprite frame library for an [AnimatedSprite2D] or [AnimatedSprite3D] node. Contains frames and animation data for playback.
+		Sprite frame library for an [AnimatedSprite2D] or [AnimatedSprite3D] node. Contains frame and animation data for playback.
 	</description>
 	<tutorials>
 	</tutorials>

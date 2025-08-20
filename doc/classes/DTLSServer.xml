@@ -153,7 +153,7 @@
 			<return type="int" enum="Error" />
 			<param index="0" name="server_options" type="TLSOptions" />
 			<description>
-				Setup the DTLS server to use the given [param server_options]. See [method TLSOptions.server].
+				Sets up the DTLS server to use the given [param server_options]. See [method TLSOptions.server].
 			</description>
 		</method>
 		<method name="take_connection">

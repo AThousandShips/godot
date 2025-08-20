@@ -385,7 +385,7 @@
 			<return type="void" />
 			<param index="0" name="minsize" type="Vector2i" default="Vector2i(0, 0)" />
 			<description>
-				Popups the [Window] at the center of the current screen, with optionally given minimum size. If the [Window] is embedded, it will be centered in the parent [Viewport] instead.
+				Pops up the [Window] at the center of the current screen, with optionally given minimum size. If the [Window] is embedded, it will be centered in the parent [Viewport] instead.
 				[b]Note:[/b] Calling it with the default value of [param minsize] is equivalent to calling it with [member size].
 			</description>
 		</method>
@@ -394,7 +394,7 @@
 			<param index="0" name="minsize" type="Vector2i" default="Vector2i(0, 0)" />
 			<param index="1" name="fallback_ratio" type="float" default="0.75" />
 			<description>
-				Popups the [Window] centered inside its parent [Window]. [param fallback_ratio] determines the maximum size of the [Window], in relation to its parent.
+				Pops up the [Window] centered inside its parent [Window]. [param fallback_ratio] determines the maximum size of the [Window], in relation to its parent.
 				[b]Note:[/b] Calling it with the default value of [param minsize] is equivalent to calling it with [member size].
 			</description>
 		</method>
@@ -456,7 +456,7 @@
 			<return type="void" />
 			<param index="0" name="parent_rect" type="Rect2i" />
 			<description>
-				Popups the [Window] with a position shifted by parent [Window]'s position. If the [Window] is embedded, has the same effect as [method popup].
+				Pops up the [Window] with a position shifted by parent [Window]'s position. If the [Window] is embedded, has the same effect as [method popup].
 			</description>
 		</method>
 		<method name="remove_theme_color_override">
@@ -659,7 +659,7 @@
 		</member>
 		<member name="mouse_passthrough" type="bool" setter="set_flag" getter="get_flag" default="false">
 			If [code]true[/code], all mouse events will be passed to the underlying window of the same application. See also [member mouse_passthrough_polygon].
-			[b]Note:[/b] This property is implemented on Linux (X11), macOS and Windows.
+			[b]Note:[/b] This property is implemented on Linux (X11), macOS, and Windows.
 			[b]Note:[/b] This property only works with native windows.
 		</member>
 		<member name="mouse_passthrough_polygon" type="PackedVector2Array" setter="set_mouse_passthrough_polygon" getter="get_mouse_passthrough_polygon" default="PackedVector2Array()">
@@ -689,13 +689,13 @@
 			[/codeblocks]
 			[b]Note:[/b] This property is ignored if [member mouse_passthrough] is set to [code]true[/code].
 			[b]Note:[/b] On Windows, the portion of a window that lies outside the region is not drawn, while on Linux (X11) and macOS it is.
-			[b]Note:[/b] This property is implemented on Linux (X11), macOS and Windows.
+			[b]Note:[/b] This property is implemented on Linux (X11), macOS, and Windows.
 		</member>
 		<member name="popup_window" type="bool" setter="set_flag" getter="get_flag" default="false">
 			If [code]true[/code], the [Window] will be considered a popup. Popups are sub-windows that don't show as separate windows in system's window manager's window list and will send close request when anything is clicked outside of them (unless [member exclusive] is enabled).
 		</member>
 		<member name="popup_wm_hint" type="bool" setter="set_flag" getter="get_flag" default="false">
-			If [code]true[/code], the [Window] will signal to the window manager that it is supposed to be an implementation-defined "popup" (usually a floating, borderless, untileable and immovable child window).
+			If [code]true[/code], the [Window] will signal to the window manager that it is supposed to be an implementation-defined "popup" (usually a floating, borderless, untileable, and immovable child window).
 		</member>
 		<member name="position" type="Vector2i" setter="set_position" getter="get_position" default="Vector2i(0, 0)">
 			The window's position in pixels.
@@ -729,7 +729,7 @@
 		</member>
 		<member name="transparent" type="bool" setter="set_flag" getter="get_flag" default="false">
 			If [code]true[/code], the [Window]'s background can be transparent. This is best used with embedded windows.
-			[b]Note:[/b] Transparency support is implemented on Linux, macOS and Windows, but availability might vary depending on GPU driver, display manager, and compositor capabilities.
+			[b]Note:[/b] Transparency support is implemented on Linux, macOS, and Windows, but availability might vary depending on GPU driver, display manager, and compositor capabilities.
 			[b]Note:[/b] This property has no effect if [member ProjectSettings.display/window/per_pixel_transparency/allowed] is set to [code]false[/code].
 		</member>
 		<member name="unfocusable" type="bool" setter="set_flag" getter="get_flag" default="false">
@@ -909,7 +909,7 @@
 			[b]Note:[/b] Setting this flag will prevent standard screenshot methods from capturing a window image, but does [b]NOT[/b] guarantee that other apps won't be able to capture an image. It should not be used as a DRM or security measure.
 		</constant>
 		<constant name="FLAG_POPUP_WM_HINT" value="10" enum="Flags">
-			Signals the window manager that this window is supposed to be an implementation-defined "popup" (usually a floating, borderless, untileable and immovable child window).
+			Signals the window manager that this window is supposed to be an implementation-defined "popup" (usually a floating, borderless, untileable, and immovable child window).
 		</constant>
 		<constant name="FLAG_MINIMIZE_DISABLED" value="11" enum="Flags">
 			Window minimize button is disabled.

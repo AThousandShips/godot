@@ -90,7 +90,7 @@
 			If set to a negative value, the animation is played in reverse. If set to [code]0[/code], the animation will not advance.
 		</member>
 		<member name="sprite_frames" type="SpriteFrames" setter="set_sprite_frames" getter="get_sprite_frames">
-			The [SpriteFrames] resource containing the animation(s). Allows you the option to load, edit, clear, make unique and save the states of the [SpriteFrames] resource.
+			The [SpriteFrames] resource containing the animation(s). Allows you the option to load, edit, clear, make unique, and save the states of the [SpriteFrames] resource.
 		</member>
 	</members>
 	<signals>

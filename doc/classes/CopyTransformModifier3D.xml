@@ -220,7 +220,7 @@
 			<param index="0" name="index" type="int" />
 			<param index="1" name="axis_flags" type="int" enum="CopyTransformModifier3D.AxisFlag" is_bitfield="true" />
 			<description>
-				Sets the flags to inverte axes. If the flag is valid, the axis is copied.
+				Sets the flags to invert axes. If the flag is valid, the axis is copied.
 				[b]Note:[/b] An inverted scale means an inverse number, not a negative scale. For example, inverting [code]2.0[/code] means [code]0.5[/code].
 				[b]Note:[/b] An inverted rotation flips the elements of the quaternion. For example, a two-axis inversion will flip the roll of each axis, and a three-axis inversion will flip the final orientation. However, be aware that flipping only one axis may cause unintended rotation by the unflipped axes, due to the characteristics of the quaternion.
 			</description>

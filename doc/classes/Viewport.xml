@@ -221,14 +221,14 @@
 			<return type="void" />
 			<description>
 				Inform the Viewport that the mouse has entered its area. Use this function before sending an [InputEventMouseButton] or [InputEventMouseMotion] to the [Viewport] with [method Viewport.push_input]. See also [method notify_mouse_exited].
-				[b]Note:[/b] In most cases, it is not necessary to call this function because [SubViewport] nodes that are children of [SubViewportContainer] are notified automatically. This is only necessary when interacting with viewports in non-default ways, for example as textures in [TextureRect] or with an [Area3D] that forwards input events.
+				[b]Note:[/b] In most cases, it is not necessary to call this function because [SubViewport] nodes that are children of a [SubViewportContainer] are notified automatically. This is only necessary when interacting with viewports in non-default ways, for example as textures in [TextureRect] or with an [Area3D] that forwards input events.
 			</description>
 		</method>
 		<method name="notify_mouse_exited">
 			<return type="void" />
 			<description>
 				Inform the Viewport that the mouse has left its area. Use this function when the node that displays the viewport notices the mouse has left the area of the displayed viewport. See also [method notify_mouse_entered].
-				[b]Note:[/b] In most cases, it is not necessary to call this function because [SubViewport] nodes that are children of [SubViewportContainer] are notified automatically. This is only necessary when interacting with viewports in non-default ways, for example as textures in [TextureRect] or with an [Area3D] that forwards input events.
+				[b]Note:[/b] In most cases, it is not necessary to call this function because [SubViewport] nodes that are children of a [SubViewportContainer] are notified automatically. This is only necessary when interacting with viewports in non-default ways, for example as textures in [TextureRect] or with an [Area3D] that forwards input events.
 			</description>
 		</method>
 		<method name="push_input">
@@ -298,7 +298,7 @@
 		<method name="update_mouse_cursor_state">
 			<return type="void" />
 			<description>
-				Force instantly updating the display based on the current mouse cursor position. This includes updating the mouse cursor shape and sending necessary [signal Control.mouse_entered], [signal CollisionObject2D.mouse_entered], [signal CollisionObject3D.mouse_entered] and [signal Window.mouse_entered] signals and their respective [code]mouse_exited[/code] counterparts.
+				Forces an instant update of the display based on the current mouse cursor position. This includes updating the mouse cursor shape and sending necessary [signal Control.mouse_entered], [signal CollisionObject2D.mouse_entered], [signal CollisionObject3D.mouse_entered], and [signal Window.mouse_entered] signals and their respective [code]mouse_exited[/code] counterparts.
 			</description>
 		</method>
 		<method name="warp_mouse">
@@ -306,7 +306,7 @@
 			<param index="0" name="position" type="Vector2" />
 			<description>
 				Moves the mouse pointer to the specified position in this [Viewport] using the coordinate system of this [Viewport].
-				[b]Note:[/b] [method warp_mouse] is only supported on Windows, macOS and Linux. It has no effect on Android, iOS and Web.
+				[b]Note:[/b] [method warp_mouse] is only supported on Windows, macOS, and Linux. It has no effect on Android, iOS, and Web.
 			</description>
 		</method>
 	</methods>
@@ -415,7 +415,7 @@
 			The subdivision amount of the fourth quadrant on the shadow atlas.
 		</member>
 		<member name="positional_shadow_atlas_size" type="int" setter="set_positional_shadow_atlas_size" getter="get_positional_shadow_atlas_size" default="2048">
-			The shadow atlas' resolution (used for omni and spot lights). The value is rounded up to the nearest power of 2.
+			The shadow atlas's resolution (used for omni and spot lights). The value is rounded up to the nearest power of 2.
 			[b]Note:[/b] If this is set to [code]0[/code], no positional shadows will be visible at all. This can improve performance significantly on low-end systems by reducing both the CPU and GPU load (as fewer draw calls are needed to draw the scene without shadows).
 		</member>
 		<member name="scaling_3d_mode" type="int" setter="set_scaling_3d_mode" getter="get_scaling_3d_mode" enum="Viewport.Scaling3DMode" default="0">

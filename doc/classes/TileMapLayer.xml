@@ -85,7 +85,7 @@
 			<return type="Vector2i" />
 			<param index="0" name="coords" type="Vector2i" />
 			<description>
-				Returns the tile atlas coordinates ID of the cell at coordinates [param coords]. Returns [code]Vector2i(-1, -1)[/code] if the cell does not exist.
+				Returns the tile atlas coordinate ID of the cell at coordinates [param coords]. Returns [code]Vector2i(-1, -1)[/code] if the cell does not exist.
 			</description>
 		</method>
 		<method name="get_cell_source_id" qualifiers="const">
@@ -150,7 +150,7 @@
 		<method name="get_used_cells" qualifiers="const">
 			<return type="Vector2i[]" />
 			<description>
-				Returns a [Vector2i] array with the positions of all cells containing a tile. A cell is considered empty if its source identifier equals [code]-1[/code], its atlas coordinate identifier is [code]Vector2(-1, -1)[/code] and its alternative identifier is [code]-1[/code].
+				Returns a [Vector2i] array with the positions of all cells containing a tile. A cell is considered empty if its source identifier equals [code]-1[/code], its atlas coordinate identifier is [code]Vector2(-1, -1)[/code], and its alternative identifier is [code]-1[/code].
 			</description>
 		</method>
 		<method name="get_used_cells_by_id" qualifiers="const">
@@ -159,9 +159,9 @@
 			<param index="1" name="atlas_coords" type="Vector2i" default="Vector2i(-1, -1)" />
 			<param index="2" name="alternative_tile" type="int" default="-1" />
 			<description>
-				Returns a [Vector2i] array with the positions of all cells containing a tile. Tiles may be filtered according to their source ([param source_id]), their atlas coordinates ([param atlas_coords]), or alternative id ([param alternative_tile]).
+				Returns a [Vector2i] array with the positions of all cells containing a tile. Tiles may be filtered according to their source ([param source_id]), their atlas coordinates ([param atlas_coords]), or alternative ID ([param alternative_tile]).
 				If a parameter has its value set to the default one, this parameter is not used to filter a cell. Thus, if all parameters have their respective default values, this method returns the same result as [method get_used_cells].
-				A cell is considered empty if its source identifier equals [code]-1[/code], its atlas coordinate identifier is [code]Vector2(-1, -1)[/code] and its alternative identifier is [code]-1[/code].
+				A cell is considered empty if its source identifier equals [code]-1[/code], its atlas coordinate identifier is [code]Vector2(-1, -1)[/code], and its alternative identifier is [code]-1[/code].
 			</description>
 		</method>
 		<method name="get_used_rect" qualifiers="const">
@@ -251,7 +251,7 @@
 			<param index="2" name="terrain" type="int" />
 			<param index="3" name="ignore_empty_terrains" type="bool" default="true" />
 			<description>
-				Update all the cells in the [param cells] coordinates array so that they use the given [param terrain] for the given [param terrain_set]. If an updated cell has the same terrain as one of its neighboring cells, this function tries to join the two. This function might update neighboring tiles if needed to create correct terrain transitions.
+				Updates all the cells in the [param cells] coordinate array so that they use the given [param terrain] for the given [param terrain_set]. If an updated cell has the same terrain as one of its neighboring cells, this function tries to join the two. This function might update neighboring tiles if needed to create correct terrain transitions.
 				If [param ignore_empty_terrains] is [code]true[/code], empty terrains will be ignored when trying to find the best fitting tile for the given terrain constraints.
 				[b]Note:[/b] To work correctly, this method requires the [TileMapLayer]'s TileSet to have terrains set up with all required terrain combinations. Otherwise, it may produce unexpected results.
 			</description>
@@ -263,7 +263,7 @@
 			<param index="2" name="terrain" type="int" />
 			<param index="3" name="ignore_empty_terrains" type="bool" default="true" />
 			<description>
-				Update all the cells in the [param path] coordinates array so that they use the given [param terrain] for the given [param terrain_set]. The function will also connect two successive cell in the path with the same terrain. This function might update neighboring tiles if needed to create correct terrain transitions.
+				Updates all the cells in the [param path] coordinate array so that they use the given [param terrain] for the given [param terrain_set]. The function will also connect two successive cell in the path with the same terrain. This function might update neighboring tiles if needed to create correct terrain transitions.
 				If [param ignore_empty_terrains] is [code]true[/code], empty terrains will be ignored when trying to find the best fitting tile for the given terrain constraints.
 				[b]Note:[/b] To work correctly, this method requires the [TileMapLayer]'s TileSet to have terrains set up with all required terrain combinations. Otherwise, it may produce unexpected results.
 			</description>
@@ -286,7 +286,7 @@
 		<method name="update_internals">
 			<return type="void" />
 			<description>
-				Triggers a direct update of the [TileMapLayer]. Usually, calling this function is not needed, as [TileMapLayer] node updates automatically when one of its properties or cells is modified.
+				Triggers a direct update of the [TileMapLayer]. Usually, calling this function is not needed, as [TileMapLayer] node updates automatically when one of its properties or cells are modified.
 				However, for performance reasons, those updates are batched and delayed to the end of the frame. Calling this function will force the [TileMapLayer] to update right away instead.
 				[b]Warning:[/b] Updating the [TileMapLayer] is computationally expensive and may impact performance. Try to limit the number of updates and how many tiles they impact.
 			</description>

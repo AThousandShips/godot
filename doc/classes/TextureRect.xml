@@ -62,7 +62,7 @@
 			Scale the texture to fit the node's bounding rectangle, but maintain the texture's aspect ratio.
 		</constant>
 		<constant name="STRETCH_KEEP_ASPECT_CENTERED" value="5" enum="StretchMode">
-			Scale the texture to fit the node's bounding rectangle, center it and maintain its aspect ratio.
+			Scale the texture to fit the node's bounding rectangle, center it, and maintain its aspect ratio.
 		</constant>
 		<constant name="STRETCH_KEEP_ASPECT_COVERED" value="6" enum="StretchMode">
 			Scale the texture so that the shorter side fits the bounding rectangle. The other side clips to the node's limits.

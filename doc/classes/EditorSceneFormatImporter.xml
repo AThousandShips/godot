@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="EditorSceneFormatImporter" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
-		Imports scenes from third-parties' 3D files.
+		Imports scenes from third-party 3D files.
 	</brief_description>
 	<description>
 		[EditorSceneFormatImporter] allows to define an importer script for a third-party 3D format.

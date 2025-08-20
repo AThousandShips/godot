@@ -150,7 +150,7 @@
 									print("Third state")
 						)
 				[/codeblock]
-				[b]Note:[/b] Multistate items don't update their state automatically and must be done manually. See [method toggle_item_multistate], [method set_item_multistate] and [method get_item_multistate] for more info on how to control it.
+				[b]Note:[/b] Multistate items don't update their state automatically and must be done manually. See [method toggle_item_multistate], [method set_item_multistate], and [method get_item_multistate] for more info on how to control it.
 			</description>
 		</method>
 		<method name="add_radio_check_item">
@@ -524,7 +524,7 @@
 			<param index="1" name="id" type="int" />
 			<description>
 				Sets the [param id] of the item at the given [param index].
-				The [param id] is used in [signal id_pressed] and [signal id_focused] signals.
+				The [param id] is used in the [signal id_pressed] and [signal id_focused] signals.
 			</description>
 		</method>
 		<method name="set_item_indent">

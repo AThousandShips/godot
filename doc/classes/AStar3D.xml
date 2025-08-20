@@ -267,7 +267,7 @@
 		<method name="get_point_count" qualifiers="const">
 			<return type="int" />
 			<description>
-				Returns the number of points currently in the points pool.
+				Returns the number of points currently in the point pool.
 			</description>
 		</method>
 		<method name="get_point_ids">
@@ -320,7 +320,7 @@
 			<return type="void" />
 			<param index="0" name="id" type="int" />
 			<description>
-				Removes the point associated with the given [param id] from the points pool.
+				Removes the point associated with the given [param id] from the point pool.
 			</description>
 		</method>
 		<method name="reserve_space">
