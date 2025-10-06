@@ -317,11 +317,11 @@ Vector<String> TranslationServer::get_all_languages() const {
 }
 
 String TranslationServer::get_language_name(const String &p_language) const {
-	if (language_map.has(p_language)) {
-		return language_map[p_language];
-	} else {
+	const String *ret = language_map.getptr(p_language);
+	if (!ret) {
 		return p_language;
 	}
+	return *ret;
 }
 
 Vector<String> TranslationServer::get_all_scripts() const {
@@ -335,11 +335,11 @@ Vector<String> TranslationServer::get_all_scripts() const {
 }
 
 String TranslationServer::get_script_name(const String &p_script) const {
-	if (script_map.has(p_script)) {
-		return script_map[p_script];
-	} else {
+	const String *ret = script_map.getptr(p_script);
+	if (!ret) {
 		return p_script;
 	}
+	return *ret;
 }
 
 Vector<String> TranslationServer::get_all_countries() const {
@@ -353,11 +353,11 @@ Vector<String> TranslationServer::get_all_countries() const {
 }
 
 String TranslationServer::get_country_name(const String &p_country) const {
-	if (country_name_map.has(p_country)) {
-		return country_name_map[p_country];
-	} else {
+	const String *ret = country_name_map.getptr(p_country);
+	if (!ret) {
 		return p_country;
 	}
+	return *ret;
 }
 
 void TranslationServer::set_locale(const String &p_locale) {

@@ -570,13 +570,13 @@ void ShaderData::set_default_texture_parameter(const StringName &p_name, RID p_t
 }
 
 Variant ShaderData::get_default_parameter(const StringName &p_parameter) const {
-	if (uniforms.has(p_parameter)) {
-		ShaderLanguage::ShaderNode::Uniform uniform = uniforms[p_parameter];
-		Vector<ShaderLanguage::Scalar> default_value = uniform.default_value;
+	const ShaderLanguage::ShaderNode::Uniform *uniform = uniforms.getptr(p_parameter);
+	if (uniform) {
+		Vector<ShaderLanguage::Scalar> default_value = uniform->default_value;
 		if (default_value.is_empty()) {
-			return ShaderLanguage::get_default_datatype_value(uniform.type, uniform.array_size, uniform.hint);
+			return ShaderLanguage::get_default_datatype_value(uniform->type, uniform->array_size, uniform->hint);
 		}
-		return ShaderLanguage::constant_value_to_variant(default_value, uniform.type, uniform.array_size, uniform.hint);
+		return ShaderLanguage::constant_value_to_variant(default_value, uniform->type, uniform->array_size, uniform->hint);
 	}
 	return Variant();
 }
@@ -2490,11 +2490,11 @@ void MaterialStorage::material_set_param(RID p_material, const StringName &p_par
 Variant MaterialStorage::material_get_param(RID p_material, const StringName &p_param) const {
 	const GLES3::Material *material = material_owner.get_or_null(p_material);
 	ERR_FAIL_NULL_V(material, Variant());
-	if (material->params.has(p_param)) {
-		return material->params[p_param];
-	} else {
+	const Variant *ret = material->params.getptr(p_param);
+	if (!ret) {
 		return Variant();
 	}
+	return *ret;
 }
 
 void MaterialStorage::material_set_next_pass(RID p_material, RID p_next_material) {

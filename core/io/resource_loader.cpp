@@ -664,22 +664,22 @@ Ref<ResourceLoader::LoadToken> ResourceLoader::_load_start(const String &p_path,
 }
 
 float ResourceLoader::_dependency_get_progress(const String &p_path) {
-	if (thread_load_tasks.has(p_path)) {
-		ThreadLoadTask &load_task = thread_load_tasks[p_path];
+	ThreadLoadTask *load_task = thread_load_tasks.getptr(p_path);
+	if (load_task) {
 		float current_progress = 0.0;
-		int dep_count = load_task.sub_tasks.size();
+		int dep_count = load_task->sub_tasks.size();
 		if (dep_count > 0) {
-			for (const String &E : load_task.sub_tasks) {
+			for (const String &E : load_task->sub_tasks) {
 				current_progress += _dependency_get_progress(E);
 			}
 			current_progress /= float(dep_count);
 			current_progress *= 0.5;
-			current_progress += load_task.progress * 0.5;
+			current_progress += load_task->progress * 0.5;
 		} else {
-			current_progress = load_task.progress;
+			current_progress = load_task->progress;
 		}
-		load_task.max_reported_progress = MAX(load_task.max_reported_progress, current_progress);
-		return load_task.max_reported_progress;
+		load_task->max_reported_progress = MAX(load_task->max_reported_progress, current_progress);
+		return load_task->max_reported_progress;
 	} else {
 		return 1.0; //assume finished loading it so it no longer exists
 	}
@@ -697,10 +697,10 @@ ResourceLoader::ThreadLoadStatus ResourceLoader::load_threaded_get_status(const 
 		}
 
 		String local_path = _validate_local_path(p_path);
-		ERR_FAIL_COND_V_MSG(!thread_load_tasks.has(local_path), THREAD_LOAD_INVALID_RESOURCE, "Bug in ResourceLoader logic, please report.");
+		ThreadLoadTask *load_task = thread_load_tasks.getptr(local_path);
+		ERR_FAIL_NULL_V_MSG(load_tasks, THREAD_LOAD_INVALID_RESOURCE, "Bug in ResourceLoader logic, please report.");
 
-		ThreadLoadTask &load_task = thread_load_tasks[local_path];
-		status = load_task.status;
+		status = load_task->status;
 		if (r_progress) {
 			*r_progress = _dependency_get_progress(local_path);
 		}
@@ -708,10 +708,10 @@ ResourceLoader::ThreadLoadStatus ResourceLoader::load_threaded_get_status(const 
 		// Support userland polling in a loop on the main thread.
 		if (Thread::is_main_thread() && status == THREAD_LOAD_IN_PROGRESS) {
 			uint64_t frame = Engine::get_singleton()->get_process_frames();
-			if (frame == load_task.last_progress_check_main_thread_frame) {
+			if (frame == load_task->last_progress_check_main_thread_frame) {
 				ensure_progress = true;
 			} else {
-				load_task.last_progress_check_main_thread_frame = frame;
+				load_task->last_progress_check_main_thread_frame = frame;
 			}
 		}
 	}

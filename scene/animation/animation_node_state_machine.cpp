@@ -1355,9 +1355,10 @@ bool AnimationNodeStateMachine::can_edit_node(const StringName &p_name) const {
 }
 
 Ref<AnimationNode> AnimationNodeStateMachine::get_node(const StringName &p_name) const {
-	ERR_FAIL_COND_V_EDMSG(!states.has(p_name), Ref<AnimationNode>(), String(p_name) + " is not found current state.");
+	const State *state = states.getptr(p_name);
+	ERR_FAIL_NULL_V_EDMSG(state, Ref<AnimationNode>(), String(p_name) + " is not found current state.");
 
-	return states[p_name].node;
+	return state->node;
 }
 
 StringName AnimationNodeStateMachine::get_node_name(const Ref<AnimationNode> &p_node) const {

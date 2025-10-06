@@ -362,12 +362,12 @@ Variant ProjectSettings::get_setting_with_override_and_custom_features(const Str
 	_THREAD_SAFE_METHOD_
 
 	StringName name = p_name;
-	if (feature_overrides.has(name)) {
-		const LocalVector<Pair<StringName, StringName>> &overrides = feature_overrides[name];
-		for (uint32_t i = 0; i < overrides.size(); i++) {
-			if (p_features.has(String(overrides[i].first).to_lower())) {
-				if (props.has(overrides[i].second)) {
-					name = overrides[i].second;
+	const LocalVector<Pair<StringName, StringName>> *overrides = feature_overrides.getptr(name);
+	if (overrides) {
+		for (uint32_t i = 0; i < overrides->size(); i++) {
+			if (p_features.has(String((*overrides)[i].first).to_lower())) {
+				if (props.has((*overrides)[i].second)) {
+					name = (*overrides)[i].second;
 					break;
 				}
 			}

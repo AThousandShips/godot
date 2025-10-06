@@ -343,8 +343,9 @@ bool RenderingShaderContainerD3D12::_convert_spirv_to_nir(Span<ReflectedShaderSt
 		nir_shader *shader = *shader_ptr;
 		nir_shader *prev_shader = nullptr;
 		for (int j = i - 1; j >= 0; j--) {
-			if (r_stages_nir_shaders.has(j)) {
-				prev_shader = r_stages_nir_shaders[j];
+			nir_shader **prev_shader_ptr = r_stages_nir_shaders.getptr(j);
+			if (prev_shader_ptr) {
+				prev_shader = *prev_shader_ptr;
 				break;
 			}
 		}

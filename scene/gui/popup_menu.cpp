@@ -2835,11 +2835,12 @@ void PopupMenu::clear(bool p_free_submenus) {
 }
 
 void PopupMenu::_ref_shortcut(Ref<Shortcut> p_sc) {
-	if (!shortcut_refcount.has(p_sc)) {
+	int *refcount = shortcut_refcount.getptr(p_sc);
+	if (!refcount) {
 		shortcut_refcount[p_sc] = 1;
 		p_sc->connect_changed(callable_mp(this, &PopupMenu::_shortcut_changed));
 	} else {
-		shortcut_refcount[p_sc] += 1;
+		*refcount += 1;
 	}
 }
 

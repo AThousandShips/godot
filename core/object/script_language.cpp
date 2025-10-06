@@ -697,13 +697,15 @@ bool PlaceHolderScriptInstance::set(const StringName &p_name, const Variant &p_v
 }
 
 bool PlaceHolderScriptInstance::get(const StringName &p_name, Variant &r_ret) const {
-	if (values.has(p_name)) {
-		r_ret = values[p_name];
+	const Variant *value = values.getptr(p_name);
+	if (value) {
+		r_ret = *value;
 		return true;
 	}
 
-	if (constants.has(p_name)) {
-		r_ret = constants[p_name];
+	const Variant *constant = constants.getptr(p_name);
+	if (constant) {
+		r_ret = *constant;
 		return true;
 	}
 
@@ -732,18 +734,20 @@ void PlaceHolderScriptInstance::get_property_list(List<PropertyInfo> *p_properti
 }
 
 Variant::Type PlaceHolderScriptInstance::get_property_type(const StringName &p_name, bool *r_is_valid) const {
-	if (values.has(p_name)) {
+	const Variant *value = values.getptr(p_name);
+	if (value) {
 		if (r_is_valid) {
 			*r_is_valid = true;
 		}
-		return values[p_name].get_type();
+		return value->get_type();
 	}
 
-	if (constants.has(p_name)) {
+	const Variant *constant = constants.getptr(p_name);
+	if (constant) {
 		if (r_is_valid) {
 			*r_is_valid = true;
 		}
-		return constants[p_name].get_type();
+		return constant->get_type();
 	}
 
 	if (r_is_valid) {

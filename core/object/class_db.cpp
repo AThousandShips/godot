@@ -546,10 +546,11 @@ void ClassDB::add_compatibility_class(const StringName &p_class, const StringNam
 }
 
 StringName ClassDB::get_compatibility_class(const StringName &p_class) {
-	if (compat_classes.has(p_class)) {
-		return compat_classes[p_class];
+	const StringName *compat_class = compat_classes.getptr(p_class);
+	if (!compat_class) {
+		return StringName();
 	}
-	return StringName();
+	return *compat_class;
 }
 
 Object *ClassDB::_instantiate_internal(const StringName &p_class, bool p_require_real_class, bool p_notify_postinitialize, bool p_exposed_only) {
@@ -1092,8 +1093,8 @@ Vector<uint32_t> ClassDB::get_method_compatibility_hashes(const StringName &p_cl
 	ClassInfo *type = classes.getptr(p_class);
 
 	while (type) {
-		if (type->method_map_compatibility.has(p_name)) {
-			LocalVector<MethodBind *> *c = type->method_map_compatibility.getptr(p_name);
+		LocalVector<MethodBind *> *c = type->method_map_compatibility.getptr(p_name);
+		if (c) {
 			Vector<uint32_t> ret;
 			for (uint32_t i = 0; i < c->size(); i++) {
 				ret.push_back((*c)[i]->get_hash());
@@ -1437,9 +1438,10 @@ bool ClassDB::get_signal(const StringName &p_class, const StringName &p_signal, 
 	ClassInfo *type = classes.getptr(p_class);
 	ClassInfo *check = type;
 	while (check) {
-		if (check->signal_map.has(p_signal)) {
+		const MethodInfo *signal = check->signal_map.getptr(p_signal);
+		if (signal) {
 			if (r_signal) {
-				*r_signal = check->signal_map[p_signal];
+				*r_signal = *signal;
 			}
 			return true;
 		}

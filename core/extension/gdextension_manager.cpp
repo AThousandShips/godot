@@ -242,10 +242,11 @@ bool GDExtensionManager::class_has_icon_path(const String &p_class) const {
 
 String GDExtensionManager::class_get_icon_path(const String &p_class) const {
 	// TODO: Check that the icon belongs to a registered class somehow.
-	if (gdextension_class_icon_paths.has(p_class)) {
-		return gdextension_class_icon_paths[p_class];
+	const String *ret = gdextension_class_icon_paths.getptr(p_class);
+	if (!ret) {
+		return "";
 	}
-	return "";
+	return *ret;
 }
 
 void GDExtensionManager::initialize_extensions(GDExtension::InitializationLevel p_level) {

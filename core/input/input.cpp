@@ -590,24 +590,27 @@ String Input::get_joy_name(int p_idx) {
 }
 
 Vector2 Input::get_joy_vibration_strength(int p_device) {
-	if (joy_vibration.has(p_device)) {
-		return Vector2(joy_vibration[p_device].weak_magnitude, joy_vibration[p_device].strong_magnitude);
+	const VibrationInfo *vibration = joy_vibration.getptr(p_device);
+	if (vibration) {
+		return Vector2(vibration->weak_magnitude, vibration->strong_magnitude);
 	} else {
 		return Vector2(0, 0);
 	}
 }
 
 uint64_t Input::get_joy_vibration_timestamp(int p_device) {
-	if (joy_vibration.has(p_device)) {
-		return joy_vibration[p_device].timestamp;
+	const VibrationInfo *vibration = joy_vibration.getptr(p_device);
+	if (vibration) {
+		return vibration->timestamp;
 	} else {
 		return 0;
 	}
 }
 
 float Input::get_joy_vibration_duration(int p_device) {
-	if (joy_vibration.has(p_device)) {
-		return joy_vibration[p_device].duration;
+	const VibrationInfo *vibration = joy_vibration.getptr(p_device);
+	if (vibration) {
+		return vibration->duration;
 	} else {
 		return 0.f;
 	}
@@ -1859,8 +1862,9 @@ void Input::set_fallback_mapping(const String &p_guid) {
 
 //platforms that use the remapping system can override and call to these ones
 bool Input::is_joy_known(int p_device) {
-	if (joy_names.has(p_device)) {
-		int mapping = joy_names[p_device].mapping;
+	const Joypad *joy = joy_names.getptr(p_device);
+	if (joy) {
+		int mapping = joy->mapping;
 		if (mapping != -1 && mapping != fallback_mapping) {
 			return true;
 		}

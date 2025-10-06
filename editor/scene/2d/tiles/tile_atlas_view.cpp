@@ -580,10 +580,12 @@ Vector3i TileAtlasView::get_alternative_tile_at_pos(const Vector2 p_pos) const {
 }
 
 Rect2i TileAtlasView::get_alternative_tile_rect(const Vector2i p_coords, int p_alternative_tile) {
-	ERR_FAIL_COND_V_MSG(!alternative_tiles_rect_cache.has(p_coords), Rect2i(), vformat("No cached rect for tile coords:%s", p_coords));
-	ERR_FAIL_COND_V_MSG(!alternative_tiles_rect_cache[p_coords].has(p_alternative_tile), Rect2i(), vformat("No cached rect for tile coords:%s alternative_id:%d", p_coords, p_alternative_tile));
+	const HashMap<int, Rect2i> *alternative_tiles_rect_ptr = alternative_tiles_rect_cache.getptr(p_coords);
+	ERR_FAIL_NULL_V_MSG(alternative_tiles_rect_ptr, Rect2i(), vformat("No cached rect for tile coords:%s", p_coords));
+	const Rect2i *ret = alternative_tiles_rect_ptr->getptr(p_alternative_tile);
+	ERR_FAIL_NULL_V_MSG(ret, Rect2i(), vformat("No cached rect for tile coords:%s alternative_id:%d", p_coords, p_alternative_tile));
 
-	return alternative_tiles_rect_cache[p_coords][p_alternative_tile];
+	return *ret;
 }
 
 void TileAtlasView::queue_redraw() {

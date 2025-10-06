@@ -5854,10 +5854,8 @@ const RenderingShaderContainerFormat &RenderingDeviceDriverD3D12::get_shader_con
 }
 
 bool RenderingDeviceDriverD3D12::is_composite_alpha_supported(CommandQueueID p_queue) const {
-	if (has_comp_alpha.has((uint64_t)p_queue.id)) {
-		return has_comp_alpha[(uint64_t)p_queue.id];
-	}
-	return false;
+	const bool *ret = has_comp_alpha.getptr((uint64_t)p_queue.id);
+	return ret && *ret;
 }
 
 /******************/

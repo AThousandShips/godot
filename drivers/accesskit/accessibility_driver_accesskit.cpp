@@ -41,17 +41,19 @@
 AccessibilityDriverAccessKit *AccessibilityDriverAccessKit::singleton = nullptr;
 
 _FORCE_INLINE_ accesskit_role AccessibilityDriverAccessKit::_accessibility_role(DisplayServer::AccessibilityRole p_role) const {
-	if (role_map.has(p_role)) {
-		return role_map[p_role];
+	const accesskit_role *ret = role_map.getptr(p_role);
+	if (!ret) {
+		return ACCESSKIT_ROLE_UNKNOWN;
 	}
-	return ACCESSKIT_ROLE_UNKNOWN;
+	return *ret;
 }
 
 _FORCE_INLINE_ accesskit_action AccessibilityDriverAccessKit::_accessibility_action(DisplayServer::AccessibilityAction p_action) const {
-	if (action_map.has(p_action)) {
-		return action_map[p_action];
+	const accesskit_action *ret = action_map.getptr(p_action);
+	if (!ret) {
+		return ACCESSKIT_ACTION_CLICK;
 	}
-	return ACCESSKIT_ACTION_CLICK;
+	return *ret;
 }
 
 bool AccessibilityDriverAccessKit::window_create(DisplayServer::WindowID p_window_id, void *p_handle) {

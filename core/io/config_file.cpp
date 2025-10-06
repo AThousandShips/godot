@@ -90,14 +90,14 @@ Vector<String> ConfigFile::get_sections() const {
 
 Vector<String> ConfigFile::get_section_keys(const String &p_section) const {
 	Vector<String> keys;
-	ERR_FAIL_COND_V_MSG(!values.has(p_section), keys, vformat("Cannot get keys from nonexistent section \"%s\".", p_section));
+	const HashMap<String, Variant> *keys_map = values.getptr(p_section);
+	ERR_FAIL_NULL_V_MSG(keys_map, keys, vformat("Cannot get keys from nonexistent section \"%s\".", p_section));
 
-	const HashMap<String, Variant> &keys_map = values[p_section];
-	keys.resize(keys_map.size());
+	keys.resize(keys_map->size());
 
 	int i = 0;
 	String *keys_write = keys.ptrw();
-	for (const KeyValue<String, Variant> &E : keys_map) {
+	for (const KeyValue<String, Variant> &E : *keys_map) {
 		keys_write[i++] = E.key;
 	}
 

@@ -166,10 +166,11 @@ bool InputMap::has_action(const StringName &p_action) const {
 }
 
 String InputMap::get_action_description(const StringName &p_action) const {
-	ERR_FAIL_COND_V_MSG(!input_map.has(p_action), String(), suggest_actions(p_action));
+	const Action *action = input_map.getptr(p_action);
+	ERR_FAIL_NULL_V_MSG(action, String(), suggest_actions(p_action));
 
 	String ret;
-	const List<Ref<InputEvent>> &inputs = input_map[p_action].inputs;
+	const List<Ref<InputEvent>> &inputs = action->inputs;
 	for (Ref<InputEventKey> iek : inputs) {
 		if (iek.is_valid()) {
 			if (!ret.is_empty()) {
@@ -185,9 +186,10 @@ String InputMap::get_action_description(const StringName &p_action) const {
 }
 
 float InputMap::action_get_deadzone(const StringName &p_action) {
-	ERR_FAIL_COND_V_MSG(!input_map.has(p_action), 0.0f, suggest_actions(p_action));
+	const Action *action = input_map.getptr(p_action);
+	ERR_FAIL_NULL_V_MSG(action, 0.0f, suggest_actions(p_action));
 
-	return input_map[p_action].deadzone;
+	return action->deadzone;
 }
 
 void InputMap::action_set_deadzone(const StringName &p_action, float p_deadzone) {

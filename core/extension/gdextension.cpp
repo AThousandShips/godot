@@ -506,10 +506,11 @@ void GDExtension::_register_extension_class_method(GDExtensionClassLibraryPtr p_
 
 	StringName class_name = *reinterpret_cast<const StringName *>(p_class_name);
 	StringName method_name = *reinterpret_cast<const StringName *>(p_method_info->name);
-	ERR_FAIL_COND_MSG(!self->extension_classes.has(class_name), vformat("Attempt to register extension method '%s' for unexisting class '%s'.", String(method_name), class_name));
+	Extension **extension_ptr = self->extension_classes.getptr(class_name);
+	ERR_FAIL_NULL_MSG(extension_ptr, vformat("Attempt to register extension method '%s' for unexisting class '%s'.", String(method_name), class_name));
 
 #ifdef TOOLS_ENABLED
-	Extension *extension = &self->extension_classes[class_name];
+	Extension *extension = *extension_ptr;
 	GDExtensionMethodBind *method = nullptr;
 
 	// If the extension is still marked as reloading, that means it failed to register again.
@@ -556,11 +557,12 @@ void GDExtension::_register_extension_class_integer_constant(GDExtensionClassLib
 	StringName class_name = *reinterpret_cast<const StringName *>(p_class_name);
 	StringName enum_name = *reinterpret_cast<const StringName *>(p_enum_name);
 	StringName constant_name = *reinterpret_cast<const StringName *>(p_constant_name);
-	ERR_FAIL_COND_MSG(!self->extension_classes.has(class_name), vformat("Attempt to register extension constant '%s' for unexisting class '%s'.", constant_name, class_name));
+	Extension **extension_ptr = self->extension_classes.getptr(class_name);
+	ERR_FAIL_NULL_MSG(extension_ptr, vformat("Attempt to register extension constant '%s' for unexisting class '%s'.", constant_name, class_name));
 
 #ifdef TOOLS_ENABLED
 	// If the extension is still marked as reloading, that means it failed to register again.
-	Extension *extension = &self->extension_classes[class_name];
+	Extension *extension = *extension_ptr;
 	if (extension->is_reloading) {
 		return;
 	}
@@ -580,11 +582,12 @@ void GDExtension::_register_extension_class_property_indexed(GDExtensionClassLib
 	StringName setter = *reinterpret_cast<const StringName *>(p_setter);
 	StringName getter = *reinterpret_cast<const StringName *>(p_getter);
 	String property_name = *reinterpret_cast<const StringName *>(p_info->name);
-	ERR_FAIL_COND_MSG(!self->extension_classes.has(class_name), vformat("Attempt to register extension class property '%s' for unexisting class '%s'.", property_name, class_name));
+	Extension **extension_ptr = self->extension_classes.getptr(class_name);
+	ERR_FAIL_NULL_MSG(extension_ptr, vformat("Attempt to register extension class property '%s' for unexisting class '%s'.", property_name, class_name));
 
 #ifdef TOOLS_ENABLED
 	// If the extension is still marked as reloading, that means it failed to register again.
-	Extension *extension = &self->extension_classes[class_name];
+	Extension *extension = *extension_ptr;
 	if (extension->is_reloading) {
 		return;
 	}
@@ -601,11 +604,12 @@ void GDExtension::_register_extension_class_property_group(GDExtensionClassLibra
 	StringName class_name = *reinterpret_cast<const StringName *>(p_class_name);
 	String group_name = *reinterpret_cast<const String *>(p_group_name);
 	String prefix = *reinterpret_cast<const String *>(p_prefix);
-	ERR_FAIL_COND_MSG(!self->extension_classes.has(class_name), vformat("Attempt to register extension class property group '%s' for unexisting class '%s'.", group_name, class_name));
+	Extension **extension_ptr = self->extension_classes.getptr(class_name);
+	ERR_FAIL_NULL_MSG(extension_ptr, vformat("Attempt to register extension class property group '%s' for unexisting class '%s'.", group_name, class_name));
 
 #ifdef TOOLS_ENABLED
 	// If the extension is still marked as reloading, that means it failed to register again.
-	Extension *extension = &self->extension_classes[class_name];
+	Extension *extension = *extension_ptr;
 	if (extension->is_reloading) {
 		return;
 	}
@@ -620,11 +624,12 @@ void GDExtension::_register_extension_class_property_subgroup(GDExtensionClassLi
 	StringName class_name = *reinterpret_cast<const StringName *>(p_class_name);
 	String subgroup_name = *reinterpret_cast<const String *>(p_subgroup_name);
 	String prefix = *reinterpret_cast<const String *>(p_prefix);
-	ERR_FAIL_COND_MSG(!self->extension_classes.has(class_name), vformat("Attempt to register extension class property subgroup '%s' for unexisting class '%s'.", subgroup_name, class_name));
+	Extension **extension_ptr = self->extension_classes.getptr(class_name);
+	ERR_FAIL_NULL_MSG(extension_ptr, vformat("Attempt to register extension class property subgroup '%s' for unexisting class '%s'.", subgroup_name, class_name));
 
 #ifdef TOOLS_ENABLED
 	// If the extension is still marked as reloading, that means it failed to register again.
-	Extension *extension = &self->extension_classes[class_name];
+	Extension *extension = *extension_ptr;
 	if (extension->is_reloading) {
 		return;
 	}
@@ -638,11 +643,12 @@ void GDExtension::_register_extension_class_signal(GDExtensionClassLibraryPtr p_
 
 	StringName class_name = *reinterpret_cast<const StringName *>(p_class_name);
 	StringName signal_name = *reinterpret_cast<const StringName *>(p_signal_name);
-	ERR_FAIL_COND_MSG(!self->extension_classes.has(class_name), vformat("Attempt to register extension class signal '%s' for unexisting class '%s'.", signal_name, class_name));
+	Extension **extension_ptr = self->extension_classes.getptr(class_name);
+	ERR_FAIL_NULL_MSG(extension_ptr, vformat("Attempt to register extension class signal '%s' for unexisting class '%s'.", signal_name, class_name));
 
 #ifdef TOOLS_ENABLED
 	// If the extension is still marked as reloading, that means it failed to register again.
-	Extension *extension = &self->extension_classes[class_name];
+	Extension *extension = *extension_ptr;
 	if (extension->is_reloading) {
 		return;
 	}
@@ -661,9 +667,10 @@ void GDExtension::_unregister_extension_class(GDExtensionClassLibraryPtr p_libra
 	GDExtension *self = reinterpret_cast<GDExtension *>(p_library);
 
 	StringName class_name = *reinterpret_cast<const StringName *>(p_class_name);
-	ERR_FAIL_COND_MSG(!self->extension_classes.has(class_name), vformat("Attempt to unregister unexisting extension class '%s'.", class_name));
+	Extension **ext_ptr = self->extension_classes.getptr(class_name);
+	ERR_FAIL_NULL_MSG(ext_ptr, vformat("Attempt to unregister unexisting extension class '%s'.", class_name));
 
-	Extension *ext = &self->extension_classes[class_name];
+	Extension *ext = *ext_ptr;
 #ifdef TOOLS_ENABLED
 	if (ext->is_reloading) {
 		self->_clear_extension(ext);
