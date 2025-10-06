@@ -1030,10 +1030,11 @@ void SceneImportSettingsDialog::_select(Tree *p_from, const String &p_type, cons
 
 void SceneImportSettingsDialog::_inspector_property_edited(const String &p_name) {
 	if (p_name == "settings/loop_mode") {
-		if (!animation_map.has(selected_id)) {
+		AnimationData *animation_ptr = animation_map.getptr(selected_id);
+		if (!animation_ptr) {
 			return;
 		}
-		HashMap<StringName, Variant> settings = animation_map[selected_id].settings;
+		HashMap<StringName, Variant> settings = animation_ptr->settings;
 		if (settings.has(p_name)) {
 			animation_loop_mode = static_cast<Animation::LoopMode>((int)settings[p_name]);
 		} else {

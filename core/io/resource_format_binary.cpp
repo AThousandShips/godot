@@ -408,11 +408,12 @@ Error ResourceLoaderBinary::parse_variant(Variant &r_v) {
 					}
 
 					//always use internal cache for loading internal resources
-					if (!internal_index_cache.has(path)) {
+					Ref<Resource> *res = internal_index_cache.getptr(path);
+					if (!res) {
 						WARN_PRINT(vformat("Couldn't load resource (no cache): %s.", path));
 						r_v = Variant();
 					} else {
-						r_v = internal_index_cache[path];
+						r_v = *res;
 					}
 				} break;
 				case OBJECT_EXTERNAL_RESOURCE: {
@@ -1874,13 +1875,14 @@ void ResourceFormatSaverBinaryInstance::write_variant(Ref<FileAccess> f, const V
 				f->store_32(OBJECT_EXTERNAL_RESOURCE_INDEX);
 				f->store_32(uint32_t(external_resources[res]));
 			} else {
-				if (!resource_map.has(res)) {
+				int *res_id = resource_map.getptr(res);
+				if (!res_id) {
 					f->store_32(OBJECT_EMPTY);
 					ERR_FAIL_MSG("Resource was not pre cached for the resource section, most likely due to circular reference.");
 				}
 
 				f->store_32(OBJECT_INTERNAL_RESOURCE);
-				f->store_32(uint32_t(resource_map[res]));
+				f->store_32(uint32_t(*res_id));
 				//internal resource
 			}
 

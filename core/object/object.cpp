@@ -1118,14 +1118,15 @@ void Object::set_meta(const StringName &p_name, const Variant &p_value) {
 }
 
 Variant Object::get_meta(const StringName &p_name, const Variant &p_default) const {
-	if (!metadata.has(p_name)) {
+	const Variant *ret = metadata.getptr(p_name);
+	if (!ret) {
 		if (p_default != Variant()) {
 			return p_default;
 		} else {
 			ERR_FAIL_V_MSG(Variant(), vformat("The object does not have any 'meta' values with the key '%s'.", p_name));
 		}
 	}
-	return metadata[p_name];
+	return *ret;
 }
 
 void Object::remove_meta(const StringName &p_name) {
@@ -1191,10 +1192,8 @@ void Object::add_user_signal(const MethodInfo &p_signal) {
 bool Object::_has_user_signal(const StringName &p_name) const {
 	OBJ_SIGNAL_LOCK
 
-	if (!signal_map.has(p_name)) {
-		return false;
-	}
-	return signal_map[p_name].user.name.length() > 0;
+	const SignalData *ret = signal_map.getptr(p_name);
+	return ret && ret->user.name.length() > 0;
 }
 
 void Object::_remove_user_signal(const StringName &p_name) {

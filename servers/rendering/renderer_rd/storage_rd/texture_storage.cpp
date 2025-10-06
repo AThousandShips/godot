@@ -3231,17 +3231,17 @@ void TextureStorage::update_decal_atlas() {
 }
 
 void TextureStorage::texture_add_to_decal_atlas(RID p_texture, bool p_panorama_to_dp) {
-	if (!decal_atlas.textures.has(p_texture)) {
+	DecalAtlas::Texture *tp = decal_atlas.textures.getptr(p_texture);
+	if (!tp) {
 		DecalAtlas::Texture t;
 		t.users = 1;
 		t.panorama_to_dp_users = p_panorama_to_dp ? 1 : 0;
 		decal_atlas.textures[p_texture] = t;
 		decal_atlas.dirty = true;
 	} else {
-		DecalAtlas::Texture *t = decal_atlas.textures.getptr(p_texture);
-		t->users++;
+		tp->users++;
 		if (p_panorama_to_dp) {
-			t->panorama_to_dp_users++;
+			tp->panorama_to_dp_users++;
 		}
 	}
 }

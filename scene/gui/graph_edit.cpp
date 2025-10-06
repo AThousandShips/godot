@@ -557,11 +557,12 @@ void GraphEdit::_ensure_node_order_from(Node *p_node) {
 		// Move the frame to the front of the background node index range.
 		attached_frame->get_parent()->call_deferred("move_child", attached_frame, background_nodes_separator_idx - 1);
 
-		if (!frame_attached_nodes.has(attached_frame->get_name())) {
+		HashSet<StringName> *frame_attached_node = frame_attached_nodes.getptr(attached_frame->get_name());
+		if (!frame_attached_node) {
 			continue;
 		}
 
-		for (const StringName &attached_node_name : frame_attached_nodes.get(attached_frame->get_name())) {
+		for (const StringName &attached_node_name : *frame_attached_node) {
 			GraphElement *attached_node = Object::cast_to<GraphElement>(get_node(NodePath(attached_node_name)));
 
 			GraphFrame *attached_child_frame_node = Object::cast_to<GraphFrame>(attached_node);
@@ -887,18 +888,19 @@ Rect2 GraphEdit::_compute_shrinked_frame_rect(const GraphFrame *p_frame) {
 	Vector2 min_point{ FLT_MAX, FLT_MAX };
 	Vector2 max_point{ -FLT_MAX, -FLT_MAX };
 
-	if (!frame_attached_nodes.has(p_frame->get_name())) {
+	HashSet<StringName> *frame_attached_node = frame_attached_nodes.getptr(p_frame->get_name());
+	if (!frame_attached_node) {
 		return Rect2(p_frame->get_position_offset(), Size2());
 	}
 
 	int autoshrink_margin = p_frame->get_autoshrink_margin();
 
-	for (const StringName &attached_node_name : frame_attached_nodes.get(p_frame->get_name())) {
+	for (const StringName &attached_node_name : *frame_attached_node) {
 		GraphElement *attached_node = Object::cast_to<GraphElement>(get_node_or_null(NodePath(attached_node_name)));
 
 		if (!attached_node || attached_node == p_frame) {
 			if (!attached_node) {
-				frame_attached_nodes.get(p_frame->get_name()).erase(attached_node_name);
+				frame_attached_node->erase(attached_node_name);
 			}
 			continue;
 		}
@@ -957,11 +959,12 @@ void GraphEdit::_update_graph_frame(GraphFrame *p_frame) {
 }
 
 void GraphEdit::_set_drag_frame_attached_nodes(GraphFrame *p_frame, bool p_drag) {
-	if (!frame_attached_nodes.has(p_frame->get_name())) {
+	HashSet<StringName> *frame_attached_node = frame_attached_nodes.getptr(p_frame->get_name());
+	if (!frame_attached_node) {
 		return;
 	}
 
-	for (const StringName &attached_node_name : frame_attached_nodes.get(p_frame->get_name())) {
+	for (const StringName &attached_node_name : *frame_attached_node) {
 		GraphElement *attached_node = Object::cast_to<GraphElement>(get_node(NodePath(attached_node_name)));
 
 		attached_node->set_drag(p_drag);
@@ -973,11 +976,12 @@ void GraphEdit::_set_drag_frame_attached_nodes(GraphFrame *p_frame, bool p_drag)
 }
 
 void GraphEdit::_set_position_of_frame_attached_nodes(GraphFrame *p_frame, const Vector2 &p_pos) {
-	if (!frame_attached_nodes.has(p_frame->get_name())) {
+	HashSet<StringName> *frame_attached_node = frame_attached_nodes.getptr(p_frame->get_name());
+	if (!frame_attached_node) {
 		return;
 	}
 
-	for (const StringName &attached_node_name : frame_attached_nodes.get(p_frame->get_name())) {
+	for (const StringName &attached_node_name : *frame_attached_node) {
 		GraphElement *attached_node = Object::cast_to<GraphElement>(get_node_or_null(NodePath(attached_node_name)));
 		if (!attached_node) {
 			continue;
@@ -2685,22 +2689,24 @@ void GraphEdit::detach_graph_element_from_frame(const StringName &p_graph_elemen
 }
 
 GraphFrame *GraphEdit::get_element_frame(const StringName &p_attached_graph_element) {
-	if (!linked_parent_map.has(p_attached_graph_element)) {
+	const StringName *linked_parent = linked_parent_map.getptr(p_attached_graph_element);
+	if (!linked_parent) {
 		return nullptr;
 	}
 
-	Node *parent = get_node_or_null(NodePath(linked_parent_map[p_attached_graph_element]));
+	Node *parent = get_node_or_null(NodePath(*linked_parent));
 
 	return Object::cast_to<GraphFrame>(parent);
 }
 
 TypedArray<StringName> GraphEdit::get_attached_nodes_of_frame(const StringName &p_graph_frame) {
-	if (!frame_attached_nodes.has(p_graph_frame)) {
+	HashSet<StringName> *frame_attached_node = frame_attached_nodes.getptr(p_graph_frame);
+	if (!frame_attached_node) {
 		return TypedArray<StringName>();
 	}
 
 	TypedArray<StringName> attached_nodes;
-	for (const StringName &node : frame_attached_nodes.get(p_graph_frame)) {
+	for (const StringName &node : *frame_attached_node) {
 		attached_nodes.push_back(node);
 	}
 

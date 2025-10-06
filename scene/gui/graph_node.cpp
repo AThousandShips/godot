@@ -652,29 +652,29 @@ void GraphNode::_notification(int p_what) {
 					if (E.key < 0 || E.key >= slot_y_cache.size()) {
 						continue;
 					}
-					if (!slot_table.has(E.key)) {
+					const Slot *slot = slot_table.getptr(E.key);
+					if (!slot) {
 						continue;
 					}
-					const Slot &slot = slot_table[E.key];
 
 					// Left port.
-					if (slot.enable_left) {
-						draw_port(slot_index, Point2i(port_h_offset, slot_y_cache[E.key]), true, slot.color_left);
+					if (slot->enable_left) {
+						draw_port(slot_index, Point2i(port_h_offset, slot_y_cache[E.key]), true, slot->color_left);
 					}
 
 					// Right port.
-					if (slot.enable_right) {
-						draw_port(slot_index, Point2i(get_size().x - port_h_offset, slot_y_cache[E.key]), false, slot.color_right);
+					if (slot->enable_right) {
+						draw_port(slot_index, Point2i(get_size().x - port_h_offset, slot_y_cache[E.key]), false, slot->color_right);
 					}
 
 					if (slot_index == selected_slot) {
-						Ref<Texture2D> port_icon = slot.custom_port_icon_left;
+						Ref<Texture2D> port_icon = slot->custom_port_icon_left;
 						if (port_icon.is_null()) {
 							port_icon = theme_cache.port;
 						}
 						Size2i port_sz = port_icon->get_size() + sb_slot_selected->get_minimum_size();
 						draw_style_box(sb_slot_selected, Rect2i(port_h_offset - port_sz.x * 0.5, slot_y_cache[E.key] - port_sz.y * 0.5, port_sz.x, port_sz.y));
-						port_icon = slot.custom_port_icon_right;
+						port_icon = slot->custom_port_icon_right;
 						if (port_icon.is_null()) {
 							port_icon = theme_cache.port;
 						}
@@ -683,7 +683,7 @@ void GraphNode::_notification(int p_what) {
 					}
 
 					// Draw slot stylebox.
-					if (slot.draw_stylebox) {
+					if (slot->draw_stylebox) {
 						Control *child = Object::cast_to<Control>(get_child(E.key, false));
 						if (!child || !child->is_visible_in_tree()) {
 							continue;
@@ -751,10 +751,8 @@ void GraphNode::clear_all_slots() {
 }
 
 bool GraphNode::is_slot_enabled_left(int p_slot_index) const {
-	if (!slot_table.has(p_slot_index)) {
-		return false;
-	}
-	return slot_table[p_slot_index].enable_left;
+	const Slot *slot = slot_table.getptr(p_slot_index);
+	return slot && slot->enable_left;
 }
 
 void GraphNode::set_slot_enabled_left(int p_slot_index, bool p_enable) {
@@ -774,13 +772,14 @@ void GraphNode::set_slot_enabled_left(int p_slot_index, bool p_enable) {
 }
 
 void GraphNode::set_slot_type_left(int p_slot_index, int p_type) {
-	ERR_FAIL_COND_MSG(!slot_table.has(p_slot_index), vformat("Cannot set type_left for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
+	Slot *slot = slot_table.getptr(p_slot_index);
+	ERR_FAIL_NULL_MSG(slot, vformat("Cannot set type_left for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
 
-	if (slot_table[p_slot_index].type_left == p_type) {
+	if (slot->type_left == p_type) {
 		return;
 	}
 
-	slot_table[p_slot_index].type_left = p_type;
+	slot->type_left = p_type;
 
 	queue_accessibility_update();
 	queue_redraw();
@@ -790,20 +789,22 @@ void GraphNode::set_slot_type_left(int p_slot_index, int p_type) {
 }
 
 int GraphNode::get_slot_type_left(int p_slot_index) const {
-	if (!slot_table.has(p_slot_index)) {
+	const Slot *slot = slot_table.getptr(p_slot_index);
+	if (!slot) {
 		return 0;
 	}
-	return slot_table[p_slot_index].type_left;
+	return slot->type_left;
 }
 
 void GraphNode::set_slot_color_left(int p_slot_index, const Color &p_color) {
-	ERR_FAIL_COND_MSG(!slot_table.has(p_slot_index), vformat("Cannot set color_left for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
+	Slot *slot = slot_table.getptr(p_slot_index);
+	ERR_FAIL_NULL_MSG(slot, vformat("Cannot set color_left for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
 
-	if (slot_table[p_slot_index].color_left == p_color) {
+	if (slot->color_left == p_color) {
 		return;
 	}
 
-	slot_table[p_slot_index].color_left = p_color;
+	slot->color_left = p_color;
 	queue_redraw();
 	port_pos_dirty = true;
 
@@ -811,20 +812,22 @@ void GraphNode::set_slot_color_left(int p_slot_index, const Color &p_color) {
 }
 
 Color GraphNode::get_slot_color_left(int p_slot_index) const {
-	if (!slot_table.has(p_slot_index)) {
+	const Slot *slot = slot_table.getptr(p_slot_index);
+	if (!slot) {
 		return Color(1, 1, 1, 1);
 	}
-	return slot_table[p_slot_index].color_left;
+	return slot->color_left;
 }
 
 void GraphNode::set_slot_custom_icon_left(int p_slot_index, const Ref<Texture2D> &p_custom_icon) {
-	ERR_FAIL_COND_MSG(!slot_table.has(p_slot_index), vformat("Cannot set custom_port_icon_left for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
+	Slot *slot = slot_table.getptr(p_slot_index);
+	ERR_FAIL_NULL_MSG(slot, vformat("Cannot set custom_port_icon_left for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
 
-	if (slot_table[p_slot_index].custom_port_icon_left == p_custom_icon) {
+	if (slot->custom_port_icon_left == p_custom_icon) {
 		return;
 	}
 
-	slot_table[p_slot_index].custom_port_icon_left = p_custom_icon;
+	slot->custom_port_icon_left = p_custom_icon;
 	queue_redraw();
 	port_pos_dirty = true;
 
@@ -832,17 +835,16 @@ void GraphNode::set_slot_custom_icon_left(int p_slot_index, const Ref<Texture2D>
 }
 
 Ref<Texture2D> GraphNode::get_slot_custom_icon_left(int p_slot_index) const {
-	if (!slot_table.has(p_slot_index)) {
+	const Slot *slot = slot_table.getptr(p_slot_index);
+	if (!slot) {
 		return Ref<Texture2D>();
 	}
-	return slot_table[p_slot_index].custom_port_icon_left;
+	return slot->custom_port_icon_left;
 }
 
 bool GraphNode::is_slot_enabled_right(int p_slot_index) const {
-	if (!slot_table.has(p_slot_index)) {
-		return false;
-	}
-	return slot_table[p_slot_index].enable_right;
+	const Slot *slot = slot_table.getptr(p_slot_index);
+	return slot && slot->enable_right;
 }
 
 void GraphNode::set_slot_enabled_right(int p_slot_index, bool p_enable) {
@@ -862,13 +864,14 @@ void GraphNode::set_slot_enabled_right(int p_slot_index, bool p_enable) {
 }
 
 void GraphNode::set_slot_type_right(int p_slot_index, int p_type) {
-	ERR_FAIL_COND_MSG(!slot_table.has(p_slot_index), vformat("Cannot set type_right for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
+	Slot *slot = slot_table.getptr(p_slot_index);
+	ERR_FAIL_NULL_MSG(slot, vformat("Cannot set type_right for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
 
-	if (slot_table[p_slot_index].type_right == p_type) {
+	if (slot->type_right == p_type) {
 		return;
 	}
 
-	slot_table[p_slot_index].type_right = p_type;
+	slot->type_right = p_type;
 
 	queue_accessibility_update();
 	queue_redraw();
@@ -878,20 +881,22 @@ void GraphNode::set_slot_type_right(int p_slot_index, int p_type) {
 }
 
 int GraphNode::get_slot_type_right(int p_slot_index) const {
-	if (!slot_table.has(p_slot_index)) {
+	const Slot *slot = slot_table.getptr(p_slot_index);
+	if (!slot) {
 		return 0;
 	}
-	return slot_table[p_slot_index].type_right;
+	return slot->type_right;
 }
 
 void GraphNode::set_slot_color_right(int p_slot_index, const Color &p_color) {
-	ERR_FAIL_COND_MSG(!slot_table.has(p_slot_index), vformat("Cannot set color_right for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
+	Slot *slot = slot_table.getptr(p_slot_index);
+	ERR_FAIL_NULL_MSG(slot, vformat("Cannot set color_right for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
 
-	if (slot_table[p_slot_index].color_right == p_color) {
+	if (slot->color_right == p_color) {
 		return;
 	}
 
-	slot_table[p_slot_index].color_right = p_color;
+	slot->color_right = p_color;
 	queue_redraw();
 	port_pos_dirty = true;
 
@@ -899,20 +904,22 @@ void GraphNode::set_slot_color_right(int p_slot_index, const Color &p_color) {
 }
 
 Color GraphNode::get_slot_color_right(int p_slot_index) const {
-	if (!slot_table.has(p_slot_index)) {
+	const Slot *slot = slot_table.getptr(p_slot_index);
+	if (!slot) {
 		return Color(1, 1, 1, 1);
 	}
-	return slot_table[p_slot_index].color_right;
+	return slot->color_right;
 }
 
 void GraphNode::set_slot_custom_icon_right(int p_slot_index, const Ref<Texture2D> &p_custom_icon) {
-	ERR_FAIL_COND_MSG(!slot_table.has(p_slot_index), vformat("Cannot set custom_port_icon_right for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
+	Slot *slot = slot_table.getptr(p_slot_index);
+	ERR_FAIL_NULL_MSG(slot, vformat("Cannot set custom_port_icon_right for the slot with index '%d' because it hasn't been enabled.", p_slot_index));
 
-	if (slot_table[p_slot_index].custom_port_icon_right == p_custom_icon) {
+	if (slot->custom_port_icon_right == p_custom_icon) {
 		return;
 	}
 
-	slot_table[p_slot_index].custom_port_icon_right = p_custom_icon;
+	slot->custom_port_icon_right = p_custom_icon;
 	queue_redraw();
 	port_pos_dirty = true;
 
@@ -920,17 +927,16 @@ void GraphNode::set_slot_custom_icon_right(int p_slot_index, const Ref<Texture2D
 }
 
 Ref<Texture2D> GraphNode::get_slot_custom_icon_right(int p_slot_index) const {
-	if (!slot_table.has(p_slot_index)) {
+	const Slot *slot = slot_table.getptr(p_slot_index);
+	if (!slot) {
 		return Ref<Texture2D>();
 	}
-	return slot_table[p_slot_index].custom_port_icon_right;
+	return slot->custom_port_icon_right;
 }
 
 bool GraphNode::is_slot_draw_stylebox(int p_slot_index) const {
-	if (!slot_table.has(p_slot_index)) {
-		return false;
-	}
-	return slot_table[p_slot_index].draw_stylebox;
+	const Slot *slot = slot_table.getptr(p_slot_index);
+	return slot && slot->draw_stylebox;
 }
 
 void GraphNode::set_slot_draw_stylebox(int p_slot_index, bool p_enable) {

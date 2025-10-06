@@ -296,11 +296,12 @@ void ThemeDB::_finalize_theme_contexts() {
 }
 
 ThemeContext *ThemeDB::get_theme_context(Node *p_node) const {
-	if (!theme_contexts.has(p_node)) {
+	ThemeContext *const *theme_context = theme_contexts.getptr(p_node);
+	if (!theme_context) {
 		return nullptr;
 	}
 
-	return theme_contexts[p_node];
+	return *theme_context;
 }
 
 ThemeContext *ThemeDB::get_default_theme_context() const {

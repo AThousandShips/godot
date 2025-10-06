@@ -318,23 +318,23 @@ FT_Error tvg_svg_in_ot_render(FT_GlyphSlot p_slot, FT_Pointer *p_state) {
 	}
 	MutexLock lock(state->mutex);
 
-	if (!state->glyph_map.has(p_slot->glyph_index)) {
+	GL_State *gl_state = state->glyph_map.getptr(p_slot->glyph_index);
+	if (!gl_state) {
 		ERR_FAIL_V_MSG(FT_Err_Invalid_SVG_Document, "SVG glyph not loaded.");
 	}
 
-	GL_State &gl_state = state->glyph_map[p_slot->glyph_index];
-	ERR_FAIL_COND_V_MSG(!gl_state.ready, FT_Err_Invalid_SVG_Document, "SVG glyph not ready.");
+	ERR_FAIL_COND_V_MSG(!gl_state->ready, FT_Err_Invalid_SVG_Document, "SVG glyph not ready.");
 
 	std::unique_ptr<tvg::Picture> picture = tvg::Picture::gen();
-	tvg::Result res = picture->load(gl_state.xml_code.get_data(), gl_state.xml_code.length(), "svg+xml", false);
+	tvg::Result res = picture->load(gl_state->xml_code.get_data(), gl_state->xml_code.length(), "svg+xml", false);
 	if (res != tvg::Result::Success) {
 		ERR_FAIL_V_MSG(FT_Err_Invalid_SVG_Document, "Failed to load SVG document (glyph rendering).");
 	}
-	res = picture->size(gl_state.w, gl_state.h);
+	res = picture->size(gl_state->w, gl_state->h);
 	if (res != tvg::Result::Success) {
 		ERR_FAIL_V_MSG(FT_Err_Invalid_SVG_Document, "Failed to resize SVG document.");
 	}
-	res = picture->transform(gl_state.m);
+	res = picture->transform(gl_state->m);
 	if (res != tvg::Result::Success) {
 		ERR_FAIL_V_MSG(FT_Err_Invalid_SVG_Document, "Failed to apply transform to SVG document.");
 	}

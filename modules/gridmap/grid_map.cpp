@@ -436,10 +436,11 @@ int GridMap::get_cell_item(const Vector3i &p_position) const {
 	key.y = p_position.y;
 	key.z = p_position.z;
 
-	if (!cell_map.has(key)) {
+	const Cell *cell = cell_map.getptr(key);
+	if (!cell) {
 		return INVALID_CELL_ITEM;
 	}
-	return cell_map[key].item;
+	return cell->item;
 }
 
 int GridMap::get_cell_item_orientation(const Vector3i &p_position) const {
@@ -452,10 +453,11 @@ int GridMap::get_cell_item_orientation(const Vector3i &p_position) const {
 	key.y = p_position.y;
 	key.z = p_position.z;
 
-	if (!cell_map.has(key)) {
+	const Cell *cell = cell_map.getptr(key);
+	if (!cell) {
 		return -1;
 	}
-	return cell_map[key].rot;
+	return cell->rot;
 }
 
 static const Basis _ortho_bases[24] = {

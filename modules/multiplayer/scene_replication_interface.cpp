@@ -300,15 +300,15 @@ void SceneReplicationInterface::_visibility_changed(int p_peer, ObjectID p_sid) 
 }
 
 bool SceneReplicationInterface::is_rpc_visible(const ObjectID &p_oid, int p_peer) const {
-	if (!tracked_nodes.has(p_oid)) {
+	const TrackedNode *tnode = tracked_nodes.getptr(p_oid);
+	if (!tnode) {
 		return true; // Untracked nodes are always visible to RPCs.
 	}
 	ERR_FAIL_COND_V(p_peer < 0, false);
-	const TrackedNode &tnode = tracked_nodes[p_oid];
-	if (tnode.synchronizers.is_empty()) {
+	if (tnode->synchronizers.is_empty()) {
 		return true; // No synchronizers means no visibility restrictions.
 	}
-	if (tnode.remote_peer && uint32_t(p_peer) == tnode.remote_peer) {
+	if (tnode->remote_peer && uint32_t(p_peer) == tnode->remote_peer) {
 		return true; // RPCs on spawned nodes are always visible to spawner.
 	} else if (spawned_nodes.has(p_oid)) {
 		// It's a spawned node we control, this can be fast.
@@ -324,7 +324,7 @@ bool SceneReplicationInterface::is_rpc_visible(const ObjectID &p_oid, int p_peer
 		}
 	} else {
 		// Cycle object synchronizers to check visibility.
-		for (const ObjectID &sid : tnode.synchronizers) {
+		for (const ObjectID &sid : tnode->synchronizers) {
 			MultiplayerSynchronizer *sync = get_id_as<MultiplayerSynchronizer>(sid);
 			ERR_CONTINUE(!sync);
 			// RPC visibility is composed using OR when multiple synchronizers are present.

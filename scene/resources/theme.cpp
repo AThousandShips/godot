@@ -340,11 +340,12 @@ void Theme::clear_icon(const StringName &p_name, const StringName &p_theme_type)
 void Theme::get_icon_list(const StringName &p_theme_type, List<StringName> *p_list) const {
 	ERR_FAIL_NULL(p_list);
 
-	if (!icon_map.has(p_theme_type)) {
+	const ThemeIconMap *icon_map_ptr = icon_map.getptr(p_theme_type);
+	if (!icon_map_ptr) {
 		return;
 	}
 
-	for (const KeyValue<StringName, Ref<Texture2D>> &E : icon_map[p_theme_type]) {
+	for (const KeyValue<StringName, Ref<Texture2D>> &E : *icon_map_ptr) {
 		p_list->push_back(E.key);
 	}
 }
@@ -461,11 +462,12 @@ void Theme::clear_stylebox(const StringName &p_name, const StringName &p_theme_t
 void Theme::get_stylebox_list(const StringName &p_theme_type, List<StringName> *p_list) const {
 	ERR_FAIL_NULL(p_list);
 
-	if (!style_map.has(p_theme_type)) {
+	const ThemeStyleMap *style_map_ptr = style_map.getptr(p_theme_type);
+	if (!style_map_ptr) {
 		return;
 	}
 
-	for (const KeyValue<StringName, Ref<StyleBox>> &E : style_map[p_theme_type]) {
+	for (const KeyValue<StringName, Ref<StyleBox>> &E : *style_map_ptr) {
 		p_list->push_back(E.key);
 	}
 }
@@ -588,11 +590,12 @@ void Theme::clear_font(const StringName &p_name, const StringName &p_theme_type)
 void Theme::get_font_list(const StringName &p_theme_type, List<StringName> *p_list) const {
 	ERR_FAIL_NULL(p_list);
 
-	if (!font_map.has(p_theme_type)) {
+	const ThemeFontMap *font_map_ptr = font_map.getptr(p_theme_type);
+	if (!font_map_ptr) {
 		return;
 	}
 
-	for (const KeyValue<StringName, Ref<Font>> &E : font_map[p_theme_type]) {
+	for (const KeyValue<StringName, Ref<Font>> &E : *font_map_ptr) {
 		p_list->push_back(E.key);
 	}
 }
@@ -702,11 +705,12 @@ void Theme::clear_font_size(const StringName &p_name, const StringName &p_theme_
 void Theme::get_font_size_list(const StringName &p_theme_type, List<StringName> *p_list) const {
 	ERR_FAIL_NULL(p_list);
 
-	if (!font_size_map.has(p_theme_type)) {
+	const ThemeFontSizeMap *font_size_map_ptr = font_size_map.getptr(p_theme_type);
+	if (!font_size_map_ptr) {
 		return;
 	}
 
-	for (const KeyValue<StringName, int> &E : font_size_map[p_theme_type]) {
+	for (const KeyValue<StringName, int> &E : *font_size_map_ptr) {
 		p_list->push_back(E.key);
 	}
 }
@@ -799,11 +803,12 @@ void Theme::clear_color(const StringName &p_name, const StringName &p_theme_type
 void Theme::get_color_list(const StringName &p_theme_type, List<StringName> *p_list) const {
 	ERR_FAIL_NULL(p_list);
 
-	if (!color_map.has(p_theme_type)) {
+	const ThemeColorMap *color_map_ptr = color_map.getptr(p_theme_type);
+	if (!color_map_ptr) {
 		return;
 	}
 
-	for (const KeyValue<StringName, Color> &E : color_map[p_theme_type]) {
+	for (const KeyValue<StringName, Color> &E : *color_map_ptr) {
 		p_list->push_back(E.key);
 	}
 }
@@ -896,11 +901,12 @@ void Theme::clear_constant(const StringName &p_name, const StringName &p_theme_t
 void Theme::get_constant_list(const StringName &p_theme_type, List<StringName> *p_list) const {
 	ERR_FAIL_NULL(p_list);
 
-	if (!constant_map.has(p_theme_type)) {
+	const ThemeConstantMap *constant_map_ptr = constant_map.getptr(p_theme_type);
+	if (!constant_map_ptr) {
 		return;
 	}
 
-	for (const KeyValue<StringName, int> &E : constant_map[p_theme_type]) {
+	for (const KeyValue<StringName, int> &E : *constant_map_ptr) {
 		p_list->push_back(E.key);
 	}
 }
@@ -1265,21 +1271,23 @@ void Theme::clear_type_variation(const StringName &p_theme_type) {
 }
 
 StringName Theme::get_type_variation_base(const StringName &p_theme_type) const {
-	if (!variation_map.has(p_theme_type)) {
+	const StringName *ret = variation_map.getptr(p_theme_type);
+	if (!ret) {
 		return StringName();
 	}
 
-	return variation_map[p_theme_type];
+	return *ret;
 }
 
 void Theme::get_type_variation_list(const StringName &p_base_type, List<StringName> *p_list) const {
 	ERR_FAIL_NULL(p_list);
 
-	if (!variation_base_map.has(p_base_type)) {
+	const List<StringName> *variation_base_ptr = variation_base_map.getptr(p_base_type);
+	if (!variation_base_ptr) {
 		return;
 	}
 
-	for (const StringName &E : variation_base_map[p_base_type]) {
+	for (const StringName &E : *variation_base_ptr) {
 		// Prevent infinite loops if variants were set to be cross-dependent (that's still invalid usage, but handling for stability sake).
 		if (p_list->find(E)) {
 			continue;

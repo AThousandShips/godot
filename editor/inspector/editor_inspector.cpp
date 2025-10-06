@@ -4702,11 +4702,12 @@ void EditorInspector::update_tree() {
 }
 
 void EditorInspector::update_property(const String &p_prop) {
-	if (!editor_property_map.has(p_prop)) {
+	List<EditorProperty *> *editor_property_map_ptr = editor_property_map.getptr(p_prop);
+	if (!editor_property_map_ptr) {
 		return;
 	}
 
-	for (EditorProperty *E : editor_property_map[p_prop]) {
+	for (EditorProperty *E : *editor_property_map_ptr) {
 		E->update_property();
 		E->update_editor_property_status();
 		E->update_cache();

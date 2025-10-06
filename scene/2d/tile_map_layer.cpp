@@ -1133,11 +1133,11 @@ void TileMapLayer::_physics_draw_quadrant_debug(const RID &p_canvas_item, DebugQ
 	for (int x = first_physics_quadrant_coords.x; x < last_physics_quadrant_coords.x; x++) {
 		for (int y = first_physics_quadrant_coords.y; y < last_physics_quadrant_coords.y; y++) {
 			const Vector2i physics_quadrant_coords = Vector2i(x, y);
-			if (!physics_quadrant_map.has(physics_quadrant_coords)) {
+			Ref<PhysicsQuadrant> *physics_quadrant = physics_quadrant_map.getptr(physics_quadrant_coords);
+			if (!physics_quadrant) {
 				continue;
 			}
 			r_debug_quadrant.drawn_to = true;
-			Ref<PhysicsQuadrant> physics_quadrant = physics_quadrant_map[physics_quadrant_coords];
 
 			const Vector2 debug_quadrant_pos = tile_set->map_to_local(r_debug_quadrant.quadrant_coords * TILE_MAP_DEBUG_QUADRANT_SIZE);
 			Transform2D global_to_debug_quadrant = (get_global_transform() * Transform2D(0, debug_quadrant_pos)).affine_inverse();
@@ -1153,7 +1153,7 @@ void TileMapLayer::_physics_draw_quadrant_debug(const RID &p_canvas_item, DebugQ
 
 			vertex_map.clear();
 
-			for (const KeyValue<PhysicsQuadrant::PhysicsBodyKey, PhysicsQuadrant::PhysicsBodyValue> &kvbody : physics_quadrant->bodies) {
+			for (const KeyValue<PhysicsQuadrant::PhysicsBodyKey, PhysicsQuadrant::PhysicsBodyValue> &kvbody : (*physics_quadrant)->bodies) {
 				const RID &body = kvbody.value.body;
 				int shape_count = ps->body_get_shape_count(body);
 				if (shape_count == 0) {
@@ -2633,10 +2633,11 @@ HashMap<Vector2i, TileSet::TerrainsPattern> TileMapLayer::terrain_fill_pattern(c
 }
 
 TileMapCell TileMapLayer::get_cell(const Vector2i &p_coords) const {
-	if (!tile_map_layer_data.has(p_coords)) {
+	const CellData *ret = tile_map_layer_data.getptr(p_coords);
+	if (!ret) {
 		return TileMapCell();
 	} else {
-		return tile_map_layer_data.find(p_coords)->value.cell;
+		return ret->cell;
 	}
 }
 

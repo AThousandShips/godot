@@ -71,12 +71,13 @@ Vector<StringName> MaterialStorage::global_shader_parameter_get_list() const {
 }
 
 RS::GlobalShaderParameterType MaterialStorage::global_shader_parameter_get_type(const StringName &p_name) const {
-	if (!global_shader_variables.has(p_name)) {
+	const RS::GlobalShaderParameterType *gsv = global_shader_variables.getptr(p_name);
+	if (!gsv) {
 		print_line("don't have name, sorry");
 		return RS::GLOBAL_VAR_TYPE_MAX;
 	}
 
-	return global_shader_variables[p_name];
+	return *gsv;
 }
 
 void MaterialStorage::global_shader_parameters_load_settings(bool p_load_textures) {

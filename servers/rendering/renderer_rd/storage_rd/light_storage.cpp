@@ -2602,7 +2602,8 @@ int LightStorage::get_directional_light_shadow_size(RID p_light_instance) {
 /* SHADOW CUBEMAPS */
 
 LightStorage::ShadowCubemap *LightStorage::_get_shadow_cubemap(int p_size) {
-	if (!shadow_cubemaps.has(p_size)) {
+	ShadowCubemap *scp = shadow_cubemaps.getptr(p_size);
+	if (!scp) {
 		ShadowCubemap sc;
 		{
 			RD::TextureFormat tf;
@@ -2625,7 +2626,7 @@ LightStorage::ShadowCubemap *LightStorage::_get_shadow_cubemap(int p_size) {
 		shadow_cubemaps[p_size] = sc;
 	}
 
-	return &shadow_cubemaps[p_size];
+	return scp;
 }
 
 RID LightStorage::get_cubemap(int p_size) {

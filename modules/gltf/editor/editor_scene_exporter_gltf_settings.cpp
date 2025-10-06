@@ -127,23 +127,23 @@ void EditorSceneExporterGLTFSettings::_on_extension_property_list_changed() {
 
 bool EditorSceneExporterGLTFSettings::_set_extension_setting(const String &p_name_str, const Variant &p_value) {
 	PackedStringArray split = String(p_name_str).split("/", true, 1);
-	if (!_config_name_to_extension_map.has(split[0])) {
+	Ref<GLTFDocumentExtension> *extension = _config_name_to_extension_map.getptr(split[0]);
+	if (!extension) {
 		return false;
 	}
-	Ref<GLTFDocumentExtension> extension = _config_name_to_extension_map[split[0]];
 	bool valid;
-	extension->set(split[1], p_value, &valid);
+	(*extension)->set(split[1], p_value, &valid);
 	return valid;
 }
 
 bool EditorSceneExporterGLTFSettings::_get_extension_setting(const String &p_name_str, Variant &r_ret) const {
 	PackedStringArray split = String(p_name_str).split("/", true, 1);
-	if (!_config_name_to_extension_map.has(split[0])) {
+	const Ref<GLTFDocumentExtension> *extension = _config_name_to_extension_map.getptr(split[0]);
+	if (!extension) {
 		return false;
 	}
-	Ref<GLTFDocumentExtension> extension = _config_name_to_extension_map[split[0]];
 	bool valid;
-	r_ret = extension->get(split[1], &valid);
+	r_ret = (*extension)->get(split[1], &valid);
 	return valid;
 }
 

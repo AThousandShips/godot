@@ -583,20 +583,20 @@ void CreateDialog::_notification(int p_what) {
 }
 
 void CreateDialog::select_type(const String &p_type, bool p_center_on_item) {
-	if (!search_options_types.has(p_type)) {
+	TreeItem **to_select = search_options_types.getptr(p_type);
+	if (!to_select) {
 		return;
 	}
 
-	TreeItem *to_select = search_options_types[p_type];
-	to_select->select(0);
-	search_options->scroll_to_item(to_select, p_center_on_item);
+	(*to_select)->select(0);
+	search_options->scroll_to_item(*to_select, p_center_on_item);
 
 	help_bit->parse_symbol("class|" + p_type + "|");
 
 	favorite->set_disabled(false);
 	favorite->set_pressed(favorite_list.has(p_type));
 
-	if (to_select->get_meta("__instantiable", true)) {
+	if ((*to_select)->get_meta("__instantiable", true)) {
 		get_ok_button()->set_disabled(false);
 		get_ok_button()->set_tooltip_text(String());
 	} else {

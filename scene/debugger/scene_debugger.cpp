@@ -1032,11 +1032,11 @@ void LiveEditor::_node_set_func(int p_id, const StringName &p_prop, const Varian
 		return;
 	}
 
-	if (!live_edit_node_path_cache.has(p_id)) {
+	const NodePath *np = live_edit_node_path_cache.getptr(p_id);
+	if (!np) {
 		return;
 	}
 
-	NodePath np = live_edit_node_path_cache[p_id];
 	Node *base = nullptr;
 	if (scene_tree->root->has_node(live_edit_root)) {
 		base = scene_tree->root->get_node(live_edit_root);
@@ -1054,10 +1054,10 @@ void LiveEditor::_node_set_func(int p_id, const StringName &p_prop, const Varian
 			continue;
 		}
 
-		if (!n->has_node(np)) {
+		if (!n->has_node(*np)) {
 			continue;
 		}
-		Node *n2 = n->get_node(np);
+		Node *n2 = n->get_node(*np);
 
 		// Do not change transform of edited scene root, unless it's the scene being played.
 		// See GH-86659 for additional context.
@@ -1103,11 +1103,11 @@ void LiveEditor::_node_call_func(int p_id, const StringName &p_method, const Var
 	if (!scene_tree) {
 		return;
 	}
-	if (!live_edit_node_path_cache.has(p_id)) {
+	const NodePath *np = live_edit_node_path_cache.getptr(p_id);
+	if (!np) {
 		return;
 	}
 
-	NodePath np = live_edit_node_path_cache[p_id];
 	Node *base = nullptr;
 	if (scene_tree->root->has_node(live_edit_root)) {
 		base = scene_tree->root->get_node(live_edit_root);
@@ -1125,10 +1125,10 @@ void LiveEditor::_node_call_func(int p_id, const StringName &p_method, const Var
 			continue;
 		}
 
-		if (!n->has_node(np)) {
+		if (!n->has_node(*np)) {
 			continue;
 		}
-		Node *n2 = n->get_node(np);
+		Node *n2 = n->get_node(*np);
 
 		// Do not change transform of edited scene root, unless it's the scene being played.
 		// See GH-86659 for additional context.
@@ -1163,17 +1163,16 @@ void LiveEditor::_node_call_func(int p_id, const StringName &p_method, const Var
 }
 
 void LiveEditor::_res_set_func(int p_id, const StringName &p_prop, const Variant &p_value) {
-	if (!live_edit_resource_cache.has(p_id)) {
+	const String *resp = live_edit_resource_cache.getptr(p_id);
+	if (!resp) {
 		return;
 	}
 
-	String resp = live_edit_resource_cache[p_id];
-
-	if (!ResourceCache::has(resp)) {
+	if (!ResourceCache::has(*resp)) {
 		return;
 	}
 
-	Ref<Resource> r = ResourceCache::get_ref(resp);
+	Ref<Resource> r = ResourceCache::get_ref(*resp);
 	if (r.is_null()) {
 		return;
 	}
@@ -1190,17 +1189,16 @@ void LiveEditor::_res_set_res_func(int p_id, const StringName &p_prop, const Str
 }
 
 void LiveEditor::_res_call_func(int p_id, const StringName &p_method, const Variant **p_args, int p_argcount) {
-	if (!live_edit_resource_cache.has(p_id)) {
+	const String *resp = live_edit_resource_cache.getptr(p_id);
+	if (!resp) {
 		return;
 	}
 
-	String resp = live_edit_resource_cache[p_id];
-
-	if (!ResourceCache::has(resp)) {
+	if (!ResourceCache::has(*resp)) {
 		return;
 	}
 
-	Ref<Resource> r = ResourceCache::get_ref(resp);
+	Ref<Resource> r = ResourceCache::get_ref(*resp);
 	if (r.is_null()) {
 		return;
 	}

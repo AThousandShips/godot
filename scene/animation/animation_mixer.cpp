@@ -138,26 +138,26 @@ void AnimationMixer::_animation_set_cache_update() {
 	for (const AnimationLibraryData &lib : animation_libraries) {
 		for (const KeyValue<StringName, Ref<Animation>> &K : lib.library->animations) {
 			StringName key = lib.name == StringName() ? K.key : StringName(String(lib.name) + "/" + String(K.key));
-			if (!animation_set.has(key)) {
-				AnimationData ad;
-				ad.animation = K.value;
-				ad.animation_library = lib.name;
-				ad.name = key;
-				ad.last_update = animation_set_update_pass;
-				animation_set.insert(ad.name, ad);
+			AnimationData *ad = animation_set.getptr(key);
+			if (!ad) {
+				AnimationData nad;
+				nad.animation = K.value;
+				nad.animation_library = lib.name;
+				nad.name = key;
+				nad.last_update = animation_set_update_pass;
+				animation_set.insert(nad.name, nad);
 				cache_valid = false; // No need to delete the cache, but it must be updated to add track caches.
 			} else {
-				AnimationData &ad = animation_set[key];
-				if (ad.last_update != animation_set_update_pass) {
+				if (ad->last_update != animation_set_update_pass) {
 					// Was not updated, update. If the animation is duplicated, the second one will be ignored.
-					if (ad.animation != K.value || ad.animation_library != lib.name) {
+					if (ad->animation != K.value || ad->animation_library != lib.name) {
 						// Animation changed, update and clear caches.
 						clear_cache_needed = true;
-						ad.animation = K.value;
-						ad.animation_library = lib.name;
+						ad->animation = K.value;
+						ad->animation_library = lib.name;
 					}
 
-					ad.last_update = animation_set_update_pass;
+					ad->last_update = animation_set_update_pass;
 				}
 			}
 		}
@@ -394,9 +394,9 @@ void AnimationMixer::get_animation_list(List<StringName> *p_animations) const {
 }
 
 Ref<Animation> AnimationMixer::get_animation(const StringName &p_name) const {
-	ERR_FAIL_COND_V_MSG(!animation_set.has(p_name), Ref<Animation>(), vformat("Animation not found: \"%s\".", p_name));
-	const AnimationData &anim_data = animation_set[p_name];
-	return anim_data.animation;
+	const AnimationData *anim_data = animation_set.getptr(p_name);
+	ERR_FAIL_NULL_V_MSG(anim_data, Ref<Animation>(), vformat("Animation not found: \"%s\".", p_name));
+	return anim_data->animation;
 }
 
 bool AnimationMixer::has_animation(const StringName &p_name) const {

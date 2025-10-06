@@ -650,10 +650,11 @@ Variant Skeleton3D::get_bone_meta(int p_bone, const StringName &p_key) const {
 	const int bone_size = bones.size();
 	ERR_FAIL_INDEX_V(p_bone, bone_size, Variant());
 
-	if (!bones[p_bone].metadata.has(p_key)) {
+	const Variant *ret = bones[p_bone].metadata.getptr(p_key);
+	if (!ret) {
 		return Variant();
 	}
-	return bones[p_bone].metadata[p_key];
+	return *ret;
 }
 
 TypedArray<StringName> Skeleton3D::_get_bone_meta_list_bind(int p_bone) const {

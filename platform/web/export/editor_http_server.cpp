@@ -89,7 +89,8 @@ void EditorHTTPServer::_send_response() {
 	const String cache_path = EditorPaths::get_singleton()->get_temp_dir().path_join("web");
 	const String filepath = cache_path.path_join(req_file);
 
-	if (!mimes.has(req_ext) || !FileAccess::exists(filepath)) {
+	const String *ctype = mimes.getptr(req_ext);
+	if (!ctype || !FileAccess::exists(filepath)) {
 		String s = "HTTP/1.1 404 Not Found\r\n";
 		s += "Connection: Close\r\n";
 		s += "\r\n";
@@ -97,13 +98,12 @@ void EditorHTTPServer::_send_response() {
 		peer->put_data((const uint8_t *)cs.get_data(), cs.size() - 1);
 		return;
 	}
-	const String ctype = mimes[req_ext];
 
 	Ref<FileAccess> f = FileAccess::open(filepath, FileAccess::READ);
 	ERR_FAIL_COND(f.is_null());
 	String s = "HTTP/1.1 200 OK\r\n";
 	s += "Connection: Close\r\n";
-	s += "Content-Type: " + ctype + "\r\n";
+	s += "Content-Type: " + *ctype + "\r\n";
 	s += "Access-Control-Allow-Origin: *\r\n";
 	s += "Cross-Origin-Opener-Policy: same-origin\r\n";
 	s += "Cross-Origin-Embedder-Policy: require-corp\r\n";

@@ -191,32 +191,36 @@ float InputMap::action_get_deadzone(const StringName &p_action) {
 }
 
 void InputMap::action_set_deadzone(const StringName &p_action, float p_deadzone) {
-	ERR_FAIL_COND_MSG(!input_map.has(p_action), suggest_actions(p_action));
+	Action *action = input_map.getptr(p_action);
+	ERR_FAIL_NULL_MSG(action, suggest_actions(p_action));
 
-	input_map[p_action].deadzone = p_deadzone;
+	action->deadzone = p_deadzone;
 }
 
 void InputMap::action_add_event(const StringName &p_action, const Ref<InputEvent> &p_event) {
 	ERR_FAIL_COND_MSG(p_event.is_null(), "It's not a reference to a valid InputEvent object.");
-	ERR_FAIL_COND_MSG(!input_map.has(p_action), suggest_actions(p_action));
-	if (_find_event(input_map[p_action], p_event, true)) {
+	Action *action = input_map.getptr(p_action);
+	ERR_FAIL_NULL_MSG(action, suggest_actions(p_action));
+	if (_find_event(*action, p_event, true)) {
 		return; // Already added.
 	}
 
-	input_map[p_action].inputs.push_back(p_event);
+	action->inputs.push_back(p_event);
 }
 
 bool InputMap::action_has_event(const StringName &p_action, const Ref<InputEvent> &p_event) {
-	ERR_FAIL_COND_V_MSG(!input_map.has(p_action), false, suggest_actions(p_action));
-	return (_find_event(input_map[p_action], p_event, true) != nullptr);
+	Action *action = input_map.getptr(p_action);
+	ERR_FAIL_NULL_V_MSG(action, false, suggest_actions(p_action));
+	return (_find_event(*action, p_event, true) != nullptr);
 }
 
 void InputMap::action_erase_event(const StringName &p_action, const Ref<InputEvent> &p_event) {
-	ERR_FAIL_COND_MSG(!input_map.has(p_action), suggest_actions(p_action));
+	Action *action = input_map.getptr(p_action);
+	ERR_FAIL_NULL_MSG(action, suggest_actions(p_action));
 
-	List<Ref<InputEvent>>::Element *E = _find_event(input_map[p_action], p_event, true);
+	List<Ref<InputEvent>>::Element *E = _find_event(*action, p_event, true);
 	if (E) {
-		input_map[p_action].inputs.erase(E);
+		action->inputs.erase(E);
 
 		if (Input::get_singleton()->is_action_pressed(p_action)) {
 			Input::get_singleton()->action_release(p_action);
@@ -225,9 +229,10 @@ void InputMap::action_erase_event(const StringName &p_action, const Ref<InputEve
 }
 
 void InputMap::action_erase_events(const StringName &p_action) {
-	ERR_FAIL_COND_MSG(!input_map.has(p_action), suggest_actions(p_action));
+	Action *action = input_map.getptr(p_action);
+	ERR_FAIL_NULL_MSG(action, suggest_actions(p_action));
 
-	input_map[p_action].inputs.clear();
+	action->inputs.clear();
 }
 
 TypedArray<InputEvent> InputMap::_action_get_events(const StringName &p_action) {

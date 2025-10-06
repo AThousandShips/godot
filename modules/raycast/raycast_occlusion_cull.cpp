@@ -592,36 +592,40 @@ Rect2 _get_viewport_rect(const Projection &p_cam_projection) {
 }
 
 void RaycastOcclusionCull::buffer_update(RID p_buffer, const Transform3D &p_cam_transform, const Projection &p_cam_projection, bool p_cam_orthogonal) {
-	if (!buffers.has(p_buffer)) {
+	RaycastHZBuffer *buffer = buffers.getptr(p_buffer);
+	if (!buffer) {
 		return;
 	}
 
-	RaycastHZBuffer &buffer = buffers[p_buffer];
-
-	if (buffer.is_empty() || !scenarios.has(buffer.scenario_rid)) {
+	if (buffer->is_empty()) {
 		return;
 	}
 
-	Scenario &scenario = scenarios[buffer.scenario_rid];
-	scenario.update();
+	Scenario *scenario = scenarios.getptr(buffer->scenario_rid);
+	if (!scenario) {
+		return;
+	}
+
+	scenario->update();
 
 	Rect2 vp_rect = _get_viewport_rect(p_cam_projection);
 	Vector2 bottom_left = vp_rect.position;
-	bottom_left += _get_jitter(vp_rect, buffer.get_occlusion_buffer_size());
+	bottom_left += _get_jitter(vp_rect, buffer->get_occlusion_buffer_size());
 	Vector3 near_bottom_left = Vector3(bottom_left.x, bottom_left.y, -p_cam_projection.get_z_near());
 
-	buffer.update_camera_rays(p_cam_transform, near_bottom_left, vp_rect.get_size(), p_cam_projection.get_z_far(), p_cam_orthogonal);
+	buffer->update_camera_rays(p_cam_transform, near_bottom_left, vp_rect.get_size(), p_cam_projection.get_z_far(), p_cam_orthogonal);
 
-	scenario.raycast(buffer.camera_rays, buffer.camera_ray_masks.ptr(), buffer.camera_rays_tile_count);
-	buffer.sort_rays(-p_cam_transform.basis.get_column(2), p_cam_orthogonal);
-	buffer.update_mips();
+	scenario->raycast(buffer->camera_rays, buffer->camera_ray_masks.ptr(), buffer->camera_rays_tile_count);
+	buffer->sort_rays(-p_cam_transform.basis.get_column(2), p_cam_orthogonal);
+	buffer->update_mips();
 }
 
 RaycastOcclusionCull::HZBuffer *RaycastOcclusionCull::buffer_get_ptr(RID p_buffer) {
-	if (!buffers.has(p_buffer)) {
+	RaycastHZBuffer *ret = buffers.getptr(p_buffer);
+	if (!ret) {
 		return nullptr;
 	}
-	return &buffers[p_buffer];
+	return ret;
 }
 
 RID RaycastOcclusionCull::buffer_get_debug_texture(RID p_buffer) {

@@ -307,37 +307,36 @@ void DocTools::merge_from(const DocTools &p_data) {
 	for (KeyValue<String, DocData::ClassDoc> &E : class_list) {
 		DocData::ClassDoc &c = E.value;
 
-		if (!p_data.class_list.has(c.name)) {
+		const DocData::ClassDoc *cf = p_data.class_list.getptr(c.name);
+		if (!cf) {
 			continue;
 		}
 
-		const DocData::ClassDoc &cf = p_data.class_list[c.name];
+		c.is_deprecated = cf->is_deprecated;
+		c.deprecated_message = cf->deprecated_message;
+		c.is_experimental = cf->is_experimental;
+		c.experimental_message = cf->experimental_message;
+		c.keywords = cf->keywords;
 
-		c.is_deprecated = cf.is_deprecated;
-		c.deprecated_message = cf.deprecated_message;
-		c.is_experimental = cf.is_experimental;
-		c.experimental_message = cf.experimental_message;
-		c.keywords = cf.keywords;
+		c.description = cf->description;
+		c.brief_description = cf->brief_description;
+		c.tutorials = cf->tutorials;
 
-		c.description = cf.description;
-		c.brief_description = cf.brief_description;
-		c.tutorials = cf.tutorials;
+		merge_constructors(c.constructors, cf->constructors);
 
-		merge_constructors(c.constructors, cf.constructors);
+		merge_methods(c.methods, cf->methods);
 
-		merge_methods(c.methods, cf.methods);
+		merge_methods(c.signals, cf->signals);
 
-		merge_methods(c.signals, cf.signals);
+		merge_constants(c.constants, cf->constants);
 
-		merge_constants(c.constants, cf.constants);
+		merge_methods(c.annotations, cf->annotations);
 
-		merge_methods(c.annotations, cf.annotations);
+		merge_properties(c.properties, cf->properties);
 
-		merge_properties(c.properties, cf.properties);
+		merge_theme_properties(c.theme_properties, cf->theme_properties);
 
-		merge_theme_properties(c.theme_properties, cf.theme_properties);
-
-		merge_operators(c.operators, cf.operators);
+		merge_operators(c.operators, cf->operators);
 	}
 }
 

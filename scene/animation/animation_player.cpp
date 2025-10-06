@@ -601,9 +601,10 @@ void AnimationPlayer::set_assigned_animation(const String &p_animation) {
 		float speed = playback.current.speed_scale;
 		play(p_animation, -1.0, speed, std::signbit(speed));
 	} else {
-		ERR_FAIL_COND_MSG(!animation_set.has(p_animation), vformat("Animation not found: %s.", p_animation));
+		AnimationData *animation = animation_set.getptr(p_animation);
+		ERR_FAIL_NULL_MSG(animation, vformat("Animation not found: %s.", p_animation));
 		playback.current.pos = 0;
-		playback.current.from = &animation_set[p_animation];
+		playback.current.from = animation;
 		playback.current.start_time = -1;
 		playback.current.end_time = -1;
 		playback.assigned = p_animation;
@@ -650,8 +651,9 @@ void AnimationPlayer::seek_internal(double p_time, bool p_update, bool p_update_
 	playback.current.pos = p_time;
 	if (!playback.current.from) {
 		if (playback.assigned) {
-			ERR_FAIL_COND_MSG(!animation_set.has(playback.assigned), vformat("Animation not found: %s.", playback.assigned));
-			playback.current.from = &animation_set[playback.assigned];
+			AnimationData *animation = animation_set.getptr(playback.assigned);
+			ERR_FAIL_NULL_MSG(animation, vformat("Animation not found: %s.", playback.assigned));
+			playback.current.from = animation;
 		}
 		if (!playback.current.from) {
 			return; // There is no animation.
@@ -794,10 +796,11 @@ void AnimationPlayer::animation_set_next(const StringName &p_animation, const St
 }
 
 StringName AnimationPlayer::animation_get_next(const StringName &p_animation) const {
-	if (!animation_next_set.has(p_animation)) {
+	const StringName *ret = animation_next_set.getptr(p_animation);
+	if (!ret) {
 		return StringName();
 	}
-	return animation_next_set[p_animation];
+	return *ret;
 }
 
 void AnimationPlayer::set_default_blend_time(double p_default) {

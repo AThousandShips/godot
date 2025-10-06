@@ -213,13 +213,13 @@ Dictionary GDScriptLanguageProtocol::initialize(const Dictionary &p_params) {
 		params["path"] = workspace->root;
 		Dictionary request = make_notification("gdscript_client/changeWorkspace", params);
 
-		ERR_FAIL_COND_V_MSG(!clients.has(latest_client_id), ret.to_json(),
+		Ref<LSPeer> *peer = clients.getptr(latest_client_id);
+		ERR_FAIL_NULL_V_MSG(peer, ret.to_json(),
 				vformat("GDScriptLanguageProtocol: Can't initialize invalid peer '%d'.", latest_client_id));
-		Ref<LSPeer> peer = clients.get(latest_client_id);
-		if (peer.is_valid()) {
+		if ((*peer).is_valid()) {
 			String msg = Variant(request).to_json_string();
 			msg = format_output(msg);
-			(*peer)->res_queue.push_back(msg.utf8());
+			(**peer)->res_queue.push_back(msg.utf8());
 		}
 	}
 

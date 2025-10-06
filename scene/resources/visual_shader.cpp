@@ -774,10 +774,11 @@ void VisualShaderNodeCustom::_set_option_index(int p_option, int p_value) {
 }
 
 int VisualShaderNodeCustom::get_option_index(int p_option) const {
-	if (!dp_selected_cache.has(p_option)) {
+	const int *ret = dp_selected_cache.getptr(p_option);
+	if (!ret) {
 		return 0;
 	}
-	return dp_selected_cache[p_option];
+	return *ret;
 }
 
 void VisualShaderNodeCustom::_bind_methods() {

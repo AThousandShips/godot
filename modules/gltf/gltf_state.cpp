@@ -361,10 +361,11 @@ void GLTFState::set_animations(TypedArray<GLTFAnimation> p_animations) {
 }
 
 Node *GLTFState::get_scene_node(GLTFNodeIndex idx) {
-	if (!scene_nodes.has(idx)) {
+	Node **ret = scene_nodes.getptr(idx);
+	if (!ret) {
 		return nullptr;
 	}
-	return scene_nodes[idx];
+	return *ret;
 }
 
 GLTFNodeIndex GLTFState::get_node_index(Node *p_node) {

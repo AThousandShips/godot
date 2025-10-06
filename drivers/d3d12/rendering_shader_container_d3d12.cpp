@@ -157,7 +157,8 @@ uint32_t RenderingDXIL::patch_specialization_constant(
 	};
 	uint32_t stages_patched_mask = 0;
 	for (int stage = 0; stage < RenderingDeviceCommons::SHADER_STAGE_MAX; stage++) {
-		if (!r_stages_bytecodes.has((RenderingDeviceCommons::ShaderStage)stage)) {
+		Vector<uint8_t> *bytecode = r_stages_bytecodes.getptr((RenderingDeviceCommons::ShaderStage)stage);
+		if (!bytecode) {
 			continue;
 		}
 
@@ -167,15 +168,14 @@ uint32_t RenderingDXIL::patch_specialization_constant(
 			continue;
 		}
 
-		Vector<uint8_t> &bytecode = r_stages_bytecodes[(RenderingDeviceCommons::ShaderStage)stage];
 #ifdef DEV_ENABLED
-		uint64_t orig_patch_val = tamper_bits(bytecode.ptrw(), offset, patch_val);
+		uint64_t orig_patch_val = tamper_bits(bytecode->ptrw(), offset, patch_val);
 		// Checking against the value the NIR patch should have set.
 		DEV_ASSERT(!p_is_first_patch || ((orig_patch_val >> 1) & GODOT_NIR_SC_SENTINEL_MAGIC_MASK) == GODOT_NIR_SC_SENTINEL_MAGIC);
-		uint64_t readback_patch_val = tamper_bits(bytecode.ptrw(), offset, patch_val);
+		uint64_t readback_patch_val = tamper_bits(bytecode->ptrw(), offset, patch_val);
 		DEV_ASSERT(readback_patch_val == patch_val);
 #else
-		tamper_bits(bytecode.ptrw(), offset, patch_val);
+		tamper_bits(bytecode->ptrw(), offset, patch_val);
 #endif
 
 		stages_patched_mask |= (1 << stage);
@@ -336,10 +336,11 @@ bool RenderingShaderContainerD3D12::_convert_spirv_to_nir(Span<ReflectedShaderSt
 
 	// Link NIR shaders.
 	for (int i = RenderingDeviceCommons::SHADER_STAGE_MAX - 1; i >= 0; i--) {
-		if (!r_stages_nir_shaders.has(i)) {
+		nir_shader **shader_ptr = r_stages_nir_shaders.getptr(i);
+		if (!shader_ptr) {
 			continue;
 		}
-		nir_shader *shader = r_stages_nir_shaders[i];
+		nir_shader *shader = *shader_ptr;
 		nir_shader *prev_shader = nullptr;
 		for (int j = i - 1; j >= 0; j--) {
 			if (r_stages_nir_shaders.has(j)) {

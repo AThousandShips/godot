@@ -1327,10 +1327,11 @@ Vector<Error> ClassDB::get_method_error_return_values(const StringName &p_class,
 
 	ERR_FAIL_NULL_V(type, Vector<Error>());
 
-	if (!type->method_error_values.has(p_method)) {
+	Vector<Error> *ret = type->method_error_values.getptr(p_method);
+	if (!ret) {
 		return Vector<Error>();
 	}
-	return type->method_error_values[p_method];
+	return *ret;
 #else
 	return Vector<Error>();
 #endif // DEBUG_ENABLED
@@ -2270,14 +2271,16 @@ Variant ClassDB::class_get_default_property_value(const StringName &p_class, con
 		default_values_cached.insert(p_class);
 	}
 
-	if (!default_values.has(p_class)) {
+	HashMap<StringName, Variant> *default_value_ptr = default_values.getptr(p_class);
+	if (!default_value_ptr) {
 		if (r_valid != nullptr) {
 			*r_valid = false;
 		}
 		return Variant();
 	}
 
-	if (!default_values[p_class].has(p_property)) {
+	Variant *var = default_value_ptr->getptr(p_property);
+	if (!var) {
 		if (r_valid != nullptr) {
 			*r_valid = false;
 		}
@@ -2288,23 +2291,21 @@ Variant ClassDB::class_get_default_property_value(const StringName &p_class, con
 		*r_valid = true;
 	}
 
-	Variant var = default_values[p_class][p_property];
-
 #ifdef DEBUG_ENABLED
 	// Some properties may have an instantiated Object as default value,
 	// (like Path2D's `curve` used to have), but that's not a good practice.
 	// Instead, those properties should use PROPERTY_USAGE_EDITOR_INSTANTIATE_OBJECT
 	// to be auto-instantiated when created in the editor with the following method:
 	// EditorNode::get_editor_data().instantiate_object_properties(obj);
-	if (var.get_type() == Variant::OBJECT) {
-		Object *obj = var.get_validated_object();
+	if (var->get_type() == Variant::OBJECT) {
+		Object *obj = var->get_validated_object();
 		if (obj) {
 			WARN_PRINT(vformat("Instantiated %s used as default value for %s's \"%s\" property.", obj->get_class(), p_class, p_property));
 		}
 	}
 #endif // DEBUG_ENABLED
 
-	return var;
+	return *var;
 }
 
 void ClassDB::register_extension_class(ObjectGDExtension *p_extension) {

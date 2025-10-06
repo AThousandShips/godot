@@ -222,11 +222,11 @@ AnimationNode::NodeTimeInfo AnimationNode::_blend_node(Ref<AnimationNode> p_node
 
 		for (const KeyValue<NodePath, bool> &E : filter) {
 			const AHashMap<NodePath, int> &map = *process_state->track_map;
-			if (!map.has(E.key)) {
+			const int *idx = map.getptr(E.key);
+			if (!idx) {
 				continue;
 			}
-			int idx = map[E.key];
-			blendw[idx] = 1.0; // Filtered goes to one.
+			blendw[*idx] = 1.0; // Filtered goes to one.
 		}
 
 		switch (p_filter) {
@@ -976,12 +976,12 @@ void AnimationTree::_get_property_list(List<PropertyInfo> *p_list) const {
 }
 
 real_t AnimationTree::get_connection_activity(const StringName &p_path, int p_connection) const {
-	if (!input_activity_map_get.has(p_path)) {
+	const int *index = input_activity_map_get.getptr(p_path);
+	if (!index) {
 		return 0;
 	}
 
-	int index = input_activity_map_get[p_path];
-	const LocalVector<Activity> &activity = input_activity_map.get_by_index(index).value;
+	const LocalVector<Activity> &activity = input_activity_map.get_by_index(*index).value;
 
 	if (p_connection < 0 || p_connection >= (int64_t)activity.size() || activity[p_connection].last_pass != process_pass) {
 		return 0;

@@ -96,11 +96,12 @@ bool SnapshotDataObject::_get(const StringName &p_name, Variant &r_ret) const {
 	if (name.begins_with("Metadata/")) {
 		name = name.replace_first("Metadata/", "metadata/");
 	}
-	if (!prop_values.has(name)) {
+	const Variant *ret = prop_values.getptr(name);
+	if (!ret) {
 		return false;
 	}
 
-	r_ret = prop_values[p_name];
+	r_ret = *ret;
 	return true;
 }
 

@@ -641,11 +641,8 @@ void MaterialStorage::ShaderData::get_instance_param_list(List<RendererMaterialS
 }
 
 bool MaterialStorage::ShaderData::is_parameter_texture(const StringName &p_param) const {
-	if (!uniforms.has(p_param)) {
-		return false;
-	}
-
-	return uniforms[p_param].is_texture();
+	const ShaderLanguage::ShaderNode::Uniform *uniform = uniforms.getptr(p_param);
+	return uniform && uniform->is_texture();
 }
 
 RD::PipelineColorBlendState::Attachment MaterialStorage::ShaderData::blend_mode_to_blend_attachment(BlendMode p_mode) {
@@ -1645,13 +1642,13 @@ void MaterialStorage::global_shader_parameter_add(const StringName &p_name, RS::
 }
 
 void MaterialStorage::global_shader_parameter_remove(const StringName &p_name) {
-	if (!global_shader_uniforms.variables.has(p_name)) {
+	const GlobalShaderUniforms::Variable *gv = global_shader_uniforms.variables.getptr(p_name);
+	if (!gv) {
 		return;
 	}
-	const GlobalShaderUniforms::Variable &gv = global_shader_uniforms.variables[p_name];
 
-	if (gv.buffer_index >= 0) {
-		global_shader_uniforms.buffer_usage[gv.buffer_index].elements = 0;
+	if (gv->buffer_index >= 0) {
+		global_shader_uniforms.buffer_usage[gv->buffer_index].elements = 0;
 		global_shader_uniforms.must_update_buffer_materials = true;
 	} else {
 		global_shader_uniforms.must_update_texture_materials = true;
@@ -1695,29 +1692,29 @@ void MaterialStorage::global_shader_parameter_set(const StringName &p_name, cons
 }
 
 void MaterialStorage::global_shader_parameter_set_override(const StringName &p_name, const Variant &p_value) {
-	if (!global_shader_uniforms.variables.has(p_name)) {
+	GlobalShaderUniforms::Variable *gv = global_shader_uniforms.variables.getptr(p_name);
+
+	if (!gv) {
 		return; //variable may not exist
 	}
 
 	ERR_FAIL_COND(p_value.get_type() == Variant::OBJECT);
 
-	GlobalShaderUniforms::Variable &gv = global_shader_uniforms.variables[p_name];
+	gv->override = p_value;
 
-	gv.override = p_value;
-
-	if (gv.buffer_index >= 0) {
+	if (gv->buffer_index >= 0) {
 		//buffer
-		if (gv.override.get_type() == Variant::NIL) {
-			_global_shader_uniform_store_in_buffer(gv.buffer_index, gv.type, gv.value);
+		if (gv->override.get_type() == Variant::NIL) {
+			_global_shader_uniform_store_in_buffer(gv->buffer_index, gv->type, gv->value);
 		} else {
-			_global_shader_uniform_store_in_buffer(gv.buffer_index, gv.type, gv.override);
+			_global_shader_uniform_store_in_buffer(gv->buffer_index, gv->type, gv->override);
 		}
 
-		_global_shader_uniform_mark_buffer_dirty(gv.buffer_index, gv.buffer_elements);
+		_global_shader_uniform_mark_buffer_dirty(gv->buffer_index, gv->buffer_elements);
 	} else {
 		//texture
 		MaterialStorage *material_storage = MaterialStorage::get_singleton();
-		for (const RID &E : gv.texture_materials) {
+		for (const RID &E : gv->texture_materials) {
 			Material *material = material_storage->get_material(E);
 			ERR_CONTINUE(!material);
 			material_storage->_material_queue_update(material, false, true);
@@ -1730,19 +1727,21 @@ Variant MaterialStorage::global_shader_parameter_get(const StringName &p_name) c
 		ERR_FAIL_V_MSG(Variant(), "This function should never be used outside the editor, it can severely damage performance.");
 	}
 
-	if (!global_shader_uniforms.variables.has(p_name)) {
+	const GlobalShaderUniforms::Variable *gv = global_shader_uniforms.variables.getptr(p_name);
+	if (!gv) {
 		return Variant();
 	}
 
-	return global_shader_uniforms.variables[p_name].value;
+	return gv->value;
 }
 
 RS::GlobalShaderParameterType MaterialStorage::global_shader_parameter_get_type_internal(const StringName &p_name) const {
-	if (!global_shader_uniforms.variables.has(p_name)) {
+	const GlobalShaderUniforms::Variable *gv = global_shader_uniforms.variables.getptr(p_name);
+	if (!gv) {
 		return RS::GLOBAL_VAR_TYPE_MAX;
 	}
 
-	return global_shader_uniforms.variables[p_name].type;
+	return gv->type;
 }
 
 RS::GlobalShaderParameterType MaterialStorage::global_shader_parameter_get_type(const StringName &p_name) const {

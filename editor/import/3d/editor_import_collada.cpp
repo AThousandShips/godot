@@ -1560,7 +1560,8 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 	for (const String &E : valid_animated_nodes) {
 		// take snapshots
 
-		if (!collada.state.scene_map.has(E)) {
+		Collada::Node **cnp = collada.state.scene_map.getptr(E);
+		if (!cnp) {
 			continue;
 		}
 
@@ -1575,7 +1576,7 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 
 		bool found_anim = false;
 
-		Collada::Node *cn = collada.state.scene_map[E];
+		Collada::Node *cn = *cnp;
 		if (cn->ignore_anim) {
 			continue;
 		}

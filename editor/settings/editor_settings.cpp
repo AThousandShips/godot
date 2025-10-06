@@ -352,10 +352,8 @@ void EditorSettings::_add_property_info_bind(const Dictionary &p_info) {
 bool EditorSettings::has_default_value(const String &p_setting) const {
 	_THREAD_SAFE_METHOD_
 
-	if (!props.has(p_setting)) {
-		return false;
-	}
-	return props[p_setting].has_default_value;
+	const VariantContainer *prop = props.getptr(p_setting);
+	return prop && prop->has_default_value;
 }
 
 void EditorSettings::_set_initialized() {
@@ -1472,29 +1470,32 @@ void EditorSettings::raise_order(const String &p_setting) {
 void EditorSettings::set_restart_if_changed(const StringName &p_setting, bool p_restart) {
 	_THREAD_SAFE_METHOD_
 
-	if (!props.has(p_setting)) {
+	VariantContainer *prop = props.getptr(p_setting);
+	if (!prop) {
 		return;
 	}
-	props[p_setting].restart_if_changed = p_restart;
+	prop->restart_if_changed = p_restart;
 }
 
 void EditorSettings::set_basic(const StringName &p_setting, bool p_basic) {
 	_THREAD_SAFE_METHOD_
 
-	if (!props.has(p_setting)) {
+	VariantContainer *prop = props.getptr(p_setting);
+	if (!prop) {
 		return;
 	}
-	props[p_setting].basic = p_basic;
+	prop->basic = p_basic;
 }
 
 void EditorSettings::set_initial_value(const StringName &p_setting, const Variant &p_value, bool p_update_current) {
 	_THREAD_SAFE_METHOD_
 
-	if (!props.has(p_setting)) {
+	VariantContainer *prop = props.getptr(p_setting);
+	if (!prop) {
 		return;
 	}
-	props[p_setting].initial = p_value;
-	props[p_setting].has_default_value = true;
+	prop->initial = p_value;
+	prop->has_default_value = true;
 	if (p_update_current) {
 		set(p_setting, p_value);
 	}

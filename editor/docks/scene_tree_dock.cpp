@@ -944,11 +944,11 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 				undo_redo->add_do_method(add_below_map[parent], "add_sibling", dup, true);
 
 				for (Node *F : owned) {
-					if (!duplimap.has(F)) {
+					Node **d = duplimap.getptr(F);
+					if (!d) {
 						continue;
 					}
-					Node *d = duplimap[F];
-					undo_redo->add_do_method(d, "set_owner", edited_scene);
+					undo_redo->add_do_method(*d, "set_owner", edited_scene);
 				}
 				undo_redo->add_do_method(editor_selection, "add_node", dup);
 				undo_redo->add_do_method(dup, "set_owner", edited_scene);

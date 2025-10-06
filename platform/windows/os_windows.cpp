@@ -1618,24 +1618,24 @@ int OS_Windows::get_process_id() const {
 
 bool OS_Windows::is_process_running(const ProcessID &p_pid) const {
 	MutexLock lock(process_map_mutex);
-	if (!process_map->has(p_pid)) {
+	const ProcessInfo *info = process_map->getptr(p_pid);
+	if (!info) {
 		return false;
 	}
 
-	const ProcessInfo &info = (*process_map)[p_pid];
-	if (!info.is_running) {
+	if (!info->is_running) {
 		return false;
 	}
 
-	const PROCESS_INFORMATION &pi = info.pi;
+	const PROCESS_INFORMATION &pi = info->pi;
 	DWORD dw_exit_code = 0;
 	if (!GetExitCodeProcess(pi.hProcess, &dw_exit_code)) {
 		return false;
 	}
 
 	if (dw_exit_code != STILL_ACTIVE) {
-		info.is_running = false;
-		info.exit_code = dw_exit_code;
+		info->is_running = false;
+		info->exit_code = dw_exit_code;
 		return false;
 	}
 
@@ -1644,16 +1644,16 @@ bool OS_Windows::is_process_running(const ProcessID &p_pid) const {
 
 int OS_Windows::get_process_exit_code(const ProcessID &p_pid) const {
 	MutexLock lock(process_map_mutex);
-	if (!process_map->has(p_pid)) {
+	const ProcessInfo *info = process_map->getptr(p_pid);
+	if (!info) {
 		return -1;
 	}
 
-	const ProcessInfo &info = (*process_map)[p_pid];
-	if (!info.is_running) {
-		return info.exit_code;
+	if (!info->is_running) {
+		return info->exit_code;
 	}
 
-	const PROCESS_INFORMATION &pi = info.pi;
+	const PROCESS_INFORMATION &pi = info->pi;
 
 	DWORD dw_exit_code = 0;
 	if (!GetExitCodeProcess(pi.hProcess, &dw_exit_code)) {
@@ -1664,8 +1664,8 @@ int OS_Windows::get_process_exit_code(const ProcessID &p_pid) const {
 		return -1;
 	}
 
-	info.is_running = false;
-	info.exit_code = dw_exit_code;
+	info->is_running = false;
+	info->exit_code = dw_exit_code;
 	return dw_exit_code;
 }
 

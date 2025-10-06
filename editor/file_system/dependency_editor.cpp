@@ -79,13 +79,14 @@ void DependencyEditor::_fix_and_find(EditorFileSystemDirectory *efsd, HashMap<St
 
 	for (int i = 0; i < efsd->get_file_count(); i++) {
 		String file = efsd->get_file(i);
-		if (!candidates.has(file)) {
+		HashMap<String, String> *candidate = candidates.getptr(file);
+		if (!candidate) {
 			continue;
 		}
 
 		String path = efsd->get_file_path(i);
 
-		for (KeyValue<String, String> &E : candidates[file]) {
+		for (KeyValue<String, String> &E : *candidate) {
 			if (E.value.is_empty()) {
 				E.value = path;
 				continue;

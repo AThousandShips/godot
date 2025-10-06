@@ -206,15 +206,16 @@ void ShaderGlobalsOverride::_get_property_list(List<PropertyInfo> *p_list) const
 			} break;
 		}
 
-		if (!overrides.has(variables[i])) {
-			Override o;
-			o.in_use = false;
+		Override *o = overrides.getptr(variables[i]);
+		if (!o) {
+			Override ovr;
+			ovr.in_use = false;
 			Callable::CallError ce;
-			Variant::construct(pinfo.type, o.override, nullptr, 0, ce);
-			overrides[variables[i]] = o;
+			Variant::construct(pinfo.type, ovr.override, nullptr, 0, ce);
+			overrides[variables[i]] = ovr;
+			o = overrides.getptr(variables[i]);
 		}
 
-		Override *o = overrides.getptr(variables[i]);
 		if (o->in_use && o->override.get_type() != Variant::NIL) {
 			pinfo.usage |= PROPERTY_USAGE_CHECKED;
 			pinfo.usage |= PROPERTY_USAGE_STORAGE;

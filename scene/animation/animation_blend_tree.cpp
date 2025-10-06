@@ -1614,7 +1614,8 @@ AnimationNodeBlendTree::ConnectionError AnimationNodeBlendTree::can_connect_node
 		return CONNECTION_ERROR_NO_OUTPUT;
 	}
 
-	if (!nodes.has(p_input_node)) {
+	const Node *input_node = nodes.getptr(p_input_node);
+	if (!input_node) {
 		return CONNECTION_ERROR_NO_INPUT;
 	}
 
@@ -1622,13 +1623,13 @@ AnimationNodeBlendTree::ConnectionError AnimationNodeBlendTree::can_connect_node
 		return CONNECTION_ERROR_SAME_NODE;
 	}
 
-	Ref<AnimationNode> input = nodes[p_input_node].node;
+	Ref<AnimationNode> input = input_node->node;
 
-	if (p_input_index < 0 || p_input_index >= nodes[p_input_node].connections.size()) {
+	if (p_input_index < 0 || p_input_index >= input_node->connections.size()) {
 		return CONNECTION_ERROR_NO_INPUT_INDEX;
 	}
 
-	if (nodes[p_input_node].connections[p_input_index] != StringName()) {
+	if (input_node->connections[p_input_index] != StringName()) {
 		return CONNECTION_ERROR_CONNECTION_EXISTS;
 	}
 

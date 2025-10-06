@@ -6212,11 +6212,12 @@ Error DisplayServerX11::embed_process(WindowID p_window, OS::ProcessID p_pid, co
 Error DisplayServerX11::request_close_embedded_process(OS::ProcessID p_pid) {
 	_THREAD_SAFE_METHOD_
 
-	if (!embedded_processes.has(p_pid)) {
+	EmbeddedProcessData **epp = embedded_processes.getptr(p_pid);
+	if (!epp) {
 		return ERR_DOES_NOT_EXIST;
 	}
 
-	EmbeddedProcessData *ep = embedded_processes.get(p_pid);
+	EmbeddedProcessData *ep = *epp;
 
 	// Handle bad window errors silently because just in case the embedded window was closed.
 	int (*oldHandler)(Display *, XErrorEvent *) = XSetErrorHandler(&bad_window_error_handler);

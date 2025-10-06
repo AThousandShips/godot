@@ -57,12 +57,13 @@ Error ResourceLoaderText::_parse_sub_resource_dummy(DummyReadData *p_data, Varia
 	} else {
 		String unique_id = token.value;
 
-		if (!p_data->resource_map.has(unique_id)) {
+		Ref<Resource> *resource_ptr = p_data->resource_map.getptr(unique_id);
+		if (!resource_ptr) {
 			r_err_str = "Found unique_id reference before mapping, sub-resources stored out of order in resource file";
 			return ERR_PARSE_ERROR;
 		}
 
-		r_res = p_data->resource_map[unique_id];
+		r_res = *resource_ptr;
 	}
 
 	VariantParser::get_token(p_stream, token, line, r_err_str);
@@ -134,14 +135,15 @@ Error ResourceLoaderText::_parse_ext_resource(VariantParser::Stream *p_stream, R
 	Error err = OK;
 
 	if (!ignore_resource_parsing) {
-		if (!ext_resources.has(id)) {
+		ExtResource *ext_resource = ext_resources.getptr(id);
+		if (!ext_resource) {
 			r_err_str = "Can't load cached ext-resource id: " + id;
 			return ERR_PARSE_ERROR;
 		}
 
-		String path = ext_resources[id].path;
-		String type = ext_resources[id].type;
-		Ref<ResourceLoader::LoadToken> &load_token = ext_resources[id].load_token;
+		String path = ext_resource->path;
+		String type = ext_resource->type;
+		Ref<ResourceLoader::LoadToken> &load_token = ext_resource->load_token;
 
 		if (load_token.is_valid()) { // If not valid, it's OK since then we know this load accepts broken dependencies.
 			Ref<Resource> res = ResourceLoader::_load_complete(*load_token.ptr(), &err);
@@ -166,7 +168,7 @@ Error ResourceLoaderText::_parse_ext_resource(VariantParser::Stream *p_stream, R
 		if (r_res.is_null()) {
 			// Hack to allow checking original path.
 			r_res.instantiate();
-			r_res->set_meta("__load_path__", ext_resources[id].path);
+			r_res->set_meta("__load_path__", ext_resource->path);
 		}
 #endif
 	}

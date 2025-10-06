@@ -3196,14 +3196,14 @@ Error DisplayServerWindows::embed_process(WindowID p_window, OS::ProcessID p_pid
 Error DisplayServerWindows::request_close_embedded_process(OS::ProcessID p_pid) {
 	_THREAD_SAFE_METHOD_
 
-	if (!embedded_processes.has(p_pid)) {
+	EmbeddedProcessData **ep = embedded_processes.getptr(p_pid);
+
+	if (!ep) {
 		return ERR_DOES_NOT_EXIST;
 	}
 
-	EmbeddedProcessData *ep = embedded_processes.get(p_pid);
-
 	// Send a close message to gracefully close the process.
-	PostMessage(ep->window_handle, WM_CLOSE, 0, 0);
+	PostMessage((*ep)->window_handle, WM_CLOSE, 0, 0);
 
 	return OK;
 }
@@ -3211,11 +3211,12 @@ Error DisplayServerWindows::request_close_embedded_process(OS::ProcessID p_pid) 
 Error DisplayServerWindows::remove_embedded_process(OS::ProcessID p_pid) {
 	_THREAD_SAFE_METHOD_
 
-	if (!embedded_processes.has(p_pid)) {
+	EmbeddedProcessData **epp = embedded_processes.getptr(p_pid);
+	if (!epp) {
 		return ERR_DOES_NOT_EXIST;
 	}
 
-	EmbeddedProcessData *ep = embedded_processes.get(p_pid);
+	EmbeddedProcessData *ep = *epp;
 
 	request_close_embedded_process(p_pid);
 
@@ -5255,12 +5256,13 @@ LRESULT DisplayServerWindows::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 				}
 				pointer_button[pen_id] = mb->get_button_index();
 			} else {
-				if (!pointer_button.has(pen_id)) {
+				MouseButton *pointer_button_ptr = pointer_button.getptr(pen_id);
+				if (!pointer_button_ptr) {
 					return 0;
 				}
 				mb->set_pressed(false);
-				mb->set_button_index(pointer_button[pen_id]);
-				pointer_button[pen_id] = MouseButton::NONE;
+				mb->set_button_index(*pointer_button_ptr);
+				*pointer_button_ptr = MouseButton::NONE;
 			}
 
 			ScreenToClient(windows[window_id].hWnd, &coords);

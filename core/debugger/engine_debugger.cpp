@@ -69,19 +69,19 @@ void EngineDebugger::register_uri_handler(const String &p_protocol, CreatePeerFu
 }
 
 void EngineDebugger::profiler_enable(const StringName &p_name, bool p_enabled, const Array &p_opts) {
-	ERR_FAIL_COND_MSG(!profilers.has(p_name), vformat("Can't change profiler state, no profiler: '%s'.", p_name));
-	Profiler &p = profilers[p_name];
-	if (p.toggle) {
-		p.toggle(p.data, p_enabled, p_opts);
+	Profiler *p = profilers.getptr(p_name);
+	ERR_FAIL_NULL_MSG(p, vformat("Can't change profiler state, no profiler: '%s'.", p_name));
+	if (p->toggle) {
+		p->toggle(p->data, p_enabled, p_opts);
 	}
-	p.active = p_enabled;
+	p->active = p_enabled;
 }
 
 void EngineDebugger::profiler_add_frame_data(const StringName &p_name, const Array &p_data) {
-	ERR_FAIL_COND_MSG(!profilers.has(p_name), vformat("Can't add frame data, no profiler: '%s'.", p_name));
-	Profiler &p = profilers[p_name];
-	if (p.add) {
-		p.add(p.data, p_data);
+	Profiler *p = profilers.getptr(p_name);
+	ERR_FAIL_NULL_MSG(p, vformat("Can't add frame data, no profiler: '%s'.", p_name));
+	if (p->add) {
+		p->add(p->data, p_data);
 	}
 }
 

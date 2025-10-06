@@ -717,10 +717,11 @@ void EditorDockManager::load_docks_from_config(Ref<ConfigFile> p_layout, const S
 			const String &name = names[j];
 			const String section_name = p_section + "/" + name;
 
-			if (!dock_map.has(name)) {
+			EditorDock **dock_ptr = dock_map.getptr(name);
+			if (!dock_ptr) {
 				continue;
 			}
-			EditorDock *dock = dock_map[name];
+			EditorDock *dock = *dock_ptr;
 
 			if (!dock->enabled) {
 				// Don't open disabled docks.

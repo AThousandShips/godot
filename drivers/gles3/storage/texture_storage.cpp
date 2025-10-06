@@ -2008,13 +2008,13 @@ void TextureStorage::texture_bind(RID p_texture, uint32_t p_texture_no) {
 /* TEXTURE ATLAS API */
 
 void TextureStorage::texture_add_to_texture_atlas(RID p_texture) {
-	if (!texture_atlas.textures.has(p_texture)) {
-		TextureAtlas::Texture t;
-		t.users = 1;
-		texture_atlas.textures[p_texture] = t;
+	TextureAtlas::Texture *t = texture_atlas.textures.getptr(p_texture);
+	if (!t) {
+		TextureAtlas::Texture tn;
+		tn.users = 1;
+		texture_atlas.textures[p_texture] = tn;
 		texture_atlas.dirty = true;
 	} else {
-		TextureAtlas::Texture *t = texture_atlas.textures.getptr(p_texture);
 		t->users++;
 	}
 }

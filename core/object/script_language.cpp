@@ -450,13 +450,13 @@ void ScriptServer::get_inheriters_list(const StringName &p_base_type, List<Strin
 		inheriters_cache_dirty = false;
 	}
 
-	if (!inheriters_cache.has(p_base_type)) {
+	const Vector<StringName> *v = inheriters_cache.getptr(p_base_type);
+	if (!v) {
 		return;
 	}
 
-	const Vector<StringName> &v = inheriters_cache[p_base_type];
-	for (int i = 0; i < v.size(); i++) {
-		r_classes->push_back(v[i]);
+	for (int i = 0; i < v->size(); i++) {
+		r_classes->push_back((*v)[i]);
 	}
 }
 

@@ -269,13 +269,14 @@ void EditorCommandPalette::_add_command(String p_command_name, String p_key_name
 }
 
 void EditorCommandPalette::execute_command(const String &p_command_key) {
-	ERR_FAIL_COND_MSG(!commands.has(p_command_key), p_command_key + " not found.");
-	commands[p_command_key].last_used = OS::get_singleton()->get_unix_time();
+	Command *command = commands.getptr(p_command_key);
+	ERR_FAIL_NULL_MSG(command, p_command_key + " not found.");
+	command->last_used = OS::get_singleton()->get_unix_time();
 	_save_history();
 
 	Variant ret;
 	Callable::CallError ce;
-	const Callable &callable = commands[p_command_key].callable;
+	const Callable &callable = command->callable;
 	callable.callp(nullptr, 0, ret, ce);
 
 	if (ce.error != Callable::CallError::CALL_OK) {

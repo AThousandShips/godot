@@ -153,11 +153,12 @@ GDExtensionManager::LoadStatus GDExtensionManager::reload_extension(const String
 		return LOAD_STATUS_FAILED;
 	}
 
-	if (!gdextension_map.has(p_path)) {
+	Ref<GDExtension> *extension_ptr = gdextension_map.getptr(p_path);
+	if (!extension_ptr) {
 		return LOAD_STATUS_NOT_LOADED;
 	}
 
-	Ref<GDExtension> extension = gdextension_map[p_path];
+	Ref<GDExtension> extension = *extension_ptr;
 	ERR_FAIL_COND_V_MSG(!extension->is_reloadable(), LOAD_STATUS_FAILED, vformat("This GDExtension is not marked as 'reloadable' or doesn't support reloading: %s.", p_path));
 
 	LoadStatus status;
@@ -203,13 +204,12 @@ GDExtensionManager::LoadStatus GDExtensionManager::unload_extension(const String
 		return LOAD_STATUS_FAILED;
 	}
 
-	if (!gdextension_map.has(p_path)) {
+	Ref<GDExtension> *extension = gdextension_map.getptr(p_path);
+	if (!extension) {
 		return LOAD_STATUS_NOT_LOADED;
 	}
 
-	Ref<GDExtension> extension = gdextension_map[p_path];
-
-	LoadStatus status = _unload_extension_internal(extension);
+	LoadStatus status = _unload_extension_internal(*extension);
 	if (status != LOAD_STATUS_OK) {
 		return status;
 	}

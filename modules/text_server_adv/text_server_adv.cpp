@@ -161,11 +161,12 @@ hb_position_t TextServerAdvanced::_bmp_get_glyph_h_kerning(hb_font_t *p_font, vo
 		return 0;
 	}
 
-	if (!bm_font->face->kerning_map.has(Vector2i(p_left_glyph, p_right_glyph))) {
+	const Vector2 *kerning = bm_font->face->kerning_map.getptr(Vector2i(p_left_glyph, p_right_glyph));
+	if (!kerning) {
 		return 0;
 	}
 
-	return bm_font->face->kerning_map[Vector2i(p_left_glyph, p_right_glyph)].x * 64;
+	return kerning->x * 64;
 }
 
 hb_bool_t TextServerAdvanced::_bmp_get_glyph_v_origin(hb_font_t *p_font, void *p_font_data, hb_codepoint_t p_glyph, hb_position_t *r_x, hb_position_t *r_y, void *p_user_data) {

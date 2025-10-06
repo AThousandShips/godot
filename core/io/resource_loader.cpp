@@ -732,15 +732,15 @@ Ref<Resource> ResourceLoader::load_threaded_get(const String &p_path, Error *r_e
 	{
 		MutexLock thread_load_lock(thread_load_mutex);
 
-		if (!user_load_tokens.has(p_path)) {
+		LoadToken **load_token_ptr = user_load_tokens.getptr(p_path);
+		if (!load_token_ptr) {
 			print_verbose("load_threaded_get(): No threaded load for resource path '" + p_path + "' has been initiated or its result has already been collected.");
 			if (r_error) {
 				*r_error = ERR_INVALID_PARAMETER;
 			}
 			return Ref<Resource>();
 		}
-
-		LoadToken *load_token = user_load_tokens[p_path];
+		LoadToken *load_token = *load_token_ptr;
 		DEV_ASSERT(load_token->user_rc >= 1);
 
 		// Support userland requesting on the main thread before the load is reported to be complete.
@@ -793,20 +793,19 @@ Ref<Resource> ResourceLoader::_load_complete_inner(LoadToken &p_load_token, Erro
 	if (p_load_token.task_if_unregistered) {
 		load_task_ptr = p_load_token.task_if_unregistered;
 	} else {
-		if (!thread_load_tasks.has(p_load_token.local_path)) {
+		ThreadLoadTask *load_task = thread_load_tasks.getptr(p_load_token.local_path);
+		if (!load_task) {
 			if (r_error) {
 				*r_error = ERR_BUG;
 			}
 			ERR_FAIL_V_MSG(Ref<Resource>(), "Bug in ResourceLoader logic, please report.");
 		}
 
-		ThreadLoadTask &load_task = thread_load_tasks[p_load_token.local_path];
+		if (load_task->status == THREAD_LOAD_IN_PROGRESS) {
+			DEV_ASSERT((load_task->task_id == 0) != (load_task->thread_id == 0));
 
-		if (load_task.status == THREAD_LOAD_IN_PROGRESS) {
-			DEV_ASSERT((load_task.task_id == 0) != (load_task.thread_id == 0));
-
-			if ((load_task.task_id != 0 && load_task.task_id == WorkerThreadPool::get_singleton()->get_caller_task_id()) ||
-					(load_task.thread_id != 0 && load_task.thread_id == Thread::get_caller_id())) {
+			if ((load_task->task_id != 0 && load_task->task_id == WorkerThreadPool::get_singleton()->get_caller_task_id()) ||
+					(load_task->thread_id != 0 && load_task->thread_id == Thread::get_caller_id())) {
 				// Load is in progress, but it's precisely this thread the one in charge.
 				// That means this is a cyclic load.
 				if (r_error) {
@@ -815,13 +814,13 @@ Ref<Resource> ResourceLoader::_load_complete_inner(LoadToken &p_load_token, Erro
 				return Ref<Resource>();
 			}
 
-			bool loader_is_wtp = load_task.task_id != 0;
+			bool loader_is_wtp = load_task->task_id != 0;
 			if (loader_is_wtp) {
 				// Loading thread is in the worker pool.
 				p_thread_load_lock.temp_unlock();
 
 				PREPARE_FOR_WTP_WAIT
-				Error wait_err = WorkerThreadPool::get_singleton()->wait_for_task_completion(load_task.task_id);
+				Error wait_err = WorkerThreadPool::get_singleton()->wait_for_task_completion(load_task->task_id);
 				RESTORE_AFTER_WTP_WAIT
 
 				DEV_ASSERT(!wait_err || wait_err == ERR_BUSY);
@@ -831,46 +830,46 @@ Ref<Resource> ResourceLoader::_load_complete_inner(LoadToken &p_load_token, Erro
 					// resource loading that means that the task to wait for can be restarted here to break the
 					// cycle, with as much recursion into this process as needed.
 					// When the stack is eventually unrolled, the original load will have been notified to go on.
-					load_task.load_token->reference();
-					_run_load_task(&load_task);
+					load_task->load_token->reference();
+					_run_load_task(load_task);
 				}
 
 				p_thread_load_lock.temp_relock();
-				load_task.awaited = true;
+				load_task->awaited = true;
 				// Mark nested loads with the same task id as awaited.
 				for (KeyValue<String, ResourceLoader::ThreadLoadTask> &E : thread_load_tasks) {
-					if (E.value.task_id == load_task.task_id) {
+					if (E.value.task_id == load_task->task_id) {
 						E.value.awaited = true;
 					}
 				}
 
-				DEV_ASSERT(load_task.status == THREAD_LOAD_FAILED || load_task.status == THREAD_LOAD_LOADED);
-			} else if (load_task.need_wait) {
+				DEV_ASSERT(load_task->status == THREAD_LOAD_FAILED || load_task->status == THREAD_LOAD_LOADED);
+			} else if (load_task->need_wait) {
 				// Loading thread is main or user thread.
-				if (!load_task.cond_var) {
-					load_task.cond_var = memnew(ConditionVariable);
+				if (!load_task->cond_var) {
+					load_task->cond_var = memnew(ConditionVariable);
 				}
-				load_task.awaiters_count++;
+				load_task->awaiters_count++;
 				do {
-					load_task.cond_var->wait(p_thread_load_lock);
+					load_task->cond_var->wait(p_thread_load_lock);
 					DEV_ASSERT(thread_load_tasks.has(p_load_token.local_path) && p_load_token.get_reference_count());
-				} while (load_task.need_wait);
-				load_task.awaiters_count--;
-				if (load_task.awaiters_count == 0) {
-					memdelete(load_task.cond_var);
-					load_task.cond_var = nullptr;
+				} while (load_task->need_wait);
+				load_task->awaiters_count--;
+				if (load_task->awaiters_count == 0) {
+					memdelete(load_task->cond_var);
+					load_task->cond_var = nullptr;
 				}
 
-				DEV_ASSERT(load_task.status == THREAD_LOAD_FAILED || load_task.status == THREAD_LOAD_LOADED);
+				DEV_ASSERT(load_task->status == THREAD_LOAD_FAILED || load_task->status == THREAD_LOAD_LOADED);
 			}
 		}
 
 		if (cleaning_tasks) {
-			load_task.resource = Ref<Resource>();
-			load_task.error = FAILED;
+			load_task->resource = Ref<Resource>();
+			load_task->error = FAILED;
 		}
 
-		load_task_ptr = &load_task;
+		load_task_ptr = load_task;
 	}
 
 	p_thread_load_lock.temp_unlock();

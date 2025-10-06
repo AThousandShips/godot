@@ -35,20 +35,22 @@ bool MissingNode::_set(const StringName &p_name, const Variant &p_value) {
 		properties.insert(p_name, p_value);
 		return true; //always valid to set (add)
 	} else {
-		if (!properties.has(p_name)) {
+		Variant *property = properties.getptr(p_name);
+		if (!property) {
 			return false;
 		}
 
-		properties[p_name] = p_value;
+		*property = p_value;
 		return true;
 	}
 }
 
 bool MissingNode::_get(const StringName &p_name, Variant &r_ret) const {
-	if (!properties.has(p_name)) {
+	const Variant *ret = properties.getptr(p_name);
+	if (!ret) {
 		return false;
 	}
-	r_ret = properties[p_name];
+	r_ret = *ret;
 	return true;
 }
 
