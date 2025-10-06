@@ -45,19 +45,19 @@ Node *EditorSceneFormatImporterGLTF::import_scene(const String &p_path, uint32_t
 	gltf.instantiate();
 	Ref<GLTFState> state;
 	state.instantiate();
-	if (p_options.has("gltf/naming_version")) {
-		int naming_version = p_options["gltf/naming_version"];
+	if (const Variant *naming_version_ptr = p_options.getptr("gltf/naming_version")) {
+		int naming_version = *naming_version_ptr;
 		gltf->set_naming_version(naming_version);
 	}
-	if (p_options.has("gltf/embedded_image_handling")) {
-		int32_t enum_option = p_options["gltf/embedded_image_handling"];
+	if (const Variant *enum_option_ptr = p_options.getptr("gltf/embedded_image_handling")) {
+		int32_t enum_option = *enum_option_ptr;
 		state->set_handle_binary_image(enum_option);
 	}
 	if (p_options.has(SNAME("nodes/import_as_skeleton_bones")) ? (bool)p_options[SNAME("nodes/import_as_skeleton_bones")] : false) {
 		state->set_import_as_skeleton_bones(true);
 	}
-	if (p_options.has(SNAME("extract_path"))) {
-		state->set_extract_path(p_options["extract_path"]);
+	if (const Variant *extract_path_ptr = p_options.getptr(SNAME("extract_path"))) {
+		state->set_extract_path(*extract_path_ptr);
 	}
 	state->set_bake_fps(p_options["animation/fps"]);
 	Error err = gltf->append_from_file(p_path, state, p_flags);
@@ -67,8 +67,8 @@ Node *EditorSceneFormatImporterGLTF::import_scene(const String &p_path, uint32_t
 		}
 		return nullptr;
 	}
-	if (p_options.has("animation/import")) {
-		state->set_create_animations(bool(p_options["animation/import"]));
+	if (const Variant *import_ptr = p_options.getptr("animation/import")) {
+		state->set_create_animations(bool(*import_ptr));
 	}
 
 #ifndef DISABLE_DEPRECATED

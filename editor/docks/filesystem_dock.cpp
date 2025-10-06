@@ -1583,8 +1583,9 @@ void FileSystemDock::_update_resource_paths_after_move(const HashMap<String, Str
 			base_path = base_path.substr(0, sep_pos);
 		}
 
-		if (p_renames.has(base_path)) {
-			base_path = p_renames[base_path];
+		const String *rename = p_renames.getptr(base_path);
+		if (rename) {
+			base_path = *rename;
 			r->set_path(base_path + extra_path);
 		}
 	}

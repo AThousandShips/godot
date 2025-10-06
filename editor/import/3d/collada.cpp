@@ -871,24 +871,26 @@ void Collada::_parse_curve_geometry(XMLParser &p_parser, const String &p_id, con
 
 			} else if (section == "float_array" || section == "array") {
 				// create a new array and read it.
-				if (curvedata.sources.has(current_source)) {
-					curvedata.sources[current_source].array = _read_float_array(p_parser);
-					COLLADA_PRINT("section: " + current_source + " read " + itos(curvedata.sources[current_source].array.size()) + " values.");
+				CurveData::Source *source = curvedata.sources.getptr(current_source);
+				if (source) {
+					source->array = _read_float_array(p_parser);
+					COLLADA_PRINT("section: " + current_source + " read " + itos(source->array.size()) + " values.");
 				}
 			} else if (section == "Name_array") {
 				// create a new array and read it.
-				if (curvedata.sources.has(current_source)) {
-					curvedata.sources[current_source].sarray = _read_string_array(p_parser);
-					COLLADA_PRINT("section: " + current_source + " read " + itos(curvedata.sources[current_source].array.size()) + " values.");
+				CurveData::Source *source = curvedata.sources.getptr(current_source);
+				if (source) {
+					source->sarray = _read_string_array(p_parser);
+					COLLADA_PRINT("section: " + current_source + " read " + itos(source->array.size()) + " values.");
 				}
 
 			} else if (section == "technique_common") {
 				//skip it
 			} else if (section == "accessor") { // child of source (below a technique tag)
-
-				if (curvedata.sources.has(current_source)) {
-					curvedata.sources[current_source].stride = p_parser.get_named_attribute_value("stride").to_int();
-					COLLADA_PRINT("section: " + current_source + " stride " + itos(curvedata.sources[current_source].stride));
+				CurveData::Source *source = curvedata.sources.getptr(current_source);
+				if (source) {
+					source->stride = p_parser.get_named_attribute_value("stride").to_int();
+					COLLADA_PRINT("section: " + current_source + " stride " + itos(source->stride));
 				}
 			} else if (section == "control_vertices") {
 				while (p_parser.read() == OK) {
@@ -951,17 +953,18 @@ void Collada::_parse_mesh_geometry(XMLParser &p_parser, const String &p_id, cons
 
 			} else if (section == "float_array" || section == "array") {
 				// create a new array and read it.
-				if (meshdata.sources.has(current_source)) {
-					meshdata.sources[current_source].array = _read_float_array(p_parser);
-					COLLADA_PRINT("section: " + current_source + " read " + itos(meshdata.sources[current_source].array.size()) + " values.");
+				MeshData::Source *source = meshdata.sources.getptr(current_source);
+				if (source) {
+					source->array = _read_float_array(p_parser);
+					COLLADA_PRINT("section: " + current_source + " read " + itos(source->array.size()) + " values.");
 				}
 			} else if (section == "technique_common") {
 				//skip it
 			} else if (section == "accessor") { // child of source (below a technique tag)
-
-				if (meshdata.sources.has(current_source)) {
-					meshdata.sources[current_source].stride = p_parser.get_named_attribute_value("stride").to_int();
-					COLLADA_PRINT("section: " + current_source + " stride " + itos(meshdata.sources[current_source].stride));
+				MeshData::Source *source = meshdata.sources.getptr(current_source);
+				if (source) {
+					source->stride = p_parser.get_named_attribute_value("stride").to_int();
+					COLLADA_PRINT("section: " + current_source + " stride " + itos(source->stride));
 				}
 			} else if (section == "vertices") {
 				MeshData::Vertices vert;
@@ -1097,9 +1100,10 @@ void Collada::_parse_skin_controller(XMLParser &p_parser, const String &p_id) {
 
 			} else if (section == "float_array" || section == "array") {
 				// create a new array and read it.
-				if (skindata.sources.has(current_source)) {
-					skindata.sources[current_source].array = _read_float_array(p_parser);
-					COLLADA_PRINT("section: " + current_source + " read " + itos(skindata.sources[current_source].array.size()) + " values.");
+				SkinControllerData::Source *source = skindata.sources.getptr(current_source);
+				if (source) {
+					source->array = _read_float_array(p_parser);
+					COLLADA_PRINT("section: " + current_source + " read " + itos(source->array.size()) + " values.");
 				}
 			} else if (section == "Name_array" || section == "IDREF_array") {
 				// create a new array and read it.
@@ -1107,28 +1111,29 @@ void Collada::_parse_skin_controller(XMLParser &p_parser, const String &p_id) {
 				if (section == "IDREF_array") {
 					skindata.use_idrefs = true;
 				}
-				if (skindata.sources.has(current_source)) {
-					skindata.sources[current_source].sarray = _read_string_array(p_parser);
+				SkinControllerData::Source *source = skindata.sources.getptr(current_source);
+				if (source) {
+					source->sarray = _read_string_array(p_parser);
 					if (section == "IDREF_array") {
-						Vector<String> sa = skindata.sources[current_source].sarray;
+						Vector<String> sa = source->sarray;
 						for (int i = 0; i < sa.size(); i++) {
 							state.idref_joints.insert(sa[i]);
 						}
 					}
-					COLLADA_PRINT("section: " + current_source + " read " + itos(skindata.sources[current_source].array.size()) + " values.");
+					COLLADA_PRINT("section: " + current_source + " read " + itos(source->array.size()) + " values.");
 				}
 			} else if (section == "technique_common") {
 				//skip it
 			} else if (section == "accessor") { // child of source (below a technique tag)
-
-				if (skindata.sources.has(current_source)) {
+				SkinControllerData::Source *source = skindata.sources.getptr(current_source);
+				if (source) {
 					int stride = 1;
 					if (p_parser.has_attribute("stride")) {
 						stride = p_parser.get_named_attribute_value("stride").to_int();
 					}
 
-					skindata.sources[current_source].stride = stride;
-					COLLADA_PRINT("section: " + current_source + " stride " + itos(skindata.sources[current_source].stride));
+					source->stride = stride;
+					COLLADA_PRINT("section: " + current_source + " stride " + itos(source->stride));
 				}
 
 			} else if (section == "joints") {
@@ -1243,28 +1248,30 @@ void Collada::_parse_morph_controller(XMLParser &p_parser, const String &p_id) {
 
 			} else if (section == "float_array" || section == "array") {
 				// create a new array and read it.
-				if (morphdata.sources.has(current_source)) {
-					morphdata.sources[current_source].array = _read_float_array(p_parser);
-					COLLADA_PRINT("section: " + current_source + " read " + itos(morphdata.sources[current_source].array.size()) + " values.");
+				MorphControllerData::Source *source = morphdata.sources.getptr(current_source);
+				if (source) {
+					source->array = _read_float_array(p_parser);
+					COLLADA_PRINT("section: " + current_source + " read " + itos(source->array.size()) + " values.");
 				}
 			} else if (section == "Name_array" || section == "IDREF_array") {
 				// create a new array and read it.
-				if (morphdata.sources.has(current_source)) {
-					morphdata.sources[current_source].sarray = _read_string_array(p_parser);
-					COLLADA_PRINT("section: " + current_source + " read " + itos(morphdata.sources[current_source].array.size()) + " values.");
+				MorphControllerData::Source *source = morphdata.sources.getptr(current_source);
+				if (source) {
+					source->sarray = _read_string_array(p_parser);
+					COLLADA_PRINT("section: " + current_source + " read " + itos(source->array.size()) + " values.");
 				}
 			} else if (section == "technique_common") {
 				//skip it
 			} else if (section == "accessor") { // child of source (below a technique tag)
-
-				if (morphdata.sources.has(current_source)) {
+				MorphControllerData::Source *source = morphdata.sources.getptr(current_source);
+				if (source) {
 					int stride = 1;
 					if (p_parser.has_attribute("stride")) {
 						stride = p_parser.get_named_attribute_value("stride").to_int();
 					}
 
-					morphdata.sources[current_source].stride = stride;
-					COLLADA_PRINT("section: " + current_source + " stride " + itos(morphdata.sources[current_source].stride));
+					source->stride = stride;
+					COLLADA_PRINT("section: " + current_source + " stride " + itos(source->stride));
 				}
 
 			} else if (section == "targets") {
@@ -1352,8 +1359,8 @@ Collada::Node *Collada::_parse_visual_instance_geometry(XMLParser &p_parser) {
 		if (geom->skeletons.is_empty()) {
 			//XSI style
 
-			if (state.skin_controller_data_map.has(geom->source)) {
-				SkinControllerData *skin = &state.skin_controller_data_map[geom->source];
+			SkinControllerData *skin = state.skin_controller_data_map.getptr(geom->source);
+			if (skin) {
 				//case where skeletons reference bones with IDREF (XSI)
 				ERR_FAIL_COND_V(!skin->joints.sources.has("JOINT"), geom);
 				String joint_arr = skin->joints.sources["JOINT"];

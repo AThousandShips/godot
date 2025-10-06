@@ -117,8 +117,8 @@ void EditorCommandPalette::_update_command_search(const String &search_text) {
 		String section_name = entries[i].key_name.get_slicec('/', 0);
 		TreeItem *section;
 
-		if (sections.has(section_name)) {
-			section = sections[section_name];
+		if (TreeItem **selection_ptr = sections.getptr(section_name)) {
+			section = *selection_ptr;
 		} else {
 			section = search_options->create_item(root);
 
@@ -299,8 +299,9 @@ void EditorCommandPalette::register_shortcuts_as_command() {
 	Dictionary command_history = EditorSettings::get_singleton()->get_project_metadata("command_palette", "command_history", Dictionary());
 	for (const KeyValue<Variant, Variant> &history_kv : command_history) {
 		const String &history_key = history_kv.key;
-		if (commands.has(history_key)) {
-			commands[history_key].last_used = history_kv.value;
+		Command *command = commands.getptr(history_key);
+		if (command) {
+			command->last_used = history_kv.value;
 		}
 	}
 }

@@ -56,10 +56,8 @@ void LightmapRaycasterEmbree::filter_function(const struct RTCFilterFunctionNArg
 
 	rtcInterpolate0(geom, hit->primID, hit->u, hit->v, RTC_BUFFER_TYPE_VERTEX_ATTRIBUTE, 0, &hit->u, 2);
 
-	if (scene->alpha_textures.has(geomID)) {
-		const AlphaTextureData &alpha_texture = scene->alpha_textures[geomID];
-
-		if (alpha_texture.sample(hit->u, hit->v) < 128) {
+	if (const AlphaTextureData *alpha_texture = scene->alpha_textures.getptr(geomID)) {
+		if (alpha_texture->sample(hit->u, hit->v) < 128) {
 			p_args->valid[0] = 0;
 			return;
 		}

@@ -59,16 +59,16 @@ Node *EditorSceneFormatImporterUFBX::import_scene(const String &p_path, uint32_t
 	state.instantiate();
 	print_verbose(vformat("FBX path: %s", p_path));
 	String path = ProjectSettings::get_singleton()->globalize_path(p_path);
-	if (p_options.has("fbx/naming_version")) {
-		int naming_version = p_options["fbx/naming_version"];
+	if (const Variant *naming_version_ptr = p_options.getptr("fbx/naming_version")) {
+		int naming_version = *naming_version_ptr;
 		fbx->set_naming_version(naming_version);
 	}
 	bool allow_geometry_helper_nodes = p_options.has("fbx/allow_geometry_helper_nodes") ? (bool)p_options["fbx/allow_geometry_helper_nodes"] : false;
 	if (allow_geometry_helper_nodes) {
 		state->set_allow_geometry_helper_nodes(allow_geometry_helper_nodes);
 	}
-	if (p_options.has("fbx/embedded_image_handling")) {
-		int32_t enum_option = p_options["fbx/embedded_image_handling"];
+	if (const Variant *enum_option_ptr = p_options.getptr("fbx/embedded_image_handling")) {
+		int32_t enum_option = *enum_option_ptr;
 		state->set_handle_binary_image(enum_option);
 	}
 	if (p_options.has(SNAME("nodes/import_as_skeleton_bones")) ? (bool)p_options[SNAME("nodes/import_as_skeleton_bones")] : false) {

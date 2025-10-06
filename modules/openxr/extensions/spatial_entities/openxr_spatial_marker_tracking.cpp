@@ -697,14 +697,12 @@ void OpenXRSpatialMarkerTrackingCapability::_process_snapshot(RID p_snapshot, bo
 			if (entity_state == XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT) {
 				// We should only get this status on update queries.
 				// We'll remove the marker.
-				if (marker_trackers.has(entity_id)) {
-					Ref<OpenXRMarkerTracker> marker_tracker = marker_trackers[entity_id];
-
-					marker_tracker->invalidate_pose(SNAME("default"));
-					marker_tracker->set_spatial_tracking_state(XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT);
+				if (Ref<OpenXRMarkerTracker> *marker_tracker = marker_trackers.getptr(entity_id)) {
+					(*marker_tracker)->invalidate_pose(SNAME("default"));
+					(*marker_tracker)->set_spatial_tracking_state(XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT);
 
 					// Remove it from our XRServer.
-					xr_server->remove_tracker(marker_tracker);
+					xr_server->remove_tracker(*marker_tracker);
 
 					// Remove it from our trackers.
 					marker_trackers.erase(entity_id);
@@ -760,16 +758,14 @@ void OpenXRSpatialMarkerTrackingCapability::_process_snapshot(RID p_snapshot, bo
 		if (p_is_discovery) {
 			// Remove any markers that are no longer there...
 			for (const XrSpatialEntityIdEXT &entity_id : current_markers) {
-				if (marker_trackers.has(entity_id)) {
-					Ref<OpenXRMarkerTracker> marker_tracker = marker_trackers[entity_id];
-
+				if (Ref<OpenXRMarkerTracker> *marker_tracker = marker_trackers.getptr(entity_id)) {
 					// Just in case there are still references out there to this marker,
 					// reset some stuff.
-					marker_tracker->invalidate_pose(SNAME("default"));
-					marker_tracker->set_spatial_tracking_state(XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT);
+					(*marker_tracker)->invalidate_pose(SNAME("default"));
+					(*marker_tracker)->set_spatial_tracking_state(XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT);
 
 					// Remove it from our XRServer.
-					xr_server->remove_tracker(marker_tracker);
+					xr_server->remove_tracker(*marker_tracker);
 
 					// Remove it from our trackers.
 					marker_trackers.erase(entity_id);

@@ -92,11 +92,12 @@ String _get_pascal_case_part_override(String p_part, bool p_input_is_upper = tru
 		}
 	}
 
-	if (pascal_case_part_overrides.has(p_part)) {
-		return pascal_case_part_overrides.get(p_part);
+	const String *part_override = pascal_case_part_overrides.getptr(p_part);
+	if (!part_override) {
+		return String();
 	}
 
-	return String();
+	return *part_override;
 }
 
 Vector<String> _split_pascal_case(const String &p_identifier) {
@@ -151,9 +152,9 @@ String pascal_to_pascal_case(const String &p_identifier) {
 		return p_identifier.to_upper();
 	}
 
-	if (pascal_case_name_overrides.has(p_identifier)) {
+	if (const String *name_override = pascal_case_name_overrides.getptr(p_identifier)) {
 		// Use hardcoded value for the identifier.
-		return pascal_case_name_overrides.get(p_identifier);
+		return *name_override;
 	}
 
 	Vector<String> parts = _split_pascal_case(p_identifier);

@@ -96,9 +96,8 @@ void AudioStreamInteractiveTransitionEditor::_update_selection() {
 		for (int j = 0; j <= clip_count; j++) {
 			if (rows[i]->is_selected(j)) {
 				Vector2i meta = rows[i]->get_metadata(j);
-				if (selection_order.has(meta)) {
-					int order = selection_order[meta];
-					if (order > editing_order) {
+				if (int *order = selection_order.getptr(meta)) {
+					if (*order > editing_order) {
 						editing = meta;
 					}
 				}

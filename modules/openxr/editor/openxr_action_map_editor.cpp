@@ -102,8 +102,8 @@ OpenXRInteractionProfileEditorBase *OpenXRActionMapEditor::_add_interaction_prof
 
 	// need to instance the correct editor for our profile
 	OpenXRInteractionProfileEditorBase *new_profile_editor = nullptr;
-	if (interaction_profile_editors.has(profile_path)) {
-		Object *new_editor = ClassDB::instantiate(interaction_profile_editors[profile_path]);
+	if (const String *interaction_profile_editor = interaction_profile_editors.getptr(profile_path)) {
+		Object *new_editor = ClassDB::instantiate(*interaction_profile_editor);
 		if (new_editor) {
 			new_profile_editor = Object::cast_to<OpenXRInteractionProfileEditorBase>(new_editor);
 			if (!new_profile_editor) {
@@ -421,8 +421,9 @@ void OpenXRActionMapEditor::register_binding_modifier_editor(const String &p_bin
 }
 
 String OpenXRActionMapEditor::get_binding_modifier_editor_class(const String &p_binding_modifier_class) {
-	if (binding_modifier_editors.has(p_binding_modifier_class)) {
-		return binding_modifier_editors[p_binding_modifier_class];
+	String *binding_modifier_editor = binding_modifier_editors.getptr(p_binding_modifier_class);
+	if (binding_modifier_editor) {
+		return *binding_modifier_editor;
 	}
 
 	return OpenXRBindingModifierEditor::get_class_static();

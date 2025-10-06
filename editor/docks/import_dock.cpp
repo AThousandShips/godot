@@ -68,8 +68,9 @@ public:
 	}
 
 	bool _get(const StringName &p_name, Variant &r_ret) const {
-		if (values.has(p_name)) {
-			r_ret = values[p_name];
+		const Variant *value = values.getptr(p_name);
+		if (value) {
+			r_ret = *value;
 			return true;
 		}
 
@@ -294,11 +295,11 @@ void ImportDock::set_edit_multiple_paths(const Vector<String> &p_paths) {
 	for (const ResourceImporter::ImportOption &E : options) {
 		params->properties.push_back(E.option);
 
-		if (value_frequency.has(E.option.name)) {
-			Dictionary d = value_frequency[E.option.name];
+		Dictionary *d = value_frequency.getptr(E.option.name);
+		if (d) {
 			int freq = 0;
 			Variant value;
-			for (const KeyValue<Variant, Variant> &kv : d) {
+			for (const KeyValue<Variant, Variant> &kv : *d) {
 				int f = kv.value;
 				if (f > freq) {
 					value = kv.key;

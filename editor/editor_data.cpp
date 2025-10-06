@@ -473,10 +473,11 @@ void EditorData::remove_move_array_element_function(const StringName &p_class) {
 }
 
 Callable EditorData::get_move_array_element_function(const StringName &p_class) const {
-	if (move_element_functions.has(p_class)) {
-		return move_element_functions[p_class];
+	const Callable *ret = move_element_functions.getptr(p_class);
+	if (!ret) {
+		return Callable();
 	}
-	return Callable();
+	return *ret;
 }
 
 void EditorData::remove_editor_plugin(EditorPlugin *p_plugin) {

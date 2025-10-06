@@ -59,8 +59,9 @@ void OpenXRInteractionProfileMetadata::register_profile_rename(const String &p_o
 }
 
 String OpenXRInteractionProfileMetadata::check_profile_name(const String &p_name) const {
-	if (profile_renames.has(p_name)) {
-		return profile_renames[p_name];
+	const String *profile_rename = profile_renames.getptr(p_name);
+	if (profile_rename) {
+		return *profile_rename;
 	}
 
 	return p_name;

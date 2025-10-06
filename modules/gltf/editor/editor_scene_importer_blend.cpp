@@ -153,8 +153,8 @@ Node *EditorSceneFormatImporterBlend::import_scene(const String &p_path, uint32_
 	} else {
 		parameters_map["export_extras"] = false;
 	}
-	if (p_options.has(SNAME("blender/meshes/skins"))) {
-		int32_t skins = p_options["blender/meshes/skins"];
+	if (const Variant *skins_ptr = p_options.getptr(SNAME("blender/meshes/skins"))) {
+		int32_t skins = *skins_ptr;
 		if (skins == BLEND_BONE_INFLUENCES_NONE) {
 			parameters_map["export_skins"] = false;
 		} else if (skins == BLEND_BONE_INFLUENCES_COMPATIBLE) {
@@ -167,8 +167,8 @@ Node *EditorSceneFormatImporterBlend::import_scene(const String &p_path, uint32_
 	} else {
 		parameters_map["export_skins"] = false;
 	}
-	if (p_options.has(SNAME("blender/materials/export_materials"))) {
-		int32_t exports = p_options["blender/materials/export_materials"];
+	if (const Variant *exports_ptr = p_options.getptr(SNAME("blender/materials/export_materials"))) {
+		int32_t exports = *exports_ptr;
 		switch (exports) {
 			case BLEND_MATERIAL_EXPORT_PLACEHOLDER: {
 				parameters_map["export_materials"] = "PLACEHOLDER";
@@ -207,8 +207,8 @@ Node *EditorSceneFormatImporterBlend::import_scene(const String &p_path, uint32_
 			parameters_map["export_colors"] = false;
 		}
 	}
-	if (p_options.has(SNAME("blender/nodes/visible"))) {
-		int32_t visible = p_options["blender/nodes/visible"];
+	if (const Variant *visible_ptr = p_options.getptr(SNAME("blender/nodes/visible"))) {
+		int32_t visible = *visible_ptr;
 		if (visible == BLEND_VISIBLE_VISIBLE_ONLY) {
 			parameters_map["use_visible"] = true;
 		} else if (visible == BLEND_VISIBLE_RENDERABLE) {
@@ -307,8 +307,8 @@ Node *EditorSceneFormatImporterBlend::import_scene(const String &p_path, uint32_
 	Ref<GLTFState> state;
 	state.instantiate();
 
-	if (p_options.has("gltf/naming_version")) {
-		int naming_version = p_options["gltf/naming_version"];
+	if (const Variant *naming_version_ptr = p_options.getptr("gltf/naming_version")) {
+		int naming_version = *naming_version_ptr;
 		gltf->set_naming_version(naming_version);
 	}
 	if (p_options.has(SNAME("nodes/import_as_skeleton_bones")) ? (bool)p_options[SNAME("nodes/import_as_skeleton_bones")] : false) {

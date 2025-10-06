@@ -392,17 +392,17 @@ void EditorExport::update_export_presets() {
 	bool export_presets_updated = false;
 	for (int i = 0; i < export_presets.size(); i++) {
 		Ref<EditorExportPreset> preset = export_presets[i];
-		if (platform_options.has(preset->get_platform()->get_name())) {
+		List<EditorExportPlatform::ExportOption> *options = platform_options.getptr(preset->get_platform()->get_name());
+		if (options) {
 			export_presets_updated = true;
 
 			bool update_value_overrides = false;
-			List<EditorExportPlatform::ExportOption> options = platform_options[preset->get_platform()->get_name()];
 
 			// Clear the preset properties prior to reloading, keep the values to preserve options from plugins that may be currently disabled.
 			preset->properties.clear();
 			preset->update_visibility.clear();
 
-			for (const EditorExportPlatform::ExportOption &E : options) {
+			for (const EditorExportPlatform::ExportOption &E : *options) {
 				StringName option_name = E.option.name;
 				preset->properties[option_name] = E.option;
 				if (!preset->has(option_name)) {

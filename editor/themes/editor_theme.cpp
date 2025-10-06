@@ -39,33 +39,45 @@ Vector<StringName> EditorTheme::editor_theme_types;
 
 // Keep in sync with Theme::get_color.
 Color EditorTheme::get_color(const StringName &p_name, const StringName &p_theme_type) const {
-	if (color_map.has(p_theme_type) && color_map[p_theme_type].has(p_name)) {
-		return color_map[p_theme_type][p_name];
-	} else {
-		if (editor_theme_types.has(p_theme_type)) {
-			WARN_PRINT(vformat("Trying to access a non-existing editor theme color '%s' in '%s'.", p_name, p_theme_type));
+	const ThemeColorMap *color_map_ptr = color_map.getptr(p_theme_type);
+	if (color_map_ptr) {
+		const Color *color_ptr = color_map_ptr->getptr(p_name);
+		if (color_ptr) {
+			return *color_ptr;
 		}
-		return Color();
 	}
+
+	if (editor_theme_types.has(p_theme_type)) {
+		WARN_PRINT(vformat("Trying to access a non-existing editor theme color '%s' in '%s'.", p_name, p_theme_type));
+	}
+	return Color();
 }
 
 // Keep in sync with Theme::get_constant.
 int EditorTheme::get_constant(const StringName &p_name, const StringName &p_theme_type) const {
-	if (constant_map.has(p_theme_type) && constant_map[p_theme_type].has(p_name)) {
-		return constant_map[p_theme_type][p_name];
-	} else {
-		if (editor_theme_types.has(p_theme_type)) {
-			WARN_PRINT(vformat("Trying to access a non-existing editor theme constant '%s' in '%s'.", p_name, p_theme_type));
+	const ThemeConstantMap *constant_map_ptr = constant_map.getptr(p_theme_type);
+	if (constant_map_ptr) {
+		const int *constant_ptr = constant_map_ptr->getptr(p_name);
+		if (constant_ptr) {
+			return *constant_ptr;
 		}
-		return 0;
 	}
+	if (editor_theme_types.has(p_theme_type)) {
+		WARN_PRINT(vformat("Trying to access a non-existing editor theme constant '%s' in '%s'.", p_name, p_theme_type));
+	}
+	return 0;
 }
 
 // Keep in sync with Theme::get_font.
 Ref<Font> EditorTheme::get_font(const StringName &p_name, const StringName &p_theme_type) const {
-	if (font_map.has(p_theme_type) && font_map[p_theme_type].has(p_name) && font_map[p_theme_type][p_name].is_valid()) {
-		return font_map[p_theme_type][p_name];
-	} else if (has_default_font()) {
+	const ThemeFontMap *font_map_ptr = font_map.getptr(p_theme_type);
+	if (font_map_ptr) {
+		const Ref<Font> *font_ptr = font_map_ptr->getptr(p_name);
+		if (font_ptr && font_ptr->is_valid()) {
+			return *font_ptr;
+		}
+	}
+	if (has_default_font()) {
 		if (editor_theme_types.has(p_theme_type)) {
 			WARN_PRINT(vformat("Trying to access a non-existing editor theme font '%s' in '%s'.", p_name, p_theme_type));
 		}
@@ -80,9 +92,14 @@ Ref<Font> EditorTheme::get_font(const StringName &p_name, const StringName &p_th
 
 // Keep in sync with Theme::get_font_size.
 int EditorTheme::get_font_size(const StringName &p_name, const StringName &p_theme_type) const {
-	if (font_size_map.has(p_theme_type) && font_size_map[p_theme_type].has(p_name) && (font_size_map[p_theme_type][p_name] > 0)) {
-		return font_size_map[p_theme_type][p_name];
-	} else if (has_default_font_size()) {
+	const ThemeFontSizeMap *font_size_map_ptr = font_size_map.getptr(p_theme_type);
+	if (font_size_map_ptr) {
+		const int *font_size_ptr = font_size_map_ptr->getptr(p_name);
+		if (font_size_ptr && *font_size_ptr > 0) {
+			return *font_size_ptr;
+		}
+	}
+	if (has_default_font_size()) {
 		if (editor_theme_types.has(p_theme_type)) {
 			WARN_PRINT(vformat("Trying to access a non-existing editor theme font size '%s' in '%s'.", p_name, p_theme_type));
 		}
@@ -97,26 +114,32 @@ int EditorTheme::get_font_size(const StringName &p_name, const StringName &p_the
 
 // Keep in sync with Theme::get_icon.
 Ref<Texture2D> EditorTheme::get_icon(const StringName &p_name, const StringName &p_theme_type) const {
-	if (icon_map.has(p_theme_type) && icon_map[p_theme_type].has(p_name) && icon_map[p_theme_type][p_name].is_valid()) {
-		return icon_map[p_theme_type][p_name];
-	} else {
-		if (editor_theme_types.has(p_theme_type)) {
-			WARN_PRINT(vformat("Trying to access a non-existing editor theme icon '%s' in '%s'.", p_name, p_theme_type));
+	const ThemeIconMap *icon_map_ptr = icon_map.getptr(p_theme_type);
+	if (icon_map_ptr) {
+		const Ref<Texture2D> *icon_ptr = icon_map_ptr->getptr(p_name);
+		if (icon_ptr && icon_ptr->is_valid()) {
+			return *icon_ptr;
 		}
-		return ThemeDB::get_singleton()->get_fallback_icon();
 	}
+	if (editor_theme_types.has(p_theme_type)) {
+		WARN_PRINT(vformat("Trying to access a non-existing editor theme icon '%s' in '%s'.", p_name, p_theme_type));
+	}
+	return ThemeDB::get_singleton()->get_fallback_icon();
 }
 
 // Keep in sync with Theme::get_stylebox.
 Ref<StyleBox> EditorTheme::get_stylebox(const StringName &p_name, const StringName &p_theme_type) const {
-	if (style_map.has(p_theme_type) && style_map[p_theme_type].has(p_name) && style_map[p_theme_type][p_name].is_valid()) {
-		return style_map[p_theme_type][p_name];
-	} else {
-		if (editor_theme_types.has(p_theme_type)) {
-			WARN_PRINT(vformat("Trying to access a non-existing editor theme stylebox '%s' in '%s'.", p_name, p_theme_type));
+	const ThemeStyleMap *style_map_ptr = style_map.getptr(p_theme_type);
+	if (style_map_ptr) {
+		const Ref<StyleBox> *style_ptr = style_map_ptr->getptr(p_name);
+		if (style_ptr && style_ptr->is_valid()) {
+			return *style_ptr;
 		}
-		return ThemeDB::get_singleton()->get_fallback_stylebox();
 	}
+	if (editor_theme_types.has(p_theme_type)) {
+		WARN_PRINT(vformat("Trying to access a non-existing editor theme stylebox '%s' in '%s'.", p_name, p_theme_type));
+	}
+	return ThemeDB::get_singleton()->get_fallback_stylebox();
 }
 
 void EditorTheme::initialize() {

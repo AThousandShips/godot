@@ -728,8 +728,9 @@ void GDScript::_save_old_static_data() {
 
 void GDScript::_restore_old_static_data() {
 	for (KeyValue<StringName, MemberInfo> &E : old_static_variables_indices) {
-		if (static_variables_indices.has(E.key)) {
-			static_variables.write[static_variables_indices[E.key].index] = old_static_variables[E.value.index];
+		const MemberInfo *static_variable_ptr = static_variables_indices.getptr(E.key);
+		if (static_variable_ptr) {
+			static_variables.write[static_variable_ptr->index] = old_static_variables[E.value.index];
 		}
 	}
 	old_static_variables_indices.clear();
@@ -1839,11 +1840,12 @@ bool GDScriptInstance::get(const StringName &p_name, Variant &r_ret) const {
 }
 
 Variant::Type GDScriptInstance::get_property_type(const StringName &p_name, bool *r_is_valid) const {
-	if (script->member_indices.has(p_name)) {
+	const GDScript::MemberInfo *member_ptr = script->member_indices.getptr(p_name);
+	if (member_ptr) {
 		if (r_is_valid) {
 			*r_is_valid = true;
 		}
-		return script->member_indices[p_name].property_info.type;
+		return member_ptr->property_info.type;
 	}
 
 	if (r_is_valid) {
@@ -2149,8 +2151,9 @@ void GDScriptInstance::reload_members() {
 
 	//pass the values to the new indices
 	for (KeyValue<StringName, GDScript::MemberInfo> &E : script->member_indices) {
-		if (member_indices_cache.has(E.key)) {
-			Variant value = members[member_indices_cache[E.key]];
+		const int *member_index_ptr = member_indices_cache.getptr(E.key);
+		if (member_index_ptr) {
+			Variant value = members[*member_index_ptr];
 			new_members.write[E.value.index] = value;
 		}
 	}
@@ -2200,9 +2203,9 @@ String GDScriptLanguage::get_name() const {
 /* LANGUAGE FUNCTIONS */
 
 void GDScriptLanguage::_add_global(const StringName &p_name, const Variant &p_value) {
-	if (globals.has(p_name)) {
+	if (const int *global = globals.getptr(p_name)) {
 		//overwrite existing
-		global_array.write[globals[p_name]] = p_value;
+		global_array.write[*global] = p_value;
 		return;
 	}
 
@@ -2236,11 +2239,11 @@ void GDScriptLanguage::add_named_global_constant(const StringName &p_name, const
 }
 
 Variant GDScriptLanguage::get_any_global_constant(const StringName &p_name) {
-	if (named_globals.has(p_name)) {
-		return named_globals[p_name];
+	if (const Variant *named_global = named_globals.getptr(p_name)) {
+		return *named_global;
 	}
-	if (globals.has(p_name)) {
-		return _global_array[globals[p_name]];
+	if (const int *global = globals.getptr(p_name)) {
+		return _global_array[*global];
 	}
 	ERR_FAIL_V_MSG(Variant(), vformat("Could not find any global constant with name: %s.", p_name));
 }

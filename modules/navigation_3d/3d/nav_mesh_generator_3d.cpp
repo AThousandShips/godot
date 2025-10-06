@@ -239,8 +239,8 @@ bool NavMeshGenerator3D::is_baking(Ref<NavigationMesh> p_navigation_mesh) {
 String NavMeshGenerator3D::get_baking_state_msg(Ref<NavigationMesh> p_navigation_mesh) {
 	String bake_state_msg;
 	MutexLock baking_navmesh_lock(baking_navmesh_mutex);
-	if (baking_navmeshes.has(p_navigation_mesh)) {
-		bake_state_msg = _navmesh_bake_state_msgs[baking_navmeshes[p_navigation_mesh]->bake_state];
+	if (NavMeshGeneratorTask3D **baking_navmesh = baking_navmeshes.getptr(p_navigation_mesh)) {
+		bake_state_msg = _navmesh_bake_state_msgs[(*baking_navmesh)->bake_state];
 	} else {
 		bake_state_msg = _navmesh_bake_state_msgs[NavMeshBakeState::BAKE_STATE_NONE];
 	}

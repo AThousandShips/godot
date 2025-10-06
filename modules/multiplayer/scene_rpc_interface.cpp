@@ -101,8 +101,8 @@ void SceneRPCInterface::_parse_rpc_config(const Variant &p_config, bool p_for_no
 
 const SceneRPCInterface::RPCConfigCache &SceneRPCInterface::_get_node_config(const Node *p_node) {
 	const ObjectID oid = p_node->get_instance_id();
-	if (rpc_cache.has(oid)) {
-		return rpc_cache[oid];
+	if (RPCConfigCache *cache_ptr = rpc_cache.getptr(oid)) {
+		return *cache_ptr;
 	}
 	RPCConfigCache cache;
 	_parse_rpc_config(p_node->get_node_rpc_config(), true, cache);

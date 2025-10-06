@@ -910,9 +910,9 @@ void OpenXRSpatialAnchorCapability::_process_update_snapshot(RID p_snapshot) {
 			XrSpatialEntityIdEXT entity_id = query_result_data->get_entity_id(i);
 			XrSpatialEntityTrackingStateEXT entity_state = query_result_data->get_entity_state(i);
 
-			if (anchors.has(entity_id)) {
+			if (Ref<OpenXRAnchorTracker> *anchor_ptr = anchors.getptr(entity_id)) {
 				// Process our entity.
-				Ref<OpenXRAnchorTracker> anchor = anchors[entity_id];
+				Ref<OpenXRAnchorTracker> anchor = *anchor_ptr;
 
 				if (entity_state == XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT) {
 					anchor->invalidate_pose(SNAME("default"));

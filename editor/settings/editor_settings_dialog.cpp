@@ -529,8 +529,8 @@ void EditorSettingsDialog::_update_shortcuts() {
 	common_section->set_text(0, TTRC("Common"));
 	common_section->set_selectable(0, false);
 	common_section->set_selectable(1, false);
-	if (collapsed.has("Common")) {
-		common_section->set_collapsed(collapsed["Common"]);
+	if (const bool *collapsed_ptr = collapsed.getptr("Common")) {
+		common_section->set_collapsed(*collapsed_ptr);
 	}
 	common_section->set_custom_bg_color(0, get_theme_color(SNAME("prop_subsection"), EditorStringName(Editor)));
 	common_section->set_custom_bg_color(1, get_theme_color(SNAME("prop_subsection"), EditorStringName(Editor)));
@@ -590,8 +590,8 @@ void EditorSettingsDialog::_update_shortcuts() {
 		section->set_custom_bg_color(0, get_theme_color(SNAME("prop_subsection"), EditorStringName(Editor)));
 		section->set_custom_bg_color(1, get_theme_color(SNAME("prop_subsection"), EditorStringName(Editor)));
 
-		if (collapsed.has(item_name)) {
-			section->set_collapsed(collapsed[item_name]);
+		if (const bool *collapsed_ptr = collapsed.getptr(item_name)) {
+			section->set_collapsed(*collapsed_ptr);
 		}
 
 		sections[section_name] = section;

@@ -125,9 +125,9 @@ void AccessibilityDriverAccessKit::_accessibility_action_callback(struct accessk
 		rq_data = ae->run;
 	}
 
-	if (ae->actions.has(p_request->action)) {
-		Callable &cb = ae->actions[p_request->action];
-		if (cb.is_valid()) {
+	Callable *cb = ae->actions.getptr(p_request->action);
+	if (cb) {
+		if (cb->is_valid()) {
 			if (p_request->data.has_value) {
 				switch (p_request->data.value.tag) {
 					case ACCESSKIT_ACTION_DATA_CUSTOM_ACTION: {
@@ -196,7 +196,7 @@ void AccessibilityDriverAccessKit::_accessibility_action_callback(struct accessk
 				}
 			}
 
-			cb.call_deferred(rq_data);
+			cb->call_deferred(rq_data);
 		}
 	}
 }

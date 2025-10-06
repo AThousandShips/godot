@@ -615,8 +615,8 @@ Transform3D OpenXRRenderModelExtension::render_model_get_animatable_node_transfo
 }
 
 Ref<OpenXRRenderModelData> OpenXRRenderModelExtension::_get_render_model_data(XrUuidEXT p_cache_id, uint32_t p_animatable_node_count) {
-	if (render_model_data_cache.has(p_cache_id)) {
-		return render_model_data_cache[p_cache_id];
+	if (Ref<OpenXRRenderModelData> *render_model_data_ptr = render_model_data_cache.getptr(p_cache_id)) {
+		return *render_model_data_ptr;
 	}
 
 	// We don't have this cached, lets load it up

@@ -124,8 +124,8 @@ Variant JSONRPC::process_action(const Variant &p_action, bool p_process_arr_elem
 			}
 		}
 
-		if (methods.has(method)) {
-			Variant call_ret = methods[method].callv(args);
+		if (Callable *method_ptr = methods.getptr(method)) {
+			Variant call_ret = method_ptr->callv(args);
 			ret = make_response(call_ret, id);
 		} else {
 			ret = make_response_error(JSONRPC::METHOD_NOT_FOUND, "Method not found: " + method, id);

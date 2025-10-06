@@ -1093,15 +1093,15 @@ TreeItem *EditorHelpSearch::Runner::_create_class_hierarchy(const ClassMatch &p_
 	if (p_match.doc->name.is_empty()) {
 		return nullptr;
 	}
-	if (class_items.has(p_match.doc->name)) {
-		return class_items[p_match.doc->name];
+	if (TreeItem **found = class_items.getptr(p_match.doc->name)) {
+		return *found;
 	}
 
 	// Ensure parent nodes are created first.
 	TreeItem *parent_item = root_item;
 	if (!p_match.doc->inherits.is_empty()) {
-		if (class_items.has(p_match.doc->inherits)) {
-			parent_item = class_items[p_match.doc->inherits];
+		if (TreeItem **found = class_items.getptr(p_match.doc->inherits)) {
+			parent_item = *found;
 		} else {
 			ClassMatch &base_match = matches[p_match.doc->inherits];
 			if (base_match.doc) {

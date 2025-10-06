@@ -773,20 +773,19 @@ void EditorBuildProfileManager::_find_files(EditorFileSystemDirectory *p_dir, co
 		uint64_t timestamp = 0;
 		String md5;
 
-		if (p_cache.has(p)) {
-			const DetectedFile &cache = p_cache[p];
+		if (const DetectedFile *cache = p_cache.getptr(p)) {
 			// Check if timestamp and MD5 match.
 			timestamp = FileAccess::get_modified_time(p_check);
 			bool cache_valid = true;
-			if (cache.timestamp != timestamp) {
+			if (cache->timestamp != timestamp) {
 				md5 = FileAccess::get_md5(p_check);
-				if (md5 != cache.md5) {
+				if (md5 != cache->md5) {
 					cache_valid = false;
 				}
 			}
 
 			if (cache_valid) {
-				r_detected.insert(p, cache);
+				r_detected.insert(p, *cache);
 				continue;
 			}
 		}

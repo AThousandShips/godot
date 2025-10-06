@@ -2422,8 +2422,8 @@ static bool _guess_identifier_type(GDScriptParser::CompletionContext &p_context,
 				case GDScriptParser::DataType::CLASS:
 					if (base_type.class_type->has_function(p_context.current_function->identifier->name)) {
 						GDScriptParser::FunctionNode *parent_function = base_type.class_type->get_member(p_context.current_function->identifier->name).function;
-						if (parent_function->parameters_indices.has(p_identifier->name)) {
-							const GDScriptParser::ParameterNode *parameter = parent_function->parameters[parent_function->parameters_indices[p_identifier->name]];
+						if (int *parameter_index = parent_function->parameters_indices.getptr(p_identifier->name)) {
+							const GDScriptParser::ParameterNode *parameter = parent_function->parameters[*parameter_index];
 							if ((!id_type.type.is_set() || id_type.type.is_variant()) && parameter->get_datatype().is_hard_type()) {
 								id_type.type = parameter->get_datatype();
 							}
@@ -2610,8 +2610,8 @@ static bool _guess_identifier_type_from_base(GDScriptParser::CompletionContext &
 				if (scr.is_valid()) {
 					HashMap<StringName, Variant> constants;
 					scr->get_constants(&constants);
-					if (constants.has(p_identifier)) {
-						r_type = _type_from_variant(constants[p_identifier], p_context);
+					if (Variant *constant = constants.getptr(p_identifier)) {
+						r_type = _type_from_variant(*constant, p_context);
 						return true;
 					}
 
@@ -4506,8 +4506,8 @@ static Error _lookup_symbol_from_base(const GDScriptParser::DataType &p_base, co
 				}
 
 				const HashMap<StringName, int> &global_map = GDScriptLanguage::get_singleton()->get_global_map();
-				if (global_map.has(p_symbol)) {
-					Variant value = GDScriptLanguage::get_singleton()->get_global_array()[global_map[p_symbol]];
+				if (const int *global = global_map.getptr(p_symbol)) {
+					Variant value = GDScriptLanguage::get_singleton()->get_global_array()[*global];
 					if (value.get_type() == Variant::OBJECT) {
 						const Object *obj = value;
 						if (obj) {

@@ -281,10 +281,10 @@ void EditorResourcePreview::_iterate() {
 	QueueItem item = queue.front()->get();
 	queue.pop_front();
 
-	if (cache.has(item.path)) {
-		Item cached_item = cache[item.path];
+	Item *cached_item = cache.getptr(item.path);
+	if (cached_item) {
 		// Already has it because someone loaded it, just let it know it's ready.
-		_preview_ready(item.path, cached_item.last_hash, cached_item.preview, cached_item.small_preview, item.callback, cached_item.preview_metadata);
+		_preview_ready(item.path, cached_item->last_hash, cached_item->preview, cached_item->small_preview, item.callback, cached_item->preview_metadata);
 		preview_mutex.unlock();
 		return;
 	}

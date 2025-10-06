@@ -367,10 +367,11 @@ void EditorPerformanceProfiler::add_profile_frame(const Vector<float> &p_values)
 }
 
 List<float> *EditorPerformanceProfiler::get_monitor_data(const StringName &p_name) {
-	if (monitors.has(p_name)) {
-		return &monitors[p_name].history;
+	Monitor *monitor = monitors.getptr(p_name);
+	if (!monitor) {
+		return nullptr;
 	}
-	return nullptr;
+	return &monitor->history;
 }
 
 void EditorPerformanceProfiler::_notification(int p_what) {

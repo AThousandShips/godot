@@ -648,8 +648,8 @@ void AudioStreamPlaybackInteractive::_queue(int p_to_clip_index, bool p_is_auto_
 	};
 
 	for (int i = 0; i < 4; i++) {
-		if (stream->transition_map.has(tkeys[i])) {
-			transition = stream->transition_map[tkeys[i]];
+		if (AudioStreamInteractive::Transition *tr = stream->transition_map.getptr(tkeys[i])) {
+			transition = *tr;
 			break;
 		}
 	}

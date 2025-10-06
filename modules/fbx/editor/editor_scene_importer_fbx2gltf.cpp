@@ -98,8 +98,8 @@ Node *EditorSceneFormatImporterFBX2GLTF::import_scene(const String &p_path, uint
 	gltf.instantiate();
 	Ref<GLTFState> state;
 	state.instantiate();
-	if (p_options.has("fbx/naming_version")) {
-		int naming_version = p_options["fbx/naming_version"];
+	if (const Variant *naming_version_ptr = p_options.getptr("fbx/naming_version")) {
+		int naming_version = *naming_version_ptr;
 		gltf->set_naming_version(naming_version);
 	}
 	if (p_options.has(SNAME("nodes/import_as_skeleton_bones")) ? (bool)p_options[SNAME("nodes/import_as_skeleton_bones")] : false) {

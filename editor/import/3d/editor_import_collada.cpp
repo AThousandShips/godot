@@ -1225,11 +1225,11 @@ Error ColladaImport::_create_resources(Collada::Node *p_node, bool p_use_compres
 							Vector<String> names = morph->sources[target].sarray;
 							for (int i = 0; i < names.size(); i++) {
 								const String &meshid2 = names[i];
-								if (collada.state.mesh_data_map.has(meshid2)) {
+								const Collada::MeshData *meshdata = collada.state.mesh_data_map.getptr(meshid2);
+								if (meshdata) {
 									Ref<ImporterMesh> mesh = Ref<ImporterMesh>(memnew(ImporterMesh));
-									const Collada::MeshData &meshdata = collada.state.mesh_data_map[meshid2];
-									mesh->set_name(meshdata.name);
-									Error err = _create_mesh_surfaces(false, mesh, ng2->material_map, meshdata, apply_xform, bone_remap, skin, nullptr, Vector<Ref<ImporterMesh>>(), false);
+									mesh->set_name(meshdata->name);
+									Error err = _create_mesh_surfaces(false, mesh, ng2->material_map, *meshdata, apply_xform, bone_remap, skin, nullptr, Vector<Ref<ImporterMesh>>(), false);
 									ERR_FAIL_COND_V(err, err);
 
 									morphs.push_back(mesh);
@@ -1508,10 +1508,10 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 			int tc = collada.state.animation_clips[i].tracks.size();
 			for (int j = 0; j < tc; j++) {
 				String n = collada.state.animation_clips[i].tracks[j];
-				if (collada.state.by_id_tracks.has(n)) {
-					const Vector<int> &ti = collada.state.by_id_tracks[n];
-					for (int k = 0; k < ti.size(); k++) {
-						track_filter.insert(ti[k]);
+				const Vector<int> *ti = collada.state.by_id_tracks.getptr(n);
+				if (ti) {
+					for (int k = 0; k < ti->size(); k++) {
+						track_filter.insert((*ti)[k]);
 					}
 				}
 			}
@@ -1520,10 +1520,10 @@ void ColladaImport::create_animation(int p_clip, bool p_import_value_tracks) {
 		int tc = collada.state.animation_clips[p_clip].tracks.size();
 		for (int j = 0; j < tc; j++) {
 			String n = collada.state.animation_clips[p_clip].tracks[j];
-			if (collada.state.by_id_tracks.has(n)) {
-				const Vector<int> &ti = collada.state.by_id_tracks[n];
-				for (int k = 0; k < ti.size(); k++) {
-					track_filter.insert(ti[k]);
+			const Vector<int> *ti = collada.state.by_id_tracks.getptr(n);
+			if (ti) {
+				for (int k = 0; k < ti->size(); k++) {
+					track_filter.insert((*ti)[k]);
 				}
 			}
 		}

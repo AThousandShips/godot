@@ -336,8 +336,8 @@ public:
 
 	virtual int get_member_line(const StringName &p_member) const override {
 #ifdef TOOLS_ENABLED
-		if (member_lines.has(p_member)) {
-			return member_lines[p_member];
+		if (const int *member_line = member_lines.getptr(p_member)) {
+			return *member_line;
 		}
 #endif
 		return -1;

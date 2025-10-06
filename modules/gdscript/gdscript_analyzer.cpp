@@ -230,9 +230,8 @@ static GDScriptParser::DataType make_builtin_meta_type(Variant::Type p_type) {
 }
 
 bool GDScriptAnalyzer::has_member_name_conflict_in_script_class(const StringName &p_member_name, const GDScriptParser::ClassNode *p_class, const GDScriptParser::Node *p_member) {
-	if (p_class->members_indices.has(p_member_name)) {
-		int index = p_class->members_indices[p_member_name];
-		const GDScriptParser::ClassNode::Member *member = &p_class->members[index];
+	if (const int *index = p_class->members_indices.getptr(p_member_name)) {
+		const GDScriptParser::ClassNode::Member *member = &p_class->members[*index];
 
 		if (member->type == GDScriptParser::ClassNode::Member::VARIABLE ||
 				member->type == GDScriptParser::ClassNode::Member::CONSTANT ||
@@ -4312,10 +4311,8 @@ void GDScriptAnalyzer::reduce_identifier_from_base(GDScriptParser::IdentifierNod
 		HashMap<StringName, Variant> constant_map;
 		script_type->get_constants(&constant_map);
 
-		if (constant_map.has(p_identifier->name)) {
-			Variant constant = constant_map.get(p_identifier->name);
-
-			p_identifier->set_datatype(make_builtin_meta_type(constant.get_type()));
+		if (const Variant *constant = constant_map.getptr(p_identifier->name)) {
+			p_identifier->set_datatype(make_builtin_meta_type(constant->get_type()));
 			p_identifier->source = GDScriptParser::IdentifierNode::MEMBER_CONSTANT;
 			return;
 		}

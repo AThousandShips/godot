@@ -35,8 +35,9 @@
 bool EditorExportPreset::_set(const StringName &p_name, const Variant &p_value) {
 	values[p_name] = p_value;
 	EditorExport::singleton->save_presets();
-	if (update_visibility.has(p_name)) {
-		if (update_visibility[p_name]) {
+	const bool *update_visibility_ptr = update_visibility.getptr(p_name);
+	if (update_visibility_ptr) {
+		if (*update_visibility_ptr) {
 			update_value_overrides();
 			notify_property_list_changed();
 		}
@@ -47,13 +48,15 @@ bool EditorExportPreset::_set(const StringName &p_name, const Variant &p_value) 
 }
 
 bool EditorExportPreset::_get(const StringName &p_name, Variant &r_ret) const {
-	if (value_overrides.has(p_name)) {
-		r_ret = value_overrides[p_name];
+	const Variant *value_override = value_overrides.getptr(p_name);
+	if (value_override) {
+		r_ret = *value_override;
 		return true;
 	}
 
-	if (values.has(p_name)) {
-		r_ret = values[p_name];
+	const Variant *value = values.getptr(p_name);
+	if (value) {
+		r_ret = *value;
 		return true;
 	}
 

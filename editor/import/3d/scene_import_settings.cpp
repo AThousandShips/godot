@@ -109,8 +109,9 @@ class SceneImportSettingsData : public Object {
 				return true;
 			}
 		}
-		if (defaults.has(p_name)) {
-			r_ret = defaults[p_name];
+		const Variant *default_ptr = defaults.getptr(p_name);
+		if (default_ptr) {
+			r_ret = *default_ptr;
 			return true;
 		}
 		return false;
@@ -206,8 +207,9 @@ bool SceneImportSettingsDialog::_get_current(const StringName &p_name, Variant &
 	if (scene_import_settings_data->_get(p_name, r_ret)) {
 		return true;
 	}
-	if (defaults.has(p_name)) {
-		r_ret = defaults[p_name];
+	const Variant *default_ptr = defaults.getptr(p_name);
+	if (default_ptr) {
+		r_ret = *default_ptr;
 		return true;
 	}
 	return false;
@@ -1035,8 +1037,9 @@ void SceneImportSettingsDialog::_inspector_property_edited(const String &p_name)
 			return;
 		}
 		HashMap<StringName, Variant> settings = animation_ptr->settings;
-		if (settings.has(p_name)) {
-			animation_loop_mode = static_cast<Animation::LoopMode>((int)settings[p_name]);
+		const Variant *setting = settings.getptr(p_name);
+		if (setting) {
+			animation_loop_mode = static_cast<Animation::LoopMode>((int)*setting);
 		} else {
 			animation_loop_mode = Animation::LoopMode::LOOP_NONE;
 		}
@@ -1117,10 +1120,12 @@ void SceneImportSettingsDialog::_reset_animation(const String &p_animation_name)
 		animation_loop_mode = Animation::LoopMode::LOOP_NONE;
 		animation_pingpong = false;
 
-		if (animation_map.has(p_animation_name)) {
-			HashMap<StringName, Variant> settings = animation_map[p_animation_name].settings;
-			if (settings.has("settings/loop_mode")) {
-				animation_loop_mode = static_cast<Animation::LoopMode>((int)settings["settings/loop_mode"]);
+		AnimationData *animation = animation_map.getptr(p_animation_name);
+		if (animation) {
+			HashMap<StringName, Variant> settings = animation->settings;
+			const Variant *setting = settings.getptr("settings/loop_mode");
+			if (setting) {
+				animation_loop_mode = static_cast<Animation::LoopMode>((int)*setting);
 			}
 		}
 

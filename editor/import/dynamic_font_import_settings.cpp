@@ -57,12 +57,14 @@ bool DynamicFontImportSettingsData::_set(const StringName &p_name, const Variant
 }
 
 bool DynamicFontImportSettingsData::_get(const StringName &p_name, Variant &r_ret) const {
-	if (settings.has(p_name)) {
-		r_ret = settings[p_name];
+	const Variant *setting = settings.getptr(p_name);
+	if (setting) {
+		r_ret = *setting;
 		return true;
 	}
-	if (defaults.has(p_name)) {
-		r_ret = defaults[p_name];
+	const Variant *default_ = defaults.getptr(p_name);
+	if (default_) {
+		r_ret = *default_;
 		return true;
 	}
 	return false;

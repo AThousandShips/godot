@@ -275,9 +275,10 @@ bool GameViewDebugger::_msg_get_screenshot(const Array &p_args) {
 	int64_t h = p_args[2];
 	const String &path = p_args[3];
 
-	if (screenshot_callbacks.has(id)) {
-		if (screenshot_callbacks[id].cb.is_valid()) {
-			screenshot_callbacks[id].cb.call(w, h, path, screenshot_callbacks[id].rect);
+	ScreenshotCB *screenshot_callback = screenshot_callbacks.getptr(id);
+	if (screenshot_callback) {
+		if (screenshot_callback->cb.is_valid()) {
+			screenshot_callback->cb.call(w, h, path, screenshot_callback->rect);
 		}
 		screenshot_callbacks.erase(id);
 	}

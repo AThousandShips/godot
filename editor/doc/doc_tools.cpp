@@ -1618,8 +1618,9 @@ Error DocTools::save_classes(const String &p_default_path, const HashMap<String,
 		DocData::ClassDoc &c = E.value;
 
 		String save_path;
-		if (p_class_path.has(c.name)) {
-			save_path = p_class_path[c.name];
+		const String *class_path = p_class_path.getptr(c.name);
+		if (class_path) {
+			save_path = *class_path;
 		} else {
 			save_path = p_default_path;
 		}

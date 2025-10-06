@@ -1403,8 +1403,9 @@ void TileSetAtlasSourceEditor::_end_dragging() {
 				Vector2i coords = E;
 				undo_redo->add_do_method(tile_set_atlas_source, "remove_tile", coords);
 				undo_redo->add_undo_method(tile_set_atlas_source, "create_tile", coords);
-				if (per_tile.has(coords)) {
-					for (List<const PropertyInfo *>::Element *E_property = per_tile[coords].front(); E_property; E_property = E_property->next()) {
+				List<const PropertyInfo *> *per_tile_ptr = per_tile.getptr(coords);
+				if (per_tile_ptr) {
+					for (List<const PropertyInfo *>::Element *E_property = per_tile_ptr->front(); E_property; E_property = E_property->next()) {
 						String property = E_property->get()->name;
 						Variant value = tile_set_atlas_source->get(property);
 						if (value.get_type() != Variant::NIL) {
@@ -1457,8 +1458,9 @@ void TileSetAtlasSourceEditor::_end_dragging() {
 				Vector2i coords = E;
 				undo_redo->add_do_method(tile_set_atlas_source, "remove_tile", coords);
 				undo_redo->add_undo_method(tile_set_atlas_source, "create_tile", coords);
-				if (per_tile.has(coords)) {
-					for (List<const PropertyInfo *>::Element *E_property = per_tile[coords].front(); E_property; E_property = E_property->next()) {
+				List<const PropertyInfo *> *per_tile_ptr = per_tile.getptr(coords);
+				if (per_tile_ptr) {
+					for (List<const PropertyInfo *>::Element *E_property = per_tile_ptr->front(); E_property; E_property = E_property->next()) {
 						String property = E_property->get()->name;
 						Variant value = tile_set_atlas_source->get(property);
 						if (value.get_type() != Variant::NIL) {
@@ -1621,8 +1623,9 @@ void TileSetAtlasSourceEditor::_menu_option(int p_option) {
 					undo_redo->add_do_method(tile_set_atlas_source, "remove_tile", selected.tile);
 					undo_redo->add_undo_method(tile_set_atlas_source, "create_tile", selected.tile);
 					removed.insert(selected.tile);
-					if (per_tile.has(selected.tile)) {
-						for (List<const PropertyInfo *>::Element *E_property = per_tile[selected.tile].front(); E_property; E_property = E_property->next()) {
+					List<const PropertyInfo *> *per_tile_ptr = per_tile.getptr(selected.tile);
+					if (per_tile_ptr) {
+						for (List<const PropertyInfo *>::Element *E_property = per_tile_ptr->front(); E_property; E_property = E_property->next()) {
 							String property = E_property->get()->name;
 							Variant value = tile_set_atlas_source->get(property);
 							if (value.get_type() != Variant::NIL) {
@@ -1640,8 +1643,9 @@ void TileSetAtlasSourceEditor::_menu_option(int p_option) {
 					// Remove an alternative tile.
 					undo_redo->add_do_method(tile_set_atlas_source, "remove_alternative_tile", selected.tile, selected.alternative);
 					undo_redo->add_undo_method(tile_set_atlas_source, "create_alternative_tile", selected.tile, selected.alternative);
-					if (per_tile.has(selected.tile)) {
-						for (List<const PropertyInfo *>::Element *E_property = per_tile[selected.tile].front(); E_property; E_property = E_property->next()) {
+					List<const PropertyInfo *> *per_tile_ptr = per_tile.getptr(selected.tile);
+					if (per_tile_ptr) {
+						for (List<const PropertyInfo *>::Element *E_property = per_tile_ptr->front(); E_property; E_property = E_property->next()) {
 							Vector<String> components = E_property->get()->name.split("/", true, 2);
 							if (components.size() >= 2 && components[1].is_valid_int() && components[1].to_int() == selected.alternative) {
 								String property = E_property->get()->name;
@@ -2290,8 +2294,9 @@ void TileSetAtlasSourceEditor::_cleanup_outside_tiles() {
 	undo_redo->add_do_method(tile_set_atlas_source, "clear_tiles_outside_texture");
 	for (const Vector2i &coords : tiles_outside) {
 		undo_redo->add_undo_method(tile_set_atlas_source, "create_tile", coords);
-		if (per_tile.has(coords)) {
-			for (List<const PropertyInfo *>::Element *E_property = per_tile[coords].front(); E_property; E_property = E_property->next()) {
+		List<const PropertyInfo *> *per_tile_ptr = per_tile.getptr(coords);
+		if (per_tile_ptr) {
+			for (List<const PropertyInfo *>::Element *E_property = per_tile_ptr->front(); E_property; E_property = E_property->next()) {
 				String property = E_property->get()->name;
 				Variant value = tile_set_atlas_source->get(property);
 				if (value.get_type() != Variant::NIL) {
@@ -2405,8 +2410,9 @@ void TileSetAtlasSourceEditor::_auto_remove_tiles() {
 			if (!is_opaque) {
 				undo_redo->add_do_method(tile_set_atlas_source, "remove_tile", coords);
 				undo_redo->add_undo_method(tile_set_atlas_source, "create_tile", coords);
-				if (per_tile.has(coords)) {
-					for (List<const PropertyInfo *>::Element *E_property = per_tile[coords].front(); E_property; E_property = E_property->next()) {
+				List<const PropertyInfo *> *per_tile_ptr = per_tile.getptr(coords);
+				if (per_tile_ptr) {
+					for (List<const PropertyInfo *>::Element *E_property = per_tile_ptr->front(); E_property; E_property = E_property->next()) {
 						String property = E_property->get()->name;
 						Variant value = tile_set_atlas_source->get(property);
 						if (value.get_type() != Variant::NIL) {

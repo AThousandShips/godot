@@ -261,8 +261,8 @@ static void _unpack_manifold(
 		}
 
 		Ref<Material> material;
-		if (p_mesh_materials.has(original_id)) {
-			material = p_mesh_materials[original_id];
+		if (const Ref<Material> *mesh_material = p_mesh_materials.getptr(original_id)) {
+			material = *mesh_material;
 		}
 		// Find or reserve a material ID in the brush.
 		int32_t material_id = r_mesh_merge->materials.find(material);

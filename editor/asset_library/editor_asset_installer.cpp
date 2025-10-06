@@ -380,8 +380,9 @@ TreeItem *EditorAssetInstaller::_create_file_item(Tree *p_tree, TreeItem *p_pare
 
 	String file = p_path.get_file();
 	String extension = file.get_extension().to_lower();
-	if (extension_icon_map.has(extension)) {
-		ti->set_icon(0, extension_icon_map[extension]);
+	Ref<Texture2D> *extension_icon = extension_icon_map.getptr(extension);
+	if (extension_icon) {
+		ti->set_icon(0, *extension_icon);
 	} else {
 		ti->set_icon(0, generic_extension_icon);
 	}

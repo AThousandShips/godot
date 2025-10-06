@@ -228,8 +228,8 @@ class GDScriptByteCodeGenerator : public GDScriptCodeGenerator {
 	}
 
 	int get_constant_pos(const Variant &p_constant) {
-		if (constant_map.has(p_constant)) {
-			return constant_map[p_constant];
+		if (const int *constant = constant_map.getptr(p_constant)) {
+			return *constant;
 		}
 		int pos = constant_map.size();
 		constant_map[p_constant] = pos;

@@ -842,10 +842,11 @@ void ScriptEditorDebugger::_msg_servers_profile_common(const Array &p_data, cons
 		float internal = frame.script_functions[i].internal_time;
 
 		EditorProfiler::Metric::Category::Item item;
-		if (profiler_signature.has(signature)) {
-			item.signature = profiler_signature[signature];
+		const String *prof_signature = profiler_signature.getptr(signature);
+		if (prof_signature) {
+			item.signature = *prof_signature;
 
-			String name = profiler_signature[signature];
+			String name = *prof_signature;
 			Vector<String> strings = name.split("::");
 			if (strings.size() == 3) {
 				item.name = strings[2];

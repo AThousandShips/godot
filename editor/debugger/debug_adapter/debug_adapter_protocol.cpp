@@ -643,8 +643,9 @@ int DebugAdapterProtocol::parse_variant(const Variant &p_var) {
 
 			// Object may have been already requested.
 			ObjectID object_id = encoded_obj->get_object_id();
-			if (object_list.has(object_id)) {
-				return object_list[object_id];
+			DAPVarID *ret = object_list.getptr(object_id);
+			if (ret) {
+				return *ret;
 			}
 
 			// Queue requesting the object.

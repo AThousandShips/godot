@@ -44,8 +44,8 @@ int GDScriptTokenizerBuffer::_token_to_binary(const Token &p_token, Vector<uint8
 			// Add identifier to map.
 			int identifier_pos;
 			StringName id = p_token.get_identifier();
-			if (r_identifiers_map.has(id)) {
-				identifier_pos = r_identifiers_map[id];
+			if (uint32_t *identifier = r_identifiers_map.getptr(id)) {
+				identifier_pos = *identifier;
 			} else {
 				identifier_pos = r_identifiers_map.size();
 				r_identifiers_map[id] = identifier_pos;
@@ -56,8 +56,8 @@ int GDScriptTokenizerBuffer::_token_to_binary(const Token &p_token, Vector<uint8
 		case GDScriptTokenizer::Token::LITERAL: {
 			// Add literal to map.
 			int constant_pos;
-			if (r_constants_map.has(p_token.literal)) {
-				constant_pos = r_constants_map[p_token.literal];
+			if (uint32_t *constant = r_constants_map.getptr(p_token.literal)) {
+				constant_pos = *constant;
 			} else {
 				constant_pos = r_constants_map.size();
 				r_constants_map[p_token.literal] = constant_pos;

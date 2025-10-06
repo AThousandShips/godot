@@ -1579,11 +1579,11 @@ void CSharpInstance::get_property_list(List<PropertyInfo> *p_properties) const {
 }
 
 Variant::Type CSharpInstance::get_property_type(const StringName &p_name, bool *r_is_valid) const {
-	if (script->member_info.has(p_name)) {
+	if (const PropertyInfo *member_info = script->member_info.getptr(p_name)) {
 		if (r_is_valid) {
 			*r_is_valid = true;
 		}
-		return script->member_info[p_name].type;
+		return member_info->type;
 	}
 
 	if (r_is_valid) {

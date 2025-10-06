@@ -842,15 +842,15 @@ void GodotConcavePolygonShape2D::set_data(const Variant &p_data) {
 			Point2 p2 = arr[i + 1];
 			int idx_p1, idx_p2;
 
-			if (pointmap.has(p1)) {
-				idx_p1 = pointmap[p1];
+			if (const int *p1_ptr = pointmap.getptr(p1)) {
+				idx_p1 = *p1_ptr;
 			} else {
 				idx_p1 = pointmap.size();
 				pointmap[p1] = idx_p1;
 			}
 
-			if (pointmap.has(p2)) {
-				idx_p2 = pointmap[p2];
+			if (const int *p2_ptr = pointmap.getptr(p2)) {
+				idx_p2 = *p2_ptr;
 			} else {
 				idx_p2 = pointmap.size();
 				pointmap[p2] = idx_p2;

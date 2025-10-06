@@ -1061,8 +1061,9 @@ void TextureRegionEditor::_edit_region() {
 	texture_preview->set_texture_filter(filter);
 	texture_preview->set_texture_repeat(CanvasItem::TEXTURE_REPEAT_DISABLED);
 
-	if (cache_map.has(object_texture->get_rid())) {
-		autoslice_cache = cache_map[object_texture->get_rid()];
+	List<Rect2> *cache_ptr = cache_map.getptr(object_texture->get_rid());
+	if (cache_ptr) {
+		autoslice_cache = *cache_ptr;
 		autoslice_is_dirty = false;
 	} else {
 		if (is_visible() && snap_mode == SNAP_AUTOSLICE) {

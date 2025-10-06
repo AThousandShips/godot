@@ -2201,11 +2201,10 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 	output.append(itype.proxy_name);
 
 	if (is_derived_type && !itype.is_singleton) {
-		if (obj_types.has(itype.base_name)) {
-			TypeInterface base_type = obj_types[itype.base_name];
+		if (TypeInterface *base_type = obj_types.getptr(itype.base_name)) {
 			output.append(" : ");
-			output.append(base_type.proxy_name);
-			if (base_type.is_singleton) {
+			output.append(base_type->proxy_name);
+			if (base_type->is_singleton) {
 				// If the type is a singleton, use the instance type.
 				output.append(CS_SINGLETON_INSTANCE_SUFFIX);
 			}

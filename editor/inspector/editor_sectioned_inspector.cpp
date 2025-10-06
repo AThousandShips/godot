@@ -157,10 +157,10 @@ void SectionedInspector::_section_selected() {
 }
 
 void SectionedInspector::set_current_section(const String &p_section) {
-	if (section_map.has(p_section)) {
-		TreeItem *item = section_map[p_section];
-		item->select(0);
-		sections->scroll_to_item(item);
+	TreeItem **item = section_map.getptr(p_section);
+	if (item) {
+		(*item)->select(0);
+		sections->scroll_to_item(*item);
 	}
 }
 
@@ -300,8 +300,9 @@ void SectionedInspector::update_category_list() {
 		}
 	}
 
-	if (section_map.has(selected_category)) {
-		section_map[selected_category]->select(0);
+	TreeItem **item = section_map.getptr(selected_category);
+	if (item) {
+		(*item)->select(0);
 	}
 
 	inspector->update_tree();

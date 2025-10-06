@@ -305,8 +305,9 @@ void EditorSettings::_get_property_list(List<PropertyInfo> *p_list) const {
 
 		PropertyInfo pi(E.type, E.name);
 		pi.usage = pusage;
-		if (hints.has(E.name)) {
-			pi = hints[E.name];
+		const PropertyInfo *hint = hints.getptr(E.name);
+		if (hint) {
+			pi = *hint;
 		}
 
 		if (E.basic) {
@@ -2073,8 +2074,9 @@ void EditorSettings::set_builtin_action_override(const String &p_name, const Typ
 	}
 
 	// Update the shortcut (if it is used somewhere in the editor) to be the first event of the new list.
-	if (shortcuts.has(p_name)) {
-		shortcuts[p_name]->set_events_list(&event_list);
+	Ref<Shortcut> *shortcut = shortcuts.getptr(p_name);
+	if (shortcut) {
+		(*shortcut)->set_events_list(&event_list);
 	}
 }
 

@@ -8090,8 +8090,8 @@ public:
 			Label *prop_name = memnew(Label);
 			prop_name->set_focus_mode(Control::FOCUS_ACCESSIBILITY);
 			String prop_name_str = p_names[i];
-			if (p_overrided_names.has(p_names[i])) {
-				prop_name_str = p_overrided_names[p_names[i]] + ":";
+			if (const String *overrided_name = p_overrided_names.getptr(p_names[i])) {
+				prop_name_str = *overrided_name + ":";
 			} else {
 				prop_name_str = prop_name_str.capitalize() + ":";
 			}

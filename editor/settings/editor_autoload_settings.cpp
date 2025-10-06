@@ -502,15 +502,15 @@ void EditorAutoloadSettings::update_autoload() {
 		info.order = ProjectSettings::get_singleton()->get_order(pi.name);
 
 		bool need_to_add = true;
-		if (to_remove.has(name)) {
-			AutoloadInfo &old_info = to_remove[name];
-			if (old_info.path == info.path) {
+		AutoloadInfo *old_info = to_remove.getptr(name);
+		if (old_info) {
+			if (old_info->path == info.path) {
 				// Still the same resource, check status
-				info.node = old_info.node;
+				info.node = old_info->node;
 				if (info.node) {
 					Ref<Script> scr = info.node->get_script();
 					info.in_editor = scr.is_valid() && scr->is_tool();
-					if (info.is_singleton == old_info.is_singleton && info.in_editor == old_info.in_editor) {
+					if (info.is_singleton == old_info->is_singleton && info.in_editor == old_info->in_editor) {
 						to_remove.erase(name);
 						need_to_add = false;
 					} else {

@@ -198,8 +198,8 @@ void GDScriptCache::remove_script(const String &p_path) {
 
 	singleton->abandoned_parser_map.erase(p_path);
 
-	if (singleton->parser_map.has(p_path)) {
-		singleton->parser_map[p_path]->clear();
+	if (GDScriptParserRef **parser = singleton->parser_map.getptr(p_path)) {
+		(*parser)->clear();
 	}
 
 	remove_parser(p_path);
@@ -216,8 +216,8 @@ Ref<GDScriptParserRef> GDScriptCache::get_parser(const String &p_path, GDScriptP
 		singleton->dependencies[p_owner].insert(p_path);
 		singleton->parser_inverse_dependencies[p_path].insert(p_owner);
 	}
-	if (singleton->parser_map.has(p_path)) {
-		ref = Ref<GDScriptParserRef>(singleton->parser_map[p_path]);
+	if (GDScriptParserRef **parser = singleton->parser_map.getptr(p_path)) {
+		ref = Ref<GDScriptParserRef>(*parser);
 		if (ref.is_null()) {
 			r_error = ERR_INVALID_DATA;
 			return ref;
@@ -245,10 +245,9 @@ bool GDScriptCache::has_parser(const String &p_path) {
 void GDScriptCache::remove_parser(const String &p_path) {
 	MutexLock lock(singleton->mutex);
 
-	if (singleton->parser_map.has(p_path)) {
-		GDScriptParserRef *parser_ref = singleton->parser_map[p_path];
-		parser_ref->abandoned = true;
-		singleton->abandoned_parser_map[p_path].push_back(parser_ref->get_instance_id());
+	if (GDScriptParserRef **parser_ref = singleton->parser_map.getptr(p_path)) {
+		(*parser_ref)->abandoned = true;
+		singleton->abandoned_parser_map[p_path].push_back((*parser_ref)->get_instance_id());
 	}
 
 	// Can't clear the parser because some other parser might be currently using it in the chain of calls.
@@ -301,11 +300,11 @@ Ref<GDScript> GDScriptCache::get_shallow_script(const String &p_path, Error &r_e
 	if (!p_owner.is_empty()) {
 		singleton->dependencies[p_owner].insert(p_path);
 	}
-	if (singleton->full_gdscript_cache.has(p_path)) {
-		return singleton->full_gdscript_cache[p_path];
+	if (Ref<GDScript> *full_gdscript = singleton->full_gdscript_cache.getptr(p_path)) {
+		return *full_gdscript;
 	}
-	if (singleton->shallow_gdscript_cache.has(p_path)) {
-		return singleton->shallow_gdscript_cache[p_path];
+	if (Ref<GDScript> *shallow_gdscript = singleton->shallow_gdscript_cache.getptr(p_path)) {
+		return *shallow_gdscript;
 	}
 
 	const String remapped_path = ResourceLoader::path_remap(p_path);
@@ -346,8 +345,8 @@ Ref<GDScript> GDScriptCache::get_full_script(const String &p_path, Error &r_erro
 
 	Ref<GDScript> script;
 	r_error = OK;
-	if (singleton->full_gdscript_cache.has(p_path)) {
-		script = singleton->full_gdscript_cache[p_path];
+	if (Ref<GDScript> *full_gdscript = singleton->full_gdscript_cache.getptr(p_path)) {
+		script = *full_gdscript;
 		if (!p_update_from_disk) {
 			return script;
 		}
@@ -397,12 +396,12 @@ Ref<GDScript> GDScriptCache::get_full_script(const String &p_path, Error &r_erro
 Ref<GDScript> GDScriptCache::get_cached_script(const String &p_path) {
 	MutexLock lock(singleton->mutex);
 
-	if (singleton->full_gdscript_cache.has(p_path)) {
-		return singleton->full_gdscript_cache[p_path];
+	if (Ref<GDScript> *full_gdscript = singleton->full_gdscript_cache.getptr(p_path)) {
+		return *full_gdscript;
 	}
 
-	if (singleton->shallow_gdscript_cache.has(p_path)) {
-		return singleton->shallow_gdscript_cache[p_path];
+	if (Ref<GDScript> *shallow_gdscript = singleton->shallow_gdscript_cache.getptr(p_path)) {
+		return *shallow_gdscript;
 	}
 
 	return Ref<GDScript>();

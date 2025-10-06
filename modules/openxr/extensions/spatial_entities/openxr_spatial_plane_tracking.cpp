@@ -773,10 +773,9 @@ void OpenXRSpatialPlaneTrackingCapability::_process_snapshot(RID p_snapshot) {
 			if (entity_state == XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT) {
 				// We should only get this status on updates as a prelude to needing to remove this marker.
 				// So we just update the status.
-				if (plane_trackers.has(entity_id)) {
-					Ref<OpenXRPlaneTracker> plane_tracker = plane_trackers[entity_id];
-					plane_tracker->invalidate_pose(SNAME("default"));
-					plane_tracker->set_spatial_tracking_state(XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT);
+				if (Ref<OpenXRPlaneTracker> *plane_tracker = plane_trackers.getptr(entity_id)) {
+					(*plane_tracker)->invalidate_pose(SNAME("default"));
+					(*plane_tracker)->set_spatial_tracking_state(XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT);
 				}
 			} else {
 				// Process our entity
@@ -852,16 +851,14 @@ void OpenXRSpatialPlaneTrackingCapability::_process_snapshot(RID p_snapshot) {
 
 		// Remove any planes that are no longer there...
 		for (const XrSpatialEntityIdEXT &entity_id : current_planes) {
-			if (plane_trackers.has(entity_id)) {
-				Ref<OpenXRPlaneTracker> plane_tracker = plane_trackers[entity_id];
-
+			if (Ref<OpenXRPlaneTracker> *plane_tracker = plane_trackers.getptr(entity_id)) {
 				// Just in case there are still references out there to this marker,
 				// reset some stuff.
-				plane_tracker->invalidate_pose(SNAME("default"));
-				plane_tracker->set_spatial_tracking_state(XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT);
+				(*plane_tracker)->invalidate_pose(SNAME("default"));
+				(*plane_tracker)->set_spatial_tracking_state(XR_SPATIAL_ENTITY_TRACKING_STATE_STOPPED_EXT);
 
 				// Remove it from our XRServer
-				xr_server->remove_tracker(plane_tracker);
+				xr_server->remove_tracker(*plane_tracker);
 
 				// Remove it from our trackers
 				plane_trackers.erase(entity_id);

@@ -560,7 +560,7 @@ void Theme::set_font(const StringName &p_name, const StringName &p_theme_type, c
 }
 
 Ref<Font> Theme::get_font(const StringName &p_name, const StringName &p_theme_type) const {
-	const ThemeSizeMap *font_map_ptr = font_map.getptr(p_theme_type);
+	const ThemeFontMap *font_map_ptr = font_map.getptr(p_theme_type);
 	if (font_map_ptr) {
 		const Ref<Font> *ret = font_map_ptr->getptr(p_name);
 		if (ret && ret->is_valid()) {

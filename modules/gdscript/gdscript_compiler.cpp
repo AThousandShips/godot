@@ -272,8 +272,8 @@ GDScriptCodeGenerator::Address GDScriptCompiler::_parse_expression(CodeGen &code
 				case GDScriptParser::IdentifierNode::LOCAL_ITERATOR:
 				case GDScriptParser::IdentifierNode::LOCAL_BIND: {
 					// Try function parameters.
-					if (codegen.parameters.has(identifier)) {
-						return codegen.parameters[identifier];
+					if (GDScriptCodeGenerator::Address *parameter = codegen.parameters.getptr(identifier)) {
+						return *parameter;
 					}
 
 					// Try local variables and constants.
@@ -298,16 +298,16 @@ GDScriptCodeGenerator::Address GDScriptCompiler::_parse_expression(CodeGen &code
 					// Try members.
 					if (!codegen.function_node || !codegen.function_node->is_static) {
 						// Try member variables.
-						if (codegen.script->member_indices.has(identifier)) {
-							if (codegen.script->member_indices[identifier].getter != StringName() && codegen.script->member_indices[identifier].getter != codegen.function_name) {
+						if (GDScript::MemberInfo *member_info = codegen.script->member_indices.getptr(identifier)) {
+							if (member_info->getter != StringName() && member_info->getter != codegen.function_name) {
 								// Perform getter.
-								GDScriptCodeGenerator::Address temp = codegen.add_temporary(codegen.script->member_indices[identifier].data_type);
+								GDScriptCodeGenerator::Address temp = codegen.add_temporary(member_info->data_type);
 								Vector<GDScriptCodeGenerator::Address> args; // No argument needed.
-								gen->write_call_self(temp, codegen.script->member_indices[identifier].getter, args);
+								gen->write_call_self(temp, member_info->getter, args);
 								return temp;
 							} else {
 								// No getter or inside getter: direct member access.
-								int idx = codegen.script->member_indices[identifier].index;
+								int idx = member_info->index;
 								return GDScriptCodeGenerator::Address(GDScriptCodeGenerator::Address::MEMBER, idx, codegen.script->get_member_type(identifier));
 							}
 						}
@@ -365,8 +365,8 @@ GDScriptCodeGenerator::Address GDScriptCompiler::_parse_expression(CodeGen &code
 						GDScriptNativeClass *nc = nullptr;
 
 						while (scr) {
-							if (scr->constants.has(identifier)) {
-								return codegen.add_constant(scr->constants[identifier]); // TODO: Get type here.
+							if (Variant *constant = scr->constants.getptr(identifier)) {
+								return codegen.add_constant(*constant); // TODO: Get type here.
 							}
 							if (scr->native.is_valid()) {
 								nc = scr->native.ptr();
@@ -390,19 +390,19 @@ GDScriptCodeGenerator::Address GDScriptCompiler::_parse_expression(CodeGen &code
 					// Try static variables.
 					GDScript *scr = codegen.script;
 					while (scr) {
-						if (scr->static_variables_indices.has(identifier)) {
-							if (scr->static_variables_indices[identifier].getter != StringName() && scr->static_variables_indices[identifier].getter != codegen.function_name) {
+						if (GDScript::MemberInfo *static_variable = scr->static_variables_indices.getptr(identifier)) {
+							if (static_variable->getter != StringName() && static_variable->getter != codegen.function_name) {
 								// Perform getter.
-								GDScriptCodeGenerator::Address temp = codegen.add_temporary(scr->static_variables_indices[identifier].data_type);
+								GDScriptCodeGenerator::Address temp = codegen.add_temporary(static_variable->data_type);
 								GDScriptCodeGenerator::Address class_addr(GDScriptCodeGenerator::Address::CLASS);
 								Vector<GDScriptCodeGenerator::Address> args; // No argument needed.
-								gen->write_call(temp, class_addr, scr->static_variables_indices[identifier].getter, args);
+								gen->write_call(temp, class_addr, static_variable->getter, args);
 								return temp;
 							} else {
 								// No getter or inside getter: direct variable access.
-								GDScriptCodeGenerator::Address temp = codegen.add_temporary(scr->static_variables_indices[identifier].data_type);
+								GDScriptCodeGenerator::Address temp = codegen.add_temporary(static_variable->data_type);
 								GDScriptCodeGenerator::Address _class = codegen.add_constant(scr);
-								int index = scr->static_variables_indices[identifier].index;
+								int index = static_variable->index;
 								gen->write_get_static_variable(temp, _class, index);
 								return temp;
 							}
@@ -1025,30 +1025,29 @@ GDScriptCodeGenerator::Address GDScriptCompiler::_parse_expression(CodeGen &code
 								if (_is_class_member_property(codegen, var_name)) {
 									assign_class_member_property = var_name;
 								} else if (!_is_local_or_parameter(codegen, var_name)) {
-									if (codegen.script->member_indices.has(var_name)) {
+									if (const GDScript::MemberInfo *minfo = codegen.script->member_indices.getptr(var_name)) {
 										is_member_property = true;
 										is_static = false;
-										const GDScript::MemberInfo &minfo = codegen.script->member_indices[var_name];
-										member_property_setter_function = minfo.setter;
+										member_property_setter_function = minfo->setter;
 										member_property_has_setter = member_property_setter_function != StringName();
 										member_property_is_in_setter = member_property_has_setter && member_property_setter_function == codegen.function_name;
 										target_member_property.mode = GDScriptCodeGenerator::Address::MEMBER;
-										target_member_property.address = minfo.index;
-										target_member_property.type = minfo.data_type;
+										target_member_property.address = minfo->index;
+										target_member_property.type = minfo->data_type;
 									} else {
 										// Try static variables.
 										GDScript *scr = codegen.script;
 										while (scr) {
-											if (scr->static_variables_indices.has(var_name)) {
+											minfo = scr->static_variables_indices.getptr(var_name);
+											if (minfo) {
 												is_member_property = true;
 												is_static = true;
-												const GDScript::MemberInfo &minfo = scr->static_variables_indices[var_name];
-												member_property_setter_function = minfo.setter;
+												member_property_setter_function = minfo->setter;
 												member_property_has_setter = member_property_setter_function != StringName();
 												member_property_is_in_setter = member_property_has_setter && member_property_setter_function == codegen.function_name;
 												static_var_class = codegen.add_constant(scr);
-												static_var_index = minfo.index;
-												static_var_data_type = minfo.data_type;
+												static_var_index = minfo->index;
+												static_var_data_type = minfo->data_type;
 												break;
 											}
 											scr = scr->_base;
@@ -1294,30 +1293,29 @@ GDScriptCodeGenerator::Address GDScriptCompiler::_parse_expression(CodeGen &code
 				StringName setter_function;
 				var_name = static_cast<const GDScriptParser::IdentifierNode *>(assignment->assignee)->name;
 				if (!_is_local_or_parameter(codegen, var_name)) {
-					if (codegen.script->member_indices.has(var_name)) {
+					if (GDScript::MemberInfo *minfo = codegen.script->member_indices.getptr(var_name)) {
 						is_member = true;
 						is_static = false;
-						GDScript::MemberInfo &minfo = codegen.script->member_indices[var_name];
-						setter_function = minfo.setter;
+						setter_function = minfo->setter;
 						has_setter = setter_function != StringName();
 						is_in_setter = has_setter && setter_function == codegen.function_name;
 						member.mode = GDScriptCodeGenerator::Address::MEMBER;
-						member.address = minfo.index;
-						member.type = minfo.data_type;
+						member.address = minfo->index;
+						member.type = minfo->data_type;
 					} else {
 						// Try static variables.
 						GDScript *scr = codegen.script;
 						while (scr) {
-							if (scr->static_variables_indices.has(var_name)) {
+							minfo = scr->static_variables_indices.getptr(var_name);
+							if (minfo) {
 								is_member = true;
 								is_static = true;
-								GDScript::MemberInfo &minfo = scr->static_variables_indices[var_name];
-								setter_function = minfo.setter;
+								setter_function = minfo->setter;
 								has_setter = setter_function != StringName();
 								is_in_setter = has_setter && setter_function == codegen.function_name;
 								static_var_class = codegen.add_constant(scr);
-								static_var_index = minfo.index;
-								static_var_data_type = minfo.data_type;
+								static_var_index = minfo->index;
+								static_var_data_type = minfo->data_type;
 								break;
 							}
 							scr = scr->_base;
@@ -3153,8 +3151,8 @@ void GDScriptCompiler::make_scripts(GDScript *p_script, const GDScriptParser::Cl
 
 		Ref<GDScript> subclass;
 
-		if (old_subclasses.has(name)) {
-			subclass = old_subclasses[name];
+		if (Ref<GDScript> *old_subclass = old_subclasses.getptr(name)) {
+			subclass = *old_subclass;
 		} else {
 			subclass = GDScriptLanguage::get_singleton()->get_orphan_subclass(inner_class->fqcn);
 		}

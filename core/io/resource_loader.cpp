@@ -698,7 +698,7 @@ ResourceLoader::ThreadLoadStatus ResourceLoader::load_threaded_get_status(const 
 
 		String local_path = _validate_local_path(p_path);
 		ThreadLoadTask *load_task = thread_load_tasks.getptr(local_path);
-		ERR_FAIL_NULL_V_MSG(load_tasks, THREAD_LOAD_INVALID_RESOURCE, "Bug in ResourceLoader logic, please report.");
+		ERR_FAIL_NULL_V_MSG(load_task, THREAD_LOAD_INVALID_RESOURCE, "Bug in ResourceLoader logic, please report.");
 
 		status = load_task->status;
 		if (r_progress) {

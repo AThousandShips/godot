@@ -49,16 +49,18 @@ class ImportDefaultsEditorSettings : public Object {
 
 protected:
 	bool _set(const StringName &p_name, const Variant &p_value) {
-		if (values.has(p_name)) {
-			values[p_name] = p_value;
+		Variant *value = values.getptr(p_name);
+		if (value) {
+			*value = p_value;
 			return true;
 		} else {
 			return false;
 		}
 	}
 	bool _get(const StringName &p_name, Variant &r_ret) const {
-		if (values.has(p_name)) {
-			r_ret = values[p_name];
+		const Variant *value = values.getptr(p_name);
+		if (value) {
+			r_ret = *value;
 			return true;
 		} else {
 			r_ret = Variant();

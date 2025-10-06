@@ -323,10 +323,9 @@ bool OpenXRSpatialEntityExtension::supports_component_type(XrSpatialCapabilityEX
 		return false;
 	}
 
-	if (supported_capabilities.has(p_capability)) {
-		return supported_capabilities[p_capability].component_types.has(p_component_type);
-	}
-	return false;
+	SpatialEntityCapabality *supported_capability = supported_capabilities.getptr(p_capability);
+
+	return supported_capability && supported_capability->component_types.has(p_component_type);
 }
 
 bool OpenXRSpatialEntityExtension::_supports_component_type(Capability p_capability, ComponentType p_component_type) {

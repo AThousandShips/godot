@@ -62,8 +62,9 @@ Variant::Type GDScriptParser::get_builtin_type(const StringName &p_type) {
 		}
 	}
 
-	if (builtin_types.has(p_type)) {
-		return builtin_types[p_type];
+	Variant::Type *builtin_type = builtin_types.getptr(p_type);
+	if (builtin_type) {
+		return *builtin_type;
 	}
 	return Variant::VARIANT_MAX;
 }
@@ -778,8 +779,8 @@ void GDScriptParser::parse_program() {
 
 Ref<GDScriptParserRef> GDScriptParser::get_depended_parser_for(const String &p_path) {
 	Ref<GDScriptParserRef> ref;
-	if (depended_parsers.has(p_path)) {
-		ref = depended_parsers[p_path];
+	if (Ref<GDScriptParserRef> *depended_parser = depended_parsers.getptr(p_path)) {
+		ref = *depended_parser;
 	} else {
 		Error err = OK;
 		ref = GDScriptCache::get_parser(p_path, GDScriptParserRef::EMPTY, err, script_path);
@@ -4258,8 +4259,8 @@ bool GDScriptParser::SuiteNode::has_local(const StringName &p_name) const {
 }
 
 const GDScriptParser::SuiteNode::Local &GDScriptParser::SuiteNode::get_local(const StringName &p_name) const {
-	if (locals_indices.has(p_name)) {
-		return locals[locals_indices[p_name]];
+	if (const int *local_index = locals_indices.getptr(p_name)) {
+		return locals[*local_index];
 	}
 	if (parent_block != nullptr) {
 		return parent_block->get_local(p_name);

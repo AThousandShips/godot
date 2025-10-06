@@ -299,17 +299,15 @@ void RaycastOcclusionCull::scenario_remove_instance(RID p_scenario, RID p_instan
 	ERR_FAIL_COND(!scenarios.has(p_scenario));
 	Scenario &scenario = scenarios[p_scenario];
 
-	if (scenario.instances.has(p_instance)) {
-		OccluderInstance &instance = scenario.instances[p_instance];
-
-		if (!instance.removed) {
-			Occluder *occluder = occluder_owner.get_or_null(instance.occluder);
+	if (OccluderInstance *instance = scenario.instances.getptr(p_instance)) {
+		if (!instance->removed) {
+			Occluder *occluder = occluder_owner.get_or_null(instance->occluder);
 			if (occluder) {
 				occluder->users.erase(InstanceID(p_scenario, p_instance));
 			}
 
 			scenario.removed_instances.push_back(p_instance);
-			instance.removed = true;
+			instance->removed = true;
 		}
 	}
 }

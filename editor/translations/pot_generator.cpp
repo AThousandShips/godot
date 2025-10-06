@@ -211,18 +211,18 @@ void POTGenerator::_write_msgid(Ref<FileAccess> r_file, const String &p_id, bool
 
 void POTGenerator::_add_new_msgid(const String &p_msgid, const String &p_context, const String &p_plural, const String &p_location, const String &p_comment) {
 	// Insert new location if msgid under same context exists already.
-	if (all_translation_strings.has(p_msgid)) {
-		Vector<MsgidData> &v_mdata = all_translation_strings[p_msgid];
-		for (int i = 0; i < v_mdata.size(); i++) {
-			if (v_mdata[i].ctx == p_context) {
-				if (!v_mdata[i].plural.is_empty() && !p_plural.is_empty() && v_mdata[i].plural != p_plural) {
+	Vector<MsgidData> *v_mdata = all_translation_strings.getptr(p_msgid);
+	if (v_mdata) {
+		for (int i = 0; i < v_mdata->size(); i++) {
+			if ((*v_mdata)[i].ctx == p_context) {
+				if (!(*v_mdata)[i].plural.is_empty() && !p_plural.is_empty() && (*v_mdata)[i].plural != p_plural) {
 					WARN_PRINT("Redefinition of plural message (msgid_plural), under the same message (msgid) and context (msgctxt)");
 				}
 				if (!p_location.is_empty()) {
-					v_mdata.write[i].locations.insert(p_location);
+					v_mdata->write[i].locations.insert(p_location);
 				}
 				if (!p_comment.is_empty()) {
-					v_mdata.write[i].comments.insert(p_comment);
+					v_mdata->write[i].comments.insert(p_comment);
 				}
 				return;
 			}
@@ -239,7 +239,7 @@ void POTGenerator::_add_new_msgid(const String &p_msgid, const String &p_context
 	if (!p_comment.is_empty()) {
 		mdata.comments.insert(p_comment);
 	}
-	all_translation_strings[p_msgid].push_back(mdata);
+	v_mdata->push_back(mdata);
 }
 
 POTGenerator *POTGenerator::get_singleton() {

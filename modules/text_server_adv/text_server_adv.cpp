@@ -3752,8 +3752,9 @@ int64_t TextServerAdvanced::_font_get_char_from_glyph_index(const RID &p_font_ri
 		}
 	}
 
-	if (ffsd->inv_glyph_map.has(p_glyph_index)) {
-		return ffsd->inv_glyph_map[p_glyph_index];
+	const int64_t *inv_glyph_ptr = ffsd->inv_glyph_map.getptr(p_glyph_index);
+	if (inv_glyph_ptr) {
+		return *inv_glyph_ptr;
 	} else {
 		return 0;
 	}
@@ -4214,11 +4215,8 @@ bool TextServerAdvanced::_font_is_language_supported(const RID &p_font_rid, cons
 	ERR_FAIL_NULL_V(fd, false);
 
 	MutexLock lock(fd->mutex);
-	if (fd->language_support_overrides.has(p_language)) {
-		return fd->language_support_overrides[p_language];
-	} else {
-		return true;
-	}
+	const bool *language_support_override = fd->language_support_overrides.getptr(p_language);
+	return language_support_override && *language_support_override;
 }
 
 void TextServerAdvanced::_font_set_language_support_override(const RID &p_font_rid, const String &p_language, bool p_supported) {
@@ -4262,8 +4260,9 @@ bool TextServerAdvanced::_font_is_script_supported(const RID &p_font_rid, const 
 	ERR_FAIL_NULL_V(fd, false);
 
 	MutexLock lock(fd->mutex);
-	if (fd->script_support_overrides.has(p_script)) {
-		return fd->script_support_overrides[p_script];
+	const bool *script_support_override = fd->script_support_overrides.getptr(p_script);
+	if (script_support_override) {
+		return *script_support_override;
 	} else {
 		Vector2i size = _get_size(fd, 16);
 		FontForSizeAdvanced *ffsd = nullptr;
@@ -5621,12 +5620,11 @@ RID TextServerAdvanced::_find_sys_font_for_text(const RID &p_fdef, const String 
 	for (const String &E : fallback_font_name) {
 #endif
 		SystemFontKey key = SystemFontKey(E, font_style & TextServer::FONT_ITALIC, font_weight, font_stretch, p_fdef, this);
-		if (system_fonts.has(key)) {
-			const SystemFontCache &sysf_cache = system_fonts[key];
+		if (const SystemFontCache *sysf_cache = system_fonts.getptr(key)) {
 			int best_score = 0;
 			int best_match = -1;
-			for (int face_idx = 0; face_idx < sysf_cache.var.size(); face_idx++) {
-				const SystemFontCacheRec &F = sysf_cache.var[face_idx];
+			for (int face_idx = 0; face_idx < sysf_cache->var.size(); face_idx++) {
+				const SystemFontCacheRec &F = sysf_cache->var[face_idx];
 				if (unlikely(!_font_has_char(F.rid, p_text[0]))) {
 					continue;
 				}
@@ -5647,13 +5645,12 @@ RID TextServerAdvanced::_find_sys_font_for_text(const RID &p_fdef, const String 
 				}
 			}
 			if (best_match != -1) {
-				f = sysf_cache.var[best_match].rid;
+				f = sysf_cache->var[best_match].rid;
 			}
 		}
 		if (!f.is_valid()) {
-			if (system_fonts.has(key)) {
-				const SystemFontCache &sysf_cache = system_fonts[key];
-				if (sysf_cache.max_var == sysf_cache.var.size()) {
+			if (const SystemFontCache *sysf_cache = system_fonts.getptr(key)) {
+				if (sysf_cache->max_var == sysf_cache->var.size()) {
 					// All subfonts already tested, skip.
 					continue;
 				}

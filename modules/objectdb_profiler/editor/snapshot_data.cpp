@@ -297,8 +297,8 @@ void GameStateSnapshot::recompute_references() {
 
 		for (const KeyValue<String, ObjectID> &kv : refs) {
 			// Get the guy we are pointing to, and indicate the name of _our_ property that is pointing to them.
-			if (objects.has(kv.value)) {
-				objects[kv.value]->inbound_references[kv.key] = obj.key;
+			if (SnapshotDataObject **object = objects.getptr(kv.value)) {
+				(*object)->inbound_references[kv.key] = obj.key;
 			}
 		}
 	}

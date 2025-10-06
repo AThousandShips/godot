@@ -1716,8 +1716,9 @@ void EditorHelp::_update_doc() {
 				if ((key.get_slice_count(".") > 1) && (key.get_slicec('.', 0) == edited_class)) {
 					key = key.get_slicec('.', 1);
 				}
-				if (cd.enums.has(key)) {
-					const bool is_documented = cd.enums[key].is_deprecated || cd.enums[key].is_experimental || !cd.enums[key].description.strip_edges().is_empty();
+				const DocData::EnumDoc *enum_doc = cd.enums.getptr(key);
+				if (enum_doc) {
+					const bool is_documented = enum_doc->is_deprecated || enum_doc->is_experimental || !enum_doc->description.strip_edges().is_empty();
 					if (!is_documented && cd.is_script_doc && E.key.begins_with("_")) {
 						continue;
 					}
@@ -1749,10 +1750,10 @@ void EditorHelp::_update_doc() {
 				_pop_code_font();
 
 				// Enum description.
-				if (key != "@unnamed_enums" && cd.enums.has(key)) {
-					const String descr = HANDLE_DOC(cd.enums[key].description);
+				if (key != "@unnamed_enums" && enum_doc) {
+					const String descr = HANDLE_DOC(enum_doc->description);
 					const bool is_multiline = descr.find_char('\n') > 0;
-					if (cd.enums[key].is_deprecated || cd.enums[key].is_experimental || !descr.is_empty()) {
+					if (enum_doc->is_deprecated || enum_doc->is_experimental || !descr.is_empty()) {
 						class_desc->add_newline();
 
 						class_desc->push_indent(1);
@@ -1761,12 +1762,12 @@ void EditorHelp::_update_doc() {
 
 						bool has_prev_text = false;
 
-						if (cd.enums[key].is_deprecated) {
+						if (enum_doc->is_deprecated) {
 							has_prev_text = true;
-							DEPRECATED_DOC_MSG(HANDLE_DOC(cd.enums[key].deprecated_message), TTR("This enumeration may be changed or removed in future versions."));
+							DEPRECATED_DOC_MSG(HANDLE_DOC(enum_doc->deprecated_message), TTR("This enumeration may be changed or removed in future versions."));
 						}
 
-						if (cd.enums[key].is_experimental) {
+						if (enum_doc->is_experimental) {
 							if (has_prev_text) {
 								class_desc->add_newline();
 								if (is_multiline) {
@@ -1774,7 +1775,7 @@ void EditorHelp::_update_doc() {
 								}
 							}
 							has_prev_text = true;
-							EXPERIMENTAL_DOC_MSG(HANDLE_DOC(cd.enums[key].experimental_message), TTR("This enumeration may be changed or removed in future versions."));
+							EXPERIMENTAL_DOC_MSG(HANDLE_DOC(enum_doc->experimental_message), TTR("This enumeration may be changed or removed in future versions."));
 						}
 
 						if (!descr.is_empty()) {

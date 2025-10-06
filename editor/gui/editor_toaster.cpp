@@ -283,12 +283,13 @@ void EditorToaster::_draw_button() {
 }
 
 void EditorToaster::_draw_progress(Control *panel) {
-	if (toasts.has(panel) && toasts[panel].remaining_time > 0 && toasts[panel].duration > 0) {
+	const Toast *toast = toasts.getptr(panel);
+	if (toast && toast->remaining_time > 0 && toast->duration > 0) {
 		Size2 size = panel->get_size();
-		size.x *= MIN(1, Math::remap(toasts[panel].remaining_time, 0, toasts[panel].duration, 0, 2));
+		size.x *= MIN(1, Math::remap(toast->remaining_time, 0, toast->duration, 0, 2));
 
 		Ref<StyleBoxFlat> stylebox;
-		switch (toasts[panel].severity) {
+		switch (toast->severity) {
 			case SEVERITY_INFO:
 				stylebox = info_panel_style_progress;
 				break;

@@ -4776,8 +4776,9 @@ void EditorInspector::edit(Object *p_object) {
 
 	if (object) {
 		update_scroll_request = 0; //reset
-		if (scroll_cache.has(object->get_instance_id())) { //if exists, set something else
-			update_scroll_request = scroll_cache[object->get_instance_id()]; //done this way because wait until full size is accommodated
+		const int *cache = scroll_cache.getptr(object->get_instance_id());
+		if (cache) { //if exists, set something else
+			update_scroll_request = *cache; //done this way because wait until full size is accommodated
 		}
 		object->connect(CoreStringName(property_list_changed), callable_mp(this, &EditorInspector::_changed_callback));
 
@@ -5110,8 +5111,9 @@ void EditorInspector::_edit_set(const String &p_name, const Variant &p_value, bo
 		undo_redo->commit_action();
 	}
 
-	if (editor_property_map.has(p_name)) {
-		for (EditorProperty *E : editor_property_map[p_name]) {
+	List<EditorProperty *> *editor_property = editor_property_map.getptr(p_name);
+	if (editor_property) {
+		for (EditorProperty *E : *editor_property) {
 			E->update_editor_property_status();
 		}
 	}
@@ -5233,8 +5235,9 @@ void EditorInspector::_property_checked(const String &p_path, bool p_checked) {
 			_edit_set(p_path, to_create, false, "");
 		}
 
-		if (editor_property_map.has(p_path)) {
-			for (EditorProperty *E : editor_property_map[p_path]) {
+		List<EditorProperty *> *editor_property = editor_property_map.getptr(p_path);
+		if (editor_property) {
+			for (EditorProperty *E : *editor_property) {
 				E->set_checked(p_checked);
 				E->update_property();
 				E->update_editor_property_status();
@@ -5258,8 +5261,9 @@ void EditorInspector::_property_pinned(const String &p_path, bool p_pinned) {
 	undo_redo->create_action(vformat(p_pinned ? TTR("Pinned %s") : TTR("Unpinned %s"), p_path));
 	undo_redo->add_do_method(node, "_set_property_pinned", p_path, p_pinned);
 	undo_redo->add_undo_method(node, "_set_property_pinned", p_path, !p_pinned);
-	if (editor_property_map.has(p_path)) {
-		for (List<EditorProperty *>::Element *E = editor_property_map[p_path].front(); E; E = E->next()) {
+	List<EditorProperty *> *editor_property = editor_property_map.getptr(p_path);
+	if (editor_property) {
+		for (List<EditorProperty *>::Element *E = editor_property->front(); E; E = E->next()) {
 			undo_redo->add_do_method(E->get(), "_update_editor_property_status");
 			undo_redo->add_undo_method(E->get(), "_update_editor_property_status");
 		}
@@ -5560,8 +5564,9 @@ void EditorInspector::_notification(int p_what) {
 			} else {
 				while (pending.size()) {
 					StringName prop = *pending.begin();
-					if (editor_property_map.has(prop)) {
-						for (EditorProperty *E : editor_property_map[prop]) {
+					List<EditorProperty *> *editor_property = editor_property_map.getptr(prop);
+					if (editor_property) {
+						for (EditorProperty *E : *editor_property) {
 							E->update_property();
 							E->update_editor_property_status();
 							E->update_cache();
