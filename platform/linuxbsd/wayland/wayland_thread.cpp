@@ -3033,7 +3033,7 @@ void WaylandThread::_xdg_activation_token_on_done(void *data, struct xdg_activat
 	xdg_activation_v1_activate(ws->wayland_thread->registry.xdg_activation, token, ws->wl_surface);
 	xdg_activation_token_v1_destroy(xdg_activation_token);
 
-	DEBUG_LOG_WAYLAND_THREAD(vformat("Received activation token and requested window activation."));
+	DEBUG_LOG_WAYLAND_THREAD("Received activation token and requested window activation.");
 }
 
 // NOTE: This must be started after a valid wl_display is loaded.

@@ -486,8 +486,8 @@ static Ref<Resource> _dds_create_texture_from_images(const Vector<Ref<Image>> &p
 }
 
 static Vector<Ref<Image>> _dds_load_images_from_buffer(Ref<FileAccess> p_f, DDSFormat &r_dds_format, uint32_t &r_width, uint32_t &r_height, uint32_t &r_mipmaps, uint32_t &r_pitch, uint32_t &r_flags, uint32_t &r_layer_count, uint32_t &r_dds_type, const String &p_path = "") {
-	ERR_FAIL_COND_V_MSG(p_f.is_null(), Vector<Ref<Image>>(), vformat("Empty DDS texture file."));
-	ERR_FAIL_COND_V_MSG(!p_f->get_length(), Vector<Ref<Image>>(), vformat("Empty DDS texture file."));
+	ERR_FAIL_COND_V_MSG(p_f.is_null(), Vector<Ref<Image>>(), "Empty DDS texture file.");
+	ERR_FAIL_COND_V_MSG(!p_f->get_length(), Vector<Ref<Image>>(), "Empty DDS texture file.");
 
 	uint32_t magic = p_f->get_32();
 	uint32_t hsize = p_f->get_32();

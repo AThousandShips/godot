@@ -3374,7 +3374,7 @@ Vector<uint8_t> RenderingDevice::shader_compile_binary_from_spirv(const Vector<S
 
 	// Compile shader binary from SPIR-V.
 	bool code_compiled = shader_container->set_code_from_spirv(p_shader_name, p_spirv);
-	ERR_FAIL_COND_V_MSG(!code_compiled, Vector<uint8_t>(), vformat("Failed to compile code to native for SPIR-V."));
+	ERR_FAIL_COND_V_MSG(!code_compiled, Vector<uint8_t>(), "Failed to compile code to native for SPIR-V.");
 
 	return shader_container->to_bytes();
 }

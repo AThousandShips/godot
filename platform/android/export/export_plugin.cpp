@@ -3006,7 +3006,7 @@ bool EditorExportPlatformAndroid::has_valid_project_configuration(const Ref<Edit
 	} else {
 		if (_is_transparency_allowed(p_preset)) {
 			// Warning only, so don't override `valid`.
-			err += vformat(TTR("\"Use Gradle Build\" is required for transparent background on Android"));
+			err += TTR("\"Use Gradle Build\" is required for transparent background on Android");
 			err += "\n";
 		}
 	}
@@ -4122,7 +4122,7 @@ Error EditorExportPlatformAndroid::export_project_helper(const Ref<EditorExportP
 
 	if (err != OK) {
 		unzClose(pkg);
-		add_message(EXPORT_MESSAGE_ERROR, TTR("Export"), vformat(TTR("Could not export project files.")));
+		add_message(EXPORT_MESSAGE_ERROR, TTR("Export"), TTR("Could not export project files."));
 		CLEANUP_AND_RETURN(ERR_SKIP);
 	}
 
@@ -4155,7 +4155,7 @@ Error EditorExportPlatformAndroid::export_project_helper(const Ref<EditorExportP
 
 	unzFile tmp_unaligned = unzOpen2(tmp_unaligned_path.utf8().get_data(), &io);
 	if (!tmp_unaligned) {
-		add_message(EXPORT_MESSAGE_ERROR, TTR("Export"), vformat(TTR("Could not unzip temporary unaligned APK.")));
+		add_message(EXPORT_MESSAGE_ERROR, TTR("Export"), TTR("Could not unzip temporary unaligned APK."));
 		CLEANUP_AND_RETURN(ERR_FILE_NOT_FOUND);
 	}
 

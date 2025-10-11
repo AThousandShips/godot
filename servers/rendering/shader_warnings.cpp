@@ -48,7 +48,7 @@ const StringName &ShaderWarning::get_subject() const {
 String ShaderWarning::get_message() const {
 	switch (code) {
 		case FLOAT_COMPARISON:
-			return vformat(RTR("Direct floating-point comparison (this may not evaluate to `true` as you expect). Instead, use `abs(a - b) < 0.0001` for an approximate but predictable comparison."));
+			return RTR("Direct floating-point comparison (this may not evaluate to `true` as you expect). Instead, use `abs(a - b) < 0.0001` for an approximate but predictable comparison.");
 		case UNUSED_CONSTANT:
 			return vformat(RTR("The const '%s' is declared but never used."), subject);
 		case UNUSED_FUNCTION:
@@ -66,7 +66,7 @@ String ShaderWarning::get_message() const {
 		case DEVICE_LIMIT_EXCEEDED:
 			return vformat(RTR("The total size of the %s for this shader on this device has been exceeded (%d/%d). The shader may not work correctly."), subject, (int)extra_args[0], (int)extra_args[1]);
 		case MAGIC_POSITION_WRITE:
-			return vformat(RTR("You are attempting to assign the VERTEX position in model space to the vertex POSITION in clip space. The definition of clip space changed in version 4.3, so if this code was written prior to 4.3, it will not continue to work. Consider specifying the clip space z-component directly i.e. use `vec4(VERTEX.xy, 1.0, 1.0)`."));
+			return RTR("You are attempting to assign the VERTEX position in model space to the vertex POSITION in clip space. The definition of clip space changed in version 4.3, so if this code was written prior to 4.3, it will not continue to work. Consider specifying the clip space z-component directly i.e. use `vec4(VERTEX.xy, 1.0, 1.0)`.");
 		default:
 			break;
 	}

@@ -1235,7 +1235,7 @@ Error CodeSign::_codesign_file(bool p_use_hardened_runtime, bool p_force, const 
 	// Extract fat binary.
 	Vector<String> files_to_sign;
 	if (LipO::is_lipo(main_exe)) {
-		print_verbose(vformat("CodeSign: Executable is fat, extracting..."));
+		print_verbose("CodeSign: Executable is fat, extracting...");
 		String tmp_path_name = EditorPaths::get_singleton()->get_temp_dir().path_join("_lipo");
 		Error err = da->make_dir_recursive(tmp_path_name);
 		if (err != OK) {

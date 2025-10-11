@@ -433,7 +433,7 @@ void ShaderBakerExportPlugin::_process_work_item(WorkItem p_work_item) {
 
 		// Compile shader binary from SPIR-V.
 		bool code_compiled = shader_container->set_code_from_spirv(p_work_item.shader_name, spirv_data);
-		ERR_FAIL_COND_MSG(!code_compiled, vformat("Failed to compile code to native for SPIR-V."));
+		ERR_FAIL_COND_MSG(!code_compiled, "Failed to compile code to native for SPIR-V.");
 
 		PackedByteArray shader_bytes = shader_container->to_bytes();
 		{

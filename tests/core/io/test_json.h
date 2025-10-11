@@ -275,12 +275,12 @@ TEST_CASE("[JSON] Parsing escape sequences") {
 
 		CHECK_MESSAGE(
 				json.get_error_line() == 0,
-				vformat("Parsing valid unicode escape sequence with value `0020` as JSON should parse successfully."));
+				"Parsing valid unicode escape sequence with value `0020` as JSON should parse successfully.");
 
 		String json_value = json.get_data();
 		CHECK_MESSAGE(
 				json_value == " ",
-				vformat("Parsing valid unicode escape sequence with value `0020` as JSON should return the expected value."));
+				"Parsing valid unicode escape sequence with value `0020` as JSON should return the expected value.");
 	}
 
 	SUBCASE("Invalid escape sequences") {

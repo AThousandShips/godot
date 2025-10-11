@@ -504,7 +504,7 @@ void Skeleton3DEditor::create_physical_skeleton() {
 	const int bone_count = skeleton->get_bone_count();
 
 	if (!bone_count) {
-		EditorNode::get_singleton()->show_warning(vformat(TTR("Cannot create a physical skeleton for a Skeleton3D node with no bones.")));
+		EditorNode::get_singleton()->show_warning(TTR("Cannot create a physical skeleton for a Skeleton3D node with no bones."));
 		return;
 	}
 
@@ -602,7 +602,7 @@ PhysicalBone3D *Skeleton3DEditor::create_physical_bone(int bone_id, int bone_chi
 
 void Skeleton3DEditor::export_skeleton_profile() {
 	if (!skeleton->get_bone_count()) {
-		EditorNode::get_singleton()->show_warning(vformat(TTR("Cannot export a SkeletonProfile for a Skeleton3D node with no bones.")));
+		EditorNode::get_singleton()->show_warning(TTR("Cannot export a SkeletonProfile for a Skeleton3D node with no bones."));
 		return;
 	}
 

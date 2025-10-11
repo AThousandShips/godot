@@ -106,7 +106,7 @@ PackedStringArray MissingNode::get_configuration_warnings() const {
 	PackedStringArray warnings = Node::get_configuration_warnings();
 	if (!original_scene.is_empty()) {
 		warnings.push_back(vformat(RTR("This node was an instance of scene '%s', which was no longer available when this scene was loaded."), original_scene));
-		warnings.push_back(vformat(RTR("Saving current scene will discard instance and all its properties, including editable children edits (if existing).")));
+		warnings.push_back(RTR("Saving current scene will discard instance and all its properties, including editable children edits (if existing)."));
 	} else if (!original_class.is_empty()) {
 		warnings.push_back(vformat(RTR("This node was saved as class type '%s', which was no longer available when this scene was loaded."), original_class));
 		warnings.push_back(RTR("Data from the original node is kept as a placeholder until this type of node is available again. It can hence be safely re-saved without risk of data loss."));

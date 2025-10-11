@@ -610,7 +610,7 @@ void EditorPropertyOTFeatures::update_property() {
 	}
 
 	if (supported.is_empty()) {
-		edit->set_text(vformat(TTR("No supported features")));
+		edit->set_text(TTR("No supported features"));
 		if (container) {
 			set_bottom_editor(nullptr);
 			memdelete(container);

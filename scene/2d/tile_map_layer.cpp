@@ -3218,7 +3218,7 @@ void TileMapLayer::set_tile_map_data_from_array(const Vector<uint8_t> &p_data) {
 	clear();
 
 	while (index < size) {
-		ERR_FAIL_COND_MSG(index + cell_data_struct_size > size, vformat("Corrupted tile map data: tiles might be missing."));
+		ERR_FAIL_COND_MSG(index + cell_data_struct_size > size, "Corrupted tile map data: tiles might be missing.");
 
 		// Get a pointer at the start of the cell data.
 		const uint8_t *cell_data_ptr = &ptr[index];

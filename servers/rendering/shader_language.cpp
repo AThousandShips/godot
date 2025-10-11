@@ -5668,7 +5668,7 @@ Error ShaderLanguage::_parse_array_size(BlockNode *p_block, const FunctionInfo &
 		error = true;
 	}
 	if (error) {
-		_set_error(vformat(RTR("Array size is already defined.")));
+		_set_error(RTR("Array size is already defined."));
 		return ERR_PARSE_ERROR;
 	}
 
@@ -5677,7 +5677,7 @@ Error ShaderLanguage::_parse_array_size(BlockNode *p_block, const FunctionInfo &
 
 	if (tk.type == TK_BRACKET_CLOSE) {
 		if (p_forbid_unknown_size) {
-			_set_error(vformat(RTR("Unknown array size is forbidden in that context.")));
+			_set_error(RTR("Unknown array size is forbidden in that context."));
 			return ERR_PARSE_ERROR;
 		}
 		if (r_unknown_size != nullptr) {
@@ -6453,7 +6453,7 @@ ShaderLanguage::Node *ShaderLanguage::_parse_expression(BlockNode *p_block, cons
 												ShaderNode::Uniform::Hint hint = u->hint;
 
 												if (hint == ShaderNode::Uniform::HINT_DEPTH_TEXTURE || hint == ShaderNode::Uniform::HINT_SCREEN_TEXTURE || hint == ShaderNode::Uniform::HINT_NORMAL_ROUGHNESS_TEXTURE) {
-													_set_error(vformat(RTR("Unable to pass a multiview texture sampler as a parameter to custom function. Consider to sample it in the main function and then pass the vector result to it."), get_uniform_hint_name(hint)));
+													_set_error(RTR("Unable to pass a multiview texture sampler as a parameter to custom function. Consider to sample it in the main function and then pass the vector result to it."));
 													return nullptr;
 												}
 											}
