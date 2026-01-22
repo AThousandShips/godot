@@ -260,7 +260,7 @@ EditorRun::WindowPlacement EditorRun::get_window_placement() {
 
 	Ref<ConfigFile> cfg_override;
 	cfg_override.instantiate();
-	if (!bool(GLOBAL_GET("application/config/disable_project_settings_override")) && FileAccess::exists("res://override.cfg")) {
+	if (FileAccess::exists("res://override.cfg")) {
 		Error err = cfg_override->load("res://override.cfg");
 		if (err != OK) {
 			WARN_PRINT("Found override.cfg but could not load it.");
