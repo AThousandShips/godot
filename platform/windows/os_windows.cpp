@@ -2745,6 +2745,12 @@ bool OS_Windows::_test_create_rendering_device_and_gl(const String &p_display_dr
 }
 #endif
 
+#ifdef _MSC_VER
+#define IAT_HOOK_CALL __declspec(guard(nocf))
+#else
+#define IAT_HOOK_CALL
+#endif
+
 using GetProcAddressType = FARPROC(__stdcall *)(HMODULE, LPCSTR);
 GetProcAddressType Original_GetProcAddress = nullptr;
 
@@ -2780,7 +2786,7 @@ bool _hid_is_controller(HANDLE p_hid_handle) {
 	return false;
 }
 
-BOOLEAN __stdcall Hook_HidD_GetProductString(HANDLE p_object, void *p_buffer, ULONG p_buffer_length) {
+IAT_HOOK_CALL BOOLEAN __stdcall Hook_HidD_GetProductString(HANDLE p_object, void *p_buffer, ULONG p_buffer_length) {
 	constexpr const wchar_t unknown_product_string[] = L"Unknown HID Device";
 	constexpr size_t unknown_product_length = sizeof(unknown_product_string);
 
@@ -2798,7 +2804,7 @@ BOOLEAN __stdcall Hook_HidD_GetProductString(HANDLE p_object, void *p_buffer, UL
 	return FALSE;
 }
 
-FARPROC __stdcall Hook_GetProcAddress(HMODULE p_module, LPCSTR p_name) {
+IAT_HOOK_CALL FARPROC __stdcall Hook_GetProcAddress(HMODULE p_module, LPCSTR p_name) {
 	if (String(p_name) == "HidD_GetProductString") {
 		return (FARPROC)(LPVOID)Hook_HidD_GetProductString;
 	}
