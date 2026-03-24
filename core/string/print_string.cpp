@@ -36,8 +36,12 @@
 static PrintHandlerList *print_handler_list = nullptr;
 static thread_local bool is_printing = false;
 
-static void __print_fallback(const String &p_string, bool p_err) {
-	fprintf(p_err ? stderr : stdout, "While attempting to print a message, another message was printed:\n%s\n", p_string.utf8().get_data());
+static void __print_fallback(const String &p_string, bool p_err, bool p_reentrance) {
+	if (p_reentrance) {
+		fprintf(p_err ? stderr : stdout, "While attempting to print an error, another error was printed:\n");
+	}
+
+	fprintf(p_err ? stderr : stdout, "%s\n", p_string.utf8().get_data());
 }
 
 void add_print_handler(PrintHandlerList *p_handler) {
@@ -76,8 +80,13 @@ void __print_line(const String &p_string) {
 		return;
 	}
 
+	if (!CoreGlobals::print_ready) {
+		__print_fallback(p_string, false, false);
+		return;
+	}
+
 	if (is_printing) {
-		__print_fallback(p_string, false);
+		__print_fallback(p_string, false, true);
 		return;
 	}
 
@@ -277,8 +286,13 @@ void __print_line_rich(const String &p_string) {
 	}
 	output += "\u001b[0m"; // Reset.
 
+	if (!CoreGlobals::print_ready) {
+		__print_fallback(output, false, false);
+		return;
+	}
+
 	if (is_printing) {
-		__print_fallback(output, false);
+		__print_fallback(output, false, true);
 		return;
 	}
 
@@ -299,8 +313,13 @@ void __print_line_rich(const String &p_string) {
 }
 
 void print_raw(const String &p_string) {
+	if (!CoreGlobals::print_ready) {
+		__print_fallback(p_string, false, false);
+		return;
+	}
+
 	if (is_printing) {
-		__print_fallback(p_string, true);
+		__print_fallback(p_string, true, true);
 		return;
 	}
 
@@ -316,8 +335,13 @@ void print_error(const String &p_string) {
 		return;
 	}
 
+	if (!CoreGlobals::print_ready) {
+		__print_fallback(p_string, false, false);
+		return;
+	}
+
 	if (is_printing) {
-		__print_fallback(p_string, true);
+		__print_fallback(p_string, true, true);
 		return;
 	}
 
