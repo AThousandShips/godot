@@ -187,6 +187,11 @@ public:
 		this->operator=(p_from);
 	}
 
+	Ref(Object *p_from) = delete;
+
+	Ref(std::nullptr_t) {
+	}
+
 	Ref(const Variant &p_from) {
 		this->operator=(p_from);
 	}
