@@ -520,7 +520,7 @@ TileMapEditorPlugin::~TileMapEditorPlugin() {
 }
 
 void TileSetEditorPlugin::edit(Object *p_object) {
-	editor->edit(Ref<TileSet>(p_object));
+	editor->edit(Object::cast_to<TileSet>(p_object));
 	if (p_object) {
 		edited_tileset = p_object->get_instance_id();
 	} else {

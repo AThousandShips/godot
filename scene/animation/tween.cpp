@@ -789,7 +789,7 @@ CallbackTweener::CallbackTweener(const Callable &p_callback) {
 
 	Object *callback_instance = p_callback.get_object();
 	if (callback_instance && callback_instance->is_ref_counted()) {
-		ref_copy = callback_instance;
+		ref_copy = Object::cast_to<RefCounted>(callback_instance);
 	}
 }
 
@@ -883,7 +883,7 @@ MethodTweener::MethodTweener(const Callable &p_callback, const Variant &p_from, 
 
 	Object *callback_instance = p_callback.get_object();
 	if (callback_instance && callback_instance->is_ref_counted()) {
-		ref_copy = callback_instance;
+		ref_copy = Object::cast_to<RefCounted>(callback_instance);
 	}
 }
 
@@ -988,7 +988,7 @@ AwaitTweener::AwaitTweener(const Signal &p_signal) {
 
 	Object *signal_instance = p_signal.get_object();
 	if (signal_instance && signal_instance->is_ref_counted()) {
-		ref_copy = signal_instance;
+		ref_copy = Object::cast_to<RefCounted>(signal_instance);
 	}
 }
 

@@ -2783,7 +2783,7 @@ Error GDScriptCompiler::_prepare_compilation(GDScript *p_script, const GDScriptP
 			// Nothing more to do.
 			break;
 		case GDScriptDataType::GDSCRIPT: {
-			Ref<GDScript> base = Ref<GDScript>(base_type.script_type);
+			Ref<GDScript> base = Object::cast_to<GDScript>(base_type.script_type);
 			if (base.is_null()) {
 				_set_error("Compiler bug (please report): base script type is null.", nullptr);
 				return ERR_BUG;

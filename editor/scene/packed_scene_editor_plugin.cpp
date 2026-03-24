@@ -57,7 +57,7 @@ bool EditorInspectorPluginPackedScene::can_handle(Object *p_object) {
 }
 
 void EditorInspectorPluginPackedScene::parse_begin(Object *p_object) {
-	Ref<PackedScene> packed_scene(p_object);
+	Ref<PackedScene> packed_scene(Object::cast_to<PackedScene>(p_object));
 	PackedSceneEditor *editor = memnew(PackedSceneEditor(packed_scene));
 	add_custom_control(editor);
 }

@@ -136,8 +136,8 @@ class SceneImportSettingsData : public Object {
 					if (settings->has("rest_pose/external_animation_library")) {
 						res = (*settings)["rest_pose/external_animation_library"];
 					}
-					Ref<Animation> anim(res);
-					Ref<AnimationLibrary> library(res);
+					Ref<Animation> anim(Object::cast_to<Animation>(res));
+					Ref<AnimationLibrary> library(Object::cast_to<AnimationLibrary>(res));
 					if (anim.is_valid()) {
 						hint_string = anim->get_name();
 					}

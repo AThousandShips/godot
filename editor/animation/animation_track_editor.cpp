@@ -4788,7 +4788,7 @@ void AnimationTrackEditor::insert_value_key(const String &p_property, bool p_adv
 	ERR_FAIL_COND(history->get_path_size() == 0);
 	Object *obj = ObjectDB::get_instance(history->get_path_object(0));
 
-	Ref<MultiNodeEdit> multi_node_edit(obj);
+	Ref<MultiNodeEdit> multi_node_edit(Object::cast_to<MultiNodeEdit>(obj));
 	if (multi_node_edit.is_valid()) {
 		Node *edited_scene = EditorNode::get_singleton()->get_edited_scene();
 		ERR_FAIL_NULL(edited_scene);

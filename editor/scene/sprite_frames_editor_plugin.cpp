@@ -2761,7 +2761,7 @@ void SpriteFramesEditorPlugin::edit(Object *p_object) {
 		if (animated_sprite_3d) {
 			s = animated_sprite_3d->get_sprite_frames();
 		} else {
-			s = p_object;
+			s = Object::cast_to<SpriteFrames>(p_object);
 		}
 	}
 

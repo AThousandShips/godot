@@ -4112,7 +4112,7 @@ ThemeEditor::ThemeEditor() {
 ///////////////////////
 
 void ThemeEditorPlugin::edit(Object *p_object) {
-	theme_editor->edit(Ref<Theme>(p_object));
+	theme_editor->edit(Object::cast_to<Theme>(p_object));
 }
 
 bool ThemeEditorPlugin::handles(Object *p_object) const {

@@ -407,7 +407,7 @@ void InspectorDock::_files_moved(const String &p_old_file, const String &p_new_f
 	}
 
 	ObjectID current_id = EditorNode::get_singleton()->get_editor_selection_history()->get_current();
-	Ref<Resource> res(current_id.is_valid() ? ObjectDB::get_instance(current_id) : nullptr);
+	Ref<Resource> res = current_id.is_valid() ? ObjectDB::get_ref<Resource>(current_id) : Ref<Resource>();
 	// We only care about updating the path if the current object is the one being renamed.
 	if (res.is_valid() && p_old_file == res->get_path()) {
 		res->set_path(p_new_file);

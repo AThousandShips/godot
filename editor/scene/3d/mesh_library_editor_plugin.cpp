@@ -298,7 +298,7 @@ void MeshLibraryEditor::_select_item(int p_id, Ref<MeshLibrary> p_lib_check) {
 
 	Object *edited = inspector->get_edited_object();
 	if (edited) {
-		Ref<MeshLibraryItem> item(edited);
+		Ref<MeshLibraryItem> item(Object::cast_to<MeshLibraryItem>(edited));
 		if (item->mesh_id == selected_item) {
 			return; // Already inspecting it.
 		}

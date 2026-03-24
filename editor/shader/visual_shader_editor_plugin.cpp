@@ -482,7 +482,7 @@ Ref<Script> VisualShaderGraphPlugin::get_node_script(int p_node_id) const {
 		return Ref<Script>();
 	}
 
-	Ref<VisualShaderNodeCustom> custom = Ref<VisualShaderNodeCustom>(links[p_node_id].visual_node);
+	Ref<VisualShaderNodeCustom> custom = Object::cast_to<VisualShaderNodeCustom>(links[p_node_id].visual_node);
 	if (custom.is_valid()) {
 		return custom->get_script();
 	}
@@ -1900,7 +1900,7 @@ void VisualShaderEditor::_update_custom_script(const Ref<Script> &p_script) {
 }
 
 void VisualShaderEditor::_resource_saved(const Ref<Resource> &p_resource) {
-	_update_custom_script(Ref<Script>(p_resource.ptr()));
+	_update_custom_script(Ref<Script>(p_resource));
 }
 
 void VisualShaderEditor::_resources_removed() {
@@ -1968,7 +1968,7 @@ void VisualShaderEditor::_resources_removed() {
 }
 
 void VisualShaderEditor::_resource_removed(const Ref<Resource> &p_resource) {
-	Ref<Script> scr = Ref<Script>(p_resource.ptr());
+	Ref<Script> scr = p_resource;
 	if (scr.is_null() || scr->get_instance_base_type() != "VisualShaderNodeCustom") {
 		return;
 	}
@@ -5847,7 +5847,7 @@ void VisualShaderEditor::_varying_select_item(Ref<VisualShaderNodeVarying> p_var
 		return;
 	}
 
-	bool is_getter = Ref<VisualShaderNodeVaryingGetter>(p_varying.ptr()).is_valid();
+	bool is_getter = Object::cast_to<VisualShaderNodeVaryingGetter>(p_varying.ptr()) != nullptr;
 
 	EditorUndoRedoManager *undo_redo_man = EditorUndoRedoManager::get_singleton();
 	undo_redo_man->create_action(TTR("Varying Name Changed"));
@@ -7923,7 +7923,7 @@ public:
 			EditorNode::get_singleton()->get_editor_theme()->get_icon(SNAME("Transform3D"), EditorStringName(EditorIcons)),
 		};
 
-		bool is_getter = Ref<VisualShaderNodeVaryingGetter>(p_varying.ptr()).is_valid();
+		bool is_getter = Object::cast_to<VisualShaderNodeVaryingGetter>(p_varying.ptr()) != nullptr;
 
 		add_item(TTR("[None]"));
 		set_item_metadata(-1, "[None]");
@@ -8187,7 +8187,7 @@ public:
 };
 
 Control *VisualShaderNodePluginDefault::create_editor(const Ref<Resource> &p_parent_resource, const Ref<VisualShaderNode> &p_node) {
-	Ref<VisualShader> p_shader = Ref<VisualShader>(p_parent_resource.ptr());
+	Ref<VisualShader> p_shader = p_parent_resource;
 
 	if (p_shader.is_valid() && (p_node->is_class("VisualShaderNodeVaryingGetter") || p_node->is_class("VisualShaderNodeVaryingSetter"))) {
 		VisualShaderNodePluginVaryingEditor *editor = memnew(VisualShaderNodePluginVaryingEditor);

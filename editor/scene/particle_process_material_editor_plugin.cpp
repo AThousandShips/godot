@@ -452,7 +452,7 @@ bool EditorInspectorParticleProcessMaterialPlugin::parse_property(Object *p_obje
 	}
 	ERR_FAIL_COND_V(p_hint != PROPERTY_HINT_RANGE, false);
 
-	Ref<ParticleProcessMaterial> mat = Ref<ParticleProcessMaterial>(p_object);
+	Ref<ParticleProcessMaterial> mat = Object::cast_to<ParticleProcessMaterial>(p_object);
 	ERR_FAIL_COND_V(mat.is_null(), false);
 
 	PackedStringArray range_hint = p_hint_text.split(",");

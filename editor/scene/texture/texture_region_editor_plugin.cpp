@@ -948,11 +948,11 @@ void TextureRegionEditor::edit(Object *p_obj) {
 
 		bool is_resource = false;
 		if (Object::cast_to<StyleBoxTexture>(p_obj)) {
-			res_stylebox = Ref<StyleBoxTexture>(p_obj);
+			res_stylebox = Object::cast_to<StyleBoxTexture>(p_obj);
 			is_resource = true;
 		}
 		if (Object::cast_to<AtlasTexture>(p_obj)) {
-			res_atlas_texture = Ref<AtlasTexture>(p_obj);
+			res_atlas_texture = Object::cast_to<AtlasTexture>(p_obj);
 			is_resource = true;
 		}
 

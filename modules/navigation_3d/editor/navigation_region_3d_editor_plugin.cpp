@@ -272,7 +272,7 @@ void NavigationRegion3DEditorPlugin::edit(Object *p_object) {
 		}
 	}
 
-	Ref<MultiNodeEdit> mne = Ref<MultiNodeEdit>(p_object);
+	Ref<MultiNodeEdit> mne = Object::cast_to<MultiNodeEdit>(p_object);
 	Node *edited_scene = EditorNode::get_singleton()->get_edited_scene();
 	if (mne.is_valid() && edited_scene) {
 		for (int i = 0; i < mne->get_node_count(); i++) {
@@ -291,7 +291,7 @@ bool NavigationRegion3DEditorPlugin::handles(Object *p_object) const {
 		return true;
 	}
 
-	Ref<MultiNodeEdit> mne = Ref<MultiNodeEdit>(p_object);
+	Ref<MultiNodeEdit> mne = Object::cast_to<MultiNodeEdit>(p_object);
 	Node *edited_scene = EditorNode::get_singleton()->get_edited_scene();
 	if (mne.is_valid() && edited_scene) {
 		for (int i = 0; i < mne->get_node_count(); i++) {

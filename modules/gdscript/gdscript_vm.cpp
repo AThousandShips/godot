@@ -2992,7 +2992,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 					if (!ret_inst) {
 #ifdef DEBUG_ENABLED
 						err_text = vformat(R"(Trying to return a value of type "%s" from a function whose return type is "%s".)",
-								_get_var_type(r), GDScript::debug_get_script_name(Ref<GDScript>(base_type)));
+								_get_var_type(r), GDScript::debug_get_script_name(Ref<GDScript>(Object::cast_to<GDScript>(base_type))));
 #endif // DEBUG_ENABLED
 						OPCODE_BREAK;
 					}
@@ -3011,7 +3011,7 @@ Variant GDScriptFunction::call(GDScriptInstance *p_instance, const Variant **p_a
 					if (!valid) {
 #ifdef DEBUG_ENABLED
 						err_text = vformat(R"(Trying to return a value of type "%s" from a function whose return type is "%s".)",
-								_get_var_type(r), GDScript::debug_get_script_name(Ref<GDScript>(base_type)));
+								_get_var_type(r), GDScript::debug_get_script_name(Ref<GDScript>(Object::cast_to<GDScript>(base_type))));
 #endif // DEBUG_ENABLED
 						OPCODE_BREAK;
 					}

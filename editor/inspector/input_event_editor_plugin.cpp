@@ -141,16 +141,16 @@ InputEventConfigContainer::InputEventConfigContainer() {
 ///////////////////////
 
 bool EditorInspectorPluginInputEvent::can_handle(Object *p_object) {
-	Ref<InputEventKey> k = Ref<InputEventKey>(p_object);
-	Ref<InputEventMouseButton> m = Ref<InputEventMouseButton>(p_object);
-	Ref<InputEventJoypadButton> jb = Ref<InputEventJoypadButton>(p_object);
-	Ref<InputEventJoypadMotion> jm = Ref<InputEventJoypadMotion>(p_object);
+	Ref<InputEventKey> k = Object::cast_to<InputEventKey>(p_object);
+	Ref<InputEventMouseButton> m = Object::cast_to<InputEventMouseButton>(p_object);
+	Ref<InputEventJoypadButton> jb = Object::cast_to<InputEventJoypadButton>(p_object);
+	Ref<InputEventJoypadMotion> jm = Object::cast_to<InputEventJoypadMotion>(p_object);
 
 	return k.is_valid() || m.is_valid() || jb.is_valid() || jm.is_valid();
 }
 
 void EditorInspectorPluginInputEvent::parse_begin(Object *p_object) {
-	Ref<InputEvent> ie = Ref<InputEvent>(p_object);
+	Ref<InputEvent> ie = Object::cast_to<InputEvent>(p_object);
 
 	InputEventConfigContainer *picker_controls = memnew(InputEventConfigContainer);
 	picker_controls->set_event(ie);

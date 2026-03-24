@@ -1483,7 +1483,7 @@ void EditorAudioBuses::open_layout(const String &p_path) {
 }
 
 void AudioBusesEditorPlugin::edit(Object *p_node) {
-	Ref<AudioBusLayout> bus_layout(p_node);
+	Ref<AudioBusLayout> bus_layout(Object::cast_to<AudioBusLayout>(p_node));
 	if (bus_layout.is_null()) {
 		return;
 	}

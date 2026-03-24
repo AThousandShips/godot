@@ -396,7 +396,7 @@ void EditorPropertyOTVariation::update_property() {
 
 	Ref<Font> fd;
 	if (Object::cast_to<Font>(get_edited_object()) != nullptr) {
-		fd = get_edited_object();
+		fd = Object::cast_to<Font>(get_edited_object());
 	} else if (Object::cast_to<DynamicFontImportSettingsData>(get_edited_object()) != nullptr) {
 		Ref<DynamicFontImportSettingsData> imp = Object::cast_to<DynamicFontImportSettingsData>(get_edited_object());
 		fd = imp->get_font();
@@ -605,7 +605,7 @@ void EditorPropertyOTFeatures::update_property() {
 
 	Ref<Font> fd;
 	if (Object::cast_to<FontVariation>(get_edited_object()) != nullptr) {
-		fd = get_edited_object();
+		fd = Object::cast_to<FontVariation>(get_edited_object());
 	} else if (Object::cast_to<DynamicFontImportSettingsData>(get_edited_object()) != nullptr) {
 		Ref<DynamicFontImportSettingsData> imp = Object::cast_to<DynamicFontImportSettingsData>(get_edited_object());
 		fd = imp->get_font();

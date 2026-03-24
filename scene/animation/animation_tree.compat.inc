@@ -43,7 +43,7 @@ AnimationTree::AnimationProcessCallback AnimationTree::_get_process_callback_bin
 }
 
 void AnimationTree::_set_tree_root_bind_compat_80813(const Ref<AnimationNode> &p_root) {
-	const Ref<AnimationRootNode> rn = Ref<AnimationRootNode>(p_root.ptr());
+	const Ref<AnimationRootNode> rn = p_root;
 	if (rn.is_null()) {
 		return;
 	}
@@ -51,7 +51,7 @@ void AnimationTree::_set_tree_root_bind_compat_80813(const Ref<AnimationNode> &p
 }
 
 Ref<AnimationNode> AnimationTree::_get_tree_root_bind_compat_80813() const {
-	const Ref<AnimationRootNode> rn = Ref<AnimationNode>(get_root_animation_node().ptr());
+	const Ref<AnimationRootNode> rn = get_root_animation_node();
 	return rn;
 }
 

@@ -1521,9 +1521,9 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 				}
 			} else if (int(node_settings["rest_pose/load_pose"]) == 2) {
 				Object *external_object = node_settings.get("rest_pose/external_animation_library", Variant());
-				rest_animation = external_object;
+				rest_animation = Object::cast_to<Animation>(external_object);
 				if (rest_animation.is_null()) {
-					Ref<AnimationLibrary> library(external_object);
+					Ref<AnimationLibrary> library(Object::cast_to<AnimationLibrary>(external_object));
 					if (library.is_valid()) {
 						LocalVector<StringName> anim_list;
 						library->get_animation_list(&anim_list);
@@ -2382,11 +2382,11 @@ bool ResourceImporterScene::get_internal_option_visibility(InternalImportCategor
 					}
 				} else if (int(p_options["rest_pose/load_pose"]) == 2) {
 					Object *res = p_options["rest_pose/external_animation_library"];
-					Ref<Animation> anim(res);
+					Ref<Animation> anim(Object::cast_to<Animation>(res));
 					if (anim.is_valid() && p_option == "rest_pose/selected_animation") {
 						return false;
 					}
-					Ref<AnimationLibrary> library(res);
+					Ref<AnimationLibrary> library(Object::cast_to<AnimationLibrary>(res));
 					String selected_animation_name = p_options["rest_pose/selected_animation"];
 					if (library.is_valid()) {
 						LocalVector<StringName> anim_list;

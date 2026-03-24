@@ -639,7 +639,7 @@ struct VariantInternalAccessor<Object *> {
 
 template <typename T>
 struct VariantInternalAccessor<Ref<T>> {
-	static _FORCE_INLINE_ Ref<T> get(const Variant *v) { return Ref<T>(const_cast<Object *>(*VariantInternal::get_object(v))); }
+	static _FORCE_INLINE_ Ref<T> get(const Variant *v) { return Ref<T>(Object::cast_to<T>(const_cast<Object *>(*VariantInternal::get_object(v)))); }
 	static _FORCE_INLINE_ void set(Variant *v, const Ref<T> &p_ref) { VariantInternal::object_assign(v, p_ref); }
 };
 
