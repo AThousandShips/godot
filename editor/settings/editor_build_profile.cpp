@@ -236,6 +236,7 @@ const HashMap<EditorBuildProfile::BuildOption, LocalVector<EditorBuildProfile::B
 	} },
 };
 
+// Should also contain classes not derived from either `Resource` or `Node`.
 const HashMap<EditorBuildProfile::BuildOption, LocalVector<String>> EditorBuildProfile::build_option_classes = {
 	{ BUILD_OPTION_3D, {
 			"Node3D",
@@ -807,9 +808,7 @@ void EditorBuildProfileManager::_find_files(EditorFileSystemDirectory *p_dir, co
 		HashSet<StringName> classes;
 		ResourceLoader::get_classes_used(p, &classes);
 		for (const StringName &E : classes) {
-			if (E == "Resource" || E == "Node" || ClassDB::is_parent_class(E, "Resource") || ClassDB::is_parent_class(E, "Node")) {
-				cache.classes.push_back(E);
-			}
+			cache.classes.push_back(E);
 		}
 
 		HashSet<String> build_deps;
@@ -1016,7 +1015,7 @@ void EditorBuildProfileManager::_detect_from_project() {
 		const LocalVector<String> classes = EditorBuildProfile::get_build_option_classes(EditorBuildProfile::BuildOption(i));
 		if (!classes.is_empty()) {
 			for (StringName class_name : classes) {
-				if (!edited->is_class_disabled(class_name)) {
+				if (all_used_classes.has(class_name) && !edited->is_class_disabled(class_name)) {
 					skip = true;
 					break;
 				}
