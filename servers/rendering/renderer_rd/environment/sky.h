@@ -262,6 +262,7 @@ public:
 		float uv_border_size = 0.0; // Border size in UV space.
 
 		RS::SkyMode mode = RS::SKY_MODE_AUTOMATIC;
+		RS::SkyMode internal_mode = RS::SKY_MODE_INCREMENTAL; // When using SKY_MODE_AUTOMATIC, this is the mode used internally.
 
 		ReflectionData reflection;
 		bool dirty = false;
