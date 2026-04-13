@@ -599,8 +599,9 @@ void JoltArea3D::body_exited(const JPH::BodyID &p_body_id, bool p_notify) {
 	}
 
 	for (const KeyValue<ShapeIDPair, ShapeIndexPair> &E : overlap->shape_pairs) {
-		overlap->pending_added.erase(E.value);
-		overlap->pending_removed.push_back(E.value);
+		if (!overlap->pending_added.erase(E.value)) {
+			overlap->pending_removed.push_back(E.value);
+		}
 	}
 
 	_events_changed();
@@ -623,8 +624,9 @@ void JoltArea3D::area_exited(const JPH::BodyID &p_body_id) {
 	}
 
 	for (const KeyValue<ShapeIDPair, ShapeIndexPair> &E : overlap->shape_pairs) {
-		overlap->pending_added.erase(E.value);
-		overlap->pending_removed.push_back(E.value);
+		if (!overlap->pending_added.erase(E.value)) {
+			overlap->pending_removed.push_back(E.value);
+		}
 	}
 
 	_events_changed();

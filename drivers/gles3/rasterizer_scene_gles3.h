@@ -815,6 +815,7 @@ protected:
 		int mipmap_count = 1;
 
 		RS::SkyMode mode = RS::SKY_MODE_AUTOMATIC;
+		RS::SkyMode internal_mode = RS::SKY_MODE_INCREMENTAL; // When using SKY_MODE_AUTOMATIC, this is the mode used internally.
 
 		//ReflectionData reflection;
 		bool reflection_dirty = false;

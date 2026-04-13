@@ -236,6 +236,7 @@ const HashMap<EditorBuildProfile::BuildOption, LocalVector<EditorBuildProfile::B
 	} },
 };
 
+// Should also contain classes not derived from either `Resource` or `Node`.
 const HashMap<EditorBuildProfile::BuildOption, LocalVector<String>> EditorBuildProfile::build_option_classes = {
 	{ BUILD_OPTION_3D, {
 			"Node3D",
@@ -905,12 +906,8 @@ void EditorBuildProfileManager::_detect_from_project() {
 	const LocalVector<String> hardcoded_classes = {
 		"Font",
 		"InputEvent",
-		"MainLoop",
-		"Mutex",
 		"ShaderInclude",
-		"ShaderIncludeDB",
 		"StyleBox",
-		"Time",
 		"Window",
 	};
 
@@ -970,8 +967,16 @@ void EditorBuildProfileManager::_detect_from_project() {
 	ClassDB::get_class_list(all_classes);
 
 	for (const StringName &class_name : all_classes) {
-		if (String(class_name).begins_with("Editor") || ClassDB::get_api_type(class_name) != ClassDB::API_CORE || all_used_classes.has(class_name)) {
-			// This class is valid or editor-only, do nothing.
+		ClassDB::APIType class_api = ClassDB::get_api_type(class_name);
+		if (class_api == ClassDB::API_EDITOR || class_api != ClassDB::API_CORE) {
+			continue; // This class is editor-only or not from Godot itself.
+		}
+
+		if (class_name != "Resource" && class_name != "Node" && !ClassDB::is_parent_class(class_name, "Resource") && !ClassDB::is_parent_class(class_name, "Node")) {
+			continue;
+		}
+
+		if (all_used_classes.has(class_name)) {
 			continue;
 		}
 
@@ -1010,7 +1015,7 @@ void EditorBuildProfileManager::_detect_from_project() {
 		const LocalVector<String> classes = EditorBuildProfile::get_build_option_classes(EditorBuildProfile::BuildOption(i));
 		if (!classes.is_empty()) {
 			for (StringName class_name : classes) {
-				if (!edited->is_class_disabled(class_name)) {
+				if (all_used_classes.has(class_name) && !edited->is_class_disabled(class_name)) {
 					skip = true;
 					break;
 				}
@@ -1130,10 +1135,10 @@ void EditorBuildProfileManager::_fill_classes_from(TreeItem *p_parent, const Str
 	child_classes.sort_custom<StringName::AlphCompare>();
 
 	for (const StringName &name : child_classes) {
-		if (String(name).begins_with("Editor") || ClassDB::get_api_type(name) != ClassDB::API_CORE) {
-			continue;
+		ClassDB::APIType class_api = ClassDB::get_api_type(name);
+		if (class_api != ClassDB::API_EDITOR && class_api == ClassDB::API_CORE) {
+			_fill_classes_from(class_item, name, p_selected);
 		}
-		_fill_classes_from(class_item, name, p_selected);
 	}
 }
 
