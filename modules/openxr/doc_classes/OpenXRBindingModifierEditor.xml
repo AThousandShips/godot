@@ -20,7 +20,7 @@
 			<param index="0" name="action_map" type="OpenXRActionMap" />
 			<param index="1" name="binding_modifier" type="OpenXRBindingModifier" />
 			<description>
-				Setup this editor for the provided [param action_map] and [param binding_modifier].
+				Sets up this editor for the provided [param action_map] and [param binding_modifier].
 			</description>
 		</method>
 	</methods>

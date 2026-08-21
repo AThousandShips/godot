@@ -14,7 +14,7 @@
 			Company that produced the application. Required. See [url=https://learn.microsoft.com/en-us/windows/win32/menurc/stringfileinfo-block]StringFileInfo[/url].
 		</member>
 		<member name="application/console_wrapper_icon" type="String" setter="" getter="">
-			Console wrapper icon file. If left empty, it will fallback to [member application/icon], then to [member ProjectSettings.application/config/windows_native_icon], and lastly, [member ProjectSettings.application/config/icon].
+			Console wrapper icon file. If left empty, it will fall back to [member application/icon], then to [member ProjectSettings.application/config/windows_native_icon], and lastly, [member ProjectSettings.application/config/icon].
 		</member>
 		<member name="application/copyright" type="String" setter="" getter="">
 			Copyright notice for the bundle visible to the user. Optional. See [url=https://learn.microsoft.com/en-us/windows/win32/menurc/stringfileinfo-block]StringFileInfo[/url].
@@ -35,7 +35,7 @@
 			Version number of the file. Falls back to [member ProjectSettings.application/config/version] if left empty. See [url=https://learn.microsoft.com/en-us/windows/win32/menurc/stringfileinfo-block]StringFileInfo[/url].
 		</member>
 		<member name="application/icon" type="String" setter="" getter="">
-			Application icon file. If left empty, it will fallback to [member ProjectSettings.application/config/windows_native_icon], and then to [member ProjectSettings.application/config/icon].
+			Application icon file. If left empty, it will fall back to [member ProjectSettings.application/config/windows_native_icon], and then to [member ProjectSettings.application/config/icon].
 		</member>
 		<member name="application/icon_interpolation" type="int" setter="" getter="">
 			Interpolation method used to resize application icon.

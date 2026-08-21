@@ -14,7 +14,7 @@
 			<param index="0" name="action_map" type="OpenXRActionMap" />
 			<param index="1" name="interaction_profile" type="OpenXRInteractionProfile" />
 			<description>
-				Setup this editor for the provided [param action_map] and [param interaction_profile].
+				Sets up this editor for the provided [param action_map] and [param interaction_profile].
 			</description>
 		</method>
 	</methods>

@@ -894,7 +894,7 @@
 				Requests the OS to open the file manager, navigate to the given [param file_or_dir_path] and select the target file or folder.
 				If [param open_folder] is [code]true[/code] and [param file_or_dir_path] is a valid directory path, the OS will open the file manager and navigate to the target folder without selecting anything.
 				Use [method ProjectSettings.globalize_path] to convert a [code]res://[/code] or [code]user://[/code] project path into a system path to use with this method.
-				[b]Note:[/b] This method is currently only implemented on Windows and macOS. On other platforms, it will fallback to [method shell_open] with a directory path of [param file_or_dir_path] prefixed with [code]file://[/code].
+				[b]Note:[/b] This method is currently only implemented on Windows and macOS. On other platforms, it will fall back to [method shell_open] with a directory path of [param file_or_dir_path] prefixed with [code]file://[/code].
 			</description>
 		</method>
 		<method name="unset_environment" qualifiers="const">

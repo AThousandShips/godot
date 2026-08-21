@@ -28,7 +28,7 @@
 			<return type="void" />
 			<param index="0" name="modification_stack" type="SkeletonModificationStack2D" />
 			<description>
-				Called when the modification is setup. This is where the modification performs initialization.
+				Called when the modification is set up. This is where the modification performs initialization.
 			</description>
 		</method>
 		<method name="clamp_angle">
@@ -50,7 +50,7 @@
 		<method name="get_is_setup" qualifiers="const">
 			<return type="bool" />
 			<description>
-				Returns whether this modification has been successfully setup or not.
+				Returns whether this modification has been successfully set up or not.
 			</description>
 		</method>
 		<method name="get_modification_stack">

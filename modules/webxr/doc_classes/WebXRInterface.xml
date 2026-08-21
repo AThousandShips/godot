@@ -50,7 +50,7 @@
 			# experience (it puts you 1.6m above the ground if you have 3DoF headset),
 			# whereas as 'local' puts you down at the XROrigin.
 			# This list means it'll first try to request 'bounded-floor', then
-			# fallback on 'local-floor' and ultimately 'local', if nothing else is
+			# fall back on 'local-floor' and ultimately 'local', if nothing else is
 			# supported.
 			webxr_interface.requested_reference_space_types = 'bounded-floor, local-floor, local'
 			# In order to use 'local-floor' or 'bounded-floor' we must also
